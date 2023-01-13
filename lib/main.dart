@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/Dashboard/dashboard_screen.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
+import 'package:sangathan/Login/Screens/SendOtp/send_otp.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 
 void main() {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const DashBoardScreen(),
+        home: const SendOtpScreen(),
       ),
     );
   }

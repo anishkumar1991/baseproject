@@ -28,4 +28,9 @@ class AppColor {
   static const Color dividerColor = Color(0xFFE6E6E6);
   static const Color navyBlue400 = Color(0xFF425D86);
   static const Color navyBlue = Color(0xFF214B67);
+  
+    static const Color buttonOrangeBackGroundColor = Color(0xFFFF9559);
+
+    static const Color textGreyColor = Color(0xFF000000);
+
 }

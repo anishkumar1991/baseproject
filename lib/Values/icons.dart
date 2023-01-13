@@ -18,5 +18,6 @@ class AppIcons {
   static const String homeOutlineIcon = "assets/images/home_outline.png";
   static const String menuOutline = "assets/images/menu_outline.png";
     static const String backGroundImage = "assets/images/backGround_image.png";
+    static const String loginImage = "assets/images/login_image.png";
 
 }

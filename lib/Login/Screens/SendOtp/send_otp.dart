@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Login/Screens/SendOtp/common_button.dart';
 import 'package:sangathan/Login/Screens/SendOtp/textformfield.dart';
-import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
-import 'package:sangathan/Utils/AppBar/appbar.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
-import 'package:sangathan/Values/Constants.dart';
-import '../../../Utils/Buttons/button.dart';
+import 'package:sangathan/Values/app_colors.dart';
+import 'package:sangathan/Values/icons.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
-import '../../../Values/app_colors.dart';
 import '../../../Values/size_config.dart';
 
 class SendOtpScreen extends StatelessWidget {
@@ -16,79 +14,71 @@ class SendOtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        SizeConfig().getCurrentOrientation(context);
+    SizeConfig().getCurrentOrientation(context);
 
     return Scaffold(
-      backgroundColor: AppColor().backgroundColor,
-      appBar: APPBar.getAppBar(),
-      body: BlocBuilder<InternetCubit, InternetState>(
-        builder: (context, state) {
-          if (state == InternetState.connected) {
-            return ListView(
-              children: [
-                Column(
-                  children: [
-                    //login text
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                          Constants.paddingLeft, 14, 0, 0),
-                      child: Row(
-                        children: [
-                          Text("Login",
-                              style: GoogleFonts.publicSans(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColor().textColor)),
-                        ],
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: BlocBuilder<InternetCubit, InternetState>(
+            builder: (context, state) {
+              if (state == InternetState.connected) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 100,
                       ),
-                    ),
-
-                    //mobile text
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(Constants.paddingLeft,
-                          96, Constants.paddingRight, 149),
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text("Mobile Number",
-                                style: GoogleFonts.quicksand(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColor().textColor)),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 12),
-                            child: const TextFormFieldLogin(),
-                          ),
-                        ],
+                      Align(
+                          alignment: Alignment.center,
+                          child: Image.asset(AppIcons.loginImage,
+                              height: 259, width: 262)),
+                      const SizedBox(
+                        height: 33,
                       ),
-                    ),
-
-                    //nextbutton
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                          Constants.buttonLeft, 0, Constants.buttonRight, 0),
-                      child: SizedBox(
-                        width: Constants.buttonSizeBoxWidth,
-                        height: Constants.buttonSizeBoxHeight,
-                        child: BUTTON(onPress: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const VerifyOtpScreen()),
-                          );
-                        }),
+                      Text(
+                        'लॉगिन करे',
+                        style: GoogleFonts.poppins(
+                            fontSize: 24, fontWeight: FontWeight.w600),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          } else {
-            return const NotConnected();
-          }
-        },
+                      const SizedBox(
+                        height: 33,
+                      ),
+                      Text(
+                        'अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColor.greyColor),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: TextFormFieldLogin(),
+                      ),
+                     const SizedBox(
+                        height: 40,
+                      ),
+                      CommonButton(
+                        title: 'लॉगिन',
+                        style: GoogleFonts.poppins(
+                            color: AppColor.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return const NotConnected();
+              }
+            },
+          ),
+        ),
       ),
     );
   }
