@@ -25,8 +25,7 @@ class AppColor {
   static const Color white = Colors.white;
   static const Color brown200 = Color(0xFFFFEBDF);
   static const Color green200 = Color(0xFFC3EEAF);
-
+  static const Color dividerColor = Color(0xFFE6E6E6);
   static const Color navyBlue400 = Color(0xFF425D86);
-
   static const Color navyBlue = Color(0xFF214B67);
 }

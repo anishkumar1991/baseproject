@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/Values/size_config.dart';
 
-class CustomListView extends StatelessWidget {
-  const CustomListView({super.key});
+class EventListView extends StatelessWidget {
+  const EventListView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +92,6 @@ class CustomListView extends StatelessWidget {
                               ),
                               label: const Text(
                                 'Upcoming',
-                                
                               ))
                         ],
                       ),

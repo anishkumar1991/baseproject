@@ -9,8 +9,14 @@ class AppIcons {
   static const String sangathanLogo = "assets/images/sangathan_logo.png";
   static const String personImage = "assets/images/person_image.png";
   static const String meetingImage = "assets/images/metting_image.png";
-  static const String arrowForward = "assets/images/arrow_forward.png";
-
+  static const String arrowForward = "assets/images/arrow_forward_icon.png";
   static const String memberImage = "assets/images/member_image.png";
+  static const String announceOutlineImage =
+      "assets/images/announce_outline.png";
+  static const String announceIcon = "assets/images/announce_icon.png";
+  static const String homeIcon = "assets/images/home_icons.png";
+  static const String homeOutlineIcon = "assets/images/home_outline.png";
+  static const String menuOutline = "assets/images/menu_outline.png";
+    static const String backGroundImage = "assets/images/backGround_image.png";
 
 }
