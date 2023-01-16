@@ -8,6 +8,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Network/api/auth_api.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
+import 'package:sangathan/Values/string.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
 
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           useInheritedMediaQuery: true,
-          title: 'Flutter Demo',
+          title: AppStrings.appTitle,
           builder: EasyLoading.init(),
           onGenerateRoute: RouteGenerator.generatorRoute,
           initialRoute: RoutePath.loginScreen,

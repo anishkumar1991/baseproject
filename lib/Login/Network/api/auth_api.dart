@@ -10,4 +10,8 @@ abstract class AuthApi {
 
   @POST('/zila/api/resend_otp')
   Future<HttpResponse> resendOtp(@Body() Map<String, dynamic> data);
+
+  @POST('/zila/api/submit_otp')
+  Future<HttpResponse> submitOtp(@Body() Map<String, dynamic> data);
+
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_widget.dart';
-import 'package:sangathan/Login/Screens/SendOtp/common_button.dart';
+import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 class SocialMediaPage extends StatelessWidget {

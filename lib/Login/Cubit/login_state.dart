@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
+import 'package:sangathan/Login/Network/model/user_model.dart';
 
 abstract class LoginState extends Equatable {
   List<Object> get props => [];
@@ -24,4 +25,14 @@ class UserLoggedState extends LoginState {
 class LoginFaieldState extends LoginState {
   String error;
   LoginFaieldState(this.error);
+}
+
+class OtpResendSuccessfullyState extends LoginState {
+  final LoginModel model;
+  OtpResendSuccessfullyState(this.model);
+}
+
+class UserLoginSuccessfullyState extends LoginState {
+  UserDetails userDetails;
+  UserLoginSuccessfullyState(this.userDetails);
 }

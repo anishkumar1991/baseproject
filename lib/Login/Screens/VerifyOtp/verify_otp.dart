@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
-import 'package:sangathan/Login/Screens/SendOtp/common_button.dart';
+import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
 import 'package:sangathan/Values/Constants.dart';
 import 'package:sangathan/Values/icons.dart';
+import 'package:sangathan/route/route_path.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../Values/app_colors.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
-  const VerifyOtpScreen({Key? key,required this.number}) : super(key: key);
+  const VerifyOtpScreen({Key? key, required this.number}) : super(key: key);
   final String number;
   @override
   State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
+  OtpFieldController otpFieldController = OtpFieldController();
+  String otpText = '';
+  String errorText = '';
   @override
   void initState() {
     context.read<LoginCubit>().startTimer();
@@ -83,7 +88,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         height: 10,
                       ),
                       Text(
-                        'एक 4 अंकों का कोड भेजा गया है\n+91 ${widget.number}',
+                        'एक 6 अंकों का कोड भेजा गया है\n+91 ${widget.number}',
                         style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -97,35 +102,75 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             left: Constants.paddingLeft,
                             right: Constants.paddingRight),
                         child: OTPTextField(
+                            controller: otpFieldController,
                             fieldStyle: FieldStyle.box,
                             length: 6,
                             width: MediaQuery.of(context).size.width,
                             fieldWidth: 40,
+                            onCompleted: ((value) {
+                              otpText = value;
+                            }),
                             style: GoogleFonts.inter(
                                 fontSize: 25, fontWeight: FontWeight.w500),
-                            onChanged: (value) {}),
+                            onChanged: (value) {
+                              otpText = value;
+                            }),
                       ),
                       const SizedBox(
                         height: 40,
                       ),
-                      CommonButton(
-                        borderRadius: 10,
-                        padding: const EdgeInsets.all(10),
-                        title: 'सत्यापित करना',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.white),
+                      errorText.isNotEmpty
+                          ? Text(
+                              errorText,
+                              style: GoogleFonts.poppins(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.redColor),
+                            )
+                          : const SizedBox.shrink(),
+                      BlocConsumer<LoginCubit, LoginState>(
+                        listener: (context, state) {
+                          if (state is UserLoginSuccessfullyState) {
+                            Navigator.pushReplacementNamed(
+                                context, RoutePath.dashBoardScreen);
+                          } else if (state is LoginFaieldState) {
+                            errorText = state.error;
+                          }
+                        },
+                        builder: (context, state) {
+                          return CommonButton(
+                            onTap: (() async {
+                              if (otpText.isNotEmpty && otpText.length >= 6) {
+                                await context
+                                    .read<LoginCubit>()
+                                    .submitOTP(otp: otpText);
+                              } else {
+                                EasyLoading.showError('Please Enter OTP');
+                              }
+                            }),
+                            borderRadius: 10,
+                            padding: const EdgeInsets.all(10),
+                            title: 'सत्यापित करना',
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColor.white),
+                          );
+                        },
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      BlocBuilder<LoginCubit, LoginState>(
+                      BlocConsumer<LoginCubit, LoginState>(
                         builder: (context, state) {
                           return Center(
                             child: cubit.count == 0
                                 ? InkWell(
-                                    onTap: (() {}),
+                                    onTap: (() async {
+                                      await context
+                                          .read<LoginCubit>()
+                                          .resendOTP();
+                                    }),
                                     child: Text('ओटीपी पुनः भेजें',
                                         style: GoogleFonts.poppins(
                                             fontSize: 15,
@@ -142,6 +187,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                             .buttonOrangeBackGroundColor)),
                           );
                         },
+                        listener: ((context, state) {
+                          if (state is OtpResendSuccessfullyState) {
+                            EasyLoading.showSuccess(state.model.message ?? '');
+                          }
+                        }),
                       )
                     ],
                   ),

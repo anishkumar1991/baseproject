@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sangathan/Dashboard/Screen/Dashboard/dashboard_screen.dart';
-import 'package:sangathan/Login/Screens/SendOtp/login_page.dart';
+import 'package:sangathan/Login/Screens/LoginScreen/login_page.dart';
 import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
 import 'package:sangathan/route/route_path.dart';
 
