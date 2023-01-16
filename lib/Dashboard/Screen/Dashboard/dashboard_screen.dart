@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_state.dart';
-import 'package:sangathan/Dashboard/Screen/announcementPage/announcment_screen.dart';
+import 'package:sangathan/Dashboard/Screen/socialMediaPage/social_Media_screen.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/home_screen.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/menu_screen.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -18,7 +18,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   TextEditingController searchTextController = TextEditingController();
   int selectIndex = 0;
-  List<Widget> pages = [const AnnouncePage(), HomePage(), const MenuPage()];
+  List<Widget> pages = [const SocialMediaPage(), HomePage(), const MenuPage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

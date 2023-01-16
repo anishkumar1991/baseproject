@@ -1,12 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/Dashboard/dashboard_screen.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
-import 'package:sangathan/Login/Screens/SendOtp/send_otp.dart';
+import 'package:sangathan/Login/Cubit/login_cubit.dart';
+import 'package:sangathan/Login/Network/api/auth_api.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
+import 'package:sangathan/route/route_path.dart';
+import 'package:sangathan/route/routes.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
+
   runApp(const MyApp());
 }
 
@@ -15,20 +22,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider(create: (context) => InternetCubit()),
-        BlocProvider(create: (context) => DashBoardCubit()),
-        BlocProvider(create: (context) => HomePageCubit())
+        RepositoryProvider(create: (context) => AuthApi(Dio())),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        useInheritedMediaQuery: true,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => InternetCubit()),
+          BlocProvider(create: (context) => DashBoardCubit()),
+          BlocProvider(create: (context) => HomePageCubit()),
+          BlocProvider(create: (context) => LoginCubit())
+        ],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          useInheritedMediaQuery: true,
+          title: 'Flutter Demo',
+          builder: EasyLoading.init(),
+          onGenerateRoute: RouteGenerator.generatorRoute,
+          initialRoute: RoutePath.loginScreen,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
         ),
-        home: const SendOtpScreen(),
       ),
     );
   }

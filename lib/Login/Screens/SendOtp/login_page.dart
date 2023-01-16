@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Login/Cubit/login_cubit.dart';
+import 'package:sangathan/Login/Cubit/login_state.dart';
+import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Screens/SendOtp/common_button.dart';
 import 'package:sangathan/Login/Screens/SendOtp/textformfield.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
+import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../Values/size_config.dart';
 
-class SendOtpScreen extends StatelessWidget {
-  const SendOtpScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatelessWidget {
+  LoginScreen({Key? key}) : super(key: key);
+  TextEditingController mobileNumController = TextEditingController();
 
+  LoginModel? loginModel;
   @override
   Widget build(BuildContext context) {
     SizeConfig().getCurrentOrientation(context);
@@ -29,12 +36,14 @@ class SendOtpScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(
-                        height: 100,
+                        height: 30,
                       ),
                       Align(
                           alignment: Alignment.center,
-                          child: Image.asset(AppIcons.loginImage,
-                              height: 259, width: 262)),
+                          child: Image.asset(
+                            AppIcons.loginImage,
+                            height: 200,
+                          )),
                       const SizedBox(
                         height: 33,
                       ),
@@ -44,31 +53,56 @@ class SendOtpScreen extends StatelessWidget {
                             fontSize: 24, fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(
-                        height: 33,
+                        height: 20,
                       ),
                       Text(
                         'अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे',
+                        textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                             color: AppColor.greyColor),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12),
-                        child: TextFormFieldLogin(),
+                        child: TextFormFieldLogin(
+                          controller: mobileNumController,
+                        ),
                       ),
-                     const SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
-                      CommonButton(
-                        title: 'लॉगिन',
-                        style: GoogleFonts.poppins(
-                            color: AppColor.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
+                      BlocListener<LoginCubit, LoginState>(
+                        listener: (context, state) {
+                          if (state is UserLoggedState) {
+                            loginModel = state.model;
+                            EasyLoading.showSuccess(loginModel?.message ?? '');
+                            Navigator.pushReplacementNamed(
+                                context, RoutePath.verifyOtpScreen,
+                                arguments: mobileNumController.text);
+                          } else if (state is LoginFaieldState) {
+                            EasyLoading.showError(state.error);
+                          }
+                        },
+                        child: CommonButton(
+                          onTap: (() async {
+                            await context.read<LoginCubit>().loginUser(
+                                  mobileNumber: mobileNumController.text,
+                                );
+                            // Navigator.pushNamed(
+                            //     context, RoutePath.verifyOtpScreen,
+                            //     arguments: mobileNumController.text);
+                          }),
+                          padding: const EdgeInsets.all(12),
+                          title: 'लॉगिन',
+                          style: GoogleFonts.poppins(
+                              color: AppColor.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ],
                   ),

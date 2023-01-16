@@ -19,5 +19,8 @@ class AppIcons {
   static const String menuOutline = "assets/images/menu_outline.png";
     static const String backGroundImage = "assets/images/backGround_image.png";
     static const String loginImage = "assets/images/login_image.png";
+    static const String socialPageImage = "assets/images/social_page_image.png";
+    static const String likeIcon = "assets/images/like_icon.png";
+    static const String whatsappIcon = "assets/images/whatsapp_icon.png";
 
 }
