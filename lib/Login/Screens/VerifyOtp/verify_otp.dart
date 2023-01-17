@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -8,7 +9,6 @@ import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
-import 'package:sangathan/Values/Constants.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/route/route_path.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
@@ -24,7 +24,8 @@ class VerifyOtpScreen extends StatefulWidget {
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   OtpFieldController otpFieldController = OtpFieldController();
   String otpText = '';
-  String errorText = '';
+  String? errorText;
+  bool isLoading = false;
   @override
   void initState() {
     context.read<LoginCubit>().startTimer();
@@ -98,15 +99,14 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                       //OTP Text Field
                       Padding(
                         padding: const EdgeInsets.only(
-                            top: 40,
-                            left: Constants.paddingLeft,
-                            right: Constants.paddingRight),
+                          top: 40,
+                        ),
                         child: OTPTextField(
                             controller: otpFieldController,
                             fieldStyle: FieldStyle.box,
                             length: 6,
                             width: MediaQuery.of(context).size.width,
-                            fieldWidth: 40,
+                            fieldWidth: 50,
                             onCompleted: ((value) {
                               otpText = value;
                             }),
@@ -117,82 +117,17 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             }),
                       ),
                       const SizedBox(
-                        height: 40,
+                        height: 20,
                       ),
-                      errorText.isNotEmpty
-                          ? Text(
-                              errorText,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.redColor),
-                            )
-                          : const SizedBox.shrink(),
-                      BlocConsumer<LoginCubit, LoginState>(
-                        listener: (context, state) {
-                          if (state is UserLoginSuccessfullyState) {
-                            Navigator.pushReplacementNamed(
-                                context, RoutePath.dashBoardScreen);
-                          } else if (state is LoginFaieldState) {
-                            errorText = state.error;
-                          }
-                        },
-                        builder: (context, state) {
-                          return CommonButton(
-                            onTap: (() async {
-                              if (otpText.isNotEmpty && otpText.length >= 6) {
-                                await context
-                                    .read<LoginCubit>()
-                                    .submitOTP(otp: otpText);
-                              } else {
-                                EasyLoading.showError('Please Enter OTP');
-                              }
-                            }),
-                            borderRadius: 10,
-                            padding: const EdgeInsets.all(10),
-                            title: 'सत्यापित करना',
-                            style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppColor.white),
-                          );
-                        },
-                      ),
+
+                      /// SUBMIT OTP BUTTON
+                      submitOtpButtom(),
                       const SizedBox(
                         height: 20,
                       ),
-                      BlocConsumer<LoginCubit, LoginState>(
-                        builder: (context, state) {
-                          return Center(
-                            child: cubit.count == 0
-                                ? InkWell(
-                                    onTap: (() async {
-                                      await context
-                                          .read<LoginCubit>()
-                                          .resendOTP();
-                                    }),
-                                    child: Text('ओटीपी पुनः भेजें',
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w600,
-                                            color: AppColor
-                                                .buttonOrangeBackGroundColor)),
-                                  )
-                                : Text(
-                                    '${cubit.count} में ओटीपी कोड दोबारा भेजें',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppColor
-                                            .buttonOrangeBackGroundColor)),
-                          );
-                        },
-                        listener: ((context, state) {
-                          if (state is OtpResendSuccessfullyState) {
-                            EasyLoading.showSuccess(state.model.message ?? '');
-                          }
-                        }),
-                      )
+
+                      /// RESEND OTP BUTTON
+                      reSendOtpButton(cubit),
                     ],
                   ),
                 ),
@@ -203,6 +138,103 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           },
         ),
       ),
+    );
+  }
+
+  Widget submitOtpButtom() {
+    return BlocConsumer<LoginCubit, LoginState>(
+      listener: (context, state) {
+        if (state is UserLoginSuccessfullyState) {
+          Navigator.pushReplacementNamed(context, RoutePath.dashBoardScreen);
+        } else if (state is LoginFaieldState) {
+          errorText = state.error;
+          isLoading = false;
+        } else if (state is SubmitOtpLoadingState) {
+          isLoading = true;
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            errorText != null
+                ? Text(
+                    errorText!,
+                    style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColor.redColor),
+                  )
+                : const SizedBox.shrink(),
+            const SizedBox(
+              height: 20,
+            ),
+            CommonButton(
+              onTap: (() async {
+                if (otpText.isNotEmpty && otpText.length >= 6) {
+                  await context.read<LoginCubit>().submitOTP(otp: otpText);
+                } else {
+                  EasyLoading.showError('Please Enter OTP');
+                }
+              }),
+              isUseWidget: true,
+              borderRadius: 10,
+              padding: const EdgeInsets.all(10),
+              widget: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  isLoading
+                      ? const SpinKitFadingCircle(
+                          color: AppColor.white,
+                          size: 27,
+                        )
+                      : const SizedBox.shrink(),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    isLoading ? 'सत्यापित किया जा रहा है...' : 'सत्यापित करना',
+                    style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppColor.white),
+                  )
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget reSendOtpButton(LoginCubit cubit) {
+    return BlocConsumer<LoginCubit, LoginState>(
+      builder: (context, state) {
+        return Center(
+          child: cubit.count == 0
+              ? InkWell(
+                  onTap: (() async {
+                    await context.read<LoginCubit>().resendOTP();
+                  }),
+                  child: Text('ओटीपी पुनः भेजें',
+                      style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.buttonOrangeBackGroundColor)),
+                )
+              : Text('${cubit.count} में ओटीपी कोड दोबारा भेजें',
+                  style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.buttonOrangeBackGroundColor)),
+        );
+      },
+      listener: ((context, state) {
+        if (state is OtpResendSuccessfullyState) {
+          EasyLoading.showSuccess(state.model.message ?? '');
+        }
+      }),
     );
   }
 }

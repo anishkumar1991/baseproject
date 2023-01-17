@@ -10,6 +10,8 @@ class CommonButton extends StatelessWidget {
       this.padding,
       this.margin,
       this.onTap,
+      this.isUseWidget = false,
+      this.widget,
       this.width});
   final String? title;
   final TextStyle? style;
@@ -17,6 +19,8 @@ class CommonButton extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final double? width;
+  final bool? isUseWidget;
+  final Widget? widget;
   final GestureTapCallback? onTap;
 
   @override
@@ -31,7 +35,7 @@ class CommonButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius ?? 8),
             color: AppColor.buttonOrangeBackGroundColor),
         child: Center(
-            child: Text(
+            child:isUseWidget??false?widget: Text(
           title ?? '',
           style: style,
         )),

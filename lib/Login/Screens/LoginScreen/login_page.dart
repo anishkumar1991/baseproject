@@ -80,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                           if (state is UserLoggedState) {
                             loginModel = state.model;
                             EasyLoading.showSuccess(loginModel?.message ?? '');
-                            Navigator.pushReplacementNamed(
+                            Navigator.pushNamed(
                                 context, RoutePath.verifyOtpScreen,
                                 arguments: mobileNumController.text);
                           } else if (state is LoginFaieldState) {

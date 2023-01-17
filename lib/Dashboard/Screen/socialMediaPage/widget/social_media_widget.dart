@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:readmore/readmore.dart';
+import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_share_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
+import 'package:sangathan/Values/spaceHeightWidget.dart';
+import 'package:sangathan/Values/spaceWidthWidget.dart';
 
 class SocialMedia extends StatelessWidget {
   const SocialMedia({super.key});
@@ -71,24 +74,20 @@ class SocialMedia extends StatelessWidget {
               )
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          spaceHeightWidget(10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'People’s PollNobody can break Modi-Yogi Pair: UP governor',
                   style: TextStyle(
                       fontSize: 19,
                       fontFamily: 'Tw Cen MT',
                       fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
-                  height: 14,
-                ),
-                ReadMoreText(
+                spaceHeightWidget(14),
+                const ReadMoreText(
                   'Uttar Pradesh Governor Anandiben Patel on Sunday said nobody available on branch on give by leader ',
                   trimMode: TrimMode.Line,
                   trimLines: 2,
@@ -112,67 +111,13 @@ class SocialMedia extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 18,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    AppIcons.likeIcon,
-                    height: 30,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    '1k',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.share_outlined,
-                    size: 22,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    '223',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    AppIcons.whatsappIcon,
-                    height: 24,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    '223',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                ],
-              )
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
+          spaceHeightWidget(18),
+         const SocialShareButtons(),
+          spaceHeightWidget(10),
         ],
       ),
     );
   }
 }
+
+

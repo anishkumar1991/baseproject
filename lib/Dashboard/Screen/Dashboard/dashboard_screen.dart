@@ -22,75 +22,80 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<DashBoardCubit, NavigationBarState>(
-        builder: (context, state) {
-          if (state is NavigationBarIndexSelectedState) {
-            selectIndex = state.index;
-          }
-          return Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              pages.elementAt(selectIndex),
-              Container(
-                margin: const EdgeInsets.only(bottom: 10, left: 18, right: 18),
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.white.withOpacity(0.8),
-                      ),
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white),
-                child: BlocBuilder<DashBoardCubit, NavigationBarState>(
-                  builder: (context, state) {
-                    if (state is NavigationBarIndexSelectedState) {
-                      selectIndex = state.index;
-                    }
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        bottomIcon(
-                            icon: selectIndex == 0
-                                ? AppIcons.announceIcon
-                                : AppIcons.announceOutlineImage,
-                            onTap: () {
-                              context.read<DashBoardCubit>().onTapIcons(0);
-                            },
-                            color: selectIndex == 0
-                                ? AppColor.cardOrangeColor
-                                : Colors.transparent),
-                        bottomIcon(
-                            icon: selectIndex == 1
-                                ? AppIcons.homeIcon
-                                : AppIcons.homeOutlineIcon,
-                            onTap: (() {
-                              context.read<DashBoardCubit>().onTapIcons(1);
-                            }),
-                            color: selectIndex == 1
-                                ? AppColor.cardOrangeColor
-                                : Colors.transparent),
-                        bottomIcon(
-                            icon: selectIndex == 2
-                                ? AppIcons.menuOutline
-                                : AppIcons.menuOutline,
-                            onTap: (() {
-                              context.read<DashBoardCubit>().onTapIcons(2);
-                            }),
-                            color: selectIndex == 2
-                                ? AppColor.cardOrangeColor
-                                : Colors.transparent)
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: BlocBuilder<DashBoardCubit, NavigationBarState>(
+          builder: (context, state) {
+            if (state is NavigationBarIndexSelectedState) {
+              selectIndex = state.index;
+            }
+            return Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                pages.elementAt(selectIndex),
+                Container(
+                  margin:
+                      const EdgeInsets.only(bottom: 10, left: 18, right: 18),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.white.withOpacity(0.8),
+                        ),
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                        ),
                       ],
-                    );
-                  },
+                      borderRadius: BorderRadius.circular(30),
+                      color: Colors.white),
+                  child: BlocBuilder<DashBoardCubit, NavigationBarState>(
+                    builder: (context, state) {
+                      if (state is NavigationBarIndexSelectedState) {
+                        selectIndex = state.index;
+                      }
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          bottomIcon(
+                              icon: selectIndex == 0
+                                  ? AppIcons.announceIcon
+                                  : AppIcons.announceOutlineImage,
+                              onTap: () {
+                                context.read<DashBoardCubit>().onTapIcons(0);
+                              },
+                              color: selectIndex == 0
+                                  ? AppColor.cardOrangeColor
+                                  : Colors.transparent),
+                          bottomIcon(
+                              icon: selectIndex == 1
+                                  ? AppIcons.homeIcon
+                                  : AppIcons.homeOutlineIcon,
+                              onTap: (() {
+                                context.read<DashBoardCubit>().onTapIcons(1);
+                              }),
+                              color: selectIndex == 1
+                                  ? AppColor.cardOrangeColor
+                                  : Colors.transparent),
+                          bottomIcon(
+                              width: selectIndex == 2 ? 16 : 19,
+                              icon: selectIndex == 2
+                                  ? AppIcons.menuIcon
+                                  : AppIcons.menuOutline,
+                              onTap: (() {
+                                context.read<DashBoardCubit>().onTapIcons(2);
+                              }),
+                              color: selectIndex == 2
+                                  ? AppColor.cardOrangeColor
+                                  : Colors.transparent)
+                        ],
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -98,7 +103,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget bottomIcon(
       {required String icon,
       required GestureTapCallback onTap,
-      required Color color}) {
+      required Color color,
+      double? width}) {
     return Container(
         height: 35,
         padding: const EdgeInsets.only(left: 20, right: 20),
@@ -109,7 +115,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             child: Image.asset(
               icon,
               height: 16,
-              width: 19,
+              width: width ?? 19,
             )));
   }
 }

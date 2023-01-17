@@ -10,8 +10,10 @@ class LoginInitialState extends LoadingState {}
 
 class LoadingState extends LoginState {}
 
+class SubmitOtpLoadingState extends LoginState {}
+
 class TimerRunningState extends LoginState {
-  int count;
+  final int count;
   TimerRunningState(this.count);
 }
 
@@ -23,7 +25,7 @@ class UserLoggedState extends LoginState {
 }
 
 class LoginFaieldState extends LoginState {
-  String error;
+  final String error;
   LoginFaieldState(this.error);
 }
 
@@ -33,6 +35,6 @@ class OtpResendSuccessfullyState extends LoginState {
 }
 
 class UserLoginSuccessfullyState extends LoginState {
-  UserDetails userDetails;
+  final UserDetails userDetails;
   UserLoginSuccessfullyState(this.userDetails);
 }

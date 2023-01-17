@@ -17,10 +17,28 @@ class AppIcons {
   static const String homeIcon = "assets/images/home_icons.png";
   static const String homeOutlineIcon = "assets/images/home_outline.png";
   static const String menuOutline = "assets/images/menu_outline.png";
-    static const String backGroundImage = "assets/images/backGround_image.png";
-    static const String loginImage = "assets/images/login_image.png";
-    static const String socialPageImage = "assets/images/social_page_image.png";
-    static const String likeIcon = "assets/images/like_icon.png";
-    static const String whatsappIcon = "assets/images/whatsapp_icon.png";
+  static const String menuIcon = "assets/images/menu_icon.png";
+  static const String backGroundImage = "assets/images/backGround_image.png";
+  static const String loginImage = "assets/images/login_image.png";
+  static const String socialPageImage = "assets/images/social_page_image.png";
+  static const String likeIcon = "assets/images/like_icon.png";
+  static const String whatsappIcon = "assets/images/whatsapp_icon.png";
+  static const String videoBackImage = "assets/images/video_back_image.png";
+  static const String userLogo = "assets/images/user_image.png";
+  static const String questionMark = "assets/images/question_mark_icon.png";
+  static const String helpIcon = "assets/images/helpline_icon.png";
+  static const String language = "assets/images/language_icon.png";
+  static const String logOutIcon = "assets/images/logout_icon.png";
+  static const String customerService = "assets/images/customer_service.png";
+    static const String drawerIcon = "assets/images/drawer_icon.png";
+    static const String pradeshImage = "assets/images/pradesh_image.png";
+    static const String vibhagImage = "assets/images/vibhag_image.png";
+    static const String vidhansabhaImage = "assets/images/vidhansabha_image.png";
+    static const String zilaImage = "assets/images/zila_image.png";
+    static const String loksabhaImage = "assets/images/loksabha_image.png";
+        static const String mandalImage = "assets/images/mandal_image.png";
+    static const String shaktikendraImage = "assets/images/shaktikendra_image.png";
+    static const String boothImage = "assets/images/booth_image.png";
+
 
 }

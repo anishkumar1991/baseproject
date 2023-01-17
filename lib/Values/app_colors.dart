@@ -29,6 +29,7 @@ class AppColor {
   static const Color navyBlue400 = Color(0xFF425D86);
   static const Color navyBlue = Color(0xFF214B67);
   static const Color redColor = Color(0xFFFF2828);
+  static const Color progressGreenColor = Color(0xFF61BE7A);
 
   static const Color buttonOrangeBackGroundColor = Color(0xFFFF9559);
 

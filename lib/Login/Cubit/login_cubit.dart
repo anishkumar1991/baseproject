@@ -11,7 +11,9 @@ import 'package:sangathan/Storage/user_storage_service.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
 
-  final api = AuthApi(Dio());
+  final api = AuthApi(Dio(BaseOptions(
+      contentType: 'application/json', validateStatus: ((status) => true))));
+
   Timer? timer;
   int count = 30;
   Future<void> startTimer() async {
@@ -48,7 +50,6 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoadingState());
       String token = StorageService.getUserIdentificationToken() ?? '';
       final res = await api.resendOtp({'identification_token': token});
-      print('res==+${res.response.statusCode}');
       if (res.response.statusCode == 200) {
         LoginModel model = LoginModel.fromJson(res.data);
         emit(OtpResendSuccessfullyState(model));
@@ -63,7 +64,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   Future submitOTP({required String otp}) async {
     try {
-      emit(LoadingState());
+      emit(SubmitOtpLoadingState());
       String token = StorageService.getUserIdentificationToken() ?? '';
       final res =
           await api.submitOtp({'identification_token': token, 'otp': otp});
@@ -72,10 +73,13 @@ class LoginCubit extends Cubit<LoginState> {
         UserDetails userData = UserDetails.fromJson(res.data);
         emit(UserLoginSuccessfullyState(userData));
       } else {
-        UserDetails? model = UserDetails.fromJson(res.data);
-        emit(LoginFaieldState(model.message ?? ''));
+        //UserDetails? model = UserDetails.fromJson(res.data);
+        Map<String, dynamic>? msg = res.data;
+        print('msg-=$msg');
+        emit(LoginFaieldState(msg?['message'] ?? ''));
       }
     } on Exception catch (e) {
+      emit(LoginFaieldState(e.toString()));
       print('catch $e');
     }
   }
