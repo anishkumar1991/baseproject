@@ -9,9 +9,11 @@ class CommonButton extends StatelessWidget {
       this.borderRadius,
       this.padding,
       this.margin,
+      this.backGroundcolor,
       this.onTap,
       this.isUseWidget = false,
       this.widget,
+      this.bordercolor,
       this.width});
   final String? title;
   final TextStyle? style;
@@ -21,6 +23,9 @@ class CommonButton extends StatelessWidget {
   final double? width;
   final bool? isUseWidget;
   final Widget? widget;
+  final Color? backGroundcolor;
+  final Color? bordercolor;
+
   final GestureTapCallback? onTap;
 
   @override
@@ -32,13 +37,17 @@ class CommonButton extends StatelessWidget {
         padding: padding,
         width: width ?? double.infinity,
         decoration: BoxDecoration(
+            border: Border.all(
+                color: bordercolor ?? AppColor.buttonOrangeBackGroundColor),
             borderRadius: BorderRadius.circular(borderRadius ?? 8),
-            color: AppColor.buttonOrangeBackGroundColor),
+            color: backGroundcolor ?? AppColor.buttonOrangeBackGroundColor),
         child: Center(
-            child:isUseWidget??false?widget: Text(
-          title ?? '',
-          style: style,
-        )),
+            child: isUseWidget ?? false
+                ? widget
+                : Text(
+                    title ?? '',
+                    style: style,
+                  )),
       ),
     );
   }

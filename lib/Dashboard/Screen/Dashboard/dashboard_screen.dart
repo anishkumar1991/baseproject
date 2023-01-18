@@ -38,12 +38,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       const EdgeInsets.only(bottom: 10, left: 18, right: 18),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
-                          color: Colors.white.withOpacity(0.8),
+                          color: Colors.grey,
+                          offset: Offset(3, 3),
+                          blurRadius: 6,
                         ),
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
+                          color: Colors.white12,
+                          offset: Offset(-1, -1),
                         ),
                       ],
                       borderRadius: BorderRadius.circular(30),

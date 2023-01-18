@@ -52,7 +52,7 @@ class SocialMediaPage extends StatelessWidget {
             spaceHeightWidget(10),
             const SocialVideo(),
             spaceHeightWidget(10),
-            const PollWidget(),
+            PollWidget(question: 'Who will win the 2024 Elections?'),
             spaceHeightWidget(20),
             Container(
               decoration: BoxDecoration(

@@ -4,8 +4,8 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/spaceHeightWidget.dart';
 
 class PollWidget extends StatelessWidget {
-  const PollWidget({super.key});
-
+  PollWidget({super.key, this.question});
+  String? question;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,8 +27,8 @@ class PollWidget extends StatelessWidget {
                   color: AppColor.textBlackColor),
             ),
             spaceHeightWidget(12),
-            const Text('Who will win the 2024 Elections?',
-                style: TextStyle(
+            Text(question ?? '',
+                style: const TextStyle(
                     fontFamily: 'Tw Cen MT',
                     fontSize: 20,
                     fontWeight: FontWeight.w400,

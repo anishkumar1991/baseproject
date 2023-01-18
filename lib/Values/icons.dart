@@ -30,15 +30,18 @@ class AppIcons {
   static const String language = "assets/images/language_icon.png";
   static const String logOutIcon = "assets/images/logout_icon.png";
   static const String customerService = "assets/images/customer_service.png";
-    static const String drawerIcon = "assets/images/drawer_icon.png";
-    static const String pradeshImage = "assets/images/pradesh_image.png";
-    static const String vibhagImage = "assets/images/vibhag_image.png";
-    static const String vidhansabhaImage = "assets/images/vidhansabha_image.png";
-    static const String zilaImage = "assets/images/zila_image.png";
-    static const String loksabhaImage = "assets/images/loksabha_image.png";
-        static const String mandalImage = "assets/images/mandal_image.png";
-    static const String shaktikendraImage = "assets/images/shaktikendra_image.png";
-    static const String boothImage = "assets/images/booth_image.png";
-
-
+  static const String drawerIcon = "assets/images/drawer_icon.png";
+  static const String pradeshImage = "assets/images/pradesh_image.png";
+  static const String vibhagImage = "assets/images/vibhag_image.png";
+  static const String vidhansabhaImage = "assets/images/vidhansabha_image.png";
+  static const String zilaImage = "assets/images/zila_image.png";
+  static const String loksabhaImage = "assets/images/loksabha_image.png";
+  static const String mandalImage = "assets/images/mandal_image.png";
+  static const String shaktikendraImage =
+      "assets/images/shaktikendra_image.png";
+  static const String boothImage = "assets/images/booth_image.png";
+  static const String addUserImage = "assets/images/add_user_image.png";
+  static const String galleryColorImage =
+      "assets/images/gallery_color_image.png";
+  static const String galleryImage = "assets/images/gallery_image.png";
 }
