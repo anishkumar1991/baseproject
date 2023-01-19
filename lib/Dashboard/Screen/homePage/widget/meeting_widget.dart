@@ -48,7 +48,7 @@ class MeetingCard extends StatelessWidget {
                     style: GoogleFonts.quicksand(
                         fontSize: 16,
                         fontWeight: FontWeight.w700,
-                        color: AppColor().buttonTextColor),
+                        color: AppColor.buttonTextColor),
                   ),
                 ),
                 Positioned(

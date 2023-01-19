@@ -78,7 +78,7 @@ class PravasCardWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: AppColor().buttonTextColor),
+                          color: AppColor.buttonTextColor),
                       child: IntrinsicHeight(
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

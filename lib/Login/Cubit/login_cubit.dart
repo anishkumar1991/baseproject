@@ -34,7 +34,8 @@ class LoginCubit extends Cubit<LoginState> {
       final res = await api.loginUser({'phone_number': mobileNumber});
       if (res.response.statusCode == 200) {
         LoginModel model = LoginModel.fromJson(res.data);
-        StorageService.setUserData(model.identificationToken ?? '');
+        StorageService.setUserIdentificationToken(
+            model.identificationToken ?? '');
         emit(UserLoggedState(model));
       } else {
         LoginModel? model = LoginModel.fromJson(res.data);
@@ -68,9 +69,13 @@ class LoginCubit extends Cubit<LoginState> {
       String token = StorageService.getUserIdentificationToken() ?? '';
       final res =
           await api.submitOtp({'identification_token': token, 'otp': otp});
+      print('res==+${res.response.data}');
+
       print('res==+${res.response.statusCode}');
       if (res.response.statusCode == 200) {
         UserDetails userData = UserDetails.fromJson(res.data);
+        print('Auth token==${userData.authToken}');
+        StorageService.setUserAuthToken(userData.authToken ?? '');
         emit(UserLoginSuccessfullyState(userData));
       } else {
         //UserDetails? model = UserDetails.fromJson(res.data);

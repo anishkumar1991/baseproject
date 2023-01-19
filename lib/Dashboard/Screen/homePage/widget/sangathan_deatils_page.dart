@@ -4,6 +4,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/spaceHeightWidget.dart';
 import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/route/route_path.dart';
 
 class SangathanDetailsPage extends StatelessWidget {
   SangathanDetailsPage({super.key});
@@ -100,7 +101,10 @@ class SangathanDetailsPage extends StatelessWidget {
               crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
           itemBuilder: ((context, index) {
             return InkWell(
-              onTap: (() {}),
+              onTap: (() {
+                Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                    arguments: data[index]['text']);
+              }),
               child: Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(

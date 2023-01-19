@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 abstract class NavigationBarState extends Equatable {
+  @override
   List<Object> get props => [];
 }
 

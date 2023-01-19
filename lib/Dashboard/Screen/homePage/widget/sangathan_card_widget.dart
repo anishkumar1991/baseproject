@@ -44,7 +44,7 @@ class SngathanCardWidget extends StatelessWidget {
                   child: Text(
                     'क्लिक करें',
                     style: GoogleFonts.poppins(
-                        color: AppColor().buttonTextColor,
+                        color: AppColor.buttonTextColor,
                         fontSize: 14,
                         fontWeight: FontWeight.w600),
                   )),

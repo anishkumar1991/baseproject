@@ -4,5 +4,6 @@ class RoutePath {
     static const String verifyOtpScreen = 'verifyOtp';
     static const String sangathanDetailsScreen = 'sangathan_details';
     static const String addEntryScreen = 'addEntry';
+    static const String splashScreenPage = 'splashScreen';
 
 }

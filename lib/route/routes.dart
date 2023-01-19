@@ -4,6 +4,7 @@ import 'package:sangathan/Dashboard/Screen/Dashboard/dashboard_screen.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_deatils_page.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/login_page.dart';
 import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
+import 'package:sangathan/SplashScreen/Screen/splash_screen.dart';
 import 'package:sangathan/route/route_path.dart';
 
 class RouteGenerator {
@@ -42,7 +43,14 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return AddEntryPage();
+            return AddEntryPage(type: settings.arguments as String,);
+          },
+        );
+        case RoutePath.splashScreenPage:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return SplashScreen();
           },
         );
 

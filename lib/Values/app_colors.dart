@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 
-@immutable
 class AppColor {
-  final textColor = const Color(0xFF5A5A61);
-  final backgroundColor = const Color(0xFFE5E5E5);
-  final appBarColor = const Color(0xFFF3F7FF);
-  final buttonColor = const Color(0xFF0167A2);
-  final buttonTextColor = const Color(0xFFFFFFFF);
-  final textFieldColor = const Color(0xFFFFFFFF);
-  final buttonShadowColor = const Color(0x26000000);
-  final formFieldBoxColor = const Color(0xFFEDF3FF);
-  final timerColor = const Color(0xFF61BE7A);
+  static const Color buttonTextColor = Color(0xFFFFFFFF);
   static const Color borderColor = Color(0xFF999999);
   static const Color cardOrangeColor = Color(0xFFFED8BD);
   static const Color pravasCradColor = Color(0xFFBCE7FF);
@@ -33,8 +24,6 @@ class AppColor {
   static const Color orange100 = Color(0xFFFBF2F8);
   static const Color orange300Color = Color(0xFFFFE8DB);
   static const Color purpleColor = Color(0xFF912E60);
-
   static const Color buttonOrangeBackGroundColor = Color(0xFFFF9559);
-
   static const Color textGreyColor = Color(0xFF000000);
 }
