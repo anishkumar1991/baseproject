@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 abstract class AddEntryState extends Equatable {
@@ -22,4 +24,13 @@ class AddEntryErrorState extends AddEntryState {
 class DobSelectedState extends AddEntryState {
   String date;
   DobSelectedState(this.date);
+}
+
+class RadioButtonSelectState extends AddEntryState {}
+
+class ImagePickedState extends AddEntryState {
+  final File? file;
+  ImagePickedState(this.file);
+}class FilePickedState extends AddEntryState {
+  FilePickedState();
 }

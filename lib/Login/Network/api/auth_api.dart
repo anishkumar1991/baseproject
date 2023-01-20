@@ -14,4 +14,7 @@ abstract class AuthApi {
 
   @POST('/zila/api/submit_otp')
   Future<HttpResponse> submitOtp(@Body() Map<String, dynamic> data);
+
+  @GET('/zila/api/logout')
+  Future<HttpResponse> logOut(@Header('Authorization') String token);
 }

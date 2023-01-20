@@ -9,7 +9,7 @@ import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/select_boxs.dart';
 import 'package:sangathan/AddEntry/Screen/widget/textfiled_widget.dart';
-import 'package:sangathan/AddEntry/Screen/widget/upload_card_widget.dart';
+import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -53,7 +53,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
   TextEditingController houseController = TextEditingController();
   TextEditingController streetController = TextEditingController();
 
-  String? selectRadio;
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<AddEntryCubit>(context);
@@ -139,24 +138,30 @@ class _AddEntryPageState extends State<AddEntryPage> {
                           ),
                     spaceHeightWidget(8),
                     widget.type == 'Loksabha'
-                        ? Row(
-                            children: [
-                              CustomRadioButton(
-                                title: 'Male',
-                                value: 'male',
-                                groupValue: selectRadio ?? "",
-                              ),
-                              CustomRadioButton(
-                                title: 'Female',
-                                value: 'female',
-                                groupValue: selectRadio ?? "",
-                              ),
-                              CustomRadioButton(
-                                title: 'Transgender',
-                                value: 'female',
-                                groupValue: selectRadio ?? "",
-                              ),
-                            ],
+                        ? BlocBuilder<AddEntryCubit, AddEntryState>(
+                            builder: (context, state) {
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomRadioButton(
+                                    title: 'Male',
+                                    value: 'male',
+                                    groupValue: cubit.selectRadio ?? "",
+                                  ),
+                                  CustomRadioButton(
+                                    title: 'Female',
+                                    value: 'female',
+                                    groupValue: cubit.selectRadio ?? "",
+                                  ),
+                                  CustomRadioButton(
+                                    title: 'Transgender',
+                                    value: 'transGender',
+                                    groupValue: cubit.selectRadio ?? "",
+                                  ),
+                                ],
+                              );
+                            },
                           )
                         : const SizedBox.shrink(),
                     spaceHeightWidget(8),
@@ -433,10 +438,20 @@ class _AddEntryPageState extends State<AddEntryPage> {
                           ),
                     spaceHeightWidget(8),
                     widget.type == 'Loksabha'
-                        ? UploadCard(
-                            controller: adharNoController,
-                            hintText: 'Enter Aadhar No.',
-                            title: 'Aadhar No.')
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              TextFieldWidget(
+                                  controller: adharNoController,
+                                  title: 'Enter Aadhar No.',
+                                  keyboardType: TextInputType.number,
+                                  hintText: 'Aadhar No.'),
+                              spaceHeightWidget(8),
+                              UploadCard(
+                                onTap: (() {}),
+                              ),
+                            ],
+                          )
                         : CommonTextField(
                             title: 'AADHAR No.',
                             hintText: 'Enter Your AADHAR No.',
@@ -447,10 +462,21 @@ class _AddEntryPageState extends State<AddEntryPage> {
                           ),
                     spaceHeightWidget(8),
                     widget.type == 'Loksabha'
-                        ? UploadCard(
-                            controller: voterIDController,
-                            hintText: 'Enter Voter ID No.',
-                            title: 'Voter ID No.')
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              TextFieldWidget(
+                                controller: voterIDController,
+                                hintText: 'Enter Voter ID No.',
+                                title: 'Voter ID No.',
+                                keyboardType: TextInputType.number,
+                              ),
+                              spaceHeightWidget(8),
+                              UploadCard(
+                                onTap: (() {}),
+                              ),
+                            ],
+                          )
                         : CommonTextField(
                             title: 'Voter ID',
                             hintText: 'Enter Your Voter ID No.',
@@ -460,10 +486,29 @@ class _AddEntryPageState extends State<AddEntryPage> {
                           ),
                     spaceHeightWidget(8),
                     widget.type == 'Loksabha'
-                        ? UploadCard(
-                            controller: rationCardNoController,
-                            hintText: 'Enter Ration Card No.',
-                            title: 'Ration Card No.')
+                        ? BlocBuilder<AddEntryCubit, AddEntryState>(
+                            builder: (context, state) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  TextFieldWidget(
+                                    controller: rationCardNoController,
+                                    hintText: 'Enter Ration Card No.',
+                                    title: 'Ration Card No.',
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                  spaceHeightWidget(8),
+                                  UploadCard(
+                                    uploadedFilePath:
+                                        cubit.pickedFile?.path.substring(53),
+                                    onTap: (() async {
+                                      await cubit.pickFile();
+                                    }),
+                                  ),
+                                ],
+                              );
+                            },
+                          )
                         : CommonTextField(
                             title: 'Ration Card No.',
                             hintText: 'Enter Your Ration Card No.',
@@ -474,7 +519,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     spaceHeightWidget(10),
                     widget.type == 'Loksabha'
                         ? Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SelectPropertyBox(
                                 value: false,

@@ -38,3 +38,13 @@ class UserLoginSuccessfullyState extends LoginState {
   final UserDetails userDetails;
   UserLoginSuccessfullyState(this.userDetails);
 }
+class LogOutLoadingState extends LoadingState{}
+class UserLogOutSuccessState extends LoginState {
+  final String msg;
+  UserLogOutSuccessState(this.msg);
+}
+
+class UserLogOutFaieldState extends LoginState {
+  final String error;
+  UserLogOutFaieldState(this.error);
+}

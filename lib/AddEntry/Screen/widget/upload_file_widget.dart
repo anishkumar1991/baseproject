@@ -7,32 +7,27 @@ import 'package:sangathan/Values/spaceHeightWidget.dart';
 import 'package:sangathan/Values/spaceWidthWidget.dart';
 
 class UploadCard extends StatelessWidget {
-  UploadCard(
-      {super.key,
-      required this.controller,
-      required this.hintText,
-      required this.title});
-  final String title;
-  final String hintText;
-  final TextEditingController controller;
+  UploadCard({super.key, required this.onTap, this.uploadedFilePath});
+
+  final GestureTapCallback? onTap;
+  final String? uploadedFilePath;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextFieldWidget(
-            controller: controller,
-            title: title,
-            keyboardType: TextInputType.number,
-            hintText: hintText),
+        Flexible(
+            child: Text(
+          uploadedFilePath ?? '',
+        )),
         spaceHeightWidget(8),
         CommonButton(
+          onTap: onTap,
           width: 100,
           padding: const EdgeInsets.all(5),
           borderRadius: 5,
           isUseWidget: true,
           widget: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               const Icon(
                 Icons.ios_share_outlined,

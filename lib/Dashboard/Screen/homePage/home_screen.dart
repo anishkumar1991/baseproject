@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/widget/customListview.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/widget/event_Listview.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/meeting_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/pravas_card_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
@@ -137,7 +137,14 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const SizedBox(height: 257, child: EventListView()),
+                SizedBox(
+                    height: 257,
+                    child: EventListView(
+                      onTap: (() {}),
+                      title: 'Mann ki Baat',
+                      subtitle: '97th Edition',
+                      date: 'On 29th Jan 2023',
+                    )),
                 const SizedBox(
                   height: 10,
                 ),

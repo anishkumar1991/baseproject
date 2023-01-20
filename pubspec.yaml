@@ -51,6 +51,9 @@ dependencies:
   auto_size_text: ^3.0.0
   percent_indicator: ^4.2.2
   intl: ^0.17.0
+  image_picker: ^0.8.6
+  file_picker: ^5.2.5
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:

@@ -3,8 +3,16 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 
 class EventListView extends StatelessWidget {
-  const EventListView({super.key});
-
+  const EventListView(
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.onTap,
+      required this.date});
+  final String title;
+  final String subtitle;
+  final String date;
+  final GestureTapCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -47,9 +55,9 @@ class EventListView extends StatelessWidget {
                           const SizedBox(
                             height: 8,
                           ),
-                          const Text(
-                            'Mann ki Baat',
-                            style: TextStyle(
+                          Text(
+                            title,
+                            style: const TextStyle(
                               fontFamily: 'Tw Cen MT',
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -58,9 +66,9 @@ class EventListView extends StatelessWidget {
                           const SizedBox(
                             height: 8,
                           ),
-                          const Text(
-                            '97th Edition',
-                            style: TextStyle(
+                          Text(
+                            subtitle,
+                            style: const TextStyle(
                                 fontFamily: 'Tw Cen MT',
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -69,9 +77,9 @@ class EventListView extends StatelessWidget {
                           const SizedBox(
                             height: 8,
                           ),
-                          const Text(
-                            'On 29th Jan 2023',
-                            style: TextStyle(
+                          Text(
+                            date,
+                            style: const TextStyle(
                                 fontFamily: 'Tw Cen MT',
                                 fontSize: 14,
                                 fontWeight: FontWeight.w700,
@@ -85,7 +93,7 @@ class EventListView extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20)),
                                   backgroundColor: AppColor.brownColor),
-                              onPressed: (() {}),
+                              onPressed: onTap,
                               icon: const Icon(
                                 Icons.schedule,
                                 color: AppColor.white,

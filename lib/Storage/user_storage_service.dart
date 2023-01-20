@@ -20,4 +20,10 @@ class StorageService {
   static String? getUserAuthToken() {
     return storage.read(userAuthTokenKey);
   }
+  static removeUserAuthToken()async {
+   await storage.remove(userAuthTokenKey);
+  }
+  static removeUserIdentificationToken()async {
+   await storage.remove(userInfoKey);
+  }
 }

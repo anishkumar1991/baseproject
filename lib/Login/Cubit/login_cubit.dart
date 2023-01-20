@@ -88,4 +88,24 @@ class LoginCubit extends Cubit<LoginState> {
       print('catch $e');
     }
   }
+
+  Future logOut() async {
+    try {
+      emit(LogOutLoadingState());
+      String token = StorageService.getUserAuthToken() ?? '';
+
+      final respose = await api.logOut('Bearer $token');
+      print('logOut=${respose.response.statusCode}');
+      if (respose.response.statusCode == 200) {
+        Map<String, dynamic> msg = respose.data;
+        await StorageService.removeUserAuthToken();
+        await StorageService.removeUserIdentificationToken();
+        emit(UserLogOutSuccessState(msg['message']));
+      } else {
+        emit(UserLogOutFaieldState('Something Went Wrong'));
+      }
+    } catch (e) {
+      UserLogOutFaieldState(e.toString());
+    }
+  }
 }

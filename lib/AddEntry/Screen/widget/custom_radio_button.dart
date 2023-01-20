@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/AddEntry/Cubit/add_entry_cubit.dart';
+import 'package:sangathan/AddEntry/Cubit/add_entry_state.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 class CustomRadioButton extends StatelessWidget {
@@ -16,12 +19,17 @@ class CustomRadioButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = BlocProvider.of<AddEntryCubit>(context);
     return Row(
       children: [
         Radio(
-            value: value,
-            groupValue: groupValue,
-            onChanged: ((value) => onChanged != null ? (value!) : null)),
+          value: value,
+          groupValue: groupValue,
+          onChanged: ((value) {
+            cubit.onTapRadioButton(value!);
+          }),
+          //onChanged: ((value) => onChanged != null ? (value!) : null)
+        ),
         Text(
           title,
           style: GoogleFonts.roboto(

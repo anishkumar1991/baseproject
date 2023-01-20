@@ -4,7 +4,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/spaceWidthWidget.dart';
 
 class UserImageCard extends StatelessWidget {
-  UserImageCard({super.key, this.imageUrl,this.onTap});
+  UserImageCard({super.key, this.imageUrl, this.onTap});
   final String? imageUrl;
   final GestureTapCallback? onTap;
   @override

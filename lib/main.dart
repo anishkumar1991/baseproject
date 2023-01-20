@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -7,7 +6,6 @@ import 'package:sangathan/AddEntry/Cubit/add_entry_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
-import 'package:sangathan/Login/Network/api/auth_api.dart';
 import 'package:sangathan/SplashScreen/Cubit/user_profile_cubit.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import 'package:sangathan/Values/string.dart';
@@ -25,30 +23,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
       providers: [
-        RepositoryProvider(create: (context) => AuthApi(Dio())),
+        BlocProvider(create: (context) => InternetCubit()),
+        BlocProvider(create: (context) => DashBoardCubit()),
+        BlocProvider(create: (context) => HomePageCubit()),
+        BlocProvider(create: (context) => LoginCubit()),
+        BlocProvider(create: (context) => AddEntryCubit()),
+        BlocProvider(create: (context) => UserProfileCubit())
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => InternetCubit()),
-          BlocProvider(create: (context) => DashBoardCubit()),
-          BlocProvider(create: (context) => HomePageCubit()),
-          BlocProvider(create: (context) => LoginCubit()),
-          BlocProvider(create: (context) => AddEntryCubit()),
-                    BlocProvider(create: (context) => UserProfileCubit())
-
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          useInheritedMediaQuery: true,
-          title: AppStrings.appTitle,
-          builder: EasyLoading.init(),
-          onGenerateRoute: RouteGenerator.generatorRoute,
-          initialRoute: RoutePath.splashScreenPage,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        useInheritedMediaQuery: true,
+        title: AppStrings.appTitle,
+        builder: EasyLoading.init(),
+        onGenerateRoute: RouteGenerator.generatorRoute,
+        initialRoute: RoutePath.splashScreenPage,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
       ),
     );
