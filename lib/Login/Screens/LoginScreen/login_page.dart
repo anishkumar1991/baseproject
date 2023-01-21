@@ -83,6 +83,8 @@ class LoginScreen extends StatelessWidget {
                             Navigator.pushNamed(
                                 context, RoutePath.verifyOtpScreen,
                                 arguments: mobileNumController.text);
+                          } else if (state is LoginLoadingState) {
+                            EasyLoading.show();
                           } else if (state is LoginFaieldState) {
                             EasyLoading.showError(state.error);
                           }
@@ -108,7 +110,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 );
               } else {
-                return const NotConnected();
+                return const Center(child: NotConnected());
               }
             },
           ),

@@ -16,7 +16,9 @@ class TimerRunningState extends LoginState {
   final int count;
   TimerRunningState(this.count);
 }
-
+class LoginLoadingState extends LoginState{
+  
+}
 class TimerStopState extends LoginState {}
 
 class UserLoggedState extends LoginState {

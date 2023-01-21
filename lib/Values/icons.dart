@@ -45,5 +45,9 @@ class AppIcons {
       "assets/images/gallery_color_image.png";
   static const String galleryImage = "assets/images/gallery_image.png";
   static const String personLogo = "assets/images/person_logo.png";
+    static const String userImage = "assets/images/user_logo.png";
+    static const String profileImage = "assets/images/profile.png";
+    static const String help = "assets/images/help.png";
+
 
 }

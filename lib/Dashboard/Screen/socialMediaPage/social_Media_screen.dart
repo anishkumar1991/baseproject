@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/poll_widget.dart';
+import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_video_widget.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_widget.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_video.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
@@ -30,6 +31,7 @@ class SocialMediaPage extends StatelessWidget {
                       color: AppColor.textBlackColor),
                 ),
                 CommonButton(
+                  onTap: (() {}),
                   title: 'Login',
                   width: 80,
                   borderRadius: 30,
@@ -53,6 +55,8 @@ class SocialMediaPage extends StatelessWidget {
             const SocialVideo(),
             spaceHeightWidget(10),
             PollWidget(question: 'Who will win the 2024 Elections?'),
+            spaceHeightWidget(10),
+            const SocialMediaNews(),
             spaceHeightWidget(20),
             Container(
               decoration: BoxDecoration(

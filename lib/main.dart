@@ -14,7 +14,6 @@ import 'package:sangathan/route/routes.dart';
 
 void main() async {
   await GetStorage.init();
-
   runApp(const MyApp());
 }
 
