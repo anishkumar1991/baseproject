@@ -7,12 +7,13 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
-import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
+import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/route/route_path.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../Values/app_colors.dart';
+import '../../../common/common_button.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   const VerifyOtpScreen({Key? key, required this.number}) : super(key: key);

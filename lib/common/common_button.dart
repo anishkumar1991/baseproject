@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 class CommonButton extends StatelessWidget {
-  CommonButton(
+  const CommonButton(
       {super.key,
       this.title,
       this.style,
@@ -13,6 +13,7 @@ class CommonButton extends StatelessWidget {
       this.onTap,
       this.isUseWidget = false,
       this.widget,
+      this.height,
       this.bordercolor,
       this.width});
   final String? title;
@@ -21,6 +22,7 @@ class CommonButton extends StatelessWidget {
   final EdgeInsets? padding;
   final EdgeInsets? margin;
   final double? width;
+  final double? height;
   final bool? isUseWidget;
   final Widget? widget;
   final Color? backGroundcolor;
@@ -34,6 +36,7 @@ class CommonButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: margin,
+        height: height,
         padding: padding,
         width: width ?? double.infinity,
         decoration: BoxDecoration(

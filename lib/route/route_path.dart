@@ -6,5 +6,9 @@ class RoutePath {
     static const String addEntryScreen = 'addEntry';
     static const String splashScreenPage = 'splashScreen';
     static const String zilaDataPage = 'zilaDataScreen';
+    static const String pravasListScreen = 'pravasListScreen';
+    static const String pravasCreateScreen = 'pravasCreateScreen';
+    static const String pravasEditTimeScreen = 'pravasEditTimeScreen';
+    static const String createFunctionScreen = 'createFunctionScreen';
 
 }

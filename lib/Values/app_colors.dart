@@ -14,6 +14,8 @@ class AppColor {
   static const Color greyColor = Color(0xFF666666);
   static const Color brownColor = Color(0xFF903A1E);
   static const Color white = Colors.white;
+  static const Color black = Colors.black;
+  static const Color transparent = Colors.transparent;
   static const Color brown200 = Color(0xFFFFEBDF);
   static const Color green200 = Color(0xFFC3EEAF);
   static const Color dividerColor = Color(0xFFE6E6E6);
@@ -28,4 +30,9 @@ class AppColor {
   static const Color textGreyColor = Color(0xFF000000);
 
   static const Color yellow100Color = Color(0xFFFFF3EA);
+  static const Color blue = Color(0xFF0D8BD2);
+  static const Color tealColor = Color(0xFF259aab);
+  static const Color yellowColor = Color(0xFFf1e8dc);
+  static const Color pinkColor = Color(0xFFecdfe5);
+  static const Color lightGreenColor = Color(0xFFF1F8EF);
 }

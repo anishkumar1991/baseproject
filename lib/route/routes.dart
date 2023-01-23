@@ -8,6 +8,11 @@ import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
 import 'package:sangathan/SplashScreen/Screen/splash_screen.dart';
 import 'package:sangathan/route/route_path.dart';
 
+import '../Dashboard/Screen/homePage/screens/edit_date/edit_date_screen.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.dart';
+import '../Dashboard/Screen/homePage/screens/create_function_page/create_function_page.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
+
 class RouteGenerator {
   static Route<dynamic>? generatorRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -61,6 +66,33 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return ZilaDataScreen(type: settings.arguments as String);
+          },
+        );
+      case RoutePath.pravasCreateScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return PrvasCreateScreen();
+          },
+        );
+      case RoutePath.pravasEditTimeScreen:
+        return MaterialPageRoute(
+            settings: RouteSettings(name: settings.name),
+            builder: (context) {
+              return EditDateScreen();
+            });
+      case RoutePath.pravasListScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return PravasListScreen();
+          },
+        );
+      case RoutePath.createFunctionScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const CreateFunctionScreen();
           },
         );
 

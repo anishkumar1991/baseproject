@@ -50,6 +50,8 @@ class AppIcons {
     static const String help = "assets/images/help.png";
     static const String callIcon = "assets/images/call_icon.png";
     static const String verifyIcon = "assets/images/verify_icon.png";
+    static const String checkBox = "assets/images/checkbox.png";
+    static const String calender = "assets/images/calender.png";
 
 
 }

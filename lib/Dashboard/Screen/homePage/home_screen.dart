@@ -18,7 +18,7 @@ import '../../../Values/spaceWidthWidget.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  TextEditingController searchTextController = TextEditingController();
+  final TextEditingController searchTextController = TextEditingController();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
