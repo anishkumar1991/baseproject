@@ -31,7 +31,7 @@ class SangathanDetailsPage extends StatelessWidget {
             appbar(),
             spaceHeightWidget(20),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Row(
                 children: [
                   IconButton(
@@ -102,7 +102,10 @@ class SangathanDetailsPage extends StatelessWidget {
           itemBuilder: ((context, index) {
             return InkWell(
               onTap: (() {
-                Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                // Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                //     arguments: data[index]['text']);
+
+                Navigator.pushNamed(context, RoutePath.zilaDataPage,
                     arguments: data[index]['text']);
               }),
               child: Container(

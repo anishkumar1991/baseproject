@@ -12,17 +12,13 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
-import '../../../Values/size_config.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
   TextEditingController mobileNumController = TextEditingController();
 
-  LoginModel? loginModel;
   @override
   Widget build(BuildContext context) {
-    SizeConfig().getCurrentOrientation(context);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -78,8 +74,8 @@ class LoginScreen extends StatelessWidget {
                       BlocListener<LoginCubit, LoginState>(
                         listener: (context, state) {
                           if (state is UserLoggedState) {
-                            loginModel = state.model;
-                            EasyLoading.showSuccess(loginModel?.message ?? '');
+                            LoginModel loginModel = state.model;
+                            EasyLoading.showSuccess(loginModel.message ?? '');
                             Navigator.pushNamed(
                                 context, RoutePath.verifyOtpScreen,
                                 arguments: mobileNumController.text);

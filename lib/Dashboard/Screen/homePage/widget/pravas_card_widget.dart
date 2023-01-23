@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Cubit/dashboard_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_state.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -11,7 +10,7 @@ class PravasCardWidget extends StatelessWidget {
   bool isOpen = false;
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomePageCubit, NavigationBarState>(
+    return BlocBuilder<HomePageCubit, HomePageState>(
       builder: (context, state) {
         if (state is OnChnageValueState) {
           isOpen = state.isOpen;

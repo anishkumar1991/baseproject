@@ -26,4 +26,6 @@ class AppColor {
   static const Color purpleColor = Color(0xFF912E60);
   static const Color buttonOrangeBackGroundColor = Color(0xFFFF9559);
   static const Color textGreyColor = Color(0xFF000000);
+
+  static const Color yellow100Color = Color(0xFFFFF3EA);
 }

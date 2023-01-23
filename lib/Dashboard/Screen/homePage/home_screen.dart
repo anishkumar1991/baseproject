@@ -108,11 +108,14 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    Image.asset(
-                      AppIcons.micicon,
-                      height: 18,
-                      width: 14,
-                      fit: BoxFit.cover,
+                    InkWell(
+                      onTap: (() {}),
+                      child: Image.asset(
+                        AppIcons.micicon,
+                        height: 18,
+                        width: 14,
+                        fit: BoxFit.cover,
+                      ),
                     )
                   ],
                 ),
@@ -163,7 +166,7 @@ class HomePage extends StatelessWidget {
                       height: 10,
                     ),
                     SizedBox(
-                        height: 257,
+                        height: 262,
                         child: EventListView(
                           onTap: (() {}),
                           title: 'Mann ki Baat',

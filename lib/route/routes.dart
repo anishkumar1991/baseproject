@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sangathan/AddEntry/Screen/add_entry_screen.dart';
 import 'package:sangathan/Dashboard/Screen/Dashboard/dashboard_screen.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_deatils_page.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/zila_data_screen.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/login_page.dart';
 import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
 import 'package:sangathan/SplashScreen/Screen/splash_screen.dart';
@@ -43,14 +44,23 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return AddEntryPage(type: settings.arguments as String,);
+            return AddEntryPage(
+              type: settings.arguments as String,
+            );
           },
         );
-        case RoutePath.splashScreenPage:
+      case RoutePath.splashScreenPage:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return SplashScreen();
+            return const SplashScreen();
+          },
+        );
+      case RoutePath.zilaDataPage:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return ZilaDataScreen(type: settings.arguments as String);
           },
         );
 

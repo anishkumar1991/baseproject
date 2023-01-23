@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/SplashScreen/Cubit/user_profile_cubit.dart';
 import 'package:sangathan/SplashScreen/Cubit/user_profile_state.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
@@ -34,6 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
         listener: (context, state) {
           if (state is UserProfileDataFetchedState) {
             Navigator.pushNamed(context, RoutePath.dashBoardScreen);
+          } else if (state is UserProfileErrorState) {
+            EasyLoading.showError(state.error);
           }
         },
         child: Center(

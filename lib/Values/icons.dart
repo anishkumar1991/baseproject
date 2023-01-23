@@ -48,6 +48,8 @@ class AppIcons {
     static const String userImage = "assets/images/user_logo.png";
     static const String profileImage = "assets/images/profile.png";
     static const String help = "assets/images/help.png";
+    static const String callIcon = "assets/images/call_icon.png";
+    static const String verifyIcon = "assets/images/verify_icon.png";
 
 
 }
