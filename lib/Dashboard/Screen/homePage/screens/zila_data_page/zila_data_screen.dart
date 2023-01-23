@@ -5,11 +5,13 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_state.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/spaceHeightWidget.dart';
 import 'package:sangathan/Values/spaceWidthWidget.dart';
+
+import 'cubit/zila_data_state.dart';
 
 class ZilaDataScreen extends StatefulWidget {
   ZilaDataScreen({super.key, required this.type});
@@ -21,19 +23,19 @@ class ZilaDataScreen extends StatefulWidget {
 
 class _ZilaDataScreenState extends State<ZilaDataScreen> {
   List<String> zilaNameList = ['Bhopal', 'Bihar', 'UttarPradesh'];
-
   List<String> data = ['पदाधिकारी', 'कार्यकारिणी', 'सार्वजनिक बैठक'];
 
   @override
   void initState() {
     context
-        .read<HomePageCubit>()
+        .read<ZilaDataCubit>()
         .getEntryData(data: {"level": 4, "unit": 25, "level_name": 348});
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var cubit = context.read<HomePageCubit>();
     return Scaffold(
       body: SafeArea(
           child:
@@ -127,120 +129,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   spaceHeightWidget(10),
                   entryFilterWidget(),
                   spaceHeightWidget(20),
-                  BlocConsumer<HomePageCubit, HomePageState>(
-                    listener: (context, state) {
-                      if (state is ErrorState) {
-                        EasyLoading.showError(state.error);
-                      } else if (state is DataFetchingLoadingState) {
-                        EasyLoading.show();
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is EntryDataFetchedState) {
-                        return ListView.separated(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: state.data.data!.data!.length,
-                            separatorBuilder: ((context, index) =>
-                                spaceHeightWidget(18)),
-                            itemBuilder: ((context, index) {
-                              final data = state.data.data?.data?[index];
-                              return Slidable(
-                                key: UniqueKey(),
-                                endActionPane: ActionPane(
-                                    motion: const ScrollMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: ((context) {}),
-                                        backgroundColor: Colors.green.shade100,
-                                        icon: Icons.security,
-                                        label: 'Vrify',
-                                      ),
-                                      SlidableAction(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: ((context) {}),
-                                        backgroundColor: AppColor.white,
-                                        icon: Icons.edit,
-                                        label: 'Edit',
-                                      ),
-                                      SlidableAction(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: ((context) {}),
-                                        backgroundColor: Colors.red.shade100,
-                                        foregroundColor: Colors.red.shade300,
-                                        icon: Icons.delete_outline,
-                                        label: 'Delete',
-                                      ),
-                                    ]),
-                                child: Row(
-                                  children: [
-                                    ClipRRect(
-                                        borderRadius: BorderRadius.circular(80),
-                                        child: Image.network(
-                                          data?.photo ?? '',
-                                          height: 56,
-                                          width: 56,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              ((context, error, stackTrace) =>
-                                                  Container(
-                                                    height: 56,
-                                                    width: 56,
-                                                    color: AppColor.navyBlue,
-                                                  )),
-                                        )),
-                                    spaceWidthWidget(16),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              data?.name ?? '',
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w600,
-                                                  color:
-                                                      AppColor.textBlackColor),
-                                            ),
-                                            spaceWidthWidget(5),
-                                            Image.asset(
-                                              AppIcons.verifyIcon,
-                                              height: 10,
-                                            )
-                                          ],
-                                        ),
-                                        Text(
-                                          data?.designationName ?? '',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                              color: AppColor.greyColor),
-                                        ),
-                                        Text(
-                                          data?.phone ?? '',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12,
-                                              color: AppColor.greyColor),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Image.asset(
-                                      AppIcons.callIcon,
-                                      height: 20,
-                                    ),
-                                    spaceWidthWidget(10)
-                                  ],
-                                ),
-                              );
-                            }));
-                      }
-                      return const Center(child: CircularProgressIndicator());
-                    },
-                  )
+                  entryDetails(cubit)
                 ],
               ),
             ),
@@ -265,6 +154,123 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               )
             ],
           )),
+    );
+  }
+
+  BlocListener<ZilaDataCubit, ZilaDataState> entryDetails(HomePageCubit cubit) {
+    return BlocListener<ZilaDataCubit, ZilaDataState>(
+      listener: (context, state) {
+        if (state is ErrorState) {
+          EasyLoading.showError(state.error);
+        }
+      },
+      child: BlocBuilder<ZilaDataCubit, ZilaDataState>(
+        builder: (context, state) {
+          if (state is EntryDataFetchedState) {
+            if (state.data.data != null) {
+              cubit.dataList = state.data.data!.data!;
+            }
+          }
+          if (state is DataFetchingLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: cubit.dataList.length,
+              separatorBuilder: ((context, index) => spaceHeightWidget(18)),
+              itemBuilder: ((context, index) {
+                final data = cubit.dataList[index];
+                return Slidable(
+                  key: UniqueKey(),
+                  endActionPane:
+                      ActionPane(motion: const ScrollMotion(), children: [
+                    SlidableAction(
+                      padding: EdgeInsets.zero,
+                      onPressed: ((context) {}),
+                      backgroundColor: Colors.green.shade100,
+                      icon: Icons.security,
+                      label: 'Verify',
+                    ),
+                    SlidableAction(
+                      padding: EdgeInsets.zero,
+                      onPressed: ((context) {}),
+                      backgroundColor: AppColor.white,
+                      icon: Icons.edit,
+                      label: 'Edit',
+                    ),
+                    SlidableAction(
+                      padding: EdgeInsets.zero,
+                      onPressed: ((context) {}),
+                      backgroundColor: Colors.red.shade100,
+                      foregroundColor: Colors.red.shade300,
+                      icon: Icons.delete_outline,
+                      label: 'Delete',
+                    ),
+                  ]),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(80),
+                          child: Image.network(
+                            data.photo ?? '',
+                            height: 56,
+                            width: 56,
+                            fit: BoxFit.cover,
+                            errorBuilder: ((context, error, stackTrace) =>
+                                Container(
+                                  height: 56,
+                                  width: 56,
+                                  color: AppColor.navyBlue,
+                                )),
+                          )),
+                      spaceWidthWidget(16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              AutoSizeText(
+                                data.name ?? '',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColor.textBlackColor),
+                              ),
+                              spaceWidthWidget(5),
+                              Image.asset(
+                                AppIcons.verifyIcon,
+                                height: 10,
+                              )
+                            ],
+                          ),
+                          Text(
+                            data.designationName ?? '',
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10,
+                                color: AppColor.greyColor),
+                          ),
+                          Text(
+                            data.phone ?? '',
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                color: AppColor.greyColor),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      Image.asset(
+                        AppIcons.callIcon,
+                        height: 20,
+                      ),
+                      spaceWidthWidget(10)
+                    ],
+                  ),
+                );
+              }));
+        },
+      ),
     );
   }
 
@@ -293,13 +299,14 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               child: Container(
                 height: 32,
                 color: AppColor.navyBlue400,
-                child: Text(
-                  'पद',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: AppColor.white),
+                child: Center(
+                  child: Text(
+                    'पद',
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: AppColor.white),
+                  ),
                 ),
               ),
             ),
@@ -333,9 +340,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 fontWeight: FontWeight.w400,
                 fontSize: 14),
           ),
-          BlocBuilder<HomePageCubit, HomePageState>(
+          BlocBuilder<ZilaDataCubit, ZilaDataState>(
             builder: (context, state) {
-              final cubit = BlocProvider.of<HomePageCubit>(context);
+              final cubit = BlocProvider.of<ZilaDataCubit>(context);
               return DropdownButtonHideUnderline(
                   child: DropdownButton(
                       isDense: true,

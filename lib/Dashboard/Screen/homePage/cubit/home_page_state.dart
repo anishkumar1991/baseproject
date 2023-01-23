@@ -14,15 +14,3 @@ class OnChnageValueState extends HomePageState {
   bool isOpen = false;
   OnChnageValueState(this.isOpen);
 }
-class DataFetchingLoadingState extends HomePageState{}
-class EntryDataFetchedState extends HomePageState {
-  DataEntryModel data;
-  EntryDataFetchedState(this.data);
-}
-
-class ErrorState extends HomePageState {
-  String error;
-  ErrorState(this.error);
-}
-
-class ZilaChangedState extends HomePageState {}

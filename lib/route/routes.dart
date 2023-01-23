@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sangathan/AddEntry/Screen/add_entry_screen.dart';
 import 'package:sangathan/Dashboard/Screen/Dashboard/dashboard_screen.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_deatils_page.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/zila_data_screen.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/zila_data_screen.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/login_page.dart';
 import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
 import 'package:sangathan/SplashScreen/Screen/splash_screen.dart';

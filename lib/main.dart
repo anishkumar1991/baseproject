@@ -6,6 +6,7 @@ import 'package:sangathan/AddEntry/Cubit/add_entry_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/SplashScreen/Cubit/user_profile_cubit.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserProfileCubit()),
         BlocProvider(create: (context) => PravasListCubit()),
         BlocProvider(create: (context) => CreateFunctionCubit()),
+        BlocProvider(create: (context) => ZilaDataCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
