@@ -4,9 +4,11 @@ import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/poll_widget.da
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_video_widget.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_widget.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_video.dart';
-import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
+import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/spaceHeightWidget.dart';
+
+import '../../../common/common_button.dart';
 
 class SocialMediaPage extends StatelessWidget {
   const SocialMediaPage({super.key});

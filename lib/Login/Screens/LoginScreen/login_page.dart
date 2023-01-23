@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
-import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
+import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/textformfield.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
 import 'package:sangathan/route/route_path.dart';
@@ -13,6 +13,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../Values/size_config.dart';
+import '../../../common/common_button.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);

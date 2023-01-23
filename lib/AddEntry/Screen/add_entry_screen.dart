@@ -8,14 +8,19 @@ import 'package:sangathan/AddEntry/Screen/widget/custom_textfield.dart';
 import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/select_boxs.dart';
-import 'package:sangathan/AddEntry/Screen/widget/textfiled_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
-import 'package:sangathan/Login/Screens/LoginScreen/common_button.dart';
+import 'package:sangathan/common/textfiled_widget.dart';
+import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
+import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
+import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/spaceHeightWidget.dart';
 import 'package:sangathan/Values/spaceWidthWidget.dart';
+
+import '../../common/common_button.dart';
+import '../../common/textfiled_widget.dart';
 
 class AddEntryPage extends StatefulWidget {
   AddEntryPage({Key? key, required this.type}) : super(key: key);

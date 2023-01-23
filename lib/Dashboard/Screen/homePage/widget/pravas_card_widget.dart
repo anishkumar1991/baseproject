@@ -5,6 +5,9 @@ import 'package:sangathan/Dashboard/Cubit/dashboard_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_state.dart';
 import 'package:sangathan/Values/app_colors.dart';
+import 'package:sangathan/Values/icons.dart';
+import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/route/route_path.dart';
 
 class PravasCardWidget extends StatelessWidget {
   PravasCardWidget({super.key});
@@ -45,20 +48,9 @@ class PravasCardWidget extends StatelessWidget {
                               fontSize: 20),
                         ),
                         const Spacer(),
-                        const Text(
-                          'See pravas list',
-                          style: TextStyle(
-                              fontFamily: 'Tw Cen MT',
-                              color: AppColor.textBlackColor,
-                              fontSize: 14,
-                              decoration: TextDecoration.underline),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
                         InkWell(
                           onTap: (() {
-                            context.read<HomePageCubit>().onTapButton();
+                            Navigator.pushNamed(context, RoutePath.pravasListScreen);
                           }),
                           child: Container(
                             decoration: const BoxDecoration(
@@ -80,48 +72,68 @@ class PravasCardWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                           color: AppColor.buttonTextColor),
                       child: IntrinsicHeight(
-                        child: Row(
+                        child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Column(
+                              Row(
                                 children: [
-                                  const Text(
-                                    'Total Pravas',
-                                    style: TextStyle(
-                                        fontFamily: 'Tw Cen MT',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.naturalBlackColor),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Image.asset(AppIcons.checkBox,height: 20,width: 20),
+                                        spaceWidthWidget(10),
+                                        const Text(
+                                          'अभी तक किये कुल प्रवास -',
+                                          style: TextStyle(
+                                              fontFamily: 'Tw Cen MT',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColor.naturalBlackColor),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Text(
-                                    '5',
-                                    style: GoogleFonts.quicksand(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColor.textBlackColor),
-                                  )
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    child: Text('10',
+                                        style: GoogleFonts.quicksand(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColor.blue)),
+                                  ),
                                 ],
                               ),
-                              const VerticalDivider(
+                              const Divider(
                                 indent: 6,
                                 endIndent: 6,
                                 color: AppColor.borderColor,
                               ),
-                              Column(
+                              Row(
                                 children: [
-                                  const Text(
-                                    'Total Karyakram',
-                                    style: TextStyle(
-                                        fontFamily: 'Tw Cen MT',
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColor.naturalBlackColor),
+                                 Expanded(
+                                   child: Row(
+                                     children: [
+                                       Image.asset(AppIcons.calender,height: 20,width: 20),
+                                       spaceWidthWidget(10),
+                                       const Text(
+                                         'आगामी प्रवास -',
+                                         style: TextStyle(
+                                             fontFamily: 'Tw Cen MT',
+                                             fontSize: 14,
+                                             fontWeight: FontWeight.w400,
+                                             color: AppColor.naturalBlackColor),
+                                       ),
+                                     ],
+                                   ),
+                                 ),
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    child: Text('06',
+                                        style: GoogleFonts.quicksand(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColor.blue)),
                                   ),
-                                  Text('2',
-                                      style: GoogleFonts.quicksand(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColor.textBlackColor))
                                 ],
                               ),
                             ]),
