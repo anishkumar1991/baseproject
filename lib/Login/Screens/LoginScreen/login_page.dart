@@ -5,15 +5,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
-import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/textformfield.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
-import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
+import 'package:sangathan/common/common_button.dart';
+import 'package:sangathan/route/route_path.dart';
+
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
-import '../../../Values/size_config.dart';
-import '../../../common/common_button.dart';
+import '../../../generated/l10n.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                         height: 33,
                       ),
                       Text(
-                        'लॉगिन करे',
+                        S.of(context).login,
                         style: GoogleFonts.poppins(
                             fontSize: 24, fontWeight: FontWeight.w600),
                       ),
@@ -54,7 +54,7 @@ class LoginScreen extends StatelessWidget {
                         height: 20,
                       ),
                       Text(
-                        'अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे',
+                        S.of(context).enterYourMobileNumber,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             fontSize: 14,
@@ -97,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                             //     arguments: mobileNumController.text);
                           }),
                           padding: const EdgeInsets.all(12),
-                          title: 'लॉगिन',
+                          title: S.of(context).loginButtonText,
                           style: GoogleFonts.poppins(
                               color: AppColor.white,
                               fontSize: 14,

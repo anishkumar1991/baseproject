@@ -4,11 +4,11 @@ import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/poll_widget.da
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_video_widget.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_widget.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_video.dart';
-import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/spaceHeightWidget.dart';
+import 'package:sangathan/common/common_button.dart';
 
-import '../../../common/common_button.dart';
+import '../../../generated/l10n.dart';
 
 class SocialMediaPage extends StatelessWidget {
   const SocialMediaPage({super.key});
@@ -72,7 +72,9 @@ class SocialMediaPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'संगठन से जुड़े कार्यक्रम एवं जानकारी प्राप्त करने हेतु लॉगिन करे',
+                      S
+                          .of(context)
+                          .loginToGetTheProgramsAndInformationRelatedToTheOrganization,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                           fontSize: 16, fontWeight: FontWeight.w700),
@@ -81,7 +83,7 @@ class SocialMediaPage extends StatelessWidget {
                     CommonButton(
                       onTap: (() {}),
                       padding: const EdgeInsets.all(10),
-                      title: 'लॉगिन ',
+                      title: S.of(context).loginButtonText,
                       style: GoogleFonts.poppins(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,

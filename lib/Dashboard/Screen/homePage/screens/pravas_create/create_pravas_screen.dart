@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/edit_date/widgets/header_widget_pravas_create.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/widgets/header_widget_pravas_create.dart';
+
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/spaceHeightWidget.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../../route/route_path.dart';
-import '../edit_date/edit_date_screen.dart';
 
 class PrvasCreateScreen extends StatefulWidget {
   const PrvasCreateScreen({Key? key}) : super(key: key);
@@ -20,6 +20,7 @@ class PrvasCreateScreen extends StatefulWidget {
 class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
   TextEditingController prvasNameCtr = TextEditingController();
   TextEditingController pravasSubjectCtr = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<PravasCreateCubit>(context);
@@ -33,12 +34,12 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             spaceHeightWidget(10),
-            headerWidgetPravasCreate(),
+            headerWidgetPravasCreate(context),
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
             TextFieldWidget(
               controller: prvasNameCtr,
               title: '',
-              labelText: 'प्रवास का नाम*',
+              labelText: S.of(context).nameOfTour,
               keyboardType: TextInputType.emailAddress,
             ),
             spaceHeightWidget(35),
@@ -50,7 +51,9 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                     return Row(
                       children: [
                         Text(
-                          cubit.date,
+                          cubit.date != ""
+                              ? cubit.date
+                              : S.of(context).dateFrom,
                           style: const TextStyle(
                             color: AppColor.greyColor,
                           ),
@@ -61,17 +64,19 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                             cubit.startDateOfTour(context);
                           },
                           child: const Icon(
-                              Icons.calendar_month_outlined,color:  AppColor.greyColor,),
+                            Icons.calendar_month_outlined,
+                            color: AppColor.greyColor,
+                          ),
                         )
                       ],
                     );
                   },
                 ),
                 spaceHeightWidget(4),
-                 Divider(
+                Divider(
                   height: 2,
                   thickness: 1.5,
-                   color: AppColor.greyColor.withOpacity(0.5),
+                  color: AppColor.greyColor.withOpacity(0.5),
                 )
               ],
             ),
@@ -84,7 +89,9 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                     return Row(
                       children: [
                         Text(
-                          cubit.date1,
+                          cubit.date1 != ""
+                              ? cubit.date1
+                              : S.of(context).dateTo,
                           style: const TextStyle(
                             color: AppColor.greyColor,
                           ),
@@ -94,15 +101,15 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                           onTap: () async {
                             cubit.endOfTour(context);
                           },
-                          child: const Icon(
-                              Icons.calendar_month_outlined,color:  AppColor.greyColor),
+                          child: const Icon(Icons.calendar_month_outlined,
+                              color: AppColor.greyColor),
                         )
                       ],
                     );
                   },
                 ),
                 spaceHeightWidget(4),
-                 Divider(
+                Divider(
                   height: 2,
                   thickness: 1.5,
                   color: AppColor.greyColor.withOpacity(0.5),
@@ -113,15 +120,15 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
             TextFieldWidget(
               controller: pravasSubjectCtr,
               title: '',
-              labelText: 'प्रवास का विषय ',
+              labelText: S.of(context).descriptionOfTour,
               keyboardType: TextInputType.emailAddress,
             ),
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
             CommonButton(
-              onTap: (){
-               showConfirmDialog();
+              onTap: () {
+                showConfirmDialog();
               },
-              title: 'प्रवास बनाये',
+              title: S.of(context).takeATour,
               borderRadius: 10,
               height: 50,
               style: const TextStyle(fontSize: 15, color: AppColor.white),
@@ -132,38 +139,43 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
     );
   }
 
-  Future showConfirmDialog(){
+  Future showConfirmDialog() {
     return showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
-          shape: OutlineInputBorder(borderRadius: BorderRadius.circular(15),borderSide: const BorderSide(color: Colors.transparent)),
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(color: Colors.transparent)),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 CommonButton(
-                  onTap: (){
-                    Navigator.pushNamed(context, RoutePath.createFunctionScreen);
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RoutePath.createFunctionScreen);
                   },
-                  title: 'प्रवास के अंतरगर्त कार्यक्रम बनाये',
+                  title: S.of(context).makeTourSchedules,
                   borderRadius: 20,
                   height: 45,
                   style: const TextStyle(fontSize: 14, color: AppColor.white),
                 ),
                 spaceHeightWidget(20),
                 CommonButton(
-                  onTap: (){
-
+                  onTap: () {
+                    Navigator.pop(context);
                   },
-                  title: 'बाद मे',
+                  title: S.of(context).later,
                   borderRadius: 20,
                   height: 45,
                   backGroundcolor: Colors.transparent,
                   bordercolor: AppColor.buttonOrangeBackGroundColor,
-                  style: const TextStyle(fontSize: 14, color: AppColor.buttonOrangeBackGroundColor),
+                  style: const TextStyle(
+                      fontSize: 14,
+                      color: AppColor.buttonOrangeBackGroundColor),
                 ),
               ],
             ),

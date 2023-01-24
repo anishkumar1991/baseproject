@@ -8,9 +8,13 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/spaceWidthWidget.dart';
 import 'package:sangathan/route/route_path.dart';
 
+import '../../../../generated/l10n.dart';
+
 class PravasCardWidget extends StatelessWidget {
   PravasCardWidget({super.key});
+
   bool isOpen = false;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomePageCubit, HomePageState>(
@@ -49,7 +53,8 @@ class PravasCardWidget extends StatelessWidget {
                         const Spacer(),
                         InkWell(
                           onTap: (() {
-                            Navigator.pushNamed(context, RoutePath.pravasListScreen);
+                            Navigator.pushNamed(
+                                context, RoutePath.pravasListScreen);
                           }),
                           child: Container(
                             decoration: const BoxDecoration(
@@ -79,21 +84,24 @@ class PravasCardWidget extends StatelessWidget {
                                   Expanded(
                                     child: Row(
                                       children: [
-                                        Image.asset(AppIcons.checkBox,height: 20,width: 20),
+                                        Image.asset(AppIcons.checkBox,
+                                            height: 20, width: 20),
                                         spaceWidthWidget(10),
-                                        const Text(
-                                          'अभी तक किये कुल प्रवास -',
-                                          style: TextStyle(
+                                        Text(
+                                          S.of(context).totalTravelSoFar,
+                                          style: const TextStyle(
                                               fontFamily: 'Tw Cen MT',
                                               fontSize: 14,
                                               fontWeight: FontWeight.w400,
-                                              color: AppColor.naturalBlackColor),
+                                              color:
+                                                  AppColor.naturalBlackColor),
                                         ),
                                       ],
                                     ),
                                   ),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
                                     child: Text('10',
                                         style: GoogleFonts.quicksand(
                                             fontSize: 20,
@@ -109,24 +117,27 @@ class PravasCardWidget extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                 Expanded(
-                                   child: Row(
-                                     children: [
-                                       Image.asset(AppIcons.calender,height: 20,width: 20),
-                                       spaceWidthWidget(10),
-                                       const Text(
-                                         'आगामी प्रवास -',
-                                         style: TextStyle(
-                                             fontFamily: 'Tw Cen MT',
-                                             fontSize: 14,
-                                             fontWeight: FontWeight.w400,
-                                             color: AppColor.naturalBlackColor),
-                                       ),
-                                     ],
-                                   ),
-                                 ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Image.asset(AppIcons.calender,
+                                            height: 20, width: 20),
+                                        spaceWidthWidget(10),
+                                        Text(
+                                          S.of(context).upcomingTrip,
+                                          style: const TextStyle(
+                                              fontFamily: 'Tw Cen MT',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color:
+                                                  AppColor.naturalBlackColor),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                   SizedBox(
-                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
                                     child: Text('06',
                                         style: GoogleFonts.quicksand(
                                             fontSize: 20,

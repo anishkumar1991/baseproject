@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sangathan/AddEntry/Cubit/add_entry_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
@@ -13,9 +14,11 @@ import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart'
 import 'package:sangathan/Values/string.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
-import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
+
 import 'Dashboard/Screen/homePage/screens/create_function_page/create_function_cubit/create_function_cubit.dart';
+import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_list/pravas_cubit/pravas_list_cubit.dart';
+import 'generated/l10n.dart';
 
 void main() async {
   await GetStorage.init();
@@ -47,6 +50,14 @@ class MyApp extends StatelessWidget {
         useInheritedMediaQuery: true,
         title: AppStrings.appTitle,
         builder: EasyLoading.init(),
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        locale: const Locale.fromSubtags(languageCode: 'hi'),
         onGenerateRoute: RouteGenerator.generatorRoute,
         initialRoute: RoutePath.splashScreenPage,
         theme: ThemeData(

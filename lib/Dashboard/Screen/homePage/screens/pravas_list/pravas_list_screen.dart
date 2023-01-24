@@ -7,23 +7,23 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/spaceHeightWidget.dart';
 import 'package:sangathan/Values/spaceWidthWidget.dart';
 
-import '../../../../../common/common_button.dart';
 import '../../../../../Values/icons.dart';
+import '../../../../../common/common_button.dart';
 import '../../../../../common/dot_widget.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../../route/route_path.dart';
 import 'data/fake_list_data.dart';
 
 class PravasListScreen extends StatelessWidget {
-  PravasListScreen({Key? key}) : super(key: key);
-
-  final List data = [
-    {'text': 'सभी', 'color': AppColor.tealColor.withOpacity(0.8)},
-    {'text': 'वर्तमान', 'color': AppColor.yellowColor},
-    {'text': 'आगामी', 'color': AppColor.pinkColor}
-  ];
+  const PravasListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final List data = [
+      {'text': S.of(context).all, 'color': AppColor.tealColor.withOpacity(0.8)},
+      {'text': S.of(context).present, 'color': AppColor.yellowColor},
+      {'text': S.of(context).upcoming, 'color': AppColor.pinkColor}
+    ];
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
@@ -164,9 +164,9 @@ class PravasListScreen extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color: AppColor.naturalBlackColor),
                                     ),
-                                    const Text(
-                                      'कार्यक्रम ',
-                                      style: TextStyle(
+                                    Text(
+                                      S.of(context).program,
+                                      style: const TextStyle(
                                           fontSize: 10,
                                           fontWeight: FontWeight.bold,
                                           color: AppColor.naturalBlackColor),
@@ -188,14 +188,17 @@ class PravasListScreen extends StatelessWidget {
                         spaceHeightWidget(25),
                         CommonPravasEventButton(
                           onTap: () {
-                            if(pravasList[index].endDate!.isAfter(DateTime.now())){
-                              if(pravasList[index].totalEvent != 0){
+                            if (pravasList[index]
+                                .endDate!
+                                .isAfter(DateTime.now())) {
+                              if (pravasList[index].totalEvent != 0) {
                                 //function create or update
-                              }else{
+                              } else {
                                 //function create
-                                Navigator.pushNamed(context, RoutePath.createFunctionScreen);
+                                Navigator.pushNamed(
+                                    context, RoutePath.createFunctionScreen);
                               }
-                            }else{
+                            } else {
                               //show function
                             }
                           },
@@ -209,9 +212,9 @@ class PravasListScreen extends StatelessWidget {
                           text:
                               pravasList[index].endDate!.isAfter(DateTime.now())
                                   ? pravasList[index].totalEvent != 0
-                                      ? 'कार्यक्रम बनायें एवं अपडेट करे'
-                                      : 'कार्यक्रम बनायें'
-                                  : 'कार्यक्रम देखें ',
+                                      ? S.of(context).createAndUpdateProgram
+                                      : S.of(context).makeProgram
+                                  : S.of(context).viewProgram,
                           isEnd: pravasList[index]
                               .endDate!
                               .isBefore(DateTime.now()),
@@ -232,7 +235,7 @@ class PravasListScreen extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, RoutePath.pravasCreateScreen);
             },
-            title: 'प्रवास बनाये',
+            title: S.of(context).takeATour,
             width: 200,
             height: 50,
             borderRadius: 25,

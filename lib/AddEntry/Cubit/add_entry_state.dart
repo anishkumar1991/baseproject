@@ -22,7 +22,7 @@ class AddEntryErrorState extends AddEntryState {
 }
 
 class DobSelectedState extends AddEntryState {
-  String date;
+  final String date;
   DobSelectedState(this.date);
 }
 
@@ -31,6 +31,8 @@ class RadioButtonSelectState extends AddEntryState {}
 class ImagePickedState extends AddEntryState {
   final File? file;
   ImagePickedState(this.file);
-}class FilePickedState extends AddEntryState {
+}
+
+class FilePickedState extends AddEntryState {
   FilePickedState();
 }

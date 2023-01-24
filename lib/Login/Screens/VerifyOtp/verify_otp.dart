@@ -7,17 +7,19 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
-import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/notConnected.dart';
 import 'package:sangathan/Values/icons.dart';
+import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/route/route_path.dart';
+
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../Values/app_colors.dart';
-import '../../../common/common_button.dart';
+import '../../../generated/l10n.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   const VerifyOtpScreen({Key? key, required this.number}) : super(key: key);
   final String number;
+
   @override
   State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
 }
@@ -27,6 +29,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   String otpText = '';
   String? errorText;
   bool isLoading = false;
+
   @override
   void initState() {
     context.read<LoginCubit>().startTimer();
@@ -66,7 +69,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                             width: MediaQuery.of(context).size.width * 0.15,
                           ),
                           Text(
-                            'ओटीपी सत्यापन',
+                            S.of(context).otpVerification,
                             style: GoogleFonts.poppins(
                                 fontSize: 20, fontWeight: FontWeight.w500),
                           )
@@ -82,7 +85,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         height: 30,
                       ),
                       Text(
-                        'ओटीपी दर्ज करें',
+                        S.of(context).enterOTP,
                         style: GoogleFonts.poppins(
                             fontSize: 24, fontWeight: FontWeight.w600),
                       ),
@@ -90,7 +93,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         height: 10,
                       ),
                       Text(
-                        'एक 6 अंकों का कोड भेजा गया है\n+91 ${widget.number}',
+                        '${S.of(context).digitCodeHasBeenSent}\n+91 ${widget.number}',
                         style: GoogleFonts.poppins(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -194,7 +197,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     width: 5,
                   ),
                   Text(
-                    isLoading ? 'सत्यापित किया जा रहा है...' : 'सत्यापित करना',
+                    isLoading ? S.of(context).verified : S.of(context).verify,
                     style: GoogleFonts.poppins(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -218,13 +221,16 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   onTap: (() async {
                     await context.read<LoginCubit>().resendOTP();
                   }),
-                  child: Text('ओटीपी पुनः भेजें',
+                  child: Text(S.of(context).resendOTP,
                       style: GoogleFonts.poppins(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
                           color: AppColor.buttonOrangeBackGroundColor)),
                 )
-              : Text('${cubit.count} में ओटीपी कोड दोबारा भेजें',
+              : Text(
+                  Localizations.localeOf(context).toString() == "hi"
+                      ? '${S.of(context).resendOTPCodeTo}${cubit.count}'
+                      : '${cubit.count}${S.of(context).resendOTPCodeTo}',
                   style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,

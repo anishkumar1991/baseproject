@@ -1,15 +1,14 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 
 part 'pravas_create_state.dart';
 
 class PravasCreateCubit extends Cubit<PravasCreateState> {
   PravasCreateCubit() : super(PravasCreateInitial());
 
-  String date = 'दिनांक  ( कब से )*';
-  String date1 = 'दिनांक  ( कब तक )';
+  String date = '';
+  String date1 = '';
   DateTime dateTime = DateTime.now();
   DateTime dateTime1 = DateTime.now();
 
@@ -58,5 +57,4 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
       emit(EndOfTour(date1));
     }
   }
-
 }

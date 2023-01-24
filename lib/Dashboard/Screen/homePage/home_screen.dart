@@ -15,6 +15,7 @@ import 'package:sangathan/route/route_path.dart';
 
 import '../../../Login/Cubit/login_cubit.dart';
 import '../../../Values/spaceWidthWidget.dart';
+import '../../../generated/l10n.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -101,7 +102,7 @@ class HomePage extends StatelessWidget {
                           decoration: InputDecoration(
                               contentPadding: const EdgeInsets.all(8),
                               border: InputBorder.none,
-                              hintText: 'प्रवास और  कार्याक्रम देखे',
+                              hintText: S.of(context).viewToursEvents,
                               hintStyle: GoogleFonts.poppins(
                                   color: AppColor.borderColor, fontSize: 14)),
                         ),

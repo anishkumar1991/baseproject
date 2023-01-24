@@ -4,6 +4,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 
 import '../../../../Values/size_config.dart';
+import '../../../../generated/l10n.dart';
 
 class SngathanCardWidget extends StatelessWidget {
   const SngathanCardWidget({super.key});
@@ -24,7 +25,7 @@ class SngathanCardWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5, top: 16),
               child: Text(
-                'संगठन',
+                S.of(context).sangathan,
                 style: GoogleFonts.poppins(
                     color: AppColor.textBlackColor,
                     fontSize: 20,
@@ -42,7 +43,7 @@ class SngathanCardWidget extends StatelessWidget {
                       backgroundColor: AppColor.buttonBackGroundColor),
                   onPressed: (() {}),
                   child: Text(
-                    'क्लिक करें',
+                    S.of(context).click,
                     style: GoogleFonts.poppins(
                         color: AppColor.buttonTextColor,
                         fontSize: 14,

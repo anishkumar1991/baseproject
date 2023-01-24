@@ -22,7 +22,11 @@ class _SplashScreenState extends State<SplashScreen> {
       if (token != null) {
         context.read<UserProfileCubit>().getUserProfileData();
       } else {
-        Navigator.pushNamed(context, RoutePath.loginScreen);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutePath.loginScreen,
+          (route) => false,
+        );
       }
     }));
     super.initState();
@@ -34,7 +38,11 @@ class _SplashScreenState extends State<SplashScreen> {
       body: BlocListener<UserProfileCubit, UserProfileState>(
         listener: (context, state) {
           if (state is UserProfileDataFetchedState) {
-            Navigator.pushNamed(context, RoutePath.dashBoardScreen);
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              RoutePath.dashBoardScreen,
+              (route) => false,
+            );
           } else if (state is UserProfileErrorState) {
             EasyLoading.showError(state.error);
           }

@@ -38,7 +38,7 @@ class CustomDropDown extends StatelessWidget {
                   isExpanded: true,
                   value: selectedValue,
                   hint: Text(
-                    hintText??"",
+                    hintText ?? "",
                     style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w400,
                         fontSize: 16,
