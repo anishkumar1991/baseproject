@@ -188,6 +188,7 @@ class PravasListScreen extends StatelessWidget {
                         spaceHeightWidget(25),
                         CommonPravasEventButton(
                           onTap: () {
+                            print("hello");
                             if (pravasList[index]
                                 .endDate!
                                 .isAfter(DateTime.now())) {
@@ -200,6 +201,8 @@ class PravasListScreen extends StatelessWidget {
                               }
                             } else {
                               //show function
+                              Navigator.pushNamed(
+                                  context, RoutePath.stayAndProgramListScreen);
                             }
                           },
                           icon: pravasList[index]

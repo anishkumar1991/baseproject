@@ -156,7 +156,11 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                 CommonButton(
                   onTap: () {
                     Navigator.pushNamed(
-                        context, RoutePath.createFunctionScreen);
+                        context, RoutePath.createFunctionScreen,
+                    arguments: {
+                          'isEdit' : false,
+                          'isView' : false
+                    });
                   },
                   title: S.of(context).makeTourSchedules,
                   borderRadius: 20,

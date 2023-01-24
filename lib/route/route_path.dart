@@ -10,5 +10,8 @@ class RoutePath {
     static const String pravasCreateScreen = 'pravasCreateScreen';
     static const String pravasEditTimeScreen = 'pravasEditTimeScreen';
     static const String createFunctionScreen = 'createFunctionScreen';
+    static const String stayAndProgramListScreen = 'stayAndProgramListScreen';
+    static const String createProgramScreen = 'createProgramScreen';
+    static const String guestListScreen = 'guestListScreen';
 
 }

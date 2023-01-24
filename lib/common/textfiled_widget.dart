@@ -13,6 +13,8 @@ class TextFieldWidget extends StatelessWidget {
         this.readOnly,
         this.labelText,
         this.onTap,
+        this.maxLines,
+        this.inpurborder,
         this.hintText});
 
   final TextEditingController controller;
@@ -22,7 +24,9 @@ class TextFieldWidget extends StatelessWidget {
   final GestureTapCallback? onTap;
   final String? hintText;
   final String? labelText;
+  final InputBorder? inpurborder;
   final Widget? suffixWidget;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +35,14 @@ class TextFieldWidget extends StatelessWidget {
       children: [
         Text(title),
         TextField(
+          maxLines: maxLines,
           controller: controller,
           readOnly: readOnly ?? false,
           keyboardType: keyboardType,
           clipBehavior: Clip.hardEdge,
           onTap: onTap,
           decoration: InputDecoration(
+            border: inpurborder,
               hintText: hintText,
               labelText: labelText,
               labelStyle: GoogleFonts.poppins(

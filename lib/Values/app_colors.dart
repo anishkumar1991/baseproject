@@ -35,4 +35,6 @@ class AppColor {
   static const Color yellowColor = Color(0xFFf1e8dc);
   static const Color pinkColor = Color(0xFFecdfe5);
   static const Color lightGreenColor = Color(0xFFF1F8EF);
+  static const Color darkBlue = Color(0xFF5F5390);
+  static  Color greyWithOpacity01 = Colors.grey.withOpacity(0.1);
 }
