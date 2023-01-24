@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/AddEntry/Cubit/add_entry_cubit.dart';
-import 'package:sangathan/AddEntry/Cubit/add_entry_state.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 class CustomRadioButton extends StatelessWidget {

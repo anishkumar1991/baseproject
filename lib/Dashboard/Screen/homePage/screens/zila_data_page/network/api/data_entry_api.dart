@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../../../../Values/string.dart';
+import '../../../../../../../Values/string.dart';
 
 part 'data_entry_api.g.dart';
 
@@ -11,6 +11,5 @@ abstract class DataEntryApi {
 
   @POST('/zila/api/dashboard/karyakarta_report')
   Future<HttpResponse> getPersonList(
-      @Header('Authorization') String token,
-      @Body() Map<String, dynamic> data);
+      @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

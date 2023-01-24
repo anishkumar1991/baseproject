@@ -17,4 +17,5 @@ abstract class AuthApi {
 
   @GET('/zila/api/logout')
   Future<HttpResponse> logOut(@Header('Authorization') String token);
+  
 }

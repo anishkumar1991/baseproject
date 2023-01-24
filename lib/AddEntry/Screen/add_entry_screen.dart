@@ -11,19 +11,15 @@ import 'package:sangathan/AddEntry/Screen/widget/select_boxs.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
-import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
-import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
-import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
-import '../../common/common_button.dart';
-import '../../common/textfiled_widget.dart';
 
 class AddEntryPage extends StatefulWidget {
-  AddEntryPage({Key? key, required this.type}) : super(key: key);
+ const AddEntryPage({Key? key, required this.type}) : super(key: key);
   final String type;
   @override
   State<AddEntryPage> createState() => _AddEntryPageState();

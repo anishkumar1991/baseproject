@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
 
 class SocialVideo extends StatelessWidget {
   const SocialVideo({super.key});

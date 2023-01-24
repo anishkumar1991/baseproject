@@ -4,9 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/api/auth_api.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/alloted_location_model.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
-import 'package:sangathan/Storage/user_storage_service.dart';
+import 'package:sangathan/storage/user_storage_service.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
@@ -33,8 +34,9 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginLoadingState());
       final res = await api.loginUser({'phone_number': mobileNumber});
       if (res.response.statusCode == 200) {
+        print(res.data['identification_token']);
         LoginModel model = LoginModel.fromJson(res.data);
-        StorageService.setUserIdentificationToken(
+        await StorageService.setUserIdentificationToken(
             model.identificationToken ?? '');
         emit(UserLoggedState(model));
       } else {
@@ -69,13 +71,15 @@ class LoginCubit extends Cubit<LoginState> {
       String token = StorageService.getUserIdentificationToken() ?? '';
       final res =
           await api.submitOtp({'identification_token': token, 'otp': otp});
-      print('res==+${res.response.data}');
 
       print('res==+${res.response.statusCode}');
+      print('data=${res.data}');
+
       if (res.response.statusCode == 200) {
         UserDetails userData = UserDetails.fromJson(res.data);
+
         print('Auth token==${userData.authToken}');
-        StorageService.setUserAuthToken(userData.authToken ?? '');
+        await StorageService.setUserAuthToken(userData.authToken ?? '');
         emit(UserLoginSuccessfullyState(userData));
       } else {
         //UserDetails? model = UserDetails.fromJson(res.data);

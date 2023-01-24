@@ -1,7 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 
 part 'edit_date_state.dart';
 
@@ -10,7 +9,7 @@ class EditDateCubit extends Cubit<EditDateState> {
   String date = 'दिनांक';
   String time = 'समय';
   DateTime dateTime = DateTime.now();
-  TimeOfDay _time = TimeOfDay(hour: 7, minute: 15);
+  TimeOfDay _time = const TimeOfDay(hour: 7, minute: 15);
 
   static String ddMMMYYYYfromDateTime(DateTime date) {
     return DateFormat('dd-MMM-yyyy').format(date);

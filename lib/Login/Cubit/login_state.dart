@@ -3,6 +3,7 @@ import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
 
 abstract class LoginState extends Equatable {
+  @override
   List<Object> get props => [];
 }
 
@@ -16,9 +17,9 @@ class TimerRunningState extends LoginState {
   final int count;
   TimerRunningState(this.count);
 }
-class LoginLoadingState extends LoginState{
-  
-}
+
+class LoginLoadingState extends LoginState {}
+
 class TimerStopState extends LoginState {}
 
 class UserLoggedState extends LoginState {
@@ -40,7 +41,9 @@ class UserLoginSuccessfullyState extends LoginState {
   final UserDetails userDetails;
   UserLoginSuccessfullyState(this.userDetails);
 }
-class LogOutLoadingState extends LoadingState{}
+
+class LogOutLoadingState extends LoadingState {}
+
 class UserLogOutSuccessState extends LoginState {
   final String msg;
   UserLogOutSuccessState(this.msg);
@@ -50,3 +53,4 @@ class UserLogOutFaieldState extends LoginState {
   final String error;
   UserLogOutFaieldState(this.error);
 }
+

@@ -6,8 +6,8 @@ import 'package:sangathan/AddEntry/Cubit/add_entry_cubit.dart';
 import 'package:sangathan/AddEntry/Cubit/add_entry_state.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
-import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
 class ImageNotUploaded extends StatelessWidget {
   const ImageNotUploaded({super.key, this.onTap});

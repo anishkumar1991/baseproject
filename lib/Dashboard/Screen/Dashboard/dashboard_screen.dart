@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_state.dart';
-import 'package:sangathan/Dashboard/Screen/socialMediaPage/social_Media_screen.dart';
+import 'package:sangathan/Dashboard/Screen/socialMediaPage/social_media_screen.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/home_screen.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/menu_screen.dart';
 import 'package:sangathan/Values/app_colors.dart';

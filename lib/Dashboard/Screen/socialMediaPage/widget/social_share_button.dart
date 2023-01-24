@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../Values/icons.dart';
-import '../../../../Values/spaceWidthWidget.dart';
+import '../../../../Values/space_width_widget.dart';
 
 class SocialShareButtons extends StatelessWidget {
   const SocialShareButtons({

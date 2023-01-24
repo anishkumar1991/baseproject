@@ -4,8 +4,8 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_list/widgets/
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_list/widgets/common_pravas_event_button.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_list/widgets/header_widget_pravas_list.dart';
 import 'package:sangathan/Values/app_colors.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
-import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../../../../../Values/icons.dart';
 import '../../../../../common/common_button.dart';

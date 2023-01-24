@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sangathan/SplashScreen/Cubit/user_profile_state.dart';
-import 'package:sangathan/SplashScreen/Network/api/user_profile_api.dart';
-import 'package:sangathan/SplashScreen/Network/model/user_profile_model.dart';
-import 'package:sangathan/Storage/user_storage_service.dart';
+import 'package:sangathan/splash_screen/cubit/user_profile_state.dart';
+import 'package:sangathan/splash_screen/network/api/user_profile_api.dart';
+import 'package:sangathan/splash_screen/network/model/user_profile_model.dart';
+import 'package:sangathan/storage/user_storage_service.dart';
 
 class UserProfileCubit extends Cubit<UserProfileState> {
   UserProfileCubit() : super(UserProfileInitialState());

@@ -7,8 +7,8 @@ import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
-import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/route/route_path.dart';
 
 class MenuPage extends StatelessWidget {

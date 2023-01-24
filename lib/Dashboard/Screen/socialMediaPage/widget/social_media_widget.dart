@@ -3,7 +3,7 @@ import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/read_more_text
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_share_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
 
 class SocialMediaNews extends StatelessWidget {
   const SocialMediaNews({super.key});

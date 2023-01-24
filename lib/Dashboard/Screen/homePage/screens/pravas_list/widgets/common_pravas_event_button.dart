@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../../../../../../Values/app_colors.dart';
 

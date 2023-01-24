@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:sangathan/AddEntry/Screen/add_entry_screen.dart';
 import 'package:sangathan/Dashboard/Screen/Dashboard/dashboard_screen.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_deatils_page.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/sangathan_deatils_page.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/zila_data_screen.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/login_page.dart';
 import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
-import 'package:sangathan/SplashScreen/Screen/splash_screen.dart';
 import 'package:sangathan/route/route_path.dart';
 import '../Dashboard/Screen/homePage/screens/edit_date/edit_date_screen.dart';
 import '../Dashboard/Screen/homePage/screens/guest_list/guest_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.dart';
 import '../Dashboard/Screen/homePage/screens/create_function_page/create_function_page.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
+import '../Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
+import '../splash_screen/screen/splash_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic>? generatorRoute(RouteSettings settings) {
@@ -73,14 +73,14 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return PrvasCreateScreen();
+            return const PrvasCreateScreen();
           },
         );
       case RoutePath.pravasEditTimeScreen:
         return MaterialPageRoute(
             settings: RouteSettings(name: settings.name),
             builder: (context) {
-              return EditDateScreen();
+              return const EditDateScreen();
             });
       case RoutePath.pravasListScreen:
         return MaterialPageRoute(
@@ -94,20 +94,20 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             Map<String, dynamic>? map =
-            settings.arguments as Map<String, dynamic>;
+                settings.arguments as Map<String, dynamic>;
             bool? isEdit = map['isEdit'] ?? false;
             bool? isView = map['isView'] ?? false;
-            return  CreateFunctionScreen(isView: isView,isEdit: isEdit);
+            return CreateFunctionScreen(isView: isView, isEdit: isEdit);
           },
         );
-        case RoutePath.stayAndProgramListScreen:
+      case RoutePath.stayAndProgramListScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const StayAndProgramListScreen();
           },
         );
-        case RoutePath.guestListScreen:
+      case RoutePath.guestListScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {

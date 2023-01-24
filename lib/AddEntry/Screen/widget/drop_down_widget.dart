@@ -19,7 +19,6 @@ class CustomDropDown extends StatelessWidget {
   List<String> dropDownList = [];
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<AddEntryCubit>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

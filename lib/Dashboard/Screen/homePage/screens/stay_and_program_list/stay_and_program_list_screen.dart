@@ -6,8 +6,9 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/common/appstyle.dart';
 
-import '../../../../../Values/spaceHeightWidget.dart';
-import '../../../../../Values/spaceWidthWidget.dart';
+
+import '../../../../../Values/space_height_widget.dart';
+import '../../../../../Values/space_width_widget.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/dot_widget.dart';
 import '../../../../../route/route_path.dart';

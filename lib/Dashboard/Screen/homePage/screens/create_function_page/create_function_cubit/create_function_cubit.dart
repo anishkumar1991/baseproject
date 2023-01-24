@@ -35,8 +35,7 @@ class CreateFunctionCubit extends Cubit<CreateFunctionState> {
   Future<void> selectImage1() async {
     emit(CreateFunctionInitial());
     try {
-      final image = await ImagePicker()
-          .pickImage(source: ImageSource.gallery);
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageTemp = File(image.path);
       imageFile1 = imageTemp;
@@ -50,8 +49,7 @@ class CreateFunctionCubit extends Cubit<CreateFunctionState> {
   Future<void> selectImage2() async {
     emit(CreateFunctionInitial());
     try {
-      final image = await ImagePicker()
-          .pickImage(source: ImageSource.gallery);
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
       final imageTemp = File(image.path);
       imageFile2 = imageTemp;

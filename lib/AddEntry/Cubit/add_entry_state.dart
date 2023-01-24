@@ -22,7 +22,9 @@ class AddEntryErrorState extends AddEntryState {
 }
 
 class DobSelectedState extends AddEntryState {
-  final String date;
+
+ final String date;
+
   DobSelectedState(this.date);
 }
 

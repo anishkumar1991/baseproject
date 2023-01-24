@@ -4,18 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
-import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'cubit/zila_data_state.dart';
 
 class ZilaDataScreen extends StatefulWidget {
-  ZilaDataScreen({super.key, required this.type});
-  String? type;
+  const ZilaDataScreen({super.key, required this.type});
+  final String? type;
 
   @override
   State<ZilaDataScreen> createState() => _ZilaDataScreenState();
@@ -35,7 +35,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<HomePageCubit>();
+    var cubit = context.read<ZilaDataCubit>();
     return Scaffold(
       body: SafeArea(
           child:
@@ -63,6 +63,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -157,7 +158,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-  BlocListener<ZilaDataCubit, ZilaDataState> entryDetails(HomePageCubit cubit) {
+  BlocListener<ZilaDataCubit, ZilaDataState> entryDetails(ZilaDataCubit cubit) {
     return BlocListener<ZilaDataCubit, ZilaDataState>(
       listener: (context, state) {
         if (state is ErrorState) {
@@ -172,7 +173,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             }
           }
           if (state is DataFetchingLoadingState) {
-            return const Center(child: CircularProgressIndicator());
+            return shimmerWidget();
           }
           return ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
@@ -274,6 +275,65 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
+  ListView shimmerWidget() {
+    return ListView.separated(
+      separatorBuilder: ((context, index) => spaceHeightWidget(10)),
+      itemCount: 10,
+      shrinkWrap: true,
+      itemBuilder: ((context, index) {
+        return Shimmer.fromColors(
+          baseColor: AppColor.greyColor.withOpacity(0.3),
+          highlightColor: Colors.grey.withOpacity(0.1),
+          child: Row(
+            children: [
+              Container(
+                height: 60,
+                width: 60,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.white),
+              ),
+              spaceWidthWidget(20),
+              Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        height: 8.0,
+                        color: Colors.white,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2.0),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 8.0,
+                        color: Colors.white,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2.0),
+                      ),
+                      Container(
+                        width: 50.0,
+                        height: 8.0,
+                        color: Colors.white,
+                      ),
+                    ]),
+              ),
+              Spacer(),
+              Container(
+                height: 20,
+                width: 20,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle, color: Colors.white),
+              ),
+            ],
+          ),
+        );
+      }),
+    );
+  }
+
   Container entryFilterWidget() {
     return Container(
       height: 32,
@@ -284,15 +344,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         child: Row(
           children: [
             Expanded(
-              child: Container(
-                child: Text(
-                  'नवीन एंट्री',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: AppColor.textBlackColor),
-                ),
+              child: Text(
+                'नवीन एंट्री',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: AppColor.textBlackColor),
               ),
             ),
             Expanded(
@@ -311,15 +369,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               ),
             ),
             Expanded(
-              child: Container(
-                child: Text(
-                  'A to Z',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: AppColor.textBlackColor),
-                ),
+              child: Text(
+                'A to Z',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color: AppColor.textBlackColor),
               ),
             ),
           ],

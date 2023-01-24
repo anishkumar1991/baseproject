@@ -6,12 +6,12 @@ abstract class EditDateState {}
 class EditDateInitial extends EditDateState {}
 
 class StartDateOfTour extends EditDateState {
-  String date;
+ final String date;
   StartDateOfTour(this.date);
 }
 
 class EditTime extends EditDateState {
-  String time;
+ final String time;
   EditTime(this.time);
 }
 class AddEntryLoadingState extends EditDateState {}

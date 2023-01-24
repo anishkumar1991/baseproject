@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/app_colors.dart';
-import 'package:sangathan/Values/spaceWidthWidget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
 class UserImageCard extends StatelessWidget {
-  UserImageCard({super.key, this.imageUrl, this.onTap});
+  const UserImageCard({super.key, this.imageUrl, this.onTap});
   final String? imageUrl;
   final GestureTapCallback? onTap;
   @override

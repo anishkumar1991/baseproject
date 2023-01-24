@@ -7,10 +7,11 @@ import 'package:sangathan/AddEntry/Cubit/add_entry_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
-import 'package:sangathan/SplashScreen/Cubit/user_profile_cubit.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
+import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/string.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
@@ -19,6 +20,7 @@ import 'Dashboard/Screen/homePage/screens/create_function_page/create_function_c
 import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_list/pravas_cubit/pravas_list_cubit.dart';
 import 'generated/l10n.dart';
+import 'splash_screen/cubit/user_profile_cubit.dart';
 
 void main() async {
   await GetStorage.init();
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => PravasListCubit()),
         BlocProvider(create: (context) => CreateFunctionCubit()),
         BlocProvider(create: (context) => ZilaDataCubit()),
+        BlocProvider(create: (context) => SangathanDetailsCubit()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -60,8 +63,10 @@ class MyApp extends StatelessWidget {
         locale: const Locale.fromSubtags(languageCode: 'hi'),
         onGenerateRoute: RouteGenerator.generatorRoute,
         initialRoute: RoutePath.splashScreenPage,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+        theme: Theme.of(context).copyWith(
+          colorScheme: Theme.of(context).colorScheme.copyWith(
+                primary: AppColor.primaryColor,
+              ),
         ),
       ),
     );

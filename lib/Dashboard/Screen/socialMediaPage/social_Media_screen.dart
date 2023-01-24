@@ -5,9 +5,9 @@ import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_v
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_media_widget.dart';
 import 'package:sangathan/Dashboard/Screen/socialMediaPage/widget/social_video.dart';
 import 'package:sangathan/Values/app_colors.dart';
-import 'package:sangathan/Values/spaceHeightWidget.dart';
-import 'package:sangathan/common/common_button.dart';
 
+import '../../../Values/space_height_widget.dart';
+import '../../../common/common_button.dart';
 import '../../../generated/l10n.dart';
 
 class SocialMediaPage extends StatelessWidget {
