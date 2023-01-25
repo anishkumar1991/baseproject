@@ -37,6 +37,12 @@ class EditDateCubit extends Cubit<EditDateState> {
     final TimeOfDay? newTime = await showTimePicker(
       context: context,
       initialTime: _time,
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: false),
+          child: child ?? Container(),
+        );
+      },
     );
     if (newTime != null && newTime != _time) {
       _time = newTime;
@@ -58,7 +64,4 @@ class EditDateCubit extends Cubit<EditDateState> {
     //   emit(EditTime(time));
     // }
   }
-
-
-
 }

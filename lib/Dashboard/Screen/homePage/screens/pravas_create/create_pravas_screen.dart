@@ -31,108 +31,118 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 25),
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             spaceHeightWidget(10),
             headerWidgetPravasCreate(context),
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
-            TextFieldWidget(
-              controller: prvasNameCtr,
-              title: '',
-              labelText: S.of(context).nameOfTour,
-              keyboardType: TextInputType.emailAddress,
-            ),
-            spaceHeightWidget(35),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BlocBuilder<PravasCreateCubit, PravasCreateState>(
-                  builder: (context, state) {
-                    return Row(
+            Expanded(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFieldWidget(
+                      controller: prvasNameCtr,
+                      title: '',
+                      labelText: S.of(context).nameOfTour,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    spaceHeightWidget(35),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          cubit.date != ""
-                              ? cubit.date
-                              : S.of(context).dateFrom,
-                          style: const TextStyle(
-                            color: AppColor.greyColor,
-                          ),
-                        ),
-                        const Spacer(),
-                        GestureDetector(
-                          onTap: () async {
-                            cubit.startDateOfTour(context);
+                        BlocBuilder<PravasCreateCubit, PravasCreateState>(
+                          builder: (context, state) {
+                            return Row(
+                              children: [
+                                Text(
+                                  cubit.startDate != ""
+                                      ? "${cubit.startDate} - ${cubit.endDate}"
+                                      : S.of(context).dateToFrom,
+                                  style: const TextStyle(
+                                    color: AppColor.greyColor,
+                                  ),
+                                ),
+                                const Spacer(),
+                                GestureDetector(
+                                  onTap: () async {
+                                    print("hello");
+                                    cubit.startToEndDate(context);
+                                  },
+                                  child: const Icon(
+                                    Icons.calendar_month_outlined,
+                                    color: AppColor.greyColor,
+                                  ),
+                                )
+                              ],
+                            );
                           },
-                          child: const Icon(
-                            Icons.calendar_month_outlined,
-                            color: AppColor.greyColor,
-                          ),
+                        ),
+                        spaceHeightWidget(4),
+                        Divider(
+                          height: 2,
+                          thickness: 1.5,
+                          color: AppColor.greyColor.withOpacity(0.5),
                         )
                       ],
-                    );
-                  },
+                    ),
+                    // spaceHeightWidget(35),
+                    // Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     BlocBuilder<PravasCreateCubit, PravasCreateState>(
+                    //       builder: (context, state) {
+                    //         return Row(
+                    //           children: [
+                    //             Text(
+                    //               cubit.date1 != ""
+                    //                   ? cubit.date1
+                    //                   : S.of(context).dateTo,
+                    //               style: const TextStyle(
+                    //                 color: AppColor.greyColor,
+                    //               ),
+                    //             ),
+                    //             const Spacer(),
+                    //             GestureDetector(
+                    //               onTap: () async {
+                    //                 cubit.endOfTour(context);
+                    //               },
+                    //               child: const Icon(Icons.calendar_month_outlined,
+                    //                   color: AppColor.greyColor),
+                    //             )
+                    //           ],
+                    //         );
+                    //       },
+                    //     ),
+                    //     spaceHeightWidget(4),
+                    //     Divider(
+                    //       height: 2,
+                    //       thickness: 1.5,
+                    //       color: AppColor.greyColor.withOpacity(0.5),
+                    //     )
+                    //   ],
+                    // ),
+                    spaceHeightWidget(5),
+                    TextFieldWidget(
+                      controller: pravasSubjectCtr,
+                      title: '',
+                      labelText: S.of(context).descriptionOfTour,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
+                    CommonButton(
+                      onTap: () {
+                        showConfirmDialog();
+                      },
+                      title: S.of(context).takeATour,
+                      borderRadius: 10,
+                      height: 50,
+                      style: const TextStyle(fontSize: 15, color: AppColor.white),
+                    )
+                  ],
                 ),
-                spaceHeightWidget(4),
-                Divider(
-                  height: 2,
-                  thickness: 1.5,
-                  color: AppColor.greyColor.withOpacity(0.5),
-                )
-              ],
+              ),
             ),
-            spaceHeightWidget(35),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BlocBuilder<PravasCreateCubit, PravasCreateState>(
-                  builder: (context, state) {
-                    return Row(
-                      children: [
-                        Text(
-                          cubit.date1 != ""
-                              ? cubit.date1
-                              : S.of(context).dateTo,
-                          style: const TextStyle(
-                            color: AppColor.greyColor,
-                          ),
-                        ),
-                        const Spacer(),
-                        GestureDetector(
-                          onTap: () async {
-                            cubit.endOfTour(context);
-                          },
-                          child: const Icon(Icons.calendar_month_outlined,
-                              color: AppColor.greyColor),
-                        )
-                      ],
-                    );
-                  },
-                ),
-                spaceHeightWidget(4),
-                Divider(
-                  height: 2,
-                  thickness: 1.5,
-                  color: AppColor.greyColor.withOpacity(0.5),
-                )
-              ],
-            ),
-            spaceHeightWidget(5),
-            TextFieldWidget(
-              controller: pravasSubjectCtr,
-              title: '',
-              labelText: S.of(context).descriptionOfTour,
-              keyboardType: TextInputType.emailAddress,
-            ),
-            spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
-            CommonButton(
-              onTap: () {
-                showConfirmDialog();
-              },
-              title: S.of(context).takeATour,
-              borderRadius: 10,
-              height: 50,
-              style: const TextStyle(fontSize: 15, color: AppColor.white),
-            )
           ],
         ),
       ),

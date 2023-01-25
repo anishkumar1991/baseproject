@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Values/app_colors.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget(
+   TextFieldWidget(
       {super.key,
         required this.controller,
         required this.title,
@@ -14,12 +14,14 @@ class TextFieldWidget extends StatelessWidget {
         this.labelText,
         this.onTap,
         this.maxLines,
+        this.onChanged,
         this.inpurborder,
         this.hintText});
 
   final TextEditingController controller;
   final String title;
   final TextInputType? keyboardType;
+  ValueChanged<String>? onChanged;
   final bool? readOnly;
   final GestureTapCallback? onTap;
   final String? hintText;
@@ -40,6 +42,7 @@ class TextFieldWidget extends StatelessWidget {
           readOnly: readOnly ?? false,
           keyboardType: keyboardType,
           clipBehavior: Clip.hardEdge,
+          onChanged: onChanged,
           onTap: onTap,
           decoration: InputDecoration(
             border: inpurborder,

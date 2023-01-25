@@ -26,11 +26,15 @@
   "createAndUpdateProgram": "Create and update program",
   "nameOfTour": "Name Of Tour",
   "descriptionOfTour":"Description of Tour",
-  "dateFrom": "Date (From)",
+  "dateToFrom": "Date (From To)",
   "dateTo": "Date (To)",
   "createATour": "Create a tour",
   "makeTourSchedules": "Make tour schedule",
   "later": "Later",
-  "createProgram": "Create program"
+  "createProgram": "Create program",
+  "name": "Name",
+  "phoneNumber": "Mobile Number (optional)",
+  "position": "position",
+  "add": "Add"
 
 }

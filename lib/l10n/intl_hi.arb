@@ -26,10 +26,14 @@
   "createAndUpdateProgram": "कार्यक्रम बनायें एवं अपडेट करे",
   "nameOfTour": "प्रवास का नाम*",
   "descriptionOfTour": "प्रवास का विषय",
-  "dateFrom": "दिनांक  ( कब से )*",
+  "dateToFrom": "दिनांक  ( कब से कब तक)*",
   "dateTo": "दिनांक  ( कब तक )",
   "createATour": "प्रवास बनाएँ",
   "makeTourSchedules": "प्रवास के अंतरगर्त कार्यक्रम बनाये",
   "later": "बाद मे",
-  "createProgram": "कार्याक्रम बनाएँ"
+  "createProgram": "कार्याक्रम बनाएँ",
+  "name": "नाम",
+  "phoneNumber": "फ़ोन नंबर ( वैकल्पिक )",
+  "position": "पद",
+  "add": "ऐड करे"
 }

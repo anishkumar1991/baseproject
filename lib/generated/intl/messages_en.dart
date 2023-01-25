@@ -22,14 +22,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add": MessageLookupByLibrary.simpleMessage("Add"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
         "createATour": MessageLookupByLibrary.simpleMessage("Create a tour"),
         "createAndUpdateProgram":
             MessageLookupByLibrary.simpleMessage("Create and update program"),
         "createProgram": MessageLookupByLibrary.simpleMessage("Create program"),
-        "dateFrom": MessageLookupByLibrary.simpleMessage("Date (From)"),
         "dateTo": MessageLookupByLibrary.simpleMessage("Date (To)"),
+        "dateToFrom": MessageLookupByLibrary.simpleMessage("Date (From To)"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("Description of Tour"),
         "digitCodeHasBeenSent":
@@ -46,9 +47,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "makeProgram": MessageLookupByLibrary.simpleMessage("Make a Program"),
         "makeTourSchedules":
             MessageLookupByLibrary.simpleMessage("Make tour schedule"),
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("OTP Verification"),
+        "phoneNumber":
+            MessageLookupByLibrary.simpleMessage("Mobile Number (optional)"),
+        "position": MessageLookupByLibrary.simpleMessage("position"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "program": MessageLookupByLibrary.simpleMessage("Program"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("Resend OTP"),

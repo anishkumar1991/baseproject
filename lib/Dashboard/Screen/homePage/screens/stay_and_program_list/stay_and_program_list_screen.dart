@@ -24,36 +24,42 @@ class StayAndProgramListScreen extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.symmetric(horizontal: 15),
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              spaceHeightWidget(10),
-              headerWidgetStayProgramList(context),
-              spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
-              buildCard(context: context),
-              spaceHeightWidget(MediaQuery.of(context).size.height * 0.025),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                    'कुल कार्यक्रम - 12',
-                    textAlign: TextAlign.left,
-                    style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w500)
+        child: Column(
+          children: [
+            spaceHeightWidget(10),
+            headerWidgetStayProgramList(context),
+            spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildCard(context: context),
+                    spaceHeightWidget(MediaQuery.of(context).size.height * 0.025),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                          'कुल कार्यक्रम - 12',
+                          textAlign: TextAlign.left,
+                          style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w500)
+                      ),
+                    ),
+                    spaceHeightWidget(MediaQuery.of(context).size.height * 0.015),
+                    ListView.builder(
+                        itemCount: 3,
+                        padding: EdgeInsets.zero,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context,index){
+                          return buildBottomContainer(context: context);
+                        })
+
+                  ],
                 ),
               ),
-              spaceHeightWidget(MediaQuery.of(context).size.height * 0.015),
-              ListView.builder(
-                  itemCount: 3,
-                  padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context,index){
-                    return buildBottomContainer(context: context);
-                  })
-
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       floatingActionButton: Padding(
@@ -62,7 +68,7 @@ class StayAndProgramListScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: CommonButton(
               onTap: () {
-                // Navigator.pushNamed(context, RoutePath.createProgramScreen);
+                Navigator.pushNamed(context, RoutePath.createFunctionScreen);
               },
               title: 'प्रवास बनाये',
               width: 200,

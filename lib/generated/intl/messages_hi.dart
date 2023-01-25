@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "click": MessageLookupByLibrary.simpleMessage("क्लिक करें"),
         "createATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाएँ"),
@@ -29,8 +30,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "कार्यक्रम बनायें एवं अपडेट करे"),
         "createProgram":
             MessageLookupByLibrary.simpleMessage("कार्याक्रम बनाएँ"),
-        "dateFrom": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब से )*"),
         "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )"),
+        "dateToFrom":
+            MessageLookupByLibrary.simpleMessage("दिनांक  ( कब से कब तक)*"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("प्रवास का विषय"),
         "digitCodeHasBeenSent": MessageLookupByLibrary.simpleMessage(
@@ -47,9 +49,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "makeProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम बनायें"),
         "makeTourSchedules": MessageLookupByLibrary.simpleMessage(
             "प्रवास के अंतरगर्त कार्यक्रम बनाये"),
+        "name": MessageLookupByLibrary.simpleMessage("नाम"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
+        "phoneNumber":
+            MessageLookupByLibrary.simpleMessage("फ़ोन नंबर ( वैकल्पिक )"),
+        "position": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("ओटीपी पुनः भेजें"),

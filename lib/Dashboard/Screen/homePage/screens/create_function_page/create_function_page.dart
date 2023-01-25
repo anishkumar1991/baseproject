@@ -5,7 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/create_function_page/widgets/header_widget_create_function.dart';
 import 'package:sangathan/Values/app_colors.dart';
+
 import 'package:sangathan/Values/space_width_widget.dart';
+import 'package:sangathan/Values/icons.dart';
+
 
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/common_button.dart';
@@ -42,301 +45,393 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
               child: headerWidgetCreateFunction(context),
             ),
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
-            Expanded(
-                child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        TextFieldWidget(
-                          controller: cubit.functionNameText,
-                          title: '',
-                          labelText: 'कार्यक्रम का नाम *',
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                        TextFieldWidget(
-                          controller: cubit.functionDateTimeText,
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, RoutePath.pravasEditTimeScreen);
-                          },
-                          readOnly: true,
-                          title: '',
-                          hintText: 'दिनांक और समय * ',
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                        BlocBuilder<CreateFunctionCubit, CreateFunctionState>(
-                          builder: (context, state) {
-                            return TextFieldWidget(
-                              controller: cubit.functionTypeText,
-                              title: '',
-                              hintText: 'कार्यक्रम का प्रकार *',
-                              readOnly: true,
-                              keyboardType: TextInputType.emailAddress,
-                              suffixWidget: SizedBox(
-                                width: 60,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    const Icon(Icons.info_outline_rounded,
-                                        color: AppColor.blue),
-                                    spaceWidthWidget(8),
-                                    InkWell(
-                                        onTap: () {
-                                          _modalBottomSheetMenuForFunctionType(
-                                              context);
-                                        },
-                                        child: const Icon(
-                                            Icons.keyboard_arrow_down_rounded)),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                        TextFieldWidget(
-                          controller: cubit.functionLevelText,
-                          title: '',
-                          hintText: 'कार्यक्रम का स्तर *',
-                          readOnly: true,
-                          keyboardType: TextInputType.emailAddress,
-                          suffixWidget: InkWell(
-                              onTap: () {
-                                _modalBottomSheetMenuForFunctionLevel(context);
-                              },
-                              child: const Icon(
-                                  Icons.keyboard_arrow_down_rounded)),
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                        TextFieldWidget(
-                          controller: cubit.lokSabhaText,
-                          title: '',
-                          hintText: 'लोकसभा',
-                          readOnly: true,
-                          keyboardType: TextInputType.emailAddress,
-                          suffixWidget:
-                              const Icon(Icons.keyboard_arrow_down_rounded),
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                        BlocBuilder<CreateFunctionCubit, CreateFunctionState>(
-                          builder: (context, state) {
-                            return TextFieldWidget(
-                              controller: cubit.placeText,
-                              title: '',
-                              readOnly: true,
-                              onTap: () {
-                                _modalBottomSheetMenuForPlace(context,
-                                    selectedValue: cubit.placeText.text);
-                              },
-                              hintText: 'स्थान ( कार्यक्रम स्थल का पता )',
-                              keyboardType: TextInputType.emailAddress,
-                              suffixWidget: const Icon(
-                                  Icons.info_outline_rounded,
-                                  color: AppColor.blue),
-                            );
-                          },
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                        TextFieldWidget(
-                          controller: cubit.subjectText,
-                          title: '',
-                          labelText: 'विषय',
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                      ],
-                    ),
-                  ),
-                  spaceHeightWidget(MediaQuery.of(context).size.height * 0.04),
-                  Container(
-                    color: AppColor.lightGreenColor,
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        Text(
-                          'कार्यक्रम में उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता जिनका नाम आप जोड़ना चाहते है।',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                              color: AppColor.naturalBlackColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        spaceHeightWidget(19),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, RoutePath.guestListScreen);
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'ऐड कर ( वैकल्पिक  )',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(
-                                    color: AppColor.blue, fontSize: 14),
-                              ),
-                              spaceWidthWidget(5),
-                              const Icon(
-                                Icons.arrow_forward,
-                                color: AppColor.blue,
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        TextFieldWidget(
-                          controller: cubit.commentText,
-                          // inpurborder: InputBorder.none,
-                          maxLines: 5,
-                          title: '',
-                          labelText: 'टिपण्णी',
-                          keyboardType: TextInputType.emailAddress,
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.05),
-                        Text(
-                          'फोटो ( अधिकतम  2  )',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                              color: AppColor.naturalBlackColor, fontSize: 12),
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.01),
-                        BlocBuilder<CreateFunctionCubit, CreateFunctionState>(
-                          builder: (context, state) {
-                            return InkWell(
-                                onTap: () {
-                                  cubit.selectImage1();
+            Expanded(child: SingleChildScrollView(
+              child: BlocBuilder<CreateFunctionCubit, CreateFunctionState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            TextFieldWidget(
+                                controller: cubit.functionNameText,
+                                title: '',
+                                labelText: 'कार्यक्रम का नाम *',
+                                onChanged: (value) {
+                                  cubit.emitState();
                                 },
-                                child: cubit.imageFile1 == null
-                                    ? DottedBorder(
-                                        color: AppColor.blue,
-                                        strokeWidth: 1,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            children: [
-                                              const Icon(Icons.image,
-                                                  color: AppColor.blue),
-                                              spaceWidthWidget(
-                                                  MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05),
-                                              Text(
-                                                'फोटो यहाँ अपलोड करें',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                    color: AppColor.blue,
-                                                    fontSize: 12),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    : InkWell(
-                                        onTap: () {},
-                                        child: SizedBox(
-                                          height: 100,
-                                          width: 130,
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.file(
-                                                  cubit.imageFile1!,
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                      ));
-                          },
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                        BlocBuilder<CreateFunctionCubit, CreateFunctionState>(
-                          builder: (context, state) {
-                            return InkWell(
-                                onTap: () {
-                                  cubit.selectImage2();
-                                },
-                                child: cubit.imageFile2 == null
-                                    ? DottedBorder(
-                                        color: AppColor.blue,
-                                        strokeWidth: 1,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            children: [
-                                              const Icon(Icons.image,
-                                                  color: AppColor.blue),
-                                              spaceWidthWidget(
-                                                  MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.05),
-                                              Text(
-                                                'फोटो यहाँ अपलोड करें',
-                                                textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                    color: AppColor.blue,
-                                                    fontSize: 12),
+                                keyboardType: TextInputType.emailAddress,
+                                suffixWidget:
+                                    cubit.functionNameText.text.isNotEmpty
+                                        ? InkWell(
+                                            onTap: () {
+                                              cubit.functionNameText.clear();
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 16.0,
+                                                  left: 15,
+                                                  right: 15),
+                                              child: Image.asset(
+                                                AppIcons.clearIcon,
+                                                height: 2,
+                                                width: 5,
                                               ),
-                                            ],
+                                            ),
+                                          )
+                                        : SizedBox.shrink()),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            TextFieldWidget(
+                              controller: cubit.functionDateTimeText,
+                              onChanged: (value) {
+                                cubit.emitState();
+                              },
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutePath.pravasEditTimeScreen);
+                              },
+                              readOnly: true,
+                              suffixWidget:
+                                  cubit.functionDateTimeText.text.isNotEmpty
+                                      ? InkWell(
+                                          onTap: () {
+                                            cubit.functionDateTimeText.clear();
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 16.0, left: 15, right: 15),
+                                            child: Image.asset(
+                                              AppIcons.clearIcon,
+                                              height: 2,
+                                              width: 5,
+                                            ),
                                           ),
+                                        )
+                                      : SizedBox.shrink(),
+                              title: '',
+                              hintText: 'दिनांक और समय * ',
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            BlocBuilder<CreateFunctionCubit,
+                                CreateFunctionState>(
+                              builder: (context, state) {
+                                return TextFieldWidget(
+                                  controller: cubit.functionTypeText,
+                                  title: '',
+                                  hintText: 'कार्यक्रम का प्रकार *',
+                                  readOnly: true,
+                                  keyboardType: TextInputType.emailAddress,
+                                  suffixWidget: SizedBox(
+                                    width: 60,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        const Icon(Icons.info_outline_rounded,
+                                            color: AppColor.blue),
+                                        spaceWidthWidget(8),
+                                        InkWell(
+                                            onTap: () {
+                                              _modalBottomSheetMenuForFunctionType(
+                                                  context);
+                                            },
+                                            child: const Icon(Icons
+                                                .keyboard_arrow_down_rounded)),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            TextFieldWidget(
+                              controller: cubit.functionLevelText,
+                              title: '',
+                              hintText: 'कार्यक्रम का स्तर *',
+                              readOnly: true,
+                              keyboardType: TextInputType.emailAddress,
+                              suffixWidget: InkWell(
+                                  onTap: () {
+                                    _modalBottomSheetMenuForFunctionLevel(
+                                        context);
+                                  },
+                                  child: const Icon(
+                                      Icons.keyboard_arrow_down_rounded)),
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            TextFieldWidget(
+                              controller: cubit.lokSabhaText,
+                              title: '',
+                              hintText: 'लोकसभा',
+                              readOnly: true,
+                              keyboardType: TextInputType.emailAddress,
+                              suffixWidget:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            BlocBuilder<CreateFunctionCubit,
+                                CreateFunctionState>(
+                              builder: (context, state) {
+                                return TextFieldWidget(
+                                  controller: cubit.placeText,
+                                  title: '',
+                                  readOnly: true,
+                                  onTap: () {
+                                    _modalBottomSheetMenuForPlace(context,
+                                        selectedValue: cubit.placeText.text);
+                                  },
+                                  hintText: 'स्थान ( कार्यक्रम स्थल का पता )',
+                                  keyboardType: TextInputType.emailAddress,
+                                  suffixWidget: const Icon(
+                                      Icons.info_outline_rounded,
+                                      color: AppColor.blue),
+                                );
+                              },
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            TextFieldWidget(
+                              controller: cubit.subjectText,
+                              title: '',
+                              labelText: 'विषय',
+                              onChanged: (value) {
+                                cubit.emitState();
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              suffixWidget: cubit.subjectText.text.isNotEmpty
+                                  ? InkWell(
+                                      onTap: () {
+                                        cubit.subjectText.clear();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 16.0, left: 15, right: 15),
+                                        child: Image.asset(
+                                          AppIcons.clearIcon,
+                                          height: 2,
+                                          width: 5,
                                         ),
-                                      )
-                                    : InkWell(
-                                        onTap: () {},
-                                        child: SizedBox(
-                                          height: 100,
-                                          width: 130,
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.file(
-                                                  cubit.imageFile2!,
-                                                  fit: BoxFit.cover)),
+                                      ),
+                                    )
+                                  : SizedBox.shrink(),
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                          ],
+                        ),
+                      ),
+                      spaceHeightWidget(
+                          MediaQuery.of(context).size.height * 0.04),
+                      Container(
+                        color: AppColor.lightGreenColor,
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          children: [
+                            Text(
+                              'कार्यक्रम में उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता जिनका नाम आप जोड़ना चाहते है।',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  color: AppColor.naturalBlackColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            spaceHeightWidget(19),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutePath.guestListScreen);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'ऐड कर ( वैकल्पिक  )',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.blue, fontSize: 14),
+                                  ),
+                                  spaceWidthWidget(5),
+                                  const Icon(
+                                    Icons.arrow_forward,
+                                    color: AppColor.blue,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      spaceHeightWidget(
+                          MediaQuery.of(context).size.height * 0.02),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            TextFieldWidget(
+                              controller: cubit.commentText,
+                              maxLines: 5,
+                              onChanged: (value) {
+                                cubit.emitState();
+                              },
+                              suffixWidget: cubit.commentText.text.isNotEmpty
+                                  ? InkWell(
+                                      onTap: () {
+                                        cubit.commentText.clear();
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 16.0, left: 15, right: 15),
+                                        child: Image.asset(
+                                          AppIcons.clearIcon,
+                                          height: 2,
+                                          width: 5,
                                         ),
-                                      ));
-                          },
+                                      ),
+                                    )
+                                  : SizedBox.shrink(),
+                              title: '',
+                              labelText: 'टिपण्णी',
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.05),
+                            Text(
+                              'फोटो ( अधिकतम  2  )',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                  color: AppColor.naturalBlackColor,
+                                  fontSize: 12),
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.01),
+                            BlocBuilder<CreateFunctionCubit,
+                                CreateFunctionState>(
+                              builder: (context, state) {
+                                return InkWell(
+                                    onTap: () {
+                                      cubit.selectImage1();
+                                    },
+                                    child: cubit.imageFile1 == null
+                                        ? DottedBorder(
+                                            color: AppColor.blue,
+                                            strokeWidth: 1,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(Icons.image,
+                                                      color: AppColor.blue),
+                                                  spaceWidthWidget(
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.05),
+                                                  Text(
+                                                    'फोटो यहाँ अपलोड करें',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.poppins(
+                                                        color: AppColor.blue,
+                                                        fontSize: 12),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : InkWell(
+                                            onTap: () {},
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 130,
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: Image.file(
+                                                      cubit.imageFile1!,
+                                                      fit: BoxFit.cover)),
+                                            ),
+                                          ));
+                              },
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            BlocBuilder<CreateFunctionCubit,
+                                CreateFunctionState>(
+                              builder: (context, state) {
+                                return InkWell(
+                                    onTap: () {
+                                      cubit.selectImage2();
+                                    },
+                                    child: cubit.imageFile2 == null
+                                        ? DottedBorder(
+                                            color: AppColor.blue,
+                                            strokeWidth: 1,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(Icons.image,
+                                                      color: AppColor.blue),
+                                                  spaceWidthWidget(
+                                                      MediaQuery.of(context)
+                                                              .size
+                                                              .width *
+                                                          0.05),
+                                                  Text(
+                                                    'फोटो यहाँ अपलोड करें',
+                                                    textAlign: TextAlign.center,
+                                                    style: GoogleFonts.poppins(
+                                                        color: AppColor.blue,
+                                                        fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        : InkWell(
+                                            onTap: () {},
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 130,
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: Image.file(
+                                                      cubit.imageFile2!,
+                                                      fit: BoxFit.cover)),
+                                            ),
+                                          ));
+                              },
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.07),
+                            widget.isEdit == true || widget.isView == true
+                                ? SizedBox.shrink()
+                                : CommonButton(
+                                    onTap: () {
+                                      Navigator.pushReplacementNamed(context,
+                                          RoutePath.stayAndProgramListScreen);
+                                    },
+                                    title: 'सेव करे',
+                                    height: 50,
+                                    borderRadius: 7,
+                                    style: const TextStyle(
+                                        fontSize: 20, color: AppColor.white),
+                                  ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                          ],
                         ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.07),
-                        CommonButton(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, RoutePath.stayAndProgramListScreen);
-                          },
-                          title: 'सेव करे',
-                          height: 50,
-                          borderRadius: 7,
-                          style: TextStyle(fontSize: 20, color: AppColor.white),
-                        ),
-                        spaceHeightWidget(
-                            MediaQuery.of(context).size.height * 0.02),
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
             ))
           ],

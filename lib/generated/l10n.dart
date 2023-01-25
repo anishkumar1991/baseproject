@@ -310,11 +310,11 @@ class S {
     );
   }
 
-  /// `Date (From)`
-  String get dateFrom {
+  /// `Date (From To)`
+  String get dateToFrom {
     return Intl.message(
-      'Date (From)',
-      name: 'dateFrom',
+      'Date (From To)',
+      name: 'dateToFrom',
       desc: '',
       args: [],
     );
@@ -365,6 +365,46 @@ class S {
     return Intl.message(
       'Create program',
       name: 'createProgram',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mobile Number (optional)`
+  String get phoneNumber {
+    return Intl.message(
+      'Mobile Number (optional)',
+      name: 'phoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `position`
+  String get position {
+    return Intl.message(
+      'position',
+      name: 'position',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get add {
+    return Intl.message(
+      'Add',
+      name: 'add',
       desc: '',
       args: [],
     );

@@ -93,11 +93,16 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            Map<String, dynamic>? map =
-                settings.arguments as Map<String, dynamic>;
-            bool? isEdit = map['isEdit'] ?? false;
-            bool? isView = map['isView'] ?? false;
-            return CreateFunctionScreen(isView: isView, isEdit: isEdit);
+            Map<String, dynamic>? map = {};
+            bool? isEdit = false;
+            bool? isView = false;
+            if (settings.arguments != null) {
+              map = settings.arguments as Map<String, dynamic>;
+              isEdit = map['isEdit'];
+              isView = map['isView'];
+            }
+            return CreateFunctionScreen(
+                isView: isView ?? false, isEdit: isEdit ?? false);
           },
         );
       case RoutePath.stayAndProgramListScreen:

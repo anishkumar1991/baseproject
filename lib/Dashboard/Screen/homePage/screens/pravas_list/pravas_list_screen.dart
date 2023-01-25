@@ -194,13 +194,18 @@ class PravasListScreen extends StatelessWidget {
                                 .isAfter(DateTime.now())) {
                               if (pravasList[index].totalEvent != 0) {
                                 //function create or update
+                                print("0");
+                                Navigator.pushNamed(
+                                    context, RoutePath.stayAndProgramListScreen);
                               } else {
+                                print("1");
                                 //function create
                                 Navigator.pushNamed(
                                     context, RoutePath.createFunctionScreen);
                               }
                             } else {
                               //show function
+                              print("2");
                               Navigator.pushNamed(
                                   context, RoutePath.stayAndProgramListScreen);
                             }

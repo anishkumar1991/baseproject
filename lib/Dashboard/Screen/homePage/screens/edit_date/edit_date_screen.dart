@@ -29,7 +29,7 @@ class _EditDateScreenState extends State<EditDateScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             spaceHeightWidget(10),
-            headerWidgetEditDate(),
+            headerWidgetEditDate(context: context),
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.05),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,6 +101,7 @@ class _EditDateScreenState extends State<EditDateScreen> {
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
             CommonButton(
               onTap: (){
+                Navigator.pop(context);
               },
               title: 'आगे',
               borderRadius: 10,

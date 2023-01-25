@@ -17,8 +17,13 @@ class CreateFunctionCubit extends Cubit<CreateFunctionState> {
   final TextEditingController placeText = TextEditingController();
   final TextEditingController subjectText = TextEditingController();
   final TextEditingController commentText = TextEditingController();
+
   File? imageFile1;
   File? imageFile2;
+
+  emitState(){
+    emit(CreateFunctionInitial());
+  }
 
   setFunctionType({required String typeName}) {
     emit(CreateFunctionInitial());

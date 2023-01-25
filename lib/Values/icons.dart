@@ -54,6 +54,7 @@ class AppIcons {
     static const String calender = "assets/images/calender.png";
     static const String marker = "assets/images/marker.png";
     static const String tempCardImg = "assets/images/temp_image_1.png";
+    static const String clearIcon = "assets/images/clear_icon.png";
 
 
 }
