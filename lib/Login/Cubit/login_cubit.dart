@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/api/auth_api.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/alloted_location_model.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
@@ -77,7 +76,6 @@ class LoginCubit extends Cubit<LoginState> {
 
       if (res.response.statusCode == 200) {
         UserDetails userData = UserDetails.fromJson(res.data);
-
         print('Auth token==${userData.authToken}');
         await StorageService.setUserAuthToken(userData.authToken ?? '');
         emit(UserLoginSuccessfullyState(userData));

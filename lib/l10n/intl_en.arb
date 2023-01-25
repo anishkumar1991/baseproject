@@ -53,6 +53,11 @@
   "uploadPhoto": "upload photo here",
   "save" : "save it",
   "stayAndProgramList": "Stay and program list",
-  "totalProgram" : "Total Program"
-
+  "totalProgram" : "Total Program",
+  "pleaseChoosePlace":"Please choose location" ,
+  "noOrganizationsAvailable": "No organizations available",
+  "entry": "Entry",
+  "total": "Total",
+  "dataEntry":"Data Entry"
+  
 }

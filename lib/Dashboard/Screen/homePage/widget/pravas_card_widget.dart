@@ -7,6 +7,7 @@ import 'package:sangathan/route/route_path.dart';
 
 import '../../../../generated/l10n.dart';
 
+
 class PravasCardWidget extends StatelessWidget {
 
  const PravasCardWidget({super.key});
@@ -32,7 +33,7 @@ class PravasCardWidget extends StatelessWidget {
 
                      Text(
                        S.of(context).tour,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: 'Tw Cen MT',
                           color: AppColor.textBlackColor,
                           fontSize: 20),
@@ -76,7 +77,7 @@ class PravasCardWidget extends StatelessWidget {
                                     spaceWidthWidget(10),
                                      Text(
                                       S.of(context).totalTravelSoFar,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontFamily: 'Tw Cen MT',
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,
@@ -113,7 +114,7 @@ class PravasCardWidget extends StatelessWidget {
                                     spaceWidthWidget(10),
                                      Text(
                                       S.of(context).upcomingTrip,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontFamily: 'Tw Cen MT',
                                           fontSize: 14,
                                           fontWeight: FontWeight.w400,

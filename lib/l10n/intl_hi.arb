@@ -53,5 +53,10 @@
   "uploadPhoto": "फोटो यहाँ अपलोड करें",
   "save" : "सेव करे",
   "stayAndProgramList": "प्रवास और कार्यक्रम सूची",
-  "totalProgram" : "कुल कार्यक्रम"
+  "totalProgram" : "कुल कार्यक्रम",
+  "pleaseChoosePlace":"कृपया स्थान चुनें",
+  "noOrganizationsAvailable":"कोई संगठन उपलब्ध नहीं है",
+  "entry":"एंट्री",
+  "total":"कुल",
+  "dataEntry":"डाटा एंट्री"
 }

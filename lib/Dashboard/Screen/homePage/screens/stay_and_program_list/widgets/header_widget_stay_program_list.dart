@@ -14,7 +14,7 @@ Widget headerWidgetStayProgramList(BuildContext context){
           },
           child: const Icon(Icons.arrow_back,size: 25)),
       spaceWidthWidget(10),
-      Text(S.of(context).stayAndProgramList,style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
+      Text(S.of(context).stayAndProgramList,style:const TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
     ],
   );
 }

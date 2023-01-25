@@ -57,7 +57,7 @@ class GuestListScreen extends StatelessWidget {
                  title: S.of(context).add,
                  height: 50,
                  borderRadius: 7,
-                 style: TextStyle(fontSize: 20, color: AppColor.white),
+                 style: const TextStyle(fontSize: 20, color: AppColor.white),
                ),
                spaceHeightWidget(20),
                ListView.builder(
@@ -105,7 +105,7 @@ class GuestListScreen extends StatelessWidget {
                              Text("9783748362",style: textStyleWithPoppin(color: AppColor.greyColor,fontSize: 10),)
                            ],
                          ),
-                         Spacer(),
+                         const Spacer(),
                          Container(
                            decoration: BoxDecoration(
                              borderRadius: BorderRadius.circular(8),
@@ -113,7 +113,7 @@ class GuestListScreen extends StatelessWidget {
                            ),
                            height: 40,
                            width: 40,
-                           child: Icon(Icons.edit_outlined,color: AppColor.blue,size: 22,),
+                           child: const Icon(Icons.edit_outlined,color: AppColor.blue,size: 22,),
                          )
                        ],
                      ),

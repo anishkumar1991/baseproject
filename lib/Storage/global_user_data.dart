@@ -1,5 +1,5 @@
 import '../Login/Network/model/user_model.dart';
 
-class UserData {
+class UserProfile {
   static User user = User();
 }

@@ -13,8 +13,8 @@ class UserProfileCubit extends Cubit<UserProfileState> {
   Future getUserProfileData() async {
     try {
       emit(UserProfileLoadigState());
-      String? token = StorageService.getUserAuthToken();
-      final res = await api.getUserProfileDetails('Bearer $token');
+      final res = await api
+          .getUserProfileDetails('Bearer ${StorageService.userAuthToken}');
       print('profile res =${res.response.statusCode}');
       print(res.data);
       if (res.response.statusCode == 200) {
@@ -25,7 +25,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
         emit(UserProfileErrorState(msg?['error'] ?? ''));
       }
     } catch (e) {
-      emit(UserProfileErrorState(e.toString()));
+      emit(UserProfileErrorState('something went wrong'));
     }
   }
 }

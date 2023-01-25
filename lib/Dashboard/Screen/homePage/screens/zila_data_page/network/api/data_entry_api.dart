@@ -12,4 +12,12 @@ abstract class DataEntryApi {
   @POST('/zila/api/dashboard/karyakarta_report')
   Future<HttpResponse> getPersonList(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
+
+  @GET('/zila/api/data_entry/party_zilas?state_id={id}')
+  Future<HttpResponse> partyzilas(
+      @Header('Authorization') String token, @Path('id') int id);
+
+  @POST('/zila/api/dashboard/get_filter_options')
+  Future<HttpResponse> getFilterOptions(
+      @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

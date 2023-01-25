@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "कार्यक्रम बनायें एवं अपडेट करे"),
         "createProgram":
             MessageLookupByLibrary.simpleMessage("कार्याक्रम बनाएँ"),
+        "dataEntry": MessageLookupByLibrary.simpleMessage("डाटा एंट्री"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("दिनांक और समय * "),
         "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )"),
         "dateToFrom":
@@ -46,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterOTP": MessageLookupByLibrary.simpleMessage("ओटीपी दर्ज करें"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
+        "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
         "functionAdd": MessageLookupByLibrary.simpleMessage(
             "स्थान ( कार्यक्रम स्थल का पता )"),
         "functionLayer":
@@ -67,11 +69,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "myEvent": MessageLookupByLibrary.simpleMessage("मेरे कार्यक्रम"),
         "name": MessageLookupByLibrary.simpleMessage("नाम"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
+        "noOrganizationsAvailable":
+            MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
         "phoneNumber":
             MessageLookupByLibrary.simpleMessage("फ़ोन नंबर ( वैकल्पिक )"),
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
+        "pleaseChoosePlace":
+            MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
@@ -85,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("प्रवास और कार्यक्रम सूची"),
         "subject": MessageLookupByLibrary.simpleMessage("विषय"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
+        "total": MessageLookupByLibrary.simpleMessage("कुल"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("कुल कार्यक्रम"),
         "totalTravelSoFar":
             MessageLookupByLibrary.simpleMessage("अब तक की कुल यात्रा -"),

@@ -17,7 +17,6 @@ import '../../../Login/Cubit/login_cubit.dart';
 import '../../../Values/space_width_widget.dart';
 import '../../../generated/l10n.dart';
 
-
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final TextEditingController searchTextController = TextEditingController();
@@ -139,13 +138,13 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                   const PravasCardWidget(),
+                    const PravasCardWidget(),
                     const SizedBox(
                       height: 14,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:  [
+                      children: [
                         Text(
                           S.of(context).myEvent,
                           style: const TextStyle(
@@ -168,7 +167,7 @@ class HomePage extends StatelessWidget {
                       height: 10,
                     ),
                     SizedBox(
-                        height: 262,
+                        height: 270,
                         child: EventListView(
                           onTap: (() {}),
                           title: 'Mann ki Baat',

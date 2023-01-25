@@ -26,3 +26,5 @@ class LocationFetchedState extends SangathanDetailsState {
   final AllotedLocationModel locationData;
   LocationFetchedState(this.locationData);
 }
+
+class LocationChoosedState extends SangathanDetailsState{}

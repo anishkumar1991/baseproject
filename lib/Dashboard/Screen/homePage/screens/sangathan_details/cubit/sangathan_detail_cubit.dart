@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail.state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/api/sangathan_details_api.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/sangathan_data_model.dart';
+import 'package:sangathan/storage/global_user_data.dart';
 
 import '../network/model/alloted_location_model.dart';
 import '../../../../../../storage/user_storage_service.dart';
@@ -14,12 +15,15 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   List<SangathanData> sangathanDataList = [];
   List<Locations> locationList = [];
+  int? selectedId;
   Future getSangathanDataLevel() async {
     try {
       emit(LoadingState());
-      String? token = StorageService.getUserAuthToken();
-      var res = await api.getDataLevel('Bearer $token',
-          'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D)');
+      var res = await api.getDataLevel(
+          'Bearer ${StorageService.userAuthToken}',
+          'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D)',
+          true,
+          1);
       print('sangathan Data =${res.response.statusCode}');
       if (res.response.statusCode == 200) {
         print(res.response.data);
@@ -30,24 +34,34 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
         emit(ErrorState(res.data['message']));
       }
     } catch (e) {
-      emit(ErrorState(e.toString()));
+      emit(ErrorState('Something Went Wrong'));
     }
   }
 
   Future getAllotedLocations() async {
     try {
-      emit(LoadingState());
-      String token = StorageService.getUserAuthToken() ?? '';
-      final respose = await api.allottedlocations('Bearer $token');
-      print('Alloted locations res=${respose.response.statusCode}');
-      if (respose.response.statusCode == 200) {
-        AllotedLocationModel data = AllotedLocationModel.fromJson(respose.data);
-        emit(LocationFetchedState(data));
-      } else {
-        emit(ErrorState('Something Went Wrong'));
+      if (UserProfile.user.countryStateId == 0 ||
+          UserProfile.user.countryStateId == null) {
+        emit(LoadingState());
+        final respose = await api
+            .allottedlocations('Bearer ${StorageService.userAuthToken}');
+        print('Alloted locations res=${respose.response.statusCode}');
+        if (respose.response.statusCode == 200) {
+          AllotedLocationModel data =
+              AllotedLocationModel.fromJson(respose.data);
+          emit(LocationFetchedState(data));
+        } else {
+          emit(ErrorState(respose.data['message']));
+        }
       }
     } catch (e) {
-      ErrorState(e.toString());
+      ErrorState('Something Went Wrong');
     }
+  }
+
+  void onSelectLocation(int id) {
+    emit(LoadingState());
+    selectedId = id;
+    emit(LocationChoosedState());
   }
 }

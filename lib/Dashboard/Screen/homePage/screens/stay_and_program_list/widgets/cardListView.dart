@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 
 class CardListView extends StatelessWidget {
@@ -11,7 +10,7 @@ class CardListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
         shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
+        physics:const BouncingScrollPhysics(),
         itemCount: 10,
         scrollDirection: Axis.horizontal,
         itemBuilder: ((context, index) {

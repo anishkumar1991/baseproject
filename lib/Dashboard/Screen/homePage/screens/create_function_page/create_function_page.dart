@@ -81,7 +81,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                               ),
                                             ),
                                           )
-                                        : SizedBox.shrink()),
+                                        : const SizedBox.shrink()),
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.02),
                             TextFieldWidget(
@@ -110,7 +110,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                             ),
                                           ),
                                         )
-                                      : SizedBox.shrink(),
+                                      : const SizedBox.shrink(),
                               title: '',
                               hintText:  S.of(context).dateAndTime,
                               keyboardType: TextInputType.emailAddress,
@@ -220,7 +220,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                         ),
                                       ),
                                     )
-                                  : SizedBox.shrink(),
+                                  : const SizedBox.shrink(),
                             ),
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.02),
@@ -296,7 +296,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                         ),
                                       ),
                                     )
-                                  : SizedBox.shrink(),
+                                  : const SizedBox.shrink(),
                               title: '',
                               labelText:  S.of(context).comment,
                               keyboardType: TextInputType.emailAddress,
@@ -413,7 +413,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.07),
                             widget.isEdit == true || widget.isView == true
-                                ? SizedBox.shrink()
+                                ? const SizedBox.shrink()
                                 : CommonButton(
                                     onTap: () {
                                       Navigator.pushReplacementNamed(context,

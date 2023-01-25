@@ -46,7 +46,7 @@ class EventListView extends StatelessWidget {
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20)),
                     ),
-                    width: 206,
+                    width: 216,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 18),
                       child: Column(

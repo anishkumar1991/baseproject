@@ -9,27 +9,30 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
+import 'package:sangathan/generated/l10n.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'cubit/zila_data_state.dart';
 
 class ZilaDataScreen extends StatefulWidget {
-  const ZilaDataScreen({super.key, required this.type});
+  const ZilaDataScreen({super.key, required this.type, this.id});
   final String? type;
-
+  final int? id;
   @override
   State<ZilaDataScreen> createState() => _ZilaDataScreenState();
 }
 
 class _ZilaDataScreenState extends State<ZilaDataScreen> {
-  List<String> zilaNameList = ['Bhopal', 'Bihar', 'UttarPradesh'];
-  List<String> data = ['पदाधिकारी', 'कार्यकारिणी', 'सार्वजनिक बैठक'];
-
   @override
   void initState() {
     context
         .read<ZilaDataCubit>()
         .getEntryData(data: {"level": 4, "unit": 25, "level_name": 348});
+    if (widget.id != null) {
+      context.read<ZilaDataCubit>().getPartyZila(id: widget.id!);
+    }
+    context.read<ZilaDataCubit>().getFilterOptions();
+
     super.initState();
   }
 
@@ -49,7 +52,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 }),
                 icon: const Icon(Icons.arrow_back)),
             Text(
-              '${widget.type} Data Entry',
+              '${widget.type} ${S.of(context).dataEntry}',
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -83,44 +86,66 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   spaceHeightWidget(13),
                   SizedBox(
                     height: 44,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: data.length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            margin: const EdgeInsets.only(right: 16),
-                            decoration: BoxDecoration(
-                              color: index == 0
-                                  ? AppColor.buttonOrangeBackGroundColor
-                                  : AppColor.orange300Color,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Center(
-                              child: Text(
-                                data[index],
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                    color: index == 0
-                                        ? AppColor.white
-                                        : AppColor.greyColor),
-                              ),
-                            ),
-                          );
-                        })),
+                    child: BlocConsumer<ZilaDataCubit, ZilaDataState>(
+                      listener: (context, state) {
+                        if (state is ErrorState) {
+                          EasyLoading.showError(state.error);
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is FilterDataFetchedState) {
+                          if (state.filterdata.data!.isNotEmpty) {
+                            cubit.filterDataList = state.filterdata.data!;
+                          }
+                        }
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: cubit.filterDataList.length,
+                            itemBuilder: ((context, index) {
+                              final data = cubit.filterDataList[index];
+                              return InkWell(
+                                onTap: (() {
+                                  cubit.onTapFilterData(index);
+                                }),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  margin: const EdgeInsets.only(right: 16),
+                                  decoration: BoxDecoration(
+                                    color: cubit.filterDtaSelectedIndex == index
+                                        ? AppColor.buttonOrangeBackGroundColor
+                                        : AppColor.orange300Color,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      data.name ?? '',
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
+                                          color: cubit.filterDtaSelectedIndex ==
+                                                  index
+                                              ? AppColor.white
+                                              : AppColor.greyColor),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }));
+                      },
+                    ),
                   ),
                   spaceHeightWidget(20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('एंट्री',
+                      Text(S.of(context).entry,
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
                           )),
-                      Text('कुल: 80',
+                      Text("${S.of(context).total}:80",
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
@@ -142,18 +167,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           backgroundColor: AppColor.buttonOrangeBackGroundColor,
           onPressed: (() {}),
-          label: Row(
-            children: [
-              const Icon(Icons.add),
-              spaceWidthWidget(5),
-              Text(
-                'Add Entry',
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: AppColor.white),
-              )
-            ],
+          icon: const Icon(Icons.add),
+          label: Text(
+            'Add Entry',
+            style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+                color: AppColor.white),
           )),
     );
   }
@@ -252,7 +272,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                 color: AppColor.greyColor),
                           ),
                           Text(
-                            data.phone ?? '',
+                            "+91- ${data.phone ?? ''}",
                             style: GoogleFonts.poppins(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 12,
@@ -275,7 +295,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-  ListView shimmerWidget() {
+  Widget shimmerWidget() {
     return ListView.separated(
       separatorBuilder: ((context, index) => spaceHeightWidget(10)),
       itemCount: 10,
@@ -320,7 +340,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       ),
                     ]),
               ),
-              Spacer(),
+              const Spacer(),
               Container(
                 height: 20,
                 width: 20,
@@ -334,7 +354,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-  Container entryFilterWidget() {
+  Widget entryFilterWidget() {
     return Container(
       height: 32,
       decoration: BoxDecoration(
@@ -384,7 +404,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-  Expanded dropdownLocation() {
+  Widget dropdownLocation() {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -396,9 +416,18 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 fontWeight: FontWeight.w400,
                 fontSize: 14),
           ),
-          BlocBuilder<ZilaDataCubit, ZilaDataState>(
+          BlocConsumer<ZilaDataCubit, ZilaDataState>(
+            listener: ((context, state) {
+              if (state is ErrorState) {
+                EasyLoading.showError(state.error);
+              }
+            }),
             builder: (context, state) {
               final cubit = BlocProvider.of<ZilaDataCubit>(context);
+              if (state is PartyZilaSelectedState) {
+                cubit.zilaSelected = null;
+                cubit.partyzilaList = state.data.data!;
+              }
               return DropdownButtonHideUnderline(
                   child: DropdownButton(
                       isDense: true,
@@ -418,11 +447,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           fontSize: 16,
                           color: AppColor.textBlackColor),
                       isExpanded: true,
-                      items: zilaNameList
+                      items: cubit.partyzilaList
                           .map((e) => DropdownMenuItem(
                               value: e,
                               child: Text(
-                                e,
+                                e.name ?? '',
                                 style: GoogleFonts.roboto(
                                     fontWeight: FontWeight.w400, fontSize: 16),
                               )))

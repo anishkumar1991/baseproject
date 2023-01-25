@@ -4,10 +4,12 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail.state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/zila_data_screen.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
+import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -19,8 +21,6 @@ class SangathanDetailsPage extends StatefulWidget {
 }
 
 class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
-  int? sele;
-
   @override
   void initState() {
     BlocProvider.of<SangathanDetailsCubit>(context).getSangathanDataLevel();
@@ -52,7 +52,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                       }),
                       icon: const Icon(Icons.arrow_back)),
                   Text(
-                    'Sangthan',
+                    S.of(context).sangathan,
                     style: GoogleFonts.quicksand(
                         fontSize: 18, fontWeight: FontWeight.w600),
                   )
@@ -107,8 +107,17 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           enableDrag: false,
           isDismissible: false,
           context: context,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0))),
           builder: (builder) {
-            return BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
+            return BlocConsumer<SangathanDetailsCubit, SangathanDetailsState>(
+              listener: ((context, state) {
+                if (state is ErrorState) {
+                  EasyLoading.showError(state.error);
+                }
+              }),
               builder: (context, state) {
                 var cubit = context.read<SangathanDetailsCubit>();
                 if (state is LocationFetchedState) {
@@ -116,23 +125,66 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     cubit.locationList = state.locationData.data!.locations!;
                   }
                 }
-                return Container(
-                    height: MediaQuery.of(context).size.height * 0.3,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.0),
-                            topRight: Radius.circular(10.0))),
+                return SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.75,
+                    width: double.infinity,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Wrap(
-                          spacing: 10,
-                          runSpacing: 5,
-                          children: cubit.locationList
-                              .map((e) => ActionChip(
-                                    label: Text(e.name ?? ''),
-                                    onPressed: (() {}),
-                                  ))
-                              .toList()),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          spaceHeightWidget(15),
+                          Row(
+                            children: [
+                              IconButton(
+                                  onPressed: (() {
+                                    if (cubit.selectedId == null) {
+                                      EasyLoading.showError(
+                                          S.of(context).pleaseChoosePlace);
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
+                                  }),
+                                  icon: const Icon(Icons.arrow_back)),
+                              spaceWidthWidget(10),
+                              Text(
+                                S.of(context).pleaseChoosePlace,
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          spaceHeightWidget(10),
+                          Wrap(
+                              spacing: 10,
+                              runSpacing: 5,
+                              children: cubit.locationList
+                                  .map((e) => ChoiceChip(
+                                        backgroundColor:
+                                            AppColor.orange300Color,
+                                        selectedColor:
+                                            cubit.selectedId == e.countryStateId
+                                                ? AppColor
+                                                    .buttonOrangeBackGroundColor
+                                                : null,
+                                        selected: cubit.selectedId ==
+                                            e.countryStateId,
+                                        label: Text(
+                                          e.name ?? '',
+                                          style: TextStyle(
+                                              color: cubit.selectedId ==
+                                                      e.countryStateId
+                                                  ? AppColor.white
+                                                  : AppColor.textBlackColor),
+                                        ),
+                                        onSelected: ((value) {
+                                          cubit.onSelectLocation(
+                                              e.countryStateId!);
+                                        }),
+                                      ))
+                                  .toList()),
+                        ],
+                      ),
                     ));
               },
             );
@@ -193,7 +245,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         //     arguments: data[index]['text']);
 
                         Navigator.pushNamed(context, RoutePath.zilaDataPage,
-                            arguments: data.name);
+                            arguments: ZilaDataScreen(
+                              type: data.name,
+                              id: cubit.selectedId,
+                            ));
                       }),
                       child: Container(
                         padding: const EdgeInsets.all(4),
@@ -230,7 +285,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     );
                   }))
               : Center(
-                  child: Text('कोई संगठन उपलब्ध नहीं है',
+                  child: Text(S.of(context).noOrganizationsAvailable,
                       style: GoogleFonts.quicksand(
                           fontSize: 20, fontWeight: FontWeight.w400)));
         },

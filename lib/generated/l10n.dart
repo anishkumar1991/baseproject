@@ -589,6 +589,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Please choose location`
+  String get pleaseChoosePlace {
+    return Intl.message(
+      'Please choose location',
+      name: 'pleaseChoosePlace',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No organizations available`
+  String get noOrganizationsAvailable {
+    return Intl.message(
+      'No organizations available',
+      name: 'noOrganizationsAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Entry`
+  String get entry {
+    return Intl.message(
+      'Entry',
+      name: 'entry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total`
+  String get total {
+    return Intl.message(
+      'Total',
+      name: 'total',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data Entry`
+  String get dataEntry {
+    return Intl.message(
+      'Data Entry',
+      name: 'dataEntry',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

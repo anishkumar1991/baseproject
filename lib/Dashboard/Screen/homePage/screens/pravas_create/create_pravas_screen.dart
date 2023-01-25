@@ -37,7 +37,7 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
             Expanded(
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -16,6 +16,7 @@ import '../splash_screen/screen/splash_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic>? generatorRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
       case RoutePath.loginScreen:
         return MaterialPageRoute(
@@ -66,7 +67,11 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return ZilaDataScreen(type: settings.arguments as String);
+            ZilaDataScreen data = args as ZilaDataScreen;
+            return ZilaDataScreen(
+              type: data.type,
+              id: data.id,
+            );
           },
         );
       case RoutePath.pravasCreateScreen:

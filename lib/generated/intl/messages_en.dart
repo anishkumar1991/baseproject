@@ -34,6 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createAndUpdateProgram":
             MessageLookupByLibrary.simpleMessage("Create and update program"),
         "createProgram": MessageLookupByLibrary.simpleMessage("Create program"),
+        "dataEntry": MessageLookupByLibrary.simpleMessage("Data Entry"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("date and time *"),
         "dateTo": MessageLookupByLibrary.simpleMessage("Date (To)"),
         "dateToFrom": MessageLookupByLibrary.simpleMessage("Date (From To)"),
@@ -44,6 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
+        "entry": MessageLookupByLibrary.simpleMessage("Entry"),
         "functionAdd": MessageLookupByLibrary.simpleMessage(
             "Venue (Address of the venue)"),
         "functionLayer":
@@ -63,11 +65,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "myEvent": MessageLookupByLibrary.simpleMessage("My events"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
+        "noOrganizationsAvailable":
+            MessageLookupByLibrary.simpleMessage("No organizations available"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("OTP Verification"),
         "phoneNumber":
             MessageLookupByLibrary.simpleMessage("Mobile Number (optional)"),
         "photoMax": MessageLookupByLibrary.simpleMessage("Photo ( max 2 )"),
+        "pleaseChoosePlace":
+            MessageLookupByLibrary.simpleMessage("Please choose location"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "program": MessageLookupByLibrary.simpleMessage("Program"),
@@ -81,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Stay and program list"),
         "subject": MessageLookupByLibrary.simpleMessage("subject"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
+        "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("Total Program"),
         "totalTravelSoFar":
             MessageLookupByLibrary.simpleMessage("Total Travel So Far"),

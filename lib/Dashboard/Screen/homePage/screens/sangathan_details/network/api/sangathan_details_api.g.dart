@@ -24,6 +24,8 @@ class _DataLevelApi implements DataLevelApi {
   Future<HttpResponse<dynamic>> getDataLevel(
     token,
     agent,
+    status,
+    id,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -41,7 +43,7 @@ class _DataLevelApi implements DataLevelApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/data/level?check_permissions=true&type=1',
+              '/zila/api/data/level?check_permissions=${status}&type=${id}',
               queryParameters: queryParameters,
               data: _data,
             )
