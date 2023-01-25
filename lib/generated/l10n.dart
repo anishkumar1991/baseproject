@@ -230,6 +230,16 @@ class S {
     );
   }
 
+  /// `Complete`
+  String get Complete {
+    return Intl.message(
+      'Complete',
+      name: 'Complete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Upcoming`
   String get upcoming {
     return Intl.message(
@@ -280,10 +290,10 @@ class S {
     );
   }
 
-  /// `Create and update program`
+  /// `Create and`
   String get createAndUpdateProgram {
     return Intl.message(
-      'Create and update program',
+      'Create and',
       name: 'createAndUpdateProgram',
       desc: '',
       args: [],
@@ -440,20 +450,20 @@ class S {
     );
   }
 
-  /// `program name *`
+  /// `Program Name *`
   String get functionName {
     return Intl.message(
-      'program name *',
+      'Program Name *',
       name: 'functionName',
       desc: '',
       args: [],
     );
   }
 
-  /// `date and time *`
+  /// `Date and Time *`
   String get dateAndTime {
     return Intl.message(
-      'date and time *',
+      'Date and Time *',
       name: 'dateAndTime',
       desc: '',
       args: [],
@@ -500,10 +510,10 @@ class S {
     );
   }
 
-  /// `subject`
+  /// `Subject`
   String get subject {
     return Intl.message(
-      'subject',
+      'Subject',
       name: 'subject',
       desc: '',
       args: [],
@@ -520,20 +530,20 @@ class S {
     );
   }
 
-  /// `add tax (optional)`
+  /// `Add Tax (optional)`
   String get addOptional {
     return Intl.message(
-      'add tax (optional)',
+      'Add Tax (optional)',
       name: 'addOptional',
       desc: '',
       args: [],
     );
   }
 
-  /// `comment`
+  /// `Comment`
   String get comment {
     return Intl.message(
-      'comment',
+      'Comment',
       name: 'comment',
       desc: '',
       args: [],
@@ -550,20 +560,20 @@ class S {
     );
   }
 
-  /// `upload photo here`
+  /// `Upload Photo Here`
   String get uploadPhoto {
     return Intl.message(
-      'upload photo here',
+      'Upload Photo Here',
       name: 'uploadPhoto',
       desc: '',
       args: [],
     );
   }
 
-  /// `save it`
+  /// `Save it`
   String get save {
     return Intl.message(
-      'save it',
+      'Save it',
       name: 'save',
       desc: '',
       args: [],
@@ -635,6 +645,56 @@ class S {
     return Intl.message(
       'Data Entry',
       name: 'dataEntry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Program Type`
+  String get typeOfFunction {
+    return Intl.message(
+      'Program Type',
+      name: 'typeOfFunction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message(
+      'Edit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View`
+  String get view {
+    return Intl.message(
+      'View',
+      name: 'view',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Tour Level`
+  String get selectPravasLevel {
+    return Intl.message(
+      'Select Tour Level',
+      name: 'selectPravasLevel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Loksabha`
+  String get selectLoksabha {
+    return Intl.message(
+      'Select Loksabha',
+      name: 'selectLoksabha',
       desc: '',
       args: [],
     );

@@ -125,6 +125,10 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                   title: '',
                                   hintText:  S.of(context).functionType,
                                   readOnly: true,
+                                  onTap: (){
+                                    _modalBottomSheetMenuForFunctionType(
+                                        context);
+                                  },
                                   keyboardType: TextInputType.emailAddress,
                                   suffixWidget: SizedBox(
                                     width: 60,
@@ -132,15 +136,10 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         const Icon(Icons.info_outline_rounded,
-                                            color: AppColor.blue),
+                                            color: AppColor.blue,size: 22,),
                                         spaceWidthWidget(8),
-                                        InkWell(
-                                            onTap: () {
-                                              _modalBottomSheetMenuForFunctionType(
-                                                  context);
-                                            },
-                                            child: const Icon(Icons
-                                                .keyboard_arrow_down_rounded)),
+                                        Icon(Icons
+                                            .keyboard_arrow_down_rounded)
                                       ],
                                     ),
                                   ),
@@ -154,14 +153,13 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                               title: '',
                               hintText:  S.of(context).functionLayer,
                               readOnly: true,
+                              onTap: (){
+                                _modalBottomSheetMenuForFunctionLevel(
+                                    context);
+                              },
                               keyboardType: TextInputType.emailAddress,
-                              suffixWidget: InkWell(
-                                  onTap: () {
-                                    _modalBottomSheetMenuForFunctionLevel(
-                                        context);
-                                  },
-                                  child: const Icon(
-                                      Icons.keyboard_arrow_down_rounded)),
+                              suffixWidget: const Icon(
+                                  Icons.keyboard_arrow_down_rounded),
                             ),
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.02),
@@ -475,7 +473,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                       ),
                       spaceHeightWidget(30),
                       Text(
-                        'कार्यक्रम का प्रकार',
+                        S.of(context).typeOfFunction,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             color: AppColor.borderColor, fontSize: 16),
@@ -553,7 +551,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                       ),
                       spaceHeightWidget(30),
                       Text(
-                        'प्रवास लेवल चुने',
+                        S.of(context).selectPravasLevel,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             color: AppColor.borderColor, fontSize: 16),
@@ -638,7 +636,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                           ),
                           spaceHeightWidget(30),
                           Text(
-                            'लोकसभा चुने',
+                            S.of(context).selectLoksabha,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 color: AppColor.borderColor, fontSize: 16),

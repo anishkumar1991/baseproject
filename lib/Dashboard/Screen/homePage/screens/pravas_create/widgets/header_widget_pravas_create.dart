@@ -6,7 +6,11 @@ import '../../../../../../generated/l10n.dart';
 Widget headerWidgetPravasCreate(BuildContext context) {
   return Row(
     children: [
-      const Icon(Icons.arrow_back, size: 25),
+      InkWell(
+          onTap: (){
+            Navigator.pop(context);
+          },
+          child: const Icon(Icons.arrow_back, size: 25)),
       spaceWidthWidget(10),
       Text(
         S.of(context).createATour,

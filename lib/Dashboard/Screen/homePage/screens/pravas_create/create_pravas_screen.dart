@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/widgets/header_widget_pravas_create.dart';
+import 'package:sangathan/Values/icons.dart';
 
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
@@ -69,10 +70,14 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                                     print("hello");
                                     cubit.startToEndDate(context);
                                   },
-                                  child: const Icon(
-                                    Icons.calendar_month_outlined,
-                                    color: AppColor.greyColor,
-                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(AppIcons.datePickerIcon),
+                                    ),
+                                  )
                                 )
                               ],
                             );

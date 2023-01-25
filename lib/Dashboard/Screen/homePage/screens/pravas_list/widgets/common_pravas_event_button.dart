@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../../../../../../Values/app_colors.dart';
+import '../../../../../../common/appstyle.dart';
 
 class CommonPravasEventButton extends StatelessWidget {
   final String text;
@@ -32,12 +33,9 @@ class CommonPravasEventButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(text,
-                style: TextStyle(
-                    fontSize: 16,
-                    color: isEnd ?? false
-                        ? AppColor.naturalBlackColor
-                        : AppColor.buttonOrangeBackGroundColor)),
-            spaceWidthWidget(20),
+              style: textStyleWithPoppin(color: isEnd ?? false ? AppColor.naturalBlackColor: AppColor.buttonOrangeBackGroundColor,fontSize: 13,fontWeight: FontWeight.w500),
+          ),
+            spaceWidthWidget(10),
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: icon,

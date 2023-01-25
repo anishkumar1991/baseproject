@@ -236,7 +236,7 @@ class StayAndProgramListScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'कार्यक्रम का प्रकार -',
+                   "${ S.of(context).typeOfFunction} - ",
                     textAlign: TextAlign.left,
                     style: textStyleWithPoppin(color: AppColor.greyColor,fontSize: 14),
 
@@ -271,13 +271,13 @@ class StayAndProgramListScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BuildButton(width: MediaQuery.of(context).size.width * 0.37,icon: Icons.mode_edit_outlined,text: 'एडिट',onTap: (){
+                  BuildButton(width: MediaQuery.of(context).size.width * 0.37,icon: Icons.mode_edit_outlined,text: S.of(context).edit,onTap: (){
                     Navigator.pushNamed(context, RoutePath.createFunctionScreen,
                     arguments: {
                       'isEdit' : true
                     });
                   },),
-                  BuildButton(width: MediaQuery.of(context).size.width * 0.37,icon: Icons.visibility_outlined,text: 'देखें',onTap: (){
+                  BuildButton(width: MediaQuery.of(context).size.width * 0.37,icon: Icons.visibility_outlined,text: S.of(context).view,onTap: (){
                     Navigator.pushNamed(context, RoutePath.createFunctionScreen,
                         arguments: {
                           'isView' : true
