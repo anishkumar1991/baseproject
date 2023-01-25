@@ -409,6 +409,186 @@ class S {
       args: [],
     );
   }
+
+  /// `Tour`
+  String get tour {
+    return Intl.message(
+      'Tour',
+      name: 'tour',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My events`
+  String get myEvent {
+    return Intl.message(
+      'My events',
+      name: 'myEvent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See all`
+  String get seeAll {
+    return Intl.message(
+      'See all',
+      name: 'seeAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `program name *`
+  String get functionName {
+    return Intl.message(
+      'program name *',
+      name: 'functionName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `date and time *`
+  String get dateAndTime {
+    return Intl.message(
+      'date and time *',
+      name: 'dateAndTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Program Type *`
+  String get functionType {
+    return Intl.message(
+      'Program Type *',
+      name: 'functionType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Program Level *`
+  String get functionLayer {
+    return Intl.message(
+      'Program Level *',
+      name: 'functionLayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lok Sabha`
+  String get lokSabha {
+    return Intl.message(
+      'Lok Sabha',
+      name: 'lokSabha',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Venue (Address of the venue)`
+  String get functionAdd {
+    return Intl.message(
+      'Venue (Address of the venue)',
+      name: 'functionAdd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `subject`
+  String get subject {
+    return Intl.message(
+      'subject',
+      name: 'subject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The guest / participant / activist present in the program whose name you want to add.`
+  String get addGuestDetail {
+    return Intl.message(
+      'The guest / participant / activist present in the program whose name you want to add.',
+      name: 'addGuestDetail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add tax (optional)`
+  String get addOptional {
+    return Intl.message(
+      'add tax (optional)',
+      name: 'addOptional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `comment`
+  String get comment {
+    return Intl.message(
+      'comment',
+      name: 'comment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Photo ( max 2 )`
+  String get photoMax {
+    return Intl.message(
+      'Photo ( max 2 )',
+      name: 'photoMax',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `upload photo here`
+  String get uploadPhoto {
+    return Intl.message(
+      'upload photo here',
+      name: 'uploadPhoto',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `save it`
+  String get save {
+    return Intl.message(
+      'save it',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stay and program list`
+  String get stayAndProgramList {
+    return Intl.message(
+      'Stay and program list',
+      name: 'stayAndProgramList',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Program`
+  String get totalProgram {
+    return Intl.message(
+      'Total Program',
+      name: 'totalProgram',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

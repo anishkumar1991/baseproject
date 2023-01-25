@@ -13,6 +13,7 @@ import 'package:sangathan/Values/icons.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../../route/route_path.dart';
 import 'create_function_cubit/create_function_cubit.dart';
 import 'data/fake_data_list.dart';
@@ -57,7 +58,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             TextFieldWidget(
                                 controller: cubit.functionNameText,
                                 title: '',
-                                labelText: 'कार्यक्रम का नाम *',
+                                labelText:  S.of(context).functionName,
                                 onChanged: (value) {
                                   cubit.emitState();
                                 },
@@ -111,7 +112,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                         )
                                       : SizedBox.shrink(),
                               title: '',
-                              hintText: 'दिनांक और समय * ',
+                              hintText:  S.of(context).dateAndTime,
                               keyboardType: TextInputType.emailAddress,
                             ),
                             spaceHeightWidget(
@@ -122,7 +123,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                 return TextFieldWidget(
                                   controller: cubit.functionTypeText,
                                   title: '',
-                                  hintText: 'कार्यक्रम का प्रकार *',
+                                  hintText:  S.of(context).functionType,
                                   readOnly: true,
                                   keyboardType: TextInputType.emailAddress,
                                   suffixWidget: SizedBox(
@@ -151,7 +152,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             TextFieldWidget(
                               controller: cubit.functionLevelText,
                               title: '',
-                              hintText: 'कार्यक्रम का स्तर *',
+                              hintText:  S.of(context).functionLayer,
                               readOnly: true,
                               keyboardType: TextInputType.emailAddress,
                               suffixWidget: InkWell(
@@ -167,7 +168,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             TextFieldWidget(
                               controller: cubit.lokSabhaText,
                               title: '',
-                              hintText: 'लोकसभा',
+                              hintText:  S.of(context).lokSabha,
                               readOnly: true,
                               keyboardType: TextInputType.emailAddress,
                               suffixWidget:
@@ -186,7 +187,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                     _modalBottomSheetMenuForPlace(context,
                                         selectedValue: cubit.placeText.text);
                                   },
-                                  hintText: 'स्थान ( कार्यक्रम स्थल का पता )',
+                                  hintText:  S.of(context).functionAdd,
                                   keyboardType: TextInputType.emailAddress,
                                   suffixWidget: const Icon(
                                       Icons.info_outline_rounded,
@@ -199,7 +200,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             TextFieldWidget(
                               controller: cubit.subjectText,
                               title: '',
-                              labelText: 'विषय',
+                              labelText:  S.of(context).subject,
                               onChanged: (value) {
                                 cubit.emitState();
                               },
@@ -234,7 +235,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                         child: Column(
                           children: [
                             Text(
-                              'कार्यक्रम में उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता जिनका नाम आप जोड़ना चाहते है।',
+                              S.of(context).addGuestDetail,
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                   color: AppColor.naturalBlackColor,
@@ -251,7 +252,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Text(
-                                    'ऐड कर ( वैकल्पिक  )',
+                                    S.of(context).addOptional,
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.poppins(
                                         color: AppColor.blue, fontSize: 14),
@@ -297,13 +298,13 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                     )
                                   : SizedBox.shrink(),
                               title: '',
-                              labelText: 'टिपण्णी',
+                              labelText:  S.of(context).comment,
                               keyboardType: TextInputType.emailAddress,
                             ),
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.05),
                             Text(
-                              'फोटो ( अधिकतम  2  )',
+                              S.of(context).photoMax,
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                   color: AppColor.naturalBlackColor,
@@ -334,7 +335,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                                               .width *
                                                           0.05),
                                                   Text(
-                                                    'फोटो यहाँ अपलोड करें',
+                                                    S.of(context).uploadPhoto,
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.poppins(
                                                         color: AppColor.blue,
@@ -384,7 +385,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                                               .width *
                                                           0.05),
                                                   Text(
-                                                    'फोटो यहाँ अपलोड करें',
+                                                    S.of(context).uploadPhoto,
                                                     textAlign: TextAlign.center,
                                                     style: GoogleFonts.poppins(
                                                         color: AppColor.blue,
@@ -418,7 +419,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                       Navigator.pushReplacementNamed(context,
                                           RoutePath.stayAndProgramListScreen);
                                     },
-                                    title: 'सेव करे',
+                                    title: S.of(context).save,
                                     height: 50,
                                     borderRadius: 7,
                                     style: const TextStyle(

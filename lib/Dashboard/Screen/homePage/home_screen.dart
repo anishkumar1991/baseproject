@@ -145,17 +145,17 @@ class HomePage extends StatelessWidget {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children:  [
                         Text(
-                          'My events',
-                          style: TextStyle(
+                          S.of(context).myEvent,
+                          style: const TextStyle(
                               fontFamily: 'Tw Cen MT',
                               fontSize: 20,
                               fontWeight: FontWeight.w400),
                         ),
                         Text(
-                          'See all',
-                          style: TextStyle(
+                          S.of(context).seeAll,
+                          style: const TextStyle(
                             fontFamily: 'Tw Cen MT',
                             fontSize: 20,
                             fontWeight: FontWeight.w400,

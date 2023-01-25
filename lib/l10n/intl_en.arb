@@ -35,6 +35,24 @@
   "name": "Name",
   "phoneNumber": "Mobile Number (optional)",
   "position": "position",
-  "add": "Add"
+  "add": "Add",
+  "tour":"Tour",
+  "myEvent": "My events",
+  "seeAll": "See all",
+  "functionName": "program name *",
+  "dateAndTime": "date and time *",
+  "functionType" : "Program Type *",
+  "functionLayer": "Program Level *",
+  "lokSabha": "Lok Sabha",
+  "functionAdd": "Venue (Address of the venue)",
+  "subject": "subject",
+      "addGuestDetail" : "The guest / participant / activist present in the program whose name you want to add.",
+  "addOptional": "add tax (optional)",
+  "comment" : "comment",
+  "photoMax": "Photo ( max 2 )",
+  "uploadPhoto": "upload photo here",
+  "save" : "save it",
+  "stayAndProgramList": "Stay and program list",
+  "totalProgram" : "Total Program"
 
 }

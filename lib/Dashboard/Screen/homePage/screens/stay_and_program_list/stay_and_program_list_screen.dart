@@ -11,6 +11,7 @@ import '../../../../../Values/space_height_widget.dart';
 import '../../../../../Values/space_width_widget.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/dot_widget.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../../route/route_path.dart';
 
 class StayAndProgramListScreen extends StatelessWidget {
@@ -40,7 +41,7 @@ class StayAndProgramListScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
-                          'कुल कार्यक्रम - 12',
+                          '${S.of(context).totalProgram} - 12',
                           textAlign: TextAlign.left,
                           style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w500)
                       ),
@@ -70,7 +71,7 @@ class StayAndProgramListScreen extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, RoutePath.createFunctionScreen);
               },
-              title: 'प्रवास बनाये',
+              title: S.of(context).takeATour,
               width: 200,
               height: 50,
               borderRadius: 25,

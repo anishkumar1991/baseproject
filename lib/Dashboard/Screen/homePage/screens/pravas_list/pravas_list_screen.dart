@@ -237,18 +237,21 @@ class PravasListScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: Align(
-          alignment: Alignment.bottomCenter,
-          child: CommonButton(
-            onTap: () {
-              Navigator.pushNamed(context, RoutePath.pravasCreateScreen);
-            },
-            title: S.of(context).takeATour,
-            width: 200,
-            height: 50,
-            borderRadius: 25,
-            style: const TextStyle(fontSize: 20, color: AppColor.white),
-          )),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left: 30.0),
+        child: Align(
+            alignment: Alignment.bottomCenter,
+            child: CommonButton(
+              onTap: () {
+                Navigator.pushNamed(context, RoutePath.pravasCreateScreen);
+              },
+              title: S.of(context).takeATour,
+              width: 200,
+              height: 50,
+              borderRadius: 25,
+              style: const TextStyle(fontSize: 20, color: AppColor.white),
+            )),
+      ),
     );
   }
 }

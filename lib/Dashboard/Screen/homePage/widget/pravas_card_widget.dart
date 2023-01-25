@@ -30,8 +30,8 @@ class PravasCardWidget extends StatelessWidget {
                 Row(
                   children: [
 
-                    const Text(
-                      'Pravas',
+                     Text(
+                       S.of(context).tour,
                       style: TextStyle(
                           fontFamily: 'Tw Cen MT',
                           color: AppColor.textBlackColor,
@@ -74,8 +74,8 @@ class PravasCardWidget extends StatelessWidget {
                                     Image.asset(AppIcons.checkBox,
                                         height: 20, width: 20),
                                     spaceWidthWidget(10),
-                                    const Text(
-                                      'अभी तक किये कुल प्रवास -',
+                                     Text(
+                                      S.of(context).totalTravelSoFar,
                                       style: TextStyle(
                                           fontFamily: 'Tw Cen MT',
                                           fontSize: 14,
@@ -111,8 +111,8 @@ class PravasCardWidget extends StatelessWidget {
                                     Image.asset(AppIcons.calender,
                                         height: 20, width: 20),
                                     spaceWidthWidget(10),
-                                    const Text(
-                                      'आगामी प्रवास -',
+                                     Text(
+                                      S.of(context).upcomingTrip,
                                       style: TextStyle(
                                           fontFamily: 'Tw Cen MT',
                                           fontSize: 14,

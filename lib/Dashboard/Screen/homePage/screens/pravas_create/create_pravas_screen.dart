@@ -86,42 +86,6 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                         )
                       ],
                     ),
-                    // spaceHeightWidget(35),
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     BlocBuilder<PravasCreateCubit, PravasCreateState>(
-                    //       builder: (context, state) {
-                    //         return Row(
-                    //           children: [
-                    //             Text(
-                    //               cubit.date1 != ""
-                    //                   ? cubit.date1
-                    //                   : S.of(context).dateTo,
-                    //               style: const TextStyle(
-                    //                 color: AppColor.greyColor,
-                    //               ),
-                    //             ),
-                    //             const Spacer(),
-                    //             GestureDetector(
-                    //               onTap: () async {
-                    //                 cubit.endOfTour(context);
-                    //               },
-                    //               child: const Icon(Icons.calendar_month_outlined,
-                    //                   color: AppColor.greyColor),
-                    //             )
-                    //           ],
-                    //         );
-                    //       },
-                    //     ),
-                    //     spaceHeightWidget(4),
-                    //     Divider(
-                    //       height: 2,
-                    //       thickness: 1.5,
-                    //       color: AppColor.greyColor.withOpacity(0.5),
-                    //     )
-                    //   ],
-                    // ),
                     spaceHeightWidget(5),
                     TextFieldWidget(
                       controller: pravasSubjectCtr,
