@@ -1,4 +1,4 @@
-package com.example.sangathan
+package com.jarvis.mpsangathan
 
 import io.flutter.embedding.android.FlutterActivity
 

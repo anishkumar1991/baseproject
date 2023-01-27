@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "410120124539",
+    "project_id": "sangathan-b272e",
+    "storage_bucket": "sangathan-b272e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410120124539:android:0ba917dff60dcf4f2c4ade",
+        "android_client_info": {
+          "package_name": "com.jarvis.mpsangathan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2VhFhNh7RTpYUKRKQOywQm0wDDdWg98c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
