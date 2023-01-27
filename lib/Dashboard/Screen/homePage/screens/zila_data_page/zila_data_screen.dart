@@ -10,6 +10,7 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/generated/l10n.dart';
+import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'cubit/zila_data_state.dart';
@@ -166,7 +167,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           backgroundColor: AppColor.buttonOrangeBackGroundColor,
-          onPressed: (() {}),
+          onPressed: (() {
+            Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                arguments: widget.type);
+          }),
           icon: const Icon(Icons.add),
           label: Text(
             'Add Entry',
@@ -210,7 +214,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       padding: EdgeInsets.zero,
                       onPressed: ((context) {}),
                       backgroundColor: Colors.green.shade100,
-                      icon: Icons.security,
+                      foregroundColor: Colors.green.shade900,
+                      icon: Icons.verified_user,
                       label: 'Verify',
                     ),
                     SlidableAction(
@@ -224,7 +229,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       padding: EdgeInsets.zero,
                       onPressed: ((context) {}),
                       backgroundColor: Colors.red.shade100,
-                      foregroundColor: Colors.red.shade300,
+                      foregroundColor: Colors.red.shade600,
                       icon: Icons.delete_outline,
                       label: 'Delete',
                     ),
