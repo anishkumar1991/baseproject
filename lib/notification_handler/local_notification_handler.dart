@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -32,6 +33,12 @@ class LocalNotificationService {
         onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
   }
 
+  static Future _getByteArrayFromUrl(String url) async {
+    var response = await Dio()
+        .get(url, options: Options(responseType: ResponseType.bytes));
+    return response.data;
+  }
+
   static Future createAndDisplayNotification({
     required RemoteMessage? message,
     required FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
@@ -40,36 +47,75 @@ class LocalNotificationService {
       debugPrint('message ----------$message');
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       final int myId = int.parse(id.toString());
-
-      const android = AndroidNotificationDetails(
-        "sangathnapp",
-        "sangathnappchannel",
-        importance: Importance.max,
-        priority: Priority.high,
-      );
-      const DarwinNotificationDetails darwinNotificationDetails =
-          DarwinNotificationDetails();
-      const platform = NotificationDetails(
-        android: android,
-        iOS: darwinNotificationDetails,
-      );
-
-      if (Platform.isAndroid) {
-        await flutterLocalNotificationsPlugin.show(
-          myId,
-          message?.notification!.title,
-          message?.notification!.body,
-          platform,
-          payload: message?.data.toString(),
+      if (message?.data["image"] != null) {
+        final ByteArrayAndroidBitmap bigPicture = ByteArrayAndroidBitmap(
+            await _getByteArrayFromUrl(message?.data["image"]));
+        final BigPictureStyleInformation bigPictureStyleInformation =
+            BigPictureStyleInformation(bigPicture,
+                contentTitle: message?.data["title"],
+                htmlFormatContentTitle: true,
+                summaryText: message?.data["body"],
+                htmlFormatSummaryText: true);
+        final android = AndroidNotificationDetails(
+            "sangathnapp", "sangathnappchannel",
+            importance: Importance.max,
+            priority: Priority.high,
+            styleInformation: bigPictureStyleInformation);
+        const DarwinNotificationDetails darwinNotificationDetails =
+            DarwinNotificationDetails();
+        final platform = NotificationDetails(
+          android: android,
+          iOS: darwinNotificationDetails,
         );
-      } else if (Platform.isIOS) {
-        await flutterLocalNotificationsPlugin.show(
-          myId,
-          message?.notification!.title,
-          message?.notification!.body,
-          platform,
-          payload: message?.data.toString(),
+
+        if (Platform.isAndroid) {
+          await flutterLocalNotificationsPlugin.show(
+            myId,
+            message?.notification!.title,
+            message?.notification!.body,
+            platform,
+            payload: message?.data.toString(),
+          );
+        } else if (Platform.isIOS) {
+          await flutterLocalNotificationsPlugin.show(
+            myId,
+            message?.notification!.title,
+            message?.notification!.body,
+            platform,
+            payload: message?.data.toString(),
+          );
+        }
+      } else {
+        const android = AndroidNotificationDetails(
+          "sangathnapp",
+          "sangathnappchannel",
+          importance: Importance.max,
+          priority: Priority.high,
         );
+        const DarwinNotificationDetails darwinNotificationDetails =
+            DarwinNotificationDetails();
+        const platform = NotificationDetails(
+          android: android,
+          iOS: darwinNotificationDetails,
+        );
+
+        if (Platform.isAndroid) {
+          await flutterLocalNotificationsPlugin.show(
+            myId,
+            message?.notification!.title,
+            message?.notification!.body,
+            platform,
+            payload: message?.data.toString(),
+          );
+        } else if (Platform.isIOS) {
+          await flutterLocalNotificationsPlugin.show(
+            myId,
+            message?.notification!.title,
+            message?.notification!.body,
+            platform,
+            payload: message?.data.toString(),
+          );
+        }
       }
 
       debugPrint(

@@ -20,10 +20,9 @@ Future<void> firebaseNotification(context) async {
       if (message?.notification != null) {
         final Map<String, String> finalPayLoadData =
             Map<String, String>.from(message!.data);
-        debugPrint(
-            'App is a background state ------------------$finalPayLoadData');
+        print('App is a background state ------------------$finalPayLoadData');
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-          debugPrint(
+          print(
             'A new onMessageOpenedApp event was published!-------------${message.data}----',
           );
         });
@@ -55,8 +54,11 @@ Future<void> firebaseNotification(context) async {
       if (message.notification != null) {
         final Map<String, String> finalPayLoadData =
             Map<String, String>.from(message.data);
-
-        debugPrint(
+        LocalNotificationService.createAndDisplayNotification(
+          message: message,
+          flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+        );
+        print(
           "------background---------finalPayLoadData--------------:: $finalPayLoadData",
         );
       } else {

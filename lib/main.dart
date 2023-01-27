@@ -33,6 +33,10 @@ Future<void> _firebaseMessagingBackgroundHandler(
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
+  LocalNotificationService.createAndDisplayNotification(
+    message: message,
+    flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
+  );
 }
 
 void main() async {
