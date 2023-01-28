@@ -11,6 +11,8 @@ import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart'
 import 'package:sangathan/AddEntry/Screen/widget/select_boxs.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -57,14 +59,20 @@ class _AddEntryPageState extends State<AddEntryPage> {
   @override
   void initState() {
     context.read<AddEntryCubit>().getDropdownData();
-    context.read<AddEntryCubit>().getCastData(id: '1');
-
+    //context.read<AddEntryCubit>().getCastData(id: '1');
+    context.read<ZilaDataCubit>().getFilterOptions(data: {
+      "type": "Designation",
+      "data_level": 7,
+      "country_state_id": 3,
+      "unit_id": 25,
+      "sub_unit_id": 58
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<AddEntryCubit>(context);
+    final cubit = context.read<AddEntryCubit>();
     return Scaffold(
       body: SafeArea(
           child: Padding(
@@ -107,6 +115,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       cubit.qualificationSelected = null;
                       cubit.religionSelected = null;
                       cubit.professionSelected = null;
+                      // cubit.dropdownData = state.category.data;
                       cubit.categoryData = state.category.data!.personCategory!;
                       cubit.nativeStateData = state.category.data!.nativeState!;
                       cubit.qualificationData =
@@ -134,10 +143,23 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         ),
                         spaceHeightWidget(20),
                         widget.type == 'Zila'
-                            ? CustomDropDown(
-                                title: 'Designation',
-                                hintText: 'Select Designation',
-                                //dropDownList: const ['A', 'B', 'C', 'D'],
+                            ? BlocBuilder<ZilaDataCubit, ZilaDataState>(
+                                builder: (context, state) {
+                                  final cubit = context.read<ZilaDataCubit>();
+                                  return CustomDropDown(
+                                    selectedValue: cubit.selectedFilterData,
+                                    title: 'Designation',
+                                    hintText: 'Select Designation',
+                                    dropDownList: cubit.filterDataList
+                                        .map((e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text(e.name ?? '')))
+                                        .toList(),
+                                    onChange: ((value) {
+                                      cubit.onChangeDesignationDropDown(value);
+                                    }),
+                                  );
+                                },
                               )
                             : CommonTextField(
                                 keyboardType: TextInputType.name,
@@ -209,6 +231,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                     .toList(),
                                 onChange: ((value) {
                                   cubit.onChangeCategory(value!);
+                                  context.read<AddEntryCubit>().getCastData(
+                                      id: cubit.categorySelected!.id
+                                          .toString());
                                 }),
                               )
                             : Row(

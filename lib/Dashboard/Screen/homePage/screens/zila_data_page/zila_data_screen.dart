@@ -16,9 +16,11 @@ import 'package:shimmer/shimmer.dart';
 import 'cubit/zila_data_state.dart';
 
 class ZilaDataScreen extends StatefulWidget {
-  const ZilaDataScreen({super.key, required this.type, this.id});
+  const ZilaDataScreen(
+      {super.key, required this.type, this.id, this.dataLevelId});
   final String? type;
   final int? id;
+  final int? dataLevelId;
   @override
   State<ZilaDataScreen> createState() => _ZilaDataScreenState();
 }
@@ -32,8 +34,14 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     if (widget.id != null) {
       context.read<ZilaDataCubit>().getPartyZila(id: widget.id!);
     }
-    context.read<ZilaDataCubit>().getFilterOptions();
-
+    print(widget.dataLevelId);
+    context.read<ZilaDataCubit>().getFilterOptions(data: {
+      "type": "Designation",
+      "data_level": widget.dataLevelId.toString(),
+      "country_state_id": 3,
+      "unit_id": 25,
+      "sub_unit_id": 58
+    });
     super.initState();
   }
 

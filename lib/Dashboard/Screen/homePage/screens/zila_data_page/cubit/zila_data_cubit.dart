@@ -14,6 +14,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   List<UserData> dataList = [];
   List<PartyZilaData> partyzilaList = [];
   List<FilterData> filterDataList = [];
+
+  FilterData? selectedFilterData;
   PartyZilaData? zilaSelected;
   int filterDtaSelectedIndex = 0;
   final api = DataEntryApi(Dio(BaseOptions(
@@ -61,17 +63,12 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  Future getFilterOptions() async {
+  Future getFilterOptions({required Map<String ,dynamic> data}) async {
     try {
+      selectedFilterData = null;
       emit(DataFetchingLoadingState());
       final res =
-          await api.getFilterOptions('Bearer ${StorageService.userAuthToken}', {
-        "type": "Designation",
-        "data_level": 7,
-        "country_state_id": 3,
-        "unit_id": 25,
-        "sub_unit_id": 58
-      });
+          await api.getFilterOptions('Bearer ${StorageService.userAuthToken}',data);
       print('filter options res =${res.response.statusCode}');
       if (res.response.statusCode == 200) {
         FilterDataModel data = FilterDataModel.fromJson(res.data);
@@ -88,6 +85,12 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   void onTapFilterData(int index) {
     emit(LoadingState());
     filterDtaSelectedIndex = index;
+    emit(FilterDataSelectedState());
+  }
+
+  void onChangeDesignationDropDown(FilterData filterData) {
+    emit(LoadingState());
+    selectedFilterData = filterData;
     emit(FilterDataSelectedState());
   }
 }

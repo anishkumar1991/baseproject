@@ -248,6 +248,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             arguments: ZilaDataScreen(
                               type: data.name,
                               id: cubit.selectedId,
+                              dataLevelId: data.id,
                             ));
                       }),
                       child: Container(

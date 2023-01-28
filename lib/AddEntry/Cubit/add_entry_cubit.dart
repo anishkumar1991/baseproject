@@ -25,13 +25,13 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   File? rationFilePicked;
   File? adharFilePicked;
   File? voterFilePicked;
-
-  List<DropdownData> categoryData = [];
-  List<CastData> castData = [];
-  List<DropdownData> qualificationData = [];
-  List<DropdownData> professionData = [];
-  List<DropdownData> nativeStateData = [];
-  List<DropdownData> religionData = [];
+  //Data? dropdownData;
+   List<DropdownData> categoryData = [];
+   List<CastData> castData = [];
+   List<DropdownData> qualificationData = [];
+   List<DropdownData> professionData = [];
+   List<DropdownData> nativeStateData = [];
+   List<DropdownData> religionData = [];
   CastData? castSelected;
   DropdownData? categorySelected;
   DropdownData? qualificationSelected;
