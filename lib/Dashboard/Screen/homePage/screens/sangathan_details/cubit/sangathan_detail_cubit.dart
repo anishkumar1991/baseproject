@@ -16,6 +16,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   List<SangathanData> sangathanDataList = [];
   List<Locations> locationList = [];
   int? selectedId;
+  int? dataLevelId;
   Future getSangathanDataLevel() async {
     try {
       emit(LoadingState());
@@ -40,7 +41,9 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   Future getAllotedLocations() async {
     try {
-      if (UserProfile.user.countryStateId == 0 ||
+      print(
+          'country_state_id=${StorageService.userData?.user?.countryStateId}');
+      if (StorageService.userData?.user?.countryStateId == 0 ||
           UserProfile.user.countryStateId == null) {
         emit(LoadingState());
         final respose = await api
@@ -62,6 +65,12 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   void onSelectLocation(int id) {
     emit(LoadingState());
     selectedId = id;
+    emit(LocationChoosedState());
+  }
+
+  void getDataLevelId(int? id) {
+    emit(LoadingState());
+    dataLevelId = id;
     emit(LocationChoosedState());
   }
 }

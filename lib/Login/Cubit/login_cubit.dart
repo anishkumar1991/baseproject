@@ -107,7 +107,7 @@ class LoginCubit extends Cubit<LoginState> {
         emit(UserLogOutFaieldState('Something Went Wrong'));
       }
     } catch (e) {
-      UserLogOutFaieldState(e.toString());
+      UserLogOutFaieldState('Something Went Wrong');
     }
   }
 }

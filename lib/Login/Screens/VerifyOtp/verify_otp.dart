@@ -16,7 +16,6 @@ import '../../../common/common_button.dart';
 import '../../../generated/l10n.dart';
 import '../../../route/route_path.dart';
 
-
 class VerifyOtpScreen extends StatefulWidget {
   const VerifyOtpScreen({Key? key, required this.number}) : super(key: key);
   final String number;

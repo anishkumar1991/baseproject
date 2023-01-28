@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -10,9 +11,8 @@ import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
+import 'package:sangathan/AddEntry/network/model/designation_data_model.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
-
-import '../../Dashboard/Screen/homePage/screens/zila_data_page/network/model/filter_data_model.dart';
 import '../network/api/add_entry_api.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 import 'add_entry_state.dart';
@@ -27,17 +27,21 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   File? rationFilePicked;
   File? adharFilePicked;
   File? voterFilePicked;
+
   List<DataEntryField> entryField = [];
+
   List<DropdownData> categoryData = [];
   List<CastData> castData = [];
   List<DropdownData> qualificationData = [];
   List<DropdownData> professionData = [];
   List<DropdownData> nativeStateData = [];
   List<DropdownData> religionData = [];
-  List<FilterData> designationData = [];
+
+  List<DesignationData> designationData = [];
   List<Map<String, dynamic>> textFieldControllerData = [];
   List<Widget> addEntryFormPrimary = [];
   List<Widget> addEntryFormSecondary = [];
+
 
   CastData? castSelected;
   DropdownData? categorySelected;
@@ -45,8 +49,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   DropdownData? professionSelected;
   DropdownData? nativeStateSelected;
   DropdownData? religionSelected;
-  FilterData? designationSelected;
+  DesignationData? designationSelected;
   String? profileImageUrl;
+  DesignationData? selectedDesignationData;
+
   final api = AddEntryApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
@@ -228,6 +234,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
+
   Future getAddEntryFormStructure({required String levelID}) async {
     emit(GetAddEntryFormStructureLoadingState());
     if (state is GetAddEntryFormStructureLoadingState) {
@@ -269,7 +276,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        FilterDataModel data = FilterDataModel.fromJson(res.data);
+        DesignationDataModel data = DesignationDataModel.fromJson(res.data);
         emit(DesignationDropDownSuccessState(data));
       } else {
         Map<String, dynamic>? msg = res.data;
@@ -282,5 +289,26 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   disposePage() {
     emit(DisposeState());
+  }
+ 
+  void onChangeDesignationDropDown(DesignationData designationData) {
+    emit(AddEntryLoadingState());
+    selectedDesignationData = designationData;
+    emit(FilterDataSelectedState());
+  }
+
+  Timer? timer;
+  int count = 30;
+  Future<void> startTimer() async {
+    emit(TimerLoadingState());
+    if (count == 0) {
+      emit(TimerStopState());
+    } else {
+      await Future.delayed(const Duration(seconds: 1));
+      count--;
+      emit(TimerRunningState(count));
+      startTimer();
+    }
+
   }
 }

@@ -22,7 +22,7 @@ class UserDetails {
   }
 
   Map<String, dynamic> toJson() {
-     Map<String, dynamic> data = <String, dynamic>{};
+    Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     data['message'] = message;
     data['auth_token'] = authToken;
@@ -113,7 +113,7 @@ class User {
     data['country_state_id'] = countryStateId;
     data['is_jammu_user'] = isJammuUser;
     data['role'] = role;
-    if (permissions != null) {
+    if (permissions?.isNotEmpty ?? false) {
       data['permissions'] = permissions!.map((v) => v.toJson()).toList();
     }
     data['social_media_access_token'] = socialMediaAccessToken;

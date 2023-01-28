@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/filter_data_model.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/zila_model.dart';
 
 import '../network/model/data_entry_model.dart';
@@ -32,11 +32,7 @@ class PartyZilaSelectedState extends ZilaDataState {
   PartyZilaSelectedState(this.data);
 }
 
-class FilterDataFetchedState extends ZilaDataState {
-  final FilterDataModel filterdata;
-  FilterDataFetchedState(this.filterdata);
-}
-
-class FilterDataSelectedState extends ZilaDataState{
-  
+class UnitDataFetchedState extends ZilaDataState {
+  final DataUnitModel dataUnit;
+  UnitDataFetchedState(this.dataUnit);
 }

@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:otp_text_field/otp_text_field.dart';
+import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
+import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
+import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
-import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
+
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
+
+import 'package:sangathan/common/textfiled_widget.dart';
+import 'package:sangathan/common/common_button.dart';
+
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 
 import '../../Values/space_width_widget.dart';
-import '../../common/textfiled_widget.dart';
-import '../cubit/add_entry_state.dart';
 import '../dynamic_ui_handler/field_handler.dart';
-import 'widget/drop_down_widget.dart';
 
 class AddEntryPage extends StatefulWidget {
   const AddEntryPage({Key? key, required this.type, required this.leaveId})
@@ -27,10 +33,12 @@ class AddEntryPage extends StatefulWidget {
 }
 
 class _AddEntryPageState extends State<AddEntryPage> {
+  OtpFieldController otpFieldController = OtpFieldController();
   @override
   void initState() {
     context.read<AddEntryCubit>().getDropdownData();
     //context.read<AddEntryCubit>().getCastData(id: '1');
+
     super.initState();
   }
 
@@ -192,6 +200,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                 ),
                         ),
                         spaceHeightWidget(20),
+
                         for (int i = 0; i < cubit.entryField.length; i++)
                           if (cubit.entryField[i].primary ?? false)
                             formFieldWidget(cubit, i),
@@ -224,6 +233,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                     }),
                                   );
                                 },
+
                               )
                             : CommonTextField(
                                 keyboardType: TextInputType.name,
@@ -770,7 +780,52 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                   spaceWidthWidget(30),
                                   Expanded(
                                     child: CommonButton(
-                                      onTap: (() {}),
+                                      onTap: (() {
+                                        showDialog(
+                                            context: context,
+                                            builder: ((context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                content: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      12.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      verifyOtpDialogButton(
+                                                          context, cubit),
+                                                      spaceHeightWidget(15),
+                                                      CommonButton(
+                                                        backGroundcolor:
+                                                            AppColor.white,
+                                                        height: 45,
+                                                        onTap: (() {
+                                                          Navigator.pop(
+                                                              context);
+                                                          Navigator.pop(
+                                                              context);
+                                                        }),
+                                                        title:
+                                                            'Skip & Add new entry',
+                                                        style: GoogleFonts
+                                                            .quicksand(
+                                                                color: AppColor
+                                                                    .buttonOrangeBackGroundColor,
+                                                                fontSize: 16,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            }));
+                                      }),
                                       padding: const EdgeInsets.all(12),
                                       title: 'Submit',
                                       borderRadius: 10,
@@ -793,6 +848,96 @@ class _AddEntryPageState extends State<AddEntryPage> {
           ],
         ),
       )),
+    );
+  }
+
+  CommonButton verifyOtpDialogButton(
+      BuildContext context, AddEntryCubit cubit) {
+    return CommonButton(
+      height: 45,
+      onTap: (() {
+        Navigator.pop(context);
+        cubit.count = 30;
+        cubit.startTimer();
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: ((context) {
+              return BlocBuilder<AddEntryCubit, AddEntryState>(
+                builder: (context, state) {
+                  return AlertDialog(
+                    content: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Verify with OTP',
+                          style: GoogleFonts.quicksand(
+                              color: AppColor.greyColor,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
+                        spaceHeightWidget(14),
+                        Text(
+                          'Enter OTP sent to 9988776655',
+                          style: GoogleFonts.quicksand(
+                              color: AppColor.greyColor,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        OTPTextField(
+                            controller: otpFieldController,
+                            length: 6,
+                            width: MediaQuery.of(context).size.width,
+                            fieldWidth: 25,
+                            onCompleted: ((value) {}),
+                            style: GoogleFonts.inter(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                            onChanged: (value) {}),
+                        spaceHeightWidget(26),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextButton(
+                                onPressed: cubit.count == 0 ? (() {}) : null,
+                                child: Text(
+                                  'Resend',
+                                  style: GoogleFonts.quicksand(
+                                      fontSize: 10,
+                                      color: AppColor.navyBlue,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.w500),
+                                )),
+                            Text(
+                              'OTP in 00:${cubit.count}',
+                              style: GoogleFonts.quicksand(
+                                  color: AppColor.greyColor,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
+                        ),
+                        spaceHeightWidget(32),
+                        CommonButton(
+                          title: 'Verify',
+                          height: 45,
+                          margin: const EdgeInsets.symmetric(horizontal: 40),
+                          style: GoogleFonts.quicksand(
+                              color: AppColor.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            }));
+      }),
+      title: 'Verify with OTP',
+      style: GoogleFonts.quicksand(
+          color: AppColor.white, fontSize: 16, fontWeight: FontWeight.w700),
     );
   }
 

@@ -29,6 +29,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
     super.initState();
   }
 
+  Future<bool> isExist() async {
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<SangathanDetailsCubit>();
@@ -125,67 +129,71 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     cubit.locationList = state.locationData.data!.locations!;
                   }
                 }
-                return SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.75,
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          spaceHeightWidget(15),
-                          Row(
-                            children: [
-                              IconButton(
-                                  onPressed: (() {
-                                    if (cubit.selectedId == null) {
-                                      EasyLoading.showError(
-                                          S.of(context).pleaseChoosePlace);
-                                    } else {
-                                      Navigator.pop(context);
-                                    }
-                                  }),
-                                  icon: const Icon(Icons.arrow_back)),
-                              spaceWidthWidget(10),
-                              Text(
-                                S.of(context).pleaseChoosePlace,
-                                style: GoogleFonts.quicksand(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
-                          spaceHeightWidget(10),
-                          Wrap(
-                              spacing: 10,
-                              runSpacing: 5,
-                              children: cubit.locationList
-                                  .map((e) => ChoiceChip(
-                                        backgroundColor:
-                                            AppColor.orange300Color,
-                                        selectedColor:
-                                            cubit.selectedId == e.countryStateId
-                                                ? AppColor
-                                                    .buttonOrangeBackGroundColor
-                                                : null,
-                                        selected: cubit.selectedId ==
-                                            e.countryStateId,
-                                        label: Text(
-                                          e.name ?? '',
-                                          style: TextStyle(
-                                              color: cubit.selectedId ==
-                                                      e.countryStateId
-                                                  ? AppColor.white
-                                                  : AppColor.textBlackColor),
-                                        ),
-                                        onSelected: ((value) {
-                                          cubit.onSelectLocation(
-                                              e.countryStateId!);
-                                        }),
-                                      ))
-                                  .toList()),
-                        ],
-                      ),
-                    ));
+                return WillPopScope(
+                  onWillPop: isExist,
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.75,
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            spaceHeightWidget(15),
+                            Row(
+                              children: [
+                                IconButton(
+                                    onPressed: (() {
+                                      if (cubit.selectedId == null) {
+                                        EasyLoading.showError(
+                                            S.of(context).pleaseChoosePlace);
+                                      } else {
+                                        Navigator.pop(context);
+                                      }
+                                    }),
+                                    icon: const Icon(Icons.arrow_back)),
+                                spaceWidthWidget(10),
+                                Text(
+                                  S.of(context).pleaseChoosePlace,
+                                  style: GoogleFonts.quicksand(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            spaceHeightWidget(10),
+                            Wrap(
+                                spacing: 10,
+                                runSpacing: 5,
+                                children: cubit.locationList
+                                    .map((e) => ChoiceChip(
+                                          backgroundColor:
+                                              AppColor.orange300Color,
+                                          selectedColor: cubit.selectedId ==
+                                                  e.countryStateId
+                                              ? AppColor
+                                                  .buttonOrangeBackGroundColor
+                                              : null,
+                                          selected: cubit.selectedId ==
+                                              e.countryStateId,
+                                          label: Text(
+                                            e.name ?? '',
+                                            style: TextStyle(
+                                                color: cubit.selectedId ==
+                                                        e.countryStateId
+                                                    ? AppColor.white
+                                                    : AppColor.textBlackColor),
+                                          ),
+                                          onSelected: ((value) {
+                                            cubit.onSelectLocation(
+                                                e.countryStateId!);
+                                          }),
+                                        ))
+                                    .toList()),
+                          ],
+                        ),
+                      )),
+                );
               },
             );
           });
@@ -241,6 +249,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     final data = cubit.sangathanDataList[index];
                     return InkWell(
                       onTap: (() {
+                        cubit.getDataLevelId(data.id);
                         // Navigator.pushNamed(context, RoutePath.addEntryScreen,
                         //     arguments: data[index]['text']);
 

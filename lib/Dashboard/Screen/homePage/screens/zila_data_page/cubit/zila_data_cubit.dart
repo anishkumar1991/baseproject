@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/filter_data_model.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
 
 import '../../../../../../storage/user_storage_service.dart';
 import '../Network/Api/data_entry_api.dart';
@@ -13,11 +13,13 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
 
   List<UserData> dataList = [];
   List<PartyZilaData> partyzilaList = [];
-  List<FilterData> filterDataList = [];
 
-  FilterData? selectedFilterData;
   PartyZilaData? zilaSelected;
   int filterDtaSelectedIndex = 0;
+  List<UnitData> dataUnitList = [];
+  DataUnitModel? dataUnitModel;
+  //String? selectedUnitName;
+  SubUnits? subUnits;
   final api = DataEntryApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
@@ -63,16 +65,15 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  Future getFilterOptions({required Map<String ,dynamic> data}) async {
+  Future getUnitData({required Map<String, dynamic> data}) async {
     try {
-      selectedFilterData = null;
-      emit(DataFetchingLoadingState());
-      final res =
-          await api.getFilterOptions('Bearer ${StorageService.userAuthToken}',data);
-      print('filter options res =${res.response.statusCode}');
+      emit(LoadingState());
+      final res = await api.getDataUnits(
+          'Bearer ${StorageService.userAuthToken}', data);
+      print('Part Zila res =${res.response.statusCode}');
       if (res.response.statusCode == 200) {
-        FilterDataModel data = FilterDataModel.fromJson(res.data);
-        emit(FilterDataFetchedState(data));
+        DataUnitModel data = DataUnitModel.fromJson(res.data);
+        emit(UnitDataFetchedState(data));
       } else {
         Map<String, dynamic>? msg = res.data;
         emit(ErrorState(msg?['errors'] ?? ''));
@@ -85,12 +86,14 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   void onTapFilterData(int index) {
     emit(LoadingState());
     filterDtaSelectedIndex = index;
-    emit(FilterDataSelectedState());
+    emit(ZilaChangedState());
   }
 
-  void onChangeDesignationDropDown(FilterData filterData) {
-    emit(LoadingState());
-    selectedFilterData = filterData;
-    emit(FilterDataSelectedState());
-  }
+  // void onChangeUnitData(SubUnits value) {
+  //   emit(LoadingState());
+
+  //   selectedUnitName = value.name;
+  //   print(selectedUnitName);
+  //   emit(ZilaChangedState());
+  // }
 }

@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
 
-import '../../Dashboard/Screen/homePage/screens/zila_data_page/network/model/filter_data_model.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 import '../network/model/cast_model.dart';
+import '../network/model/designation_data_model.dart';
 
 abstract class AddEntryState extends Equatable {
   @override
@@ -54,6 +54,7 @@ class CastFetchedState extends AddEntryState {
 
 class ImageConvertedState extends AddEntryState {}
 
+
 class GetAddEntryFormStructureLoadingState extends AddEntryState {}
 
 class GetAddEntryFormStructureSuccessState extends AddEntryState {
@@ -75,7 +76,7 @@ class DynamicFieldAddSuccessState extends AddEntryState {}
 class DesignationDropDownLoadingState extends AddEntryState {}
 
 class DesignationDropDownSuccessState extends AddEntryState {
-  final FilterDataModel designationList;
+  final DesignationDataModel designationList;
 
   DesignationDropDownSuccessState(this.designationList);
 }
@@ -87,3 +88,19 @@ class DesignationDropDownFailedState extends AddEntryState {
 }
 
 class DisposeState extends AddEntryState {}
+
+class FilterDataFetchedState extends AddEntryState {
+  final DesignationDataModel designationData;
+  FilterDataFetchedState(this.designationData);
+}
+
+class FilterDataSelectedState extends AddEntryState {}
+
+class TimerStopState extends AddEntryState {}
+
+class TimerLoadingState extends AddEntryState {}
+
+class TimerRunningState extends AddEntryState {
+  final int count;
+  TimerRunningState(this.count);
+}

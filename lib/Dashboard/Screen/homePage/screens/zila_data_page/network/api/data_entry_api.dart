@@ -18,6 +18,6 @@ abstract class DataEntryApi {
       @Header('Authorization') String token, @Path('id') int id);
 
   @POST('/zila/api/dashboard/get_filter_options')
-  Future<HttpResponse> getFilterOptions(
+  Future<HttpResponse> getDataUnits(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

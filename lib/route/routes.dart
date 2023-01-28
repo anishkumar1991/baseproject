@@ -73,7 +73,7 @@ class RouteGenerator {
             return ZilaDataScreen(
               type: data.type,
               id: data.id,
-              dataLevelId: data.dataLevelId,
+             dataLevelId: data.dataLevelId,
             );
           },
         );

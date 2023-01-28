@@ -78,7 +78,7 @@ class _DataEntryApi implements DataEntryApi {
   }
 
   @override
-  Future<HttpResponse<dynamic>> getFilterOptions(
+  Future<HttpResponse<dynamic>> getDataUnits(
     token,
     data,
   ) async {

@@ -1,16 +1,16 @@
-class FilterDataModel {
+class DesignationDataModel {
   bool? success;
-  List<FilterData>? data;
+  List<DesignationData>? data;
   int? status;
 
-  FilterDataModel({this.success, this.data, this.status});
+  DesignationDataModel({this.success, this.data, this.status});
 
-  FilterDataModel.fromJson(Map<String, dynamic> json) {
+  DesignationDataModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
-      data = <FilterData>[];
+      data = <DesignationData>[];
       json['data'].forEach((v) {
-        data!.add(FilterData.fromJson(v));
+        data!.add(DesignationData.fromJson(v));
       });
     }
     status = json['status'];
@@ -27,14 +27,14 @@ class FilterDataModel {
   }
 }
 
-class FilterData {
+class DesignationData {
   int? id;
   String? name;
   String? displayName;
 
-  FilterData({this.id, this.name, this.displayName});
+  DesignationData({this.id, this.name, this.displayName});
 
-  FilterData.fromJson(Map<String, dynamic> json) {
+  DesignationData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     displayName = json['display_name'];
