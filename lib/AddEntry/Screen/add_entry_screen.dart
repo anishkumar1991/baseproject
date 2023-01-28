@@ -2,72 +2,104 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
-import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
-import 'package:sangathan/AddEntry/Screen/widget/custom_radio_button.dart';
-import 'package:sangathan/AddEntry/Screen/widget/custom_textfield.dart';
-import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
-import 'package:sangathan/AddEntry/Screen/widget/select_boxs.dart';
-import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/user_image.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
-import 'package:sangathan/common/textfiled_widget.dart';
-import 'package:sangathan/common/common_button.dart';
+import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
+import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
-import 'package:sangathan/Values/space_width_widget.dart';
+
+import '../../Values/space_width_widget.dart';
+import '../../common/textfiled_widget.dart';
+import '../cubit/add_entry_state.dart';
+import '../dynamic_ui_handler/field_handler.dart';
+import 'widget/drop_down_widget.dart';
 
 class AddEntryPage extends StatefulWidget {
-  const AddEntryPage({Key? key, required this.type}) : super(key: key);
+  const AddEntryPage({Key? key, required this.type, required this.leaveId})
+      : super(key: key);
   final String type;
+  final int leaveId;
+
   @override
   State<AddEntryPage> createState() => _AddEntryPageState();
 }
 
 class _AddEntryPageState extends State<AddEntryPage> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController designationController = TextEditingController();
-  TextEditingController dobController = TextEditingController();
-  TextEditingController categoryController = TextEditingController();
-  TextEditingController castController = TextEditingController();
-  TextEditingController mandalController = TextEditingController();
-  TextEditingController nativeStateController = TextEditingController();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController genderController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController qualificationController = TextEditingController();
-  TextEditingController professionController = TextEditingController();
-  TextEditingController soController = TextEditingController();
-  TextEditingController fullAddressController = TextEditingController();
-  TextEditingController religionController = TextEditingController();
-  TextEditingController whatsAppNoController = TextEditingController();
-  TextEditingController alternatePhoneNoController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController adharNoController = TextEditingController();
-  TextEditingController voterIDController = TextEditingController();
-  TextEditingController rationCardNoController = TextEditingController();
-  TextEditingController pinController = TextEditingController();
-  TextEditingController fatherNameController = TextEditingController();
-  TextEditingController societyController = TextEditingController();
-  TextEditingController houseController = TextEditingController();
-  TextEditingController streetController = TextEditingController();
-
   @override
   void initState() {
     context.read<AddEntryCubit>().getDropdownData();
     //context.read<AddEntryCubit>().getCastData(id: '1');
-    context.read<ZilaDataCubit>().getFilterOptions(data: {
-      "type": "Designation",
-      "data_level": 7,
-      "country_state_id": 3,
-      "unit_id": 25,
-      "sub_unit_id": 58
-    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    context.read<AddEntryCubit>().disposePage();
+    super.dispose();
+  }
+
+  formFieldWidget(AddEntryCubit cubit, int i) {
+    return Column(
+      children: [
+        if (DynamicUIHandler.dropdowns
+            .contains(cubit.entryField[i].formControlName)) ...[
+          spaceHeightWidget(20),
+          BlocBuilder<AddEntryCubit, AddEntryState>(
+            builder: (context, state) {
+              /// Here getting specify dropdown list
+              getDropdownList(String dropdownType, AddEntryCubit cubit) {
+                if (dropdownType == "designation") {
+                  return cubit.designationData;
+                } else if (dropdownType == "category") {
+                  return cubit.categoryData;
+                } else if (dropdownType == "caste") {
+                  return cubit.castData;
+                } else if (dropdownType == "qualification") {
+                  return cubit.qualificationData;
+                } else if (dropdownType == "religion") {
+                  return cubit.religionData;
+                } else if (dropdownType == "profession") {
+                  return cubit.professionData;
+                } else {
+                  return [];
+                }
+              }
+
+              return CustomDropDown(
+                selectedValue: FieldHandler.getDropdownSelected(
+                    cubit.entryField[i].formControlName ?? "", cubit),
+                title: cubit.entryField[i].displayNameForUI ?? "",
+                hintText: 'Select ${cubit.entryField[i].displayNameForUI}',
+                dropDownList: getDropdownList(
+                        cubit.entryField[i].formControlName ?? "", cubit)
+                    .map((e) =>
+                        DropdownMenuItem(value: e, child: Text(e.name ?? '')))
+                    .toList(),
+                onChange: ((value) {
+                  cubit.changeDropdownValue(
+                      value, cubit.entryField[i].formControlName ?? "");
+                  //  cubit.onChangeDesignationDropDown(value);
+                }),
+              );
+            },
+          )
+        ] else if (DynamicUIHandler.textfield
+            .contains(cubit.entryField[i].formControlName)) ...[
+          spaceHeightWidget(20),
+          TextFieldWidget(
+              onChanged: (value) {
+                print(cubit.textFieldControllerData);
+                FieldHandler.onUpdate(
+                    i, value, cubit.entryField[i].fieldName ?? "", cubit);
+              },
+              title: cubit.entryField[i].displayNameForUI ?? "",
+              keyboardType: TextInputType.text,
+              hintText: 'Enter Your ${cubit.entryField[i].displayNameForUI}')
+        ]
+      ],
+    );
   }
 
   @override
@@ -115,6 +147,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       cubit.qualificationSelected = null;
                       cubit.religionSelected = null;
                       cubit.professionSelected = null;
+                      cubit.designationSelected = null;
                       // cubit.dropdownData = state.category.data;
                       cubit.categoryData = state.category.data!.personCategory!;
                       cubit.nativeStateData = state.category.data!.nativeState!;
@@ -123,9 +156,26 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       cubit.religionData = state.category.data!.religion!;
                       cubit.professionData =
                           state.category.data!.personProfession!;
+                      context
+                          .read<AddEntryCubit>()
+                          .getDesignationDropdown(data: {
+                        "type": "Designation",
+                        "data_level": 7,
+                        "country_state_id": 3,
+                        "unit_id": 25,
+                        "sub_unit_id": 58
+                      });
                     } else if (state is CastFetchedState) {
                       cubit.castSelected = null;
                       cubit.castData = state.cast.data!;
+                    } else if (state is DesignationDropDownSuccessState) {
+                      cubit.designationData = [];
+                      cubit.designationData = state.designationList.data ?? [];
+                      context.read<AddEntryCubit>().getAddEntryFormStructure(
+                          levelID: widget.leaveId.toString());
+                    } else if (state is GetAddEntryFormStructureSuccessState) {
+                      cubit.entryField =
+                          state.addEntryFormStructure.dataEntryField ?? [];
                     }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,7 +192,21 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                 ),
                         ),
                         spaceHeightWidget(20),
-                        widget.type == 'Zila'
+                        for (int i = 0; i < cubit.entryField.length; i++)
+                          if (cubit.entryField[i].primary ?? false)
+                            formFieldWidget(cubit, i),
+                        spaceHeightWidget(20),
+                        Text(
+                          'Fill Secondary Information',
+                          style: GoogleFonts.quicksand(
+                              fontSize: 20, fontWeight: FontWeight.w600),
+                        ),
+                        for (int i = 0; i < cubit.entryField.length; i++)
+                          if (cubit.entryField[i].primary == false)
+                            formFieldWidget(cubit, i),
+
+                        //if(){}
+                        /* widget.type == 'Zila'
                             ? BlocBuilder<ZilaDataCubit, ZilaDataState>(
                                 builder: (context, state) {
                                   final cubit = context.read<ZilaDataCubit>();
@@ -717,7 +781,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                     ),
                                   )
                                 ],
-                              ),
+                              ),*/
+
                         spaceHeightWidget(30),
                       ],
                     );

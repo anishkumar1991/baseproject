@@ -51,8 +51,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
+            AddEntryPage data = args as AddEntryPage;
             return AddEntryPage(
-              type: settings.arguments as String,
+              type: data.type,
+              leaveId: data.leaveId,
             );
           },
         );

@@ -13,14 +13,17 @@ import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import 'cubit/zila_data_state.dart';
 
 class ZilaDataScreen extends StatefulWidget {
   const ZilaDataScreen(
       {super.key, required this.type, this.id, this.dataLevelId});
+
   final String? type;
   final int? id;
   final int? dataLevelId;
+
   @override
   State<ZilaDataScreen> createState() => _ZilaDataScreenState();
 }
@@ -177,7 +180,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
           backgroundColor: AppColor.buttonOrangeBackGroundColor,
           onPressed: (() {
             Navigator.pushNamed(context, RoutePath.addEntryScreen,
-                arguments: widget.type);
+                arguments: AddEntryPage(
+                  type: widget.type!,
+                  leaveId: widget.dataLevelId ?? 0,
+                ));
           }),
           icon: const Icon(Icons.add),
           label: Text(

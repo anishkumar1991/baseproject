@@ -21,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), (() {
       String? token = StorageService.getUserAuthToken();
       if (token != null) {
+        print(token);
         context.read<UserProfileCubit>().getUserProfileData();
       } else {
         Navigator.pushNamedAndRemoveUntil(

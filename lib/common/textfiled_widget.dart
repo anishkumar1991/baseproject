@@ -4,21 +4,21 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Values/app_colors.dart';
 
 class TextFieldWidget extends StatelessWidget {
-   TextFieldWidget(
+  TextFieldWidget(
       {super.key,
-        required this.controller,
-        required this.title,
-        this.suffixWidget,
-        this.keyboardType,
-        this.readOnly,
-        this.labelText,
-        this.onTap,
-        this.maxLines,
-        this.onChanged,
-        this.inpurborder,
-        this.hintText});
+      this.controller,
+      required this.title,
+      this.suffixWidget,
+      this.keyboardType,
+      this.readOnly,
+      this.labelText,
+      this.onTap,
+      this.maxLines,
+      this.onChanged,
+      this.inpurborder,
+      this.hintText});
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String title;
   final TextInputType? keyboardType;
   ValueChanged<String>? onChanged;
@@ -45,11 +45,11 @@ class TextFieldWidget extends StatelessWidget {
           onChanged: onChanged,
           onTap: onTap,
           decoration: InputDecoration(
-            border: inpurborder,
+              border: inpurborder,
               hintText: hintText,
               labelText: labelText,
               labelStyle: GoogleFonts.poppins(
-                  color: AppColor.naturalBlackColor,fontSize: 14),
+                  color: AppColor.naturalBlackColor, fontSize: 14),
               suffixIcon: suffixWidget),
         ),
       ],

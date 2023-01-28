@@ -8,36 +8,44 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
 
+import '../../Dashboard/Screen/homePage/screens/zila_data_page/network/model/filter_data_model.dart';
 import '../network/api/add_entry_api.dart';
+import '../network/model/add_entry_form_structure_model.dart';
+import 'add_entry_state.dart';
 
 class AddEntryCubit extends Cubit<AddEntryState> {
   AddEntryCubit() : super(AddEntryInitialState());
 
   DateTime dateTime = DateTime.now();
-  String date = 'Seletc DOB of Birth';
+  String date = 'Select DOB of Birth';
   String? selectRadio;
   File? file;
   File? rationFilePicked;
   File? adharFilePicked;
   File? voterFilePicked;
-  //Data? dropdownData;
-   List<DropdownData> categoryData = [];
-   List<CastData> castData = [];
-   List<DropdownData> qualificationData = [];
-   List<DropdownData> professionData = [];
-   List<DropdownData> nativeStateData = [];
-   List<DropdownData> religionData = [];
+  List<DataEntryField> entryField = [];
+  List<DropdownData> categoryData = [];
+  List<CastData> castData = [];
+  List<DropdownData> qualificationData = [];
+  List<DropdownData> professionData = [];
+  List<DropdownData> nativeStateData = [];
+  List<DropdownData> religionData = [];
+  List<FilterData> designationData = [];
+  List<Map<String, dynamic>> textFieldControllerData = [];
+  List<Widget> addEntryFormPrimary = [];
+  List<Widget> addEntryFormSecondary = [];
+
   CastData? castSelected;
   DropdownData? categorySelected;
   DropdownData? qualificationSelected;
   DropdownData? professionSelected;
   DropdownData? nativeStateSelected;
   DropdownData? religionSelected;
+  FilterData? designationSelected;
   String? profileImageUrl;
   final api = AddEntryApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
@@ -52,7 +60,26 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     return DateFormat('dd-MMM-yyyy').format(date);
   }
 
-  void onChangeCategory(DropdownData? category) {
+  changeDropdownValue(dynamic value, String dropdownType) {
+    emit(AddEntryLoadingState());
+    if (dropdownType == "designation") {
+      designationSelected = value;
+    } else if (dropdownType == "category") {
+      categorySelected = value;
+      getCastData(id: categorySelected!.id.toString());
+    } else if (dropdownType == "caste") {
+      castSelected = value;
+    } else if (dropdownType == "qualification") {
+      qualificationSelected = value;
+    } else if (dropdownType == "religion") {
+      religionSelected = value;
+    } else if (dropdownType == "profession") {
+      professionSelected = value;
+    } else {}
+    emit(DropDownSelectedState());
+  }
+
+  /* void onChangeCategory(DropdownData? category) {
     emit(AddEntryLoadingState());
     categorySelected = category;
     emit(DropDownSelectedState());
@@ -61,6 +88,12 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   void onChangeCast(CastData? category) {
     emit(AddEntryLoadingState());
     castSelected = category;
+    emit(DropDownSelectedState());
+  }
+
+  void onChangeDesignationDropDown(FilterData filterData) {
+    emit(AddEntryLoadingState());
+    designationSelected = filterData;
     emit(DropDownSelectedState());
   }
 
@@ -86,7 +119,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(AddEntryLoadingState());
     religionSelected = category;
     emit(DropDownSelectedState());
-  }
+  }*/
 
   Future<void> selectedDoaDate(BuildContext context) async {
     emit(AddEntryLoadingState());
@@ -164,7 +197,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       final res = await api.getDropdownValues(
         'Bearer ${StorageService.userAuthToken}',
       );
-      print('dropdown res =${res.response.statusCode}');
+      print('dropdown res =${res.response}');
       if (res.response.statusCode == 200) {
         DropdownValueModel data = DropdownValueModel.fromJson(res.data);
         emit(DropDownValueFetchedState(data));
@@ -182,7 +215,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       emit(AddEntryLoadingState());
       final res =
           await api.getCast('Bearer ${StorageService.userAuthToken}', id);
-      print('cast res =${res.response.statusCode}');
+      print('cast res =${res.response}');
       if (res.response.statusCode == 200) {
         CastModel data = CastModel.fromJson(res.data);
         emit(CastFetchedState(data));
@@ -193,5 +226,61 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     } catch (e) {
       emit(AddEntryErrorState('Something Went Wrong'));
     }
+  }
+
+  Future getAddEntryFormStructure({required String levelID}) async {
+    emit(GetAddEntryFormStructureLoadingState());
+    if (state is GetAddEntryFormStructureLoadingState) {
+      try {
+        final res = await api.getAddEntryFormStructure(
+            'Bearer ${StorageService.userAuthToken}', levelID);
+        if (res.response.statusCode == 200) {
+          AddEntryFormStructure addEntryFormStructure =
+              AddEntryFormStructure.fromJson(res.data);
+          emit(GetAddEntryFormStructureSuccessState(addEntryFormStructure));
+          print(
+              "------------------------------------ Add entry form structure ----------------------------");
+          print("level id :$levelID");
+          print("Status code : ${res.response.statusCode}");
+          print("Response :${res.data}");
+          print(
+              "------------------------------------ ------------------------ ----------------------------");
+        } else {
+          Map<String, dynamic>? msg = res.data;
+          emit(GetAddEntryFormStructureFailedState(msg?['errors'] ?? ''));
+        }
+      } catch (e) {
+        print(e.toString());
+        emit(GetAddEntryFormStructureFailedState("Something went wrong!"));
+      }
+    }
+  }
+
+  Future getDesignationDropdown({required Map<String, dynamic> data}) async {
+    try {
+      emit(DesignationDropDownLoadingState());
+      final res = await api.getDesignation(
+          'Bearer ${StorageService.userAuthToken}', data);
+      print(
+          "------------------------------------ Designation ----------------------------");
+      print("data  :$data");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        FilterDataModel data = FilterDataModel.fromJson(res.data);
+        emit(DesignationDropDownSuccessState(data));
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(DesignationDropDownFailedState(msg?['errors'] ?? ''));
+      }
+    } catch (e) {
+      emit(DesignationDropDownFailedState('Something Went Wrong'));
+    }
+  }
+
+  disposePage() {
+    emit(DisposeState());
   }
 }

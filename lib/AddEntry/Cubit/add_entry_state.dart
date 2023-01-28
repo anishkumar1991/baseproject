@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
 
+import '../../Dashboard/Screen/homePage/screens/zila_data_page/network/model/filter_data_model.dart';
+import '../network/model/add_entry_form_structure_model.dart';
 import '../network/model/cast_model.dart';
 
 abstract class AddEntryState extends Equatable {
@@ -18,6 +20,7 @@ class DropDownSelectedState extends AddEntryState {
 
 class AddEntryErrorState extends AddEntryState {
   final String error;
+
   AddEntryErrorState(this.error);
 }
 
@@ -39,12 +42,48 @@ class FilePickedState extends AddEntryState {
 
 class DropDownValueFetchedState extends AddEntryState {
   final DropdownValueModel category;
+
   DropDownValueFetchedState(this.category);
 }
 
 class CastFetchedState extends AddEntryState {
   final CastModel cast;
+
   CastFetchedState(this.cast);
 }
 
 class ImageConvertedState extends AddEntryState {}
+
+class GetAddEntryFormStructureLoadingState extends AddEntryState {}
+
+class GetAddEntryFormStructureSuccessState extends AddEntryState {
+  final AddEntryFormStructure addEntryFormStructure;
+
+  GetAddEntryFormStructureSuccessState(this.addEntryFormStructure);
+}
+
+class GetAddEntryFormStructureFailedState extends AddEntryState {
+  final String error;
+
+  GetAddEntryFormStructureFailedState(this.error);
+}
+
+class DynamicFieldAddLoadingState extends AddEntryState {}
+
+class DynamicFieldAddSuccessState extends AddEntryState {}
+
+class DesignationDropDownLoadingState extends AddEntryState {}
+
+class DesignationDropDownSuccessState extends AddEntryState {
+  final FilterDataModel designationList;
+
+  DesignationDropDownSuccessState(this.designationList);
+}
+
+class DesignationDropDownFailedState extends AddEntryState {
+  final String error;
+
+  DesignationDropDownFailedState(this.error);
+}
+
+class DisposeState extends AddEntryState {}
