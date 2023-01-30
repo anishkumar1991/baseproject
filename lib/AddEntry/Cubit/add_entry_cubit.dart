@@ -30,8 +30,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   File? rationFilePicked;
   File? adharFilePicked;
   File? voterFilePicked;
+
   List multiSelectionList = [];
   List<DataEntryField>? entryField = [];
+
 
   List<DropdownData> categoryData = [];
   List<CastData> castData = [];
@@ -209,21 +211,31 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         await ImagePicker.platform.pickImage(source: source);
     if (pickedFile != null) {
       file = File(pickedFile.path);
+
       /* if (file != null) {
         await storeImage(folderName: 'profileImages', path: file!.path);
       }*/
+    //  if (file != null) {
+    //     await storeImage(
+    //         folderName: 'profileImages',
+    //         path: file!.path,
+    //         recievedUrl: profileImageUrl);
+    //   }
+
       emit(ImagePickedState());
     }
   }
 
   Future<void> storeImage(
-      {required String folderName, required String path}) async {
+      {required String folderName,
+      required String path,
+      String? recievedUrl}) async {
     int time = DateTime.now().millisecondsSinceEpoch;
     Reference ref =
         FirebaseStorage.instance.ref(folderName).child(time.toString());
     await ref.putFile(File(path));
-    profileImageUrl = await ref.getDownloadURL();
-    print('ImageUrl==$profileImageUrl');
+    recievedUrl = await ref.getDownloadURL();
+    //print('ImageUrl==$profileImageUrl');
   }
 
   Future<void> pickFile(String fieldType) async {
@@ -232,13 +244,20 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (result != null) {
       /*if (isAdhar) {
         adharFilePicked = File(result.files.single.path!);
-        await storeImage(folderName: 'adharFile', path: adharFilePicked!.path);
+        await storeImage(
+            folderName: 'adharFile',
+            path: adharFilePicked!.path,
+            recievedUrl: adharUrl);
       } else if (isVoter) {
         voterFilePicked = File(result.files.single.path!);
-        await storeImage(folderName: 'voterFile', path: voterFilePicked!.path);
+        await storeImage(
+            folderName: 'voterFile',
+            path: voterFilePicked!.path,
+            recievedUrl: voterUrl);
       } else if (isRation) {
         rationFilePicked = File(result.files.single.path!);
         await storeImage(
+
             folderName: 'rationFile', path: rationFilePicked!.path);
       }*/
 
@@ -252,6 +271,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           "value": result.files.single.path!,
         };
         allImagePickerList.add(json);
+
       }
     }
     emit(FilePickedState());
@@ -380,6 +400,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       emit(TimerRunningState(count));
       startTimer();
     }
+
   }
 
   getFieldName(String fieldName) {
@@ -391,5 +412,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       }
     }
     return name;
+
   }
 }

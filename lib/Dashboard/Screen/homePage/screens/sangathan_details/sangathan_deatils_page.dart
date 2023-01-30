@@ -11,6 +11,7 @@ import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
+import 'package:sangathan/storage/user_storage_service.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SangathanDetailsPage extends StatefulWidget {
@@ -21,11 +22,19 @@ class SangathanDetailsPage extends StatefulWidget {
 }
 
 class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
+  Future callApi() async {
+    if (StorageService.userData?.user?.countryStateId == 0 ||
+        StorageService.userData?.user?.countryStateId == null) {
+      await context.read<SangathanDetailsCubit>().getAllotedLocations();
+      showLocationBottomSheet();
+    }
+  }
+
   @override
   void initState() {
-    BlocProvider.of<SangathanDetailsCubit>(context).getSangathanDataLevel();
-    BlocProvider.of<SangathanDetailsCubit>(context).getAllotedLocations();
-    showLocationBottomSheet();
+    print('country_state_id=${StorageService.userData?.user?.countryStateId}');
+    callApi();
+    context.read<SangathanDetailsCubit>().getSangathanDataLevel();
     super.initState();
   }
 
@@ -279,6 +288,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                 ? Image.network(
                                     data.iconUrl!,
                                     height: 32,
+                                    errorBuilder:
+                                        ((context, error, stackTrace) =>
+                                            const SizedBox()),
                                   )
                                 : const SizedBox.shrink(),
                             spaceHeightWidget(4),

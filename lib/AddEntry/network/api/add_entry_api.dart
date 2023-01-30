@@ -15,7 +15,6 @@ abstract class AddEntryApi {
   Future<HttpResponse> getCast(
       @Header('Authorization') String token, @Path('id') String id);
 
-
   /// TODO : For now country id and type id is static need to make dynamic
   @GET(
       '/zila/api/data_entry/form_structure?level_id={levelID}&type_id=1&country_state_id=3&is_app=true')
@@ -24,6 +23,5 @@ abstract class AddEntryApi {
 
   @POST('/zila/api/dashboard/get_filter_options')
   Future<HttpResponse> getDesignation(
-
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

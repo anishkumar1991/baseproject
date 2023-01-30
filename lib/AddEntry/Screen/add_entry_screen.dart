@@ -12,8 +12,12 @@ import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
+
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
+
+import 'package:sangathan/storage/user_storage_service.dart';
+
 
 import '../../route/route_path.dart';
 import '../dynamic_ui_handler/field_handler.dart';
@@ -21,11 +25,17 @@ import 'widget/custom_radio_button.dart';
 import 'widget/select_boxs.dart';
 
 class AddEntryPage extends StatefulWidget {
-  const AddEntryPage({Key? key, required this.type, required this.leaveId})
+  const AddEntryPage(
+      {Key? key,
+      required this.type,
+      required this.leaveId,
+      required this.unitId,
+      this.subUnitId})
       : super(key: key);
   final String type;
   final int leaveId;
-
+  final int? unitId;
+  final int? subUnitId;
   @override
   State<AddEntryPage> createState() => _AddEntryPageState();
 }
@@ -277,6 +287,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
             ),
             Expanded(
               flex: 2,
+
               child: BlocConsumer<AddEntryCubit, AddEntryState>(
                 listener: (context, state) {
                   if (state is AddEntryErrorState) {
@@ -318,6 +329,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     if (state.addEntryFormStructure.dataEntryField == null) {
                       cubit.entryField = null;
                     } else {
+
                       cubit.entryField =
                           state.addEntryFormStructure.dataEntryField ?? [];
                     }

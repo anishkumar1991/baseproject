@@ -17,9 +17,10 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   PartyZilaData? zilaSelected;
   int filterDtaSelectedIndex = 0;
   List<UnitData> dataUnitList = [];
-  DataUnitModel? dataUnitModel;
-  //String? selectedUnitName;
-  SubUnits? subUnits;
+  int? unitId;
+  int? subUnitId;
+  List<SubUnits?> name = [];
+
   final api = DataEntryApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
@@ -83,17 +84,19 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  void onTapFilterData(int index) {
+  void onTapFilterData({required int index, required int id}) {
     emit(LoadingState());
     filterDtaSelectedIndex = index;
+    unitId = id;
+    print(unitId);
     emit(ZilaChangedState());
   }
 
-  // void onChangeUnitData(SubUnits value) {
-  //   emit(LoadingState());
-
-  //   selectedUnitName = value.name;
-  //   print(selectedUnitName);
-  //   emit(ZilaChangedState());
-  // }
+  void onChangeUnitData(SubUnits? value, int? id, int index) {
+    emit(DataFetchingLoadingState());
+    name[index] = value;
+    subUnitId = id;
+    print('subUnitId=$subUnitId');
+    emit(ChangeUnitData());
+  }
 }

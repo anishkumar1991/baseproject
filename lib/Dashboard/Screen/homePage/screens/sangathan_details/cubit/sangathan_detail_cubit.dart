@@ -41,21 +41,15 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   Future getAllotedLocations() async {
     try {
-      print(
-          'country_state_id=${StorageService.userData?.user?.countryStateId}');
-      if (StorageService.userData?.user?.countryStateId == 0 ||
-          UserProfile.user.countryStateId == null) {
-        emit(LoadingState());
-        final respose = await api
-            .allottedlocations('Bearer ${StorageService.userAuthToken}');
-        print('Alloted locations res=${respose.response.statusCode}');
-        if (respose.response.statusCode == 200) {
-          AllotedLocationModel data =
-              AllotedLocationModel.fromJson(respose.data);
-          emit(LocationFetchedState(data));
-        } else {
-          emit(ErrorState(respose.data['message']));
-        }
+      emit(LoadingState());
+      final respose =
+          await api.allottedlocations('Bearer ${StorageService.userAuthToken}');
+      print('Alloted locations res=${respose.response.statusCode}');
+      if (respose.response.statusCode == 200) {
+        AllotedLocationModel data = AllotedLocationModel.fromJson(respose.data);
+        emit(LocationFetchedState(data));
+      } else {
+        emit(ErrorState(respose.data['message']));
       }
     } catch (e) {
       ErrorState('Something Went Wrong');

@@ -60,6 +60,8 @@ class RouteGenerator {
             return AddEntryPage(
               type: data.type,
               leaveId: data.leaveId,
+              unitId: data.unitId,
+              subUnitId: data.subUnitId,
             );
           },
         );

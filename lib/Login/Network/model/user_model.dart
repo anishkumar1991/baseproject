@@ -114,7 +114,7 @@ class User {
     data['is_jammu_user'] = isJammuUser;
     data['role'] = role;
     if (permissions?.isNotEmpty ?? false) {
-      data['permissions'] = permissions!.map((v) => v.toJson()).toList();
+      data['permissions'] = permissions!.map((v) => v).toList();
     }
     data['social_media_access_token'] = socialMediaAccessToken;
     data['onboarding'] = onboarding;

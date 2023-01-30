@@ -36,3 +36,5 @@ class UnitDataFetchedState extends ZilaDataState {
   final DataUnitModel dataUnit;
   UnitDataFetchedState(this.dataUnit);
 }
+
+class ChangeUnitData extends ZilaDataState {}

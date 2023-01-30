@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/stay_and_program_list/widgets/button.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/stay_and_program_list/widgets/cardListView.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/stay_and_program_list/widgets/header_widget_stay_program_list.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/stay_and_program_list/header_widget_stay_program_list.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/common/appstyle.dart';

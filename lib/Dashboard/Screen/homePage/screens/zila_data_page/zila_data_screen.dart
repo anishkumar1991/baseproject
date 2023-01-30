@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
@@ -14,9 +13,9 @@ import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
-
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import 'cubit/zila_data_state.dart';
+import 'network/model/data_unit_model.dart';
 
 class ZilaDataScreen extends StatefulWidget {
   const ZilaDataScreen(
@@ -36,14 +35,19 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     if (widget.id != null) {
       context.read<ZilaDataCubit>().getPartyZila(id: widget.id!);
     }
-    context
-        .read<ZilaDataCubit>()
-        .getEntryData(data: {"level": 4, "unit": 25, "level_name": 348});
-    //print(context.read<SangathanDetailsCubit>().dataLevelId);
     context.read<ZilaDataCubit>().getUnitData(data: {
       "type": "Unit",
-      "data_level": context.read<SangathanDetailsCubit>().dataLevelId,
-      "country_state_id": 3,
+      "data_level": widget.dataLevelId,
+
+      ///TODO: country_state_id is static need to dynamic
+      "country_state_id": 1
+
+      ///StorageService.userData?.user?.countryStateId ?? 0,
+    });
+    context.read<ZilaDataCubit>().getEntryData(data: {
+      "level": widget.dataLevelId,
+      "unit": context.read<ZilaDataCubit>().unitId,
+      "level_name": 348
     });
     super.initState();
   }
@@ -51,7 +55,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ZilaDataCubit>();
-
     return Scaffold(
       body: SafeArea(
           child:
@@ -133,6 +136,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 arguments: AddEntryPage(
                   type: widget.type!,
                   leaveId: widget.dataLevelId ?? 0,
+                  unitId: cubit.unitId,
+                  subUnitId: cubit.subUnitId,
                 ));
           }),
           icon: const Icon(Icons.add),
@@ -159,6 +164,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
           if (state is UnitDataFetchedState) {
             if (state.dataUnit.data!.isNotEmpty) {
               cubit.dataUnitList = state.dataUnit.data!;
+              cubit.unitId = cubit.dataUnitList.first.id;
+              print('first unit id=${cubit.unitId}');
+              cubit.name =
+                  List.generate(cubit.dataUnitList.length, (index) => null);
             }
           }
           if (state is LoadingState) {
@@ -185,10 +194,21 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               itemCount: cubit.dataUnitList.length,
               itemBuilder: ((context, index) {
                 final data = cubit.dataUnitList[index];
-                //cubit.selectedUnitName = data.name;
+                if (cubit.name[index] == null) {
+                  cubit.name[index] = SubUnits(
+                      name: data.name, id: data.id, iconUrl: data.iconUrl);
+                }
+
                 return InkWell(
-                  onTap: (() {
-                    cubit.onTapFilterData(index);
+                  onTap: (() async {
+                    cubit.onTapFilterData(index: index, id: data.id ?? 0);
+                    await context.read<ZilaDataCubit>().getEntryData(data: {
+                      "level": widget.dataLevelId,
+                      "unit": cubit.unitId,
+
+                      ///TODO: Level name is static need to dynamic
+                      "level_name": 348
+                    });
                   }),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -203,7 +223,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          data.name ?? '',
+                          cubit.name[index]?.name ?? '',
                           style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: 18,
@@ -214,7 +234,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         data.subUnits?.isEmpty ?? false
                             ? const SizedBox.shrink()
                             : PopupMenuButton(
-                                initialValue: cubit.subUnits,
+                                initialValue: cubit.name[index],
                                 icon: Icon(
                                   Icons.arrow_drop_down,
                                   color: cubit.filterDtaSelectedIndex == index
@@ -228,7 +248,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                       .toList();
                                 }),
                                 onSelected: ((value) {
-                                  //cubit.onChangeUnitData(value);
+                                  cubit.onChangeUnitData(
+                                      value, value.id, index);
                                 }),
                               )
                       ],
@@ -317,6 +338,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                             children: [
                               AutoSizeText(
                                 data.name ?? '',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     color: AppColor.textBlackColor),
@@ -349,7 +372,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         AppIcons.callIcon,
                         height: 20,
                       ),
-                      spaceWidthWidget(10)
+                      spaceWidthWidget(4)
                     ],
                   ),
                 );
@@ -495,7 +518,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               return DropdownButtonHideUnderline(
                   child: DropdownButton(
                       isDense: true,
-                      hint: Text('Select Zila',
+                      hint: Text('Select ${widget.type}',
                           style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w400,
                               color: AppColor.greyColor,
