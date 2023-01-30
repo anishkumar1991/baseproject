@@ -22,13 +22,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AreaDes": MessageLookupByLibrary.simpleMessage(
+            "Area, Street, Sector, Village"),
         "Complete": MessageLookupByLibrary.simpleMessage("Complete"),
+        "FlatDes": MessageLookupByLibrary.simpleMessage(
+            "Flat, House no. , Building, Apartment"),
+        "Home": MessageLookupByLibrary.simpleMessage("Home"),
+        "Office": MessageLookupByLibrary.simpleMessage("Office"),
+        "Other": MessageLookupByLibrary.simpleMessage("Other"),
+        "PinCode": MessageLookupByLibrary.simpleMessage("Pin Code"),
+        "ThemeDes": MessageLookupByLibrary.simpleMessage(
+            "Get information and facts about political and social subjects."),
+        "ThemeandInsight":
+            MessageLookupByLibrary.simpleMessage("Theme and Insight"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
             "The guest / participant / activist present in the program whose name you want to add."),
         "addOptional":
             MessageLookupByLibrary.simpleMessage("Add Tax (optional)"),
+        "address": MessageLookupByLibrary.simpleMessage("Address"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
+        "business": MessageLookupByLibrary.simpleMessage("Business"),
+        "caste": MessageLookupByLibrary.simpleMessage("Caste"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "createATour": MessageLookupByLibrary.simpleMessage("Create a tour"),
@@ -39,21 +55,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "dateAndTime": MessageLookupByLibrary.simpleMessage("Date and Time *"),
         "dateTo": MessageLookupByLibrary.simpleMessage("Date (To)"),
         "dateToFrom": MessageLookupByLibrary.simpleMessage("Date (From To)"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("Description of Tour"),
         "digitCodeHasBeenSent":
             MessageLookupByLibrary.simpleMessage("6 digit code has been sent"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "education": MessageLookupByLibrary.simpleMessage("Education"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
+        "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
         "functionAdd": MessageLookupByLibrary.simpleMessage(
             "Venue (Address of the venue)"),
         "functionLayer":
             MessageLookupByLibrary.simpleMessage("Program Level *"),
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
+        "grade": MessageLookupByLibrary.simpleMessage("Grade"),
+        "home": MessageLookupByLibrary.simpleMessage("Home"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
@@ -64,6 +85,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "makeProgram": MessageLookupByLibrary.simpleMessage("Make a Program"),
         "makeTourSchedules":
             MessageLookupByLibrary.simpleMessage("Make tour schedule"),
+        "mobileNumber": MessageLookupByLibrary.simpleMessage("Mobile no."),
         "myEvent": MessageLookupByLibrary.simpleMessage("My events"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
@@ -78,17 +100,21 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please choose location"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
+        "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "program": MessageLookupByLibrary.simpleMessage("Program"),
+        "religion": MessageLookupByLibrary.simpleMessage("Religion"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("Resend OTP"),
         "resendOTPCodeTo":
             MessageLookupByLibrary.simpleMessage("Resend OTP code to "),
         "sangathan": MessageLookupByLibrary.simpleMessage("Sangathan"),
         "save": MessageLookupByLibrary.simpleMessage("Save it"),
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
+        "seeMore": MessageLookupByLibrary.simpleMessage("See more"),
         "selectLoksabha":
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "state": MessageLookupByLibrary.simpleMessage("State"),
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("Stay and program list"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
@@ -98,11 +124,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalTravelSoFar":
             MessageLookupByLibrary.simpleMessage("Total Travel So Far"),
         "tour": MessageLookupByLibrary.simpleMessage("Tour"),
+        "townCity": MessageLookupByLibrary.simpleMessage("Town/City"),
         "typeOfFunction": MessageLookupByLibrary.simpleMessage("Program Type"),
         "upcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("Upcoming Trip"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("Upload Photo Here"),
+        "userName": MessageLookupByLibrary.simpleMessage("Username"),
         "verified": MessageLookupByLibrary.simpleMessage("Verified.."),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "view": MessageLookupByLibrary.simpleMessage("View"),

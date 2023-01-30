@@ -57,6 +57,24 @@ class AppIcons {
     static const String clearIcon = "assets/images/clear_icon.png";
     static const String calender_1 = "assets/images/calender_1.png";
     static const String datePickerIcon = "assets/images/datePicker.png";
+    static const String supportIcon = "assets/images/support.png";
+    static const String customerService1 = "assets/images/customer_service(1).png";
+    static const String profileBack = "assets/images/profile_back.png";
+    static const String circle1 = "assets/images/circle1.png";
+    static const String circle2 = "assets/images/circle2.png";
+    static const String rect = "assets/images/rectangle.png";
+    static const String textLogo = "assets/images/textLogo.png";
+    static const String bjpLogo = "assets/images/bjpLogo.png";
+    static const String orangeRound = "assets/images/orange_round_shape.png";
+    static const String blueRound = "assets/images/blue_round_shape.png";
+    static const String mobile = "assets/images/mobile_icon.png";
+    static const String balloons = "assets/images/baloon_icon.png";
+    static const String gender = "assets/images/gender_icon.png";
+    static const String educationIcon = "assets/images/education_icon.png";
+    static const String businessIcon = "assets/images/buisness_icon.png";
+    static const String cameraIcon = "assets/images/camera_icon.png";
+    static const String calenderIcon = "assets/images/calander_icon.png";
+    static const String fillBuisnessIcon = "assets/images/fill_buisness_icon.png";
 
 
 }

@@ -699,6 +699,246 @@ class S {
       args: [],
     );
   }
+
+  /// `Theme and Insight`
+  String get ThemeandInsight {
+    return Intl.message(
+      'Theme and Insight',
+      name: 'ThemeandInsight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get information and facts about political and social subjects.`
+  String get ThemeDes {
+    return Intl.message(
+      'Get information and facts about political and social subjects.',
+      name: 'ThemeDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile`
+  String get profile {
+    return Intl.message(
+      'Profile',
+      name: 'profile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get address {
+    return Intl.message(
+      'Address',
+      name: 'address',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education`
+  String get education {
+    return Intl.message(
+      'Education',
+      name: 'education',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Business`
+  String get business {
+    return Intl.message(
+      'Business',
+      name: 'business',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get home {
+    return Intl.message(
+      'Home',
+      name: 'home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `See more`
+  String get seeMore {
+    return Intl.message(
+      'See more',
+      name: 'seeMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Full Name`
+  String get fullName {
+    return Intl.message(
+      'Full Name',
+      name: 'fullName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get userName {
+    return Intl.message(
+      'Username',
+      name: 'userName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mobile no.`
+  String get mobileNumber {
+    return Intl.message(
+      'Mobile no.',
+      name: 'mobileNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date of Birth`
+  String get boi {
+    return Intl.message(
+      'Date of Birth',
+      name: 'boi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Religion`
+  String get religion {
+    return Intl.message(
+      'Religion',
+      name: 'religion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Grade`
+  String get grade {
+    return Intl.message(
+      'Grade',
+      name: 'grade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Caste`
+  String get caste {
+    return Intl.message(
+      'Caste',
+      name: 'caste',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Flat, House no. , Building, Apartment`
+  String get FlatDes {
+    return Intl.message(
+      'Flat, House no. , Building, Apartment',
+      name: 'FlatDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Area, Street, Sector, Village`
+  String get AreaDes {
+    return Intl.message(
+      'Area, Street, Sector, Village',
+      name: 'AreaDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pin Code`
+  String get PinCode {
+    return Intl.message(
+      'Pin Code',
+      name: 'PinCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Town/City`
+  String get townCity {
+    return Intl.message(
+      'Town/City',
+      name: 'townCity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `State`
+  String get state {
+    return Intl.message(
+      'State',
+      name: 'state',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get Home {
+    return Intl.message(
+      'Home',
+      name: 'Home',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Office`
+  String get Office {
+    return Intl.message(
+      'Office',
+      name: 'Office',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Other`
+  String get Other {
+    return Intl.message(
+      'Other',
+      name: 'Other',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -12,6 +12,9 @@ import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.
 import '../Dashboard/Screen/homePage/screens/create_function_page/create_function_page.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
+import '../Dashboard/Screen/menuPage/screens/edit_address/edit_address_screen.dart';
+import '../Dashboard/Screen/menuPage/screens/personal_info/personal_information_screen.dart';
+import '../Dashboard/Screen/menuPage/screens/profile_screen/profile_screen.dart';
 import '../splash_screen/screen/splash_screen.dart';
 
 class RouteGenerator {
@@ -125,6 +128,27 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const GuestListScreen();
+          },
+        );
+        case RoutePath.profileScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const ProfileScreen();
+          },
+        );
+        case RoutePath.personalInformationScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const PersonalInformationScreen();
+          },
+        );
+        case RoutePath.editAddressScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const EditAddressScreen();
           },
         );
 

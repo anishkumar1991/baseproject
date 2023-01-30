@@ -22,13 +22,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "AreaDes": MessageLookupByLibrary.simpleMessage(
+            "एरिया, स्ट्रीट, सेक्टर, विलेज"),
         "Complete": MessageLookupByLibrary.simpleMessage("पूर्ण"),
+        "FlatDes": MessageLookupByLibrary.simpleMessage(
+            "फ्लैट, हाउस न. , बिल्डिंग, अपार्टमेंट "),
+        "Home": MessageLookupByLibrary.simpleMessage("घर"),
+        "Office": MessageLookupByLibrary.simpleMessage("कार्यालय"),
+        "Other": MessageLookupByLibrary.simpleMessage("अन्य"),
+        "PinCode": MessageLookupByLibrary.simpleMessage("पिन कोड"),
+        "ThemeDes": MessageLookupByLibrary.simpleMessage(
+            "राजनैतिक एवं सामाजिक विषयों  की जानकारी एवं तथ्य प्राप्त करे ।"),
+        "ThemeandInsight":
+            MessageLookupByLibrary.simpleMessage("विषय एवं अंतर्दृष्टि"),
         "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
             "कार्यक्रम में उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता जिनका नाम आप जोड़ना चाहते है।"),
         "addOptional":
             MessageLookupByLibrary.simpleMessage("ऐड कर ( वैकल्पिक  )"),
+        "address": MessageLookupByLibrary.simpleMessage("एड्रेस"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
+        "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
+        "business": MessageLookupByLibrary.simpleMessage("व्यवसाय"),
+        "caste": MessageLookupByLibrary.simpleMessage("जाती"),
         "click": MessageLookupByLibrary.simpleMessage("क्लिक करें"),
         "comment": MessageLookupByLibrary.simpleMessage("टिपण्णी"),
         "createATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाएँ"),
@@ -41,15 +57,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )"),
         "dateToFrom":
             MessageLookupByLibrary.simpleMessage("दिनांक  ( कब से - कब तक)*"),
+        "delete": MessageLookupByLibrary.simpleMessage("डिलीट"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("प्रवास का विषय"),
         "digitCodeHasBeenSent": MessageLookupByLibrary.simpleMessage(
             "एक 6 अंकों का कोड भेजा गया है"),
         "edit": MessageLookupByLibrary.simpleMessage("एडिट"),
+        "education": MessageLookupByLibrary.simpleMessage("शिक्षा"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("ओटीपी दर्ज करें"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
+        "fullName": MessageLookupByLibrary.simpleMessage("पूरा नाम"),
         "functionAdd": MessageLookupByLibrary.simpleMessage(
             "स्थान ( कार्यक्रम स्थल का पता )"),
         "functionLayer":
@@ -58,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का नाम *"),
         "functionType":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
+        "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
+        "home": MessageLookupByLibrary.simpleMessage("होम"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "login": MessageLookupByLibrary.simpleMessage("लॉगिन करे"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("लॉगिन"),
@@ -68,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "makeProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम बनायें"),
         "makeTourSchedules": MessageLookupByLibrary.simpleMessage(
             "प्रवास के अंतरगर्त कार्यक्रम बनाये"),
+        "mobileNumber": MessageLookupByLibrary.simpleMessage("मोबाइल न."),
         "myEvent": MessageLookupByLibrary.simpleMessage("मेरे कार्यक्रम"),
         "name": MessageLookupByLibrary.simpleMessage("नाम"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
@@ -82,16 +104,20 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
+        "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
+        "religion": MessageLookupByLibrary.simpleMessage("धर्म"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("ओटीपी पुनः भेजें"),
         "resendOTPCodeTo":
             MessageLookupByLibrary.simpleMessage(" में ओटीपी कोड दोबारा भेजें"),
         "sangathan": MessageLookupByLibrary.simpleMessage("संगठन"),
         "save": MessageLookupByLibrary.simpleMessage("सेव करे"),
         "seeAll": MessageLookupByLibrary.simpleMessage("सभी देखें"),
+        "seeMore": MessageLookupByLibrary.simpleMessage("जयादा देखे"),
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "state": MessageLookupByLibrary.simpleMessage("स्टेट"),
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("प्रवास और कार्यक्रम सूची"),
         "subject": MessageLookupByLibrary.simpleMessage("विषय"),
@@ -101,12 +127,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalTravelSoFar":
             MessageLookupByLibrary.simpleMessage("अब तक की कुल यात्रा -"),
         "tour": MessageLookupByLibrary.simpleMessage("प्रवास"),
+        "townCity": MessageLookupByLibrary.simpleMessage("टाउन/सिटी "),
         "typeOfFunction":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार"),
         "upcoming": MessageLookupByLibrary.simpleMessage("आगामी"),
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("आगामी प्रवास -"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("फोटो यहाँ अपलोड करें"),
+        "userName": MessageLookupByLibrary.simpleMessage("यूजरनेम"),
         "verified":
             MessageLookupByLibrary.simpleMessage("सत्यापित किया जा रहा है..."),
         "verify": MessageLookupByLibrary.simpleMessage("सत्यापित करना"),

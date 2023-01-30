@@ -26,6 +26,7 @@ class AppColor {
   static const Color progressGreenColor = Color(0xFF61BE7A);
   static const Color orange100 = Color(0xFFFBF2F8);
   static const Color orange300Color = Color(0xFFFFE8DB);
+  static const Color orange = Color(0xFFFF9559);
   static const Color purpleColor = Color(0xFF912E60);
   static const Color buttonOrangeBackGroundColor = Color(0xFFFF9559);
   static const Color textGreyColor = Color(0xFF000000);

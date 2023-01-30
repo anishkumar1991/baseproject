@@ -11,141 +11,83 @@ import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/route/route_path.dart';
 
+import '../../../common/appstyle.dart';
+import '../../../generated/l10n.dart';
+
 class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ListTile(
+                onTap: (){
+                  Navigator.pushNamed(context, RoutePath.profileScreen);
+                },
+                contentPadding: EdgeInsets.zero,
+                title:  Text("नमस्ते तरुण चुघ जी  !",style: textStyleWithPoppin(fontSize: 15,color: AppColor.black,fontWeight: FontWeight.w700),),
+                subtitle:  Text("@तरुण चुघ 123",style: textStyleWithPoppin(fontSize: 10,color: AppColor.greyColor.withOpacity(0.7),fontWeight: FontWeight.w500),),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  size: 18,
+                  color: AppColor.naturalBlackColor,
+                ),
+                leading: SizedBox(
+                  height: double.infinity,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(350),
+                      child: const Image(image: AssetImage(AppIcons.userLogo))),
+                ),
+              ),
+              spaceHeightWidget(15),
+              Column(
                 children: [
-                  Column(
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      spaceHeightWidget(16),
-                      Text(
-                        'Tarun chowk',
-                        style: GoogleFonts.poppins(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                      spaceHeightWidget(5),
-                      Text(
-                        '@Tarunchowk234',
-                        style: GoogleFonts.poppins(
-                            color: AppColor.textBlackColor,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      spaceHeightWidget(30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'See profile',
-                            style: GoogleFonts.poppins(
-                                color: AppColor.buttonOrangeBackGroundColor,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          spaceWidthWidget(4),
-                          const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 14,
-                            color: AppColor.buttonOrangeBackGroundColor,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      CircularPercentIndicator(
-                        radius: 50,
-                        progressColor: AppColor.progressGreenColor,
-                        percent: 0.84,
-                        center: Image.asset(
-                          AppIcons.userLogo,
-                          height: 84,
-                        ),
-                        backgroundColor: AppColor.greyColor.withOpacity(0.3),
-                      ),
                       Container(
-                        padding: const EdgeInsets.only(
-                            left: 2, right: 2, top: 2, bottom: 2),
+                        height: 35,
+                        width: 35,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: AppColor.white),
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                              left: 5, right: 5, top: 3, bottom: 3),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColor.progressGreenColor),
-                          child: Row(
-                            children: [
-                              Text(
-                                '82%',
-                                style: GoogleFonts.poppins(
-                                    color: AppColor.white,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              const Icon(
-                                Icons.arrow_forward_ios,
-                                color: AppColor.white,
-                                size: 10,
-                              )
-                            ],
-                          ),
+                          shape: BoxShape.circle,
+                          color: AppColor.greyColor.withOpacity(0.2),
+                        ),
+                        child: const Center(
+                          child: Text("#",style: TextStyle(fontSize: 25),),
+                        )
+                      ),
+                      spaceWidthWidget(10),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(S.of(context).ThemeandInsight,style: textStyleWithPoppin(fontSize: 14,color: AppColor.naturalBlackColor,fontWeight: FontWeight.w500),),
+                      ),
+                      const Spacer(),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 4.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          size: 18,
+                          color: AppColor.naturalBlackColor
                         ),
                       )
                     ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.12,right: 4),
+                    child: Text(S.of(context).ThemeDes,style: textStyleWithPoppin(color: AppColor.greyColor.withOpacity(0.7),fontSize: 13),),
                   )
                 ],
               ),
-              spaceHeightWidget(30),
-              customListTile(
-                icon: AppIcons.questionMark,
-                title: 'Frequently Asked Questions',
-              ),
-              spaceHeightWidget(27),
-              customListTile(
-                icon: AppIcons.helpIcon,
-                title: 'Helpline',
-              ),
-              spaceHeightWidget(27),
-              customListTile(
-                icon: AppIcons.language,
-                title: 'Language',
-              ),
-              spaceHeightWidget(27),
-              BlocListener<LoginCubit, LoginState>(
-                listener: (context, state) {
-                  if (state is UserLogOutSuccessState) {
-                    EasyLoading.showSuccess(state.msg);
-                    Navigator.pushNamed(context, RoutePath.loginScreen);
-                  } else if (state is LogOutLoadingState) {
-                    EasyLoading.show();
-                  } else if (state is UserLogOutFaieldState) {
-                    EasyLoading.showError(state.error);
-                  }
-                },
-                child: GestureDetector(
-                  onTap: () async {
-                    await context.read<LoginCubit>().logOut();
-                  },
-                  child: customListTile(
-                    icon: AppIcons.logOutIcon,
-                    title: 'Log Out',
-                    height: 20,
-                  ),
-                ),
-              ),
+              spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
+              customListTile(title: "Support", icon: AppIcons.supportIcon),
+              spaceHeightWidget(10),
+              const Divider(color: AppColor.dividerColor,),
+              spaceHeightWidget(5),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: customBottomContainer())
             ])));
   }
 
@@ -158,22 +100,37 @@ class MenuPage extends StatelessWidget {
       children: [
         Image.asset(
           icon,
-          height: height ?? 24,
+          height: height ?? 22,
         ),
-        spaceWidthWidget(8),
+        spaceWidthWidget(10),
         Text(
           title,
-          style: GoogleFonts.poppins(
-              color: AppColor.textBlackColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w400),
-        ),
-        const Spacer(),
-        const Icon(
-          Icons.arrow_forward_ios,
-          size: 20,
+          style: textStyleWithPoppin(color: AppColor.greyColor.withOpacity(0.7),fontSize: 15),
         ),
       ],
+    );
+  }
+
+  Widget customBottomContainer() {
+    return Container(
+      height: 90,
+      width: 90,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColor.greyColor.withOpacity(0.4))
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            AppIcons.customerService1,
+            color: AppColor.greyColor.withOpacity(0.5),
+            height: 22,
+          ),
+          spaceHeightWidget(5),
+          Text("Support",style: textStyleWithPoppin(color: AppColor.greyColor.withOpacity(0.7),fontSize: 13),)
+        ],
+      ),
     );
   }
 }

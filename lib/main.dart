@@ -22,6 +22,8 @@ import 'Dashboard/Screen/homePage/screens/create_function_page/create_function_c
 import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/guest_list/cubit/guest_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_list/pravas_cubit/pravas_list_cubit.dart';
+import 'Dashboard/Screen/menuPage/screens/edit_address/cubit/edit_address_cubit.dart';
+import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
@@ -79,6 +81,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => CreateFunctionCubit()),
         BlocProvider(create: (context) => GuestCubit()),
         BlocProvider(create: (context) => ZilaDataCubit()),
+        BlocProvider(create: (context) => PersonalInfoCubit()),
+        BlocProvider(create: (context) => EditAddressCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
       ],
       child: MaterialApp(
