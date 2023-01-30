@@ -38,6 +38,7 @@ class FieldHandler extends AddEntryCubit {
     }
   }
 
+  /// This function call in textfield onChange()
   static onUpdate(
       int index, String val, String fieldName, AddEntryCubit cubit) async {
     int foundKey = -1;
@@ -60,5 +61,17 @@ class FieldHandler extends AddEntryCubit {
       "value": val,
     };
     cubit.textFieldControllerData.add(json);
+  }
+
+  /// here get pick image or file  name
+
+  static getFileName(String fieldName, AddEntryCubit cubit) {
+    String name = '';
+    for (int i = 0; i < cubit.allImagePickerList.length; i++) {
+      if (cubit.allImagePickerList[i]["fieldName"] == fieldName) {
+        name = cubit.allImagePickerList[i]["value"];
+      }
+    }
+    return name;
   }
 }

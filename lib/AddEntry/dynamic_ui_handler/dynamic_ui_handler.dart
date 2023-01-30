@@ -48,7 +48,11 @@ class DynamicUIHandler {
     "voter_id",
     "ration_card_number"
   ];
-
+  static List<String> filePickerUrl = [
+    "aadhaar_url",
+    "voter_url",
+    "ration_url"
+  ];
   static List<String> radioButton = ["gender"];
 
   static List<String> imagePicker = ["photo"];

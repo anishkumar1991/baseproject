@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 import 'dart:io';
 
@@ -13,6 +15,7 @@ import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
 import 'package:sangathan/AddEntry/network/model/designation_data_model.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
+
 import '../network/api/add_entry_api.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 import 'add_entry_state.dart';
@@ -27,8 +30,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   File? rationFilePicked;
   File? adharFilePicked;
   File? voterFilePicked;
-
-  List<DataEntryField> entryField = [];
+  List multiSelectionList = [];
+  List<DataEntryField>? entryField = [];
 
   List<DropdownData> categoryData = [];
   List<CastData> castData = [];
@@ -38,10 +41,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   List<DropdownData> religionData = [];
 
   List<DesignationData> designationData = [];
-  List<Map<String, dynamic>> textFieldControllerData = [];
+
   List<Widget> addEntryFormPrimary = [];
   List<Widget> addEntryFormSecondary = [];
-
 
   CastData? castSelected;
   DropdownData? categorySelected;
@@ -53,6 +55,14 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   String? profileImageUrl;
   DesignationData? selectedDesignationData;
 
+  ///  all field
+  List<Map<String, dynamic>> allDropdownValueList = [];
+  List<Map<String, dynamic>> allImagePickerList = [];
+  List<Map<String, dynamic>> textFieldControllerData = [];
+  List<Map<String, dynamic>> allMultiFieldData = [];
+  List<Map<String, dynamic>> allDatePicker = [];
+
+  Map<String, dynamic> finalAllDataList = {};
   final api = AddEntryApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
@@ -66,70 +76,122 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     return DateFormat('dd-MMM-yyyy').format(date);
   }
 
+  /// here make final value map with key
+
+  makeFinalList() {
+    Map<String, dynamic> data = {};
+
+    /// For dropdowns
+    if (allDropdownValueList.isNotEmpty) {
+      for (var item in allDropdownValueList) {
+        data.addEntries({"${item["fieldName"]}": "${item["value"]}"}.entries);
+      }
+    }
+
+    /// for text field
+    if (textFieldControllerData.isNotEmpty) {
+      for (var item in textFieldControllerData) {
+        data.addEntries({"${item["fieldName"]}": "${item["value"]}"}.entries);
+      }
+    }
+
+    /// for file picker
+    if (allImagePickerList.isNotEmpty) {
+      for (var item in allImagePickerList) {
+        data.addEntries({"${item["fieldName"]}": "${item["value"]}"}.entries);
+      }
+    }
+
+    /// for check box
+    if (allMultiFieldData.isNotEmpty) {
+      for (var item in allMultiFieldData) {
+        data.addEntries({"${item["fieldName"]}": "${item["value"]}"}.entries);
+      }
+    }
+
+    /// for user profile image
+    if (file?.path != null) {
+      data.addEntries({"photo": "${file?.path}"}.entries);
+    }
+
+    /// for user gender
+    if (selectRadio != null) {
+      data.addEntries({"gender": "$selectRadio"}.entries);
+    }
+
+    /// for DOB
+
+    if (date != 'Select DOB of Birth' && date != null && date != '') {
+      data.addEntries({"dob": date}.entries);
+    }
+
+    finalAllDataList = data;
+    print(finalAllDataList);
+  }
+
+  /// getting all multi check value
+
+  getAllMultiCheckData(String type, dynamic value) {
+    emit(AddEntryLoadingState());
+    int index =
+        allMultiFieldData.indexWhere((element) => element["fieldName"] == type);
+    if (index >= 0) {
+      allMultiFieldData.removeAt(index);
+    } else {
+      Map<String, dynamic> json = {
+        "fieldName": type,
+        "value": value,
+      };
+      allMultiFieldData.add(json);
+    }
+    emit(MultiCheckSelectionState());
+  }
+
+  /// getting all dropdown value
+  getAllDropDownData(dynamic value, String dropdownType) {
+    int index = allDropdownValueList
+        .indexWhere((element) => element["fieldName"] == dropdownType);
+    if (index >= 0) {
+      allDropdownValueList[index]["value"] = value.name;
+    } else {
+      Map<String, dynamic> json = {
+        "fieldName": dropdownType,
+        "value": value.name,
+      };
+      allDropdownValueList.add(json);
+    }
+  }
+
+  /// here change dropdown value based on selection
   changeDropdownValue(dynamic value, String dropdownType) {
     emit(AddEntryLoadingState());
     if (dropdownType == "designation") {
       designationSelected = value;
+      getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "category") {
       categorySelected = value;
+      getAllDropDownData(value, dropdownType);
       getCastData(id: categorySelected!.id.toString());
     } else if (dropdownType == "caste") {
       castSelected = value;
+      getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "qualification") {
       qualificationSelected = value;
+      getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "religion") {
       religionSelected = value;
+      getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "profession") {
       professionSelected = value;
+      getAllDropDownData(value, dropdownType);
     } else {}
     emit(DropDownSelectedState());
   }
 
-  /* void onChangeCategory(DropdownData? category) {
-    emit(AddEntryLoadingState());
-    categorySelected = category;
-    emit(DropDownSelectedState());
-  }
-
-  void onChangeCast(CastData? category) {
-    emit(AddEntryLoadingState());
-    castSelected = category;
-    emit(DropDownSelectedState());
-  }
-
-  void onChangeDesignationDropDown(FilterData filterData) {
-    emit(AddEntryLoadingState());
-    designationSelected = filterData;
-    emit(DropDownSelectedState());
-  }
-
-  void onChangeQualification(DropdownData? category) {
-    emit(AddEntryLoadingState());
-    qualificationSelected = category;
-    emit(DropDownSelectedState());
-  }
-
-  void onChangeProfession(DropdownData? category) {
-    emit(AddEntryLoadingState());
-    professionSelected = category;
-    emit(DropDownSelectedState());
-  }
-
-  void onChangeNativeState(DropdownData? category) {
-    emit(AddEntryLoadingState());
-    nativeStateSelected = category;
-    emit(DropDownSelectedState());
-  }
-
-  void onChangeReligion(DropdownData? category) {
-    emit(AddEntryLoadingState());
-    religionSelected = category;
-    emit(DropDownSelectedState());
-  }*/
-
   Future<void> selectedDoaDate(BuildContext context) async {
     emit(AddEntryLoadingState());
     final DateTime? picked = await showDatePicker(
+        locale: const Locale.fromSubtags(languageCode: 'en'),
         context: context,
         initialDate: dateTime,
         firstDate: DateTime(1900, 8),
@@ -147,9 +209,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         await ImagePicker.platform.pickImage(source: source);
     if (pickedFile != null) {
       file = File(pickedFile.path);
-      if (file != null) {
+      /* if (file != null) {
         await storeImage(folderName: 'profileImages', path: file!.path);
-      }
+      }*/
       emit(ImagePickedState());
     }
   }
@@ -164,14 +226,11 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     print('ImageUrl==$profileImageUrl');
   }
 
-  Future<void> pickFile(
-      {bool isAdhar = false,
-      bool isVoter = false,
-      bool isRation = false}) async {
+  Future<void> pickFile(String fieldType) async {
     emit(AddEntryLoadingState());
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      if (isAdhar) {
+      /*if (isAdhar) {
         adharFilePicked = File(result.files.single.path!);
         await storeImage(folderName: 'adharFile', path: adharFilePicked!.path);
       } else if (isVoter) {
@@ -181,6 +240,18 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         rationFilePicked = File(result.files.single.path!);
         await storeImage(
             folderName: 'rationFile', path: rationFilePicked!.path);
+      }*/
+
+      int index = allImagePickerList
+          .indexWhere((element) => element["fieldName"] == fieldType);
+      if (index >= 0) {
+        allImagePickerList[index]["value"] = result.files.single.path!;
+      } else {
+        Map<String, dynamic> json = {
+          "fieldName": fieldType,
+          "value": result.files.single.path!,
+        };
+        allImagePickerList.add(json);
       }
     }
     emit(FilePickedState());
@@ -233,7 +304,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       emit(AddEntryErrorState('Something Went Wrong'));
     }
   }
-
 
   Future getAddEntryFormStructure({required String levelID}) async {
     emit(GetAddEntryFormStructureLoadingState());
@@ -290,7 +360,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   disposePage() {
     emit(DisposeState());
   }
- 
+
   void onChangeDesignationDropDown(DesignationData designationData) {
     emit(AddEntryLoadingState());
     selectedDesignationData = designationData;
@@ -299,6 +369,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   Timer? timer;
   int count = 30;
+
   Future<void> startTimer() async {
     emit(TimerLoadingState());
     if (count == 0) {
@@ -309,6 +380,16 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       emit(TimerRunningState(count));
       startTimer();
     }
+  }
 
+  getFieldName(String fieldName) {
+    String name = '';
+
+    for (int i = 0; i < entryField!.length; i++) {
+      if (entryField![i].formControlName == fieldName) {
+        name = entryField![i].displayNameForUI ?? fieldName;
+      }
+    }
+    return name;
   }
 }

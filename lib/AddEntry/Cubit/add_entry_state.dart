@@ -54,7 +54,6 @@ class CastFetchedState extends AddEntryState {
 
 class ImageConvertedState extends AddEntryState {}
 
-
 class GetAddEntryFormStructureLoadingState extends AddEntryState {}
 
 class GetAddEntryFormStructureSuccessState extends AddEntryState {
@@ -104,3 +103,5 @@ class TimerRunningState extends AddEntryState {
   final int count;
   TimerRunningState(this.count);
 }
+
+class MultiCheckSelectionState extends AddEntryState {}

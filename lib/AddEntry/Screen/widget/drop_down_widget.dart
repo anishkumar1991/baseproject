@@ -9,11 +9,13 @@ class CustomDropDown extends StatelessWidget {
       this.dropDownList,
       this.hintText,
       this.onChange,
+      this.validator,
       this.selectedValue});
   String title;
   String? hintText;
   Function(dynamic)? onChange;
   dynamic selectedValue;
+  FormFieldValidator? validator;
   List<DropdownMenuItem>? dropDownList = [];
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,9 @@ class CustomDropDown extends StatelessWidget {
           style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 16),
         ),
         DropdownButtonHideUnderline(
-          child: DropdownButton(
+          child: DropdownButtonFormField(
+              decoration: const InputDecoration(border: InputBorder.none),
+              validator: validator,
               icon: const Icon(
                 Icons.expand_more,
                 color: AppColor.textBlackColor,

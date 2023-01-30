@@ -6,10 +6,12 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/zila_
 import 'package:sangathan/Login/Screens/LoginScreen/login_page.dart';
 import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
 import 'package:sangathan/route/route_path.dart';
+
+import '../AddEntry/Screen/add_entry_preview_submit_screen.dart';
+import '../Dashboard/Screen/homePage/screens/create_function_page/create_function_page.dart';
 import '../Dashboard/Screen/homePage/screens/edit_date/edit_date_screen.dart';
 import '../Dashboard/Screen/homePage/screens/guest_list/guest_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.dart';
-import '../Dashboard/Screen/homePage/screens/create_function_page/create_function_page.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/edit_address/edit_address_screen.dart';
@@ -76,7 +78,7 @@ class RouteGenerator {
             return ZilaDataScreen(
               type: data.type,
               id: data.id,
-             dataLevelId: data.dataLevelId,
+              dataLevelId: data.dataLevelId,
             );
           },
         );
@@ -130,25 +132,34 @@ class RouteGenerator {
             return const GuestListScreen();
           },
         );
-        case RoutePath.profileScreen:
+
+      case RoutePath.profileScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const ProfileScreen();
           },
         );
-        case RoutePath.personalInformationScreen:
+      case RoutePath.personalInformationScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const PersonalInformationScreen();
           },
         );
-        case RoutePath.editAddressScreen:
+      case RoutePath.editAddressScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const EditAddressScreen();
+          },
+        );
+
+      case RoutePath.addEntryPreviewSubmit:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const AddEntryPreviewSubmit();
           },
         );
 

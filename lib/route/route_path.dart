@@ -13,7 +13,10 @@ class RoutePath {
   static const String stayAndProgramListScreen = 'stayAndProgramListScreen';
   static const String createProgramScreen = 'createProgramScreen';
   static const String guestListScreen = 'guestListScreen';
+
   static const String profileScreen = 'profileScreen';
   static const String personalInformationScreen = 'personalInformationScreen';
   static const String editAddressScreen = 'editAddressScreen';
+
+  static const String addEntryPreviewSubmit = 'addEntryPreviewSubmit';
 }

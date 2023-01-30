@@ -16,7 +16,9 @@ class TextFieldWidget extends StatelessWidget {
       this.maxLines,
       this.onChanged,
       this.inpurborder,
-      this.hintText});
+      this.hintText,
+      this.validator,
+      this.errorText});
 
   final TextEditingController? controller;
   final String title;
@@ -29,25 +31,27 @@ class TextFieldWidget extends StatelessWidget {
   final InputBorder? inpurborder;
   final Widget? suffixWidget;
   final int? maxLines;
-
+  final FormFieldValidator? validator;
+  final String? errorText;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title),
-        TextField(
+        TextFormField(
           maxLines: maxLines,
           controller: controller,
           readOnly: readOnly ?? false,
           keyboardType: keyboardType,
-          clipBehavior: Clip.hardEdge,
+          validator: validator,
           onChanged: onChanged,
           onTap: onTap,
           decoration: InputDecoration(
               border: inpurborder,
               hintText: hintText,
               labelText: labelText,
+              errorText: errorText,
               labelStyle: GoogleFonts.poppins(
                   color: AppColor.naturalBlackColor, fontSize: 14),
               suffixIcon: suffixWidget),
