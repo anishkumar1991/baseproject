@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail.state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/api/sangathan_details_api.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/sangathan_data_model.dart';
-import 'package:sangathan/storage/global_user_data.dart';
 
 import '../network/model/alloted_location_model.dart';
 import '../../../../../../storage/user_storage_service.dart';
@@ -15,8 +14,9 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   List<SangathanData> sangathanDataList = [];
   List<Locations> locationList = [];
-  int? selectedId;
+  int? countryStateId;
   int? dataLevelId;
+  int? locationId;
   Future getSangathanDataLevel() async {
     try {
       emit(LoadingState());
@@ -56,9 +56,12 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
     }
   }
 
-  void onSelectLocation(int id) {
+  void onSelectLocation(int? countryId, int? id) {
     emit(LoadingState());
-    selectedId = id;
+    countryStateId = countryId;
+    locationId = id;
+    print(countryStateId);
+    print(locationId);
     emit(LocationChoosedState());
   }
 

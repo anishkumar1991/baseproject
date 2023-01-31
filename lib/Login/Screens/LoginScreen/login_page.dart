@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
@@ -76,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
-                      BlocListener<LoginCubit, LoginState>(
+                      BlocConsumer<LoginCubit, LoginState>(
                         listener: (context, state) {
                           if (state is UserLoggedState) {
                             LoginModel loginModel = state.model;
@@ -84,28 +85,35 @@ class LoginScreen extends StatelessWidget {
                             Navigator.pushNamed(
                                 context, RoutePath.verifyOtpScreen,
                                 arguments: mobileNumController.text);
-                          } else if (state is LoginLoadingState) {
-                            EasyLoading.show();
                           } else if (state is LoginFaieldState) {
                             EasyLoading.showError(state.error);
                           }
                         },
-                        child: CommonButton(
-                          onTap: (() async {
-                            await context.read<LoginCubit>().loginUser(
-                                  mobileNumber: mobileNumController.text,
-                                );
-                            // Navigator.pushNamed(
-                            //     context, RoutePath.verifyOtpScreen,
-                            //     arguments: mobileNumController.text);
-                          }),
-                          padding: const EdgeInsets.all(12),
-                          title: S.of(context).loginButtonText,
-                          style: GoogleFonts.poppins(
-                              color: AppColor.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
-                        ),
+                        builder: ((context, state) {
+                          if (state is LoginLoadingState) {
+                            return const SpinKitFadingCircle(
+                              color: AppColor.buttonOrangeBackGroundColor,
+                              size: 30,
+                            );
+                          } else {
+                            return CommonButton(
+                              onTap: (() async {
+                                await context.read<LoginCubit>().loginUser(
+                                      mobileNumber: mobileNumController.text,
+                                    );
+                                // Navigator.pushNamed(
+                                //     context, RoutePath.verifyOtpScreen,
+                                //     arguments: mobileNumController.text);
+                              }),
+                              padding: const EdgeInsets.all(12),
+                              title: S.of(context).loginButtonText,
+                              style: GoogleFonts.poppins(
+                                  color: AppColor.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                            );
+                          }
+                        }),
                       ),
                     ],
                   ),

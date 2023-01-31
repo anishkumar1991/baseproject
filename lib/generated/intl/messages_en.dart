@@ -89,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myEvent": MessageLookupByLibrary.simpleMessage("My events"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
+        "newEntry": MessageLookupByLibrary.simpleMessage("New Entry"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("No organizations available"),
         "otpVerification":
@@ -99,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("Please choose location"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
+        "post": MessageLookupByLibrary.simpleMessage("Post"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "program": MessageLookupByLibrary.simpleMessage("Program"),
@@ -107,6 +109,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendOTPCodeTo":
             MessageLookupByLibrary.simpleMessage("Resend OTP code to "),
         "sangathan": MessageLookupByLibrary.simpleMessage("Sangathan"),
+        "sangathanReports":
+            MessageLookupByLibrary.simpleMessage("Sangathan Reports"),
         "save": MessageLookupByLibrary.simpleMessage("Save it"),
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
         "seeMore": MessageLookupByLibrary.simpleMessage("See more"),

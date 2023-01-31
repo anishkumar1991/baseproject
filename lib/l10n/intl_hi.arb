@@ -88,5 +88,8 @@
   "Home": "घर",
   "Office": "कार्यालय",
   "Other": "अन्य",
-  "delete": "डिलीट"
+  "delete": "डिलीट",
+  "newEntry":"नवीन एंट्री",
+  "post":"पद",
+  "sangathanReports":"संगठन रिपोर्ट"
 }

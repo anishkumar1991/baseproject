@@ -10,15 +10,14 @@ import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
 import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
 
-import 'package:sangathan/storage/user_storage_service.dart';
-
-
+import '../../Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import '../../route/route_path.dart';
 import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/custom_radio_button.dart';
@@ -48,16 +47,17 @@ class _AddEntryPageState extends State<AddEntryPage> {
   void initState() {
     context.read<AddEntryCubit>().getDropdownData();
     //context.read<AddEntryCubit>().getCastData(id: '1');
+    print(widget.unitId);
     final cubit = context.read<AddEntryCubit>();
     cubit.entryField = [];
     super.initState();
   }
 
-  @override
-  void dispose() {
-    context.read<AddEntryCubit>().disposePage();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   context.read<AddEntryCubit>().disposePage();
+  //   super.dispose();
+  // }
 
   formFieldWidget(AddEntryCubit cubit, int i) {
     return Column(
@@ -287,7 +287,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
             ),
             Expanded(
               flex: 2,
-
               child: BlocConsumer<AddEntryCubit, AddEntryState>(
                 listener: (context, state) {
                   if (state is AddEntryErrorState) {
@@ -312,10 +311,11 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         state.category.data!.personProfession!;
                     context.read<AddEntryCubit>().getDesignationDropdown(data: {
                       "type": "Designation",
-                      "data_level": 7,
-                      "country_state_id": 3,
-                      "unit_id": 25,
-                      "sub_unit_id": 58
+                      "data_level": widget.leaveId,
+                      "country_state_id":
+                          context.read<SangathanDetailsCubit>().countryStateId,
+                      "unit_id": widget.unitId,
+                      "sub_unit_id": widget.subUnitId
                     });
                   } else if (state is CastFetchedState) {
                     cubit.castSelected = null;
@@ -329,7 +329,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     if (state.addEntryFormStructure.dataEntryField == null) {
                       cubit.entryField = null;
                     } else {
-
                       cubit.entryField =
                           state.addEntryFormStructure.dataEntryField ?? [];
                     }

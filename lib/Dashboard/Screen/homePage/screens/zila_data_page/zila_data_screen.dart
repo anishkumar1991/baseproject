@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
@@ -35,20 +36,16 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     if (widget.id != null) {
       context.read<ZilaDataCubit>().getPartyZila(id: widget.id!);
     }
+    print('data_leve${widget.dataLevelId}');
+    print(
+        'country_state_id${context.read<SangathanDetailsCubit>().countryStateId}');
     context.read<ZilaDataCubit>().getUnitData(data: {
       "type": "Unit",
       "data_level": widget.dataLevelId,
-
-      ///TODO: country_state_id is static need to dynamic
-      "country_state_id": 1
-
-      ///StorageService.userData?.user?.countryStateId ?? 0,
+      "country_state_id": context.read<SangathanDetailsCubit>().countryStateId
     });
-    context.read<ZilaDataCubit>().getEntryData(data: {
-      "level": widget.dataLevelId,
-      "unit": context.read<ZilaDataCubit>().unitId,
-      "level_name": 348
-    });
+    print('unitId=${context.read<ZilaDataCubit>().unitId}');
+
     super.initState();
   }
 
@@ -166,6 +163,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               cubit.dataUnitList = state.dataUnit.data!;
               cubit.unitId = cubit.dataUnitList.first.id;
               print('first unit id=${cubit.unitId}');
+              context.read<ZilaDataCubit>().getEntryData(data: {
+                "level": widget.dataLevelId,
+                "unit": cubit.unitId,
+
+                /// TODO: level_name need to make dynamic
+                "level_name": 348
+              });
               cubit.name =
                   List.generate(cubit.dataUnitList.length, (index) => null);
             }
@@ -296,14 +300,14 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       backgroundColor: Colors.green.shade100,
                       foregroundColor: Colors.green.shade900,
                       icon: Icons.verified_user,
-                      label: 'Verify',
+                      label: S.of(context).verified,
                     ),
                     SlidableAction(
                       padding: EdgeInsets.zero,
                       onPressed: ((context) {}),
                       backgroundColor: AppColor.white,
                       icon: Icons.edit,
-                      label: 'Edit',
+                      label: S.of(context).edit,
                     ),
                     SlidableAction(
                       padding: EdgeInsets.zero,
@@ -311,7 +315,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       backgroundColor: Colors.red.shade100,
                       foregroundColor: Colors.red.shade600,
                       icon: Icons.delete_outline,
-                      label: 'Delete',
+                      label: S.of(context).delete,
                     ),
                   ]),
                   child: Row(
@@ -452,7 +456,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
           children: [
             Expanded(
               child: Text(
-                'नवीन एंट्री',
+                S.of(context).newEntry,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w400,
@@ -466,7 +470,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 color: AppColor.navyBlue400,
                 child: Center(
                   child: Text(
-                    'पद',
+                    S.of(context).post,
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,

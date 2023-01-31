@@ -93,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myEvent": MessageLookupByLibrary.simpleMessage("मेरे कार्यक्रम"),
         "name": MessageLookupByLibrary.simpleMessage("नाम"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
+        "newEntry": MessageLookupByLibrary.simpleMessage("नवीन एंट्री"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
         "otpVerification":
@@ -103,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
+        "post": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
@@ -111,6 +113,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendOTPCodeTo":
             MessageLookupByLibrary.simpleMessage(" में ओटीपी कोड दोबारा भेजें"),
         "sangathan": MessageLookupByLibrary.simpleMessage("संगठन"),
+        "sangathanReports":
+            MessageLookupByLibrary.simpleMessage("संगठन रिपोर्ट"),
         "save": MessageLookupByLibrary.simpleMessage("सेव करे"),
         "seeAll": MessageLookupByLibrary.simpleMessage("सभी देखें"),
         "seeMore": MessageLookupByLibrary.simpleMessage("जयादा देखे"),

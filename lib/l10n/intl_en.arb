@@ -88,5 +88,8 @@
   "Home": "Home",
   "Office": "Office",
   "Other": "Other",
-  "delete": "Delete"
+  "delete": "Delete",
+  "newEntry":"New Entry",
+  "post":"Post",
+  "sangathanReports":"Sangathan Reports"
 }

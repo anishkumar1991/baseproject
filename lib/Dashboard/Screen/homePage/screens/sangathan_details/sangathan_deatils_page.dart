@@ -153,7 +153,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               children: [
                                 IconButton(
                                     onPressed: (() {
-                                      if (cubit.selectedId == null) {
+                                      if (cubit.locationList.isEmpty) {
+                                        Navigator.pop(context);
+                                      }
+                                      if (cubit.countryStateId == null) {
                                         EasyLoading.showError(
                                             S.of(context).pleaseChoosePlace);
                                       } else {
@@ -178,24 +181,22 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                     .map((e) => ChoiceChip(
                                           backgroundColor:
                                               AppColor.orange300Color,
-                                          selectedColor: cubit.selectedId ==
-                                                  e.countryStateId
+                                          selectedColor: cubit.locationId ==
+                                                  e.id
                                               ? AppColor
                                                   .buttonOrangeBackGroundColor
                                               : null,
-                                          selected: cubit.selectedId ==
-                                              e.countryStateId,
+                                          selected: cubit.locationId == e.id,
                                           label: Text(
                                             e.name ?? '',
                                             style: TextStyle(
-                                                color: cubit.selectedId ==
-                                                        e.countryStateId
+                                                color: cubit.locationId == e.id
                                                     ? AppColor.white
                                                     : AppColor.textBlackColor),
                                           ),
                                           onSelected: ((value) {
                                             cubit.onSelectLocation(
-                                                e.countryStateId!);
+                                                e.countryStateId, e.id);
                                           }),
                                         ))
                                     .toList()),
@@ -265,7 +266,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         Navigator.pushNamed(context, RoutePath.zilaDataPage,
                             arguments: ZilaDataScreen(
                               type: data.name,
-                              id: cubit.selectedId,
+                              id: cubit.countryStateId,
                               dataLevelId: data.id,
                             ));
                       }),
@@ -328,7 +329,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Sangathan Reports',
+              S.of(context).sangathanReports,
               style: GoogleFonts.quicksand(
                   color: AppColor.purpleColor,
                   fontSize: 20,

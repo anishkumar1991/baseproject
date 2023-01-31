@@ -34,7 +34,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   List multiSelectionList = [];
   List<DataEntryField>? entryField = [];
 
-
   List<DropdownData> categoryData = [];
   List<CastData> castData = [];
   List<DropdownData> qualificationData = [];
@@ -215,12 +214,12 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       /* if (file != null) {
         await storeImage(folderName: 'profileImages', path: file!.path);
       }*/
-    //  if (file != null) {
-    //     await storeImage(
-    //         folderName: 'profileImages',
-    //         path: file!.path,
-    //         recievedUrl: profileImageUrl);
-    //   }
+      //  if (file != null) {
+      //     await storeImage(
+      //         folderName: 'profileImages',
+      //         path: file!.path,
+      //         recievedUrl: profileImageUrl);
+      //   }
 
       emit(ImagePickedState());
     }
@@ -271,7 +270,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           "value": result.files.single.path!,
         };
         allImagePickerList.add(json);
-
       }
     }
     emit(FilePickedState());
@@ -400,7 +398,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       emit(TimerRunningState(count));
       startTimer();
     }
-
   }
 
   getFieldName(String fieldName) {
@@ -412,6 +409,5 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       }
     }
     return name;
-
   }
 }

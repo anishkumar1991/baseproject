@@ -78,7 +78,7 @@ class LoginCubit extends Cubit<LoginState> {
         UserDetails userData = UserDetails.fromJson(res.data);
         print('Auth token==${userData.authToken}');
         await StorageService.setUserData(userData);
-        StorageService.getUserData();
+       StorageService.getUserData();
         await StorageService.setUserAuthToken(userData.authToken ?? '');
         emit(UserLoginSuccessfullyState(userData));
       } else {

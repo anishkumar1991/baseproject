@@ -939,6 +939,36 @@ class S {
       args: [],
     );
   }
+
+  /// `New Entry`
+  String get newEntry {
+    return Intl.message(
+      'New Entry',
+      name: 'newEntry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post`
+  String get post {
+    return Intl.message(
+      'Post',
+      name: 'post',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sangathan Reports`
+  String get sangathanReports {
+    return Intl.message(
+      'Sangathan Reports',
+      name: 'sangathanReports',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
