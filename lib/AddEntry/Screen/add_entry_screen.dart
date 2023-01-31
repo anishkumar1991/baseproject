@@ -12,7 +12,6 @@ import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
-
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
@@ -460,7 +459,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         final FormState form =
                                             _formKey.currentState!;
                                         if (form.validate()) {
-                                          cubit.makeFinalList();
+                                          cubit.previewAndSubmitList();
                                           Navigator.pushNamed(context,
                                               RoutePath.addEntryPreviewSubmit);
                                         }

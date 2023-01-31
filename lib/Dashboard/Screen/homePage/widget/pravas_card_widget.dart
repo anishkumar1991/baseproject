@@ -7,10 +7,8 @@ import 'package:sangathan/route/route_path.dart';
 
 import '../../../../generated/l10n.dart';
 
-
 class PravasCardWidget extends StatelessWidget {
-
- const PravasCardWidget({super.key});
+  const PravasCardWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +28,12 @@ class PravasCardWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-
-                     Text(
-                       S.of(context).tour,
+                    Text(
+                      S.of(context).tour,
                       style: const TextStyle(
                           fontFamily: 'Tw Cen MT',
                           color: AppColor.textBlackColor,
                           fontSize: 20),
-
                     ),
                     const Spacer(),
                     InkWell(
@@ -68,14 +64,13 @@ class PravasCardWidget extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-
                               Expanded(
                                 child: Row(
                                   children: [
                                     Image.asset(AppIcons.checkBox,
                                         height: 20, width: 20),
                                     spaceWidthWidget(10),
-                                     Text(
+                                    Text(
                                       S.of(context).totalTravelSoFar,
                                       style: const TextStyle(
                                           fontFamily: 'Tw Cen MT',
@@ -85,7 +80,6 @@ class PravasCardWidget extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-
                               ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -95,7 +89,6 @@ class PravasCardWidget extends StatelessWidget {
                                         fontWeight: FontWeight.w700,
                                         color: AppColor.blue)),
                               ),
-
                             ],
                           ),
                           const Divider(
@@ -104,7 +97,6 @@ class PravasCardWidget extends StatelessWidget {
                             color: AppColor.borderColor,
                           ),
                           Row(
-
                             children: [
                               Expanded(
                                 child: Row(
@@ -112,7 +104,7 @@ class PravasCardWidget extends StatelessWidget {
                                     Image.asset(AppIcons.calender,
                                         height: 20, width: 20),
                                     spaceWidthWidget(10),
-                                     Text(
+                                    Text(
                                       S.of(context).upcomingTrip,
                                       style: const TextStyle(
                                           fontFamily: 'Tw Cen MT',

@@ -74,4 +74,37 @@ class FieldHandler extends AddEntryCubit {
     }
     return name;
   }
+
+  /// here get Field name
+
+  static getFieldName(String fieldName, AddEntryCubit cubit) {
+    String name = '';
+
+    for (int i = 0; i < cubit.entryField!.length; i++) {
+      if (cubit.entryField![i].formControlName == fieldName) {
+        name = cubit.entryField![i].displayNameForUI ?? fieldName;
+      }
+    }
+    return name;
+  }
+
+  /// Here getting specify dropdown selected value name
+  static getDropdownSelectedValueName(
+      String dropdownType, AddEntryCubit cubit) {
+    if (dropdownType == "designation") {
+      return cubit.designationSelected?.name;
+    } else if (dropdownType == "category") {
+      return cubit.categorySelected?.name;
+    } else if (dropdownType == "caste") {
+      return cubit.castSelected?.name;
+    } else if (dropdownType == "qualification") {
+      return cubit.qualificationSelected?.name;
+    } else if (dropdownType == "religion") {
+      return cubit.religionSelected?.name;
+    } else if (dropdownType == "profession") {
+      return cubit.professionSelected?.name;
+    } else {
+      return null;
+    }
+  }
 }

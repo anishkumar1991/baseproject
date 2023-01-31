@@ -46,6 +46,7 @@ class AppColor {
   static Color redShade100 = Colors.red.shade100;
   static Color redShade600 = Colors.red.shade600;
 
+  /// gradient colors
   static const Color purple50 = Color(0xFFE6E5FD);
   static const Color orange200 = Color(0xFFFFE3D3);
 }

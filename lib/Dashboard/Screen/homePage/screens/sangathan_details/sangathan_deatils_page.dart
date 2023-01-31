@@ -32,8 +32,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
 
   @override
   void initState() {
-    print('country_state_id=${StorageService.userData?.user?.countryStateId}');
-
+    StorageService.getUserData();
     context.read<SangathanDetailsCubit>().getSangathanDataLevel();
     super.initState();
   }
@@ -73,6 +72,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
               ),
             ),
             spaceHeightWidget(10),
+
+            /// sangathan grid view
             sangathanGridView(cubit),
             spaceHeightWidget(24),
             Container(
@@ -95,8 +96,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                               colors: [
-                                Color(0xFFE6E5FD),
-                                Color(0xFFFFE3D3),
+                                AppColor.purple50,
+                                AppColor.orange200,
                               ])),
                       child: Image.asset(
                         AppIcons.shaktikendraImage,
@@ -106,6 +107,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
               ),
             ),
             spaceHeightWidget(20),
+
+            /// report widget
             sangathanReportCard(),
             spaceHeightWidget(60)
           ],

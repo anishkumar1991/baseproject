@@ -67,19 +67,21 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   final api = AddEntryApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
+  /// gender radio button on tap method
   void onTapRadioButton(String value) {
     emit(AddEntryLoadingState());
     selectRadio = value;
     emit(RadioButtonSelectState());
   }
 
+  /// Date picker date formatter
   static String ddMMMYYYYfromDateTime(DateTime date) {
     return DateFormat('dd-MMM-yyyy').format(date);
   }
 
   /// here make final value map with key
 
-  makeFinalList() {
+  previewAndSubmitList() {
     Map<String, dynamic> data = {};
 
     /// For dropdowns
@@ -153,11 +155,11 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     int index = allDropdownValueList
         .indexWhere((element) => element["fieldName"] == dropdownType);
     if (index >= 0) {
-      allDropdownValueList[index]["value"] = value.name;
+      allDropdownValueList[index]["value"] = value.id;
     } else {
       Map<String, dynamic> json = {
         "fieldName": dropdownType,
-        "value": value.name,
+        "value": value.id,
       };
       allDropdownValueList.add(json);
     }
@@ -168,22 +170,27 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(AddEntryLoadingState());
     if (dropdownType == "designation") {
       designationSelected = value;
+
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "category") {
       categorySelected = value;
       getAllDropDownData(value, dropdownType);
+
       getCastData(id: categorySelected!.id.toString());
     } else if (dropdownType == "caste") {
       castSelected = value;
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "qualification") {
       qualificationSelected = value;
+
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "religion") {
       religionSelected = value;
+
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "profession") {
       professionSelected = value;
+
       getAllDropDownData(value, dropdownType);
     } else {}
     emit(DropDownSelectedState());
@@ -204,6 +211,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
+  /// This method for user photo picker
   Future<void> pickImage(ImageSource source) async {
     emit(AddEntryLoadingState());
     PickedFile? pickedFile =
@@ -237,6 +245,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     //print('ImageUrl==$profileImageUrl');
   }
 
+  /// File picker method(aadhaar,voter and ration)
   Future<void> pickFile(String fieldType) async {
     emit(AddEntryLoadingState());
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -275,6 +284,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(FilePickedState());
   }
 
+  /// permission handler for image picker
   Future<void> requestPermission(ImageSource source) async {
     await Permission.storage.request();
     if (await Permission.storage.request().isDenied) {
@@ -286,6 +296,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
+  /// Dropdown API call Method
   Future getDropdownData() async {
     try {
       emit(AddEntryLoadingState());
@@ -305,6 +316,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
+  /// caste api call when select category
   Future getCastData({required String id}) async {
     try {
       emit(AddEntryLoadingState());
@@ -322,6 +334,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       emit(AddEntryErrorState('Something Went Wrong'));
     }
   }
+
+  /// Add entry form structure API method
 
   Future getAddEntryFormStructure(
       {required String levelID, int? countryId}) async {
@@ -353,6 +367,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
+  ///Designation dropdown API methods
   Future getDesignationDropdown({required Map<String, dynamic> data}) async {
     try {
       emit(DesignationDropDownLoadingState());
@@ -381,6 +396,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(DisposeState());
   }
 
+  /// change value designation dropdown value
   void onChangeDesignationDropDown(DesignationData designationData) {
     emit(AddEntryLoadingState());
     selectedDesignationData = designationData;
@@ -402,14 +418,38 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
-  getFieldName(String fieldName) {
-    String name = '';
+  /// the method call when user leave all add entry page
+  cleanAllVariableData() {
+    multiSelectionList = [];
+    entryField = [];
 
-    for (int i = 0; i < entryField!.length; i++) {
-      if (entryField![i].formControlName == fieldName) {
-        name = entryField![i].displayNameForUI ?? fieldName;
-      }
-    }
-    return name;
+    categoryData = [];
+    castData = [];
+    qualificationData = [];
+    professionData = [];
+    nativeStateData = [];
+    religionData = [];
+
+    designationData = [];
+
+    addEntryFormPrimary = [];
+    addEntryFormSecondary = [];
+
+    castSelected = null;
+    categorySelected = null;
+    qualificationSelected = null;
+    professionSelected = null;
+    nativeStateSelected = null;
+    religionSelected = null;
+    designationSelected = null;
+    profileImageUrl = null;
+    selectedDesignationData = null;
+
+    ///  all field
+    allDropdownValueList = [];
+    allImagePickerList = [];
+    textFieldControllerData = [];
+    allMultiFieldData = [];
+    allDatePicker = [];
   }
 }

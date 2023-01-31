@@ -94,7 +94,7 @@ class LoginCubit extends Cubit<LoginState> {
         emit(LoginFaieldState(msg?['message'] ?? ''));
       }
     } on Exception catch (e) {
-      emit(LoginFaieldState(e.toString()));
+      emit(LoginFaieldState("Something want to wrong!"));
       print('catch $e');
     }
   }

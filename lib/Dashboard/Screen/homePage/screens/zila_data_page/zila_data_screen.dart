@@ -14,6 +14,7 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
+import '../../../../../AddEntry/cubit/add_entry_cubit.dart';
 import 'cubit/zila_data_state.dart';
 import 'network/model/data_unit_model.dart';
 
@@ -128,6 +129,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           backgroundColor: AppColor.buttonOrangeBackGroundColor,
           onPressed: (() {
+            context.read<AddEntryCubit>().cleanAllVariableData();
             Navigator.pushNamed(context, RoutePath.addEntryScreen,
                 arguments: AddEntryPage(
                   type: widget.type!,

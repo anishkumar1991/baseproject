@@ -12,6 +12,7 @@ import '../../Values/space_width_widget.dart';
 import '../../common/common_button.dart';
 import '../cubit/add_entry_cubit.dart';
 import '../dynamic_ui_handler/dynamic_ui_handler.dart';
+import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/select_boxs.dart';
 
 class AddEntryPreviewSubmit extends StatefulWidget {
@@ -87,7 +88,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
               for (int i = 0; i < cubit.entryField!.length; i++)
                 if (cubit.entryField![i].primary == false)
                   multiCheckBox(cubit, i),
-
+              spaceHeightWidget(20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -174,35 +175,44 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   }
 
   nonEditableField(AddEntryCubit cubit, int i) {
-    return Column(
-      children: [
-        for (var item in cubit.finalAllDataList.entries) ...[
-          if (cubit.entryField![i].formControlName == item.key) ...[
-            if (DynamicUIHandler.dropdowns.contains(item.key) ||
-                DynamicUIHandler.textfield.contains(item.key) ||
-                DynamicUIHandler.radioButton.contains(item.key) ||
-                DynamicUIHandler.calenderView.contains(item.key) ||
-                (DynamicUIHandler.filePickerUrl.contains(item.key)))
-              if ((DynamicUIHandler.filePicker.contains(item.key)) ||
-                  (DynamicUIHandler.filePickerUrl.contains(item.key))) ...[
-                spaceHeightWidget(8),
-                CommonTextField(
-                    title: cubit.getFieldName(item.key),
-                    hintText: item.value,
-                    suffixWidget:
-                        uploadImage(gettingFilePath(item.key, cubit))),
-              ] else ...[
-                spaceHeightWidget(8),
-                CommonTextField(
-                  title: cubit.getFieldName(item.key),
-                  hintText: item.value,
-                )
-              ],
-          ] else ...[
-            const SizedBox()
-          ],
-        ]
-      ],
+    return IgnorePointer(
+      child: Column(
+        children: [
+          for (var item in cubit.finalAllDataList.entries) ...[
+            if (cubit.entryField![i].formControlName == item.key) ...[
+              if (DynamicUIHandler.dropdowns.contains(item.key) ||
+                  DynamicUIHandler.textfield.contains(item.key) ||
+                  DynamicUIHandler.radioButton.contains(item.key) ||
+                  DynamicUIHandler.calenderView.contains(item.key) ||
+                  (DynamicUIHandler.filePickerUrl.contains(item.key)))
+                if ((DynamicUIHandler.filePicker.contains(item.key)) ||
+                    (DynamicUIHandler.filePickerUrl.contains(item.key))) ...[
+                  spaceHeightWidget(8),
+                  CommonTextField(
+                      title: FieldHandler.getFieldName(item.key, cubit),
+                      hintText: item.value,
+                      suffixWidget:
+                          uploadImage(gettingFilePath(item.key, cubit))),
+                ] else ...[
+                  spaceHeightWidget(8),
+                  if (DynamicUIHandler.dropdowns.contains(item.key))
+                    CommonTextField(
+                      title: FieldHandler.getFieldName(item.key, cubit),
+                      hintText: FieldHandler.getDropdownSelectedValueName(
+                          item.key, cubit),
+                    )
+                  else
+                    CommonTextField(
+                      title: FieldHandler.getFieldName(item.key, cubit),
+                      hintText: item.value,
+                    )
+                ],
+            ] else ...[
+              const SizedBox()
+            ],
+          ]
+        ],
+      ),
     );
   }
 
@@ -217,7 +227,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
               IntrinsicWidth(
                 child: SelectPropertyBox(
                   value: item.value == "true" ? true : false,
-                  title: cubit.getFieldName(item.key),
+                  title: FieldHandler.getFieldName(item.key, cubit),
                   onChanged: (value) {},
                 ),
               ),
