@@ -969,6 +969,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Create Shakti Kendra`
+  String get createShaktiKendra {
+    return Intl.message(
+      'Create Shakti Kendra',
+      name: 'createShaktiKendra',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

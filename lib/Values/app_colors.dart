@@ -38,6 +38,14 @@ class AppColor {
   static const Color pinkColor = Color(0xFFecdfe5);
   static const Color lightGreenColor = Color(0xFFF1F8EF);
   static const Color darkBlue = Color(0xFF5F5390);
-  static  Color greyWithOpacity01 = Colors.grey.withOpacity(0.1);
-  static  Color green = Color(0xFFdfeeee);
+  static Color greyWithOpacity01 = Colors.grey.withOpacity(0.1);
+  static Color green = const Color(0xFFdfeeee);
+
+  static Color greenshade100 = Colors.green.shade100;
+  static Color greenshade900 = Colors.green.shade900;
+  static Color redShade100 = Colors.red.shade100;
+  static Color redShade600 = Colors.red.shade600;
+
+  static const Color purple50 = Color(0xFFE6E5FD);
+  static const Color orange200 = Color(0xFFFFE3D3);
 }

@@ -10,7 +10,6 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
-import '../../../../../route/route_path.dart';
 import 'cubit/personal_info_cubit.dart';
 
 class PersonalInformationScreen extends StatefulWidget {

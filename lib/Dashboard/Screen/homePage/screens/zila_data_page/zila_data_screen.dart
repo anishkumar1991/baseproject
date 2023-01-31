@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
@@ -12,18 +11,18 @@ import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
+import 'package:sangathan/storage/user_storage_service.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import 'cubit/zila_data_state.dart';
 import 'network/model/data_unit_model.dart';
 
 class ZilaDataScreen extends StatefulWidget {
   const ZilaDataScreen(
-      {super.key, required this.type, this.id, this.dataLevelId});
+      {super.key, required this.type, this.countryStateId, this.dataLevelId});
 
   final String? type;
-  final int? id;
+  final int? countryStateId;
   final int? dataLevelId;
 
   @override
@@ -33,16 +32,16 @@ class ZilaDataScreen extends StatefulWidget {
 class _ZilaDataScreenState extends State<ZilaDataScreen> {
   @override
   void initState() {
-    if (widget.id != null) {
-      context.read<ZilaDataCubit>().getPartyZila(id: widget.id!);
-    }
+    context.read<ZilaDataCubit>().getPartyZila(
+        id: widget.countryStateId ??
+            StorageService.userData!.user!.countryStateId!);
     print('data_leve${widget.dataLevelId}');
-    print(
-        'country_state_id${context.read<SangathanDetailsCubit>().countryStateId}');
+    print('country_state_id${widget.countryStateId}');
     context.read<ZilaDataCubit>().getUnitData(data: {
       "type": "Unit",
       "data_level": widget.dataLevelId,
-      "country_state_id": context.read<SangathanDetailsCubit>().countryStateId
+      "country_state_id":
+          widget.countryStateId ?? StorageService.userData?.user?.countryStateId
     });
     print('unitId=${context.read<ZilaDataCubit>().unitId}');
 
@@ -135,6 +134,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   leaveId: widget.dataLevelId ?? 0,
                   unitId: cubit.unitId,
                   subUnitId: cubit.subUnitId,
+                  countryStateId: widget.countryStateId,
                 ));
           }),
           icon: const Icon(Icons.add),
@@ -238,6 +238,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         data.subUnits?.isEmpty ?? false
                             ? const SizedBox.shrink()
                             : PopupMenuButton(
+                                enabled: cubit.filterDtaSelectedIndex == index,
+                                splashRadius: 3,
                                 initialValue: cubit.name[index],
                                 icon: Icon(
                                   Icons.arrow_drop_down,
@@ -297,8 +299,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     SlidableAction(
                       padding: EdgeInsets.zero,
                       onPressed: ((context) {}),
-                      backgroundColor: Colors.green.shade100,
-                      foregroundColor: Colors.green.shade900,
+                      backgroundColor: AppColor.greenshade100,
+                      foregroundColor: AppColor.greenshade900,
                       icon: Icons.verified_user,
                       label: S.of(context).verified,
                     ),
@@ -312,8 +314,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     SlidableAction(
                       padding: EdgeInsets.zero,
                       onPressed: ((context) {}),
-                      backgroundColor: Colors.red.shade100,
-                      foregroundColor: Colors.red.shade600,
+                      backgroundColor: AppColor.redShade100,
+                      foregroundColor: AppColor.redShade600,
                       icon: Icons.delete_outline,
                       label: S.of(context).delete,
                     ),
@@ -332,6 +334,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                   height: 56,
                                   width: 56,
                                   color: AppColor.navyBlue,
+                                  child: const Icon(
+                                    Icons.person,
+                                    color: AppColor.white,
+                                    size: 28,
+                                  ),
                                 )),
                           )),
                       spaceWidthWidget(16),

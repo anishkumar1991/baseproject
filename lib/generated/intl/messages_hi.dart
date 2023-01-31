@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्यक्रम बनायें"),
         "createProgram":
             MessageLookupByLibrary.simpleMessage("कार्याक्रम बनाएँ"),
+        "createShaktiKendra":
+            MessageLookupByLibrary.simpleMessage("शक्ति केंद्र  निर्माण"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("डाटा एंट्री"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("दिनांक और समय * "),
         "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )"),

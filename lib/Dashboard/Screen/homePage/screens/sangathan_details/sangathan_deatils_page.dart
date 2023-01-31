@@ -78,12 +78,12 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
             Container(
               padding: const EdgeInsets.all(12),
               width: MediaQuery.of(context).size.width,
-              color: const Color(0xFFECECF8),
+              color: AppColor.purple50.withOpacity(0.6),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Create Shakti Kendra',
+                    S.of(context).createShaktiKendra,
                     style: GoogleFonts.quicksand(
                         fontSize: 18, fontWeight: FontWeight.w600),
                   ),
@@ -153,9 +153,6 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               children: [
                                 IconButton(
                                     onPressed: (() {
-                                      if (cubit.locationList.isEmpty) {
-                                        Navigator.pop(context);
-                                      }
                                       if (cubit.countryStateId == null) {
                                         EasyLoading.showError(
                                             S.of(context).pleaseChoosePlace);
@@ -267,7 +264,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         Navigator.pushNamed(context, RoutePath.zilaDataPage,
                             arguments: ZilaDataScreen(
                               type: data.name,
-                              id: cubit.countryStateId,
+                              countryStateId: cubit.countryStateId,
                               dataLevelId: data.id,
                             ));
                       }),
@@ -279,8 +276,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [
-                                  Color(0xFFE6E5FD),
-                                  Color(0xFFFFE3D3),
+                                  AppColor.purple50,
+                                  AppColor.orange200
                                 ])),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,

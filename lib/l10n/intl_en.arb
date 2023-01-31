@@ -91,5 +91,6 @@
   "delete": "Delete",
   "newEntry":"New Entry",
   "post":"Post",
-  "sangathanReports":"Sangathan Reports"
+  "sangathanReports":"Sangathan Reports",
+  "createShaktiKendra":"Create Shakti Kendra"
 }

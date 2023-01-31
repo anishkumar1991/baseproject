@@ -229,8 +229,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 )
               : Text(
                   Localizations.localeOf(context).toString() == "hi"
-                      ? '${S.of(context).resendOTPCodeTo}${cubit.count}'
-                      : '${cubit.count}${S.of(context).resendOTPCodeTo}',
+                      ? '${S.of(context).resendOTPCodeTo} ${cubit.count}'
+                      : '${cubit.count} ${S.of(context).resendOTPCodeTo}',
                   style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,

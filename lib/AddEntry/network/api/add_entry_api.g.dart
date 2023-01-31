@@ -77,6 +77,7 @@ class _AddEntryApi implements AddEntryApi {
   Future<HttpResponse<dynamic>> getAddEntryFormStructure(
     token,
     levelID,
+    countryStateId,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -91,7 +92,7 @@ class _AddEntryApi implements AddEntryApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/data_entry/form_structure?level_id=${levelID}&type_id=1&country_state_id=3&is_app=true',
+              '/zila/api/data_entry/form_structure?level_id=${levelID}&type_id=1&country_state_id=${countryStateId}&is_app=true',
               queryParameters: queryParameters,
               data: _data,
             )

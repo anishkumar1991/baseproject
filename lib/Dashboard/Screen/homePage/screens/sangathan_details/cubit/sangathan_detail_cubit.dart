@@ -72,7 +72,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
     emit(LoadingState());
     countryStateId = countryId;
     locationId = id;
-    print(countryStateId);
+    //print(countryStateId);
     print(locationId);
     emit(LocationChoosedState());
   }

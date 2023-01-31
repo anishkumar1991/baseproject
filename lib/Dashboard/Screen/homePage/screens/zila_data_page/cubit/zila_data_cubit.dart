@@ -107,7 +107,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(LoadingState());
     filterDtaSelectedIndex = index;
     unitId = id;
-    print(unitId);
+    print('unitId=$unitId');
     emit(ZilaChangedState());
   }
 

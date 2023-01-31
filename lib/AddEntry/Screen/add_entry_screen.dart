@@ -10,14 +10,13 @@ import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
 import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
+import 'package:sangathan/storage/user_storage_service.dart';
 
-import '../../Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import '../../route/route_path.dart';
 import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/custom_radio_button.dart';
@@ -29,11 +28,13 @@ class AddEntryPage extends StatefulWidget {
       required this.type,
       required this.leaveId,
       required this.unitId,
+      this.countryStateId,
       this.subUnitId})
       : super(key: key);
   final String type;
   final int leaveId;
   final int? unitId;
+  final int? countryStateId;
   final int? subUnitId;
   @override
   State<AddEntryPage> createState() => _AddEntryPageState();
@@ -312,8 +313,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     context.read<AddEntryCubit>().getDesignationDropdown(data: {
                       "type": "Designation",
                       "data_level": widget.leaveId,
-                      "country_state_id":
-                          context.read<SangathanDetailsCubit>().countryStateId,
+                      "country_state_id": widget.countryStateId ??
+                          StorageService.userData?.user?.countryStateId,
                       "unit_id": widget.unitId,
                       "sub_unit_id": widget.subUnitId
                     });
@@ -324,7 +325,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     cubit.designationData = [];
                     cubit.designationData = state.designationList.data ?? [];
                     context.read<AddEntryCubit>().getAddEntryFormStructure(
-                        levelID: widget.leaveId.toString());
+                        levelID: widget.leaveId.toString(),
+                        countryId: widget.countryStateId ??
+                            StorageService.userData?.user?.countryStateId);
                   } else if (state is GetAddEntryFormStructureSuccessState) {
                     if (state.addEntryFormStructure.dataEntryField == null) {
                       cubit.entryField = null;

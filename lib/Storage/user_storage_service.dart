@@ -43,7 +43,7 @@ class StorageService {
     await storage.write(userDataKey, data);
     Map<String, dynamic> value = storage.read(userDataKey) ?? {};
     userData = UserDetails.fromJson(value);
-    print('rEAD ${userData?.toJson()}');
+    print('rEAD ${userData?.user?.countryStateId}');
   }
 
   static UserDetails? getUserData() {

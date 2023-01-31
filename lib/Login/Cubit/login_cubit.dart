@@ -14,7 +14,6 @@ class LoginCubit extends Cubit<LoginState> {
 
   final api = AuthApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
-
   Timer? timer;
   int count = 30;
 
@@ -74,7 +73,6 @@ class LoginCubit extends Cubit<LoginState> {
         {'identification_token': token, 'otp': otp},
         'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D)',
       );
-
       print(
           "------------------------------------ Submit otp get user data  ----------------------------");
       print("otp  :$otp");

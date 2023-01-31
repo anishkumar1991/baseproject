@@ -13,7 +13,7 @@ class InitialStateState extends SangathanDetailsState {}
 class LoadingState extends SangathanDetailsState {}
 
 class DataLevelFetchedState extends SangathanDetailsState {
- final SangthanDataModel data;
+  final SangthanDataModel data;
   DataLevelFetchedState(this.data);
 }
 
@@ -27,4 +27,4 @@ class LocationFetchedState extends SangathanDetailsState {
   LocationFetchedState(this.locationData);
 }
 
-class LocationChoosedState extends SangathanDetailsState{}
+class LocationChoosedState extends SangathanDetailsState {}

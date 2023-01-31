@@ -323,12 +323,13 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
-  Future getAddEntryFormStructure({required String levelID}) async {
+  Future getAddEntryFormStructure(
+      {required String levelID, int? countryId}) async {
     emit(GetAddEntryFormStructureLoadingState());
     if (state is GetAddEntryFormStructureLoadingState) {
       try {
         final res = await api.getAddEntryFormStructure(
-            'Bearer ${StorageService.userAuthToken}', levelID);
+            'Bearer ${StorageService.userAuthToken}', levelID, countryId);
         if (res.response.statusCode == 200) {
           AddEntryFormStructure addEntryFormStructure =
               AddEntryFormStructure.fromJson(res.data);
@@ -336,6 +337,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           print(
               "------------------------------------ Add entry form structure ----------------------------");
           print("level id :$levelID");
+          print("countryStateId = $countryId");
           print("Status code : ${res.response.statusCode}");
           print("Response :${res.data}");
           print(

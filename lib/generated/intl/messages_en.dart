@@ -51,6 +51,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createAndUpdateProgram":
             MessageLookupByLibrary.simpleMessage("Create and"),
         "createProgram": MessageLookupByLibrary.simpleMessage("Create program"),
+        "createShaktiKendra":
+            MessageLookupByLibrary.simpleMessage("Create Shakti Kendra"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("Data Entry"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("Date and Time *"),
         "dateTo": MessageLookupByLibrary.simpleMessage("Date (To)"),

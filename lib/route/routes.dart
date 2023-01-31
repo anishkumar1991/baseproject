@@ -49,7 +49,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return SangathanDetailsPage();
+            return const SangathanDetailsPage();
           },
         );
       case RoutePath.addEntryScreen:
@@ -62,6 +62,7 @@ class RouteGenerator {
               leaveId: data.leaveId,
               unitId: data.unitId,
               subUnitId: data.subUnitId,
+              countryStateId: data.countryStateId,
             );
           },
         );
@@ -79,7 +80,7 @@ class RouteGenerator {
             ZilaDataScreen data = args as ZilaDataScreen;
             return ZilaDataScreen(
               type: data.type,
-              id: data.id,
+              countryStateId: data.countryStateId,
               dataLevelId: data.dataLevelId,
             );
           },
