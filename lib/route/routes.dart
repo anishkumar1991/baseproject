@@ -15,7 +15,10 @@ import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.
 import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/edit_address/edit_address_screen.dart';
+import '../Dashboard/Screen/menuPage/screens/edit_business/edit_business_screen.dart';
+import '../Dashboard/Screen/menuPage/screens/edit_education/edit_education_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/personal_info/personal_information_screen.dart';
+import '../Dashboard/Screen/menuPage/screens/profile_screen/network/model/user_detail_model.dart';
 import '../Dashboard/Screen/menuPage/screens/profile_screen/profile_screen.dart';
 import '../splash_screen/screen/splash_screen.dart';
 
@@ -147,14 +150,32 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return const PersonalInformationScreen();
+            Map<String,dynamic> data = settings.arguments as Map<String,dynamic>;
+            UserDetailModel model = UserDetailModel.fromJson(data);
+            return PersonalInformationScreen(userDetails: model);
           },
         );
       case RoutePath.editAddressScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return const EditAddressScreen();
+            Map<String, dynamic>? map = {};
+            String? flatNumber = "";
+            String? area = "";
+            String? pinCode = "";
+            String? town = "";
+            String? state = "";
+            if (settings.arguments != null) {
+              map = settings.arguments as Map<String, dynamic>;
+              flatNumber = map['flatNumber'];
+              area = map['area'];
+              pinCode = map['pinCode'];
+              town = map['town'];
+              state = map['state'];
+            }
+            return EditAddressScreen(
+              area: area,flatNumber: flatNumber,pinCode: pinCode,state: state,town: town
+            );
           },
         );
 
@@ -163,6 +184,48 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const AddEntryPreviewSubmit();
+          },
+        );
+        case RoutePath.editEducationScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            Map<String, dynamic>? map = {};
+            String? level = "";
+            String? startYear = "";
+            String? endYear = "";
+            String? collage = "";
+            if (settings.arguments != null) {
+              map = settings.arguments as Map<String, dynamic>;
+              level = map['level'];
+              startYear = map['startYear'];
+              endYear = map['endYear'];
+              collage = map['collage'];
+            }
+            return EditEducationScreen(
+              collage: collage,endYear: endYear,level: level,startYear: startYear,
+            );
+          },
+        );
+        case RoutePath.editBusinessScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            Map<String, dynamic>? map = {};
+            String? organization = "";
+            String? position = "";
+            String? startYear = "";
+            String? endYear = "";
+            if (settings.arguments != null) {
+              map = settings.arguments as Map<String, dynamic>;
+              organization = map['organization'];
+              startYear = map['startYear'];
+              endYear = map['endYear'];
+              position = map['position'];
+            }
+            return EditBusinessScreen(
+              endYear: endYear,organization: organization,startYear: startYear,position: position,
+            );
           },
         );
 

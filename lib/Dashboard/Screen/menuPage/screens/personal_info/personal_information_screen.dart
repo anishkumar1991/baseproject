@@ -10,16 +10,46 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
+
+import '../profile_screen/network/model/user_detail_model.dart';
 import 'cubit/personal_info_cubit.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
-  const PersonalInformationScreen({Key? key}) : super(key: key);
+  UserDetailModel userDetails;
+   PersonalInformationScreen({Key? key,required this.userDetails}) : super(key: key);
 
   @override
   State<PersonalInformationScreen> createState() => _PersonalInformationScreenState();
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
+  void initState(){
+
+    fillData();
+    super.initState();
+  }
+
+  fillData({final cubit}){
+    context.read<PersonalInfoCubit>().nameCtr.text = widget.userDetails.data?.name ?? '';
+    context.read<PersonalInfoCubit>().userNameCtr.text = widget.userDetails.data?.username ?? '';
+    context.read<PersonalInfoCubit>().mobileNumberCtr.text = widget.userDetails.data?.phoneNumber ?? '';
+    context.read<PersonalInfoCubit>().boiCtr.text = widget.userDetails.data?.dob ?? '';
+    context.read<PersonalInfoCubit>().religionCtr.text = widget.userDetails.data?.religion?.name ?? '';
+    context.read<PersonalInfoCubit>().statusCtr.text = widget.userDetails.data?.category?.name ?? '';
+    context.read<PersonalInfoCubit>().castCtr.text = widget.userDetails.data?.caste?.name ?? '';
+    getGenderRadioButtonValue(widget.userDetails.data?.gender?.toLowerCase());
+  }
+
+  getGenderRadioButtonValue(String? type){
+    if(type == 'male'){
+      context.read<PersonalInfoCubit>().value = Gender.male;
+    }else if(type == 'female'){
+      context.read<PersonalInfoCubit>().value = Gender.female;
+    }else{
+      context.read<PersonalInfoCubit>().value = Gender.transgender;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<PersonalInfoCubit>();
@@ -48,9 +78,27 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   child: ClipRRect(
                       borderRadius:
                       BorderRadius.circular(350),
-                      child: Image.asset(
-                          AppIcons.userLogo,
-                          fit: BoxFit.cover)),
+                      child: Image.network(
+                          widget.userDetails.data?.avatar ?? '',
+                          fit: BoxFit.cover,
+                        errorBuilder:
+                            (BuildContext context, Object exception, StackTrace? stackTrace) {
+                          return const Icon(Icons.person,size: 25);
+                        },
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },)),
                 )
                     : InkWell(
                   onTap: () {},

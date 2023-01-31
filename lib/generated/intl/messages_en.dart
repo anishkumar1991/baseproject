@@ -45,6 +45,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
         "business": MessageLookupByLibrary.simpleMessage("Business"),
         "caste": MessageLookupByLibrary.simpleMessage("Caste"),
+        "clgName": MessageLookupByLibrary.simpleMessage(
+            "Name of the Institute or College"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "createATour": MessageLookupByLibrary.simpleMessage("Create a tour"),
@@ -60,6 +62,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("Description of Tour"),
+        "dialogSubtitle": MessageLookupByLibrary.simpleMessage(
+            "This will delete profession from your profile."),
+        "dialogSubtitle1": MessageLookupByLibrary.simpleMessage(
+            "This will delete education details from your profile."),
+        "dialogSubtitle2": MessageLookupByLibrary.simpleMessage(
+            "This will delete address details from your profile."),
+        "dialogTitle":
+            MessageLookupByLibrary.simpleMessage("Delete from profile?"),
         "digitCodeHasBeenSent":
             MessageLookupByLibrary.simpleMessage("6 digit code has been sent"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
@@ -78,6 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "grade": MessageLookupByLibrary.simpleMessage("Grade"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
+        "level": MessageLookupByLibrary.simpleMessage("Level"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
         "loginToGetTheProgramsAndInformationRelatedToTheOrganization":
@@ -94,6 +105,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "newEntry": MessageLookupByLibrary.simpleMessage("New Entry"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("No organizations available"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
+        "organization":
+            MessageLookupByLibrary.simpleMessage("Name of organization"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("OTP Verification"),
         "phoneNumber":
@@ -101,7 +115,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("Photo ( max 2 )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("Please choose location"),
-        "position": MessageLookupByLibrary.simpleMessage("position"),
+        "position": MessageLookupByLibrary.simpleMessage("Position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
@@ -142,6 +156,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "viewProgram": MessageLookupByLibrary.simpleMessage("View Program"),
         "viewToursEvents":
-            MessageLookupByLibrary.simpleMessage("View Tours & Events")
+            MessageLookupByLibrary.simpleMessage("View Tours & Events"),
+        "yearFrom": MessageLookupByLibrary.simpleMessage("Years (since when)"),
+        "yearTo": MessageLookupByLibrary.simpleMessage("Years (how long)")
       };
 }

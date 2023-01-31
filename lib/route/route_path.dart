@@ -17,6 +17,8 @@ class RoutePath {
   static const String profileScreen = 'profileScreen';
   static const String personalInformationScreen = 'personalInformationScreen';
   static const String editAddressScreen = 'editAddressScreen';
+  static const String editEducationScreen = 'editEducationScreen';
+  static const String editBusinessScreen = 'editBusinessScreen';
 
   static const String addEntryPreviewSubmit = 'addEntryPreviewSubmit';
 }

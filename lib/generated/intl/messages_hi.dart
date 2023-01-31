@@ -45,6 +45,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
         "business": MessageLookupByLibrary.simpleMessage("व्यवसाय"),
         "caste": MessageLookupByLibrary.simpleMessage("जाती"),
+        "clgName":
+            MessageLookupByLibrary.simpleMessage("संस्थान या कॉलेज का नाम"),
         "click": MessageLookupByLibrary.simpleMessage("क्लिक करें"),
         "comment": MessageLookupByLibrary.simpleMessage("टिपण्णी"),
         "createATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाएँ"),
@@ -62,6 +64,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("डिलीट"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("प्रवास का विषय"),
+        "dialogSubtitle": MessageLookupByLibrary.simpleMessage(
+            "यह आपकी प्रोफ़ाइल से पेशा हटा देगा।"),
+        "dialogSubtitle1": MessageLookupByLibrary.simpleMessage(
+            "यह आपकी प्रोफ़ाइल से पता विवरण हटा देगा।"),
+        "dialogTitle":
+            MessageLookupByLibrary.simpleMessage("प्रोफ़ाइल से हटाएं?"),
         "digitCodeHasBeenSent": MessageLookupByLibrary.simpleMessage(
             "एक 6 अंकों का कोड भेजा गया है"),
         "edit": MessageLookupByLibrary.simpleMessage("एडिट"),
@@ -82,6 +90,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "home": MessageLookupByLibrary.simpleMessage("होम"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
+        "level": MessageLookupByLibrary.simpleMessage("लेवल "),
         "login": MessageLookupByLibrary.simpleMessage("लॉगिन करे"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("लॉगिन"),
         "loginToGetTheProgramsAndInformationRelatedToTheOrganization":
@@ -98,6 +107,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "newEntry": MessageLookupByLibrary.simpleMessage("नवीन एंट्री"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
+        "noThanks": MessageLookupByLibrary.simpleMessage("जी नहीं, धन्यवाद"),
+        "organization": MessageLookupByLibrary.simpleMessage("संगठन का नाम"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
         "phoneNumber":
@@ -105,7 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
-        "position": MessageLookupByLibrary.simpleMessage("पद"),
+        "position": MessageLookupByLibrary.simpleMessage("पोजीशन"),
         "post": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),
@@ -147,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "view": MessageLookupByLibrary.simpleMessage("देखें"),
         "viewProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम देखें"),
         "viewToursEvents":
-            MessageLookupByLibrary.simpleMessage("प्रवास और  कार्याक्रम देखे")
+            MessageLookupByLibrary.simpleMessage("प्रवास और  कार्याक्रम देखे"),
+        "yearFrom": MessageLookupByLibrary.simpleMessage("वर्ष ( कब से )"),
+        "yearTo": MessageLookupByLibrary.simpleMessage("वर्ष ( कब तक )")
       };
 }

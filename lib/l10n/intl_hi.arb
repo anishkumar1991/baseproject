@@ -92,5 +92,17 @@
   "newEntry":"नवीन एंट्री",
   "post":"पद",
   "sangathanReports":"संगठन रिपोर्ट",
-  "createShaktiKendra":"शक्ति केंद्र  निर्माण"
+  "createShaktiKendra":"शक्ति केंद्र  निर्माण",
+  "level": "लेवल ",
+  "yearFrom": "वर्ष ( कब से )",
+  "yearTo": "वर्ष ( कब तक )",
+  "clgName": "संस्थान या कॉलेज का नाम",
+  "position": "पोजीशन",
+  "organization": "संगठन का नाम",
+  "dialogTitle": "प्रोफ़ाइल से हटाएं?",
+  "dialogSubtitle": "यह आपकी प्रोफ़ाइल से पेशा हटा देगा।",
+  "dialogSubtitle1": "यह आपकी प्रोफ़ाइल से शिक्षा विवरण हटा देगा।",
+  "dialogSubtitle1": "यह आपकी प्रोफ़ाइल से पता विवरण हटा देगा।",
+  "noThanks": "जी नहीं, धन्यवाद"
+
 }

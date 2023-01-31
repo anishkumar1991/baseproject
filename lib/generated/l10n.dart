@@ -400,10 +400,10 @@ class S {
     );
   }
 
-  /// `position`
+  /// `Position`
   String get position {
     return Intl.message(
-      'position',
+      'Position',
       name: 'position',
       desc: '',
       args: [],
@@ -975,6 +975,106 @@ class S {
     return Intl.message(
       'Create Shakti Kendra',
       name: 'createShaktiKendra',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Level`
+  String get level {
+    return Intl.message(
+      'Level',
+      name: 'level',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Years (since when)`
+  String get yearFrom {
+    return Intl.message(
+      'Years (since when)',
+      name: 'yearFrom',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Years (how long)`
+  String get yearTo {
+    return Intl.message(
+      'Years (how long)',
+      name: 'yearTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name of the Institute or College`
+  String get clgName {
+    return Intl.message(
+      'Name of the Institute or College',
+      name: 'clgName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name of organization`
+  String get organization {
+    return Intl.message(
+      'Name of organization',
+      name: 'organization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete from profile?`
+  String get dialogTitle {
+    return Intl.message(
+      'Delete from profile?',
+      name: 'dialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This will delete profession from your profile.`
+  String get dialogSubtitle {
+    return Intl.message(
+      'This will delete profession from your profile.',
+      name: 'dialogSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This will delete education details from your profile.`
+  String get dialogSubtitle1 {
+    return Intl.message(
+      'This will delete education details from your profile.',
+      name: 'dialogSubtitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This will delete address details from your profile.`
+  String get dialogSubtitle2 {
+    return Intl.message(
+      'This will delete address details from your profile.',
+      name: 'dialogSubtitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No thanks`
+  String get noThanks {
+    return Intl.message(
+      'No thanks',
+      name: 'noThanks',
       desc: '',
       args: [],
     );
