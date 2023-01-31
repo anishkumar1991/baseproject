@@ -35,7 +35,13 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       emit(DataFetchingLoadingState());
       final res = await api.getPersonList(
           'Bearer ${StorageService.userAuthToken}', data);
-      print('Entry res =${res.response.statusCode}');
+      print(
+          "------------------------------------ Get Entry Data ----------------------------");
+      print("data  :$data");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DataEntryModel data = DataEntryModel.fromJson(res.data);
         emit(EntryDataFetchedState(data));
@@ -53,7 +59,14 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       emit(DataFetchingLoadingState());
       final res =
           await api.partyzilas('Bearer ${StorageService.userAuthToken}', id);
-      print('Part Zila res =${res.response.statusCode}');
+
+      print(
+          "------------------------------------ Get Party Zila ----------------------------");
+      print("id  :$id");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         ZilaModel data = ZilaModel.fromJson(res.data);
         emit(PartyZilaSelectedState(data));
@@ -71,7 +84,13 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       emit(LoadingState());
       final res = await api.getDataUnits(
           'Bearer ${StorageService.userAuthToken}', data);
-      print('Part Zila res =${res.response.statusCode}');
+      print(
+          "------------------------------------ Get Unit Data ----------------------------");
+      print("Data  :$data");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DataUnitModel data = DataUnitModel.fromJson(res.data);
         emit(UnitDataFetchedState(data));

@@ -4,8 +4,8 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cu
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/api/sangathan_details_api.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/sangathan_data_model.dart';
 
-import '../network/model/alloted_location_model.dart';
 import '../../../../../../storage/user_storage_service.dart';
+import '../network/model/alloted_location_model.dart';
 
 class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   SangathanDetailsCubit() : super(InitialStateState());
@@ -17,6 +17,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   int? countryStateId;
   int? dataLevelId;
   int? locationId;
+
   Future getSangathanDataLevel() async {
     try {
       emit(LoadingState());
@@ -25,9 +26,14 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
           'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D)',
           true,
           1);
-      print('sangathan Data =${res.response.statusCode}');
+      print(
+          "------------------------------------ Get Data Level ----------------------------");
+
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        print(res.response.data);
         SangthanDataModel data = SangthanDataModel.fromJson(res.data);
         emit(DataLevelFetchedState(data));
       } else {
@@ -44,7 +50,13 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
       emit(LoadingState());
       final respose =
           await api.allottedlocations('Bearer ${StorageService.userAuthToken}');
-      print('Alloted locations res=${respose.response.statusCode}');
+      print(
+          "------------------------------------ Get Allotted location ----------------------------");
+
+      print("Status code : ${respose.response.statusCode}");
+      print("Response :${respose.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
       if (respose.response.statusCode == 200) {
         AllotedLocationModel data = AllotedLocationModel.fromJson(respose.data);
         emit(LocationFetchedState(data));

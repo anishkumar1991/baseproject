@@ -24,12 +24,12 @@ class SizeConfig {
           _mediaQueryData!.padding.top + _mediaQueryData!.padding.bottom;
       safeBlockHorizontal = screenWidth! - _safeAreaHorizontal! / 100;
       safeBlockVertical = screenHeight! - _safeAreaVertical! / 100;
-      print('screenWidth $screenWidth');
+      /* print('screenWidth $screenWidth');
       print('screenHeight $screenHeight');
       print('blockSizeHorizontal $blockSizeHorizontal');
       print('blockSizeVertical $blockSizeVertical');
       print('safeBlockHorizontal $safeBlockHorizontal');
-      print('safeBlockVertical $safeBlockVertical');
+      print('safeBlockVertical $safeBlockVertical');*/
 
       // is portrait
     } else {

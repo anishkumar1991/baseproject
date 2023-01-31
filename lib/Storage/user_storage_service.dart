@@ -9,6 +9,7 @@ class StorageService {
   static String? userAuthToken;
   static GetStorage storage = GetStorage();
   static UserDetails? userData;
+
   static setUserIdentificationToken(String token) async {
     await storage.write(userInfoKey, token);
   }
@@ -49,5 +50,9 @@ class StorageService {
     Map<String, dynamic> data = storage.read(userDataKey) ?? {};
     userData = UserDetails.fromJson(data);
     return userData;
+  }
+
+  static cleanAllLocalStorage() {
+    storage.erase();
   }
 }

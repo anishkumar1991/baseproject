@@ -33,7 +33,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   @override
   void initState() {
     print('country_state_id=${StorageService.userData?.user?.countryStateId}');
-    callApi();
+
     context.read<SangathanDetailsCubit>().getSangathanDataLevel();
     super.initState();
   }
@@ -223,6 +223,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           if (state is DataLevelFetchedState) {
             if (state.data.data != null) {
               cubit.sangathanDataList = state.data.data!;
+              callApi();
             }
           } else if (state is LoadingState) {
             return Shimmer.fromColors(

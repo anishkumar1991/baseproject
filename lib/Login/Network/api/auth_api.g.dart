@@ -71,10 +71,14 @@ class _AuthApi implements AuthApi {
   }
 
   @override
-  Future<HttpResponse<dynamic>> submitOtp(data) async {
+  Future<HttpResponse<dynamic>> submitOtp(
+    data,
+    agent,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'User-Agent': agent};
+    _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(data);
     final _result =

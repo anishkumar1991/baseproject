@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sangathan/Values/string.dart';
+
 part 'auth_api.g.dart';
 
 @RestApi(baseUrl: AppStrings.baseUrl)
 abstract class AuthApi {
   factory AuthApi(Dio dio) = _AuthApi;
+
   @POST('/zila/api/login')
   Future<HttpResponse> loginUser(@Body() Map<String, dynamic> data);
 
@@ -13,9 +15,11 @@ abstract class AuthApi {
   Future<HttpResponse> resendOtp(@Body() Map<String, dynamic> data);
 
   @POST('/zila/api/submit_otp')
-  Future<HttpResponse> submitOtp(@Body() Map<String, dynamic> data);
+  Future<HttpResponse> submitOtp(
+    @Body() Map<String, dynamic> data,
+    @Header('User-Agent') String agent,
+  );
 
   @GET('/zila/api/logout')
   Future<HttpResponse> logOut(@Header('Authorization') String token);
-  
 }
