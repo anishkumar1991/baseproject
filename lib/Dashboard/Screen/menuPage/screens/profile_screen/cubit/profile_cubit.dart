@@ -19,15 +19,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   final api = UserDetailApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
-  emitState(){
+  emitState() {
     return emit(ProfileInitial());
   }
 
   Future getUserDetails() async {
-    try{
+    try {
       emit(ProfileInitial());
-     StorageService.getUserAuthToken();
-      var res = await api.getDataLevel('Bearer ${StorageService.userAuthToken}');
+      StorageService.getUserAuthToken();
+      var res =
+          await api.getDataLevel('Bearer ${StorageService.userAuthToken}');
       print('sangathan Data =${res.response.statusCode}');
       print('sangathan Data =${StorageService.userAuthToken}');
       if (res.response.statusCode == 200) {
@@ -38,7 +39,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         print('error=${res.data['message']}');
         emit(ErrorState(res.data['message']));
       }
-    }catch(e){
+    } catch (e) {
       emit(ErrorState('Something Went Wrong'));
     }
   }

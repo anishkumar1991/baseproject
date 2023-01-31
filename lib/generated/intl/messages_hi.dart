@@ -67,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dialogSubtitle": MessageLookupByLibrary.simpleMessage(
             "यह आपकी प्रोफ़ाइल से पेशा हटा देगा।"),
         "dialogSubtitle1": MessageLookupByLibrary.simpleMessage(
+            "यह आपकी प्रोफ़ाइल से शिक्षा विवरण हटा देगा।"),
+        "dialogSubtitle2": MessageLookupByLibrary.simpleMessage(
             "यह आपकी प्रोफ़ाइल से पता विवरण हटा देगा।"),
         "dialogTitle":
             MessageLookupByLibrary.simpleMessage("प्रोफ़ाइल से हटाएं?"),
@@ -105,6 +107,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("नाम"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
         "newEntry": MessageLookupByLibrary.simpleMessage("नवीन एंट्री"),
+        "noDataAvailable":
+            MessageLookupByLibrary.simpleMessage("कोई डेटा उपलब्ध नहीं है"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
         "noThanks": MessageLookupByLibrary.simpleMessage("जी नहीं, धन्यवाद"),
@@ -116,7 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
-        "position": MessageLookupByLibrary.simpleMessage("पोजीशन"),
+        "position": MessageLookupByLibrary.simpleMessage("पद"),
         "post": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),

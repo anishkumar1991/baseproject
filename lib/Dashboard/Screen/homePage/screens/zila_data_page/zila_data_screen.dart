@@ -287,109 +287,119 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
           if (state is DataFetchingLoadingState) {
             return shimmerWidget();
           }
-          return ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: cubit.dataList.length,
-              separatorBuilder: ((context, index) => spaceHeightWidget(18)),
-              itemBuilder: ((context, index) {
-                final data = cubit.dataList[index];
-                return Slidable(
-                  key: UniqueKey(),
-                  endActionPane:
-                      ActionPane(motion: const ScrollMotion(), children: [
-                    SlidableAction(
-                      padding: EdgeInsets.zero,
-                      onPressed: ((context) {}),
-                      backgroundColor: AppColor.greenshade100,
-                      foregroundColor: AppColor.greenshade900,
-                      icon: Icons.verified_user,
-                      label: S.of(context).verified,
-                    ),
-                    SlidableAction(
-                      padding: EdgeInsets.zero,
-                      onPressed: ((context) {}),
-                      backgroundColor: AppColor.white,
-                      icon: Icons.edit,
-                      label: S.of(context).edit,
-                    ),
-                    SlidableAction(
-                      padding: EdgeInsets.zero,
-                      onPressed: ((context) {}),
-                      backgroundColor: AppColor.redShade100,
-                      foregroundColor: AppColor.redShade600,
-                      icon: Icons.delete_outline,
-                      label: S.of(context).delete,
-                    ),
-                  ]),
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(80),
-                          child: Image.network(
-                            data.photo ?? '',
-                            height: 56,
-                            width: 56,
-                            fit: BoxFit.cover,
-                            errorBuilder: ((context, error, stackTrace) =>
-                                Container(
-                                  height: 56,
-                                  width: 56,
-                                  color: AppColor.navyBlue,
-                                  child: const Icon(
-                                    Icons.person,
-                                    color: AppColor.white,
-                                    size: 28,
-                                  ),
-                                )),
-                          )),
-                      spaceWidthWidget(16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+          return cubit.dataList.isEmpty
+              ? Center(
+                  heightFactor: MediaQuery.of(context).size.height * 0.02,
+                  child: Text(
+                    S.of(context).noDataAvailable,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: AppColor.black),
+                  ))
+              : ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: cubit.dataList.length,
+                  separatorBuilder: ((context, index) => spaceHeightWidget(18)),
+                  itemBuilder: ((context, index) {
+                    final data = cubit.dataList[index];
+                    return Slidable(
+                      key: UniqueKey(),
+                      endActionPane:
+                          ActionPane(motion: const ScrollMotion(), children: [
+                        SlidableAction(
+                          padding: EdgeInsets.zero,
+                          onPressed: ((context) {}),
+                          backgroundColor: AppColor.greenshade100,
+                          foregroundColor: AppColor.greenshade900,
+                          icon: Icons.verified_user,
+                          label: S.of(context).verified,
+                        ),
+                        SlidableAction(
+                          padding: EdgeInsets.zero,
+                          onPressed: ((context) {}),
+                          backgroundColor: AppColor.white,
+                          icon: Icons.edit,
+                          label: S.of(context).edit,
+                        ),
+                        SlidableAction(
+                          padding: EdgeInsets.zero,
+                          onPressed: ((context) {}),
+                          backgroundColor: AppColor.redShade100,
+                          foregroundColor: AppColor.redShade600,
+                          icon: Icons.delete_outline,
+                          label: S.of(context).delete,
+                        ),
+                      ]),
+                      child: Row(
                         children: [
-                          Row(
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(80),
+                              child: Image.network(
+                                data.photo ?? '',
+                                height: 56,
+                                width: 56,
+                                fit: BoxFit.cover,
+                                errorBuilder: ((context, error, stackTrace) =>
+                                    Container(
+                                      height: 56,
+                                      width: 56,
+                                      color: AppColor.navyBlue,
+                                      child: const Icon(
+                                        Icons.person,
+                                        color: AppColor.white,
+                                        size: 28,
+                                      ),
+                                    )),
+                              )),
+                          spaceWidthWidget(16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AutoSizeText(
-                                data.name ?? '',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
+                              Row(
+                                children: [
+                                  AutoSizeText(
+                                    data.name ?? '',
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColor.textBlackColor),
+                                  ),
+                                  spaceWidthWidget(5),
+                                  Image.asset(
+                                    AppIcons.verifyIcon,
+                                    height: 10,
+                                  )
+                                ],
+                              ),
+                              Text(
+                                data.designationName ?? '',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10,
+                                    color: AppColor.greyColor),
+                              ),
+                              Text(
+                                "+91- ${data.phone ?? ''}",
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
-                                    color: AppColor.textBlackColor),
+                                    fontSize: 12,
+                                    color: AppColor.greyColor),
                               ),
-                              spaceWidthWidget(5),
-                              Image.asset(
-                                AppIcons.verifyIcon,
-                                height: 10,
-                              )
                             ],
                           ),
-                          Text(
-                            data.designationName ?? '',
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10,
-                                color: AppColor.greyColor),
+                          const Spacer(),
+                          Image.asset(
+                            AppIcons.callIcon,
+                            height: 20,
                           ),
-                          Text(
-                            "+91- ${data.phone ?? ''}",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: AppColor.greyColor),
-                          ),
+                          spaceWidthWidget(4)
                         ],
                       ),
-                      const Spacer(),
-                      Image.asset(
-                        AppIcons.callIcon,
-                        height: 20,
-                      ),
-                      spaceWidthWidget(4)
-                    ],
-                  ),
-                );
-              }));
+                    );
+                  }));
         },
       ),
     );

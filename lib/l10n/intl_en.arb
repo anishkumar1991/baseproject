@@ -97,12 +97,11 @@
   "yearFrom": "Years (since when)",
   "yearTo": "Years (how long)",
   "clgName": "Name of the Institute or College",
-  "position": "Position",
   "organization": "Name of organization",
   "dialogTitle": "Delete from profile?",
   "dialogSubtitle": "This will delete profession from your profile.",
   "dialogSubtitle1": "This will delete education details from your profile.",
   "dialogSubtitle2": "This will delete address details from your profile.",
-  "noThanks": "No thanks"
-
+  "noThanks": "No thanks",
+  "noDataAvailable":"No Data Available"
 }

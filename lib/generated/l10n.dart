@@ -400,10 +400,10 @@ class S {
     );
   }
 
-  /// `Position`
+  /// `position`
   String get position {
     return Intl.message(
-      'Position',
+      'position',
       name: 'position',
       desc: '',
       args: [],
@@ -1075,6 +1075,16 @@ class S {
     return Intl.message(
       'No thanks',
       name: 'noThanks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Data Available`
+  String get noDataAvailable {
+    return Intl.message(
+      'No Data Available',
+      name: 'noDataAvailable',
       desc: '',
       args: [],
     );

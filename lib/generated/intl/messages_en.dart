@@ -103,6 +103,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
         "newEntry": MessageLookupByLibrary.simpleMessage("New Entry"),
+        "noDataAvailable":
+            MessageLookupByLibrary.simpleMessage("No Data Available"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("No organizations available"),
         "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
@@ -115,7 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("Photo ( max 2 )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("Please choose location"),
-        "position": MessageLookupByLibrary.simpleMessage("Position"),
+        "position": MessageLookupByLibrary.simpleMessage("position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
