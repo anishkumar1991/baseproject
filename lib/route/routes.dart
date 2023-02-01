@@ -160,21 +160,15 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             Map<String, dynamic>? map = {};
-            String? flatNumber = "";
-            String? area = "";
-            String? pinCode = "";
-            String? town = "";
-            String? state = "";
+            int? index;
+            List<Addresses>? addresses;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
-              flatNumber = map['flatNumber'];
-              area = map['area'];
-              pinCode = map['pinCode'];
-              town = map['town'];
-              state = map['state'];
+              index = map['index'];
+              addresses = map['addresses'];
             }
             return EditAddressScreen(
-              area: area,flatNumber: flatNumber,pinCode: pinCode,state: state,town: town
+              index: index,addresses: addresses,
             );
           },
         );
@@ -191,19 +185,15 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             Map<String, dynamic>? map = {};
-            String? level = "";
-            String? startYear = "";
-            String? endYear = "";
-            String? collage = "";
+            int? index;
+            List<EducationalDetails>? educationalDetails;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
-              level = map['level'];
-              startYear = map['startYear'];
-              endYear = map['endYear'];
-              collage = map['collage'];
+              index = map['index'];
+              educationalDetails = map['educationalDetails'];
             }
             return EditEducationScreen(
-              collage: collage,endYear: endYear,level: level,startYear: startYear,
+              index: index,educationalDetails: educationalDetails,
             );
           },
         );
@@ -212,19 +202,15 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             Map<String, dynamic>? map = {};
-            String? organization = "";
-            String? position = "";
-            String? startYear = "";
-            String? endYear = "";
+            int? index;
+            List<ProfessionalDetails>? professionalDetails;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
-              organization = map['organization'];
-              startYear = map['startYear'];
-              endYear = map['endYear'];
-              position = map['position'];
+              index = map['index'];
+              professionalDetails = map['professionalDetails'];
             }
             return EditBusinessScreen(
-              endYear: endYear,organization: organization,startYear: startYear,position: position,
+              index: index,professionalDetails: professionalDetails,
             );
           },
         );

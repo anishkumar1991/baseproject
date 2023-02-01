@@ -10,13 +10,12 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
+import '../profile_screen/network/model/user_detail_model.dart';
 
 class EditBusinessScreen extends StatefulWidget {
-  String? organization = "";
-  String? position = "";
-  String? startYear = "";
-  String? endYear = "";
-   EditBusinessScreen({Key? key,this.endYear,this.startYear,this.position,this.organization}) : super(key: key);
+  int? index;
+  List<ProfessionalDetails>? professionalDetails;
+   EditBusinessScreen({Key? key,this.index,this.professionalDetails}) : super(key: key);
 
   @override
   State<EditBusinessScreen> createState() => _EditBusinessScreenState();
@@ -31,10 +30,10 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
   }
 
   fillData({final cubit}){
-    context.read<EditBusinessCubit>().positionCtr.text = widget.position ?? '';
-    context.read<EditBusinessCubit>().startYearCtr.text = widget.startYear ?? '';
-    context.read<EditBusinessCubit>().endYearCtr.text = widget.endYear ?? '';
-    context.read<EditBusinessCubit>().businessNameCtr.text = widget.organization ?? '';
+    context.read<EditBusinessCubit>().positionCtr.text = widget.professionalDetails?[widget.index!].position ?? '';
+    context.read<EditBusinessCubit>().startYearCtr.text = widget.professionalDetails?[widget.index!].startYear ?? '';
+    context.read<EditBusinessCubit>().endYearCtr.text = widget.professionalDetails?[widget.index!].endYear ?? '';
+    context.read<EditBusinessCubit>().businessNameCtr.text = widget.professionalDetails?[widget.index!].orgName ?? '';
   }
   @override
   Widget build(BuildContext context) {

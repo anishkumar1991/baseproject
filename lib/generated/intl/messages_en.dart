@@ -41,10 +41,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "addOptional":
             MessageLookupByLibrary.simpleMessage("Add Tax (optional)"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
         "business": MessageLookupByLibrary.simpleMessage("Business"),
         "caste": MessageLookupByLibrary.simpleMessage("Caste"),
+        "category": MessageLookupByLibrary.simpleMessage("Category"),
         "clgName": MessageLookupByLibrary.simpleMessage(
             "Name of the Institute or College"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
@@ -131,6 +133,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sangathan Reports"),
         "save": MessageLookupByLibrary.simpleMessage("Save it"),
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
+        "seeLess": MessageLookupByLibrary.simpleMessage("See less"),
         "seeMore": MessageLookupByLibrary.simpleMessage("See more"),
         "selectLoksabha":
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
@@ -160,6 +163,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("View Tours & Events"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("Years (since when)"),
-        "yearTo": MessageLookupByLibrary.simpleMessage("Years (how long)")
+        "yearTo": MessageLookupByLibrary.simpleMessage("Years (how long)"),
+        "years": MessageLookupByLibrary.simpleMessage("Years")
       };
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/edit_education/widgets/header_widget_edit_education_screen.dart';
 
+import '../../../../../AddEntry/network/model/category_model.dart';
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/icons.dart';
 import '../../../../../Values/space_height_widget.dart';
@@ -9,15 +11,15 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
+import '../profile_screen/cubit/profile_cubit.dart';
+import '../profile_screen/network/model/user_detail_model.dart';
 import 'cubit/edit_education__cubit.dart';
 
 class EditEducationScreen extends StatefulWidget {
 
-  String? level = "";
-  String? startYear = "";
-  String? endYear = "";
-  String? collage = "";
-   EditEducationScreen({Key? key,this.endYear,this.startYear,this.collage,this.level}) : super(key: key);
+  int? index;
+  List<EducationalDetails>? educationalDetails;
+   EditEducationScreen({Key? key,this.index,this.educationalDetails}) : super(key: key);
 
   @override
   State<EditEducationScreen> createState() => _EditEducationScreenState();
@@ -32,10 +34,10 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
   }
 
   fillData({final cubit}){
-    context.read<EditEducationCubit>().levelCtr.text = widget.level ?? '';
-    context.read<EditEducationCubit>().startYearCtr.text = widget.startYear ?? '';
-    context.read<EditEducationCubit>().endYearCtr.text = widget.endYear ?? '';
-    context.read<EditEducationCubit>().collageCtr.text = widget.collage ?? '';
+    context.read<EditEducationCubit>().levelCtr.text = widget.educationalDetails?[widget.index!].level ?? '';
+    context.read<EditEducationCubit>().startYearCtr.text = widget.educationalDetails?[widget.index!].startYear ?? '';
+    context.read<EditEducationCubit>().endYearCtr.text = widget.educationalDetails?[widget.index!].endYear ?? '';
+    context.read<EditEducationCubit>().collageCtr.text = widget.educationalDetails?[widget.index!].institute ?? '';
   }
   @override
   Widget build(BuildContext context) {
@@ -61,11 +63,15 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                       return TextFieldWidget(
                           controller: cubit.levelCtr,
                           title: '',
+                          readOnly: true,
                           labelText: S.of(context).level,
                           onChanged: (value) {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.emailAddress,
+                          onTap: (){
+                            _modelBottomSheet(controller: cubit.levelCtr,text: '',context: context,dropDownList: dropDownValue?.data?.personEducation);
+                          },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: AppColor.black,
@@ -78,14 +84,20 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                       return TextFieldWidget(
                           controller: cubit.startYearCtr,
                           title: '',
+                          readOnly: true,
                           labelText: S.of(context).yearFrom,
                           onChanged: (value) {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.number,
-                          suffixWidget: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: AppColor.black,
+                          suffixWidget: InkWell(
+                            onTap: (){
+                              cubit.startToEndDate(context);
+                            },
+                            child: const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: AppColor.black,
+                            ),
                           ));
                     },
                   ),
@@ -95,6 +107,7 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                       return TextFieldWidget(
                           controller: cubit.endYearCtr,
                           title: '',
+                          readOnly: true,
                           labelText: S.of(context).yearTo,
                           onChanged: (value) {
                             cubit.emitState();
@@ -205,4 +218,85 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
       },
     );
   }
+
+  void _modelBottomSheet(
+      {required BuildContext context, List<DropdownData>? dropDownList,required String text,required TextEditingController controller}) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(28.0),
+        ),
+        builder: (builder) {
+          List<DropdownData>? list = dropDownList;
+          return Container(
+            color: Colors.transparent,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(28.0),
+                        topRight: Radius.circular(28.0))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      spaceHeightWidget(10),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          height: 5,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: AppColor.borderColor),
+                        ),
+                      ),
+                      spaceHeightWidget(30),
+                      Text(
+                        text ?? '',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            color: AppColor.borderColor, fontSize: 16),
+                      ),
+                      spaceHeightWidget(30),
+                      Expanded(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: list?.length,
+                            itemBuilder: (context,index){
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: (){
+                                      controller.text = list?[index].name ?? '';
+                                      Navigator.pop(context);
+                                    },
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Text(
+                                        list?[index].name ?? '',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.poppins(
+                                            color: AppColor.black, fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+                                  spaceHeightWidget(15),
+                                  const Divider(
+                                    color: AppColor.borderColor,
+                                  ),
+                                  spaceHeightWidget(15),
+                                ],
+                              );
+                            }),
+                      )
+                    ],
+                  ),
+                )),
+          );
+        });
+  }
+
 }

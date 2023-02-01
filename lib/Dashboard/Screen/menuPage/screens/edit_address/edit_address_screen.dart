@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/edit_address/widgets/header_widget_edit_address_screen.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
@@ -10,17 +11,20 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
+import '../personal_info/cubit/personal_info_cubit.dart';
+import '../profile_screen/cubit/profile_cubit.dart';
+import '../profile_screen/network/model/user_detail_model.dart';
 import 'cubit/edit_address_cubit.dart';
 
 class EditAddressScreen extends StatefulWidget {
+  int? index;
+  List<Addresses>? addresses;
 
-  String? flatNumber = "";
-  String? area = "";
-  String? pinCode = "";
-  String? town = "";
-  String? state = "";
-
-   EditAddressScreen({Key? key,this.pinCode,this.state,this.area,this.flatNumber,this.town}) : super(key: key);
+  EditAddressScreen(
+      {Key? key,
+      this.addresses,
+      this.index})
+      : super(key: key);
 
   @override
   State<EditAddressScreen> createState() => _EditAddressScreenState();
@@ -28,18 +32,20 @@ class EditAddressScreen extends StatefulWidget {
 
 class _EditAddressScreenState extends State<EditAddressScreen> {
 
+  Addresses address = Addresses();
+
   @override
-  void initState(){
+  void initState() {
     fillData();
     super.initState();
   }
 
-  fillData({final cubit}){
-    context.read<EditAddressCubit>().flatDesCtr.text = widget.flatNumber ?? '';
-    context.read<EditAddressCubit>().areaDesCtr.text = widget.area ?? '';
-    context.read<EditAddressCubit>().pinCodeCtr.text = widget.pinCode ?? '';
-    context.read<EditAddressCubit>().townCtr.text = widget.town ?? '';
-    context.read<EditAddressCubit>().stateCtr.text = widget.state ?? '';
+  fillData({final cubit}) {
+    context.read<EditAddressCubit>().flatDesCtr.text = widget.addresses?[widget.index!].houseNumber ?? '';
+    context.read<EditAddressCubit>().areaDesCtr.text = widget.addresses?[widget.index!].area ?? '';
+    context.read<EditAddressCubit>().pinCodeCtr.text = widget.addresses?[widget.index!].pinCode ?? '';
+    context.read<EditAddressCubit>().townCtr.text = widget.addresses?[widget.index!].city ?? '';
+    context.read<EditAddressCubit>().stateCtr.text = widget.addresses?[widget.index!].state ?? '';
   }
 
   @override
@@ -252,16 +258,38 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     ),
                   ),
                   spaceHeightWidget(5),
-                  CommonButton(
-                    onTap: () {
-                      Navigator.pop(context);
+                  BlocListener<PersonalInfoCubit, PersonalInfoState>(
+                    listener: (context, state) {
+                      if (state is PersonalInfoErrorState) {
+                        EasyLoading.dismiss();
+                        EasyLoading.showError(state.error);
+                      } else if (state is LoadingState) {
+                        EasyLoading.show();
+                      } else if (state is UpdateDataState) {
+                        context.read<ProfileCubit>().getUserDetails();
+                        Navigator.pop(context);
+                        EasyLoading.dismiss();
+                      }
                     },
-                    title: S.of(context).save,
-                    width: 150,
-                    height: 38,
-                    borderRadius: 25,
-                    style: textStyleWithPoppin(
-                        color: AppColor.white, fontSize: 16),
+                    child: CommonButton(
+                      onTap: () {
+                        filledList(cubit: cubit);
+                        context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+                          "addresses" : widget.addresses
+                          // "name":cubit.nameCtr.text,
+                          // "username":cubit.userNameCtr.text,
+                          // "phone_number": cubit.mobileNumberCtr.text,
+                          // "dob": cubit.boiCtr.text,
+                          // "gender": cubit.value.name
+                        });
+                      },
+                      title: S.of(context).save,
+                      width: 150,
+                      height: 38,
+                      borderRadius: 25,
+                      style: textStyleWithPoppin(
+                          color: AppColor.white, fontSize: 16),
+                    ),
                   ),
                   spaceHeightWidget(15),
                 ],
@@ -271,6 +299,15 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         ),
       ),
     );
+  }
+
+  filledList({required EditAddressCubit cubit}){
+    address.state = cubit.stateCtr.text;
+    address.houseNumber = cubit.flatDesCtr.text;
+    address.area = cubit.areaDesCtr.text;
+    address.pinCode = cubit.pinCodeCtr.text;
+    address.city = cubit.townCtr.text;
+    widget.addresses?[widget.index!] = address;
   }
 
   buildBottomContainer(

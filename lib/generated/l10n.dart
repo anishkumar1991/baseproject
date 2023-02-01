@@ -780,6 +780,16 @@ class S {
     );
   }
 
+  /// `See less`
+  String get seeLess {
+    return Intl.message(
+      'See less',
+      name: 'seeLess',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Full Name`
   String get fullName {
     return Intl.message(
@@ -1085,6 +1095,36 @@ class S {
     return Intl.message(
       'No Data Available',
       name: 'noDataAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Age`
+  String get age {
+    return Intl.message(
+      'Age',
+      name: 'age',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Years`
+  String get years {
+    return Intl.message(
+      'Years',
+      name: 'years',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Category`
+  String get category {
+    return Intl.message(
+      'Category',
+      name: 'category',
       desc: '',
       args: [],
     );

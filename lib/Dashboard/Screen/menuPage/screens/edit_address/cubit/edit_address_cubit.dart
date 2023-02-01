@@ -15,5 +15,4 @@ class EditAddressCubit extends Cubit<EditAddressState> {
   emitState(){
     emit(EditAddressInitial());
   }
-
 }

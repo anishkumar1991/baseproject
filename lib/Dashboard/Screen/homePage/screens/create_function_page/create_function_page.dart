@@ -138,7 +138,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                         const Icon(Icons.info_outline_rounded,
                                             color: AppColor.blue,size: 22,),
                                         spaceWidthWidget(8),
-                                        Icon(Icons
+                                        const Icon(Icons
                                             .keyboard_arrow_down_rounded)
                                       ],
                                     ),

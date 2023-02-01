@@ -41,10 +41,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "addOptional":
             MessageLookupByLibrary.simpleMessage("ऐड कर ( वैकल्पिक  )"),
         "address": MessageLookupByLibrary.simpleMessage("एड्रेस"),
+        "age": MessageLookupByLibrary.simpleMessage("उम्र"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
         "business": MessageLookupByLibrary.simpleMessage("व्यवसाय"),
         "caste": MessageLookupByLibrary.simpleMessage("जाती"),
+        "category": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "clgName":
             MessageLookupByLibrary.simpleMessage("संस्थान या कॉलेज का नाम"),
         "click": MessageLookupByLibrary.simpleMessage("क्लिक करें"),
@@ -134,6 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("संगठन रिपोर्ट"),
         "save": MessageLookupByLibrary.simpleMessage("सेव करे"),
         "seeAll": MessageLookupByLibrary.simpleMessage("सभी देखें"),
+        "seeLess": MessageLookupByLibrary.simpleMessage("कम देखें"),
         "seeMore": MessageLookupByLibrary.simpleMessage("जयादा देखे"),
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
         "selectPravasLevel":
@@ -164,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("प्रवास और  कार्याक्रम देखे"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("वर्ष ( कब से )"),
-        "yearTo": MessageLookupByLibrary.simpleMessage("वर्ष ( कब तक )")
+        "yearTo": MessageLookupByLibrary.simpleMessage("वर्ष ( कब तक )"),
+        "years": MessageLookupByLibrary.simpleMessage("वर्ष")
       };
 }

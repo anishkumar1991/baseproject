@@ -73,6 +73,7 @@
   "business": "Business",
   "home": "Home",
   "seeMore": "See more",
+  "seeLess": "See less",
   "fullName": "Full Name",
   "userName": "Username",
   "mobileNumber": "Mobile no.",
@@ -103,5 +104,9 @@
   "dialogSubtitle1": "This will delete education details from your profile.",
   "dialogSubtitle2": "This will delete address details from your profile.",
   "noThanks": "No thanks",
-  "noDataAvailable":"No Data Available"
+  "noDataAvailable":"No Data Available",
+  "age": "Age",
+  "years": "Years",
+  "religion": "Religion",
+  "category": "Category"
 }

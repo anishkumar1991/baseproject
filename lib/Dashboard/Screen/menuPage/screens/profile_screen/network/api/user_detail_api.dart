@@ -11,4 +11,7 @@ abstract class UserDetailApi {
   @GET('/zila/api/data/user_profile_details')
   Future<HttpResponse> getDataLevel(
       @Header('Authorization') String token);
+
+  @GET('/zila/api/data/independent_dropdowns')
+  Future<HttpResponse> getDropdownValues(@Header('Authorization') String token);
 }

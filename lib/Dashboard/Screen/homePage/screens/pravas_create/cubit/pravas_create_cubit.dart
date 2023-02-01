@@ -18,7 +18,7 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return const RangePickerDialog();
+        return  const RangePickerDialog();
       },
     ).then((value) =>  emit(StartDateOfTour(startDate)));
   }

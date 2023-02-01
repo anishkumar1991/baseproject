@@ -6,6 +6,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../cubit/pravas_create_cubit.dart';
 
 class RangePickerDialog extends StatelessWidget {
+
   const RangePickerDialog({Key? key}) : super(key: key);
 
   @override
@@ -22,6 +23,7 @@ class RangePickerDialog extends StatelessWidget {
             child: SfDateRangePicker(
               showActionButtons: true,
               selectionMode: DateRangePickerSelectionMode.range,
+              view: DateRangePickerView.year,
               onSubmit: (value) {
                 cubit.temp = value as PickerDateRange;
                 cubit.startDate = ddMMMYYYYfromDateTime(cubit.temp?.startDate ?? DateTime.now());

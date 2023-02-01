@@ -1,9 +1,14 @@
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+import '../../../../../../Storage/user_storage_service.dart';
+import '../../profile_screen/network/model/user_detail_model.dart';
+import '../network/api/update_personal_details.dart';
 
 part 'personal_info_state.dart';
 
@@ -17,7 +22,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   String date = 'दिनांक';
   DateTime dateTime = DateTime.now();
   bool ischecked = false;
+  bool isLoading = false;
   Gender value = Gender.male;
+  UserDetailModel? updateData;
   final TextEditingController nameCtr = TextEditingController();
   final TextEditingController userNameCtr = TextEditingController();
   final TextEditingController mobileNumberCtr = TextEditingController();
@@ -26,9 +33,36 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final TextEditingController statusCtr = TextEditingController();
   final TextEditingController castCtr = TextEditingController();
 
+  final api = UpdatePersonalDetailsApi(Dio(BaseOptions(
+      contentType: 'application/json', validateStatus: ((status) => true))));
+
+
 
   emitState(){
     emit(PersonalInfoInitial());
+  }
+
+   updatePersonalDetails({required Map<String, dynamic> data}) async {
+     emit(LoadingState());
+     print("----------------------------");
+    try {
+      StorageService.getUserAuthToken();
+      var res =
+      await api.updatePersonalDetails('Bearer ${StorageService.userAuthToken}',data);
+      print('sangathan Data =${res.response.statusCode}');
+      print('sangathan Data =${StorageService.userAuthToken}');
+      if (res.response.statusCode == 200) {
+        print(res.response.data);
+        UserDetailModel updateData = UserDetailModel.fromJson(res.response.data);
+        emit(UpdateDataState(updateData));
+      } else {
+        print('error=${res.data['message']}');
+        emit(PersonalInfoErrorState(res.data['message']));
+      }
+    } catch (e) {
+      print(e);
+      emit(PersonalInfoErrorState('Something Went Wrong'));
+    }
   }
 
 
@@ -53,7 +87,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   }
 
   static String ddMMMYYYYfromDateTime(DateTime date) {
-    return DateFormat('dd-MMM-yyyy').format(date);
+    return DateFormat('yyyy-MM-dd').format(date);
   }
 
   Future<void> selectImage() async {

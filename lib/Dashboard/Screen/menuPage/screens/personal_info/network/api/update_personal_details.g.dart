@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_detail_api.dart';
+part of 'update_personal_details.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'user_detail_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _UserDetailApi implements UserDetailApi {
-  _UserDetailApi(
+class _UpdatePersonalDetailsApi implements UpdatePersonalDetailsApi {
+  _UpdatePersonalDetailsApi(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,46 +21,25 @@ class _UserDetailApi implements UserDetailApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> getDataLevel(token) async {
+  Future<HttpResponse<dynamic>> updatePersonalDetails(
+    token,
+    data,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
+    _data.addAll(data);
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/zila/api/data/user_profile_details',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> getDropdownValues(token) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result =
-        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/zila/api/data/independent_dropdowns',
+              '/zila/api/data/users_profile',
               queryParameters: queryParameters,
               data: _data,
             )

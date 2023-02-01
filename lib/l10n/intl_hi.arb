@@ -73,6 +73,7 @@
   "business": "व्यवसाय",
   "home" : "होम",
   "seeMore": "जयादा देखे",
+  "seeLess": "कम देखें",
   "fullName": "पूरा नाम",
   "userName": "यूजरनेम",
   "mobileNumber": "मोबाइल न.",
@@ -103,5 +104,9 @@
   "dialogSubtitle1": "यह आपकी प्रोफ़ाइल से शिक्षा विवरण हटा देगा।",
   "dialogSubtitle2": "यह आपकी प्रोफ़ाइल से पता विवरण हटा देगा।",
   "noThanks": "जी नहीं, धन्यवाद",
-  "noDataAvailable":"कोई डेटा उपलब्ध नहीं है"
+  "noDataAvailable":"कोई डेटा उपलब्ध नहीं है",
+  "age": "उम्र",
+  "years": "वर्ष",
+  "religion":"धर्म",
+  "category": "श्रेणी"
 }
