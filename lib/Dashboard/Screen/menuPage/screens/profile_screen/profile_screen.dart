@@ -23,6 +23,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
   }
@@ -35,7 +36,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = context.read<ProfileCubit>();
+    var profileCubit = context.read<ProfileCubit>();
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -47,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             }
           }),
           builder: (context, state) {
+            var cubit = context.read<ProfileCubit>();
             if (state is UserDetailFetchedState) {
               if (state.data.data != null) {
                 cubit.userDetails = state.data;
@@ -109,7 +111,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         /// profile business tile
                         ProfileBusinessScreen(cubit: cubit),
-
                         spaceHeightWidget(15),
                         customDivider(),
                         Padding(

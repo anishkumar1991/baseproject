@@ -125,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "program": MessageLookupByLibrary.simpleMessage("Program"),
         "religion": MessageLookupByLibrary.simpleMessage("Religion"),
+        "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("Resend OTP"),
         "resendOTPCodeTo":
             MessageLookupByLibrary.simpleMessage("Resend OTP code to "),
@@ -158,6 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "userName": MessageLookupByLibrary.simpleMessage("Username"),
         "verified": MessageLookupByLibrary.simpleMessage("Verified.."),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
+        "verifyWithOtp":
+            MessageLookupByLibrary.simpleMessage("Verify with OTP"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "viewProgram": MessageLookupByLibrary.simpleMessage("View Program"),
         "viewToursEvents":

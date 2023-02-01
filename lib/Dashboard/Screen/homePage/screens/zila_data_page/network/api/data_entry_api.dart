@@ -20,4 +20,7 @@ abstract class DataEntryApi {
   @POST('/zila/api/dashboard/get_filter_options')
   Future<HttpResponse> getDataUnits(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
+
+  @GET('/zila/api/data/deletion_reasons')
+  Future<HttpResponse> getDeleteReason(@Header('Authorization') String token);
 }

@@ -44,7 +44,11 @@ class SocialMediaNews extends StatelessWidget {
             ),
           ),
           spaceHeightWidget(18),
-          const SocialShareButtons(),
+           SocialShareButtons(
+             like: '1k',
+             share: '223',
+             whatsappShare: '300',
+           ),
           spaceHeightWidget(10),
         ],
       ),

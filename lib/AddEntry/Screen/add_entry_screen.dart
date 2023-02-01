@@ -16,6 +16,7 @@ import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
 
+import '../../generated/l10n.dart';
 import '../../route/route_path.dart';
 import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/custom_radio_button.dart';
@@ -555,7 +556,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Verify with OTP',
+                          S.of(context).verifyWithOtp,
                           style: GoogleFonts.quicksand(
                               color: AppColor.greyColor,
                               fontSize: 14,
@@ -585,7 +586,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                             TextButton(
                                 onPressed: cubit.count == 0 ? (() {}) : null,
                                 child: Text(
-                                  'Resend',
+                                  S.of(context).resend,
                                   style: GoogleFonts.quicksand(
                                       fontSize: 10,
                                       color: AppColor.navyBlue,
@@ -603,7 +604,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         ),
                         spaceHeightWidget(32),
                         CommonButton(
-                          title: 'Verify',
+                          title: S.of(context).verify,
                           height: 45,
                           margin: const EdgeInsets.symmetric(horizontal: 40),
                           style: GoogleFonts.quicksand(
@@ -618,7 +619,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
               );
             }));
       }),
-      title: 'Verify with OTP',
+      title: S.of(context).verifyWithOtp,
       style: GoogleFonts.quicksand(
           color: AppColor.white, fontSize: 16, fontWeight: FontWeight.w700),
     );

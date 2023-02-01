@@ -33,6 +33,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   @override
   void initState() {
     StorageService.getUserData();
+    print(StorageService.userData?.user?.countryStateId);
     context.read<SangathanDetailsCubit>().getSangathanDataLevel();
     super.initState();
   }

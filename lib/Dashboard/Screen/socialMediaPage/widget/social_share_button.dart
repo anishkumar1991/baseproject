@@ -5,10 +5,12 @@ import '../../../../Values/icons.dart';
 import '../../../../Values/space_width_widget.dart';
 
 class SocialShareButtons extends StatelessWidget {
-  const SocialShareButtons({
-    Key? key,
-  }) : super(key: key);
-
+   SocialShareButtons({
+    Key? key,required this.like,required this.share,required this.whatsappShare
+  }) : super(key: key,);
+  String like;
+  String share;
+  String whatsappShare;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,7 +24,7 @@ class SocialShareButtons extends StatelessWidget {
             ),
             spaceWidthWidget(8),
             Text(
-              '1k',
+              like,
               style: GoogleFonts.montserrat(
                   fontSize: 16, fontWeight: FontWeight.w500),
             ),
@@ -36,7 +38,7 @@ class SocialShareButtons extends StatelessWidget {
             ),
             spaceWidthWidget(8),
             Text(
-              '223',
+              share,
               style: GoogleFonts.montserrat(
                   fontSize: 16, fontWeight: FontWeight.w500),
             ),
@@ -50,7 +52,7 @@ class SocialShareButtons extends StatelessWidget {
             ),
             spaceWidthWidget(8),
             Text(
-              '223',
+              whatsappShare,
               style: GoogleFonts.montserrat(
                   fontSize: 16, fontWeight: FontWeight.w500),
             ),

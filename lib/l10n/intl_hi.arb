@@ -107,6 +107,8 @@
   "noDataAvailable":"कोई डेटा उपलब्ध नहीं है",
   "age": "उम्र",
   "years": "वर्ष",
-  "religion":"धर्म",
-  "category": "श्रेणी"
+  "category": "श्रेणी",
+  "verifyWithOtp":"ओटीपी से वेरिफाई करें",
+  "skip&AddNewEntry":"छोड़ें और नई प्रविष्टि जोड़ें",
+  "resend":"पुन: भेजें"
 }

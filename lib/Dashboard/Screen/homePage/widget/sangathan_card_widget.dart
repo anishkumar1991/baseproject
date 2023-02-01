@@ -5,6 +5,7 @@ import 'package:sangathan/Values/icons.dart';
 
 import '../../../../Values/size_config.dart';
 import '../../../../generated/l10n.dart';
+import '../../../../route/route_path.dart';
 
 class SngathanCardWidget extends StatelessWidget {
   const SngathanCardWidget({super.key});
@@ -41,7 +42,10 @@ class SngathanCardWidget extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24)),
                       backgroundColor: AppColor.buttonBackGroundColor),
-                  onPressed: (() {}),
+                  onPressed: (() {
+                    Navigator.pushNamed(
+                        context, RoutePath.sangathanDetailsScreen);
+                  }),
                   child: Text(
                     S.of(context).click,
                     style: GoogleFonts.poppins(

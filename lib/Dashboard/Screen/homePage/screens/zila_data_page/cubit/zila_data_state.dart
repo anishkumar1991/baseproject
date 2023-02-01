@@ -3,6 +3,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/netwo
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/zila_model.dart';
 
 import '../network/model/data_entry_model.dart';
+import '../network/model/delete_reason_model.dart';
 
 abstract class ZilaDataState extends Equatable {
   @override
@@ -38,3 +39,8 @@ class UnitDataFetchedState extends ZilaDataState {
 }
 
 class ChangeUnitData extends ZilaDataState {}
+
+class DeleteReasonFetchedState extends ZilaDataState {
+  final DeleteReasonModel deleteReason;
+  DeleteReasonFetchedState(this.deleteReason);
+}

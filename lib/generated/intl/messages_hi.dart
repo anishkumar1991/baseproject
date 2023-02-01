@@ -128,6 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
         "religion": MessageLookupByLibrary.simpleMessage("धर्म"),
+        "resend": MessageLookupByLibrary.simpleMessage("पुन: भेजें"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("ओटीपी पुनः भेजें"),
         "resendOTPCodeTo":
             MessageLookupByLibrary.simpleMessage(" में ओटीपी कोड दोबारा भेजें"),
@@ -162,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "verified":
             MessageLookupByLibrary.simpleMessage("सत्यापित किया जा रहा है..."),
         "verify": MessageLookupByLibrary.simpleMessage("सत्यापित करना"),
+        "verifyWithOtp":
+            MessageLookupByLibrary.simpleMessage("ओटीपी से वेरिफाई करें"),
         "view": MessageLookupByLibrary.simpleMessage("देखें"),
         "viewProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम देखें"),
         "viewToursEvents":

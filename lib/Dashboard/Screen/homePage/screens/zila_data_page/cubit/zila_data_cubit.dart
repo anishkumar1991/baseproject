@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/delete_reason_model.dart';
 
 import '../../../../../../storage/user_storage_service.dart';
 import '../Network/Api/data_entry_api.dart';
@@ -21,8 +22,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? subUnitId;
   List<SubUnits?> name = [];
 
-  final api = DataEntryApi(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
+  final api =
+      DataEntryApi(Dio(BaseOptions(validateStatus: ((status) => true))));
 
   void onChnageZila(PartyZilaData? value) {
     emit(LoadingState());
@@ -119,5 +120,29 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     subUnitId = id;
     print('subUnitId=$subUnitId');
     emit(ChangeUnitData());
+  }
+
+  Future getDeleteReason() async {
+    try {
+      emit(DataFetchingLoadingState());
+      final res =
+          await api.getDeleteReason('Bearer ${StorageService.userAuthToken}');
+      print(
+          "------------------------------------ Get Delete Reason ----------------------------");
+
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        DeleteReasonModel data = DeleteReasonModel.fromJson(res.data);
+        emit(DeleteReasonFetchedState(data));
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(ErrorState(msg?['errors'] ?? ''));
+      }
+    } catch (e) {
+      emit(ErrorState('Something Went Wrong'));
+    }
   }
 }

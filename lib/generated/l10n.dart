@@ -1129,6 +1129,28 @@ class S {
       args: [],
     );
   }
+
+  /// `Verify with OTP`
+  String get verifyWithOtp {
+    return Intl.message(
+      'Verify with OTP',
+      name: 'verifyWithOtp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'skip&AddNewEntry' key
+
+  /// `Resend`
+  String get resend {
+    return Intl.message(
+      'Resend',
+      name: 'resend',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

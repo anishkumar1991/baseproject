@@ -5,7 +5,7 @@ import 'package:sangathan/Values/space_height_widget.dart';
 
 class PollWidget extends StatelessWidget {
   PollWidget({super.key, this.question});
-   String? question;
+  String? question;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,7 +63,11 @@ class PollWidget extends StatelessWidget {
                   );
                 })),
             spaceHeightWidget(20),
-            const SocialShareButtons()
+            SocialShareButtons(
+              like: '1k',
+              share: '223',
+              whatsappShare: '300',
+            )
           ],
         ),
       ),

@@ -90,6 +90,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         color: AppColor.textBlackColor,
                       ),
                       spaceWidthWidget(8),
+
+                      /// dropdown location
                       dropdownLocation(),
                     ],
                   ),
@@ -98,6 +100,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     color: AppColor.textBlackColor,
                   ),
                   spaceHeightWidget(13),
+
+                  /// unit data widget
                   dataUnit(cubit),
                   spaceHeightWidget(20),
                   Row(
@@ -108,16 +112,28 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                             fontWeight: FontWeight.w500,
                             fontSize: 18,
                           )),
-                      Text("${S.of(context).total}:80",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              color: AppColor.greyColor))
+                      BlocBuilder<ZilaDataCubit, ZilaDataState>(
+                        builder: (context, state) {
+                          if (state is EntryDataFetchedState) {
+                            if (state.data.data != null) {
+                              cubit.dataList = state.data.data!.data!;
+                            }
+                          }
+                          return Text(
+                              "${S.of(context).total}:${cubit.dataList.length}",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  color: AppColor.greyColor));
+                        },
+                      )
                     ],
                   ),
                   spaceHeightWidget(10),
                   entryFilterWidget(),
                   spaceHeightWidget(20),
+
+                  /// person list
                   entryDetails(cubit)
                 ],
               ),
@@ -133,7 +149,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             context.read<AddEntryCubit>().cleanAllVariableData();
             Navigator.pushNamed(context, RoutePath.addEntryScreen,
                 arguments: AddEntryPage(
-                  type: widget.type!,
+                  type: widget.type ?? '',
                   leaveId: widget.dataLevelId ?? 0,
                   unitId: cubit.unitId,
                   subUnitId: cubit.subUnitId,
@@ -152,7 +168,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-  SizedBox dataUnit(ZilaDataCubit cubit) {
+  Widget dataUnit(ZilaDataCubit cubit) {
     return SizedBox(
       height: 44,
       child: BlocConsumer<ZilaDataCubit, ZilaDataState>(
@@ -164,6 +180,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         builder: (context, state) {
           if (state is UnitDataFetchedState) {
             if (state.dataUnit.data!.isNotEmpty) {
+              cubit.filterDtaSelectedIndex = 0;
               cubit.dataUnitList = state.dataUnit.data!;
               cubit.unitId = cubit.dataUnitList.first.id;
               print('first unit id=${cubit.unitId}');
@@ -316,7 +333,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           backgroundColor: AppColor.greenshade100,
                           foregroundColor: AppColor.greenshade900,
                           icon: Icons.verified_user,
-                          label: S.of(context).verified,
+                          label: S.of(context).verify,
                         ),
                         SlidableAction(
                           padding: EdgeInsets.zero,
@@ -342,7 +359,26 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         ),
                         SlidableAction(
                           padding: EdgeInsets.zero,
-                          onPressed: ((context) {}),
+                          onPressed: ((context) async {
+                            showDialog(
+                                context: context,
+                                builder: ((context) {
+                                  return AlertDialog(
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Select Reason',
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColor.textBlackColor),
+                                        ),
+                                        spaceHeightWidget(14),
+                                      ],
+                                    ),
+                                  );
+                                }));
+                          }),
                           backgroundColor: AppColor.redShade100,
                           foregroundColor: AppColor.redShade600,
                           icon: Icons.delete_outline,
@@ -352,7 +388,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       child: Row(
                         children: [
                           ClipRRect(
-                              borderRadius: BorderRadius.circular(80),
+                              borderRadius: BorderRadius.circular(30),
                               child: Image.network(
                                 data.photo ?? '',
                                 height: 56,
@@ -377,7 +413,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                               Row(
                                 children: [
                                   AutoSizeText(
-                                    data.name ?? '',
+                                    Localizations.localeOf(context)
+                                                .toString() ==
+                                            "hi"
+                                        ? data.hindiName ?? ''
+                                        : data.englishName ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: GoogleFonts.poppins(

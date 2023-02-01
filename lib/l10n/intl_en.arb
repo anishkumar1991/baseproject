@@ -107,6 +107,8 @@
   "noDataAvailable":"No Data Available",
   "age": "Age",
   "years": "Years",
-  "religion": "Religion",
-  "category": "Category"
+  "category": "Category",
+  "verifyWithOtp":"Verify with OTP",
+  "skip&AddNewEntry":"Skip & Add new entry",
+  "resend":"Resend"
 }
