@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -16,6 +17,7 @@ import 'package:sangathan/AddEntry/network/model/category_model.dart';
 import 'package:sangathan/AddEntry/network/model/designation_data_model.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
 
+import '../dynamic_ui_handler/dynamic_ui_handler.dart';
 import '../network/api/add_entry_api.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 import 'add_entry_state.dart';
@@ -87,7 +89,11 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     /// For dropdowns
     if (allDropdownValueList.isNotEmpty) {
       for (var item in allDropdownValueList) {
+        /*  for (DataEntryField field in entryField ?? []) {
+          if (field.fieldName == "${item["fieldName"]}") {*/
         data.addEntries({"${item["fieldName"]}": "${item["value"]}"}.entries);
+        /* }
+        }*/
       }
     }
 
@@ -129,6 +135,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
 
     finalAllDataList = data;
+    print(allDropdownValueList);
+    print(textFieldControllerData);
+    print(allImagePickerList);
     print(finalAllDataList);
   }
 
@@ -167,12 +176,13 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// here change dropdown value based on selection
   changeDropdownValue(dynamic value, String dropdownType) {
-    emit(AddEntryLoadingState());
+    log(dropdownType);
+    /* emit(AddEntryLoadingState());*/
     if (dropdownType == "designation") {
       designationSelected = value;
 
       getAllDropDownData(value, dropdownType);
-    } else if (dropdownType == "category") {
+    } else if (dropdownType == "categoryId") {
       categorySelected = value;
       getAllDropDownData(value, dropdownType);
 
@@ -184,16 +194,16 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       qualificationSelected = value;
 
       getAllDropDownData(value, dropdownType);
-    } else if (dropdownType == "religion") {
+    } else if (dropdownType == "religionId") {
       religionSelected = value;
 
       getAllDropDownData(value, dropdownType);
-    } else if (dropdownType == "profession") {
+    } else if (dropdownType == "professionId") {
       professionSelected = value;
 
       getAllDropDownData(value, dropdownType);
     } else {}
-    emit(DropDownSelectedState());
+    /*  emit(DropDownSelectedState());*/
   }
 
   Future<void> selectedDoaDate(BuildContext context) async {
@@ -396,13 +406,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(DisposeState());
   }
 
-  /// change value designation dropdown value
-  void onChangeDesignationDropDown(DesignationData designationData) {
-    emit(AddEntryLoadingState());
-    selectedDesignationData = designationData;
-    emit(FilterDataSelectedState());
-  }
-
   Timer? timer;
   int count = 30;
 
@@ -451,5 +454,99 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     textFieldControllerData = [];
     allMultiFieldData = [];
     allDatePicker = [];
+  }
+
+  /// Get initial dropdown Data
+
+  getInitialDropdownData(Map<String, dynamic>? personData) {
+    if (personData != null) {
+      for (var item in personData.entries) {
+        if (item.key == "designation") {
+          if (item.value != null || item.value != "") {
+            int index = designationData
+                .indexWhere((element) => element.id == item.value);
+            if (index >= 0) {
+              designationSelected = designationData[index];
+              getAllDropDownData(designationData[index], item.key);
+            }
+          }
+        } else if (item.key == "categoryId") {
+          if (item.value != null || item.value != "") {
+            int index =
+                categoryData.indexWhere((element) => element.id == item.value);
+            if (index >= 0) {
+              categorySelected = categoryData[index];
+              getAllDropDownData(categoryData[index], item.key);
+              getCastData(id: categorySelected!.id.toString());
+            }
+          }
+        } else if (item.key == "caste") {
+          if (item.value != null || item.value != "") {
+            int index =
+                castData.indexWhere((element) => element.id == item.value);
+            if (index >= 0) {
+              castSelected = castData[index];
+              getAllDropDownData(castData[index], item.key);
+            }
+          }
+        } else if (item.key == "qualification") {
+          if (item.value != null || item.value != "") {
+            int index = qualificationData
+                .indexWhere((element) => element.id == item.value);
+            if (index >= 0) {
+              qualificationSelected = qualificationData[index];
+              getAllDropDownData(qualificationData[index], item.key);
+            }
+          }
+        } else if (item.key == "religionId") {
+          if (item.value != null || item.value != "") {
+            int index =
+                religionData.indexWhere((element) => element.id == item.value);
+            if (index >= 0) {
+              religionSelected = religionData[index];
+              getAllDropDownData(religionData[index], item.key);
+            }
+          }
+        } else if (item.key == "professionId") {
+          if (item.value != null || item.value != "") {
+            int index = professionData
+                .indexWhere((element) => element.id == item.value);
+            if (index >= 0) {
+              professionSelected = professionData[index];
+              getAllDropDownData(professionData[index], item.key);
+            }
+          }
+        }
+
+        emit(DropDownSelectedState());
+      }
+    }
+  }
+
+  /// Get initial Textfield Data
+
+  getInitialTextfieldData(Map<String, dynamic>? personData) {
+    if (personData != null && entryField != null) {
+      for (var item in personData.entries) {
+        if (DynamicUIHandler.textfield.contains(item.key)) {
+          int index = textFieldControllerData
+              .indexWhere((element) => element["fieldName"] == item.key);
+          if (index >= 0) {
+            if (item.value != null && item.value != "") {
+              textFieldControllerData[index]["value"] = item.value;
+            }
+          } else {
+            if (item.value != null && item.value != "") {
+              Map<String, dynamic> json = {
+                "fieldName": item.key,
+                "value": item.value,
+              };
+
+              textFieldControllerData.add(json);
+            }
+          }
+        }
+      }
+    }
   }
 }

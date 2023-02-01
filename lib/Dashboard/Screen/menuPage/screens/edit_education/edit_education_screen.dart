@@ -16,29 +16,33 @@ import '../profile_screen/network/model/user_detail_model.dart';
 import 'cubit/edit_education__cubit.dart';
 
 class EditEducationScreen extends StatefulWidget {
-
   int? index;
   List<EducationalDetails>? educationalDetails;
-   EditEducationScreen({Key? key,this.index,this.educationalDetails}) : super(key: key);
+  EditEducationScreen({Key? key, this.index, this.educationalDetails})
+      : super(key: key);
 
   @override
   State<EditEducationScreen> createState() => _EditEducationScreenState();
 }
 
 class _EditEducationScreenState extends State<EditEducationScreen> {
-
   @override
-  void initState(){
+  void initState() {
     fillData();
     super.initState();
   }
 
-  fillData({final cubit}){
-    context.read<EditEducationCubit>().levelCtr.text = widget.educationalDetails?[widget.index!].level ?? '';
-    context.read<EditEducationCubit>().startYearCtr.text = widget.educationalDetails?[widget.index!].startYear ?? '';
-    context.read<EditEducationCubit>().endYearCtr.text = widget.educationalDetails?[widget.index!].endYear ?? '';
-    context.read<EditEducationCubit>().collageCtr.text = widget.educationalDetails?[widget.index!].institute ?? '';
+  fillData({final cubit}) {
+    context.read<EditEducationCubit>().levelCtr.text =
+        widget.educationalDetails?[widget.index!].level ?? '';
+    context.read<EditEducationCubit>().startYearCtr.text =
+        widget.educationalDetails?[widget.index!].startYear ?? '';
+    context.read<EditEducationCubit>().endYearCtr.text =
+        widget.educationalDetails?[widget.index!].endYear ?? '';
+    context.read<EditEducationCubit>().collageCtr.text =
+        widget.educationalDetails?[widget.index!].institute ?? '';
   }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<EditEducationCubit>();
@@ -69,8 +73,13 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.emailAddress,
-                          onTap: (){
-                            _modelBottomSheet(controller: cubit.levelCtr,text: '',context: context,dropDownList: dropDownValue?.data?.personEducation);
+                          onTap: () {
+                            _modelBottomSheet(
+                                controller: cubit.levelCtr,
+                                text: '',
+                                context: context,
+                                dropDownList:
+                                    dropDownValue?.data?.personEducation);
                           },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -91,7 +100,7 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                           },
                           keyboardType: TextInputType.number,
                           suffixWidget: InkWell(
-                            onTap: (){
+                            onTap: () {
                               cubit.startToEndDate(context);
                             },
                             child: const Icon(
@@ -200,18 +209,28 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
         return AlertDialog(
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(23),
-              borderSide: BorderSide.none
+              borderSide: BorderSide.none),
+          title: Text(S.of(context).dialogTitle,
+              style: textStyleWithPoppin(
+                  fontSize: 20,
+                  color: AppColor.black,
+                  fontWeight: FontWeight.w400)),
+          content: Text(
+            S.of(context).dialogSubtitle1,
+            style: textStyleWithPoppin(
+                fontSize: 14,
+                color: AppColor.black,
+                fontWeight: FontWeight.w400),
           ),
-          title:  Text(S.of(context).dialogTitle,style: textStyleWithPoppin(fontSize: 20,color: AppColor.black,fontWeight: FontWeight.w400)),
-          content:  Text(S.of(context).dialogSubtitle1,style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w400),),
           actions: <Widget>[
             TextButton(
                 onPressed: () => Navigator.pop(context),
-                child:  Text((S.of(context).noThanks),
+                child: Text(
+                  (S.of(context).noThanks),
                 )),
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child:  Text(S.of(context).delete),
+              child: Text(S.of(context).delete),
             ),
           ],
         );
@@ -220,7 +239,10 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
   }
 
   void _modelBottomSheet(
-      {required BuildContext context, List<DropdownData>? dropDownList,required String text,required TextEditingController controller}) {
+      {required BuildContext context,
+      List<DropdownData>? dropDownList,
+      required String text,
+      required TextEditingController controller}) {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -264,12 +286,12 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: list?.length,
-                            itemBuilder: (context,index){
+                            itemBuilder: (context, index) {
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   InkWell(
-                                    onTap: (){
+                                    onTap: () {
                                       controller.text = list?[index].name ?? '';
                                       Navigator.pop(context);
                                     },
@@ -279,7 +301,8 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                                         list?[index].name ?? '',
                                         textAlign: TextAlign.left,
                                         style: GoogleFonts.poppins(
-                                            color: AppColor.black, fontSize: 16),
+                                            color: AppColor.black,
+                                            fontSize: 16),
                                       ),
                                     ),
                                   ),
@@ -298,5 +321,4 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
           );
         });
   }
-
 }

@@ -14,7 +14,6 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
-
 import '../profile_screen/cubit/profile_cubit.dart';
 import '../profile_screen/network/model/user_detail_model.dart';
 import 'cubit/personal_info_cubit.dart';
@@ -306,7 +305,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           },
                           keyboardType: TextInputType.emailAddress,
                           onTap: () {
-                            _modelBottomSheet(context: context,dropDownList: dropDownValue?.data?.religion,text: S.of(context).religion,controller: cubit.religionCtr);
+                            _modelBottomSheet(
+                                context: context,
+                                dropDownList: dropDownValue?.data?.religion,
+                                text: S.of(context).religion,
+                                controller: cubit.religionCtr);
                           },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -327,7 +330,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           },
                           keyboardType: TextInputType.emailAddress,
                           onTap: () {
-                            _modelBottomSheet(context: context,dropDownList: dropDownValue?.data?.personCategory,text: S.of(context).category,controller: cubit.statusCtr);
+                            _modelBottomSheet(
+                                context: context,
+                                dropDownList:
+                                    dropDownValue?.data?.personCategory,
+                                text: S.of(context).category,
+                                controller: cubit.statusCtr);
                           },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -383,39 +391,38 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     },
                   ),
                   spaceHeightWidget(25),
-
-                    BlocListener<PersonalInfoCubit,PersonalInfoState>(
-                      listener: (context, state) {
-                        if (state is PersonalInfoErrorState) {
-                          EasyLoading.dismiss();
-                          EasyLoading.showError(state.error);
-                        }else if(state is LoadingState){
-                          EasyLoading.show();
-                        }else if(state is UpdateDataState){
-                          context.read<ProfileCubit>().getUserDetails();
-                          Navigator.pop(context);
-                          EasyLoading.dismiss();
-                        }
+                  BlocListener<PersonalInfoCubit, PersonalInfoState>(
+                    listener: (context, state) {
+                      if (state is PersonalInfoErrorState) {
+                        EasyLoading.dismiss();
+                        EasyLoading.showError(state.error);
+                      } else if (state is LoadingState) {
+                        EasyLoading.show();
+                      } else if (state is UpdateDataState) {
+                        context.read<ProfileCubit>().getUserDetails();
+                        Navigator.pop(context);
+                        EasyLoading.dismiss();
+                      }
+                    },
+                    child: CommonButton(
+                      onTap: () {
+                        cubit.updatePersonalDetails(data: {
+                          "name": cubit.nameCtr.text,
+                          "username": cubit.userNameCtr.text,
+                          "phone_number": cubit.mobileNumberCtr.text,
+                          "dob": cubit.boiCtr.text,
+                          "gender": cubit.value.name
+                        });
                       },
-                      child: CommonButton(
-                        onTap: ()  {
-                          cubit.updatePersonalDetails(data: {
-                            "name":cubit.nameCtr.text,
-                            "username":cubit.userNameCtr.text,
-                            "phone_number": cubit.mobileNumberCtr.text,
-                            "dob": cubit.boiCtr.text,
-                            "gender": cubit.value.name
-                          });
-                        },
-                        title: S.of(context).save,
-                        width: 150,
-                        height: 38,
-                        borderRadius: 25,
-                        // style: const TextStyle(fontSize: 20, color: AppColor.white),
-                        style: textStyleWithPoppin(
-                            color: AppColor.white, fontSize: 16),
-                      ),
+                      title: S.of(context).save,
+                      width: 150,
+                      height: 38,
+                      borderRadius: 25,
+                      // style: const TextStyle(fontSize: 20, color: AppColor.white),
+                      style: textStyleWithPoppin(
+                          color: AppColor.white, fontSize: 16),
                     ),
+                  ),
                   spaceHeightWidget(15),
                 ],
               ),
@@ -485,7 +492,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   }
 
   void _modelBottomSheet(
-      {required BuildContext context, List<DropdownData>? dropDownList,required String text,required TextEditingController controller}) {
+      {required BuildContext context,
+      List<DropdownData>? dropDownList,
+      required String text,
+      required TextEditingController controller}) {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -529,33 +539,34 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: list?.length,
-                            itemBuilder: (context,index){
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                onTap: (){
-                                  controller.text = list?[index].name ?? '';
-                                  Navigator.pop(context);
-                                },
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  child: Text(
-                                    list?[index].name ?? '',
-                                    textAlign: TextAlign.left,
-                                    style: GoogleFonts.poppins(
-                                        color: AppColor.black, fontSize: 16),
+                            itemBuilder: (context, index) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      controller.text = list?[index].name ?? '';
+                                      Navigator.pop(context);
+                                    },
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Text(
+                                        list?[index].name ?? '',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.poppins(
+                                            color: AppColor.black,
+                                            fontSize: 16),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              spaceHeightWidget(15),
-                              const Divider(
-                                color: AppColor.borderColor,
-                              ),
-                              spaceHeightWidget(15),
-                            ],
-                          );
-                        }),
+                                  spaceHeightWidget(15),
+                                  const Divider(
+                                    color: AppColor.borderColor,
+                                  ),
+                                  spaceHeightWidget(15),
+                                ],
+                              );
+                            }),
                       )
                     ],
                   ),

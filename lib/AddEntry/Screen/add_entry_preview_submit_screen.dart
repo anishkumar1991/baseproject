@@ -179,7 +179,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
       child: Column(
         children: [
           for (var item in cubit.finalAllDataList.entries) ...[
-            if (cubit.entryField![i].formControlName == item.key) ...[
+            if (cubit.entryField![i].fieldName == item.key) ...[
               if (DynamicUIHandler.dropdowns.contains(item.key) ||
                   DynamicUIHandler.textfield.contains(item.key) ||
                   DynamicUIHandler.radioButton.contains(item.key) ||
@@ -222,7 +222,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
       spacing: 5.0,
       children: <Widget>[
         for (var item in cubit.finalAllDataList.entries)
-          if (cubit.entryField![i].formControlName == item.key)
+          if (cubit.entryField![i].fieldName == item.key)
             if (DynamicUIHandler.multiSelectionField.contains(item.key))
               IntrinsicWidth(
                 child: SelectPropertyBox(

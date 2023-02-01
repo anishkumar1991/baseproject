@@ -66,6 +66,7 @@ class RouteGenerator {
               unitId: data.unitId,
               subUnitId: data.subUnitId,
               countryStateId: data.countryStateId,
+              personData: data.personData,
             );
           },
         );
@@ -150,7 +151,8 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            Map<String,dynamic> data = settings.arguments as Map<String,dynamic>;
+            Map<String, dynamic> data =
+                settings.arguments as Map<String, dynamic>;
             UserDetailModel model = UserDetailModel.fromJson(data);
             return PersonalInformationScreen(userDetails: model);
           },
@@ -168,7 +170,8 @@ class RouteGenerator {
               addresses = map['addresses'];
             }
             return EditAddressScreen(
-              index: index,addresses: addresses,
+              index: index,
+              addresses: addresses,
             );
           },
         );
@@ -180,7 +183,7 @@ class RouteGenerator {
             return const AddEntryPreviewSubmit();
           },
         );
-        case RoutePath.editEducationScreen:
+      case RoutePath.editEducationScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
@@ -193,11 +196,12 @@ class RouteGenerator {
               educationalDetails = map['educationalDetails'];
             }
             return EditEducationScreen(
-              index: index,educationalDetails: educationalDetails,
+              index: index,
+              educationalDetails: educationalDetails,
             );
           },
         );
-        case RoutePath.editBusinessScreen:
+      case RoutePath.editBusinessScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
@@ -210,7 +214,8 @@ class RouteGenerator {
               professionalDetails = map['professionalDetails'];
             }
             return EditBusinessScreen(
-              index: index,professionalDetails: professionalDetails,
+              index: index,
+              professionalDetails: professionalDetails,
             );
           },
         );

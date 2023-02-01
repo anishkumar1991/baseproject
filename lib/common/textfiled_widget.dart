@@ -18,7 +18,10 @@ class TextFieldWidget extends StatelessWidget {
       this.inpurborder,
       this.hintText,
       this.validator,
-      this.errorText});
+      this.errorText,
+      this.initialValue});
+
+  final String? initialValue;
 
   final TextEditingController? controller;
   final String title;
@@ -33,6 +36,7 @@ class TextFieldWidget extends StatelessWidget {
   final int? maxLines;
   final FormFieldValidator? validator;
   final String? errorText;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,6 +44,7 @@ class TextFieldWidget extends StatelessWidget {
       children: [
         Text(title),
         TextFormField(
+          initialValue: initialValue,
           maxLines: maxLines,
           controller: controller,
           readOnly: readOnly ?? false,

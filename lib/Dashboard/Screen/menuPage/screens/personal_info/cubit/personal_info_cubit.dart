@@ -42,9 +42,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     emit(PersonalInfoInitial());
   }
 
-   updatePersonalDetails({required Map<String, dynamic> data}) async {
-     emit(LoadingState());
-     print("----------------------------");
+  updatePersonalDetails({required Map<String, dynamic> data}) async {
+    emit(LoadingState());
+    print("----------------------------");
     try {
       StorageService.getUserAuthToken();
       var res =

@@ -11,7 +11,7 @@ import '../network/model/zila_model.dart';
 class ZilaDataCubit extends Cubit<ZilaDataState> {
   ZilaDataCubit() : super(ZilaDataInitialStateState());
 
-  List<UserData> dataList = [];
+  List<KaryakartaData> dataList = [];
   List<PartyZilaData> partyzilaList = [];
 
   PartyZilaData? zilaSelected;
@@ -50,6 +50,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
         emit(ErrorState(msg?['errors'] ?? ''));
       }
     } catch (e) {
+      print(e);
       emit(ErrorState('Something Went Wrong'));
     }
   }
@@ -99,6 +100,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
         emit(ErrorState(msg?['errors'] ?? ''));
       }
     } catch (e) {
+      print(e);
       emit(ErrorState('Something Went Wrong'));
     }
   }

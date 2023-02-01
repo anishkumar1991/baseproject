@@ -15,7 +15,7 @@ import '../profile_screen/network/model/user_detail_model.dart';
 class EditBusinessScreen extends StatefulWidget {
   int? index;
   List<ProfessionalDetails>? professionalDetails;
-   EditBusinessScreen({Key? key,this.index,this.professionalDetails}) : super(key: key);
+  EditBusinessScreen({Key? key,this.index,this.professionalDetails}) : super(key: key);
 
   @override
   State<EditBusinessScreen> createState() => _EditBusinessScreenState();
@@ -196,16 +196,16 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(23),
-            borderSide: BorderSide.none
+              borderRadius: BorderRadius.circular(23),
+              borderSide: BorderSide.none
           ),
           title:  Text(S.of(context).dialogTitle,style: textStyleWithPoppin(fontSize: 20,color: AppColor.black,fontWeight: FontWeight.w400)),
           content:  Text(S.of(context).dialogSubtitle,style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w400),),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
-              child:  Text((S.of(context).noThanks),
-              )),
+                onPressed: () => Navigator.pop(context),
+                child:  Text((S.of(context).noThanks),
+                )),
             TextButton(
               onPressed: () => Navigator.pop(context),
               child:  Text(S.of(context).delete),

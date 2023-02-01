@@ -13,6 +13,7 @@ import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
 import 'package:shimmer/shimmer.dart';
+
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import '../../../../../AddEntry/cubit/add_entry_cubit.dart';
 import 'cubit/zila_data_state.dart';
@@ -137,6 +138,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   unitId: cubit.unitId,
                   subUnitId: cubit.subUnitId,
                   countryStateId: widget.countryStateId,
+                  personData: null,
                 ));
           }),
           icon: const Icon(Icons.add),
@@ -318,7 +320,22 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         ),
                         SlidableAction(
                           padding: EdgeInsets.zero,
-                          onPressed: ((context) {}),
+                          onPressed: ((context) {
+                            print(data.toJson());
+                            context
+                                .read<AddEntryCubit>()
+                                .cleanAllVariableData();
+                            Navigator.pushNamed(
+                                context, RoutePath.addEntryScreen,
+                                arguments: AddEntryPage(
+                                  type: widget.type!,
+                                  leaveId: widget.dataLevelId ?? 0,
+                                  unitId: cubit.unitId,
+                                  subUnitId: cubit.subUnitId,
+                                  countryStateId: widget.countryStateId,
+                                  personData: data.toJson(),
+                                ));
+                          }),
                           backgroundColor: AppColor.white,
                           icon: Icons.edit,
                           label: S.of(context).edit,

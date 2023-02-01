@@ -22,7 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
-    return emit(ProfileInitial());
+    emit(ProfileInitial());
   }
 
   Future getUserDetails() async {
@@ -31,10 +31,14 @@ class ProfileCubit extends Cubit<ProfileState> {
       StorageService.getUserAuthToken();
       var res =
           await api.getDataLevel('Bearer ${StorageService.userAuthToken}');
-      print('sangathan Data =${res.response.statusCode}');
-      print('sangathan Data =${StorageService.userAuthToken}');
+      print(
+          "------------------------------------ User profile data  ----------------------------");
+      print("token  :${StorageService.userAuthToken}");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        print(res.response.data);
         UserDetailModel data = UserDetailModel.fromJson(res.response.data);
         emit(UserDetailFetchedState(data));
       } else {

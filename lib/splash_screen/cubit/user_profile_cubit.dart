@@ -25,6 +25,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
         emit(UserProfileErrorState(msg?['error'] ?? ''));
       }
     } catch (e) {
+      print(e);
       emit(UserProfileErrorState('something went wrong'));
     }
   }

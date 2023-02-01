@@ -13,9 +13,7 @@ import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../generated/l10n.dart';
-import '../personal_info/personal_information_screen.dart';
 import 'cubit/profile_cubit.dart';
-import 'network/model/user_detail_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -25,7 +23,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
   }
@@ -38,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var profileCubit = context.read<ProfileCubit>();
+    var cubit = context.read<ProfileCubit>();
     return Scaffold(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -50,7 +47,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             }
           }),
           builder: (context, state) {
-            var cubit = context.read<ProfileCubit>();
             if (state is UserDetailFetchedState) {
               if (state.data.data != null) {
                 cubit.userDetails = state.data;
@@ -113,6 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         /// profile business tile
                         ProfileBusinessScreen(cubit: cubit),
+
                         spaceHeightWidget(15),
                         customDivider(),
                         Padding(

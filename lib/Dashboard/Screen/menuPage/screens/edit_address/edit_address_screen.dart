@@ -22,8 +22,8 @@ class EditAddressScreen extends StatefulWidget {
 
   EditAddressScreen(
       {Key? key,
-      this.addresses,
-      this.index})
+        this.addresses,
+        this.index})
       : super(key: key);
 
   @override
@@ -64,237 +64,237 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             spaceHeightWidget(10),
             Expanded(
                 child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  BlocBuilder<EditAddressCubit, EditAddressState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.flatDesCtr,
-                        title: '',
-                        labelText: S.of(context).FlatDes,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.flatDesCtr.text.isNotEmpty
-                            ? InkWell(
-                                onTap: () {
-                                  cubit.flatDesCtr.clear();
-                                  cubit.emitState();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
-                                  child: Image.asset(
-                                    AppIcons.clearIcon,
-                                    height: 2,
-                                    width: 5,
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(10),
-                  BlocBuilder<EditAddressCubit, EditAddressState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.areaDesCtr,
-                        title: '',
-                        labelText: S.of(context).AreaDes,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.areaDesCtr.text.isNotEmpty
-                            ? InkWell(
-                                onTap: () {
-                                  cubit.areaDesCtr.clear();
-                                  cubit.emitState();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
-                                  child: Image.asset(
-                                    AppIcons.clearIcon,
-                                    height: 2,
-                                    width: 5,
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(10),
-                  BlocBuilder<EditAddressCubit, EditAddressState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.pinCodeCtr,
-                        title: '',
-                        labelText: S.of(context).PinCode,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.pinCodeCtr.text.isNotEmpty
-                            ? InkWell(
-                                onTap: () {
-                                  cubit.pinCodeCtr.clear();
-                                  cubit.emitState();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
-                                  child: Image.asset(
-                                    AppIcons.clearIcon,
-                                    height: 2,
-                                    width: 5,
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(10),
-                  BlocBuilder<EditAddressCubit, EditAddressState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.townCtr,
-                        title: '',
-                        labelText: S.of(context).townCity,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.townCtr.text.isNotEmpty
-                            ? InkWell(
-                                onTap: () {
-                                  cubit.townCtr.clear();
-                                  cubit.emitState();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
-                                  child: Image.asset(
-                                    AppIcons.clearIcon,
-                                    height: 2,
-                                    width: 5,
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(10),
-                  BlocBuilder<EditAddressCubit, EditAddressState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.stateCtr,
-                        title: '',
-                        labelText: S.of(context).state,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.stateCtr.text.isNotEmpty
-                            ? InkWell(
-                                onTap: () {
-                                  cubit.stateCtr.clear();
-                                  cubit.emitState();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
-                                  child: Image.asset(
-                                    AppIcons.clearIcon,
-                                    height: 2,
-                                    width: 5,
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
                     children: [
-                      buildBottomContainer(
-                          icon: Icons.home, title: S.of(context).home),
-                      buildBottomContainer(
-                          image: AppIcons.fillBuisnessIcon,
-                          title: S.of(context).Office,
-                          isImage: true),
-                      buildBottomContainer(
-                          icon: Icons.location_on, title: S.of(context).Other),
+                      BlocBuilder<EditAddressCubit, EditAddressState>(
+                        builder: (context, state) {
+                          return TextFieldWidget(
+                            controller: cubit.flatDesCtr,
+                            title: '',
+                            labelText: S.of(context).FlatDes,
+                            onChanged: (value) {
+                              cubit.emitState();
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            suffixWidget: cubit.flatDesCtr.text.isNotEmpty
+                                ? InkWell(
+                              onTap: () {
+                                cubit.flatDesCtr.clear();
+                                cubit.emitState();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0, left: 15, right: 15),
+                                child: Image.asset(
+                                  AppIcons.clearIcon,
+                                  height: 2,
+                                  width: 5,
+                                ),
+                              ),
+                            )
+                                : const SizedBox.shrink(),
+                          );
+                        },
+                      ),
+                      spaceHeightWidget(10),
+                      BlocBuilder<EditAddressCubit, EditAddressState>(
+                        builder: (context, state) {
+                          return TextFieldWidget(
+                            controller: cubit.areaDesCtr,
+                            title: '',
+                            labelText: S.of(context).AreaDes,
+                            onChanged: (value) {
+                              cubit.emitState();
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            suffixWidget: cubit.areaDesCtr.text.isNotEmpty
+                                ? InkWell(
+                              onTap: () {
+                                cubit.areaDesCtr.clear();
+                                cubit.emitState();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0, left: 15, right: 15),
+                                child: Image.asset(
+                                  AppIcons.clearIcon,
+                                  height: 2,
+                                  width: 5,
+                                ),
+                              ),
+                            )
+                                : const SizedBox.shrink(),
+                          );
+                        },
+                      ),
+                      spaceHeightWidget(10),
+                      BlocBuilder<EditAddressCubit, EditAddressState>(
+                        builder: (context, state) {
+                          return TextFieldWidget(
+                            controller: cubit.pinCodeCtr,
+                            title: '',
+                            labelText: S.of(context).PinCode,
+                            onChanged: (value) {
+                              cubit.emitState();
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            suffixWidget: cubit.pinCodeCtr.text.isNotEmpty
+                                ? InkWell(
+                              onTap: () {
+                                cubit.pinCodeCtr.clear();
+                                cubit.emitState();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0, left: 15, right: 15),
+                                child: Image.asset(
+                                  AppIcons.clearIcon,
+                                  height: 2,
+                                  width: 5,
+                                ),
+                              ),
+                            )
+                                : const SizedBox.shrink(),
+                          );
+                        },
+                      ),
+                      spaceHeightWidget(10),
+                      BlocBuilder<EditAddressCubit, EditAddressState>(
+                        builder: (context, state) {
+                          return TextFieldWidget(
+                            controller: cubit.townCtr,
+                            title: '',
+                            labelText: S.of(context).townCity,
+                            onChanged: (value) {
+                              cubit.emitState();
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            suffixWidget: cubit.townCtr.text.isNotEmpty
+                                ? InkWell(
+                              onTap: () {
+                                cubit.townCtr.clear();
+                                cubit.emitState();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0, left: 15, right: 15),
+                                child: Image.asset(
+                                  AppIcons.clearIcon,
+                                  height: 2,
+                                  width: 5,
+                                ),
+                              ),
+                            )
+                                : const SizedBox.shrink(),
+                          );
+                        },
+                      ),
+                      spaceHeightWidget(10),
+                      BlocBuilder<EditAddressCubit, EditAddressState>(
+                        builder: (context, state) {
+                          return TextFieldWidget(
+                            controller: cubit.stateCtr,
+                            title: '',
+                            labelText: S.of(context).state,
+                            onChanged: (value) {
+                              cubit.emitState();
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            suffixWidget: cubit.stateCtr.text.isNotEmpty
+                                ? InkWell(
+                              onTap: () {
+                                cubit.stateCtr.clear();
+                                cubit.emitState();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 16.0, left: 15, right: 15),
+                                child: Image.asset(
+                                  AppIcons.clearIcon,
+                                  height: 2,
+                                  width: 5,
+                                ),
+                              ),
+                            )
+                                : const SizedBox.shrink(),
+                          );
+                        },
+                      ),
+                      spaceHeightWidget(25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildBottomContainer(
+                              icon: Icons.home, title: S.of(context).home),
+                          buildBottomContainer(
+                              image: AppIcons.fillBuisnessIcon,
+                              title: S.of(context).Office,
+                              isImage: true),
+                          buildBottomContainer(
+                              icon: Icons.location_on, title: S.of(context).Other),
+                        ],
+                      ),
+                      spaceHeightWidget(40),
+                      CommonButton(
+                        onTap: () {
+                          showConfirmDialog();
+                        },
+                        title: S.of(context).delete,
+                        width: 150,
+                        height: 20,
+                        borderRadius: 25,
+                        backGroundcolor: Colors.transparent,
+                        bordercolor: Colors.transparent,
+                        style: textStyleWithPoppin(
+                            color: AppColor.greyColor.withOpacity(0.3),
+                            fontSize: 14),
+                      ),
+                      spaceHeightWidget(5),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Divider(
+                          color: AppColor.dividerColor,
+                        ),
+                      ),
+                      spaceHeightWidget(5),
+                      BlocListener<PersonalInfoCubit, PersonalInfoState>(
+                        listener: (context, state) {
+                          if (state is PersonalInfoErrorState) {
+                            EasyLoading.dismiss();
+                            EasyLoading.showError(state.error);
+                          } else if (state is LoadingState) {
+                            EasyLoading.show();
+                          } else if (state is UpdateDataState) {
+                            context.read<ProfileCubit>().getUserDetails();
+                            Navigator.pop(context);
+                            EasyLoading.dismiss();
+                          }
+                        },
+                        child: CommonButton(
+                          onTap: () {
+                            filledList(cubit: cubit);
+                            context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+                              "addresses" : widget.addresses
+                              // "name":cubit.nameCtr.text,
+                              // "username":cubit.userNameCtr.text,
+                              // "phone_number": cubit.mobileNumberCtr.text,
+                              // "dob": cubit.boiCtr.text,
+                              // "gender": cubit.value.name
+                            });
+                          },
+                          title: S.of(context).save,
+                          width: 150,
+                          height: 38,
+                          borderRadius: 25,
+                          style: textStyleWithPoppin(
+                              color: AppColor.white, fontSize: 16),
+                        ),
+                      ),
+                      spaceHeightWidget(15),
                     ],
                   ),
-                  spaceHeightWidget(40),
-                  CommonButton(
-                    onTap: () {
-                      showConfirmDialog();
-                    },
-                    title: S.of(context).delete,
-                    width: 150,
-                    height: 20,
-                    borderRadius: 25,
-                    backGroundcolor: Colors.transparent,
-                    bordercolor: Colors.transparent,
-                    style: textStyleWithPoppin(
-                        color: AppColor.greyColor.withOpacity(0.3),
-                        fontSize: 14),
-                  ),
-                  spaceHeightWidget(5),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Divider(
-                      color: AppColor.dividerColor,
-                    ),
-                  ),
-                  spaceHeightWidget(5),
-                  BlocListener<PersonalInfoCubit, PersonalInfoState>(
-                    listener: (context, state) {
-                      if (state is PersonalInfoErrorState) {
-                        EasyLoading.dismiss();
-                        EasyLoading.showError(state.error);
-                      } else if (state is LoadingState) {
-                        EasyLoading.show();
-                      } else if (state is UpdateDataState) {
-                        context.read<ProfileCubit>().getUserDetails();
-                        Navigator.pop(context);
-                        EasyLoading.dismiss();
-                      }
-                    },
-                    child: CommonButton(
-                      onTap: () {
-                        filledList(cubit: cubit);
-                        context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
-                          "addresses" : widget.addresses
-                          // "name":cubit.nameCtr.text,
-                          // "username":cubit.userNameCtr.text,
-                          // "phone_number": cubit.mobileNumberCtr.text,
-                          // "dob": cubit.boiCtr.text,
-                          // "gender": cubit.value.name
-                        });
-                      },
-                      title: S.of(context).save,
-                      width: 150,
-                      height: 38,
-                      borderRadius: 25,
-                      style: textStyleWithPoppin(
-                          color: AppColor.white, fontSize: 16),
-                    ),
-                  ),
-                  spaceHeightWidget(15),
-                ],
-              ),
-            ))
+                ))
           ],
         ),
       ),
@@ -323,10 +323,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         children: [
           isImage ?? false
               ? Image.asset(
-                  image!,
-                  height: 20,
-                  width: 20,
-                )
+            image!,
+            height: 20,
+            width: 20,
+          )
               : Icon(icon),
           spaceWidthWidget(5),
           Padding(

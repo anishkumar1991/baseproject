@@ -1,4 +1,5 @@
 import '../cubit/add_entry_cubit.dart';
+import '../network/model/add_entry_form_structure_model.dart';
 
 class FieldHandler extends AddEntryCubit {
   static getDropdownList(String dropdownType, AddEntryCubit cubit) {
@@ -23,15 +24,15 @@ class FieldHandler extends AddEntryCubit {
   static getDropdownSelected(String dropdownType, AddEntryCubit cubit) {
     if (dropdownType == "designation") {
       return cubit.designationSelected;
-    } else if (dropdownType == "category") {
+    } else if (dropdownType == "categoryId") {
       return cubit.categorySelected;
     } else if (dropdownType == "caste") {
       return cubit.castSelected;
     } else if (dropdownType == "qualification") {
       return cubit.qualificationSelected;
-    } else if (dropdownType == "religion") {
+    } else if (dropdownType == "religionId") {
       return cubit.religionSelected;
-    } else if (dropdownType == "profession") {
+    } else if (dropdownType == "professionId") {
       return cubit.professionSelected;
     } else {
       return null;
@@ -81,7 +82,7 @@ class FieldHandler extends AddEntryCubit {
     String name = '';
 
     for (int i = 0; i < cubit.entryField!.length; i++) {
-      if (cubit.entryField![i].formControlName == fieldName) {
+      if (cubit.entryField![i].fieldName == fieldName) {
         name = cubit.entryField![i].displayNameForUI ?? fieldName;
       }
     }
@@ -93,18 +94,31 @@ class FieldHandler extends AddEntryCubit {
       String dropdownType, AddEntryCubit cubit) {
     if (dropdownType == "designation") {
       return cubit.designationSelected?.name;
-    } else if (dropdownType == "category") {
+    } else if (dropdownType == "categoryId") {
       return cubit.categorySelected?.name;
     } else if (dropdownType == "caste") {
       return cubit.castSelected?.name;
     } else if (dropdownType == "qualification") {
       return cubit.qualificationSelected?.name;
-    } else if (dropdownType == "religion") {
+    } else if (dropdownType == "religionId") {
       return cubit.religionSelected?.name;
-    } else if (dropdownType == "profession") {
+    } else if (dropdownType == "professionId") {
       return cubit.professionSelected?.name;
     } else {
       return null;
+    }
+  }
+
+  /// get dropdown keys
+
+  static getDropdownKeys(String dropdownType, List<DataEntryField> entryField) {
+    for (int i = 0; i < entryField.length; i++) {
+      print(entryField[i].fieldName);
+      if (entryField[i].fieldName == dropdownType) {
+        return entryField[i].formControlName ?? "";
+      } else {
+        return "Ksy";
+      }
     }
   }
 }

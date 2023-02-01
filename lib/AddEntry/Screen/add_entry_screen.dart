@@ -28,13 +28,16 @@ class AddEntryPage extends StatefulWidget {
       required this.leaveId,
       required this.unitId,
       this.countryStateId,
-      this.subUnitId})
+      this.subUnitId,
+      this.personData})
       : super(key: key);
   final String type;
   final int leaveId;
   final int? unitId;
   final int? countryStateId;
   final int? subUnitId;
+  final Map<String, dynamic>? personData;
+
   @override
   State<AddEntryPage> createState() => _AddEntryPageState();
 }
@@ -47,6 +50,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
   void initState() {
     context.read<AddEntryCubit>().getDropdownData();
     //context.read<AddEntryCubit>().getCastData(id: '1');
+    print("person data ${widget.personData}");
     print(widget.unitId);
     final cubit = context.read<AddEntryCubit>();
     cubit.entryField = [];
@@ -64,7 +68,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
       children: [
         /// Here getting specify dropdown list
         if (DynamicUIHandler.dropdowns
-            .contains(cubit.entryField![i].formControlName)) ...[
+            .contains(cubit.entryField![i].fieldName)) ...[
           spaceHeightWidget(20),
           BlocBuilder<AddEntryCubit, AddEntryState>(
             builder: (context, state) {
@@ -72,15 +76,15 @@ class _AddEntryPageState extends State<AddEntryPage> {
               getDropdownList(String dropdownType, AddEntryCubit cubit) {
                 if (dropdownType == "designation") {
                   return cubit.designationData;
-                } else if (dropdownType == "category") {
+                } else if (dropdownType == "categoryId") {
                   return cubit.categoryData;
                 } else if (dropdownType == "caste") {
                   return cubit.castData;
                 } else if (dropdownType == "qualification") {
                   return cubit.qualificationData;
-                } else if (dropdownType == "religion") {
+                } else if (dropdownType == "religionId") {
                   return cubit.religionData;
-                } else if (dropdownType == "profession") {
+                } else if (dropdownType == "professionId") {
                   return cubit.professionData;
                 } else {
                   return [];
@@ -89,7 +93,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
 
               return CustomDropDown(
                 selectedValue: FieldHandler.getDropdownSelected(
-                    cubit.entryField![i].formControlName ?? "", cubit),
+                    cubit.entryField![i].fieldName ?? "", cubit),
                 title: cubit.entryField![i].displayNameForUI ?? "",
                 hintText: 'Select ${cubit.entryField![i].displayNameForUI}',
                 validator: (dynamic value) {
@@ -101,13 +105,13 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   return null;
                 },
                 dropDownList: getDropdownList(
-                        cubit.entryField![i].formControlName ?? "", cubit)
+                        cubit.entryField![i].fieldName ?? "", cubit)
                     .map((e) =>
                         DropdownMenuItem(value: e, child: Text(e.name ?? '')))
                     .toList(),
                 onChange: ((value) {
                   cubit.changeDropdownValue(
-                      value, cubit.entryField![i].formControlName ?? "");
+                      value, cubit.entryField![i].fieldName ?? "");
                   //  cubit.onChangeDesignationDropDown(value);
                 }),
               );
@@ -117,69 +121,108 @@ class _AddEntryPageState extends State<AddEntryPage> {
 
         /// Here text field  generate logic
         else if (DynamicUIHandler.textfield
-            .contains(cubit.entryField![i].formControlName)) ...[
+            .contains(cubit.entryField![i].fieldName)) ...[
           spaceHeightWidget(20),
 
           /// Here text field with file picker generate logic
           if (DynamicUIHandler.filePicker
-              .contains(cubit.entryField![i].formControlName)) ...[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                TextFieldWidget(
-                    validator: (value) {
-                      if (cubit.entryField![i].mandatoryField ?? false) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
-                        }
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      FieldHandler.onUpdate(i, value,
-                          cubit.entryField![i].formControlName ?? "", cubit);
-                    },
-                    title: cubit.entryField![i].displayNameForUI ?? "",
-                    keyboardType: TextInputType.text,
-                    hintText:
-                        'Enter Your ${cubit.entryField![i].displayNameForUI}'),
-                spaceHeightWidget(8),
-                UploadCard(
-                  uploadedFilePath: FieldHandler.getFileName(
-                          "${(cubit.entryField![i].formControlName ?? "").split("_")[0]}_url",
-                          cubit)
-                      .split("/")
-                      .last,
-                  onTap: (() async {
-                    await cubit.pickFile(
-                        "${(cubit.entryField![i].formControlName ?? "").split("_")[0]}_url");
-                  }),
-                ),
-              ],
-            )
+              .contains(cubit.entryField![i].fieldName)) ...[
+            if (widget.personData != null) ...[
+              for (var item in widget.personData!.entries) ...[
+                if (cubit.entryField![i].fieldName == item.key)
+                  if (item.value != null || item.value != "") ...[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        TextFieldWidget(
+                            initialValue: item.value.toString(),
+                            validator: (value) {
+                              if (cubit.entryField![i].mandatoryField ??
+                                  false) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
+                                }
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              FieldHandler.onUpdate(
+                                  i,
+                                  value,
+                                  cubit.entryField![i].formControlName ?? "",
+                                  cubit);
+                            },
+                            title: cubit.entryField![i].displayNameForUI ?? "",
+                            keyboardType: TextInputType.text,
+                            hintText:
+                                'Enter Your ${cubit.entryField![i].displayNameForUI}'),
+                        spaceHeightWidget(8),
+                        UploadCard(
+                          uploadedFilePath: FieldHandler.getFileName(
+                                  "${(cubit.entryField![i].formControlName ?? "").split("_")[0]}_url",
+                                  cubit)
+                              .split("/")
+                              .last,
+                          onTap: (() async {
+                            await cubit.pickFile(
+                                "${(cubit.entryField![i].formControlName ?? "").split("_")[0]}_url");
+                          }),
+                        ),
+                      ],
+                    )
+                  ]
+              ]
+            ]
           ] else ...[
-            TextFieldWidget(
-                validator: (value) {
-                  if (cubit.entryField![i].mandatoryField ?? false) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
+            if (widget.personData != null) ...[
+              for (var item in widget.personData!.entries) ...[
+                if (cubit.entryField![i].fieldName == item.key)
+                  if (item.value != null || item.value != "") ...[
+                    TextFieldWidget(
+                        initialValue: item.value.toString(),
+                        validator: (value) {
+                          if (cubit.entryField![i].mandatoryField ?? false) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
+                            }
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          FieldHandler.onUpdate(i, value,
+                              cubit.entryField![i].fieldName ?? "", cubit);
+                        },
+                        title: cubit.entryField![i].displayNameForUI ?? "",
+                        keyboardType: TextInputType.text,
+                        hintText:
+                            'Enter Your ${cubit.entryField![i].displayNameForUI}')
+                  ]
+              ]
+            ] else ...[
+              TextFieldWidget(
+                  validator: (value) {
+                    if (cubit.entryField![i].mandatoryField ?? false) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
+                      }
                     }
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  FieldHandler.onUpdate(i, value,
-                      cubit.entryField![i].formControlName ?? "", cubit);
-                },
-                title: cubit.entryField![i].displayNameForUI ?? "",
-                keyboardType: TextInputType.text,
-                hintText: 'Enter Your ${cubit.entryField![i].displayNameForUI}')
+                    return null;
+                  },
+                  onChanged: (value) {
+                    FieldHandler.onUpdate(
+                        i, value, cubit.entryField![i].fieldName ?? "", cubit);
+                  },
+                  title: cubit.entryField![i].displayNameForUI ?? "",
+                  keyboardType: TextInputType.text,
+                  hintText:
+                      'Enter Your ${cubit.entryField![i].displayNameForUI}')
+            ]
           ]
         ]
 
         /// Here radio button
         else if (DynamicUIHandler.radioButton
-            .contains(cubit.entryField![i].formControlName)) ...[
+            .contains(cubit.entryField![i].fieldName)) ...[
           BlocBuilder<AddEntryCubit, AddEntryState>(
             builder: (context, state) {
               return Row(
@@ -215,7 +258,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
 
         /// Here calender view
         else if (DynamicUIHandler.calenderView
-            .contains(cubit.entryField![i].formControlName)) ...[
+            .contains(cubit.entryField![i].fieldName)) ...[
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -323,6 +366,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   } else if (state is DesignationDropDownSuccessState) {
                     cubit.designationData = [];
                     cubit.designationData = state.designationList.data ?? [];
+
                     context.read<AddEntryCubit>().getAddEntryFormStructure(
                         levelID: widget.leaveId.toString(),
                         countryId: widget.countryStateId ??
@@ -333,6 +377,10 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     } else {
                       cubit.entryField =
                           state.addEntryFormStructure.dataEntryField ?? [];
+                    }
+                    if (widget.personData != null) {
+                      cubit.getInitialTextfieldData(widget.personData);
+                      cubit.getInitialDropdownData(widget.personData);
                     }
                   }
                   return cubit.entryField == null

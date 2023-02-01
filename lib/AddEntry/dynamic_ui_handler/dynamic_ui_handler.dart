@@ -1,40 +1,42 @@
 class DynamicUIHandler {
   static List<String> dropdowns = [
     "designation",
-    "category",
+    "categoryId",
     "caste",
     "qualification",
-    "religion",
-    "profession",
+    "religionId",
+    "professionId",
+    "educationId",
   ];
   static List<String> textfield = [
     "name",
     "relation_name",
-    "phone_no",
+    "phone",
     "primary_member_id",
     "age",
     "email",
-    "full_address",
+    "address",
     "village",
     "tehsil",
     "district",
-    "pin_code",
-    "education",
-    "voter_id",
-    "aadhaar_number",
-    "ration_card_number",
+    "pinCode",
+
+    "voterId",
+    "aadhaarNumber",
+    "rationCardNumber",
 
     ///TODO : This parameter is not show in UI part
     /*  "assembly_constituency",
     "booth",*/
     "std_code",
     "landline",
-    "whatsapp_no",
-    "panna_number",
+    "whatsappNo",
+    "pannaNumber",
     "facebook_profile",
-    "twitter_profile",
-    "instagram_profile",
-    "linkedin_profile",
+    "facebookProfile",
+    "instagramProfile",
+    "twitterProfile",
+    "linkedinProfile",
     "Salutation",
     "sub_caste",
     "blood_group"
@@ -44,9 +46,9 @@ class DynamicUIHandler {
   static List<String> calenderView = ["dob"];
 
   static List<String> filePicker = [
-    "aadhaar_number",
-    "voter_id",
-    "ration_card_number"
+    "aadhaarNumber",
+    "voterId",
+    "rationCardNumber"
   ];
   static List<String> filePickerUrl = [
     "aadhaar_url",
