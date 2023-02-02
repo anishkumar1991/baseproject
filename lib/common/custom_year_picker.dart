@@ -129,7 +129,7 @@ class CustomYearPicker{
                               (DateTime.now().year - int.parse(cubit.startYearCtr.text)),
                                   (index) => InkWell(
                                 onTap: () {
-                                  cubit.endYearCtr.text = (int.parse(cubit.startYearCtr.text) - index).toString();
+                                  cubit.endYearCtr.text = (int.parse(cubit.startYearCtr.text) + index).toString();
                                   Navigator.pop(context);
                                 },
                                 child: Padding(

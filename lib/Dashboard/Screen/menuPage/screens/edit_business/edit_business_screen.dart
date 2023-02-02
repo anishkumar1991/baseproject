@@ -160,7 +160,7 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                             if(cubit.startYearCtr.text.isEmpty){
                               EasyLoading.showError(S.of(context).somethingWentWrong,duration: const Duration(seconds: 1));
                             }else{
-                              // CustomYearPicker.endYearPicker(context: context, startYearCtr: cubit.startYearCtr,endYearCtr: cubit.endYearCtr);
+                              CustomYearPicker.endYearPicker(context: context, cubit: cubit);
                             }
                           },
                           suffixWidget: const Icon(
