@@ -9,9 +9,10 @@ import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
 class ImageNotUploaded extends StatelessWidget {
-  const ImageNotUploaded({super.key, this.onTap});
+  const ImageNotUploaded({super.key, this.onTap, this.initialUserprofileURL});
 
   final GestureTapCallback? onTap;
+  final String? initialUserprofileURL;
 
   @override
   Widget build(BuildContext context) {
@@ -20,20 +21,36 @@ class ImageNotUploaded extends StatelessWidget {
       builder: (context, state) {
         return Column(
           children: [
-            cubit.file == null
-                ? Image.asset(
-                    AppIcons.personLogo,
-                    height: 68,
-                  )
-                : ClipRRect(
+            initialUserprofileURL != null
+                ? ClipRRect(
                     borderRadius: BorderRadius.circular(5),
-                    child: Image.file(
-                      cubit.file!,
+                    child: Image.network(
+                      cubit.initialUserprofileURL ?? "",
                       height: 100,
                       width: 100,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          AppIcons.personLogo,
+                          height: 68,
+                        );
+                      },
                     ),
-                  ),
+                  )
+                : cubit.file == null
+                    ? Image.asset(
+                        AppIcons.personLogo,
+                        height: 68,
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: Image.file(
+                          cubit.file!,
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
             spaceHeightWidget(8),
             GestureDetector(
               onTap: onTap,

@@ -9,7 +9,7 @@ class FieldHandler extends AddEntryCubit {
       return cubit.categoryData;
     } else if (dropdownType == "caste") {
       return cubit.castData;
-    } else if (dropdownType == "qualification") {
+    } else if (dropdownType == "educationId") {
       return cubit.qualificationData;
     } else if (dropdownType == "religion") {
       return cubit.religionData;
@@ -28,7 +28,7 @@ class FieldHandler extends AddEntryCubit {
       return cubit.categorySelected;
     } else if (dropdownType == "caste") {
       return cubit.castSelected;
-    } else if (dropdownType == "qualification") {
+    } else if (dropdownType == "educationId") {
       return cubit.qualificationSelected;
     } else if (dropdownType == "religionId") {
       return cubit.religionSelected;
@@ -98,7 +98,7 @@ class FieldHandler extends AddEntryCubit {
       return cubit.categorySelected?.name;
     } else if (dropdownType == "caste") {
       return cubit.castSelected?.name;
-    } else if (dropdownType == "qualification") {
+    } else if (dropdownType == "educationId") {
       return cubit.qualificationSelected?.name;
     } else if (dropdownType == "religionId") {
       return cubit.religionSelected?.name;
@@ -117,7 +117,7 @@ class FieldHandler extends AddEntryCubit {
       if (entryField[i].fieldName == dropdownType) {
         return entryField[i].formControlName ?? "";
       } else {
-        return "Ksy";
+        return "";
       }
     }
   }

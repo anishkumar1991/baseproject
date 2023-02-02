@@ -153,6 +153,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   leaveId: widget.dataLevelId ?? 0,
                   unitId: cubit.unitId,
                   subUnitId: cubit.subUnitId,
+                  levelName: cubit.levelNameId,
                   countryStateId: widget.countryStateId,
                   personData: null,
                 ));
@@ -412,6 +413,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                   unitId: cubit.unitId,
                                   subUnitId: cubit.subUnitId,
                                   countryStateId: widget.countryStateId,
+                                  levelName: cubit.levelNameId,
+                                  personID: data.id,
                                   personData: data.toJson(),
                                 ));
                           }),

@@ -23,6 +23,7 @@ abstract class DataEntryApi {
 
   @GET('/zila/api/data/deletion_reasons')
   Future<HttpResponse> getDeleteReason(@Header('Authorization') String token);
+
   @GET('/zila/api/data/delete_data_entry?id={id}&deletion_reason={reason}')
   Future<HttpResponse> deletePerson(@Header('Authorization') String token,
       @Path('id') int id, @Path('reason') String reason);

@@ -28,15 +28,21 @@ class AddEntryPage extends StatefulWidget {
       required this.type,
       required this.leaveId,
       required this.unitId,
+      required this.levelName,
       this.countryStateId,
       this.subUnitId,
-      this.personData})
+      this.personData,
+      this.personID})
       : super(key: key);
   final String type;
   final int leaveId;
   final int? unitId;
   final int? countryStateId;
+  final int? personID;
+
   final String? subUnitId;
+
+  final int? levelName;
   final Map<String, dynamic>? personData;
 
   @override
@@ -50,10 +56,26 @@ class _AddEntryPageState extends State<AddEntryPage> {
   @override
   void initState() {
     context.read<AddEntryCubit>().getDropdownData();
-    //context.read<AddEntryCubit>().getCastData(id: '1');
-    print("person data ${widget.personData}");
-    print(widget.unitId);
+    print(
+        "----------------------------------------  required parameter  -------------------------------------");
+    print("Level name :: ${widget.levelName}");
+    print("Unit :: ${widget.unitId}");
+    print("Level  :: ${widget.leaveId}");
+    print("from:: ${widget.type}Entry");
+    print("type id: : 1");
+    print("Sub unit :: ${widget.subUnitId}");
+    print("personID :: ${widget.personID}");
+    print(
+        "--------------------------------------------------------------------------------------------------");
     final cubit = context.read<AddEntryCubit>();
+    cubit.type = 1;
+    cubit.levelId = widget.leaveId;
+    cubit.unitId = widget.unitId;
+    cubit.from = "${widget.type}Entry";
+    cubit.subUnitId = widget.subUnitId ?? "";
+    cubit.levelName = widget.levelName;
+    cubit.personID = widget.personID;
+
     cubit.entryField = [];
     super.initState();
   }
@@ -81,7 +103,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   return cubit.categoryData;
                 } else if (dropdownType == "caste") {
                   return cubit.castData;
-                } else if (dropdownType == "qualification") {
+                } else if (dropdownType == "educationId") {
                   return cubit.qualificationData;
                 } else if (dropdownType == "religionId") {
                   return cubit.religionData;
@@ -147,11 +169,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               return null;
                             },
                             onChanged: (value) {
-                              FieldHandler.onUpdate(
-                                  i,
-                                  value,
-                                  cubit.entryField![i].formControlName ?? "",
-                                  cubit);
+                              FieldHandler.onUpdate(i, value,
+                                  cubit.entryField![i].fieldName ?? "", cubit);
                             },
                             title: cubit.entryField![i].displayNameForUI ?? "",
                             keyboardType: TextInputType.text,
@@ -160,19 +179,54 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         spaceHeightWidget(8),
                         UploadCard(
                           uploadedFilePath: FieldHandler.getFileName(
-                                  "${(cubit.entryField![i].formControlName ?? "").split("_")[0]}_url",
+                                  "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url",
                                   cubit)
                               .split("/")
                               .last,
                           onTap: (() async {
                             await cubit.pickFile(
-                                "${(cubit.entryField![i].formControlName ?? "").split("_")[0]}_url");
+                                "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
                           }),
                         ),
                       ],
                     )
                   ]
               ]
+            ] else ...[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextFieldWidget(
+                      validator: (value) {
+                        if (cubit.entryField![i].mandatoryField ?? false) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
+                          }
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        FieldHandler.onUpdate(i, value,
+                            cubit.entryField![i].fieldName ?? "", cubit);
+                      },
+                      title: cubit.entryField![i].displayNameForUI ?? "",
+                      keyboardType: TextInputType.text,
+                      hintText:
+                          'Enter Your ${cubit.entryField![i].displayNameForUI}'),
+                  spaceHeightWidget(8),
+                  UploadCard(
+                    uploadedFilePath: FieldHandler.getFileName(
+                            "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url",
+                            cubit)
+                        .split("/")
+                        .last,
+                    onTap: (() async {
+                      await cubit.pickFile(
+                          "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                    }),
+                  ),
+                ],
+              )
             ]
           ] else ...[
             if (widget.personData != null) ...[
@@ -381,6 +435,10 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     }
                     if (widget.personData != null) {
                       cubit.getInitialTextfieldData(widget.personData);
+                      cubit.getInitialUserprofileImageData(widget.personData);
+                      cubit.getInitialGenderData(widget.personData);
+                      cubit
+                          .getInitialMultiSelectionFieldData(widget.personData);
                       cubit.getInitialDropdownData(widget.personData);
                     }
                   }
@@ -404,7 +462,10 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                     spaceHeightWidget(14),
 
                                     /// User profile photo
-                                    Center(child: ImageNotUploaded(
+                                    Center(
+                                        child: ImageNotUploaded(
+                                      initialUserprofileURL:
+                                          cubit.initialUserprofileURL,
                                       onTap: (() {
                                         cubit.requestPermission(
                                             ImageSource.gallery);

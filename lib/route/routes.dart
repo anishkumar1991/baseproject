@@ -67,6 +67,8 @@ class RouteGenerator {
               subUnitId: data.subUnitId,
               countryStateId: data.countryStateId,
               personData: data.personData,
+              levelName: data.levelName,
+              personID: data.personID,
             );
           },
         );
