@@ -5,6 +5,8 @@ abstract class ProfileState {}
 
 class ProfileInitial extends ProfileState {}
 
+class ProfileLoadingState extends ProfileState {}
+
 class ErrorState extends ProfileState {
   final String error;
   ErrorState(this.error);

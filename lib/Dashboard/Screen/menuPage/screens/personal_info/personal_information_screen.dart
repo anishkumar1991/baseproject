@@ -115,21 +115,18 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               },
                             )),
                       )
-                    : InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColor.greyColor.withOpacity(0.5)),
-                              shape: BoxShape.circle),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(350),
-                              child: Image.file(cubit.imageFile!,
-                                  fit: BoxFit.cover)),
-                        ),
-                      );
+                    : Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: AppColor.greyColor.withOpacity(0.5)),
+                          shape: BoxShape.circle),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(350),
+                          child: Image.file(cubit.imageFile!,
+                              fit: BoxFit.cover)),
+                    );
               },
             ),
             spaceHeightWidget(15),
@@ -400,7 +397,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         EasyLoading.show();
                       } else if (state is UpdateDataState) {
                         context.read<ProfileCubit>().getUserDetails();
-                        Navigator.pop(context);
+                        // Navigator.pop(context);
                         EasyLoading.dismiss();
                       }
                     },
@@ -412,7 +409,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           "phone_number": cubit.mobileNumberCtr.text,
                           "dob": cubit.boiCtr.text,
                           "gender": cubit.value.name
-                        });
+                        },id: widget.userDetails.data?.id);
                       },
                       title: S.of(context).save,
                       width: 150,

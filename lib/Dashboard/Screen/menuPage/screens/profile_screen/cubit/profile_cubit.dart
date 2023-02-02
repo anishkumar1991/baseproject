@@ -27,7 +27,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future getUserDetails() async {
     try {
-      emit(ProfileInitial());
+      emit(ProfileLoadingState());
       StorageService.getUserAuthToken();
       var res =
           await api.getDataLevel('Bearer ${StorageService.userAuthToken}');

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -25,6 +27,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   bool isLoading = false;
   Gender value = Gender.male;
   UserDetailModel? updateData;
+  UploadTask? task;
+  String? urlDownload;
+  XFile? image;
   final TextEditingController nameCtr = TextEditingController();
   final TextEditingController userNameCtr = TextEditingController();
   final TextEditingController mobileNumberCtr = TextEditingController();
@@ -42,10 +47,13 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     emit(PersonalInfoInitial());
   }
 
-  updatePersonalDetails({required Map<String, dynamic> data}) async {
+  updatePersonalDetails({required Map<String, dynamic> data,int? id}) async {
     emit(LoadingState());
     print("----------------------------");
     try {
+      if(image != null && id != null){
+        getNetworkUrl(id: id);
+      }
       StorageService.getUserAuthToken();
       var res =
       await api.updatePersonalDetails('Bearer ${StorageService.userAuthToken}',data);
@@ -63,6 +71,18 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
       print(e);
       emit(PersonalInfoErrorState('Something Went Wrong'));
     }
+  }
+
+  getNetworkUrl({int? id}) async {
+    final imageTemp = File(image!.path);
+    imageFile = imageTemp;
+    final destination = '$id/${id}_userProfile';
+    task = FirebaseApi.uploadFile(destination, imageFile!);
+    final snapshot = await task!.whenComplete(() {
+      EasyLoading.showError("Photo Uploaded",duration: const Duration(milliseconds: 500));
+    });
+    urlDownload = await snapshot.ref.getDownloadURL();
+    print('Image Download-Link: $urlDownload');
   }
 
 
@@ -93,14 +113,26 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   Future<void> selectImage() async {
     emit(PersonalInfoInitial());
     try {
-      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      image = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (image == null) return;
-      final imageTemp = File(image.path);
+      final imageTemp = File(image!.path);
       imageFile = imageTemp;
       print("Image Path : $imageFile");
     } catch (e) {
       print('Failed to pick image: $e');
     }
     emit(ImageSelectSuccess());
+  }
+}
+
+class FirebaseApi {
+  static UploadTask? uploadFile(String destination, File file) {
+    try {
+      final ref = FirebaseStorage.instance.ref(destination);
+
+      return ref.putFile(file);
+    } on FirebaseException {
+      return null;
+    }
   }
 }
