@@ -4,9 +4,10 @@ import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/home_screen.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/menu_screen.dart';
-import 'package:sangathan/Dashboard/Screen/socialMediaPage/social_media_screen.dart';
 import 'package:sangathan/Values/app_colors.dart';
-import 'package:sangathan/Values/icons.dart';
+
+import '../../../Values/icons.dart';
+import '../socialMedia/MainPage.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});

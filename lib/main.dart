@@ -11,6 +11,8 @@ import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/ThumbCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -71,6 +73,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => ThumbCubit()),
+        BlocProvider(create: (context) => FetchPostsCubit()),
         BlocProvider(create: (context) => InternetCubit()),
         BlocProvider(create: (context) => DashBoardCubit()),
         BlocProvider(create: (context) => HomePageCubit()),
