@@ -4,8 +4,8 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/delete_reason_model.dart';
 
-import '../../../../../../storage/user_storage_service.dart';
-import '../Network/Api/data_entry_api.dart';
+import '../../../../../../Storage/user_storage_service.dart';
+import '../network/api/data_entry_api.dart';
 import '../network/model/data_entry_model.dart';
 import '../network/model/zila_model.dart';
 

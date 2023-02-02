@@ -12,6 +12,13 @@ class EditBusinessCubit extends Cubit<EditBusinessState> {
   TextEditingController endYearCtr = TextEditingController();
   TextEditingController positionCtr = TextEditingController();
 
+  clearData(){
+    businessNameCtr.clear();
+    startYearCtr.clear();
+    endYearCtr.clear();
+    positionCtr.clear();
+  }
+
   emitState(){
     emit(EditBusinessInitial());
   }

@@ -20,3 +20,9 @@ class DateOfBirth extends PersonalInfoState {
   final String date;
   DateOfBirth(this.date);
 }
+
+class FillCastValueState extends PersonalInfoInitial {
+  final CastModel cast;
+
+  FillCastValueState(this.cast);
+}

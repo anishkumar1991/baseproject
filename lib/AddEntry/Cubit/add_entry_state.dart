@@ -90,6 +90,7 @@ class DisposeState extends AddEntryState {}
 
 class FilterDataFetchedState extends AddEntryState {
   final DesignationDataModel designationData;
+
   FilterDataFetchedState(this.designationData);
 }
 
@@ -101,7 +102,22 @@ class TimerLoadingState extends AddEntryState {}
 
 class TimerRunningState extends AddEntryState {
   final int count;
+
   TimerRunningState(this.count);
 }
 
 class MultiCheckSelectionState extends AddEntryState {}
+
+class SubmitAddEntryLoadingState extends AddEntryState {}
+
+class SubmitAddEntrySuccessState extends AddEntryState {
+  final String message;
+
+  SubmitAddEntrySuccessState(this.message);
+}
+
+class SubmitAddEntryErrorState extends AddEntryState {
+  final String errorString;
+
+  SubmitAddEntryErrorState(this.errorString);
+}

@@ -46,10 +46,17 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, RoutePath.editBusinessScreen,
+                      arguments: {
+                        "isNew": true,
+                        "professionalDetails": widget.cubit.userDetails?.data?.professionalDetails
+                      });
+                },
                 child: Container(
-                  height: 30,
-                  width: 30,
+                  height: 35,
+                  width: 35,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.greyColor.withOpacity(0.2)),
@@ -59,9 +66,8 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
             ],
           ),
           spaceHeightWidget(5),
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Align(
+          widget.cubit.userDetails?.data?.professionalDetails?.isNotEmpty ?? false ? Column(children: [
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 widget.cubit.userDetails?.data
@@ -73,20 +79,20 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
                     fontWeight: FontWeight.w500),
               ),
             ),
-          ),
-          spaceHeightWidget(5),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
+            spaceHeightWidget(5),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
                 "${widget.cubit.userDetails?.data?.professionalDetails?.first.startYear} - ${widget.cubit.userDetails?.data?.professionalDetails?.first.endYear}\n${widget.cubit.userDetails?.data?.professionalDetails?.first.orgName}",
-              style: textStyleWithPoppin(
-                  fontSize: 13,
-                  color: AppColor.naturalBlackColor,
-                  fontWeight: FontWeight.w400),
+                style: textStyleWithPoppin(
+                    fontSize: 13,
+                    color: AppColor.naturalBlackColor,
+                    fontWeight: FontWeight.w400),
+              ),
             ),
-          ),
-          spaceHeightWidget(5),
-          Row(
+            spaceHeightWidget(5),
+          ],) : SizedBox.shrink(),
+          widget.cubit.userDetails?.data?.professionalDetails?.isNotEmpty ?? false ? Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
@@ -108,7 +114,7 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
               spaceWidthWidget(8),
               const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
             ],
-          ),
+          ) : SizedBox.shrink(),
           widget.cubit.showBusiness
             ? ListView.builder(
             shrinkWrap: true,
@@ -194,7 +200,8 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
               );
             })
             : const SizedBox.shrink(),
-          GestureDetector(
+          widget.cubit.userDetails!.data!.professionalDetails!.length > 1
+              ? GestureDetector(
             onTap: (){
               widget.cubit.showBusiness = !widget.cubit.showBusiness;
               setState(() {
@@ -220,7 +227,8 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
                 )
               ],
             ),
-          ),
+          )
+          : SizedBox.shrink(),
         ],
       ),
     );

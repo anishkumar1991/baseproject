@@ -11,8 +11,9 @@ import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
-import 'package:sangathan/storage/user_storage_service.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../../../../Storage/user_storage_service.dart';
 
 class SangathanDetailsPage extends StatefulWidget {
   const SangathanDetailsPage({super.key});

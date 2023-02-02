@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../../../AddEntry/network/model/cast_model.dart';
 import '../../../../../../Storage/user_storage_service.dart';
 import '../../profile_screen/network/model/user_detail_model.dart';
 import '../network/api/update_personal_details.dart';
@@ -30,6 +31,10 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   UploadTask? task;
   String? urlDownload;
   XFile? image;
+  int? religionId;
+  int? gradeId;
+  int? castId;
+  CastModel? castData;
   final TextEditingController nameCtr = TextEditingController();
   final TextEditingController userNameCtr = TextEditingController();
   final TextEditingController mobileNumberCtr = TextEditingController();
@@ -47,13 +52,29 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     emit(PersonalInfoInitial());
   }
 
-  updatePersonalDetails({required Map<String, dynamic> data,int? id}) async {
+  Future getCasteDropDownValue({required String id}) async {
+    try {
+      emit(PersonalInfoInitial());
+      final res =
+      await api.getCast('Bearer ${StorageService.userAuthToken}', id);
+      print('cast res =${res.response}');
+      if (res.response.statusCode == 200) {
+        CastModel data = CastModel.fromJson(res.data);
+        castData = data;
+        emit(FillCastValueState(data));
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(PersonalInfoErrorState(msg?['errors'] ?? ''));
+      }
+    } catch (e) {
+      emit(PersonalInfoErrorState('Something Went Wrong'));
+    }
+  }
+
+  updatePersonalDetails({required Map<String, dynamic> data}) async {
     emit(LoadingState());
     print("----------------------------");
     try {
-      if(image != null && id != null){
-        getNetworkUrl(id: id);
-      }
       StorageService.getUserAuthToken();
       var res =
       await api.updatePersonalDetails('Bearer ${StorageService.userAuthToken}',data);
@@ -73,16 +94,36 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     }
   }
 
-  getNetworkUrl({int? id}) async {
+  getNetworkUrlAndUpdateProfile({int? id}) async {
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
     final destination = '$id/${id}_userProfile';
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
-      EasyLoading.showError("Photo Uploaded",duration: const Duration(milliseconds: 500));
+      EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
     });
     urlDownload = await snapshot.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
+    updatePersonalDetails(data: {
+      "name": nameCtr.text,
+      "username": userNameCtr.text,
+      "phone_number": mobileNumberCtr.text,
+      "dob": boiCtr.text,
+      "gender": value.name,
+      "avatar": urlDownload,
+      "category": {
+        "id": gradeId,
+        "name": statusCtr.text
+      },
+      "religion": {
+        "id": religionId,
+        "name": religionCtr.text
+      },
+      "caste": {
+        "id": castId,
+        "name": castCtr.text
+      }
+    });
   }
 
 

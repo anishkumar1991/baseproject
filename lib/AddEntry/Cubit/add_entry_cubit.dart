@@ -9,14 +9,16 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
 import 'package:sangathan/AddEntry/network/model/designation_data_model.dart';
-import 'package:sangathan/storage/user_storage_service.dart';
 
+import '../../Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
+import '../../Storage/user_storage_service.dart';
 import '../dynamic_ui_handler/dynamic_ui_handler.dart';
 import '../network/api/add_entry_api.dart';
 import '../network/model/add_entry_form_structure_model.dart';
@@ -32,7 +34,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   File? rationFilePicked;
   File? adharFilePicked;
   File? voterFilePicked;
-
+  String? initialUserprofileURL;
   List multiSelectionList = [];
   List<DataEntryField>? entryField = [];
 
@@ -65,6 +67,14 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   List<Map<String, dynamic>> allMultiFieldData = [];
   List<Map<String, dynamic>> allDatePicker = [];
 
+  ///   API required parameter
+  int? type;
+  int? levelId;
+  int? unitId;
+  String? subUnitId;
+  int? levelName;
+  int? personID;
+  String? from;
   Map<String, dynamic> finalAllDataList = {};
   final api = AddEntryApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
@@ -121,6 +131,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     /// for user profile image
     if (file?.path != null) {
       data.addEntries({"photo": "${file?.path}"}.entries);
+    } else if (initialUserprofileURL != null) {
+      data.addEntries({"photo": "$initialUserprofileURL"}.entries);
     }
 
     /// for user gender
@@ -135,10 +147,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
 
     finalAllDataList = data;
-    print(allDropdownValueList);
-    print(textFieldControllerData);
-    print(allImagePickerList);
-    print(finalAllDataList);
+    log(finalAllDataList.toString());
   }
 
   /// getting all multi check value
@@ -152,7 +161,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     } else {
       Map<String, dynamic> json = {
         "fieldName": type,
-        "value": value,
+        "value": value == true ? "Yes" : "No",
       };
       allMultiFieldData.add(json);
     }
@@ -190,7 +199,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     } else if (dropdownType == "caste") {
       castSelected = value;
       getAllDropDownData(value, dropdownType);
-    } else if (dropdownType == "qualification") {
+    } else if (dropdownType == "educationId") {
       qualificationSelected = value;
 
       getAllDropDownData(value, dropdownType);
@@ -227,6 +236,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     PickedFile? pickedFile =
         await ImagePicker.platform.pickImage(source: source);
     if (pickedFile != null) {
+      initialUserprofileURL = null;
       file = File(pickedFile.path);
 
       /* if (file != null) {
@@ -260,25 +270,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(AddEntryLoadingState());
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      /*if (isAdhar) {
-        adharFilePicked = File(result.files.single.path!);
-        await storeImage(
-            folderName: 'adharFile',
-            path: adharFilePicked!.path,
-            recievedUrl: adharUrl);
-      } else if (isVoter) {
-        voterFilePicked = File(result.files.single.path!);
-        await storeImage(
-            folderName: 'voterFile',
-            path: voterFilePicked!.path,
-            recievedUrl: voterUrl);
-      } else if (isRation) {
-        rationFilePicked = File(result.files.single.path!);
-        await storeImage(
-
-            folderName: 'rationFile', path: rationFilePicked!.path);
-      }*/
-
       int index = allImagePickerList
           .indexWhere((element) => element["fieldName"] == fieldType);
       if (index >= 0) {
@@ -291,6 +282,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         allImagePickerList.add(json);
       }
     }
+    print(allImagePickerList);
     emit(FilePickedState());
   }
 
@@ -362,6 +354,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
               "------------------------------------ Add entry form structure ----------------------------");
           print("level id :$levelID");
           print("countryStateId = $countryId");
+          print("countryStateId = ${res.response.realUri.queryParameters}");
           print("Status code : ${res.response.statusCode}");
           print("Response :${res.data}");
           print(
@@ -447,6 +440,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     designationSelected = null;
     profileImageUrl = null;
     selectedDesignationData = null;
+    initialUserprofileURL = null;
+    file = null;
 
     ///  all field
     allDropdownValueList = [];
@@ -454,6 +449,16 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     textFieldControllerData = [];
     allMultiFieldData = [];
     allDatePicker = [];
+
+    ///
+
+    type = null;
+    levelId = null;
+    unitId = null;
+    from = null;
+    subUnitId = null;
+    levelName = null;
+    personID = null;
   }
 
   /// Get initial dropdown Data
@@ -489,7 +494,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
               getAllDropDownData(castData[index], item.key);
             }
           }
-        } else if (item.key == "qualification") {
+        } else if (item.key == "educationId") {
           if (item.value != null || item.value != "") {
             int index = qualificationData
                 .indexWhere((element) => element.id == item.value);
@@ -541,12 +546,165 @@ class AddEntryCubit extends Cubit<AddEntryState> {
                 "fieldName": item.key,
                 "value": item.value,
               };
-
               textFieldControllerData.add(json);
             }
           }
         }
       }
     }
+  }
+
+  /// Get initial gender data
+  getInitialGenderData(Map<String, dynamic>? personData) {
+    if (personData != null && entryField != null) {
+      for (var item in personData.entries) {
+        if (DynamicUIHandler.radioButton.contains(item.key)) {
+          if (item.value != null && item.value != "") {
+            selectRadio = item.value;
+          }
+        }
+      }
+    }
+  }
+
+  /// Get initial gender data
+
+  getInitialMultiSelectionFieldData(Map<String, dynamic>? personData) {
+    if (personData != null && entryField != null) {
+      for (var item in personData.entries) {
+        if (DynamicUIHandler.multiSelectionField.contains(item.key)) {
+          int index = allMultiFieldData
+              .indexWhere((element) => element["fieldName"] == item.key);
+          if (index >= 0) {
+            if (item.value != null && item.value != "") {
+              allMultiFieldData[index]["value"] = item.value;
+            }
+          } else {
+            if (item.value != null && item.value != "") {
+              Map<String, dynamic> json = {
+                "fieldName": item.key,
+                "value": item.value,
+              };
+              allMultiFieldData.add(json);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /// Get initial photo
+  getInitialUserprofileImageData(Map<String, dynamic>? personData) {
+    if (personData != null && entryField != null) {
+      for (var item in personData.entries) {
+        if (DynamicUIHandler.imagePicker.contains(item.key)) {
+          if (item.value != null && item.value != "") {
+            initialUserprofileURL = item.value;
+          }
+        }
+      }
+    }
+  }
+
+  /// Final submit button process
+
+  pressAddEntrySubmitButton() async {
+    EasyLoading.show();
+    Map<String, dynamic> map = {};
+    map.addEntries({"level_name": "$levelName"}.entries);
+    map.addEntries({"unit": "$unitId"}.entries);
+    map.addEntries({"sub_unit": "${subUnitId ?? ""} "}.entries);
+    map.addEntries({"type": "$type"}.entries);
+    map.addEntries({"level": "$levelId"}.entries);
+    map.addEntries({"from": "$from"}.entries);
+    if (personID != null && personID != "") {
+      map.addEntries({"personId": "$personID"}.entries);
+    }
+
+    for (int i = 0; i < (entryField?.length ?? 0); i++) {
+      for (var item in finalAllDataList.entries) {
+        if (entryField?[i].fieldName == item.key) {
+          if (item.key == "photo") {
+            if (item.value.toString().contains("http") ||
+                item.value.toString().contains("HTTP")) {
+              map.addEntries({
+                "${entryField?[i].formControlName}": "${item.value}"
+              }.entries);
+            } else {
+              String url = await getNetworkUrl(item.value,
+                  id: personID ?? DateTime.now().millisecondsSinceEpoch,
+                  name: 'userprofile');
+              map.addEntries(
+                  {"${entryField?[i].formControlName}": url}.entries);
+            }
+          } else {
+            map.addEntries(
+                {"${entryField?[i].formControlName}": "${item.value}"}.entries);
+          }
+        }
+      }
+    }
+    for (var item in finalAllDataList.entries) {
+      if (DynamicUIHandler.filePickerUrl.contains(item.key)) {
+        if (item.value.toString() != "" && item.value.toString() != null) {
+          if (item.value.toString().contains("http") ||
+              item.value.toString().contains("HTTP")) {
+            map.addEntries({item.key: "${item.value}"}.entries);
+          } else {
+            String url = await getNetworkUrl(item.value,
+                id: personID ?? DateTime.now().millisecondsSinceEpoch,
+                name: item.key.toString().split("_")[0]);
+            map.addEntries({item.key: url}.entries);
+          }
+        }
+      }
+    }
+
+    submitEntryData(data: map);
+    print(map);
+  }
+
+  /// call add and update entry api
+
+  Future submitEntryData({required Map<String, dynamic> data}) async {
+    try {
+      emit(SubmitAddEntryLoadingState());
+
+      final res = await api.submitAddEntry(
+          'Bearer ${StorageService.userAuthToken}', data);
+      print(
+          "------------------------------------ ADD DATA ENTRY API  ----------------------------");
+      print("data  :$data");
+      print("Status code : ${res.response.statusCode}");
+      log("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        if (res.data["success"] == true && res.data["duplication"] == false) {
+          emit(SubmitAddEntrySuccessState(res.data["message"]));
+        } else {
+          Map<String, dynamic>? msg = res.data;
+          emit(SubmitAddEntryErrorState(msg?['message'] ?? ''));
+        }
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(SubmitAddEntryErrorState(msg?['errors'] ?? ''));
+      }
+    } catch (e) {
+      emit(SubmitAddEntryErrorState('Something Went Wrong'));
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+  getNetworkUrl(String path, {int? id, required String name}) async {
+    final imageTemp = File(path);
+    File? imageFile = imageTemp;
+    final destination = '$id/${id}_$name';
+    UploadTask? task = FirebaseApi.uploadFile(destination, imageFile);
+    final snapshot = await task?.whenComplete(() {});
+    String? urlDownload = await snapshot?.ref.getDownloadURL();
+    print('Image Download-Link: $urlDownload');
+    return urlDownload;
   }
 }

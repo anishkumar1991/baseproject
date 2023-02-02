@@ -840,10 +840,10 @@ class S {
     );
   }
 
-  /// `Grade`
+  /// `Category`
   String get grade {
     return Intl.message(
-      'Grade',
+      'Category',
       name: 'grade',
       desc: '',
       args: [],
@@ -1000,20 +1000,20 @@ class S {
     );
   }
 
-  /// `Years (since when)`
+  /// `Years (From)`
   String get yearFrom {
     return Intl.message(
-      'Years (since when)',
+      'Years (From)',
       name: 'yearFrom',
       desc: '',
       args: [],
     );
   }
 
-  /// `Years (how long)`
+  /// `Years (To)`
   String get yearTo {
     return Intl.message(
-      'Years (how long)',
+      'Years (To)',
       name: 'yearTo',
       desc: '',
       args: [],
@@ -1147,6 +1147,76 @@ class S {
     return Intl.message(
       'Resend',
       name: 'resend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education Updated`
+  String get educationUpdated {
+    return Intl.message(
+      'Education Updated',
+      name: 'educationUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address Updated`
+  String get addressUpdated {
+    return Intl.message(
+      'Address Updated',
+      name: 'addressUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Business Updated`
+  String get businessUpdated {
+    return Intl.message(
+      'Business Updated',
+      name: 'businessUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Education Deleted`
+  String get educationDeleted {
+    return Intl.message(
+      'Education Deleted',
+      name: 'educationDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address Deleted`
+  String get addressDeleted {
+    return Intl.message(
+      'Address Deleted',
+      name: 'addressDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Business Deleted`
+  String get businessDeleted {
+    return Intl.message(
+      'Business Deleted',
+      name: 'businessDeleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Enter (From) year First`
+  String get somethingWentWrong {
+    return Intl.message(
+      'Please Enter (From) year First',
+      name: 'somethingWentWrong',
       desc: '',
       args: [],
     );

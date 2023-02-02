@@ -110,5 +110,12 @@
   "category": "श्रेणी",
   "verifyWithOtp":"ओटीपी से वेरिफाई करें",
   "skip&AddNewEntry":"छोड़ें और नई प्रविष्टि जोड़ें",
-  "resend":"पुन: भेजें"
+  "resend":"पुन: भेजें",
+  "educationUpdated" : "शिक्षा अपडेटेड",
+  "addressUpdated" : "एड्रेस अपडेटेड",
+  "businessUpdated" : "व्यवसाय अपडेटेड",
+  "educationDeleted" : "शिक्षा डिलीटेड",
+  "addressDeleted" : "एड्रेस डिलीटेड",
+  "businessDeleted" : "व्यवसाय डिलीटेड",
+  "somethingWentWrong" : "कृपया (कब से) वर्ष पहले दर्ज करें"
 }

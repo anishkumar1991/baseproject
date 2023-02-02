@@ -79,7 +79,7 @@
   "mobileNumber": "Mobile no.",
   "boi": "Date of Birth",
   "religion": "Religion",
-  "grade": "Grade",
+  "grade": "Category",
   "caste": "Caste",
   "FlatDes" : "Flat, House no. , Building, Apartment",
   "AreaDes": "Area, Street, Sector, Village",
@@ -95,8 +95,8 @@
   "sangathanReports":"Sangathan Reports",
   "createShaktiKendra":"Create Shakti Kendra",
   "level": "Level",
-  "yearFrom": "Years (since when)",
-  "yearTo": "Years (how long)",
+  "yearFrom": "Years (From)",
+  "yearTo": "Years (To)",
   "clgName": "Name of the Institute or College",
   "organization": "Name of organization",
   "dialogTitle": "Delete from profile?",
@@ -110,5 +110,12 @@
   "category": "Category",
   "verifyWithOtp":"Verify with OTP",
   "skip&AddNewEntry":"Skip & Add new entry",
-  "resend":"Resend"
+  "resend":"Resend",
+  "educationUpdated" : "Education Updated",
+  "addressUpdated" : "Address Updated",
+  "businessUpdated" : "Business Updated",
+  "educationDeleted" : "Education Deleted",
+  "addressDeleted" : "Address Deleted",
+  "businessDeleted" : "Business Deleted",
+  "somethingWentWrong": "Please Enter (From) year First"
 }

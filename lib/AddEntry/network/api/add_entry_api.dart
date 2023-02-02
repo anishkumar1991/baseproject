@@ -26,4 +26,8 @@ abstract class AddEntryApi {
   @POST('/zila/api/dashboard/get_filter_options')
   Future<HttpResponse> getDesignation(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
+
+  @POST('/zila/api/data_entry/create')
+  Future<HttpResponse> submitAddEntry(
+      @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

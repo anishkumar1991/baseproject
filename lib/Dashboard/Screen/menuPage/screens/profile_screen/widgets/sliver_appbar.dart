@@ -94,6 +94,7 @@ class MyAppBar extends StatelessWidget {
                           child: Image.network(
                             img,
                             height: 84,
+                            width: 84,
                             fit: BoxFit.cover,
                             errorBuilder:
                                 (BuildContext context, Object exception, StackTrace? stackTrace) {

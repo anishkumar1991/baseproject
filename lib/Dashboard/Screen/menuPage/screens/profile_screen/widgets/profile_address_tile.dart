@@ -47,10 +47,15 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, RoutePath.editAddressScreen,arguments: {
+                    "isNew" : true,
+                    "addresses": widget.cubit.userDetails?.data?.addresses
+                  });
+                },
                 child: Container(
-                  height: 30,
-                  width: 30,
+                  height: 35,
+                  width: 35,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.greyColor.withOpacity(0.2)),
@@ -60,40 +65,44 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
             ],
           ),
           spaceHeightWidget(5),
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Row(
-              children: [
-                Image.asset(
-                  AppIcons.homeOutlineIcon,
-                  color: AppColor.black,
-                  width: 15,
-                  height: 15,
+          spaceHeightWidget(5),
+          widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false ? Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 3.0,bottom: 5),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      AppIcons.homeOutlineIcon,
+                      color: AppColor.black,
+                      width: 15,
+                      height: 15,
+                    ),
+                    spaceWidthWidget(8),
+                    Text(
+                      S.of(context).home,
+                      style: textStyleWithPoppin(
+                          fontSize: 13,
+                          color: AppColor.naturalBlackColor,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
                 ),
-                spaceWidthWidget(8),
-                Text(
-                  S.of(context).home,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "${widget.cubit.userDetails?.data?.addresses?.first.houseNumber},${widget.cubit.userDetails?.data?.addresses?.first.area},${widget.cubit.userDetails?.data?.addresses?.first.city},${widget.cubit.userDetails?.data?.addresses?.first.state},${widget.cubit.userDetails?.data?.addresses?.first.pinCode}",
                   style: textStyleWithPoppin(
                       fontSize: 13,
                       color: AppColor.naturalBlackColor,
-                      fontWeight: FontWeight.w500),
+                      fontWeight: FontWeight.w400),
                 ),
-              ],
-            ),
-          ),
+              ),
+            ],
+          ) : SizedBox.shrink(),
           spaceHeightWidget(5),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "${widget.cubit.userDetails?.data?.addresses?.first.houseNumber},${widget.cubit.userDetails?.data?.addresses?.first.area},${widget.cubit.userDetails?.data?.addresses?.first.city},${widget.cubit.userDetails?.data?.addresses?.first.state},${widget.cubit.userDetails?.data?.addresses?.first.pinCode}",
-              style: textStyleWithPoppin(
-                  fontSize: 13,
-                  color: AppColor.naturalBlackColor,
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          spaceHeightWidget(5),
-          Row(
+          widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false ? Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
@@ -114,7 +123,7 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
               spaceWidthWidget(8),
               const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
             ],
-          ),
+          ) : const SizedBox.shrink(),
           spaceHeightWidget(5),
           widget.cubit.showAddress
               ? ListView.builder(
@@ -128,6 +137,27 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                     }
                     return Column(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 3.0,bottom: 5),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                AppIcons.homeOutlineIcon,
+                                color: AppColor.black,
+                                width: 15,
+                                height: 15,
+                              ),
+                              spaceWidthWidget(8),
+                              Text(
+                                S.of(context).home,
+                                style: textStyleWithPoppin(
+                                    fontSize: 13,
+                                    color: AppColor.naturalBlackColor,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
+                        ),
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
@@ -168,7 +198,8 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                     );
                   })
               : const SizedBox.shrink(),
-          GestureDetector(
+          widget.cubit.userDetails!.data!.addresses!.length > 1
+              ? GestureDetector(
             onTap: () {
               widget.cubit.showAddress = !widget.cubit.showAddress;
               // cubit.emitState();
@@ -195,7 +226,8 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                 )
               ],
             ),
-          ),
+          )
+              : const SizedBox.shrink(),
         ],
       ),
     );

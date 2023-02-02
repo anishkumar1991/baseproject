@@ -3,7 +3,6 @@ class DynamicUIHandler {
     "designation",
     "categoryId",
     "caste",
-    "qualification",
     "religionId",
     "professionId",
     "educationId",
@@ -20,7 +19,7 @@ class DynamicUIHandler {
     "tehsil",
     "district",
     "pinCode",
-
+    "qualification",
     "voterId",
     "aadhaarNumber",
     "rationCardNumber",
