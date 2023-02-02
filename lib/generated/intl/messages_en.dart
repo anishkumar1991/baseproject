@@ -41,10 +41,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "addOptional":
             MessageLookupByLibrary.simpleMessage("Add Tax (optional)"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "addressDeleted":
+            MessageLookupByLibrary.simpleMessage("Address Deleted"),
+        "addressUpdated":
+            MessageLookupByLibrary.simpleMessage("Address Updated"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
         "business": MessageLookupByLibrary.simpleMessage("Business"),
+        "businessDeleted":
+            MessageLookupByLibrary.simpleMessage("Business Deleted"),
+        "businessUpdated":
+            MessageLookupByLibrary.simpleMessage("Business Updated"),
         "caste": MessageLookupByLibrary.simpleMessage("Caste"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "clgName": MessageLookupByLibrary.simpleMessage(
@@ -76,6 +84,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("6 digit code has been sent"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "education": MessageLookupByLibrary.simpleMessage("Education"),
+        "educationDeleted":
+            MessageLookupByLibrary.simpleMessage("Education Deleted"),
+        "educationUpdated":
+            MessageLookupByLibrary.simpleMessage("Education Updated"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
@@ -87,7 +99,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Program Level *"),
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
-        "grade": MessageLookupByLibrary.simpleMessage("Grade"),
+        "grade": MessageLookupByLibrary.simpleMessage("Category"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
@@ -140,6 +152,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
+            "Please Enter (From) year First"),
         "state": MessageLookupByLibrary.simpleMessage("State"),
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("Stay and program list"),
@@ -165,8 +179,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProgram": MessageLookupByLibrary.simpleMessage("View Program"),
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("View Tours & Events"),
-        "yearFrom": MessageLookupByLibrary.simpleMessage("Years (since when)"),
-        "yearTo": MessageLookupByLibrary.simpleMessage("Years (how long)"),
+        "yearFrom": MessageLookupByLibrary.simpleMessage("Years (From)"),
+        "yearTo": MessageLookupByLibrary.simpleMessage("Years (To)"),
         "years": MessageLookupByLibrary.simpleMessage("Years")
       };
 }

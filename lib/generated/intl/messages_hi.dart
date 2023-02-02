@@ -41,10 +41,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "addOptional":
             MessageLookupByLibrary.simpleMessage("ऐड कर ( वैकल्पिक  )"),
         "address": MessageLookupByLibrary.simpleMessage("एड्रेस"),
+        "addressDeleted":
+            MessageLookupByLibrary.simpleMessage("एड्रेस डिलीटेड"),
+        "addressUpdated":
+            MessageLookupByLibrary.simpleMessage("एड्रेस अपडेटेड"),
         "age": MessageLookupByLibrary.simpleMessage("उम्र"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
         "business": MessageLookupByLibrary.simpleMessage("व्यवसाय"),
+        "businessDeleted":
+            MessageLookupByLibrary.simpleMessage("व्यवसाय डिलीटेड"),
+        "businessUpdated":
+            MessageLookupByLibrary.simpleMessage("व्यवसाय अपडेटेड"),
         "caste": MessageLookupByLibrary.simpleMessage("जाती"),
         "category": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "clgName":
@@ -78,6 +86,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "एक 6 अंकों का कोड भेजा गया है"),
         "edit": MessageLookupByLibrary.simpleMessage("एडिट"),
         "education": MessageLookupByLibrary.simpleMessage("शिक्षा"),
+        "educationDeleted":
+            MessageLookupByLibrary.simpleMessage("शिक्षा डिलीटेड"),
+        "educationUpdated":
+            MessageLookupByLibrary.simpleMessage("शिक्षा अपडेटेड"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("ओटीपी दर्ज करें"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
@@ -142,6 +154,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
+            "कृपया (कब से) वर्ष पहले दर्ज करें"),
         "state": MessageLookupByLibrary.simpleMessage("स्टेट"),
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("प्रवास और कार्यक्रम सूची"),

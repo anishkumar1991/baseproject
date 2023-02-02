@@ -9,6 +9,7 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
+import '../../../../../AddEntry/network/model/cast_model.dart';
 import '../../../../../AddEntry/network/model/category_model.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
@@ -116,17 +117,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             )),
                       )
                     : Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: AppColor.greyColor.withOpacity(0.5)),
-                          shape: BoxShape.circle),
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(350),
-                          child: Image.file(cubit.imageFile!,
-                              fit: BoxFit.cover)),
-                    );
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: AppColor.greyColor.withOpacity(0.5)),
+                            shape: BoxShape.circle),
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(350),
+                            child: Image.file(cubit.imageFile!,
+                                fit: BoxFit.cover)),
+                      );
               },
             ),
             spaceHeightWidget(15),
@@ -306,6 +307,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 context: context,
                                 dropDownList: dropDownValue?.data?.religion,
                                 text: S.of(context).religion,
+                                id: cubit.religionId ?? 0,
                                 controller: cubit.religionCtr);
                           },
                           suffixWidget: const Icon(
@@ -332,6 +334,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 dropDownList:
                                     dropDownValue?.data?.personCategory,
                                 text: S.of(context).category,
+                                id: cubit.gradeId ?? 0,
                                 controller: cubit.statusCtr);
                           },
                           suffixWidget: const Icon(
@@ -350,24 +353,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         onChanged: (value) {
                           cubit.emitState();
                         },
+                        readOnly: true,
                         keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.castCtr.text.isNotEmpty
-                            ? InkWell(
-                                onTap: () {
-                                  cubit.castCtr.clear();
-                                  cubit.emitState();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
-                                  child: Image.asset(
-                                    AppIcons.clearIcon,
-                                    height: 2,
-                                    width: 5,
-                                  ),
-                                ),
-                              )
-                            : const SizedBox.shrink(),
+                        onTap: () {
+                          showCastData(cubit: cubit);
+                        },
+                        suffixWidget: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: AppColor.black,
+                        ),
                       );
                     },
                   ),
@@ -397,19 +391,38 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         EasyLoading.show();
                       } else if (state is UpdateDataState) {
                         context.read<ProfileCubit>().getUserDetails();
-                        // Navigator.pop(context);
+                        Navigator.pop(context);
                         EasyLoading.dismiss();
+                        EasyLoading.showSuccess("Profile Updated",
+                            duration: const Duration(milliseconds: 500));
                       }
                     },
                     child: CommonButton(
                       onTap: () {
-                        cubit.updatePersonalDetails(data: {
-                          "name": cubit.nameCtr.text,
-                          "username": cubit.userNameCtr.text,
-                          "phone_number": cubit.mobileNumberCtr.text,
-                          "dob": cubit.boiCtr.text,
-                          "gender": cubit.value.name
-                        },id: widget.userDetails.data?.id);
+                        if (cubit.image != null) {
+                          cubit.getNetworkUrlAndUpdateProfile(
+                              id: widget.userDetails.data?.id);
+                        } else {
+                          cubit.updatePersonalDetails(data: {
+                            "name": cubit.nameCtr.text,
+                            "username": cubit.userNameCtr.text,
+                            "phone_number": cubit.mobileNumberCtr.text,
+                            "dob": cubit.boiCtr.text,
+                            "gender": cubit.value.name,
+                            "category": {
+                              "id": cubit.gradeId,
+                              "name": cubit.statusCtr.text
+                            },
+                            "religion": {
+                              "id": cubit.religionId,
+                              "name": cubit.religionCtr.text
+                            },
+                            "caste": {
+                              "id": cubit.castId,
+                              "name": cubit.castCtr.text
+                            },
+                          });
+                        }
                       },
                       title: S.of(context).save,
                       width: 150,
@@ -492,6 +505,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
       {required BuildContext context,
       List<DropdownData>? dropDownList,
       required String text,
+      required int id,
       required TextEditingController controller}) {
     showModalBottomSheet(
         context: context,
@@ -542,8 +556,21 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 children: [
                                   InkWell(
                                     onTap: () {
-                                      controller.text = list?[index].name ?? '';
-                                      Navigator.pop(context);
+                                      if (text == S.of(context).category) {
+                                        id = list?[index].id ?? 0;
+                                        controller.text =
+                                            list?[index].name ?? '';
+                                        context
+                                            .read<PersonalInfoCubit>()
+                                            .getCasteDropDownValue(
+                                                id: id.toString());
+                                        Navigator.pop(context);
+                                      } else {
+                                        id = list?[index].id ?? 0;
+                                        controller.text =
+                                            list?[index].name ?? '';
+                                        Navigator.pop(context);
+                                      }
                                     },
                                     child: SizedBox(
                                       width: double.infinity,
@@ -564,6 +591,95 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 ],
                               );
                             }),
+                      )
+                    ],
+                  ),
+                )),
+          );
+        });
+  }
+
+  showCastData({required PersonalInfoCubit cubit}) {
+    return showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(28.0),
+        ),
+        builder: (builder) {
+          return Container(
+            color: Colors.transparent,
+            child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(28.0),
+                        topRight: Radius.circular(28.0))),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      spaceHeightWidget(10),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          height: 5,
+                          width: 100,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: AppColor.borderColor),
+                        ),
+                      ),
+                      spaceHeightWidget(30),
+                      Text(
+                        S.of(context).caste,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            color: AppColor.borderColor, fontSize: 16),
+                      ),
+                      spaceHeightWidget(30),
+                      Expanded(
+                        child: cubit.castData?.data != null
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: cubit.castData?.data?.length,
+                                itemBuilder: (context, index) {
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          cubit.castId =
+                                              cubit.castData?.data?[index].id ??
+                                                  0;
+                                          cubit.castCtr.text = cubit.castData
+                                                  ?.data?[index].name ??
+                                              '';
+                                          Navigator.pop(context);
+                                        },
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          child: Text(
+                                            cubit.castData?.data?[index].name ??
+                                                '',
+                                            textAlign: TextAlign.left,
+                                            style: GoogleFonts.poppins(
+                                                color: AppColor.black,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ),
+                                      spaceHeightWidget(15),
+                                      const Divider(
+                                        color: AppColor.borderColor,
+                                      ),
+                                      spaceHeightWidget(15),
+                                    ],
+                                  );
+                                })
+                            : Center(
+                                child: Text(S.of(context).noDataAvailable)),
                       )
                     ],
                   ),

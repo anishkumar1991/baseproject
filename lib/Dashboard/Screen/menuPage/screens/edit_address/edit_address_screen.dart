@@ -4,7 +4,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/edit_address/widgets/header_widget_edit_address_screen.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
-
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/icons.dart';
 import '../../../../../common/appstyle.dart';
@@ -19,10 +18,12 @@ import 'cubit/edit_address_cubit.dart';
 class EditAddressScreen extends StatefulWidget {
   int? index;
   List<Addresses>? addresses;
+  bool? isNew;
 
   EditAddressScreen(
       {Key? key,
         this.addresses,
+        this.isNew = false,
         this.index})
       : super(key: key);
 
@@ -41,11 +42,15 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   }
 
   fillData({final cubit}) {
-    context.read<EditAddressCubit>().flatDesCtr.text = widget.addresses?[widget.index!].houseNumber ?? '';
-    context.read<EditAddressCubit>().areaDesCtr.text = widget.addresses?[widget.index!].area ?? '';
-    context.read<EditAddressCubit>().pinCodeCtr.text = widget.addresses?[widget.index!].pinCode ?? '';
-    context.read<EditAddressCubit>().townCtr.text = widget.addresses?[widget.index!].city ?? '';
-    context.read<EditAddressCubit>().stateCtr.text = widget.addresses?[widget.index!].state ?? '';
+    if(widget.isNew != true){
+      context.read<EditAddressCubit>().flatDesCtr.text = widget.addresses?[widget.index!].houseNumber ?? '';
+      context.read<EditAddressCubit>().areaDesCtr.text = widget.addresses?[widget.index!].area ?? '';
+      context.read<EditAddressCubit>().pinCodeCtr.text = widget.addresses?[widget.index!].pinCode ?? '';
+      context.read<EditAddressCubit>().townCtr.text = widget.addresses?[widget.index!].city ?? '';
+      context.read<EditAddressCubit>().stateCtr.text = widget.addresses?[widget.index!].state ?? '';
+    }else{
+      context.read<EditAddressCubit>().clearData();
+    }
   }
 
   @override
@@ -236,7 +241,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         ],
                       ),
                       spaceHeightWidget(40),
-                      CommonButton(
+                      widget.isNew != true ? CommonButton(
                         onTap: () {
                           showConfirmDialog();
                         },
@@ -249,7 +254,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         style: textStyleWithPoppin(
                             color: AppColor.greyColor.withOpacity(0.3),
                             fontSize: 14),
-                      ),
+                      ) : SizedBox.shrink(),
                       spaceHeightWidget(5),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -269,6 +274,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             context.read<ProfileCubit>().getUserDetails();
                             Navigator.pop(context);
                             EasyLoading.dismiss();
+                            EasyLoading.showSuccess(S.of(context).addressUpdated,duration: const Duration(milliseconds: 500));
                           }
                         },
                         child: CommonButton(
@@ -276,11 +282,6 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             filledList(cubit: cubit);
                             context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
                               "addresses" : widget.addresses
-                              // "name":cubit.nameCtr.text,
-                              // "username":cubit.userNameCtr.text,
-                              // "phone_number": cubit.mobileNumberCtr.text,
-                              // "dob": cubit.boiCtr.text,
-                              // "gender": cubit.value.name
                             });
                           },
                           title: S.of(context).save,
@@ -302,13 +303,28 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   }
 
   filledList({required EditAddressCubit cubit}){
-    address.state = cubit.stateCtr.text;
-    address.houseNumber = cubit.flatDesCtr.text;
-    address.area = cubit.areaDesCtr.text;
-    address.pinCode = cubit.pinCodeCtr.text;
-    address.city = cubit.townCtr.text;
-    widget.addresses?[widget.index!] = address;
+
+    if(widget.isNew == true){
+      address.state = cubit.stateCtr.text;
+      address.houseNumber = cubit.flatDesCtr.text;
+      address.area = cubit.areaDesCtr.text;
+      address.pinCode = cubit.pinCodeCtr.text;
+      address.city = cubit.townCtr.text;
+      widget.addresses?.add(address);
+      print(widget.addresses?.length);
+    }else{
+      address.state = cubit.stateCtr.text;
+      address.houseNumber = cubit.flatDesCtr.text;
+      address.area = cubit.areaDesCtr.text;
+      address.pinCode = cubit.pinCodeCtr.text;
+      address.city = cubit.townCtr.text;
+      widget.addresses?[widget.index!] = address;
+    }
   }
+  removeList(){
+    widget.addresses?.removeAt(widget.index!);
+  }
+
 
   buildBottomContainer(
       {IconData? icon, String? title, bool? isImage, String? image}) {
@@ -367,9 +383,29 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 child: Text(
                   (S.of(context).noThanks),
                 )),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(S.of(context).delete),
+            BlocListener<PersonalInfoCubit, PersonalInfoState>(
+              listener: (context, state) {
+                if (state is PersonalInfoErrorState) {
+                  EasyLoading.dismiss();
+                  EasyLoading.showError(state.error);
+                } else if (state is LoadingState) {
+                  EasyLoading.show();
+                } else if (state is UpdateDataState) {
+                  context.read<ProfileCubit>().getUserDetails();
+                  Navigator.pop(context);
+                  EasyLoading.dismiss();
+                  EasyLoading.showSuccess(S.of(context).addressDeleted,duration: const Duration(milliseconds: 500));
+                }
+              },
+              child: TextButton(
+                onPressed: (){
+                  removeList();
+                  context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+                    "addresses" : widget.addresses
+                  });
+                },
+                child: Text(S.of(context).delete),
+              ),
             ),
           ],
         );

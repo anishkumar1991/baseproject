@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/edit_business/cubit/edit_business_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/edit_business/widgets/header_widget_edit_business_screen.dart';
 
@@ -8,20 +9,26 @@ import '../../../../../Values/icons.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
+import '../../../../../common/custom_year_picker.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
+import '../personal_info/cubit/personal_info_cubit.dart';
+import '../profile_screen/cubit/profile_cubit.dart';
 import '../profile_screen/network/model/user_detail_model.dart';
 
 class EditBusinessScreen extends StatefulWidget {
   int? index;
   List<ProfessionalDetails>? professionalDetails;
-  EditBusinessScreen({Key? key,this.index,this.professionalDetails}) : super(key: key);
+  bool? isNew;
+  EditBusinessScreen({Key? key,this.index,this.professionalDetails,this.isNew = false}) : super(key: key);
 
   @override
   State<EditBusinessScreen> createState() => _EditBusinessScreenState();
 }
 
 class _EditBusinessScreenState extends State<EditBusinessScreen> {
+
+  ProfessionalDetails professionalDetails = ProfessionalDetails();
 
   @override
   void initState(){
@@ -30,10 +37,14 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
   }
 
   fillData({final cubit}){
-    context.read<EditBusinessCubit>().positionCtr.text = widget.professionalDetails?[widget.index!].position ?? '';
-    context.read<EditBusinessCubit>().startYearCtr.text = widget.professionalDetails?[widget.index!].startYear ?? '';
-    context.read<EditBusinessCubit>().endYearCtr.text = widget.professionalDetails?[widget.index!].endYear ?? '';
-    context.read<EditBusinessCubit>().businessNameCtr.text = widget.professionalDetails?[widget.index!].orgName ?? '';
+    if(widget.isNew != true){
+      context.read<EditBusinessCubit>().positionCtr.text = widget.professionalDetails?[widget.index!].position ?? '';
+      context.read<EditBusinessCubit>().startYearCtr.text = widget.professionalDetails?[widget.index!].startYear ?? '';
+      context.read<EditBusinessCubit>().endYearCtr.text = widget.professionalDetails?[widget.index!].endYear ?? '';
+      context.read<EditBusinessCubit>().businessNameCtr.text = widget.professionalDetails?[widget.index!].orgName ?? '';
+    }else{
+      context.read<EditBusinessCubit>().clearData();
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -119,10 +130,14 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                           controller: cubit.startYearCtr,
                           title: '',
                           labelText: S.of(context).yearFrom,
+                          readOnly: true,
                           onChanged: (value) {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.number,
+                          onTap: (){
+                            CustomYearPicker.startYearPicker(context: context, cubit: cubit);
+                          },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: AppColor.black,
@@ -136,10 +151,18 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                           controller: cubit.endYearCtr,
                           title: '',
                           labelText: S.of(context).yearTo,
+                          readOnly: true,
                           onChanged: (value) {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.number,
+                          onTap: (){
+                            if(cubit.startYearCtr.text.isEmpty){
+                              EasyLoading.showError(S.of(context).somethingWentWrong,duration: const Duration(seconds: 1));
+                            }else{
+                              // CustomYearPicker.endYearPicker(context: context, startYearCtr: cubit.startYearCtr,endYearCtr: cubit.endYearCtr);
+                            }
+                          },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: AppColor.black,
@@ -147,7 +170,7 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                     },
                   ),
                   spaceHeightWidget(MediaQuery.of(context).size.height * 0.12),
-                  CommonButton(
+                  widget.isNew != true ? CommonButton(
                     onTap: () {
                       showConfirmDialog();
                     },
@@ -160,7 +183,7 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                     style: textStyleWithPoppin(
                         color: AppColor.greyColor.withOpacity(0.3),
                         fontSize: 14),
-                  ),
+                  ) : SizedBox.shrink(),
                   spaceHeightWidget(5),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -169,17 +192,36 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                     ),
                   ),
                   spaceHeightWidget(5),
-                  CommonButton(
-                    onTap: () {
-                      Navigator.pop(context);
+                  BlocListener<PersonalInfoCubit, PersonalInfoState>(
+                    listener: (context, state) {
+                      if (state is PersonalInfoErrorState) {
+                        EasyLoading.dismiss();
+                        EasyLoading.showError(state.error);
+                      } else if (state is LoadingState) {
+                        EasyLoading.show();
+                      } else if (state is UpdateDataState) {
+                        context.read<ProfileCubit>().getUserDetails();
+                        Navigator.pop(context);
+                        EasyLoading.dismiss();
+                        EasyLoading.showSuccess(S.of(context).businessUpdated,duration: const Duration(milliseconds: 500));
+                      }
                     },
-                    title: S.of(context).save,
-                    width: 150,
-                    height: 38,
-                    borderRadius: 25,
-                    style: textStyleWithPoppin(
-                        color: AppColor.white, fontSize: 16),
+                    child:  CommonButton(
+                      onTap: () {
+                        filledList(cubit: cubit);
+                        context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+                          "professional_details" : widget.professionalDetails
+                        });
+                      },
+                      title: S.of(context).save,
+                      width: 150,
+                      height: 38,
+                      borderRadius: 25,
+                      style: textStyleWithPoppin(
+                          color: AppColor.white, fontSize: 16),
+                    ),
                   ),
+
                   spaceHeightWidget(15),
                 ],
               ),
@@ -188,6 +230,27 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
         ),
       ),
     );
+  }
+
+  filledList({required EditBusinessCubit cubit}){
+
+    if(widget.isNew == true){
+      professionalDetails.orgName = cubit.businessNameCtr.text;
+      professionalDetails.startYear = cubit.startYearCtr.text;
+      professionalDetails.endYear = cubit.endYearCtr.text;
+      professionalDetails.position = cubit.positionCtr.text;
+      widget.professionalDetails?.add(professionalDetails);;
+    }else{
+      professionalDetails.orgName = cubit.businessNameCtr.text;
+      professionalDetails.startYear = cubit.startYearCtr.text;
+      professionalDetails.endYear = cubit.endYearCtr.text;
+      professionalDetails.position = cubit.positionCtr.text;
+      widget.professionalDetails?[widget.index!] = professionalDetails;
+    }
+  }
+
+  removeList(){
+    widget.professionalDetails?.removeAt(widget.index!);
   }
 
   Future showConfirmDialog() {
@@ -206,10 +269,31 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                 onPressed: () => Navigator.pop(context),
                 child:  Text((S.of(context).noThanks),
                 )),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child:  Text(S.of(context).delete),
+            BlocListener<PersonalInfoCubit, PersonalInfoState>(
+              listener: (context, state) {
+                if (state is PersonalInfoErrorState) {
+                  EasyLoading.dismiss();
+                  EasyLoading.showError(state.error);
+                } else if (state is LoadingState) {
+                  EasyLoading.show();
+                } else if (state is UpdateDataState) {
+                  context.read<ProfileCubit>().getUserDetails();
+                  Navigator.pop(context);
+                  EasyLoading.dismiss();
+                  EasyLoading.showSuccess(S.of(context).businessDeleted,duration: const Duration(milliseconds: 500));
+                }
+              },
+              child: TextButton(
+                onPressed: (){
+                  removeList();
+                  context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+                    "professional_details" : widget.professionalDetails
+                  });
+                },
+                child:  Text(S.of(context).delete),
+              ),
             ),
+
           ],
         );
       },

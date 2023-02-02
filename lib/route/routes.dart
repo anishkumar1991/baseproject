@@ -164,14 +164,17 @@ class RouteGenerator {
             Map<String, dynamic>? map = {};
             int? index;
             List<Addresses>? addresses;
+            bool? isNew;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
               index = map['index'];
               addresses = map['addresses'];
+              isNew = map['isNew'];
             }
             return EditAddressScreen(
               index: index,
               addresses: addresses,
+              isNew: isNew
             );
           },
         );
@@ -190,14 +193,17 @@ class RouteGenerator {
             Map<String, dynamic>? map = {};
             int? index;
             List<EducationalDetails>? educationalDetails;
+            bool? isNew;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
               index = map['index'];
               educationalDetails = map['educationalDetails'];
+              isNew = map['isNew'];
             }
             return EditEducationScreen(
               index: index,
               educationalDetails: educationalDetails,
+              isNew: isNew
             );
           },
         );
@@ -208,14 +214,17 @@ class RouteGenerator {
             Map<String, dynamic>? map = {};
             int? index;
             List<ProfessionalDetails>? professionalDetails;
+            bool? isNew;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
               index = map['index'];
               professionalDetails = map['professionalDetails'];
+              isNew = map['isNew'];
             }
             return EditBusinessScreen(
               index: index,
               professionalDetails: professionalDetails,
+              isNew: isNew,
             );
           },
         );

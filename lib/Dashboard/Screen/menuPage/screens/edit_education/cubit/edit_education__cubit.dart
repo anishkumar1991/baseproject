@@ -16,23 +16,17 @@ class EditEducationCubit extends Cubit<EditEducationState> {
   TextEditingController startYearCtr = TextEditingController();
   TextEditingController endYearCtr = TextEditingController();
   TextEditingController collageCtr = TextEditingController();
-  String startDate = '';
-  String endDate = '';
-  PickerDateRange? temp;
+
+
+  clearData(){
+    levelCtr.clear();
+    startYearCtr.clear();
+    endYearCtr.clear();
+    collageCtr.clear();
+  }
 
   emitState(){
     emit(EditEducationInitial());
   }
 
-  Future<void> startToEndDate(BuildContext context) async {
-    emit(EditEducationInitial());
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        // return  RangePickerDialog(view: DateRangePickerView.year,cubit: BlocProvider.of<EditEducationCubit>(context),);
-        return Container();
-      },
-    ).then((value) =>  emit(YearDurationEducation(startDate)));
-  }
 }

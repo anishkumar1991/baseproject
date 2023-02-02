@@ -10,6 +10,8 @@ import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../Login/Cubit/login_cubit.dart';
+import '../../../../../Login/Cubit/login_state.dart';
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/appstyle.dart';
@@ -163,37 +165,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileBusinessScreen(cubit: cubit),
                         spaceHeightWidget(15),
                         customDivider(),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 15.0),
-                          child: Row(
-                            children: [
-                              Image.asset(AppIcons.logOutIcon,
-                                  height: 18,
-                                  width: 18,
-                                  color: AppColor.naturalBlackColor
-                                      .withOpacity(0.5)),
-                              spaceWidthWidget(8),
-                              Text(
-                                "Logout",
-                                style: textStyleWithPoppin(
-                                    fontSize: 14,
-                                    color: AppColor.naturalBlackColor
-                                        .withOpacity(0.5),
-                                    fontWeight: FontWeight.w500),
+
+
+                        BlocListener<LoginCubit, LoginState>(
+                          listener: (context, state) {
+                            if (state is UserLogOutSuccessState) {
+                              EasyLoading.showSuccess(state.msg);
+                              Navigator.pushNamedAndRemoveUntil(context, RoutePath.loginScreen, (route) => false);
+                            } else if (state is LogOutLoadingState) {
+                              EasyLoading.show();
+                            } else if (state is UserLogOutFaieldState) {
+                              EasyLoading.showError(state.error);
+                            }
+                          },
+                          child: InkWell(
+                            onTap: () async {
+                              await context.read<LoginCubit>().logOut();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15.0, vertical: 15.0),
+                              child: Row(
+                                children: [
+                                  Image.asset(AppIcons.logOutIcon,
+                                      height: 18,
+                                      width: 18,
+                                      color: AppColor.naturalBlackColor
+                                          .withOpacity(0.5)),
+                                  spaceWidthWidget(8),
+                                  Text(
+                                    "Logout",
+                                    style: textStyleWithPoppin(
+                                        fontSize: 14,
+                                        color: AppColor.naturalBlackColor
+                                            .withOpacity(0.5),
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  const Spacer(),
+                                  Text(
+                                    "Version 2.11",
+                                    style: textStyleWithPoppin(
+                                        fontSize: 11,
+                                        color: AppColor.naturalBlackColor
+                                            .withOpacity(0.5),
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
                               ),
-                              const Spacer(),
-                              Text(
-                                "Version 2.11",
-                                style: textStyleWithPoppin(
-                                    fontSize: 11,
-                                    color: AppColor.naturalBlackColor
-                                        .withOpacity(0.5),
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        )
+                            ),
+                          )
+                        ),
                       ],
                     ),
                   ),

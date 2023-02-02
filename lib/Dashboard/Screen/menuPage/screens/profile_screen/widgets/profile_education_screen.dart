@@ -46,10 +46,17 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
               ),
               const Spacer(),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, RoutePath.editEducationScreen,
+                      arguments: {
+                        "isNew": true,
+                        "educationalDetails": widget.cubit.userDetails?.data?.educationalDetails
+                      });
+                },
                 child: Container(
-                  height: 30,
-                  width: 30,
+                  height: 35,
+                  width: 35,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: AppColor.greyColor.withOpacity(0.2)),
@@ -59,34 +66,35 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
             ],
           ),
           spaceHeightWidget(5),
-          Padding(
-            padding: const EdgeInsets.only(left: 3.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                widget.cubit.userDetails?.data
-                    ?.educationalDetails?.first.level ??
-                    '',
-                style: textStyleWithPoppin(
-                    fontSize: 13,
-                    color: AppColor.naturalBlackColor,
-                    fontWeight: FontWeight.w500),
+          widget.cubit.userDetails?.data?.educationalDetails?.isNotEmpty ?? false ? Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.cubit.userDetails?.data
+                      ?.educationalDetails?.first.level ??
+                      '',
+                  style: textStyleWithPoppin(
+                      fontSize: 13,
+                      color: AppColor.naturalBlackColor,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
-            ),
-          ),
-          spaceHeightWidget(5),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-                "${widget.cubit.userDetails?.data?.educationalDetails?.first.startYear} - ${widget.cubit.userDetails?.data?.educationalDetails?.first.endYear}\n${widget.cubit.userDetails?.data?.educationalDetails?.first.institute}",
-              style: textStyleWithPoppin(
-                  fontSize: 13,
-                  color: AppColor.naturalBlackColor,
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          spaceHeightWidget(5),
-          Row(
+              spaceHeightWidget(5),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "${widget.cubit.userDetails?.data?.educationalDetails?.first.startYear} - ${widget.cubit.userDetails?.data?.educationalDetails?.first.endYear}\n${widget.cubit.userDetails?.data?.educationalDetails?.first.institute}",
+                  style: textStyleWithPoppin(
+                      fontSize: 13,
+                      color: AppColor.naturalBlackColor,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+              spaceHeightWidget(5),
+            ],
+          ) : SizedBox.shrink(),
+          widget.cubit.userDetails?.data?.educationalDetails?.isNotEmpty ?? false ? Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               InkWell(
@@ -108,7 +116,7 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
               spaceWidthWidget(8),
               const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
             ],
-          ),
+          ) : SizedBox.shrink(),
           widget.cubit.showEducation
               ? ListView.builder(
               shrinkWrap: true,
@@ -192,7 +200,8 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
                 );
               })
               : const SizedBox.shrink(),
-          GestureDetector(
+          widget.cubit.userDetails!.data!.educationalDetails!.length > 1
+              ? GestureDetector(
             onTap: (){
               widget.cubit.showEducation = !widget.cubit.showEducation;
               setState(() {
@@ -218,7 +227,8 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
                 )
               ],
             ),
-          ),
+          )
+              : SizedBox.shrink(),
         ],
       ),
     );
