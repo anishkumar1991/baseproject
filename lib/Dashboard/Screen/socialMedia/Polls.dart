@@ -71,7 +71,7 @@ class Polls extends StatelessWidget {
                     );
                   })),
               SizedBox(height: 10),
-             BottomSocialBar(),
+             // BottomSocialBar(),
             ],
           ),
         ),

@@ -57,7 +57,7 @@ class CustomCardTwitter extends StatelessWidget {
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(16, 10, 20, 10),
-                    child: BottomSocialBar(),
+                    // child: BottomSocialBar(),
                   )
                 ],
               ));

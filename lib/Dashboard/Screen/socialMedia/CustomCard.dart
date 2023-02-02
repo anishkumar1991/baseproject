@@ -20,7 +20,7 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit1 = context.read<FetchPostsCubit>();
-    final String tempurl = "6M3zfM-LO34";
+    final String tempurl = "https://storage.googleapis.com/dev-saral-bucket/voiyh8yh3p4jq16572icjqswiwbe?GoogleAccessId=949025725562-compute%40developer.gserviceaccount.com&Expires=1706884893&Signature=f0YU%2Bc7%2FFKZY03TfbVhBEzaouDweD%2BKHinMa5TII9zVMb8j1oiTZv217AcsVp%2FLrapIF2IHFFUsq261rQzqckwRN5FWLHB%2FMJ9YZTG9%2B2nikfa5WkJdEBrJssEsT0lGBoptNDFnaBVe%2F4bgZFx6mHD%2Fqp9jcJ2Eaga9ZcntABhlJXILbfAjheLF63PwsavPc0DXtijlZ%2B8qnVfpEPRkrtfyWAklh5cHPlzwTHK3ebvzar%2B6vKKT9n13K5RD5B0q9RIUsl0r8%2BdJQ0mnvU%2FgDqIFLwykxRyQmveciDSzew0rd5NjeFWodM68R%2Ft9FaUpIx%2FLL4auw1bLiFaf%2FphQ9%2FQ%3D%3D&response-content-disposition=inline%3B+filename%3D%223+%25281%2529.jpg%22%3B+filename%2A%3DUTF-8%27%273%2520%25281%2529.jpg&response-content-type=image%2Fpng";
     final cubit = context.read<ThumbCubit>();
     late int temp = 0;
     final YoutubePlayerController _controller = YoutubePlayerController(
@@ -71,7 +71,7 @@ class CustomCard extends StatelessWidget {
                 )),
             Padding(
               padding: EdgeInsets.fromLTRB(16, 10, 20, 10),
-              child: BottomSocialBar(url: tempurl),
+              child: BottomSocialBar(url: tempurl,index: index! ),
             )
           ],
         ));

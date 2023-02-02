@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/CustomCard.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/socialcards/ImageCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/twitter/TwitterCard.dart';
 
@@ -52,30 +53,40 @@ class SocialMediaPage extends StatelessWidget {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
-          child: BlocBuilder<FetchPostsCubit, FetchPostsState>(
-              builder: (context, state) {
-            if (state is PostsFetchedState) {
-              return ListView.builder(
-                itemCount: state.model.posts.length,
-                itemBuilder: (context, index) {
-
-                  // if (state.model.posts[index].postType == "Link" &&
-                  //     state.model.posts[index].postData.link?.linkType ==
-                  //         "twitter") {
-                  //   return CustomCardTwitter(index: index);
-                  // }
-                 if (state.model.posts[index].postType == "Image") {
-                    return CustomCard(tempkey: 2, index: index);
-                  }
-                  return SizedBox();
-                },
-              );
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 60),
+          child: ListView(
+            children: [
+              DisplayList(),
+              BlocBuilder<FetchPostsCubit, FetchPostsState>(
+                  builder: (context, state) {
+                if (state is PostsFetchedState) {
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemCount: state.model.posts.length,
+                    itemBuilder: (context, index) {
+                      // if (state.model.posts[index].postType == "Link" &&
+                      //     state.model.posts[index].postData.link?.linkType ==
+                      //         "twitter") {
+                      //   return CustomCardTwitter(index: index);
+                      // }
+                      if (state.model.posts[index].postType == "Image") {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 18),
+                          child: CustomCard(tempkey: 2, index: index),
+                        );
+                      }
+                      return SizedBox();
+                    },
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }),
+            ],
+          ),
         ));
   }
 }

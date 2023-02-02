@@ -13,6 +13,8 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cu
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/ThumbCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -74,6 +76,10 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ThumbCubit()),
+        BlocProvider(create: (context) => HorizontalTileCubit()),
+        BlocProvider(create: (context) => ReelsCubit()),
+
+
         BlocProvider(create: (context) => FetchPostsCubit()),
         BlocProvider(create: (context) => InternetCubit()),
         BlocProvider(create: (context) => DashBoardCubit()),

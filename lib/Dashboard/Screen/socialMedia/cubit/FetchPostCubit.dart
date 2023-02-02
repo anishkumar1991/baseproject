@@ -20,7 +20,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
   final api = FetchPostsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
   String? auth =
-      "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZ2NVemFaYVRZeDhpaTV5ZXEyZ1FweW1XIn0.Xfj4HWx5fsixa__klS-b2-2zCUq7I8A18Rblhc0Boec";
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiVG9NSDhudmI3MjloUHlpTXpLNDdoUU5jIn0.k75ssSFfj32l5q0MQSDn7dTeYdeUe1REW7ZzQfv4xR8";
 
   Future<void> fetchPosts() async {
     try {

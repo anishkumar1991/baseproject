@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
 import 'Share.dart';
 import 'ShareOnWhatsapp.dart';
 import 'cubit/ThumbCubit.dart';
@@ -7,11 +8,14 @@ import 'cubit/ThumbState.dart';
 
 class BottomSocialBar extends StatelessWidget {
   final String? url;
+  final int index;
 
-  const BottomSocialBar({Key? key, this.url}) : super(key: key);
+  const BottomSocialBar({Key? key, this.url, required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final cubit1 = context.read<FetchPostsCubit>();
     late int temp = 0;
 
     final cubit = context.read<ThumbCubit>();
@@ -63,7 +67,8 @@ class BottomSocialBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Text("1k"),
+              Text(
+                  cubit1.tempModel!.posts[index].reactions[0].count.toString()),
             ],
           ),
         ),
@@ -76,7 +81,7 @@ class BottomSocialBar extends StatelessWidget {
                     share(context, url!);
                   },
                   icon: const Icon(Icons.share_outlined)),
-              Text("223"),
+              Text(cubit1.tempModel!.posts[index].shares.other.toString()),
             ],
           ),
         ),
@@ -88,7 +93,7 @@ class BottomSocialBar extends StatelessWidget {
               },
               icon: const Icon(Icons.whatsapp, color: Color(0xFF1FAF38)),
             ),
-            Text("100"),
+            Text(cubit1.tempModel!.posts[index].shares.whatsapp.toString()),
           ],
         ),
       ],
