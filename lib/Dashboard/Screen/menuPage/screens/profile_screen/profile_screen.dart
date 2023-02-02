@@ -24,7 +24,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
   }

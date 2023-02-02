@@ -24,8 +24,22 @@ class EntryDataFetchedState extends ZilaDataState {
 class ErrorState extends ZilaDataState {
   final String error;
   ErrorState(this.error);
+}class GetPartZilaErrorState extends ZilaDataState {
+  final String error;
+  GetPartZilaErrorState(this.error);
 }
-
+class GetDataUnitErrorState extends ZilaDataState {
+  final String error;
+  GetDataUnitErrorState(this.error);
+}
+class DeleteReasonErrorState extends ZilaDataState {
+  final String error;
+  DeleteReasonErrorState(this.error);
+}
+class DeletePersonErrorState extends ZilaDataState {
+  final String error;
+  DeletePersonErrorState(this.error);
+}
 class ZilaChangedState extends ZilaDataState {}
 
 class PartyZilaSelectedState extends ZilaDataState {
@@ -43,4 +57,11 @@ class ChangeUnitData extends ZilaDataState {}
 class DeleteReasonFetchedState extends ZilaDataState {
   final DeleteReasonModel deleteReason;
   DeleteReasonFetchedState(this.deleteReason);
+}
+
+class DeleteReasonSeletcedState extends ZilaDataState {}
+
+class DeletePersonSuccessState extends ZilaDataState {
+  final String message;
+  DeletePersonSuccessState(this.message);
 }

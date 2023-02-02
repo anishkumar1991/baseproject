@@ -45,8 +45,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
       "country_state_id":
           widget.countryStateId ?? StorageService.userData?.user?.countryStateId
     });
-    print('unitId=${context.read<ZilaDataCubit>().unitId}');
-
+    context.read<ZilaDataCubit>().getDeleteReason();
     super.initState();
   }
 
@@ -173,7 +172,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
       height: 44,
       child: BlocConsumer<ZilaDataCubit, ZilaDataState>(
         listener: (context, state) {
-          if (state is ErrorState) {
+          if (state is GetDataUnitErrorState) {
             EasyLoading.showError(state.error);
           }
         },
@@ -187,9 +186,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               context.read<ZilaDataCubit>().getEntryData(data: {
                 "level": widget.dataLevelId,
                 "unit": cubit.unitId,
-
-                /// TODO: level_name need to make dynamic
-                "level_name": 348
+                "level_name": cubit.levelNameId
               });
               cubit.name =
                   List.generate(cubit.dataUnitList.length, (index) => null);
@@ -230,9 +227,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     await context.read<ZilaDataCubit>().getEntryData(data: {
                       "level": widget.dataLevelId,
                       "unit": cubit.unitId,
-
-                      ///TODO: Level name is static need to dynamic
-                      "level_name": 348
+                      "level_name": cubit.levelNameId
                     });
                   }),
                   child: Container(
@@ -295,6 +290,15 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         if (state is ErrorState) {
           EasyLoading.showError(state.error);
         }
+        if (state is DeletePersonSuccessState) {
+          EasyLoading.showSuccess(state.message);
+        }
+        if (state is DeleteReasonErrorState) {
+          EasyLoading.showError(state.error);
+        }
+        if (state is DeletePersonErrorState) {
+          EasyLoading.showError(state.error);
+        }
       },
       child: BlocBuilder<ZilaDataCubit, ZilaDataState>(
         builder: (context, state) {
@@ -306,6 +310,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
           if (state is DataFetchingLoadingState) {
             return shimmerWidget();
           }
+          if (state is DeleteReasonFetchedState) {
+            cubit.deleteReasonData = state.deleteReason;
+          }
+
           return cubit.dataList.isEmpty
               ? Center(
                   heightFactor: MediaQuery.of(context).size.height * 0.02,
@@ -360,24 +368,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         SlidableAction(
                           padding: EdgeInsets.zero,
                           onPressed: ((context) async {
-                            showDialog(
-                                context: context,
-                                builder: ((context) {
-                                  return AlertDialog(
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          'Select Reason',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColor.textBlackColor),
-                                        ),
-                                        spaceHeightWidget(14),
-                                      ],
-                                    ),
-                                  );
-                                }));
+                            cubit.getDeleteId(data.id);
+
+                            /// Data Entry Delete Dialog
+                            await dataEntryDeleteDialog(context, cubit, index);
                           }),
                           backgroundColor: AppColor.redShade100,
                           foregroundColor: AppColor.redShade600,
@@ -460,6 +454,122 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         },
       ),
     );
+  }
+
+  dataEntryDeleteDialog(
+      BuildContext context, ZilaDataCubit cubit, int index) async {
+    showDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog(
+            content: BlocBuilder<ZilaDataCubit, ZilaDataState>(
+              builder: (context, state) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Select Reason',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.textBlackColor),
+                    ),
+                    spaceHeightWidget(14),
+                    ListView.separated(
+                        shrinkWrap: true,
+                        separatorBuilder: ((context, index) =>
+                            spaceHeightWidget(8)),
+                        itemCount: cubit.deleteReasonData?.data?.deletionReasons
+                                ?.karyakarta?.length ??
+                            0,
+                        itemBuilder: ((context, index) {
+                          final data = cubit.deleteReasonData?.data
+                              ?.deletionReasons?.karyakarta?[index];
+                          return InkWell(
+                            onTap: (() {
+                              cubit.onTapDeleteResonData(index, data);
+                            }),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: cubit.selectedDeleteResonIndex == index
+                                      ? AppColor.buttonOrangeBackGroundColor
+                                      : AppColor.white),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: CircleAvatar(
+                                      radius: 12,
+                                      backgroundColor: AppColor.orange100,
+                                      child: Text('${index + 1}'.toString()),
+                                    ),
+                                  ),
+                                  spaceWidthWidget(6),
+                                  AutoSizeText(
+                                    data ?? '',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        color: cubit.selectedDeleteResonIndex ==
+                                                index
+                                            ? AppColor.white
+                                            : AppColor.textBlackColor),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        }))
+                  ],
+                );
+              },
+            ),
+            actions: [
+              ElevatedButton(
+                  onPressed: (() {
+                    if (cubit.selectedDeleteReson == null) {
+                      EasyLoading.showError('Please Select Reason');
+                    } else {
+                      Navigator.pop(context);
+
+                      showDialog(
+                          context: context,
+                          builder: ((context) => AlertDialog(
+                                content: Text(
+                                  'Are you sure to delete?',
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.textBlackColor),
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: (() async {
+                                        Navigator.pop(context);
+                                        await cubit.deletePerson(
+                                            deleteDataEntryId:
+                                                cubit.deleteId ?? 0,
+                                            reason: cubit.selectedDeleteReson!,
+                                            index: index);
+                                      }),
+                                      child: const Text('YES')),
+                                  ElevatedButton(
+                                      onPressed: (() {
+                                        Navigator.pop(context);
+                                      }),
+                                      child: const Text('NO')),
+                                ],
+                              )));
+                    }
+                  }),
+                  child: const Text('OK')),
+              ElevatedButton(
+                  onPressed: (() {
+                    Navigator.pop(context);
+                  }),
+                  child: const Text('CANCEL')),
+            ],
+          );
+        }));
   }
 
   Widget shimmerWidget() {
@@ -585,7 +695,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
           ),
           BlocConsumer<ZilaDataCubit, ZilaDataState>(
             listener: ((context, state) {
-              if (state is ErrorState) {
+              if (state is GetPartZilaErrorState) {
                 EasyLoading.showError(state.error);
               }
             }),
@@ -594,6 +704,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               if (state is PartyZilaSelectedState) {
                 cubit.zilaSelected = null;
                 cubit.partyzilaList = state.data.data!;
+                cubit.levelNameId = cubit.partyzilaList.first.id;
+                print('cubit.levelNameId==${cubit.levelNameId}');
               }
               return DropdownButtonHideUnderline(
                   child: DropdownButton(

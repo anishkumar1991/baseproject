@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
@@ -21,7 +22,11 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? unitId;
   int? subUnitId;
   List<SubUnits?> name = [];
-
+  DeleteReasonModel? deleteReasonData;
+  int? selectedDeleteResonIndex;
+  String? selectedDeleteReson;
+  int? deleteId;
+  int? levelNameId;
   final api =
       DataEntryApi(Dio(BaseOptions(validateStatus: ((status) => true))));
 
@@ -74,10 +79,10 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
         emit(PartyZilaSelectedState(data));
       } else {
         Map<String, dynamic>? msg = res.data;
-        emit(ErrorState(msg?['errors'] ?? ''));
+        emit(GetPartZilaErrorState(msg?['errors'] ?? ''));
       }
     } catch (e) {
-      emit(ErrorState('Something Went Wrong'));
+      emit(GetPartZilaErrorState('Something Went Wrong'));
     }
   }
 
@@ -98,11 +103,11 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
         emit(UnitDataFetchedState(data));
       } else {
         Map<String, dynamic>? msg = res.data;
-        emit(ErrorState(msg?['errors'] ?? ''));
+        emit(GetDataUnitErrorState(msg?['errors'] ?? ''));
       }
     } catch (e) {
       print(e);
-      emit(ErrorState('Something Went Wrong'));
+      emit(GetDataUnitErrorState('Something Went Wrong'));
     }
   }
 
@@ -124,7 +129,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
 
   Future getDeleteReason() async {
     try {
-      emit(DataFetchingLoadingState());
+      emit(LoadingState());
       final res =
           await api.getDeleteReason('Bearer ${StorageService.userAuthToken}');
       print(
@@ -139,10 +144,60 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
         emit(DeleteReasonFetchedState(data));
       } else {
         Map<String, dynamic>? msg = res.data;
-        emit(ErrorState(msg?['errors'] ?? ''));
+        emit(DeleteReasonErrorState(msg?['errors'] ?? ''));
       }
     } catch (e) {
-      emit(ErrorState('Something Went Wrong'));
+      emit(DeleteReasonErrorState('Something Went Wrong'));
     }
+  }
+
+  void onTapDeleteResonData(int? index, String? data) {
+    emit(LoadingState());
+    selectedDeleteResonIndex = index;
+    selectedDeleteReson = data;
+    print('reson$selectedDeleteReson');
+    emit(DeleteReasonSeletcedState());
+  }
+
+  Future deletePerson(
+      {required int deleteDataEntryId,
+      required String reason,
+      required int index}) async {
+    try {
+      emit(LoadingState());
+      final res = await api.deletePerson(
+        'Bearer ${StorageService.userAuthToken}',
+        deleteDataEntryId,
+        reason,
+      );
+      print(
+          "------------------------------------ Delete Person----------------------------");
+      print("deleteDataEntryId: $deleteDataEntryId");
+      print("reason  :$reason");
+
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        Map<String, dynamic>? msg = res.data;
+        dataList.removeAt(index);
+        emit(DeletePersonSuccessState(msg?['message']));
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(DeletePersonErrorState(msg?['message'] ?? ''));
+      }
+    } catch (e) {
+      emit(DeletePersonErrorState('Something Went Wrong'));
+    }
+  }
+
+  void getDeleteId(int? id) {
+    emit(LoadingState());
+    selectedDeleteReson = null;
+    selectedDeleteResonIndex = null;
+    deleteId = id;
+    print('deleteId $deleteId');
+    emit(ZilaChangedState());
   }
 }
