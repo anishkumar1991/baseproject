@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/splash_screen/cubit/user_profile_cubit.dart';
-import 'package:sangathan/storage/user_storage_service.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/route/route_path.dart';
 
+import '../../Storage/user_storage_service.dart';
 import '../cubit/user_profile_state.dart';
 
 class SplashScreen extends StatefulWidget {

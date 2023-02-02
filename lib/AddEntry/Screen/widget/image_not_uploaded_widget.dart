@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
-import 'package:sangathan/AddEntry/cubit/add_entry_state.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
+
+import '../../Cubit/add_entry_cubit.dart';
+import '../../Cubit/add_entry_state.dart';
 
 class ImageNotUploaded extends StatelessWidget {
   const ImageNotUploaded({super.key, this.onTap, this.initialUserprofileURL});

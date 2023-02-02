@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/splash_screen/cubit/user_profile_state.dart';
 import 'package:sangathan/splash_screen/network/api/user_profile_api.dart';
 import 'package:sangathan/splash_screen/network/model/user_profile_model.dart';
-import 'package:sangathan/storage/user_storage_service.dart';
+
+import '../../Storage/user_storage_service.dart';
 
 class UserProfileCubit extends Cubit<UserProfileState> {
   UserProfileCubit() : super(UserProfileInitialState());
@@ -18,7 +19,8 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       print('profile res =${res.response.statusCode}');
       print(res.data);
       if (res.response.statusCode == 200) {
-        UserProfileModel data = UserProfileModel.fromJson(res.data);
+        UserProfileModel data = UserProfileModel.fromJson(res.
+        data);
         emit(UserProfileDataFetchedState(data));
       } else {
         Map<String, dynamic>? msg = res.data;

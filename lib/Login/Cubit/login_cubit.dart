@@ -7,7 +7,8 @@ import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/api/auth_api.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
-import 'package:sangathan/storage/user_storage_service.dart';
+
+import '../../Storage/user_storage_service.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());

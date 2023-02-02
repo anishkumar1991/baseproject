@@ -4,7 +4,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cu
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/api/sangathan_details_api.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/sangathan_data_model.dart';
 
-import '../../../../../../storage/user_storage_service.dart';
+import '../../../../../../Storage/user_storage_service.dart';
 import '../network/model/alloted_location_model.dart';
 
 class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/widget/event_listview.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/widget/event_Listview.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/meeting_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/pravas_card_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
