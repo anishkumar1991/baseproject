@@ -1,4 +1,4 @@
-import '../cubit/add_entry_cubit.dart';
+import '../Cubit/add_entry_cubit.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 
 class FieldHandler extends AddEntryCubit {

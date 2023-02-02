@@ -16,9 +16,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
 import 'package:sangathan/AddEntry/network/model/designation_data_model.dart';
-import 'package:sangathan/storage/user_storage_service.dart';
 
 import '../../Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
+import '../../Storage/user_storage_service.dart';
 import '../dynamic_ui_handler/dynamic_ui_handler.dart';
 import '../network/api/add_entry_api.dart';
 import '../network/model/add_entry_form_structure_model.dart';
