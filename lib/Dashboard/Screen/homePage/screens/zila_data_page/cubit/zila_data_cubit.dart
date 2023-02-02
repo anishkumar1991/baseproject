@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
@@ -20,8 +19,10 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int filterDtaSelectedIndex = 0;
   List<UnitData> dataUnitList = [];
   int? unitId;
-  int? subUnitId;
-  List<SubUnits?> name = [];
+  String subUnitId = "";
+  List<SubUnits>? coreSangathanList = [];
+  List<UnitData> morchaList = [];
+  UnitData morchaData = UnitData(name: 'Morcha');
   DeleteReasonModel? deleteReasonData;
   int? selectedDeleteResonIndex;
   String? selectedDeleteReson;
@@ -33,6 +34,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   void onChnageZila(PartyZilaData? value) {
     emit(LoadingState());
     zilaSelected = value;
+    levelNameId =value?.id;
+    print('levelNameId=$levelNameId');
     emit(ZilaChangedState());
   }
 
@@ -111,20 +114,16 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  void onTapFilterData({required int index, required int id}) {
+  void onTapFilterData(
+      {required int index, required String id, required int? unitsId}) {
     emit(LoadingState());
     filterDtaSelectedIndex = index;
-    unitId = id;
-    print('unitId=$unitId');
-    emit(ZilaChangedState());
-  }
-
-  void onChangeUnitData(SubUnits? value, int? id, int index) {
-    emit(DataFetchingLoadingState());
-    name[index] = value;
+    unitId = unitsId;
     subUnitId = id;
+    print('unitId=$unitId');
+
     print('subUnitId=$subUnitId');
-    emit(ChangeUnitData());
+    emit(ZilaChangedState());
   }
 
   Future getDeleteReason() async {
@@ -198,6 +197,19 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     selectedDeleteResonIndex = null;
     deleteId = id;
     print('deleteId $deleteId');
+    emit(ZilaChangedState());
+  }
+
+  void onSelectMorcha(
+    UnitData data
+  ) {
+    emit(LoadingState());
+
+    morchaData = data;
+    unitId = data.id;
+    subUnitId = "";
+    print('unitId=$unitId');
+    print('subUnitId=$subUnitId');
     emit(ZilaChangedState());
   }
 }

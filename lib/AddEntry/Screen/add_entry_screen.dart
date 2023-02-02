@@ -36,7 +36,7 @@ class AddEntryPage extends StatefulWidget {
   final int leaveId;
   final int? unitId;
   final int? countryStateId;
-  final int? subUnitId;
+  final String? subUnitId;
   final Map<String, dynamic>? personData;
 
   @override
