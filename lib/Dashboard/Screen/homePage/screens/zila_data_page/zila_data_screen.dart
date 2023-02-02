@@ -9,6 +9,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
+import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/storage/user_storage_service.dart';
@@ -514,47 +515,63 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     showDialog(
         context: context,
         builder: ((context) {
-          return AlertDialog(
-            content: BlocBuilder<ZilaDataCubit, ZilaDataState>(
+          return Dialog(
+            child: BlocBuilder<ZilaDataCubit, ZilaDataState>(
               builder: (context, state) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      'Select Reason',
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.textBlackColor),
-                    ),
-                    spaceHeightWidget(14),
-                    ListView.separated(
-                        shrinkWrap: true,
-                        separatorBuilder: ((context, index) =>
-                            spaceHeightWidget(8)),
-                        itemCount: cubit.deleteReasonData?.data?.deletionReasons
-                                ?.karyakarta?.length ??
-                            0,
-                        itemBuilder: ((context, index) {
-                          final data = cubit.deleteReasonData?.data
-                              ?.deletionReasons?.karyakarta?[index];
-                          return InkWell(
-                            onTap: (() {
-                              cubit.onTapDeleteResonData(index, data);
-                            }),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: cubit.selectedDeleteResonIndex == index
-                                      ? AppColor.buttonOrangeBackGroundColor
-                                      : AppColor.white),
+                return Container(
+                  padding:const EdgeInsets.all(15),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Please select a reason for deletion',
+                        style: GoogleFonts.poppins(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.textBlackColor),
+                      ),
+                      spaceHeightWidget(14),
+                      ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: ((context, index) => const Divider(
+                                color: AppColor.greyColor,
+                              )),
+                          itemCount: cubit.deleteReasonData?.data
+                                  ?.deletionReasons?.karyakarta?.length ??
+                              0,
+                          itemBuilder: ((context, index) {
+                            final data = cubit.deleteReasonData?.data
+                                ?.deletionReasons?.karyakarta?[index];
+                            return InkWell(
+                              onTap: (() {
+                                cubit.onTapDeleteResonData(index, data);
+                              }),
                               child: Row(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: CircleAvatar(
-                                      radius: 12,
-                                      backgroundColor: AppColor.orange100,
-                                      child: Text('${index + 1}'.toString()),
+                                  Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 2,
+                                          color: cubit.selectedDeleteResonIndex ==
+                                                  index
+                                              ? AppColor
+                                                  .buttonOrangeBackGroundColor
+                                              : AppColor.greyColor
+                                                  .withOpacity(0.7)),
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Container(
+                                      margin: const EdgeInsets.all(2),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: cubit.selectedDeleteResonIndex ==
+                                                  index
+                                              ? AppColor
+                                                  .buttonOrangeBackGroundColor
+                                              : AppColor.greyColor
+                                                  .withOpacity(0.7)),
                                     ),
                                   ),
                                   spaceWidthWidget(6),
@@ -562,65 +579,95 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                     data ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.poppins(
-                                        fontSize: 14,
-                                        color: cubit.selectedDeleteResonIndex ==
-                                                index
-                                            ? AppColor.white
-                                            : AppColor.textBlackColor),
+                                      fontSize: 14,
+                                    ),
                                   )
                                 ],
                               ),
-                            ),
-                          );
-                        }))
-                  ],
+                            );
+                          })),
+                      const Divider(
+                        color: AppColor.greyColor,
+                      ),
+                      spaceHeightWidget(20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Expanded(
+                            child: CommonButton(
+                                onTap: (() {
+                                  Navigator.pop(context);
+                                }),
+                                bordercolor: AppColor.white,
+                                backGroundcolor: AppColor.white,
+                                title: 'Cancel',
+                                borderRadius: 5,
+                                height: 30,
+                                margin: const EdgeInsets.only(left: 20),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: AppColor.orange)),
+                          ),
+                          Expanded(
+                            child: CommonButton(
+                                onTap: (() {
+                                  if (cubit.selectedDeleteReson == null) {
+                                    EasyLoading.showError(
+                                        'Please Select Reason');
+                                  } else {
+                                    Navigator.pop(context);
+
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) => AlertDialog(
+                                              content: Text(
+                                                'Are you sure to delete?',
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: AppColor
+                                                        .textBlackColor),
+                                              ),
+                                              actions: [
+                                                ElevatedButton(
+                                                    onPressed: (() async {
+                                                      Navigator.pop(context);
+                                                      await cubit.deletePerson(
+                                                          deleteDataEntryId:
+                                                              cubit.deleteId ??
+                                                                  0,
+                                                          reason: cubit
+                                                              .selectedDeleteReson!,
+                                                          index: index);
+                                                    }),
+                                                    child: const Text('YES')),
+                                                ElevatedButton(
+                                                    onPressed: (() {
+                                                      Navigator.pop(context);
+                                                    }),
+                                                    child: const Text('NO')),
+                                              ],
+                                            )));
+                                  }
+                                }),
+                                borderRadius: 5,
+                                height: 35,
+                                margin: const EdgeInsets.only(left: 20),
+                                bordercolor: AppColor.redLight,
+                                backGroundcolor: AppColor.redLight,
+                                title: 'Delete',
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14,
+                                    color: AppColor.white)),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 );
               },
             ),
-            actions: [
-              ElevatedButton(
-                  onPressed: (() {
-                    if (cubit.selectedDeleteReson == null) {
-                      EasyLoading.showError('Please Select Reason');
-                    } else {
-                      Navigator.pop(context);
-
-                      showDialog(
-                          context: context,
-                          builder: ((context) => AlertDialog(
-                                content: Text(
-                                  'Are you sure to delete?',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColor.textBlackColor),
-                                ),
-                                actions: [
-                                  ElevatedButton(
-                                      onPressed: (() async {
-                                        Navigator.pop(context);
-                                        await cubit.deletePerson(
-                                            deleteDataEntryId:
-                                                cubit.deleteId ?? 0,
-                                            reason: cubit.selectedDeleteReson!,
-                                            index: index);
-                                      }),
-                                      child: const Text('YES')),
-                                  ElevatedButton(
-                                      onPressed: (() {
-                                        Navigator.pop(context);
-                                      }),
-                                      child: const Text('NO')),
-                                ],
-                              )));
-                    }
-                  }),
-                  child: const Text('OK')),
-              ElevatedButton(
-                  onPressed: (() {
-                    Navigator.pop(context);
-                  }),
-                  child: const Text('CANCEL')),
-            ],
           );
         }));
   }
