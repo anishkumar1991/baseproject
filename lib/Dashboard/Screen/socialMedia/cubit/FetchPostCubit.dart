@@ -46,10 +46,11 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
     }
   }
 
-  Future fetchTweets(BuildContext context, int index) async {
+  Future<void> fetchTweets(int index) async {
+    print("index $index");
     var tempId = tempModel!.posts[index].postData.link?.url.toString();
     var splitted = tempId?.split('/');
-    twitterId = splitted?[index].split('?')[0];
+    twitterId = splitted?[5].split('?')[0];
     print("twitter id = $twitterId");
 
     //! You need to get keys and tokens at https://developer.twitter.com
@@ -75,12 +76,14 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
     );
     try {
       final me = await twitter.tweets.lookupById(
-        tweetId: twitterId!.toString(),
+        tweetId: twitterId!,
         expansions: [v2.TweetExpansion.attachmentsMediaKeys],
         userFields: [v2.UserField.id],
         mediaFields: [v2.MediaField.url],
       );
-      print(me.includes?.media?.first.url);
+
+      print("url = ${me.includes?.media?.first.url}");
+      print(me.includes?.tweets?.first.text.toString());
 
       tweeturl = me.includes?.media?.first.url.toString();
 

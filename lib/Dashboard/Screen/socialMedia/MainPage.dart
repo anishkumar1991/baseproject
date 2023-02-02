@@ -59,11 +59,13 @@ class SocialMediaPage extends StatelessWidget {
               return ListView.builder(
                 itemCount: state.model.posts.length,
                 itemBuilder: (context, index) {
-                  print(state.model.posts.length.toString());
-                  if (state.model.posts[index].postType == "Link" &&
-                      state.model.posts[index].postData.link?.linkType == "twitter") {
-                    return CustomCardTwitter(index: index);
-                  } else if (state.model.posts[index].postType == "Image") {
+
+                  // if (state.model.posts[index].postType == "Link" &&
+                  //     state.model.posts[index].postData.link?.linkType ==
+                  //         "twitter") {
+                  //   return CustomCardTwitter(index: index);
+                  // }
+                 if (state.model.posts[index].postType == "Image") {
                     return CustomCard(tempkey: 2, index: index);
                   }
                   return SizedBox();
