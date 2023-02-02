@@ -519,7 +519,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             child: BlocBuilder<ZilaDataCubit, ZilaDataState>(
               builder: (context, state) {
                 return Container(
-                  padding:const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(15),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -836,8 +836,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                     fontWeight: FontWeight.w400, fontSize: 16),
                               )))
                           .toList(),
-                      onChanged: ((value) {
+                      onChanged: ((value) async {
                         cubit.onChnageZila(value);
+                        await context.read<ZilaDataCubit>().getEntryData(data: {
+                          "level": widget.dataLevelId,
+                          "unit": cubit.unitId,
+                          "level_name": cubit.levelNameId
+                        });
                       })));
             },
           ),
