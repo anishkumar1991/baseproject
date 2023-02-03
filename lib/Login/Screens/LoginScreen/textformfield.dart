@@ -13,8 +13,10 @@ class TextFormFieldLogin extends StatelessWidget {
     return TextFormField(
       keyboardType: TextInputType.phone,
       controller: controller,
+      maxLength: 10,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
+          counterText: '',
           prefixIcon: Padding(
             padding: const EdgeInsets.only(left: 10, top: 10),
             child: Text(

@@ -1221,6 +1221,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Please select a reason for deletion`
+  String get reasonforDeletion {
+    return Intl.message(
+      'Please select a reason for deletion',
+      name: 'reasonforDeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Reason`
+  String get pleaseSelectReason {
+    return Intl.message(
+      'Please Select Reason',
+      name: 'pleaseSelectReason',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

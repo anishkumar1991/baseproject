@@ -117,5 +117,10 @@
   "educationDeleted" : "Education Deleted",
   "addressDeleted" : "Address Deleted",
   "businessDeleted" : "Business Deleted",
-  "somethingWentWrong": "Please Enter (From) year First"
+  "somethingWentWrong": "Please Enter (From) year First",
+  "reasonforDeletion":"Please select a reason for deletion",
+  "yes":"Yes",
+  "no":"No",
+  "cancel":"Cancel",
+  "pleaseSelectReason":"Please Select Reason"
 }

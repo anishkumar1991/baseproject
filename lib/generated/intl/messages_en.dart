@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Business Deleted"),
         "businessUpdated":
             MessageLookupByLibrary.simpleMessage("Business Updated"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "caste": MessageLookupByLibrary.simpleMessage("Caste"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "clgName": MessageLookupByLibrary.simpleMessage(
@@ -117,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
         "newEntry": MessageLookupByLibrary.simpleMessage("New Entry"),
+        "no": MessageLookupByLibrary.simpleMessage("No"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("No Data Available"),
         "noOrganizationsAvailable":
@@ -131,11 +133,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("Photo ( max 2 )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("Please choose location"),
+        "pleaseSelectReason":
+            MessageLookupByLibrary.simpleMessage("Please Select Reason"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "program": MessageLookupByLibrary.simpleMessage("Program"),
+        "reasonforDeletion": MessageLookupByLibrary.simpleMessage(
+            "Please select a reason for deletion"),
         "religion": MessageLookupByLibrary.simpleMessage("Religion"),
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("Resend OTP"),
@@ -181,6 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("View Tours & Events"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("Years (From)"),
         "yearTo": MessageLookupByLibrary.simpleMessage("Years (To)"),
-        "years": MessageLookupByLibrary.simpleMessage("Years")
+        "years": MessageLookupByLibrary.simpleMessage("Years"),
+        "yes": MessageLookupByLibrary.simpleMessage("Yes")
       };
 }

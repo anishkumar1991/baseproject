@@ -16,7 +16,7 @@ class LoginCubit extends Cubit<LoginState> {
   final api = AuthApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
   //Timer timer;
-  int count = 30;
+  int count = 60;
 
   Future<void> startTimer() async {
     emit(LoadingState());
@@ -30,7 +30,10 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  
+  // void deactivatedState() {
+  //   count = 60;
+  //   emit(DeactivateState());
+  // }
 
   Future loginUser({required String mobileNumber}) async {
     try {

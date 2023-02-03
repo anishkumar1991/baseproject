@@ -117,5 +117,10 @@
   "educationDeleted" : "शिक्षा डिलीटेड",
   "addressDeleted" : "एड्रेस डिलीटेड",
   "businessDeleted" : "व्यवसाय डिलीटेड",
-  "somethingWentWrong" : "कृपया (कब से) वर्ष पहले दर्ज करें"
+  "somethingWentWrong" : "कृपया (कब से) वर्ष पहले दर्ज करें",
+  "reasonforDeletion":"कृपया हटाने का एक कारण चुनें",
+  "yes":"हां",
+  "no":"नहीं",
+  "cancel":"रद्द करें",
+  "pleaseSelectReason":"कृपया हटाने का कारण चुनें"
 }

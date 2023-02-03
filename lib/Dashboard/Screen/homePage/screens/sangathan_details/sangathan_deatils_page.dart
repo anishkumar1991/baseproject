@@ -158,7 +158,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               children: [
                                 IconButton(
                                     onPressed: (() {
-                                      if (cubit.countryStateId == null) {
+                                      if (cubit.locationList.isEmpty) {
+                                        Navigator.pop(context);
+                                      } else if (cubit.countryStateId == null) {
                                         EasyLoading.showError(
                                             S.of(context).pleaseChoosePlace);
                                       } else {
@@ -176,32 +178,45 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               ],
                             ),
                             spaceHeightWidget(10),
-                            Wrap(
-                                spacing: 10,
-                                runSpacing: 5,
-                                children: cubit.locationList
-                                    .map((e) => ChoiceChip(
-                                          backgroundColor:
-                                              AppColor.orange300Color,
-                                          selectedColor: cubit.locationId ==
-                                                  e.id
-                                              ? AppColor
-                                                  .buttonOrangeBackGroundColor
-                                              : null,
-                                          selected: cubit.locationId == e.id,
-                                          label: Text(
-                                            e.name ?? '',
-                                            style: TextStyle(
-                                                color: cubit.locationId == e.id
-                                                    ? AppColor.white
-                                                    : AppColor.textBlackColor),
-                                          ),
-                                          onSelected: ((value) {
-                                            cubit.onSelectLocation(
-                                                e.countryStateId, e.id);
-                                          }),
-                                        ))
-                                    .toList()),
+                            cubit.locationList.isNotEmpty
+                                ? Wrap(
+                                    spacing: 10,
+                                    runSpacing: 5,
+                                    children: cubit.locationList
+                                        .map((e) => ChoiceChip(
+                                              backgroundColor:
+                                                  AppColor.orange300Color,
+                                              selectedColor: cubit.locationId ==
+                                                      e.id
+                                                  ? AppColor
+                                                      .buttonOrangeBackGroundColor
+                                                  : null,
+                                              selected:
+                                                  cubit.locationId == e.id,
+                                              label: Text(
+                                                e.name ?? '',
+                                                style: TextStyle(
+                                                    color: cubit.locationId ==
+                                                            e.id
+                                                        ? AppColor.white
+                                                        : AppColor
+                                                            .textBlackColor),
+                                              ),
+                                              onSelected: ((value) {
+                                                cubit.onSelectLocation(
+                                                    e.countryStateId, e.id);
+                                              }),
+                                            ))
+                                        .toList())
+                                : Center(
+                                    child: Text(
+                                      S.of(context).noDataAvailable,
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.quicksand(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
                           ],
                         ),
                       )),

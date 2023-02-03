@@ -40,12 +40,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             StorageService.userData!.user!.countryStateId!);
     print('data_leve${widget.dataLevelId}');
     print('country_state_id${widget.countryStateId}');
-    context.read<ZilaDataCubit>().getUnitData(data: {
-      "type": "Unit",
-      "data_level": widget.dataLevelId,
-      "country_state_id":
-          widget.countryStateId ?? StorageService.userData?.user?.countryStateId
-    });
+
     context.read<ZilaDataCubit>().getDeleteReason();
     super.initState();
   }
@@ -76,67 +71,74 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         ),
         spaceHeightWidget(20),
         Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      spaceWidthWidget(8),
-                      const Icon(
-                        Icons.location_on_outlined,
-                        color: AppColor.textBlackColor,
-                      ),
-                      spaceWidthWidget(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    spaceWidthWidget(8),
+                    const Icon(
+                      Icons.location_on_outlined,
+                      color: AppColor.textBlackColor,
+                    ),
+                    spaceWidthWidget(8),
 
-                      /// dropdown location
-                      dropdownLocation(),
-                    ],
-                  ),
-                  const Divider(
-                    thickness: 1.2,
-                    color: AppColor.textBlackColor,
-                  ),
-                  spaceHeightWidget(13),
+                    /// dropdown location
+                    dropdownLocation(),
+                  ],
+                ),
+                const Divider(
+                  thickness: 1.2,
+                  color: AppColor.textBlackColor,
+                ),
+                spaceHeightWidget(13),
 
-                  /// unit data widget
-                  dataUnit(cubit),
-                  spaceHeightWidget(20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(S.of(context).entry,
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 18,
-                          )),
-                      BlocBuilder<ZilaDataCubit, ZilaDataState>(
-                        builder: (context, state) {
-                          if (state is EntryDataFetchedState) {
-                            if (state.data.data != null) {
-                              cubit.dataList = state.data.data!.data!;
-                            }
+                /// unit data widget
+                dataUnit(cubit),
+                spaceHeightWidget(20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(S.of(context).entry,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                        )),
+                    BlocBuilder<ZilaDataCubit, ZilaDataState>(
+                      builder: (context, state) {
+                        if (state is EntryDataFetchedState) {
+                          if (state.data.data != null) {
+                            cubit.dataList = state.data.data!.data!;
                           }
-                          return Text(
-                              "${S.of(context).total}:${cubit.dataList.length}",
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                  color: AppColor.greyColor));
-                        },
-                      )
+                        }
+                        return Text(
+                            "${S.of(context).total}:${cubit.dataList.length}",
+                            style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                color: AppColor.greyColor));
+                      },
+                    )
+                  ],
+                ),
+
+                spaceHeightWidget(10),
+                entryFilterWidget(),
+                spaceHeightWidget(10),
+                Expanded(
+                    child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      spaceHeightWidget(10),
+
+                      /// person list
+                      entryDetails(cubit)
                     ],
                   ),
-                  spaceHeightWidget(10),
-                  entryFilterWidget(),
-                  spaceHeightWidget(20),
-
-                  /// person list
-                  entryDetails(cubit)
-                ],
-              ),
+                ))
+              ],
             ),
           ),
         )
@@ -527,7 +529,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Please select a reason for deletion',
+                        S.of(context).reasonforDeletion,
                         style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
@@ -603,7 +605,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                 }),
                                 bordercolor: AppColor.white,
                                 backGroundcolor: AppColor.white,
-                                title: 'Cancel',
+                                title: S.of(context).cancel,
                                 borderRadius: 5,
                                 height: 30,
                                 margin: const EdgeInsets.only(left: 20),
@@ -617,7 +619,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                 onTap: (() {
                                   if (cubit.selectedDeleteReson == null) {
                                     EasyLoading.showError(
-                                        'Please Select Reason');
+                                        S.of(context).pleaseSelectReason);
                                   } else {
                                     Navigator.pop(context);
 
@@ -643,12 +645,14 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                                               .selectedDeleteReson!,
                                                           index: index);
                                                     }),
-                                                    child: const Text('YES')),
+                                                    child: Text(
+                                                        S.of(context).yes)),
                                                 ElevatedButton(
                                                     onPressed: (() {
                                                       Navigator.pop(context);
                                                     }),
-                                                    child: const Text('NO')),
+                                                    child:
+                                                        Text(S.of(context).no)),
                                               ],
                                             )));
                                   }
@@ -658,7 +662,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                 margin: const EdgeInsets.only(left: 20),
                                 bordercolor: AppColor.redLight,
                                 backGroundcolor: AppColor.redLight,
-                                title: 'Delete',
+                                title: S.of(context).delete,
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 14,
@@ -809,6 +813,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 cubit.partyzilaList = state.data.data!;
                 cubit.levelNameId = cubit.partyzilaList.first.id;
                 cubit.zilaSelected = cubit.partyzilaList.first;
+                context.read<ZilaDataCubit>().getUnitData(data: {
+                  "type": "Unit",
+                  "data_level": widget.dataLevelId,
+                  "country_state_id": widget.countryStateId ??
+                      StorageService.userData?.user?.countryStateId
+                });
                 print('cubit.levelNameId==${cubit.levelNameId}');
               }
               return DropdownButtonHideUnderline(

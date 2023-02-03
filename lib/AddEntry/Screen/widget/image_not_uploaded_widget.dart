@@ -58,7 +58,7 @@ class ImageNotUploaded extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
-                  width: 98,
+                  width: 105,
                   padding: const EdgeInsets.only(
                       top: 6, bottom: 6, left: 4, right: 4),
                   decoration: BoxDecoration(

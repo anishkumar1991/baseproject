@@ -9,7 +9,6 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
-import '../../../../../AddEntry/network/model/cast_model.dart';
 import '../../../../../AddEntry/network/model/category_model.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
@@ -540,7 +539,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       ),
                       spaceHeightWidget(30),
                       Text(
-                        text ?? '',
+                        text,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             color: AppColor.borderColor, fontSize: 16),

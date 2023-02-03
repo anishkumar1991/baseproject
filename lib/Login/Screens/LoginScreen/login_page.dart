@@ -98,9 +98,19 @@ class LoginScreen extends StatelessWidget {
                           } else {
                             return CommonButton(
                               onTap: (() async {
-                                await context.read<LoginCubit>().loginUser(
-                                      mobileNumber: mobileNumController.text,
-                                    );
+                                if (mobileNumController.text.isEmpty) {
+                                  EasyLoading.showError(
+                                      'Please Enter Mobile Number');
+                                } else if (mobileNumController.text.length !=
+                                    10) {
+                                  EasyLoading.showError(
+                                      'Mobile number should be 10 digit');
+                                } else {
+                                  await context.read<LoginCubit>().loginUser(
+                                        mobileNumber: mobileNumController.text,
+                                      );
+                                }
+                                //context.read<LoginCubit>().deactivatedState();
                                 // Navigator.pushNamed(
                                 //     context, RoutePath.verifyOtpScreen,
                                 //     arguments: mobileNumController.text);

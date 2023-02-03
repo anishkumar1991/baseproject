@@ -54,3 +54,4 @@ class UserLogOutFaieldState extends LoginState {
   UserLogOutFaieldState(this.error);
 }
 
+class DeactivateState extends LoginState{}

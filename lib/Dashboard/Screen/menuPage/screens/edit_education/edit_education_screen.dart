@@ -332,7 +332,7 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                       ),
                       spaceHeightWidget(30),
                       Text(
-                        text ?? '',
+                        text,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             color: AppColor.borderColor, fontSize: 16),
