@@ -1221,6 +1221,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Please select a reason for deletion`
+  String get reasonforDeletion {
+    return Intl.message(
+      'Please select a reason for deletion',
+      name: 'reasonforDeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Yes`
+  String get yes {
+    return Intl.message(
+      'Yes',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No`
+  String get no {
+    return Intl.message(
+      'No',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Reason`
+  String get pleaseSelectReason {
+    return Intl.message(
+      'Please Select Reason',
+      name: 'pleaseSelectReason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter data`
+  String get pleaseEnterData {
+    return Intl.message(
+      'Please enter data',
+      name: 'pleaseEnterData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log Out`
+  String get logOut {
+    return Intl.message(
+      'Log Out',
+      name: 'logOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to log out?`
+  String get logOutDes {
+    return Intl.message(
+      'Are you sure you want to log out?',
+      name: 'logOutDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome`
+  String get welcome {
+    return Intl.message(
+      'Welcome',
+      name: 'welcome',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

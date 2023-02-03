@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/delete_reason_model.dart';
@@ -34,7 +35,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   void onChnageZila(PartyZilaData? value) {
     emit(LoadingState());
     zilaSelected = value;
-    levelNameId =value?.id;
+    levelNameId = value?.id;
     print('levelNameId=$levelNameId');
     emit(ZilaChangedState());
   }
@@ -151,7 +152,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   }
 
   void onTapDeleteResonData(int? index, String? data) {
-    emit(LoadingState());
+    emit(ChangingDeleteReasonState());
     selectedDeleteResonIndex = index;
     selectedDeleteReson = data;
     print('reson$selectedDeleteReson');
@@ -164,6 +165,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       required int index}) async {
     try {
       emit(LoadingState());
+      EasyLoading.show();
       final res = await api.deletePerson(
         'Bearer ${StorageService.userAuthToken}',
         deleteDataEntryId,
@@ -188,6 +190,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       }
     } catch (e) {
       emit(DeletePersonErrorState('Something Went Wrong'));
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -200,9 +204,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(ZilaChangedState());
   }
 
-  void onSelectMorcha(
-    UnitData data
-  ) {
+  void onSelectMorcha(UnitData data) {
     emit(LoadingState());
 
     morchaData = data;

@@ -23,7 +23,8 @@ class EditEducationScreen extends StatefulWidget {
   List<EducationalDetails>? educationalDetails;
   bool? isNew;
 
-  EditEducationScreen({Key? key, this.index, this.educationalDetails,this.isNew = false})
+  EditEducationScreen(
+      {Key? key, this.index, this.educationalDetails, this.isNew = false})
       : super(key: key);
 
   @override
@@ -31,7 +32,6 @@ class EditEducationScreen extends StatefulWidget {
 }
 
 class _EditEducationScreenState extends State<EditEducationScreen> {
-
   EducationalDetails educationalDetails = EducationalDetails();
 
   @override
@@ -41,7 +41,7 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
   }
 
   fillData({final cubit}) {
-    if(widget.isNew != true){
+    if (widget.isNew != true) {
       context.read<EditEducationCubit>().levelCtr.text =
           widget.educationalDetails?[widget.index!].level ?? '';
       context.read<EditEducationCubit>().startYearCtr.text =
@@ -50,7 +50,7 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
           widget.educationalDetails?[widget.index!].endYear ?? '';
       context.read<EditEducationCubit>().collageCtr.text =
           widget.educationalDetails?[widget.index!].institute ?? '';
-    }else{
+    } else {
       context.read<EditEducationCubit>().clearData();
     }
   }
@@ -111,8 +111,9 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.number,
-                          onTap: (){
-                            CustomYearPicker.startYearPicker(context: context, cubit: cubit);
+                          onTap: () {
+                            CustomYearPicker.startYearPicker(
+                                context: context, cubit: cubit);
                           },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -132,12 +133,14 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.number,
-                          onTap: (){
-
-                            if(cubit.startYearCtr.text.isEmpty){
-                              EasyLoading.showError(S.of(context).somethingWentWrong,duration: const Duration(seconds: 1));
-                            }else{
-                              CustomYearPicker.endYearPicker(context: context, cubit: cubit);
+                          onTap: () {
+                            if (cubit.startYearCtr.text.isEmpty) {
+                              EasyLoading.showError(
+                                  S.of(context).somethingWentWrong,
+                                  duration: const Duration(seconds: 1));
+                            } else {
+                              CustomYearPicker.endYearPicker(
+                                  context: context, cubit: cubit);
                             }
                           },
                           suffixWidget: const Icon(
@@ -177,20 +180,22 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                     },
                   ),
                   spaceHeightWidget(MediaQuery.of(context).size.height * 0.12),
-                  widget.isNew != true ? CommonButton(
-                    onTap: () {
-                      showConfirmDialog();
-                    },
-                    title: S.of(context).delete,
-                    width: 150,
-                    height: 20,
-                    borderRadius: 25,
-                    backGroundcolor: Colors.transparent,
-                    bordercolor: Colors.transparent,
-                    style: textStyleWithPoppin(
-                        color: AppColor.greyColor.withOpacity(0.3),
-                        fontSize: 14),
-                  ) : SizedBox.shrink(),
+                  widget.isNew != true
+                      ? CommonButton(
+                          onTap: () {
+                            showConfirmDialog();
+                          },
+                          title: S.of(context).delete,
+                          width: 150,
+                          height: 20,
+                          borderRadius: 25,
+                          backGroundcolor: Colors.transparent,
+                          bordercolor: Colors.transparent,
+                          style: textStyleWithPoppin(
+                              color: AppColor.greyColor.withOpacity(0.3),
+                              fontSize: 14),
+                        )
+                      : SizedBox.shrink(),
                   spaceHeightWidget(5),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -210,15 +215,23 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                         context.read<ProfileCubit>().getUserDetails();
                         Navigator.pop(context);
                         EasyLoading.dismiss();
-                        EasyLoading.showSuccess(S.of(context).educationUpdated,duration: const Duration(milliseconds: 500));
+                        EasyLoading.showSuccess(S.of(context).educationUpdated,
+                            duration: const Duration(milliseconds: 500));
                       }
                     },
-                    child:  CommonButton(
+                    child: CommonButton(
                       onTap: () {
-                        filledList(cubit: cubit);
-                        context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
-                          "educational_details" : widget.educationalDetails
-                        });
+                        if (cubit.checkIfEmpty()) {
+                          EasyLoading.showError(S.of(context).pleaseEnterData,
+                              duration: const Duration(milliseconds: 500));
+                        } else {
+                          filledList(cubit: cubit);
+                          context
+                              .read<PersonalInfoCubit>()
+                              .updatePersonalDetails(data: {
+                            "educational_details": widget.educationalDetails
+                          });
+                        }
                       },
                       title: S.of(context).save,
                       width: 150,
@@ -275,15 +288,15 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                   context.read<ProfileCubit>().getUserDetails();
                   Navigator.pop(context);
                   EasyLoading.dismiss();
-                  EasyLoading.showSuccess(S.of(context).educationDeleted,duration: const Duration(milliseconds: 500));
+                  EasyLoading.showSuccess(S.of(context).educationDeleted,
+                      duration: const Duration(milliseconds: 500));
                 }
               },
-              child:   TextButton(
-                onPressed: (){
+              child: TextButton(
+                onPressed: () {
                   removeList();
-                  context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
-                    "educational_details" : widget.educationalDetails
-                  });
+                  context.read<PersonalInfoCubit>().updatePersonalDetails(
+                      data: {"educational_details": widget.educationalDetails});
                 },
                 child: Text(S.of(context).delete),
               ),
@@ -332,7 +345,7 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                       ),
                       spaceHeightWidget(30),
                       Text(
-                        text ?? '',
+                        text,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
                             color: AppColor.borderColor, fontSize: 16),
@@ -378,14 +391,14 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
         });
   }
 
-  filledList({required EditEducationCubit cubit}){
-    if(widget.isNew == true){
+  filledList({required EditEducationCubit cubit}) {
+    if (widget.isNew == true) {
       educationalDetails.level = cubit.levelCtr.text;
       educationalDetails.startYear = cubit.startYearCtr.text;
       educationalDetails.endYear = cubit.endYearCtr.text;
       educationalDetails.institute = cubit.collageCtr.text;
       widget.educationalDetails?.add(educationalDetails);
-    }else{
+    } else {
       educationalDetails.level = cubit.levelCtr.text;
       educationalDetails.startYear = cubit.startYearCtr.text;
       educationalDetails.endYear = cubit.endYearCtr.text;
@@ -394,8 +407,7 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
     }
   }
 
-  removeList(){
+  removeList() {
     widget.educationalDetails?.removeAt(widget.index!);
   }
-
 }

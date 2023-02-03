@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("व्यवसाय डिलीटेड"),
         "businessUpdated":
             MessageLookupByLibrary.simpleMessage("व्यवसाय अपडेटेड"),
+        "cancel": MessageLookupByLibrary.simpleMessage("रद्द करें"),
         "caste": MessageLookupByLibrary.simpleMessage("जाती"),
         "category": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "clgName":
@@ -107,6 +108,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("होम"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
+        "logOut": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
+        "logOutDes": MessageLookupByLibrary.simpleMessage(
+            "क्या आप लॉग आउट करना चाहते हैं?"),
         "login": MessageLookupByLibrary.simpleMessage("लॉगिन करे"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("लॉगिन"),
         "loginToGetTheProgramsAndInformationRelatedToTheOrganization":
@@ -121,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("नाम"),
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
         "newEntry": MessageLookupByLibrary.simpleMessage("नवीन एंट्री"),
+        "no": MessageLookupByLibrary.simpleMessage("नहीं"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("कोई डेटा उपलब्ध नहीं है"),
         "noOrganizationsAvailable":
@@ -134,11 +139,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
+        "pleaseEnterData":
+            MessageLookupByLibrary.simpleMessage("कृपया डेटा दर्ज करें"),
+        "pleaseSelectReason":
+            MessageLookupByLibrary.simpleMessage("कृपया हटाने का कारण चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
         "post": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
+        "reasonforDeletion": MessageLookupByLibrary.simpleMessage(
+            "कृपया हटाने का एक कारण चुनें"),
         "religion": MessageLookupByLibrary.simpleMessage("धर्म"),
         "resend": MessageLookupByLibrary.simpleMessage("पुन: भेजें"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("ओटीपी पुनः भेजें"),
@@ -183,8 +194,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम देखें"),
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("प्रवास और  कार्याक्रम देखे"),
+        "welcome": MessageLookupByLibrary.simpleMessage("नमस्ते"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("वर्ष ( कब से )"),
         "yearTo": MessageLookupByLibrary.simpleMessage("वर्ष ( कब तक )"),
-        "years": MessageLookupByLibrary.simpleMessage("वर्ष")
+        "years": MessageLookupByLibrary.simpleMessage("वर्ष"),
+        "yes": MessageLookupByLibrary.simpleMessage("हां")
       };
 }

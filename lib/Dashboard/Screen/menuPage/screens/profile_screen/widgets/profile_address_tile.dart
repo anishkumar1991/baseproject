@@ -48,10 +48,11 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
               const Spacer(),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, RoutePath.editAddressScreen,arguments: {
-                    "isNew" : true,
-                    "addresses": widget.cubit.userDetails?.data?.addresses
-                  });
+                  Navigator.pushNamed(context, RoutePath.editAddressScreen,
+                      arguments: {
+                        "isNew": true,
+                        "addresses": widget.cubit.userDetails?.data?.addresses
+                      });
                 },
                 child: Container(
                   height: 35,
@@ -65,65 +66,91 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
             ],
           ),
           spaceHeightWidget(5),
-          spaceHeightWidget(5),
-          widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false ? Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 3.0,bottom: 5),
-                child: Row(
+          widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false
+              ? Column(
                   children: [
-                    Image.asset(
-                      AppIcons.homeOutlineIcon,
-                      color: AppColor.black,
-                      width: 15,
-                      height: 15,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 3.0, bottom: 5),
+                      child: Row(
+                        children: [
+                          Icon(
+                            addressIcon(
+                                addressFor: widget.cubit.userDetails?.data
+                                    ?.addresses?.first.forAddress),
+                            color: AppColor.black.withOpacity(0.7),
+                            size: 20,
+                          ),
+                          spaceWidthWidget(5),
+                          Text(
+                            widget.cubit.userDetails?.data?.addresses?.first
+                                    .forAddress ??
+                                '',
+                            style: textStyleWithPoppin(
+                                fontSize: 13,
+                                color: AppColor.naturalBlackColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
                     ),
-                    spaceWidthWidget(8),
-                    Text(
-                      S.of(context).home,
-                      style: textStyleWithPoppin(
-                          fontSize: 13,
-                          color: AppColor.naturalBlackColor,
-                          fontWeight: FontWeight.w500),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "${widget.cubit.userDetails?.data?.addresses?.first.houseNumber},${widget.cubit.userDetails?.data?.addresses?.first.area},${widget.cubit.userDetails?.data?.addresses?.first.city},${widget.cubit.userDetails?.data?.addresses?.first.state},${widget.cubit.userDetails?.data?.addresses?.first.pinCode}",
+                        style: textStyleWithPoppin(
+                            fontSize: 13,
+                            color: AppColor.naturalBlackColor,
+                            fontWeight: FontWeight.w400),
+                      ),
                     ),
                   ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
+                )
+              : Align(
+            alignment: Alignment.centerLeft,
                 child: Text(
-                  "${widget.cubit.userDetails?.data?.addresses?.first.houseNumber},${widget.cubit.userDetails?.data?.addresses?.first.area},${widget.cubit.userDetails?.data?.addresses?.first.city},${widget.cubit.userDetails?.data?.addresses?.first.state},${widget.cubit.userDetails?.data?.addresses?.first.pinCode}",
-                  style: textStyleWithPoppin(
-                      fontSize: 13,
-                      color: AppColor.naturalBlackColor,
-                      fontWeight: FontWeight.w400),
-                ),
+            S.of(context).noDataAvailable,
+            style: textStyleWithPoppin(
+                  fontSize: 13,
+                  color: AppColor.naturalBlackColor,
+                  fontWeight: FontWeight.w500),
+          ),
               ),
-            ],
-          ) : SizedBox.shrink(),
           spaceHeightWidget(5),
-          widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false ? Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, RoutePath.editAddressScreen,
-                        arguments: {
+          widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false
+              ? Align(
+                  alignment: Alignment.centerRight,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, RoutePath.editAddressScreen, arguments: {
                           "index": 0,
                           "addresses": widget.cubit.userDetails?.data?.addresses
                         });
-                  },
-                  child: Text(
-                    S.of(context).edit,
-                    style: textStyleWithPoppin(
-                        fontSize: 14,
-                        color: AppColor.blue,
-                        fontWeight: FontWeight.w500),
-                  )),
-              spaceWidthWidget(8),
-              const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
-            ],
-          ) : const SizedBox.shrink(),
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              S.of(context).edit,
+                              style: textStyleWithPoppin(
+                                  fontSize: 14,
+                                  color: AppColor.blue,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            spaceWidthWidget(8),
+                            const Icon(Icons.edit_outlined,
+                                size: 18, color: AppColor.blue)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
           spaceHeightWidget(5),
           widget.cubit.showAddress
               ? ListView.builder(
@@ -138,18 +165,21 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                     return Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 3.0,bottom: 5),
+                          padding: const EdgeInsets.only(left: 3.0, bottom: 5),
                           child: Row(
                             children: [
-                              Image.asset(
-                                AppIcons.homeOutlineIcon,
-                                color: AppColor.black,
-                                width: 15,
-                                height: 15,
+                              Icon(
+                                addressIcon(
+                                    addressFor: widget.cubit.userDetails?.data
+                                        ?.addresses?[index].forAddress),
+                                color: AppColor.black.withOpacity(0.7),
+                                size: 20,
                               ),
-                              spaceWidthWidget(8),
+                              spaceWidthWidget(5),
                               Text(
-                                S.of(context).home,
+                                widget.cubit.userDetails?.data
+                                        ?.addresses?[index].forAddress ??
+                                    '',
                                 style: textStyleWithPoppin(
                                     fontSize: 13,
                                     color: AppColor.naturalBlackColor,
@@ -168,30 +198,40 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                                 fontWeight: FontWeight.w400),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  print("hello");
-                                  Navigator.pushNamed(
-                                      context, RoutePath.editAddressScreen,
-                                      arguments: {
-                                        "index": index,
-                                        "addresses": widget.cubit.userDetails?.data?.addresses
-                                      });
-                                },
-                                child: Text(
-                                  S.of(context).edit,
-                                  style: textStyleWithPoppin(
-                                      fontSize: 14,
-                                      color: AppColor.blue,
-                                      fontWeight: FontWeight.w500),
-                                )),
-                            spaceWidthWidget(8),
-                            const Icon(Icons.edit_outlined,
-                                size: 18, color: AppColor.blue)
-                          ],
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, RoutePath.editAddressScreen,
+                                    arguments: {
+                                      "index": index,
+                                      "addresses": widget
+                                          .cubit.userDetails?.data?.addresses
+                                    });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      S.of(context).edit,
+                                      style: textStyleWithPoppin(
+                                          fontSize: 14,
+                                          color: AppColor.blue,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    spaceWidthWidget(8),
+                                    const Icon(Icons.edit_outlined,
+                                        size: 18, color: AppColor.blue)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                         spaceHeightWidget(10)
                       ],
@@ -200,36 +240,47 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
               : const SizedBox.shrink(),
           widget.cubit.userDetails!.data!.addresses!.length > 1
               ? GestureDetector(
-            onTap: () {
-              widget.cubit.showAddress = !widget.cubit.showAddress;
-              // cubit.emitState();
-              setState(() {
-              });
-            },
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  widget.cubit.showAddress ? S.of(context).seeLess : S.of(context).seeMore,
-                  style: textStyleWithPoppin(
-                      fontSize: 13,
-                      color: AppColor.black,
-                      fontWeight: FontWeight.w400),
-                ),
-                spaceWidthWidget(10),
-                Icon(
-                  widget.cubit.showAddress
-                      ? Icons.keyboard_arrow_up_outlined
-                      : Icons.keyboard_arrow_down_rounded,
-                  color: AppColor.black,
-                  size: 25,
+                  onTap: () {
+                    widget.cubit.showAddress = !widget.cubit.showAddress;
+                    // cubit.emitState();
+                    setState(() {});
+                  },
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.cubit.showAddress
+                            ? S.of(context).seeLess
+                            : S.of(context).seeMore,
+                        style: textStyleWithPoppin(
+                            fontSize: 13,
+                            color: AppColor.black,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      spaceWidthWidget(10),
+                      Icon(
+                        widget.cubit.showAddress
+                            ? Icons.keyboard_arrow_up_outlined
+                            : Icons.keyboard_arrow_down_rounded,
+                        color: AppColor.black,
+                        size: 25,
+                      )
+                    ],
+                  ),
                 )
-              ],
-            ),
-          )
               : const SizedBox.shrink(),
         ],
       ),
     );
+  }
+
+  IconData addressIcon({String? addressFor}) {
+    IconData icon = Icons.home_outlined;
+    if (addressFor == S.of(context).Office) {
+      icon = Icons.business_center_outlined;
+    } else if (addressFor == S.of(context).Other) {
+      icon = Icons.location_on;
+    }
+    return icon;
   }
 }

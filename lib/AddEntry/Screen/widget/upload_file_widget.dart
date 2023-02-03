@@ -5,9 +5,8 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
-
 class UploadCard extends StatelessWidget {
- const UploadCard({super.key, required this.onTap, this.uploadedFilePath});
+  const UploadCard({super.key, required this.onTap, this.uploadedFilePath});
 
   final GestureTapCallback? onTap;
   final String? uploadedFilePath;
@@ -23,11 +22,12 @@ class UploadCard extends StatelessWidget {
         spaceHeightWidget(8),
         CommonButton(
           onTap: onTap,
-          width: 100,
+          width: 105,
           padding: const EdgeInsets.all(5),
           borderRadius: 5,
           isUseWidget: true,
           widget: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(
                 Icons.ios_share_outlined,

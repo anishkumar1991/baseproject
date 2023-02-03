@@ -19,8 +19,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       print('profile res =${res.response.statusCode}');
       print(res.data);
       if (res.response.statusCode == 200) {
-        UserProfileModel data = UserProfileModel.fromJson(res.
-        data);
+        UserProfileModel data = UserProfileModel.fromJson(res.data);
         emit(UserProfileDataFetchedState(data));
       } else {
         Map<String, dynamic>? msg = res.data;

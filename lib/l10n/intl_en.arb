@@ -117,5 +117,14 @@
   "educationDeleted" : "Education Deleted",
   "addressDeleted" : "Address Deleted",
   "businessDeleted" : "Business Deleted",
-  "somethingWentWrong": "Please Enter (From) year First"
+  "somethingWentWrong": "Please Enter (From) year First",
+  "reasonforDeletion":"Please select a reason for deletion",
+  "yes":"Yes",
+  "no":"No",
+  "cancel":"Cancel",
+  "pleaseSelectReason":"Please Select Reason",
+  "pleaseEnterData": "Please enter data",
+  "logOut" : "Log Out",
+  "logOutDes" : "Are you sure you want to log out?",
+  "welcome":"Welcome"
 }

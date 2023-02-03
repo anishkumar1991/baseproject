@@ -37,7 +37,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 pages.elementAt(selectIndex),
                 Container(
                   margin:
-                      const EdgeInsets.only(bottom: 10, left: 18, right: 18),
+                      const EdgeInsets.only(bottom: 25, left: 18, right: 18),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
                       boxShadow: const [
@@ -107,20 +107,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   Widget bottomIcon(
       {required String icon,
-      required GestureTapCallback onTap,
+      required VoidCallback onTap,
       required Color color,
       double? width}) {
-    return Container(
-        height: 35,
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.circular(20)),
-        child: InkWell(
-            onTap: onTap,
-            child: Image.asset(
-              icon,
-              height: 16,
-              width: width ?? 19,
-            )));
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+          height: 35,
+          padding: const EdgeInsets.only(left: 28, right: 28),
+          decoration: BoxDecoration(
+              color: color, borderRadius: BorderRadius.circular(20)),
+          child: Image.asset(
+            icon,
+            height: 16,
+            width: width ?? 19,
+          )),
+    );
   }
 }

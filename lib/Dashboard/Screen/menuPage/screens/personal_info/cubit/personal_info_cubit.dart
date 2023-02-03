@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -95,11 +95,13 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   }
 
   getNetworkUrlAndUpdateProfile({int? id}) async {
+    EasyLoading.show();
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
     final destination = '$id/${id}_userProfile';
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
+      EasyLoading.dismiss();
       EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
     });
     urlDownload = await snapshot.ref.getDownloadURL();
@@ -111,18 +113,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
       "dob": boiCtr.text,
       "gender": value.name,
       "avatar": urlDownload,
-      "category": {
-        "id": gradeId,
-        "name": statusCtr.text
-      },
-      "religion": {
-        "id": religionId,
-        "name": religionCtr.text
-      },
-      "caste": {
-        "id": castId,
-        "name": castCtr.text
-      }
+      "religion_id": religionId,
+      "cast_id": castId,
+      "category_id": gradeId
     });
   }
 

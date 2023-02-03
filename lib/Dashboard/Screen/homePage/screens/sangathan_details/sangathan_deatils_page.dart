@@ -27,7 +27,11 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
     if (StorageService.userData?.user?.countryStateId == 0 ||
         StorageService.userData?.user?.countryStateId == null) {
       await context.read<SangathanDetailsCubit>().getAllotedLocations();
-      showLocationBottomSheet();
+      Future.delayed(Duration.zero).then((value){
+        if(context.read<SangathanDetailsCubit>().locationList.isNotEmpty){
+          showLocationBottomSheet();
+        }
+      });
     }
   }
 
@@ -55,9 +59,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
             spaceHeightWidget(10),
             appbar(),
             spaceHeightWidget(20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
+            Row(
                 children: [
                   IconButton(
                       splashRadius: 20,
@@ -72,47 +74,46 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                   )
                 ],
               ),
-            ),
             spaceHeightWidget(10),
 
             /// sangathan grid view
             sangathanGridView(cubit),
             spaceHeightWidget(24),
-            Container(
-              padding: const EdgeInsets.all(12),
-              width: MediaQuery.of(context).size.width,
-              color: AppColor.purple50.withOpacity(0.6),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    S.of(context).createShaktiKendra,
-                    style: GoogleFonts.quicksand(
-                        fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  Container(
-                      padding: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          gradient: const LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                AppColor.purple50,
-                                AppColor.orange200,
-                              ])),
-                      child: Image.asset(
-                        AppIcons.shaktikendraImage,
-                        height: 35,
-                      ))
-                ],
-              ),
-            ),
-            spaceHeightWidget(20),
-
-            /// report widget
-            sangathanReportCard(),
-            spaceHeightWidget(60)
+            // Container(
+            //   padding: const EdgeInsets.all(12),
+            //   width: MediaQuery.of(context).size.width,
+            //   color: AppColor.purple50.withOpacity(0.6),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Text(
+            //         S.of(context).createShaktiKendra,
+            //         style: GoogleFonts.quicksand(
+            //             fontSize: 18, fontWeight: FontWeight.w600),
+            //       ),
+            //       Container(
+            //           padding: const EdgeInsets.all(2),
+            //           decoration: BoxDecoration(
+            //               borderRadius: BorderRadius.circular(4),
+            //               gradient: const LinearGradient(
+            //                   begin: Alignment.topLeft,
+            //                   end: Alignment.bottomRight,
+            //                   colors: [
+            //                     AppColor.purple50,
+            //                     AppColor.orange200,
+            //                   ])),
+            //           child: Image.asset(
+            //             AppIcons.shaktikendraImage,
+            //             height: 35,
+            //           ))
+            //     ],
+            //   ),
+            // ),
+            // spaceHeightWidget(20),
+            //
+            // /// report widget
+            // sangathanReportCard(),
+            // spaceHeightWidget(60)
           ],
         ),
       )),
@@ -149,7 +150,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                       height: MediaQuery.of(context).size.height * 0.75,
                       width: double.infinity,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -158,7 +159,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               children: [
                                 IconButton(
                                     onPressed: (() {
-                                      if (cubit.countryStateId == null) {
+                                      if (cubit.locationList.isEmpty) {
+                                        Navigator.pop(context);
+                                      } else if (cubit.countryStateId == null) {
                                         EasyLoading.showError(
                                             S.of(context).pleaseChoosePlace);
                                       } else {
@@ -176,32 +179,47 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               ],
                             ),
                             spaceHeightWidget(10),
-                            Wrap(
-                                spacing: 10,
-                                runSpacing: 5,
-                                children: cubit.locationList
-                                    .map((e) => ChoiceChip(
-                                          backgroundColor:
-                                              AppColor.orange300Color,
-                                          selectedColor: cubit.locationId ==
-                                                  e.id
-                                              ? AppColor
-                                                  .buttonOrangeBackGroundColor
-                                              : null,
-                                          selected: cubit.locationId == e.id,
-                                          label: Text(
-                                            e.name ?? '',
-                                            style: TextStyle(
-                                                color: cubit.locationId == e.id
-                                                    ? AppColor.white
-                                                    : AppColor.textBlackColor),
-                                          ),
-                                          onSelected: ((value) {
-                                            cubit.onSelectLocation(
-                                                e.countryStateId, e.id);
-                                          }),
-                                        ))
-                                    .toList()),
+                            cubit.locationList.isNotEmpty
+                                ? Wrap(
+                                    spacing: 10,
+                                    runSpacing: 5,
+                                    children: cubit.locationList
+                                        .map((e) => ChoiceChip(
+                                              backgroundColor:
+                                                  AppColor.orange300Color,
+                                              selectedColor: cubit.locationId ==
+                                                      e.id
+                                                  ? AppColor
+                                                      .buttonOrangeBackGroundColor
+                                                  : null,
+                                              selected:
+                                                  cubit.locationId == e.id,
+                                              label: Text(
+                                                e.name ?? '',
+                                                style: TextStyle(
+                                                    color: cubit.locationId ==
+                                                            e.id
+                                                        ? AppColor.white
+                                                        : AppColor
+                                                            .textBlackColor),
+                                              ),
+                                              onSelected: ((value) {
+                                                cubit.onSelectLocation(
+                                                    e.countryStateId, e.id);
+                                              }),
+                                            ))
+                                        .toList())
+                                : Expanded(
+                                  child: Center(
+                                      child: Text(
+                                        S.of(context).noDataAvailable,
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                ),
                           ],
                         ),
                       )),
@@ -312,8 +330,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                   }))
               : Center(
                   child: Text(S.of(context).noOrganizationsAvailable,
-                      style: GoogleFonts.quicksand(
-                          fontSize: 20, fontWeight: FontWeight.w400)));
+                      style: GoogleFonts.poppins(
+                          fontSize: 16, fontWeight: FontWeight.w400)));
         },
       ),
     );
@@ -388,7 +406,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
 
   Widget appbar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Stack(
         children: [
           Row(

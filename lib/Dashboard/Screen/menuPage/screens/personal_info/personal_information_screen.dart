@@ -9,7 +9,6 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
-import '../../../../../AddEntry/network/model/cast_model.dart';
 import '../../../../../AddEntry/network/model/category_model.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
@@ -36,6 +35,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     super.initState();
   }
 
+  dynamic tempId = 0;
+
   fillData({final cubit}) {
     context.read<PersonalInfoCubit>().nameCtr.text =
         widget.userDetails.data?.name ?? '';
@@ -52,6 +53,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     context.read<PersonalInfoCubit>().castCtr.text =
         widget.userDetails.data?.caste?.name ?? '';
     getGenderRadioButtonValue(widget.userDetails.data?.gender?.toLowerCase());
+    context.read<PersonalInfoCubit>().getCasteDropDownValue(
+        id: widget.userDetails.data?.category?.id.toString() ?? '0');
   }
 
   getGenderRadioButtonValue(String? type) {
@@ -90,7 +93,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             shape: BoxShape.circle),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(350),
-                            child: Image.network(
+                            child: widget.userDetails.data?.avatar != null && widget.userDetails.data?.avatar != '' ? Image.network(
                               widget.userDetails.data?.avatar ?? '',
                               fit: BoxFit.cover,
                               errorBuilder: (BuildContext context,
@@ -114,7 +117,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ),
                                 );
                               },
-                            )),
+                            ) : Container(
+                                color: AppColor.white,
+                                height: 84,
+                                width: 84,
+                                child: Image.asset(AppIcons.sangathanLogo))),
                       )
                     : Container(
                         height: 100,
@@ -251,44 +258,48 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   spaceHeightWidget(15),
                   BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
                     builder: (context, state) {
-                      return TextFieldWidget(
-                          controller: cubit.boiCtr,
-                          title: '',
-                          readOnly: true,
-                          labelText: S.of(context).boi,
-                          onChanged: (value) {
-                            cubit.emitState();
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          suffixWidget: InkWell(
-                              onTap: () {
-                                cubit.editBoi(context);
+                      return Column(
+                        children: [
+                          TextFieldWidget(
+                              controller: cubit.boiCtr,
+                              title: '',
+                              readOnly: true,
+                              labelText: S.of(context).boi,
+                              onChanged: (value) {
+                                cubit.emitState();
                               },
-                              child: Image.asset(AppIcons.calenderIcon)));
+                              keyboardType: TextInputType.emailAddress,
+                              suffixWidget: InkWell(
+                                  onTap: () {
+                                    cubit.editBoi(context);
+                                  },
+                                  child: Image.asset(AppIcons.calenderIcon))),
+                          spaceHeightWidget(5),
+                         ( widget.userDetails.data?.dob != '' &&  widget.userDetails.data?.dob != null) ? Row(
+                            children: [
+                              Text(
+                                "${S.of(context).age}:",
+                                style: textStyleWithPoppin(
+                                    fontSize: 11,
+                                    color: AppColor.naturalBlackColor,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              spaceWidthWidget(3),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 1.0),
+                                child: Text(
+                                  "${daysBetween(from: DateFormat("yyyy-MM-dd").parse(widget.userDetails.data?.dob ?? ""), to: DateTime.now()).toString()} ${S.of(context).years}",
+                                  style: textStyleWithPoppin(
+                                      fontSize: 10,
+                                      color: AppColor.naturalBlackColor,
+                                      fontWeight: FontWeight.w200),
+                                ),
+                              ),
+                            ],
+                          ) : SizedBox.shrink(),
+                        ],
+                      );
                     },
-                  ),
-                  spaceHeightWidget(5),
-                  Row(
-                    children: [
-                      Text(
-                        "${S.of(context).age}:",
-                        style: textStyleWithPoppin(
-                            fontSize: 11,
-                            color: AppColor.naturalBlackColor,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      spaceWidthWidget(3),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 1.0),
-                        child: Text(
-                          "${daysBetween(from: DateFormat("yyyy-MM-dd").parse(widget.userDetails.data?.dob ?? ""), to: DateTime.now()).toString()} ${S.of(context).years}",
-                          style: textStyleWithPoppin(
-                              fontSize: 10,
-                              color: AppColor.naturalBlackColor,
-                              fontWeight: FontWeight.w200),
-                        ),
-                      ),
-                    ],
                   ),
                   spaceHeightWidget(5),
                   BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
@@ -302,13 +313,23 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.emailAddress,
-                          onTap: () {
-                            _modelBottomSheet(
+                          onTap: () async {
+                            await showModalBottomSheet(
                                 context: context,
-                                dropDownList: dropDownValue?.data?.religion,
-                                text: S.of(context).religion,
-                                id: cubit.religionId ?? 0,
-                                controller: cubit.religionCtr);
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28.0),
+                                ),
+                                builder: (builder) {
+                                  return bottom(
+                                      context: context,
+                                      dropDownList:
+                                          dropDownValue?.data?.religion,
+                                      text: S.of(context).religion,
+                                      id: cubit.religionId ?? 0,
+                                      controller: cubit.religionCtr);
+                                }).then((value) {
+                              cubit.religionId = value;
+                            });
                           },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -328,14 +349,23 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.emailAddress,
-                          onTap: () {
-                            _modelBottomSheet(
+                          onTap: () async {
+                            await showModalBottomSheet(
                                 context: context,
-                                dropDownList:
-                                    dropDownValue?.data?.personCategory,
-                                text: S.of(context).category,
-                                id: cubit.gradeId ?? 0,
-                                controller: cubit.statusCtr);
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28.0),
+                                ),
+                                builder: (builder) {
+                                  return bottom(
+                                      context: context,
+                                      dropDownList:
+                                      dropDownValue?.data?.personCategory,
+                                      text: S.of(context).category,
+                                      id: cubit.gradeId ?? 0,
+                                      controller: cubit.statusCtr);
+                                }).then((value) {
+                              cubit.gradeId = value;
+                            });
                           },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -403,24 +433,18 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           cubit.getNetworkUrlAndUpdateProfile(
                               id: widget.userDetails.data?.id);
                         } else {
+                          print(cubit.religionId);
+                          print(cubit.castId);
+                          print(cubit.gradeId);
                           cubit.updatePersonalDetails(data: {
                             "name": cubit.nameCtr.text,
                             "username": cubit.userNameCtr.text,
                             "phone_number": cubit.mobileNumberCtr.text,
                             "dob": cubit.boiCtr.text,
                             "gender": cubit.value.name,
-                            "category": {
-                              "id": cubit.gradeId,
-                              "name": cubit.statusCtr.text
-                            },
-                            "religion": {
-                              "id": cubit.religionId,
-                              "name": cubit.religionCtr.text
-                            },
-                            "caste": {
-                              "id": cubit.castId,
-                              "name": cubit.castCtr.text
-                            },
+                            "religion_id": cubit.religionId,
+                            "cast_id": cubit.castId,
+                            "category_id": cubit.gradeId
                           });
                         }
                       },
@@ -501,102 +525,91 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     );
   }
 
-  void _modelBottomSheet(
+  bottom(
       {required BuildContext context,
       List<DropdownData>? dropDownList,
       required String text,
       required int id,
       required TextEditingController controller}) {
-    showModalBottomSheet(
-        context: context,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28.0),
-        ),
-        builder: (builder) {
-          List<DropdownData>? list = dropDownList;
-          return Container(
-            color: Colors.transparent,
-            child: Container(
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(28.0),
-                        topRight: Radius.circular(28.0))),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      spaceHeightWidget(10),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          height: 5,
-                          width: 100,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: AppColor.borderColor),
-                        ),
-                      ),
-                      spaceHeightWidget(30),
-                      Text(
-                        text ?? '',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            color: AppColor.borderColor, fontSize: 16),
-                      ),
-                      spaceHeightWidget(30),
-                      Expanded(
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: list?.length,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () {
-                                      if (text == S.of(context).category) {
-                                        id = list?[index].id ?? 0;
-                                        controller.text =
-                                            list?[index].name ?? '';
-                                        context
-                                            .read<PersonalInfoCubit>()
-                                            .getCasteDropDownValue(
-                                                id: id.toString());
-                                        Navigator.pop(context);
-                                      } else {
-                                        id = list?[index].id ?? 0;
-                                        controller.text =
-                                            list?[index].name ?? '';
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    child: SizedBox(
-                                      width: double.infinity,
-                                      child: Text(
-                                        list?[index].name ?? '',
-                                        textAlign: TextAlign.left,
-                                        style: GoogleFonts.poppins(
-                                            color: AppColor.black,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                  ),
-                                  spaceHeightWidget(15),
-                                  const Divider(
-                                    color: AppColor.borderColor,
-                                  ),
-                                  spaceHeightWidget(15),
-                                ],
-                              );
-                            }),
-                      )
-                    ],
+    List<DropdownData>? list = dropDownList;
+    return Container(
+      color: Colors.transparent,
+      child: Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28.0),
+                  topRight: Radius.circular(28.0))),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                spaceHeightWidget(10),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 5,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: AppColor.borderColor),
                   ),
-                )),
-          );
-        });
+                ),
+                spaceHeightWidget(30),
+                Text(
+                  text ?? '',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      color: AppColor.borderColor, fontSize: 16),
+                ),
+                spaceHeightWidget(30),
+                Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: list?.length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                if (text == S.of(context).category) {
+                                  id = list?[index].id ?? 0;
+                                  controller.text = list?[index].name ?? '';
+                                  context
+                                      .read<PersonalInfoCubit>()
+                                      .getCasteDropDownValue(id: id.toString());
+                                  Navigator.pop(context, id);
+                                } else {
+                                  id = list?[index].id ?? 0;
+                                  controller.text = list?[index].name ?? '';
+                                  Navigator.pop(context, id);
+                                }
+                              },
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                  list?[index].name ?? '',
+                                  textAlign: TextAlign.left,
+                                  style: GoogleFonts.poppins(
+                                      color: AppColor.black, fontSize: 16),
+                                ),
+                              ),
+                            ),
+                            spaceHeightWidget(15),
+                            const Divider(
+                              color: AppColor.borderColor,
+                            ),
+                            spaceHeightWidget(15),
+                          ],
+                        );
+                      }),
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   showCastData({required PersonalInfoCubit cubit}) {

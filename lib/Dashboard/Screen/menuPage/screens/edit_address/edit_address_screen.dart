@@ -48,6 +48,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       context.read<EditAddressCubit>().pinCodeCtr.text = widget.addresses?[widget.index!].pinCode ?? '';
       context.read<EditAddressCubit>().townCtr.text = widget.addresses?[widget.index!].city ?? '';
       context.read<EditAddressCubit>().stateCtr.text = widget.addresses?[widget.index!].state ?? '';
+      context.read<EditAddressCubit>().addressFor = widget.addresses?[widget.index!].forAddress ?? S.of(context).home;
     }else{
       context.read<EditAddressCubit>().clearData();
     }
@@ -227,18 +228,33 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         },
                       ),
                       spaceHeightWidget(25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          buildBottomContainer(
-                              icon: Icons.home, title: S.of(context).home),
-                          buildBottomContainer(
-                              image: AppIcons.fillBuisnessIcon,
-                              title: S.of(context).Office,
-                              isImage: true),
-                          buildBottomContainer(
-                              icon: Icons.location_on, title: S.of(context).Other),
-                        ],
+                      BlocBuilder<EditAddressCubit, EditAddressState>(
+                        builder: (context, state) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              buildBottomContainer(
+                                  icon: Icons.home, title: S.of(context).home,cubit: cubit,press: (){
+                                cubit.addressFor = S.of(context).home;
+                                cubit.emitState();
+                              }),
+                              buildBottomContainer(
+                                  image: AppIcons.fillBuisnessIcon,
+                                  title: S.of(context).Office,
+                                  cubit: cubit,
+                                  press: (){
+                                    cubit.addressFor = S.of(context).Office;
+                                    cubit.emitState();
+                                  },
+                                  isImage: true),
+                              buildBottomContainer(
+                                  icon: Icons.location_on, title: S.of(context).Other,cubit: cubit,press: (){
+                                cubit.addressFor = S.of(context).Other;
+                                cubit.emitState();
+                              }),
+                            ],
+                          );
+                        },
                       ),
                       spaceHeightWidget(40),
                       widget.isNew != true ? CommonButton(
@@ -279,10 +295,14 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         },
                         child: CommonButton(
                           onTap: () {
-                            filledList(cubit: cubit);
-                            context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
-                              "addresses" : widget.addresses
-                            });
+                            if(cubit.checkIfEmpty()){
+                              EasyLoading.showError(S.of(context).pleaseEnterData,duration: const Duration(milliseconds: 500));
+                            }else{
+                              filledList(cubit: cubit);
+                              context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+                                "addresses" : widget.addresses
+                              });
+                            }
                           },
                           title: S.of(context).save,
                           width: 150,
@@ -310,6 +330,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       address.area = cubit.areaDesCtr.text;
       address.pinCode = cubit.pinCodeCtr.text;
       address.city = cubit.townCtr.text;
+      address.forAddress = cubit.addressFor;
       widget.addresses?.add(address);
       print(widget.addresses?.length);
     }else{
@@ -318,6 +339,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       address.area = cubit.areaDesCtr.text;
       address.pinCode = cubit.pinCodeCtr.text;
       address.city = cubit.townCtr.text;
+      address.forAddress = cubit.addressFor;
       widget.addresses?[widget.index!] = address;
     }
   }
@@ -327,32 +349,36 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 
 
   buildBottomContainer(
-      {IconData? icon, String? title, bool? isImage, String? image}) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.04,
-      width: MediaQuery.of(context).size.width * 0.28,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          border: Border.all(color: AppColor.black)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          isImage ?? false
-              ? Image.asset(
-            image!,
-            height: 20,
-            width: 20,
-          )
-              : Icon(icon),
-          spaceWidthWidget(5),
-          Padding(
-            padding: const EdgeInsets.only(top: 3.0),
-            child: Text(
-              title!,
-              style: textStyleWithPoppin(color: AppColor.black, fontSize: 14),
-            ),
-          )
-        ],
+      {IconData? icon, String? title, bool? isImage, String? image,VoidCallback? press,EditAddressCubit? cubit}) {
+    return InkWell(
+      onTap: press,
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.04,
+        width: MediaQuery.of(context).size.width * 0.28,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: cubit?.addressFor == title ? AppColor.greyColor.withOpacity(0.2) : AppColor.white,
+            border: Border.all(color: AppColor.black)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            isImage ?? false
+                ? Image.asset(
+              image!,
+              height: 20,
+              width: 20,
+            )
+                : Icon(icon),
+            spaceWidthWidget(5),
+            Padding(
+              padding: const EdgeInsets.only(top: 3.0),
+              child: Text(
+                title!,
+                style: textStyleWithPoppin(color: AppColor.black, fontSize: 14),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -91,7 +91,7 @@ class MyAppBar extends StatelessWidget {
                         percent: persantage,
                         center: ClipRRect(
                           borderRadius: BorderRadius.circular(350),
-                          child: Image.network(
+                          child: img != '' ? Image.network(
                             img,
                             height: 84,
                             width: 84,
@@ -114,7 +114,11 @@ class MyAppBar extends StatelessWidget {
                                 ),
                               );
                             },
-                          ),
+                          ): Container(
+                              color: AppColor.white,
+                              height: 84,
+                              width: 84,
+                              child: Image.asset(AppIcons.sangathanLogo)),
                         ),
                         backgroundColor: AppColor.greyColor.withOpacity(0.3),
                       ),

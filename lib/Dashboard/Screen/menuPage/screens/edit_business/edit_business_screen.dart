@@ -208,10 +208,16 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                     },
                     child:  CommonButton(
                       onTap: () {
-                        filledList(cubit: cubit);
-                        context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
-                          "professional_details" : widget.professionalDetails
-                        });
+
+                        if (cubit.checkIfEmpty()) {
+                          EasyLoading.showError(S.of(context).pleaseEnterData,
+                              duration: const Duration(milliseconds: 500));
+                        } else {
+                          filledList(cubit: cubit);
+                          context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+                            "professional_details" : widget.professionalDetails
+                          });
+                        }
                       },
                       title: S.of(context).save,
                       width: 150,

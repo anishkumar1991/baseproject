@@ -12,12 +12,30 @@ class EditAddressCubit extends Cubit<EditAddressState> {
   final TextEditingController townCtr = TextEditingController();
   final TextEditingController stateCtr = TextEditingController();
 
+  String? addressFor;
+
   clearData(){
     flatDesCtr.clear();
     areaDesCtr.clear();
     pinCodeCtr.clear();
     townCtr.clear();
     stateCtr.clear();
+    addressFor = null;
+  }
+  bool checkIfEmpty() {
+    bool isEmpty = false;
+    if (flatDesCtr.text.isEmpty) {
+      if(areaDesCtr.text.isEmpty){
+        if(pinCodeCtr.text.isEmpty){
+          if(townCtr.text.isEmpty){
+            if(stateCtr.text.isEmpty){
+              isEmpty = true;
+            }
+          }
+        }
+      }
+    }
+    return isEmpty;
   }
 
   emitState(){

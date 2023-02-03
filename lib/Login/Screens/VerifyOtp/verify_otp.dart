@@ -7,6 +7,8 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
+import 'package:sangathan/Values/space_height_widget.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../Utils/ConnectivityCheck/not_connected.dart';
@@ -32,6 +34,13 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
   @override
   void initState() {
+    final cubit = context.read<LoginCubit>();
+    cubit.count = 60;
+
+    if (cubit.timer?.isActive ?? false) {
+      cubit.timer?.cancel();
+    }
+
     context.read<LoginCubit>().startTimer();
     super.initState();
   }
@@ -45,96 +54,96 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         child: BlocBuilder<InternetCubit, InternetState>(
           builder: (context, state) {
             if (state == InternetState.connected) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  spaceHeightWidget(10),
+                  Row(
                     children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            onPressed: (() {
-                              Navigator.pop(context);
-                            }),
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              size: 28,
-                            ),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.15,
-                          ),
-                          Text(
-                            S.of(context).otpVerification,
-                            style: GoogleFonts.poppins(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          )
-                        ],
-                      ),
-                      Align(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            AppIcons.loginImage,
-                            height: 200,
-                          )),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        S.of(context).enterOTP,
-                        style: GoogleFonts.poppins(
-                            fontSize: 24, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        '${S.of(context).digitCodeHasBeenSent}\n+91 ${widget.number}',
-                        style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.greyColor),
-                      ),
-
-                      //OTP Text Field
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 40,
+                      spaceWidthWidget(6),
+                      IconButton(
+                        onPressed: (() {
+                          Navigator.pop(context);
+                        }),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          size: 28,
                         ),
-                        child: OTPTextField(
-                            controller: otpFieldController,
-                            fieldStyle: FieldStyle.box,
-                            length: 6,
-                            width: MediaQuery.of(context).size.width,
-                            fieldWidth: 50,
-                            onCompleted: ((value) {
-                              otpText = value;
-                            }),
-                            style: GoogleFonts.inter(
-                                fontSize: 25, fontWeight: FontWeight.w500),
-                            onChanged: (value) {
-                              otpText = value;
-                            }),
                       ),
-                      const SizedBox(
-                        height: 20,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.13,
                       ),
-
-                      /// SUBMIT OTP BUTTON
-                      submitOtpButtom(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-
-                      /// RESEND OTP BUTTON
-                      reSendOtpButton(cubit),
+                      Text(
+                        S.of(context).otpVerification,
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      )
                     ],
                   ),
-                ),
+                  Expanded(
+                      child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Align(
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                AppIcons.loginImage,
+                                height: 200,
+                              )),
+                          spaceHeightWidget(10),
+
+                          Text(
+                            S.of(context).enterOTP,
+                            style: GoogleFonts.poppins(
+                                fontSize: 24, fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '${S.of(context).digitCodeHasBeenSent}\n+91 ${widget.number}',
+                            style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.greyColor),
+                          ),
+
+                          //OTP Text Field
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 40,
+                            ),
+                            child: OTPTextField(
+                                controller: otpFieldController,
+                                fieldStyle: FieldStyle.box,
+                                length: 6,
+                                width: MediaQuery.of(context).size.width,
+                                fieldWidth: 50,
+                                onCompleted: ((value) {
+                                  otpText = value;
+                                }),
+                                style: GoogleFonts.inter(
+                                    fontSize: 25, fontWeight: FontWeight.w500),
+                                onChanged: (value) {
+                                  otpText = value;
+                                }),
+                          ),
+                          spaceHeightWidget(20),
+
+                          /// SUBMIT OTP BUTTON
+                          submitOtpButtom(),
+                          spaceHeightWidget(20),
+
+                          /// RESEND OTP BUTTON
+                          reSendOtpButton(cubit),
+                        ],
+                      ),
+                    ),
+                  ))
+                ],
               );
             } else {
               return const NotConnected();
@@ -170,9 +179,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         color: AppColor.redColor),
                   )
                 : const SizedBox.shrink(),
-            const SizedBox(
-              height: 20,
-            ),
+            spaceHeightWidget(20),
             CommonButton(
               onTap: (() async {
                 if (otpText.isNotEmpty && otpText.length >= 6) {
@@ -193,9 +200,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           size: 27,
                         )
                       : const SizedBox.shrink(),
-                  const SizedBox(
-                    width: 5,
-                  ),
+                  spaceWidthWidget(5),
                   Text(
                     isLoading ? S.of(context).verified : S.of(context).verify,
                     style: GoogleFonts.poppins(

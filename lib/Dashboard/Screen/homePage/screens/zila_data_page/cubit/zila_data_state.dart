@@ -58,7 +58,7 @@ class DeleteReasonFetchedState extends ZilaDataState {
   final DeleteReasonModel deleteReason;
   DeleteReasonFetchedState(this.deleteReason);
 }
-
+class ChangingDeleteReasonState extends ZilaDataState{}
 class DeleteReasonSeletcedState extends ZilaDataState {}
 
 class DeletePersonSuccessState extends ZilaDataState {

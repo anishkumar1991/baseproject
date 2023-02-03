@@ -179,13 +179,13 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         spaceHeightWidget(8),
                         UploadCard(
                           uploadedFilePath: FieldHandler.getFileName(
-                                  "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url",
+                                  "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url",
                                   cubit)
                               .split("/")
                               .last,
                           onTap: (() async {
                             await cubit.pickFile(
-                                "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                                "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
                           }),
                         ),
                       ],
@@ -216,13 +216,13 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   spaceHeightWidget(8),
                   UploadCard(
                     uploadedFilePath: FieldHandler.getFileName(
-                            "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url",
+                            "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url",
                             cubit)
                         .split("/")
                         .last,
                     onTap: (() async {
                       await cubit.pickFile(
-                          "${(cubit.entryField![i].formControlName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                          "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
                     }),
                   ),
                 ],
@@ -418,6 +418,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   } else if (state is CastFetchedState) {
                     cubit.castSelected = null;
                     cubit.castData = state.cast.data!;
+                    cubit.getInitialCasteData(widget.personData);
                   } else if (state is DesignationDropDownSuccessState) {
                     cubit.designationData = [];
                     cubit.designationData = state.designationList.data ?? [];
@@ -437,6 +438,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       cubit.getInitialTextfieldData(widget.personData);
                       cubit.getInitialUserprofileImageData(widget.personData);
                       cubit.getInitialGenderData(widget.personData);
+                      cubit.getInitialDOBData(widget.personData);
                       cubit
                           .getInitialMultiSelectionFieldData(widget.personData);
                       cubit.getInitialDropdownData(widget.personData);

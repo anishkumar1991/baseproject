@@ -154,6 +154,7 @@ class Addresses {
   String? state;
   String? pinCode;
   String? houseNumber;
+  String? forAddress;
 
   Addresses(
       {this.area,
@@ -161,6 +162,7 @@ class Addresses {
         this.uuid,
         this.state,
         this.pinCode,
+        this.forAddress,
         this.houseNumber});
 
   Addresses.fromJson(Map<String, dynamic> json) {
@@ -170,6 +172,7 @@ class Addresses {
     state = json['state'];
     pinCode = json['pin_code'];
     houseNumber = json['house_number'];
+    forAddress = json['for'];
   }
 
   Map<String, dynamic> toJson() {
@@ -180,6 +183,7 @@ class Addresses {
     data['state'] = state;
     data['pin_code'] = pinCode;
     data['house_number'] = houseNumber;
+    data['for'] = forAddress;
     return data;
   }
 }
