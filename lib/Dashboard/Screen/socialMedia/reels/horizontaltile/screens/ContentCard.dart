@@ -20,7 +20,7 @@ class _ContentCardState extends State<ContentCard> {
       height: 169,
       width: 117,
       child: Card(
-        color: Colors.black,
+        color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Stack(
           children: [
@@ -33,8 +33,26 @@ class _ContentCardState extends State<ContentCard> {
                 ),
               ),
             ),
-            Positioned(bottom: 1, left: 8, child: Text(widget.title,style: TextStyle(color: Colors.white),)),
-            Positioned(bottom: 20, left: 8, child: Text(widget.views,style: TextStyle(color: Colors.white))),
+            Positioned(
+                bottom: 1,
+                left: 8,
+                child: Text(
+                  widget.title,
+                  style: TextStyle(
+                      fontFamily: 'Tw Cen Mt',
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400),
+                )),
+            Positioned(
+                bottom: 20,
+                left: 8,
+                child: Text(widget.views,
+                    style: TextStyle(
+                        fontFamily: 'Tw Cen Mt',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        color: Colors.white))),
           ],
         ),
       ),

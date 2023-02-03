@@ -1,15 +1,17 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
 import 'LikeIcon.dart';
 import 'Options.dart';
-import 'package:blurrycontainer/blurrycontainer.dart';
+
 class ContentScreen extends StatefulWidget {
   final String? src;
   final String title;
   final String views;
 
-  const ContentScreen({Key? k, required this.title, required this.views, this.src});
+  const ContentScreen(
+      {Key? k, required this.title, required this.views, this.src});
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -75,7 +77,10 @@ class _ContentScreenState extends State<ContentScreen> {
           Center(
             child: LikeIcon(),
           ),
-        OptionsScreen(title: widget.title,views: widget.views ,)
+        OptionsScreen(
+          title: widget.title,
+          views: widget.views,
+        )
       ],
     );
   }

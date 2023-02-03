@@ -1,14 +1,8 @@
-import 'dart:async';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/socialcards/ImageCard.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/twitter/TwitterCard.dart';
 
-import '../../Cubit/dashboard_state.dart';
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 
@@ -34,26 +28,28 @@ class SocialMediaPage extends StatelessWidget {
           actions: [
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 11, 20, 9),
-              child: Container(
-                width: 78,
-                height: 35,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFF9244),
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: Center(
-                  child: Text("Login",
-                      style: GoogleFonts.poppins(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14)),
-                ),
-              ),
+              // child: Container(
+              //
+              //   width: 78,
+              //   height: 35,
+              //   decoration: BoxDecoration(
+              //
+              //     color: const Color(0xFFFF9244),
+              //     //borderRadius: BorderRadius.circular(18),
+              //   ),
+              //   child: Center(
+              //     child: Text("Login",
+              //         style: GoogleFonts.poppins(
+              //             color: Colors.white,
+              //             fontWeight: FontWeight.w600,
+              //             fontSize: 14)),
+              //   ),
+              // ),
             )
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 12, 20, 60),
+          padding: const EdgeInsets.fromLTRB(0, 12, 0, 60),
           child: ListView(
             children: [
               DisplayList(),
