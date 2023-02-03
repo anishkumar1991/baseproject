@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../Values/app_colors.dart';
 
@@ -13,8 +14,23 @@ class TextFormFieldLogin extends StatelessWidget {
     return TextFormField(
       keyboardType: TextInputType.phone,
       controller: controller,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+      ],
       maxLength: 10,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: ((value) {
+        // if (!RegExp('[a-zA-Z0-9&%=]+').hasMatch(value!)) {
+        //   return 'Please Enter Valid Number';
+        // }
+        if (value?.isEmpty ?? false) {
+          return 'Please Enter Mobile Number';
+        } else if (value?.length != 10) {
+          return 'Mobile number should be 10 digit';
+        } else if (RegExp(r'0000000000').hasMatch(value!)) {
+          return 'This Number is Not Valid Number';
+        }
+      }),
+      //autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
           counterText: '',
           prefixIcon: Padding(
@@ -25,7 +41,7 @@ class TextFormFieldLogin extends StatelessWidget {
                   color: AppColor.textGreyColor, fontSize: 16),
             ),
           ),
-          errorStyle: const TextStyle(color: Colors.red),
+          errorStyle: const TextStyle(color: AppColor.redColor),
           hintText: '000-000-00-00',
           focusedBorder:
               OutlineInputBorder(borderRadius: BorderRadius.circular(10)),

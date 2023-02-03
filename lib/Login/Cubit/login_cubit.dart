@@ -35,7 +35,6 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-
   Future loginUser({required String mobileNumber}) async {
     try {
       emit(LoginLoadingState());

@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   TextEditingController mobileNumController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,10 +68,13 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12),
-                        child: TextFormFieldLogin(
-                          controller: mobileNumController,
+                      Form(
+                        key: formKey,
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: TextFormFieldLogin(
+                            controller: mobileNumController,
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -98,23 +101,26 @@ class LoginScreen extends StatelessWidget {
                           } else {
                             return CommonButton(
                               onTap: (() async {
-                                if (mobileNumController.text.isEmpty) {
-                                  EasyLoading.showError(
-                                      'Please Enter Mobile Number');
-                                } else if (mobileNumController.text.length !=
-                                    10) {
-                                  EasyLoading.showError(
-                                      'Mobile number should be 10 digit');
-                                } else {
+                                // if (mobileNumController.text.isEmpty) {
+                                //   EasyLoading.showError(
+                                //       'Please Enter Mobile Number');
+                                // } else if (mobileNumController.text.length !=
+                                //     10) {
+                                //   EasyLoading.showError(
+                                //       'Mobile number should be 10 digit');
+                                // }
+                                if (formKey.currentState!.validate()) {
                                   await context.read<LoginCubit>().loginUser(
                                         mobileNumber: mobileNumController.text,
                                       );
                                 }
-                                //context.read<LoginCubit>().deactivatedState();
-                                // Navigator.pushNamed(
-                                //     context, RoutePath.verifyOtpScreen,
-                                //     arguments: mobileNumController.text);
-                              }),
+                              }
+
+                                  //context.read<LoginCubit>().deactivatedState();
+                                  // Navigator.pushNamed(
+                                  //     context, RoutePath.verifyOtpScreen,
+                                  //     arguments: mobileNumController.text);
+                                  ),
                               padding: const EdgeInsets.all(12),
                               title: S.of(context).loginButtonText,
                               style: GoogleFonts.poppins(
