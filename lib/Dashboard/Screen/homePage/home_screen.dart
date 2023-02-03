@@ -73,54 +73,54 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        color: AppColor.borderColor.withOpacity(0.5)),
-                    borderRadius: BorderRadius.circular(25)),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      AppIcons.searchicon,
-                      height: 17,
-                      width: 17,
-                    ),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: SizedBox(
-                        height: 25,
-                        width: double.infinity,
-                        child: TextField(
-                          controller: searchTextController,
-                          decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(8),
-                              border: InputBorder.none,
-                              hintText: S.of(context).viewToursEvents,
-                              hintStyle: GoogleFonts.poppins(
-                                  color: AppColor.borderColor, fontSize: 14)),
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                    InkWell(
-                      onTap: (() {}),
-                      child: Image.asset(
-                        AppIcons.micicon,
-                        height: 18,
-                        width: 14,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+              // Container(
+              //   padding: const EdgeInsets.all(10),
+              //   decoration: BoxDecoration(
+              //       border: Border.all(
+              //           color: AppColor.borderColor.withOpacity(0.5)),
+              //       borderRadius: BorderRadius.circular(25)),
+              //   child: Row(
+              //     children: [
+              //       Image.asset(
+              //         AppIcons.searchicon,
+              //         height: 17,
+              //         width: 17,
+              //       ),
+              //       const SizedBox(
+              //         width: 5,
+              //       ),
+              //       Expanded(
+              //         flex: 3,
+              //         child: SizedBox(
+              //           height: 25,
+              //           width: double.infinity,
+              //           child: TextField(
+              //             controller: searchTextController,
+              //             decoration: InputDecoration(
+              //                 contentPadding: const EdgeInsets.all(8),
+              //                 border: InputBorder.none,
+              //                 hintText: S.of(context).viewToursEvents,
+              //                 hintStyle: GoogleFonts.poppins(
+              //                     color: AppColor.borderColor, fontSize: 14)),
+              //           ),
+              //         ),
+              //       ),
+              //       const Spacer(),
+              //       InkWell(
+              //         onTap: (() {}),
+              //         child: Image.asset(
+              //           AppIcons.micicon,
+              //           height: 18,
+              //           width: 14,
+              //           fit: BoxFit.cover,
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               Expanded(
                   child: SingleChildScrollView(
                 child: Column(
@@ -139,47 +139,47 @@ class HomePage extends StatelessWidget {
 
                     /// pravas card widget
                     const PravasCardWidget(),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          S.of(context).myEvent,
-                          style: const TextStyle(
-                              fontFamily: 'Tw Cen MT',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          S.of(context).seeAll,
-                          style: const TextStyle(
-                            fontFamily: 'Tw Cen MT',
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.blueTextColor,
-                          ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                        height: 270,
-                        child: EventListView(
-                          onTap: (() {}),
-                          title: 'Mann ki Baat',
-                          subtitle: '97th Edition',
-                          date: 'On 29th Jan 2023',
-                        )),
-                    const SizedBox(
-                      height: 10,
-                    ),
-
-                    /// Meeting card widget
-                    const MeetingCard(),
+                    // const SizedBox(
+                    //   height: 14,
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       S.of(context).myEvent,
+                    //       style: const TextStyle(
+                    //           fontFamily: 'Tw Cen MT',
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.w400),
+                    //     ),
+                    //     Text(
+                    //       S.of(context).seeAll,
+                    //       style: const TextStyle(
+                    //         fontFamily: 'Tw Cen MT',
+                    //         fontSize: 20,
+                    //         fontWeight: FontWeight.w400,
+                    //         color: AppColor.blueTextColor,
+                    //       ),
+                    //     )
+                    //   ],
+                    // ),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    // SizedBox(
+                    //     height: 270,
+                    //     child: EventListView(
+                    //       onTap: (() {}),
+                    //       title: 'Mann ki Baat',
+                    //       subtitle: '97th Edition',
+                    //       date: 'On 29th Jan 2023',
+                    //     )),
+                    // const SizedBox(
+                    //   height: 10,
+                    // ),
+                    //
+                    // /// Meeting card widget
+                    // const MeetingCard(),
                     const SizedBox(
                       height: 80,
                     )

@@ -95,11 +95,13 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   }
 
   getNetworkUrlAndUpdateProfile({int? id}) async {
+    EasyLoading.show();
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
     final destination = '$id/${id}_userProfile';
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
+      EasyLoading.dismiss();
       EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
     });
     urlDownload = await snapshot.ref.getDownloadURL();

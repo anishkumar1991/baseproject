@@ -35,23 +35,6 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-  <<
-
-  <<
-
-  <<
-
-  <
-
-  Updated upstream
-
-  // void deactivatedState() {
-  //   count = 60;
-  //   emit(DeactivateState());
-  // }
-
-  =======
-  >>>>>>> Stashed changes
 
   Future loginUser({required String mobileNumber}) async {
     try {

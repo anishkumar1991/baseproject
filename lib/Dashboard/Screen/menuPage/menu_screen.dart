@@ -157,7 +157,7 @@ class _MenuPageState extends State<MenuPage> {
                     },
                     contentPadding: EdgeInsets.zero,
                     title: Text(
-                      "${S.of(context).welcome}, ${cubit.userDetails?.data?.name}",
+                      "${S.of(context).welcome} ${cubit.userDetails?.data?.name}",
                       overflow: TextOverflow.ellipsis,
                       style: textStyleWithPoppin(
                           fontSize: 15,
@@ -165,7 +165,7 @@ class _MenuPageState extends State<MenuPage> {
                           fontWeight: FontWeight.w700),
                     ),
                     subtitle: Text(
-                      "@${cubit.userDetails?.data?.username}",
+                      cubit.userDetails?.data?.username != null ? "@${cubit.userDetails?.data?.username}" : "",
                       style: textStyleWithPoppin(
                           fontSize: 10,
                           color: AppColor.greyColor.withOpacity(0.7),
@@ -176,9 +176,13 @@ class _MenuPageState extends State<MenuPage> {
                       size: 18,
                       color: AppColor.naturalBlackColor,
                     ),
-                    leading: SizedBox(
+                    leading: Container(
                       height: 50,
                       width: 50,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: AppColor.dividerColor)
+                      ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(350),
                         child: Image.network(

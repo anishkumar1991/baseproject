@@ -93,7 +93,13 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
               ),
               spaceHeightWidget(5),
             ],
-          ) : SizedBox.shrink(),
+          ) : Align(alignment: Alignment.centerLeft,child: Text(
+            S.of(context).noDataAvailable,
+            style: textStyleWithPoppin(
+                fontSize: 13,
+                color: AppColor.naturalBlackColor,
+                fontWeight: FontWeight.w500),
+          ),),
           widget.cubit.userDetails?.data?.educationalDetails?.isNotEmpty ?? false ? Align(
            alignment: Alignment.centerRight,
             child: SizedBox(

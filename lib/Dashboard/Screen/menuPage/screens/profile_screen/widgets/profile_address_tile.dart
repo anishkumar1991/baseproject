@@ -66,7 +66,6 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
             ],
           ),
           spaceHeightWidget(5),
-          spaceHeightWidget(5),
           widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false
               ? Column(
                   children: [
@@ -106,7 +105,16 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                     ),
                   ],
                 )
-              : SizedBox.shrink(),
+              : Align(
+            alignment: Alignment.centerLeft,
+                child: Text(
+            S.of(context).noDataAvailable,
+            style: textStyleWithPoppin(
+                  fontSize: 13,
+                  color: AppColor.naturalBlackColor,
+                  fontWeight: FontWeight.w500),
+          ),
+              ),
           spaceHeightWidget(5),
           widget.cubit.userDetails?.data?.addresses?.isNotEmpty ?? false
               ? Align(

@@ -93,7 +93,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             shape: BoxShape.circle),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(350),
-                            child: Image.network(
+                            child: widget.userDetails.data?.avatar != null && widget.userDetails.data?.avatar != '' ? Image.network(
                               widget.userDetails.data?.avatar ?? '',
                               fit: BoxFit.cover,
                               errorBuilder: (BuildContext context,
@@ -117,7 +117,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ),
                                 );
                               },
-                            )),
+                            ) : Container(
+                                color: AppColor.white,
+                                height: 84,
+                                width: 84,
+                                child: Image.asset(AppIcons.sangathanLogo))),
                       )
                     : Container(
                         height: 100,
@@ -271,7 +275,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   },
                                   child: Image.asset(AppIcons.calenderIcon))),
                           spaceHeightWidget(5),
-                          Row(
+                         ( widget.userDetails.data?.dob != '' &&  widget.userDetails.data?.dob != null) ? Row(
                             children: [
                               Text(
                                 "${S.of(context).age}:",
@@ -292,7 +296,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 ),
                               ),
                             ],
-                          ),
+                          ) : SizedBox.shrink(),
                         ],
                       );
                     },

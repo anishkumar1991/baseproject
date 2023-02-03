@@ -193,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.phoneNumber ?? '',
+            cubit.userDetails?.data?.phoneNumber != '' ? cubit.userDetails?.data?.phoneNumber ?? "-" : "-",
             style: textStyleWithPoppin(
                 fontSize: 14,
                 color: AppColor.naturalBlackColor,
@@ -207,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.dob ?? '',
+            cubit.userDetails?.data?.dob != '' ? cubit.userDetails?.data?.dob ?? "-" : "-",
             style: textStyleWithPoppin(
                 fontSize: 14,
                 color: AppColor.naturalBlackColor,
@@ -230,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.gender ?? '',
+            cubit.userDetails?.data?.gender != '' ? cubit.userDetails?.data?.gender ?? '-' : "-",
             style: textStyleWithPoppin(
                 fontSize: 14,
                 color: AppColor.naturalBlackColor,

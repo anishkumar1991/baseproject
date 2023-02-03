@@ -98,7 +98,16 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
                     spaceHeightWidget(5),
                   ],
                 )
-              : SizedBox.shrink(),
+              : Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              S.of(context).noDataAvailable,
+              style: textStyleWithPoppin(
+                  fontSize: 13,
+                  color: AppColor.naturalBlackColor,
+                  fontWeight: FontWeight.w500),
+            ),
+          ),
           widget.cubit.userDetails?.data?.professionalDetails?.isNotEmpty ??
                   false
               ? Align(
