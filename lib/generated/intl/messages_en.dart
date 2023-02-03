@@ -104,6 +104,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
+        "logOut": MessageLookupByLibrary.simpleMessage("Log Out"),
+        "logOutDes": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to log out?"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("Login"),
         "loginToGetTheProgramsAndInformationRelatedToTheOrganization":
@@ -133,6 +136,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("Photo ( max 2 )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("Please choose location"),
+        "pleaseEnterData":
+            MessageLookupByLibrary.simpleMessage("Please enter data"),
         "pleaseSelectReason":
             MessageLookupByLibrary.simpleMessage("Please Select Reason"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
@@ -185,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProgram": MessageLookupByLibrary.simpleMessage("View Program"),
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("View Tours & Events"),
+        "welcome": MessageLookupByLibrary.simpleMessage("Welcome"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("Years (From)"),
         "yearTo": MessageLookupByLibrary.simpleMessage("Years (To)"),
         "years": MessageLookupByLibrary.simpleMessage("Years"),

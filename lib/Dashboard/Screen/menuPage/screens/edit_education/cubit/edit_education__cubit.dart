@@ -24,6 +24,20 @@ class EditEducationCubit extends Cubit<EditEducationState> {
     endYearCtr.clear();
     collageCtr.clear();
   }
+  bool checkIfEmpty() {
+    bool isEmpty = false;
+    if (levelCtr.text.isEmpty) {
+      if(startYearCtr.text.isEmpty){
+        if(endYearCtr.text.isEmpty){
+          if(collageCtr.text.isEmpty){
+              isEmpty = true;
+          }
+        }
+      }
+    }
+    return isEmpty;
+  }
+
 
   emitState(){
     emit(EditEducationInitial());

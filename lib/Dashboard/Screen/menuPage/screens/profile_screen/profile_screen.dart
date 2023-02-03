@@ -16,6 +16,7 @@ import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../generated/l10n.dart';
+import '../../../../Cubit/dashboard_cubit.dart';
 import 'cubit/profile_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -26,15 +27,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  Future callApi() async {
-    context.read<ProfileCubit>().getUserDetails();
-  }
-
-  @override
-  void initState() {
-    callApi();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,56 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 cubit.userDetails = state.data;
                 context.read<ProfileCubit>().getDropdownData();
               }
-            }else if(state is ProfileLoadingState){
-              return Shimmer.fromColors(
-                baseColor: AppColor.greyColor.withOpacity(0.3),
-                highlightColor: Colors.grey.withOpacity(0.1),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.36,
-                      child: MyAppBar(
-                          img: cubit.userDetails?.data?.avatar ?? '',
-                          persantage:
-                          cubit.userDetails?.data?.percentage?.toDouble() !=
-                              null
-                              ? ((cubit.userDetails?.data?.percentage
-                              ?.toDouble())! /
-                              100)
-                              : 0.00),
-                    ),
-                    Text(
-                      cubit.userDetails?.data?.name ?? '',
-                      style: textStyleWithPoppin(
-                          fontSize: 15,
-                          color: AppColor.black,
-                          fontWeight: FontWeight.w700),
-                    ),
-                    spaceHeightWidget(2),
-                    Text(
-                      cubit.userDetails?.data?.username ?? '',
-                      style: textStyleWithPoppin(
-                          fontSize: 10,
-                          color: AppColor.greyColor.withOpacity(0.7),
-                          fontWeight: FontWeight.w500),
-                    ),
-                    spaceHeightWidget(30),
-                    Column(
-                      children: List.generate(
-                          3,
-                              (index) => Container(
-                                decoration: BoxDecoration(
-                                    color: AppColor.white,
-                                  borderRadius: BorderRadius.circular(10)
-                                ),
-                            margin: const EdgeInsets.only(top: 20),
-                            height: MediaQuery.of(context).size.width * 0.3,
-                            width: MediaQuery.of(context).size.width * 0.95,
-                          )).toList(),
-                    )
-                  ],
-                ),
-              );
             }
             return Column(
               children: [
@@ -171,7 +113,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           listener: (context, state) {
                             if (state is UserLogOutSuccessState) {
                               EasyLoading.showSuccess(state.msg);
+
                               Navigator.pushNamedAndRemoveUntil(context, RoutePath.loginScreen, (route) => false);
+                              context.read<DashBoardCubit>().onTapIcons(0);
                             } else if (state is LogOutLoadingState) {
                               EasyLoading.show();
                             } else if (state is UserLogOutFaieldState) {
@@ -180,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                           child: InkWell(
                             onTap: () async {
-                              await context.read<LoginCubit>().logOut();
+                              showConfirmDialog();
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -294,20 +238,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Spacer(),
           InkWell(
-              onTap: () {
-                Navigator.pushNamed(
-                    context, RoutePath.personalInformationScreen,
-                    arguments: cubit.userDetails?.toJson());
-              },
-              child: Text(
-                S.of(context).edit,
-                style: textStyleWithPoppin(
-                    fontSize: 14,
-                    color: AppColor.blue,
-                    fontWeight: FontWeight.w500),
-              )),
-          spaceWidthWidget(8),
-          const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
+            onTap: (){
+              Navigator.pushNamed(
+                  context, RoutePath.personalInformationScreen,
+                  arguments: cubit.userDetails?.toJson());
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                children: [
+                  Text(
+                    S.of(context).edit,
+                    style: textStyleWithPoppin(
+                        fontSize: 14,
+                        color: AppColor.blue,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  spaceWidthWidget(8),
+                  const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -315,5 +267,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   customDivider() {
     return Divider(color: AppColor.greyColor.withOpacity(0.4));
+  }
+
+  Future showConfirmDialog() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(23),
+              borderSide: BorderSide.none
+          ),
+          title:  Text("${S.of(context).logOut}?",style: textStyleWithPoppin(fontSize: 20,color: AppColor.black,fontWeight: FontWeight.w400)),
+          content:  Text(S.of(context).logOutDes,style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w400),),
+          actions: <Widget>[
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child:  Text((S.of(context).noThanks),
+                )),
+            TextButton(
+              onPressed: () async {
+                await context.read<LoginCubit>().logOut();
+              },
+              child:  Text(S.of(context).logOut),
+            ),
+
+          ],
+        );
+      },
+    );
   }
 }

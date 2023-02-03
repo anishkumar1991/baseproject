@@ -108,6 +108,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "home": MessageLookupByLibrary.simpleMessage("होम"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
+        "logOut": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
+        "logOutDes": MessageLookupByLibrary.simpleMessage(
+            "क्या आप लॉग आउट करना चाहते हैं?"),
         "login": MessageLookupByLibrary.simpleMessage("लॉगिन करे"),
         "loginButtonText": MessageLookupByLibrary.simpleMessage("लॉगिन"),
         "loginToGetTheProgramsAndInformationRelatedToTheOrganization":
@@ -136,6 +139,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
+        "pleaseEnterData":
+            MessageLookupByLibrary.simpleMessage("कृपया डेटा दर्ज करें"),
         "pleaseSelectReason":
             MessageLookupByLibrary.simpleMessage("कृपया हटाने का कारण चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
@@ -189,6 +194,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम देखें"),
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("प्रवास और  कार्याक्रम देखे"),
+        "welcome": MessageLookupByLibrary.simpleMessage("नमस्ते"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("वर्ष ( कब से )"),
         "yearTo": MessageLookupByLibrary.simpleMessage("वर्ष ( कब तक )"),
         "years": MessageLookupByLibrary.simpleMessage("वर्ष"),

@@ -122,5 +122,9 @@
   "yes":"हां",
   "no":"नहीं",
   "cancel":"रद्द करें",
-  "pleaseSelectReason":"कृपया हटाने का कारण चुनें"
+  "pleaseSelectReason":"कृपया हटाने का कारण चुनें",
+  "pleaseEnterData": "कृपया डेटा दर्ज करें",
+  "logOut" : "लॉग आउट",
+  "logOutDes" : "क्या आप लॉग आउट करना चाहते हैं?",
+  "welcome":"नमस्ते"
 }

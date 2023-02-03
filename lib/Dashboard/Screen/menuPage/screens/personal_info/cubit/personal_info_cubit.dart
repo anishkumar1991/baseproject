@@ -111,18 +111,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
       "dob": boiCtr.text,
       "gender": value.name,
       "avatar": urlDownload,
-      "category": {
-        "id": gradeId,
-        "name": statusCtr.text
-      },
-      "religion": {
-        "id": religionId,
-        "name": religionCtr.text
-      },
-      "caste": {
-        "id": castId,
-        "name": castCtr.text
-      }
+      "religion_id": religionId,
+      "cast_id": castId,
+      "category_id": gradeId
     });
   }
 

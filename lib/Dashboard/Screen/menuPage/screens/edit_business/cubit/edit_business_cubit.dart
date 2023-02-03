@@ -18,6 +18,20 @@ class EditBusinessCubit extends Cubit<EditBusinessState> {
     endYearCtr.clear();
     positionCtr.clear();
   }
+  bool checkIfEmpty() {
+    bool isEmpty = false;
+    if (businessNameCtr.text.isEmpty) {
+      if(startYearCtr.text.isEmpty){
+        if(endYearCtr.text.isEmpty){
+          if(positionCtr.text.isEmpty){
+            isEmpty = true;
+          }
+        }
+      }
+    }
+    return isEmpty;
+  }
+
 
   emitState(){
     emit(EditBusinessInitial());

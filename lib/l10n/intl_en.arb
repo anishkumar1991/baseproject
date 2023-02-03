@@ -122,5 +122,9 @@
   "yes":"Yes",
   "no":"No",
   "cancel":"Cancel",
-  "pleaseSelectReason":"Please Select Reason"
+  "pleaseSelectReason":"Please Select Reason",
+  "pleaseEnterData": "Please enter data",
+  "logOut" : "Log Out",
+  "logOutDes" : "Are you sure you want to log out?",
+  "welcome":"Welcome"
 }

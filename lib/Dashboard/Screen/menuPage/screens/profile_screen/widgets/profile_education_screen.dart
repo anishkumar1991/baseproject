@@ -94,28 +94,38 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
               spaceHeightWidget(5),
             ],
           ) : SizedBox.shrink(),
-          widget.cubit.userDetails?.data?.educationalDetails?.isNotEmpty ?? false ? Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                  onTap: (){
-                    Navigator.pushNamed(
-                        context, RoutePath.editEducationScreen,
-                        arguments: {
-                          "index": 0,
-                          "educationalDetails": widget.cubit.userDetails?.data?.educationalDetails
-                        });
-                  },
-                  child: Text(
-                    S.of(context).edit,
-                    style: textStyleWithPoppin(
-                        fontSize: 14,
-                        color: AppColor.blue,
-                        fontWeight: FontWeight.w500),
-                  )),
-              spaceWidthWidget(8),
-              const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
-            ],
+          widget.cubit.userDetails?.data?.educationalDetails?.isNotEmpty ?? false ? Align(
+           alignment: Alignment.centerRight,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.2,
+              child: InkWell(
+                onTap: (){
+                  Navigator.pushNamed(
+                      context, RoutePath.editEducationScreen,
+                      arguments: {
+                        "index": 0,
+                        "educationalDetails": widget.cubit.userDetails?.data?.educationalDetails
+                      });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        S.of(context).edit,
+                        style: textStyleWithPoppin(
+                            fontSize: 14,
+                            color: AppColor.blue,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      spaceWidthWidget(8),
+                      const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ) : SizedBox.shrink(),
           widget.cubit.showEducation
               ? ListView.builder(
@@ -166,34 +176,38 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
                           AppColor.naturalBlackColor,
                           fontWeight: FontWeight.w400),
                     ),
-                    Row(
-                      mainAxisAlignment:
-                      MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context,
-                                  RoutePath
-                                      .editEducationScreen,
-                                  arguments: {
-                                    "index": index,
-                                    "educationalDetails": widget.cubit.userDetails?.data?.educationalDetails
-                                  });
-                            },
-                            child: Text(
-                              S.of(context).edit,
-                              style: textStyleWithPoppin(
-                                  fontSize: 14,
-                                  color: AppColor.blue,
-                                  fontWeight:
-                                  FontWeight.w500),
-                            )),
-                        spaceWidthWidget(8),
-                        const Icon(Icons.edit_outlined,
-                            size: 18,
-                            color: AppColor.blue)
-                      ],
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pushNamed(
+                                context, RoutePath.editEducationScreen,
+                                arguments: {
+                                  "index": index,
+                                  "educationalDetails": widget.cubit.userDetails?.data?.educationalDetails
+                                });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  S.of(context).edit,
+                                  style: textStyleWithPoppin(
+                                      fontSize: 14,
+                                      color: AppColor.blue,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                spaceWidthWidget(8),
+                                const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     spaceHeightWidget(10)
                   ],

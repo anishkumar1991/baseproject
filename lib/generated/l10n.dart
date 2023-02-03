@@ -1271,6 +1271,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Please enter data`
+  String get pleaseEnterData {
+    return Intl.message(
+      'Please enter data',
+      name: 'pleaseEnterData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Log Out`
+  String get logOut {
+    return Intl.message(
+      'Log Out',
+      name: 'logOut',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to log out?`
+  String get logOutDes {
+    return Intl.message(
+      'Are you sure you want to log out?',
+      name: 'logOutDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Welcome`
+  String get welcome {
+    return Intl.message(
+      'Welcome',
+      name: 'welcome',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
