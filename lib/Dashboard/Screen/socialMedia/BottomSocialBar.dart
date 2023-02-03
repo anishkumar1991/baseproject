@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
+
 import 'Share.dart';
 import 'ShareOnWhatsapp.dart';
 import 'cubit/ThumbCubit.dart';
@@ -91,7 +92,7 @@ class BottomSocialBar extends StatelessWidget {
               onPressed: () {
                 shareOnWhatsapp(SocialMedia.whatsapp);
               },
-              icon: const Icon(Icons.whatsapp, color: Color(0xFF1FAF38)),
+              icon: const Icon(Icons.facebook, color: Color(0xFF1FAF38)),
             ),
             Text(cubit1.tempModel!.posts[index].shares.whatsapp.toString()),
           ],

@@ -3,6 +3,8 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../cubit/FetchPostCubit.dart';
 import '../cubits/ReelsCubit.dart';
 import '../cubits/ReelsState.dart';
 import 'Content.dart';
@@ -20,7 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   void initState() {
     super.initState();
@@ -31,9 +32,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<FetchPostsCubit>();
+    cubit.fetchPosts();
     return Scaffold(
       body: SafeArea(
         child: Container(
+          color: Colors.black45,
           child: Stack(
             children: [
               SizedBox(
@@ -87,26 +91,43 @@ class _HomePageState extends State<HomePage> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: IconButton(
+                                  enableFeedback: true,
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
                                   icon: Icon(
                                     Icons.arrow_back,
                                     size: 30,
+                                    color: Colors.white,
                                   )),
                             ),
                           ),
                           Expanded(
-                            flex: 30,
+                            flex: 5,
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
                                 'Reels',
                                 style: GoogleFonts.montserrat(
-                                    fontSize: 18, fontWeight: FontWeight.w400),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
                               ),
                             ),
                           ),
+                          Expanded(
+                            flex: 1,
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Text(
+                                '',
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          )
                           // Expanded(
                           //   flex: 4,
                           //   child: Align(

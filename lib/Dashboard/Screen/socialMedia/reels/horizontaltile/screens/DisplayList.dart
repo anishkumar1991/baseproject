@@ -34,8 +34,8 @@ class _DisplayListState extends State<DisplayList> {
               );
             } else if (state is HorizontalTileFetchedState) {
               return Container(
-                height: 200,
-                width: 400,
+                height: 152,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.white,
                 child: Align(
                   alignment: Alignment.center,
