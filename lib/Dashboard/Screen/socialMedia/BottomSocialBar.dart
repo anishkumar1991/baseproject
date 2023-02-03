@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:like_button/like_button.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostsState.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/ShareCubit.dart';
 import 'Share.dart';
 import 'ShareOnWhatsapp.dart';
-import 'cubit/ThumbCubit.dart';
-import 'cubit/ThumbState.dart';
+import 'cubit/ShareState.dart';
 
 class BottomSocialBar extends StatelessWidget {
-  final String? url;
   final int index;
 
-  const BottomSocialBar({Key? key, this.url, required this.index})
-      : super(key: key);
+  const BottomSocialBar({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cubit1 = context.read<FetchPostsCubit>();
-    late int temp = 0;
+    final cubit2 = context.read<ShareCubit>();
+    var id = cubit1.tempModel!.posts[index].id.toString();
+    var tempcount = cubit1.tempModel!.posts[index].shares.other;
+    var temp1 = tempcount + 1;
 
-    final cubit = context.read<ThumbCubit>();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,48 +29,22 @@ class BottomSocialBar extends StatelessWidget {
           flex: 1,
           child: Row(
             children: [
-              BlocListener<ThumbCubit, ThumbState>(
-                listener: (context, state) {
-                  if (state is InitialState) {
-                    temp = 1;
-                  }
-                  if (state is ThumbPressedState) {
-                    temp = 2;
-                  }
-                  if (state is ThumbNotPressedState) {
-                    temp = 3;
-                  }
-                },
-                child: IconButton(
-                  onPressed: () {
-                    if (temp == 1) {
-                      cubit.thumbPressed();
-                    } else if (temp == 2) {
-                      cubit.thumbNotPressed();
-                    } else if (temp == 3) {
-                      cubit.thumbPressed();
-                    } else {
-                      cubit.thumbPressed();
-                    }
-                  },
-                  icon: BlocBuilder<ThumbCubit, ThumbState>(
-                    builder: (context, state) {
-                      if (state is ThumbPressedState) {
-                        return const Icon(
-                          Icons.thumb_up_alt,
-                          color: Colors.blue,
-                        );
-                      }
-                      if (state is ThumbNotPressedState) {
-                        return const Icon(Icons.thumb_up_off_alt);
-                      }
-                      return const Icon(Icons.thumb_up_off_alt);
-                    },
-                  ),
+              LikeButton(
+                circleColor: const CircleColor(
+                    start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                bubblesColor: const BubblesColor(
+                  dotPrimaryColor: Color(0xff33b5e5),
+                  dotSecondaryColor: Color(0xff0099cc),
                 ),
-              ),
-              Text(
-                  cubit1.tempModel!.posts[index].reactions[0].count.toString()),
+                likeCount: cubit1.tempModel!.posts[index].reactions[0].count,
+                likeBuilder: (isTapped) {
+                  isTapped ? cubit1.sendLike(id) : null;
+                  return Icon(
+                    Icons.thumb_up_alt,
+                    color: isTapped ? Colors.blue : Colors.grey,
+                  );
+                },
+              )
             ],
           ),
         ),
@@ -78,10 +54,24 @@ class BottomSocialBar extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    share(context, url!);
+                    cubit2.shareToAll();
+                    share(context, index);
                   },
                   icon: const Icon(Icons.share_outlined)),
-              Text(cubit1.tempModel!.posts[index].shares.other.toString()),
+
+              BlocBuilder<ShareCubit, ShareState>(
+
+                builder: (context, state) {
+                  if (state is ShareToAllState) {
+
+
+                    return Text(temp1.toString());
+                  }
+                  return Text(
+                      cubit1.tempModel!.posts[index].shares.other.toString());
+                },
+
+              ),
             ],
           ),
         ),
@@ -89,7 +79,7 @@ class BottomSocialBar extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                shareOnWhatsapp(SocialMedia.whatsapp);
+                shareOnWhatsapp(context, SocialMedia.whatsapp, index);
               },
               icon: const Icon(Icons.whatsapp, color: Color(0xFF1FAF38)),
             ),

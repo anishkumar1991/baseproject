@@ -24,7 +24,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
 
   Future<void> fetchPosts() async {
     try {
-      final res = await api.getPosts(auth!, "20");
+      final res = await api.getPosts(auth!, "25");
       if (res.response.statusCode == 200) {
         print("api working");
 
@@ -104,4 +104,23 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
       print(e);
     }
   }
+
+  Future<void> sendLike(String postId) async {
+    try {
+      final res =
+          await api.sendLike(auth!, {"post_id": postId, "reaction": "like"});
+      if (res.response.statusCode == 200) {
+        print("like button api working");
+      } else {
+        print("not api");
+        // State? model = States.fromJson(res.data);
+        // emit(LoginFaieldState(model.message ?? ''));
+      }
+    } on Exception catch (e) {
+      print(e.toString());
+      // LoginFaieldState(e.toString());
+    }
+  }
+
+
 }

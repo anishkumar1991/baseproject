@@ -8,5 +8,10 @@ abstract class FetchPostsApi {
   factory FetchPostsApi(Dio dio) = _FetchPostsApi;
 
   @GET('/api/mobile/v1/posts')
-  Future<HttpResponse> getPosts(@Header('Authorization') String token,@Query("size") String size);
+  Future<HttpResponse> getPosts(
+      @Header('Authorization') String token, @Query("size") String size);
+
+  @POST("/api/mobile/v1/posts/react")
+  Future<HttpResponse> sendLike(
+      @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

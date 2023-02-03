@@ -61,10 +61,12 @@ class SocialMediaPage extends StatelessWidget {
                   builder: (context, state) {
                 if (state is PostsFetchedState) {
                   return ListView.builder(
+
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     itemCount: state.model.posts.length,
+
                     itemBuilder: (context, index) {
                       // if (state.model.posts[index].postType == "Link" &&
                       //     state.model.posts[index].postData.link?.linkType ==
