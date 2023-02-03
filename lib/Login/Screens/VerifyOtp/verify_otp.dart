@@ -36,6 +36,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
   void initState() {
     final cubit = context.read<LoginCubit>();
     cubit.count = 60;
+
+    if (cubit.timer?.isActive ?? false) {
+      cubit.timer?.cancel();
+    }
+
     context.read<LoginCubit>().startTimer();
     super.initState();
   }
@@ -162,7 +167,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
         }
       },
       builder: (context, state) {
-        print(state);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
