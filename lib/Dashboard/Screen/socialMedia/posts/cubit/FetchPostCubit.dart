@@ -121,6 +121,4 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
       // LoginFaieldState(e.toString());
     }
   }
-
-
 }

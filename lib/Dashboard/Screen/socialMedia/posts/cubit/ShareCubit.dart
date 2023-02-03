@@ -5,7 +5,7 @@ import 'ShareState.dart';
 class ShareCubit extends Cubit<ShareState> {
   ShareCubit() : super(InitialShareState());
 
-  void shareToAll() {
-    emit(ShareToAllState());
+  void shareToAll(int index) {
+    emit(ShareToAllState(index));
   }
 }

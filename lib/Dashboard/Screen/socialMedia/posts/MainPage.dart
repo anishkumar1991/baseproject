@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/CustomCard.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
-
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 
@@ -20,33 +19,12 @@ class SocialMediaPage extends StatelessWidget {
           title: const Text(
             "Social Media",
             style: TextStyle(
-                fontFamily: 'TwCenMT',
+                fontFamily: 'Tw Cen MT',
                 color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w400),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 11, 20, 9),
-              // child: Container(
-              //
-              //   width: 78,
-              //   height: 35,
-              //   decoration: BoxDecoration(
-              //
-              //     color: const Color(0xFFFF9244),
-              //     //borderRadius: BorderRadius.circular(18),
-              //   ),
-              //   child: Center(
-              //     child: Text("Login",
-              //         style: GoogleFonts.poppins(
-              //             color: Colors.white,
-              //             fontWeight: FontWeight.w600,
-              //             fontSize: 14)),
-              //   ),
-              // ),
-            )
-          ],
+          centerTitle: true,
         ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, 12, 0, 60),
@@ -62,7 +40,6 @@ class SocialMediaPage extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
                     itemCount: state.model.posts.length,
-
                     itemBuilder: (context, index) {
                       // if (state.model.posts[index].postType == "Link" &&
                       //     state.model.posts[index].postData.link?.linkType ==

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/network/model/FetchPosts.dart';
+import '../network/model/FetchPosts.dart';
 
 abstract class FetchPostsState extends Equatable{
   @override

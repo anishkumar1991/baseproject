@@ -10,7 +10,6 @@ import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
@@ -30,7 +29,8 @@ import 'Dashboard/Screen/menuPage/screens/edit_business/cubit/edit_business_cubi
 import 'Dashboard/Screen/menuPage/screens/edit_education/cubit/edit_education__cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
-import 'Dashboard/Screen/socialMedia/cubit/ShareCubit.dart';
+import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
+import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
@@ -77,7 +77,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => ShareCubit()),
-
         BlocProvider(create: (context) => ReelsCubit()),
         BlocProvider(create: (context) => FetchPostsCubit()),
         BlocProvider(create: (context) => InternetCubit()),

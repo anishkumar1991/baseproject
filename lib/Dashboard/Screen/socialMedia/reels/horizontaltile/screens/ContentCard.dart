@@ -41,7 +41,7 @@ class _ContentCardState extends State<ContentCard> {
                   style: TextStyle(
                       fontFamily: 'Tw Cen Mt',
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 14,
                       fontWeight: FontWeight.w400),
                 )),
             Positioned(
@@ -51,7 +51,7 @@ class _ContentCardState extends State<ContentCard> {
                     style: TextStyle(
                         fontFamily: 'Tw Cen Mt',
                         fontWeight: FontWeight.w400,
-                        fontSize: 20,
+                        fontSize: 16,
                         color: Colors.white))),
           ],
         ),

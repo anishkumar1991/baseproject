@@ -7,7 +7,7 @@ import 'package:sangathan/Dashboard/Screen/menuPage/menu_screen.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 import '../../../Values/icons.dart';
-import '../socialMedia/MainPage.dart';
+import '../socialMedia/posts/MainPage.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});

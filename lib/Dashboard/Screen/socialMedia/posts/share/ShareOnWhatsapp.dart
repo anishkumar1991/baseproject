@@ -1,12 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
-import 'package:share_plus/share_plus.dart';
 import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
-Future<void> share(BuildContext context, int index) async {
+import '../cubit/FetchPostCubit.dart';
+enum SocialMedia { whatsapp }
+
+Future shareOnWhatsapp(BuildContext context, SocialMedia socialMedia, int index) async {
   final cubit = context.read<FetchPostsCubit>();
   String urlimage = cubit.tempModel!.posts[index].postData.images!.first
       .toString();
@@ -18,5 +21,13 @@ Future<void> share(BuildContext context, int index) async {
   final path = '${temp.path}/image.jpg';
   File(path).writeAsBytesSync(bytes);
   XFile file = XFile(path);
-  await Share.shareXFiles(text: text, [file]);
+
+  await Share.shareXFiles([file], text: text);
+  //
+  // final urls = {
+  //   SocialMedia.whatsapp: 'whatsapp://send?text=$text',
+  // };
+  // final url1 = urls[socialMedia]!;
+  //
+  // launchUrl(Uri.parse(url1));
 }

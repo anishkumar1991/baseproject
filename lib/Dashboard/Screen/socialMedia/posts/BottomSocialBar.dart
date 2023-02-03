@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:like_button/like_button.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostCubit.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/FetchPostsState.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/cubit/ShareCubit.dart';
-import 'Share.dart';
-import 'ShareOnWhatsapp.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/Share.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/ShareOnWhatsapp.dart';
+import 'cubit/FetchPostCubit.dart';
+import 'cubit/ShareCubit.dart';
 import 'cubit/ShareState.dart';
 
 class BottomSocialBar extends StatelessWidget {
@@ -21,7 +20,6 @@ class BottomSocialBar extends StatelessWidget {
     var tempcount = cubit1.tempModel!.posts[index].shares.other;
     var temp1 = tempcount + 1;
 
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -30,6 +28,7 @@ class BottomSocialBar extends StatelessWidget {
           child: Row(
             children: [
               LikeButton(
+                size: 40,
                 circleColor: const CircleColor(
                     start: Color(0xff00ddff), end: Color(0xff0099cc)),
                 bubblesColor: const BubblesColor(
@@ -53,24 +52,22 @@ class BottomSocialBar extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
+
                   onPressed: () {
-                    cubit2.shareToAll();
+
+                    cubit2.shareToAll(index);
                     share(context, index);
                   },
                   icon: const Icon(Icons.share_outlined)),
-
               BlocBuilder<ShareCubit, ShareState>(
-
                 builder: (context, state) {
                   if (state is ShareToAllState) {
-
 
                     return Text(temp1.toString());
                   }
                   return Text(
                       cubit1.tempModel!.posts[index].shares.other.toString());
                 },
-
               ),
             ],
           ),

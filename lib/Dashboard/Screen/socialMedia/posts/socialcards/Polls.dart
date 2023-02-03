@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'BottomSocialBar.dart';
+import '../BottomSocialBar.dart';
 
 class Polls extends StatelessWidget {
   const Polls({Key? key}) : super(key: key);

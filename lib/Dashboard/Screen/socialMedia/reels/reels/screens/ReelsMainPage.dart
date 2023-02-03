@@ -3,8 +3,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import '../../../cubit/FetchPostCubit.dart';
+import '../../../posts/cubit/FetchPostCubit.dart';
 import '../cubits/ReelsCubit.dart';
 import '../cubits/ReelsState.dart';
 import 'Content.dart';
