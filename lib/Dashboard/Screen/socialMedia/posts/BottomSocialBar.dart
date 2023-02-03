@@ -52,9 +52,7 @@ class BottomSocialBar extends StatelessWidget {
           child: Row(
             children: [
               IconButton(
-
                   onPressed: () {
-
                     cubit2.shareToAll(index);
                     share(context, index);
                   },
@@ -62,7 +60,6 @@ class BottomSocialBar extends StatelessWidget {
               BlocBuilder<ShareCubit, ShareState>(
                 builder: (context, state) {
                   if (state is ShareToAllState) {
-
                     return Text(temp1.toString());
                   }
                   return Text(

@@ -35,7 +35,6 @@ class SocialMediaPage extends StatelessWidget {
                   builder: (context, state) {
                 if (state is PostsFetchedState) {
                   return ListView.builder(
-
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     physics: const ScrollPhysics(),
@@ -52,7 +51,7 @@ class SocialMediaPage extends StatelessWidget {
                           child: CustomCard(tempkey: 2, index: index),
                         );
                       }
-                      return SizedBox();
+                      return const SizedBox();
                     },
                   );
                 }

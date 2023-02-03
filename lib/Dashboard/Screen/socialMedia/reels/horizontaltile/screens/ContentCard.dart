@@ -20,6 +20,7 @@ class _ContentCardState extends State<ContentCard> {
       height: 169,
       width: 117,
       child: Card(
+        elevation: 4,
         color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Stack(

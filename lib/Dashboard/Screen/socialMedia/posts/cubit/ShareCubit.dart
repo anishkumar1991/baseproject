@@ -6,6 +6,7 @@ class ShareCubit extends Cubit<ShareState> {
   ShareCubit() : super(InitialShareState());
 
   void shareToAll(int index) {
+
     emit(ShareToAllState(index));
   }
 }
