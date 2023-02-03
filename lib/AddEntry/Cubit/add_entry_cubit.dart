@@ -418,8 +418,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   cleanAllVariableData() {
     multiSelectionList = [];
     entryField = [];
-
+    date = 'Select DOB of Birth';
     categoryData = [];
+    selectRadio = null;
     castData = [];
     qualificationData = [];
     professionData = [];
@@ -459,11 +460,12 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     subUnitId = null;
     levelName = null;
     personID = null;
+    emit(DisposeState());
   }
 
   /// Get initial dropdown Data
 
-  getInitialDropdownData(Map<String, dynamic>? personData) {
+  getInitialDropdownData(Map<String, dynamic>? personData) async {
     if (personData != null) {
       for (var item in personData.entries) {
         if (item.key == "designation") {
@@ -482,7 +484,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             if (index >= 0) {
               categorySelected = categoryData[index];
               getAllDropDownData(categoryData[index], item.key);
-              getCastData(id: categorySelected!.id.toString());
+              await getCastData(id: categorySelected!.id.toString());
             }
           }
         } else if (item.key == "caste") {
@@ -522,10 +524,33 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             }
           }
         }
+      }
+      //emit(DropDownSelectedState());
+    }
+  }
 
-        emit(DropDownSelectedState());
+  /// Get initial caste Data
+  getInitialCasteData(Map<String, dynamic>? personData) {
+    print(castData);
+    if (personData != null) {
+      for (var item in personData.entries) {
+        print(item.key);
+        if (item.key == "caste") {
+          if (castData.isNotEmpty && castData != null) {
+            if (item.value != null || item.value != "") {
+              int index =
+                  castData.indexWhere((element) => element.id == item.value);
+              if (index >= 0) {
+                castSelected = castData[index];
+                getAllDropDownData(castData[index], item.key);
+                print(castSelected?.toJson());
+              }
+            }
+          }
+        }
       }
     }
+    emit(DropDownSelectedState());
   }
 
   /// Get initial Textfield Data
@@ -600,6 +625,19 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         if (DynamicUIHandler.imagePicker.contains(item.key)) {
           if (item.value != null && item.value != "") {
             initialUserprofileURL = item.value;
+          }
+        }
+      }
+    }
+  }
+
+  /// Get initial DOB Data
+  getInitialDOBData(Map<String, dynamic>? personData) {
+    if (personData != null && entryField != null) {
+      for (var item in personData.entries) {
+        if (DynamicUIHandler.calenderView.contains(item.key)) {
+          if (item.value != null && item.value != "") {
+            date = item.value;
           }
         }
       }
@@ -688,7 +726,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         }
       } else {
         Map<String, dynamic>? msg = res.data;
-        emit(SubmitAddEntryErrorState(msg?['errors'] ?? ''));
+        emit(SubmitAddEntryErrorState(msg?['message'] ?? ''));
       }
     } catch (e) {
       emit(SubmitAddEntryErrorState('Something Went Wrong'));
