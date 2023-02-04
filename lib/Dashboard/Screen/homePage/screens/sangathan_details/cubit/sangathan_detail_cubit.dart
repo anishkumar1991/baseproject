@@ -14,7 +14,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   List<SangathanData> sangathanDataList = [];
   List<Locations> locationList = [];
-  int countryStateId = 14;
+  int countryStateId = 03;
   int? dataLevelId;
   int? locationId;
 
@@ -70,7 +70,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   void onSelectLocation(int? countryId, int? id) {
     emit(LoadingState());
-    countryStateId = countryId ?? 14;
+    countryStateId = countryId ?? 03;
     locationId = id;
     //print(countryStateId);
     print(locationId);
