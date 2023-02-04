@@ -42,7 +42,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     print('data_leve${widget.dataLevelId}');
     print('country_state_id${widget.countryStateId}');
 
-    context.read<ZilaDataCubit>().getDeleteReason();
     super.initState();
   }
 
@@ -130,7 +129,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 spaceHeightWidget(10),
                 Expanded(
                     child: SingleChildScrollView(
-                      physics: BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       spaceHeightWidget(10),
@@ -184,7 +183,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         },
         builder: (context, state) {
           if (state is UnitDataFetchedState) {
-            if (state.dataUnit.data!.isNotEmpty) {
+            if (state.dataUnit.data?.isNotEmpty ?? false) {
               cubit.filterDtaSelectedIndex = 0;
               cubit.dataUnitList = state.dataUnit.data!;
               cubit.morchaData = UnitData(name: 'Morcha');
@@ -201,8 +200,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   print('first Unit Id=${cubit.unitId}');
                   print('first subUnitId=${cubit.subUnitId}');
                 }
-                if (cubit.dataUnitList[i].name!.contains('Morcha')) {
+                if (cubit.dataUnitList[i].name?.contains('Morcha') ?? false) {
                   cubit.morchaList.add(cubit.dataUnitList[i]);
+                  if (cubit.coreSangathanList?.isEmpty ?? false) {
+                    cubit.unitId = cubit.morchaList.first.id;
+                  }
                 }
               }
               context.read<ZilaDataCubit>().getEntryData(data: {
@@ -211,12 +213,15 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 "level_name": cubit.levelNameId
               });
             }else{
+               cubit.morchaList.clear();
+              cubit.unitId = null;
+              cubit.subUnitId = "";
               context.read<ZilaDataCubit>().getEntryData(data: {
                 "level": widget.dataLevelId,
                 "unit": cubit.unitId,
                 "level_name": cubit.levelNameId
               });
-            }
+            } 
           }
           if (state is LoadingState) {
             return Shimmer.fromColors(
@@ -382,149 +387,160 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             cubit.deleteReasonData = state.deleteReason;
           }
 
-          return cubit.dataList == null ? shimmerWidget() : cubit.dataList?.isEmpty ?? true
-              ? Center(
-                  heightFactor: MediaQuery.of(context).size.height * 0.02,
-                  child: Text(
-                    S.of(context).noDataAvailable,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: AppColor.black),
-                  ))
-              : ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: cubit.dataList?.length ?? 0,
-                  separatorBuilder: ((context, index) => spaceHeightWidget(18)),
-                  itemBuilder: ((context, index) {
-                    final data = cubit.dataList?[index];
-                    return Column(
-                      children: [
-                        Slidable(
-                          key: UniqueKey(),
-                          endActionPane:
-                              ActionPane(motion: const ScrollMotion(), children: [
-                            SlidableAction(
-                              padding: EdgeInsets.zero,
-                              onPressed: ((context) {}),
-                              backgroundColor: AppColor.greenshade100,
-                              foregroundColor: AppColor.greenshade900,
-                              icon: Icons.verified_user,
-                              label: S.of(context).verify,
-                            ),
-                            SlidableAction(
-                              padding: EdgeInsets.zero,
-                              onPressed: ((context) {
-                                context
-                                    .read<AddEntryCubit>()
-                                    .cleanAllVariableData();
-                                Navigator.pushNamed(
-                                    context, RoutePath.addEntryScreen,
-                                    arguments: AddEntryPage(
-                                      type: widget.type!,
-                                      leaveId: widget.dataLevelId ?? 0,
-                                      unitId: cubit.unitId,
-                                      subUnitId: cubit.subUnitId,
-                                      countryStateId: widget.countryStateId,
-                                      levelName: cubit.levelNameId,
-                                      personID: data?.id,
-                                      personData: data?.toJson(),
-                                    ));
-                              }),
-                              backgroundColor: AppColor.white,
-                              icon: Icons.edit,
-                              label: S.of(context).edit,
-                            ),
-                            SlidableAction(
-                              padding: EdgeInsets.zero,
-                              onPressed: ((context) async {
-                                cubit.getDeleteId(data?.id);
+          return cubit.dataList == null
+              ? shimmerWidget()
+              : cubit.dataList?.isEmpty ?? true
+                  ? Center(
+                      heightFactor: MediaQuery.of(context).size.height * 0.02,
+                      child: Text(
+                        S.of(context).noDataAvailable,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: AppColor.black),
+                      ))
+                  : ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: cubit.dataList?.length ?? 0,
+                      separatorBuilder: ((context, index) =>
+                          spaceHeightWidget(18)),
+                      itemBuilder: ((context, index) {
+                        final data = cubit.dataList?[index];
+                        return Column(
+                          children: [
+                            Slidable(
+                              key: UniqueKey(),
+                              endActionPane: ActionPane(
+                                  motion: const ScrollMotion(),
+                                  children: [
+                                    SlidableAction(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: ((context) {}),
+                                      backgroundColor: AppColor.greenshade100,
+                                      foregroundColor: AppColor.greenshade900,
+                                      icon: Icons.verified_user,
+                                      label: S.of(context).verify,
+                                    ),
+                                    SlidableAction(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: ((context) {
+                                        context
+                                            .read<AddEntryCubit>()
+                                            .cleanAllVariableData();
+                                        Navigator.pushNamed(
+                                            context, RoutePath.addEntryScreen,
+                                            arguments: AddEntryPage(
+                                              type: widget.type!,
+                                              leaveId: widget.dataLevelId ?? 0,
+                                              unitId: cubit.unitId,
+                                              subUnitId: cubit.subUnitId,
+                                              countryStateId:
+                                                  widget.countryStateId,
+                                              levelName: cubit.levelNameId,
+                                              personID: data?.id,
+                                              personData: data?.toJson(),
+                                            ));
+                                      }),
+                                      backgroundColor: AppColor.white,
+                                      icon: Icons.edit,
+                                      label: S.of(context).edit,
+                                    ),
+                                    SlidableAction(
+                                      padding: EdgeInsets.zero,
+                                      onPressed: ((context) async {
+                                        cubit.getDeleteId(data?.id);
 
-                                /// Data Entry Delete Dialog
-                                await dataEntryDeleteDialog(context, cubit, index);
-                              }),
-                              backgroundColor: AppColor.redShade100,
-                              foregroundColor: AppColor.redShade600,
-                              icon: Icons.delete_outline,
-                              label: S.of(context).delete,
-                            ),
-                          ]),
-                          child: Row(
-                            children: [
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Image.network(
-                                    data?.photo ?? '',
-                                    height: 56,
-                                    width: 56,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: ((context, error, stackTrace) =>
-                                        Container(
-                                          height: 56,
-                                          width: 56,
-                                          color: AppColor.navyBlue,
-                                          child: const Icon(
-                                            Icons.person,
-                                            color: AppColor.white,
-                                            size: 28,
-                                          ),
-                                        )),
-                                  )),
-                              spaceWidthWidget(16),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                        /// Data Entry Delete Dialog
+                                        await dataEntryDeleteDialog(
+                                            context, cubit, index);
+                                      }),
+                                      backgroundColor: AppColor.redShade100,
+                                      foregroundColor: AppColor.redShade600,
+                                      icon: Icons.delete_outline,
+                                      label: S.of(context).delete,
+                                    ),
+                                  ]),
+                              child: Row(
                                 children: [
-                                  Row(
+                                  ClipRRect(
+                                      borderRadius: BorderRadius.circular(30),
+                                      child: Image.network(
+                                        data?.photo ?? '',
+                                        height: 56,
+                                        width: 56,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            ((context, error, stackTrace) =>
+                                                Container(
+                                                  height: 56,
+                                                  width: 56,
+                                                  color: AppColor.navyBlue,
+                                                  child: const Icon(
+                                                    Icons.person,
+                                                    color: AppColor.white,
+                                                    size: 28,
+                                                  ),
+                                                )),
+                                      )),
+                                  spaceWidthWidget(16),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      AutoSizeText(
-                                        Localizations.localeOf(context)
-                                                    .toString() ==
-                                                "hi"
-                                            ? data?.hindiName ?? ''
-                                            : data?.englishName ?? '',
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
+                                      Row(
+                                        children: [
+                                          AutoSizeText(
+                                            Localizations.localeOf(context)
+                                                        .toString() ==
+                                                    "hi"
+                                                ? data?.hindiName ?? ''
+                                                : data?.englishName ?? '',
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                color: AppColor.textBlackColor),
+                                          ),
+                                          spaceWidthWidget(5),
+                                          Image.asset(
+                                            AppIcons.verifyIcon,
+                                            height: 10,
+                                          )
+                                        ],
+                                      ),
+                                      Text(
+                                        data?.designationName ?? '',
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 10,
+                                            color: AppColor.greyColor),
+                                      ),
+                                      Text(
+                                        "+91- ${data?.phone ?? ''}",
                                         style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w600,
-                                            color: AppColor.textBlackColor),
+                                            fontSize: 12,
+                                            color: AppColor.greyColor),
                                       ),
-                                      spaceWidthWidget(5),
-                                      Image.asset(
-                                        AppIcons.verifyIcon,
-                                        height: 10,
-                                      )
                                     ],
                                   ),
-                                  Text(
-                                    data?.designationName ?? '',
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 10,
-                                        color: AppColor.greyColor),
+                                  const Spacer(),
+                                  Image.asset(
+                                    AppIcons.callIcon,
+                                    height: 20,
                                   ),
-                                  Text(
-                                    "+91- ${data?.phone ?? ''}",
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: AppColor.greyColor),
-                                  ),
+                                  spaceWidthWidget(4)
                                 ],
                               ),
-                              const Spacer(),
-                              Image.asset(
-                                AppIcons.callIcon,
-                                height: 20,
-                              ),
-                              spaceWidthWidget(4)
-                            ],
-                          ),
-                        ),
-                        index + 1 == cubit.dataList?.length ? spaceHeightWidget(MediaQuery.of(context).size.height * 0.1) : SizedBox.shrink()
-                      ],
-                    );
-                  }));
+                            ),
+                            index + 1 == cubit.dataList?.length
+                                ? spaceHeightWidget(
+                                    MediaQuery.of(context).size.height * 0.1)
+                                : SizedBox.shrink()
+                          ],
+                        );
+                      }));
         },
       ),
     );
@@ -824,6 +840,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             builder: (context, state) {
               final cubit = BlocProvider.of<ZilaDataCubit>(context);
               if (state is PartyZilaSelectedState) {
+                context.read<ZilaDataCubit>().getDeleteReason();
+
                 cubit.zilaSelected = null;
                 cubit.partyzilaList = state.data.data!;
                 cubit.levelNameId = cubit.partyzilaList.first.id;
