@@ -109,7 +109,7 @@
   "years": "Years",
   "category": "Category",
   "verifyWithOtp":"Verify with OTP",
-  "skip&AddNewEntry":"Skip & Add new entry",
+  "skipAddNewEntry":"Skip & Add new entry",
   "resend":"Resend",
   "educationUpdated" : "Education Updated",
   "addressUpdated" : "Address Updated",

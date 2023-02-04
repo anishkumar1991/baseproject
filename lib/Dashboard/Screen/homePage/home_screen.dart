@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/widget/event_Listview.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/widget/meeting_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/pravas_card_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -9,7 +8,8 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/size_config.dart';
 import 'package:sangathan/route/route_path.dart';
 
-import '../../../generated/l10n.dart';
+import 'cubit/home_page_cubit.dart';
+import 'cubit/home_page_state.dart';
 import 'widget/custom_drawer_widget.dart';
 
 final homePageScaffoldGlobalKey = GlobalKey<ScaffoldState>();
@@ -22,6 +22,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().getCurrentOrientation(context);
+    context.read<HomePageCubit>().getClientAppLists();
     return Scaffold(
       key: homePageScaffoldGlobalKey,
       drawer: const CustomDrawerWidget(),
@@ -123,67 +124,96 @@ class HomePage extends StatelessWidget {
               // ),
               Expanded(
                   child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    /// Sangathan card widget
-                    GestureDetector(
-                        onTap: (() {
-                          Navigator.pushNamed(
-                              context, RoutePath.sangathanDetailsScreen);
-                        }),
-                        child: const SngathanCardWidget()),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                child: BlocListener<HomePageCubit, HomePageState>(
+                  listener: (context, state) {
+                    if (state is ClientAppListsFailedState) {
+                      EasyLoading.showError(state.errorMsg);
+                    }
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      /// Sangathan card widget
+                      BlocBuilder<HomePageCubit, HomePageState>(
+                        builder: (context, state) {
+                          if (state is ClientAppListsSuccessState) {
+                            if (state.clientAppListsModel.sections != null) {
+                              for (var item
+                                  in state.clientAppListsModel.sections!) {
+                                if (item.type == "app_cards") {
+                                  if (item.data != null) {
+                                    for (var innerItem in item.data!) {
+                                      if (innerItem.name == "Data Entry") {
+                                        return GestureDetector(
+                                            onTap: (() {
+                                              Navigator.pushNamed(
+                                                  context,
+                                                  RoutePath
+                                                      .sangathanDetailsScreen);
+                                            }),
+                                            child: const SngathanCardWidget());
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          return SizedBox();
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
 
-                    /// pravas card widget
-                    const PravasCardWidget(),
-                    // const SizedBox(
-                    //   height: 14,
-                    // ),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       S.of(context).myEvent,
-                    //       style: const TextStyle(
-                    //           fontFamily: 'Tw Cen MT',
-                    //           fontSize: 20,
-                    //           fontWeight: FontWeight.w400),
-                    //     ),
-                    //     Text(
-                    //       S.of(context).seeAll,
-                    //       style: const TextStyle(
-                    //         fontFamily: 'Tw Cen MT',
-                    //         fontSize: 20,
-                    //         fontWeight: FontWeight.w400,
-                    //         color: AppColor.blueTextColor,
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    // SizedBox(
-                    //     height: 270,
-                    //     child: EventListView(
-                    //       onTap: (() {}),
-                    //       title: 'Mann ki Baat',
-                    //       subtitle: '97th Edition',
-                    //       date: 'On 29th Jan 2023',
-                    //     )),
-                    // const SizedBox(
-                    //   height: 10,
-                    // ),
-                    //
-                    // /// Meeting card widget
-                    // const MeetingCard(),
-                    const SizedBox(
-                      height: 80,
-                    )
-                  ],
+                      /// pravas card widget
+                      const PravasCardWidget(),
+                      // const SizedBox(
+                      //   height: 14,
+                      // ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text(
+                      //       S.of(context).myEvent,
+                      //       style: const TextStyle(
+                      //           fontFamily: 'Tw Cen MT',
+                      //           fontSize: 20,
+                      //           fontWeight: FontWeight.w400),
+                      //     ),
+                      //     Text(
+                      //       S.of(context).seeAll,
+                      //       style: const TextStyle(
+                      //         fontFamily: 'Tw Cen MT',
+                      //         fontSize: 20,
+                      //         fontWeight: FontWeight.w400,
+                      //         color: AppColor.blueTextColor,
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      // SizedBox(
+                      //     height: 270,
+                      //     child: EventListView(
+                      //       onTap: (() {}),
+                      //       title: 'Mann ki Baat',
+                      //       subtitle: '97th Edition',
+                      //       date: 'On 29th Jan 2023',
+                      //     )),
+                      // const SizedBox(
+                      //   height: 10,
+                      // ),
+                      //
+                      // /// Meeting card widget
+                      // const MeetingCard(),
+                      const SizedBox(
+                        height: 80,
+                      )
+                    ],
+                  ),
                 ),
               ))
             ],

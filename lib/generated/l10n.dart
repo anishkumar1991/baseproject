@@ -1140,7 +1140,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'skip&AddNewEntry' key
+  /// `Skip & Add new entry`
+  String get skipAddNewEntry {
+    return Intl.message(
+      'Skip & Add new entry',
+      name: 'skipAddNewEntry',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Resend`
   String get resend {

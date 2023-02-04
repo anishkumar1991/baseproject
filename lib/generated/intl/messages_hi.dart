@@ -165,6 +165,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "skipAddNewEntry": MessageLookupByLibrary.simpleMessage(
+            "छोड़ें और नई प्रविष्टि जोड़ें"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
             "कृपया (कब से) वर्ष पहले दर्ज करें"),
         "state": MessageLookupByLibrary.simpleMessage("स्टेट"),

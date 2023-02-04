@@ -163,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "skipAddNewEntry":
+            MessageLookupByLibrary.simpleMessage("Skip & Add new entry"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
             "Please Enter (From) year First"),
         "state": MessageLookupByLibrary.simpleMessage("State"),
