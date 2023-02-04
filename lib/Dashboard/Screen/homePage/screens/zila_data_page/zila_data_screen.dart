@@ -191,10 +191,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               cubit.morchaList.clear();
               for (var i = 0; i < cubit.dataUnitList.length; i++) {
                 if (cubit.dataUnitList[i].name == 'Core Sangathan') {
-                  cubit.coreSangathanList = cubit.dataUnitList[i].subUnits;
+                  if (cubit.dataUnitList[i].subUnits?.isNotEmpty ?? false) {
+                    cubit.coreSangathanList = cubit.dataUnitList[i].subUnits;
+                    cubit.subUnitId =
+                        cubit.coreSangathanList?.first.id.toString() ?? "";
+                  }
                   cubit.unitId = cubit.dataUnitList[i].id;
-                  cubit.subUnitId =
-                      cubit.coreSangathanList?.first.id.toString() ?? "";
+
                   print('first Unit Id=${cubit.unitId}');
                   print('first subUnitId=${cubit.subUnitId}');
                 }
@@ -202,6 +205,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   cubit.morchaList.add(cubit.dataUnitList[i]);
                 }
               }
+              context.read<ZilaDataCubit>().getEntryData(data: {
+                "level": widget.dataLevelId,
+                "unit": cubit.unitId,
+                "level_name": cubit.levelNameId
+              });
+            }else{
               context.read<ZilaDataCubit>().getEntryData(data: {
                 "level": widget.dataLevelId,
                 "unit": cubit.unitId,

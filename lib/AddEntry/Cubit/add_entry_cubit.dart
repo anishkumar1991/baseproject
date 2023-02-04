@@ -346,7 +346,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (state is GetAddEntryFormStructureLoadingState) {
       try {
         final res = await api.getAddEntryFormStructure(
-            'Bearer ${StorageService.userAuthToken}', levelID, countryId);
+            '${StorageService.userAuthToken}', levelID, countryId);
         if (res.response.statusCode == 200) {
           AddEntryFormStructure addEntryFormStructure =
               AddEntryFormStructure.fromJson(res.data);
@@ -355,9 +355,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
               "------------------------------------ Add entry form structure ----------------------------");
           print("level id :$levelID");
           print("countryStateId = $countryId");
-          print("countryStateId = ${res.response.realUri.queryParameters}");
+          print("body = ${res.response.realUri.queryParameters}");
           print("Status code : ${res.response.statusCode}");
           print("Response :${res.data}");
+          print("token : ${StorageService.userAuthToken}");
           print(
               "------------------------------------ ------------------------ ----------------------------");
         } else {

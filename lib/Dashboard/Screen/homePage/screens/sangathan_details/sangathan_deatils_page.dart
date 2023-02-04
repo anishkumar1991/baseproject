@@ -56,8 +56,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            spaceHeightWidget(10),
-            appbar(),
+            /*spaceHeightWidget(10),*/
+           /* appbar(),*/
             spaceHeightWidget(20),
             Row(
                 children: [

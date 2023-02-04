@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       /// pravas card widget
-                      const PravasCardWidget(),
+                     /* const PravasCardWidget(),*/
                       // const SizedBox(
                       //   height: 14,
                       // ),

@@ -8,6 +8,7 @@ import 'package:sangathan/Dashboard/Screen/menuPage/screens/profile_screen/widge
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/route/route_path.dart';
+import 'package:sangathan/splash_screen/network/model/user_profile_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../Login/Cubit/login_cubit.dart';
@@ -16,6 +17,7 @@ import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../generated/l10n.dart';
+import '../../../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../../../../Cubit/dashboard_cubit.dart';
 import 'cubit/profile_cubit.dart';
 
@@ -348,6 +350,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             TextButton(
               onPressed: () async {
                 await context.read<LoginCubit>().logOut();
+                userProfileModel = UserProfileModel();
               },
               child:  Text(S.of(context).logOut),
             ),

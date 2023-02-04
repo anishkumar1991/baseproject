@@ -16,6 +16,7 @@ import '../../../common/common_button.dart';
 import '../../../common/otp_field_widget.dart';
 import '../../../generated/l10n.dart';
 import '../../../route/route_path.dart';
+import '../../../splash_screen/cubit/user_profile_cubit.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   const VerifyOtpScreen({Key? key, required this.number}) : super(key: key);
@@ -179,6 +180,9 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               onTap: (() async {
                 if (otpText.isNotEmpty && otpText.length >= 6) {
                   await context.read<LoginCubit>().submitOTP(otp: otpText);
+                  Future.delayed(Duration.zero).then((value) async {
+                    await context.read<UserProfileCubit>().getUserProfileData();
+                  });
                 } else {
                   EasyLoading.showError('Please Enter OTP');
                 }
