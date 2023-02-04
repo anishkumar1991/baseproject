@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/style.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
@@ -15,6 +13,7 @@ import '../../../Utils/ConnectivityCheck/not_connected.dart';
 import '../../../Values/app_colors.dart';
 import '../../../Values/icons.dart';
 import '../../../common/common_button.dart';
+import '../../../common/otp_field_widget.dart';
 import '../../../generated/l10n.dart';
 import '../../../route/route_path.dart';
 
@@ -27,7 +26,8 @@ class VerifyOtpScreen extends StatefulWidget {
 }
 
 class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
-  OtpFieldController otpFieldController = OtpFieldController();
+  //OtpFieldController otpFieldController = OtpFieldController();
+  TextEditingController otpFieldController = TextEditingController();
   String otpText = '';
   String? errorText;
   bool isLoading = false;
@@ -110,27 +110,22 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                                 fontWeight: FontWeight.w400,
                                 color: AppColor.greyColor),
                           ),
+                          spaceHeightWidget(20),
 
-                          //OTP Text Field
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 40,
-                            ),
-                            child: OTPTextField(
-                                controller: otpFieldController,
-                                fieldStyle: FieldStyle.box,
-                                length: 6,
-                                width: MediaQuery.of(context).size.width,
-                                fieldWidth: 50,
-                                onCompleted: ((value) {
-                                  otpText = value;
-                                }),
-                                style: GoogleFonts.inter(
-                                    fontSize: 25, fontWeight: FontWeight.w500),
-                                onChanged: (value) {
-                                  otpText = value;
-                                }),
+                          ///OTP Text Field
+                          CustomOtpTextField(
+                            controller: otpFieldController,
+                            otpText: otpText,
+                            onChange: ((value) {
+                              otpText = value;
+                              print('onChange=$otpText');
+                            }),
+                            onComplete: ((v) {
+                              otpText = v;
+                              print('onComplete=$otpText');
+                            }),
                           ),
+
                           spaceHeightWidget(20),
 
                           /// SUBMIT OTP BUTTON

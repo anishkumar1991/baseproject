@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../Values/app_colors.dart';
 
 class TextFormFieldLogin extends StatelessWidget {
@@ -16,6 +17,10 @@ class TextFormFieldLogin extends StatelessWidget {
       controller: controller,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '*#########',
+            filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
       ],
       maxLength: 10,
       validator: ((value) {

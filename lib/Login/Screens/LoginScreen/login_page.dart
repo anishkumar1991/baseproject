@@ -25,119 +25,117 @@ class LoginScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: BlocBuilder<InternetCubit, InternetState>(
-            builder: (context, state) {
-              if (state == InternetState.connected) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Align(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            AppIcons.loginImage,
-                            height: 200,
-                          )),
-                      const SizedBox(
-                        height: 33,
-                      ),
-                      Text(
-                        S.of(context).login,
-                        style: GoogleFonts.poppins(
-                            fontSize: 24, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        S.of(context).enterYourMobileNumber,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColor.greyColor),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Form(
-                        key: formKey,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: TextFormFieldLogin(
-                            controller: mobileNumController,
+    return GestureDetector(
+      onTap: (() {
+        FocusScope.of(context).unfocus();
+      }),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: BlocBuilder<InternetCubit, InternetState>(
+              builder: (context, state) {
+                if (state == InternetState.connected) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              AppIcons.loginImage,
+                              height: 200,
+                            )),
+                        const SizedBox(
+                          height: 33,
+                        ),
+                        Text(
+                          S.of(context).login,
+                          style: GoogleFonts.poppins(
+                              fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          S.of(context).enterYourMobileNumber,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.greyColor),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Form(
+                          key: formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: TextFormFieldLogin(
+                              controller: mobileNumController,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      BlocConsumer<LoginCubit, LoginState>(
-                        listener: (context, state) {
-                          if (state is UserLoggedState) {
-                            LoginModel loginModel = state.model;
-                            EasyLoading.showSuccess(loginModel.message ?? '');
-                            Navigator.pushNamed(
-                                context, RoutePath.verifyOtpScreen,
-                                arguments: mobileNumController.text);
-                          } else if (state is LoginFaieldState) {
-                            EasyLoading.showError(state.error);
-                          }
-                        },
-                        builder: ((context, state) {
-                          if (state is LoginLoadingState) {
-                            return const SpinKitFadingCircle(
-                              color: AppColor.buttonOrangeBackGroundColor,
-                              size: 30,
-                            );
-                          } else {
-                            return CommonButton(
-                              onTap: (() async {
-                                // if (mobileNumController.text.isEmpty) {
-                                //   EasyLoading.showError(
-                                //       'Please Enter Mobile Number');
-                                // } else if (mobileNumController.text.length !=
-                                //     10) {
-                                //   EasyLoading.showError(
-                                //       'Mobile number should be 10 digit');
-                                // }
-                                if (formKey.currentState!.validate()) {
-                                  await context.read<LoginCubit>().loginUser(
-                                        mobileNumber: mobileNumController.text,
-                                      );
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        BlocConsumer<LoginCubit, LoginState>(
+                          listener: (context, state) {
+                            if (state is UserLoggedState) {
+                              LoginModel loginModel = state.model;
+                              EasyLoading.showSuccess(loginModel.message ?? '');
+                              Navigator.pushNamed(
+                                  context, RoutePath.verifyOtpScreen,
+                                  arguments: mobileNumController.text);
+                            } else if (state is LoginFaieldState) {
+                              EasyLoading.showError(state.error);
+                            }
+                          },
+                          builder: ((context, state) {
+                            if (state is LoginLoadingState) {
+                              return const SpinKitFadingCircle(
+                                color: AppColor.buttonOrangeBackGroundColor,
+                                size: 30,
+                              );
+                            } else {
+                              return CommonButton(
+                                onTap: (() async {
+                                  if (formKey.currentState!.validate()) {
+                                    await context.read<LoginCubit>().loginUser(
+                                          mobileNumber:
+                                              mobileNumController.text,
+                                        );
+                                  }
                                 }
-                              }
 
-                                  //context.read<LoginCubit>().deactivatedState();
-                                  // Navigator.pushNamed(
-                                  //     context, RoutePath.verifyOtpScreen,
-                                  //     arguments: mobileNumController.text);
-                                  ),
-                              padding: const EdgeInsets.all(12),
-                              title: S.of(context).loginButtonText,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600),
-                            );
-                          }
-                        }),
-                      ),
-                    ],
-                  ),
-                );
-              } else {
-                return const Center(child: NotConnected());
-              }
-            },
+                                    //context.read<LoginCubit>().deactivatedState();
+                                    // Navigator.pushNamed(
+                                    //     context, RoutePath.verifyOtpScreen,
+                                    //     arguments: mobileNumController.text);
+                                    ),
+                                padding: const EdgeInsets.all(12),
+                                title: S.of(context).loginButtonText,
+                                style: GoogleFonts.poppins(
+                                    color: AppColor.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                              );
+                            }
+                          }),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Center(child: NotConnected());
+                }
+              },
+            ),
           ),
         ),
       ),

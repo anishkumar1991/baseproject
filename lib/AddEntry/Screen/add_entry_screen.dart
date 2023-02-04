@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:otp_text_field/otp_text_field.dart';
 import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
@@ -11,6 +10,7 @@ import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/common/common_button.dart';
+import 'package:sangathan/common/otp_field_widget.dart';
 import 'package:sangathan/common/textfiled_widget.dart';
 
 import '../../Storage/user_storage_service.dart';
@@ -50,7 +50,7 @@ class AddEntryPage extends StatefulWidget {
 }
 
 class _AddEntryPageState extends State<AddEntryPage> {
-  OtpFieldController otpFieldController = OtpFieldController();
+  TextEditingController otpFieldController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -633,15 +633,13 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               fontSize: 12,
                               fontWeight: FontWeight.w500),
                         ),
-                        OTPTextField(
-                            controller: otpFieldController,
-                            length: 6,
-                            width: MediaQuery.of(context).size.width,
-                            fieldWidth: 25,
-                            onCompleted: ((value) {}),
-                            style: GoogleFonts.inter(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                            onChanged: (value) {}),
+                        CustomOtpTextField(
+                          controller: otpFieldController,
+                          otpText: cubit.otpText ?? '',
+                          fieldWidth: 25,
+                          onChange: ((p0) {}),
+                          onComplete: ((p0) {}),
+                        ),
                         spaceHeightWidget(26),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

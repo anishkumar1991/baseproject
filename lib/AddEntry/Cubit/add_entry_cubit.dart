@@ -36,6 +36,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   File? voterFilePicked;
   String? initialUserprofileURL;
   List multiSelectionList = [];
+  String? otpText;
   List<DataEntryField>? entryField = [];
 
   List<DropdownData> categoryData = [];
