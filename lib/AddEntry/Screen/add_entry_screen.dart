@@ -574,6 +574,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                           cubit.previewAndSubmitList();
                                           Navigator.pushNamed(context,
                                               RoutePath.addEntryPreviewSubmit);
+                                        }else{
+                                          EasyLoading.showToast("Please fill all required field",toastPosition: EasyLoadingToastPosition.top);
                                         }
                                       },
                                       padding: const EdgeInsets.all(12),

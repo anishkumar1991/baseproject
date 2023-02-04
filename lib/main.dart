@@ -24,6 +24,7 @@ import 'Dashboard/Screen/homePage/screens/create_function_page/create_function_c
 import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/guest_list/cubit/guest_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_list/pravas_cubit/pravas_list_cubit.dart';
+import 'Dashboard/Screen/menuPage/cubit/menu_screen_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/edit_address/cubit/edit_address_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/edit_business/cubit/edit_business_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/edit_education/cubit/edit_education__cubit.dart';
@@ -97,6 +98,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => ProfileCubit()),
         BlocProvider(create: (context) => EditEducationCubit()),
         BlocProvider(create: (context) => EditBusinessCubit()),
+        BlocProvider(create: (context) => MenuScreenCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
       ],
       child: MaterialApp(

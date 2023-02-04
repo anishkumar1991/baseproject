@@ -28,6 +28,16 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
 
+  Future callApi() async {
+    context.read<ProfileCubit>().getUserDetails();
+  }
+
+  @override
+  void initState() {
+    callApi();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var profileCubit = context.read<ProfileCubit>();
@@ -48,6 +58,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 cubit.userDetails = state.data;
                 context.read<ProfileCubit>().getDropdownData();
               }
+            }else if(state is ProfileLoadingState){
+              return Shimmer.fromColors(
+                baseColor: AppColor.greyColor.withOpacity(0.3),
+                highlightColor: Colors.grey.withOpacity(0.1),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.36,
+                      child: MyAppBar(
+                          img: cubit.userDetails?.data?.avatar ?? '',
+                          persantage:
+                          cubit.userDetails?.data?.percentage?.toDouble() !=
+                              null
+                              ? ((cubit.userDetails?.data?.percentage
+                              ?.toDouble())! /
+                              100)
+                              : 0.00),
+                    ),
+                    Text(
+                      cubit.userDetails?.data?.name ?? '',
+                      style: textStyleWithPoppin(
+                          fontSize: 15,
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    spaceHeightWidget(2),
+                    Text(
+                      cubit.userDetails?.data?.username ?? '',
+                      style: textStyleWithPoppin(
+                          fontSize: 10,
+                          color: AppColor.greyColor.withOpacity(0.7),
+                          fontWeight: FontWeight.w500),
+                    ),
+                    spaceHeightWidget(30),
+                    Column(
+                      children: List.generate(
+                          3,
+                              (index) => Container(
+                            decoration: BoxDecoration(
+                                color: AppColor.white,
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            margin: const EdgeInsets.only(top: 20),
+                            height: MediaQuery.of(context).size.width * 0.3,
+                            width: MediaQuery.of(context).size.width * 0.95,
+                          )).toList(),
+                    )
+                  ],
+                ),
+              );
             }
             return Column(
               children: [

@@ -3,15 +3,17 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/api/auth_api.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
 
 import '../../Storage/user_storage_service.dart';
-
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
+
+  static GetStorage storage = GetStorage();
 
   final api = AuthApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
@@ -88,13 +90,13 @@ class LoginCubit extends Cubit<LoginState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         UserDetails userData = UserDetails.fromJson(res.data);
+        setSupportNumber(supportNumber: userData.helplines?.first.phoneNumber ?? '');
         print('Auth token==${userData.authToken}');
         await StorageService.setUserData(userData);
         StorageService.getUserData();
         await StorageService.setUserAuthToken(userData.authToken ?? '');
         emit(UserLoginSuccessfullyState(userData));
       } else {
-        //UserDetails? model = UserDetails.fromJson(res.data);
         Map<String, dynamic>? msg = res.data;
         print('msg-=$msg');
         emit(LoginFaieldState(msg?['message'] ?? ''));
@@ -104,6 +106,13 @@ class LoginCubit extends Cubit<LoginState> {
       print('catch $e');
     }
   }
+
+
+  static setSupportNumber({required String supportNumber}) async {
+    await storage.write('supportNumber', supportNumber);
+  }
+
+
 
   Future logOut() async {
     try {

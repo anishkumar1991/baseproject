@@ -13,7 +13,7 @@ import '../network/model/zila_model.dart';
 class ZilaDataCubit extends Cubit<ZilaDataState> {
   ZilaDataCubit() : super(ZilaDataInitialStateState());
 
-  List<KaryakartaData> dataList = [];
+  List<KaryakartaData>? dataList;
   List<PartyZilaData> partyzilaList = [];
 
   PartyZilaData? zilaSelected;
@@ -182,7 +182,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         Map<String, dynamic>? msg = res.data;
-        dataList.removeAt(index);
+        dataList?.removeAt(index);
         emit(DeletePersonSuccessState(msg?['message']));
       } else {
         Map<String, dynamic>? msg = res.data;

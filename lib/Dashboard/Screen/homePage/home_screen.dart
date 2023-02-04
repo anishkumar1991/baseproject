@@ -10,13 +10,20 @@ import 'package:sangathan/route/route_path.dart';
 
 import 'cubit/home_page_cubit.dart';
 import 'cubit/home_page_state.dart';
+import '../../../generated/l10n.dart';
+import '../../../splash_screen/cubit/user_profile_cubit.dart';
 import 'widget/custom_drawer_widget.dart';
 
 final homePageScaffoldGlobalKey = GlobalKey<ScaffoldState>();
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final TextEditingController searchTextController = TextEditingController();
 
   @override
@@ -60,13 +67,43 @@ class HomePage extends StatelessWidget {
                     width: 55,
                     fit: BoxFit.contain,
                   ),
-                  Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.asset(
-                      AppIcons.personImage,
-                      fit: BoxFit.cover,
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, RoutePath.profileScreen);
+                    },
+                    child: Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColor.dividerColor)
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(350),
+                        child: userProfileModel.data?.avatar != null && userProfileModel.data?.avatar != '' ? Image.network(
+                          userProfileModel.data?.avatar ?? '',
+                          fit: BoxFit.cover,
+                          errorBuilder:
+                              (BuildContext context, Object exception, StackTrace? stackTrace) {
+                            return const Icon(Icons.person,size: 25);
+                          },
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                        ) : Container(
+                            color: AppColor.white,
+                            child: Image.asset(AppIcons.sangathanLogo)),),
                     ),
                   )
                 ],

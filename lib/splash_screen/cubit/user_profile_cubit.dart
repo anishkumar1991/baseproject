@@ -5,7 +5,7 @@ import 'package:sangathan/splash_screen/network/api/user_profile_api.dart';
 import 'package:sangathan/splash_screen/network/model/user_profile_model.dart';
 
 import '../../Storage/user_storage_service.dart';
-
+UserProfileModel userProfileModel = UserProfileModel();
 class UserProfileCubit extends Cubit<UserProfileState> {
   UserProfileCubit() : super(UserProfileInitialState());
 
@@ -20,6 +20,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
       print(res.data);
       if (res.response.statusCode == 200) {
         UserProfileModel data = UserProfileModel.fromJson(res.data);
+        userProfileModel =  data;
         emit(UserProfileDataFetchedState(data));
       } else {
         Map<String, dynamic>? msg = res.data;
