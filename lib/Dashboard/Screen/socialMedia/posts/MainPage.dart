@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
+import 'package:shimmer/shimmer.dart';
+import '../../../../Values/app_colors.dart';
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 
@@ -33,6 +35,34 @@ class SocialMediaPage extends StatelessWidget {
               DisplayList(),
               BlocBuilder<FetchPostsCubit, FetchPostsState>(
                   builder: (context, state) {
+                if (state is FetchingPostsState) {
+                  return Center(
+                    child: Shimmer.fromColors(
+                      baseColor: AppColor.greyColor.withOpacity(0.3),
+                      highlightColor: Colors.grey.withOpacity(0.1),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Column(
+                            children: List.generate(
+                                4,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                        ),
+                                        margin:
+                                            const EdgeInsets.only(right: 20),
+                                        height: 152,
+                                      ),
+                                    )).toList(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
                 if (state is PostsFetchedState) {
                   return ListView.builder(
                     scrollDirection: Axis.vertical,

@@ -18,55 +18,58 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit1 = context.read<FetchPostsCubit>();
 
-    final YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: '6M3zfM-LO34',
-      flags: const YoutubePlayerFlags(enableCaption: false, autoPlay: false),
-    );
-    return Card(
+    // final YoutubePlayerController _controller = YoutubePlayerController(
+    //   initialVideoId: '6M3zfM-LO34',
+    //   flags: const YoutubePlayerFlags(enableCaption: false, autoPlay: false),
+    // );
+    return SizedBox(
+      child: Card(
 
-        elevation: 3,
-        child: Column(
-          children: [
-            tempkey == 2 ? ImageCard(index: index) : const Text(""),
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 20, top: 10),
-              child: Text(
-                cubit1.tempModel!.posts[index!].title.toString(),
-                style: const TextStyle(
-                    fontFamily: 'TwCenMT',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400),
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(left: 16, right: 20, top: 14),
-                child: ReadMoreText(
-                  cubit1.tempModel!.posts[index!].caption.toString(),
-                  trimMode: TrimMode.Line,
-                  trimLines: 2,
+
+          elevation: 3,
+          child: Column(
+            children: [
+              tempkey == 2 ? ImageCard(index: index) : const Text(""),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 20, top: 10),
+                child: Text(
+                  cubit1.tempModel!.posts[index!].title.toString(),
                   style: const TextStyle(
                       fontFamily: 'TwCenMT',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14,
-                      color: Colors.grey),
-                  trimCollapsedText: 'More',
-                  trimExpandedText: 'Less',
-                  lessStyle: const TextStyle(
-                      fontFamily: 'TwCenMT',
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700),
-                  moreStyle: const TextStyle(
-                      fontFamily: 'TwCenMT',
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700),
-                )),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 10, 20, 10),
-              child: BottomSocialBar(index: index!),
-            )
-          ],
-        ));
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400),
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 20, top: 14),
+                  child: ReadMoreText(
+                    cubit1.tempModel!.posts[index!].caption.toString(),
+                    trimMode: TrimMode.Line,
+                    trimLines: 2,
+                    style: const TextStyle(
+                        fontFamily: 'TwCenMT',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: Colors.grey),
+                    trimCollapsedText: 'More',
+                    trimExpandedText: 'Less',
+                    lessStyle: const TextStyle(
+                        fontFamily: 'TwCenMT',
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700),
+                    moreStyle: const TextStyle(
+                        fontFamily: 'TwCenMT',
+                        fontSize: 14,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700),
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 10, 20, 10),
+                child: BottomSocialBar(index: index!),
+              )
+            ],
+          )),
+    );
   }
 }

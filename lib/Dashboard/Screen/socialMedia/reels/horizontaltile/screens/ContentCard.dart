@@ -16,7 +16,7 @@ class ContentCard extends StatefulWidget {
 class _ContentCardState extends State<ContentCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 169,
       width: 117,
       child: Card(
@@ -39,7 +39,7 @@ class _ContentCardState extends State<ContentCard> {
                 left: 8,
                 child: Text(
                   widget.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontFamily: 'Tw Cen Mt',
                       color: Colors.white,
                       fontSize: 14,
@@ -49,7 +49,7 @@ class _ContentCardState extends State<ContentCard> {
                 bottom: 20,
                 left: 8,
                 child: Text(widget.views,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontFamily: 'Tw Cen Mt',
                         fontWeight: FontWeight.w400,
                         fontSize: 16,

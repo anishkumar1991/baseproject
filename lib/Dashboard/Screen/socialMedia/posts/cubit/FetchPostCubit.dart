@@ -23,6 +23,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiVG9NSDhudmI3MjloUHlpTXpLNDdoUU5jIn0.k75ssSFfj32l5q0MQSDn7dTeYdeUe1REW7ZzQfv4xR8";
 
   Future<void> fetchPosts() async {
+    emit(FetchingPostsState());
     try {
       final res = await api.getPosts(auth!, "25");
       if (res.response.statusCode == 200) {

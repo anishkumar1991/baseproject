@@ -12,6 +12,7 @@ class HorizontalTileCubit extends Cubit<HorizontalTileState> {
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   Future getData() async {
+    emit(HorizontalTileLoading());
     try {
       String? token =
           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiVG9NSDhudmI3MjloUHlpTXpLNDdoUU5jIn0.k75ssSFfj32l5q0MQSDn7dTeYdeUe1REW7ZzQfv4xR8";
