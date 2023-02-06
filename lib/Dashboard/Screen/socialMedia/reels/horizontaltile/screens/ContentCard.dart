@@ -48,13 +48,16 @@ class _ContentCardState extends State<ContentCard> {
                           fontWeight: FontWeight.w400),
                     ),
                     SizedBox(width: 4,),
-                    Container(
-                      width: 12,
-                      height: 12,
-                      child: Image.asset(
-                        "assets/images/eye.png",
-                        fit: BoxFit.fill,
-                        color: Colors.white,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 3),
+                      child: Container(
+                        width: 12,
+                        height: 12,
+                        child: Image.asset(
+                          "assets/images/eye2.png",
+                          fit: BoxFit.fill,
+                          color: Colors.white,
+                        ),
                       ),
                     )
                   ],
