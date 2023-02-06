@@ -49,7 +49,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                         width: 12,
                         height: 12,
                         child: Image.asset(
-                          "assets/images/eye.png",
+                          "assets/images/eye2.png",
                           fit: BoxFit.fill,
                           color: Colors.white,
 
