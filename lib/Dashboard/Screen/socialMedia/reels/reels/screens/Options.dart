@@ -43,14 +43,30 @@ class _OptionsScreenState extends State<OptionsScreen> {
                   SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    widget.views,
-                    style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  )
-                  // SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        width: 12,
+                        height: 12,
+                        child: Image.asset(
+                          "assets/images/eye.png",
+                          fit: BoxFit.fill,
+                          color: Colors.white,
+
+                        ),
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        widget.views,
+                        style: GoogleFonts.montserrat(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               Expanded(

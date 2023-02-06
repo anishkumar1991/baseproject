@@ -13,7 +13,7 @@ import firebase_storage
 import flutter_local_notifications
 import path_provider_foundation
 import share_plus
-import shared_preferences_macos
+import shared_preferences_foundation
 import sqflite
 import url_launcher_macos
 import wakelock_macos
