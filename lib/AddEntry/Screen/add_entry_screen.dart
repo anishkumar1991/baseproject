@@ -204,6 +204,14 @@ class _AddEntryPageState extends State<AddEntryPage> {
                             return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
                           }
                         }
+                        // if (cubit.entryField![i].fieldName == 'whatsappNo') {
+                        //   if (value.isNotEmpty) {
+                        //     if (value.toString().length != 10) {
+                        //       return 'Whatsapp No should be 10 digit';
+                        //     }
+                        //   }
+                        // }
+
                         return null;
                       },
                       onChanged: (value) {
@@ -211,7 +219,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                             cubit.entryField![i].fieldName ?? "", cubit);
                       },
                       title: cubit.entryField![i].displayNameForUI ?? "",
-                      keyboardType: TextInputType.text,
+                      keyboardType: cubit.getTextInputType(
+                          fieldType: cubit.entryField![i].fieldName ?? ""),
                       hintText:
                           'Enter Your ${cubit.entryField![i].displayNameForUI}'),
                   spaceHeightWidget(8),
@@ -242,6 +251,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
                             }
                           }
+
                           return null;
                         },
                         onChanged: (value) {
@@ -262,14 +272,29 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
                       }
                     }
+                    // if (cubit.entryField![i].fieldName == 'age') {
+                    //   if (value.isNotEmpty) {
+                    //     if (value.length != 2) {
+                    //       return 'Age should be 2 digit';
+                    //     }
+                    //   }
+                    // }
+
+                    cubit.getTextFieldValidation(
+                        fieldName: cubit.entryField![i].fieldName ?? '',
+                        value: value);
+
                     return null;
                   },
+                  textInputFormatter: cubit.addTextInputFormatters(
+                      fieldType: cubit.entryField![i].fieldName ?? ''),
                   onChanged: (value) {
                     FieldHandler.onUpdate(
                         i, value, cubit.entryField![i].fieldName ?? "", cubit);
                   },
                   title: cubit.entryField![i].displayNameForUI ?? "",
-                  keyboardType: TextInputType.text,
+                  keyboardType: cubit.getTextInputType(
+                      fieldType: cubit.entryField![i].fieldName ?? ''),
                   hintText:
                       'Enter Your ${cubit.entryField![i].displayNameForUI}')
             ]
@@ -470,8 +495,90 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                       initialUserprofileURL:
                                           cubit.initialUserprofileURL,
                                       onTap: (() {
-                                        cubit.requestPermission(
-                                            ImageSource.gallery);
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: ((context) => Padding(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10),
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            'Choose',
+                                                            style: GoogleFonts
+                                                                .quicksand(
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w800),
+                                                          ),
+                                                          IconButton(
+                                                              onPressed: (() {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              }),
+                                                              icon: const Icon(
+                                                                Icons.close,
+                                                                size: 25,
+                                                              ))
+                                                        ],
+                                                      ),
+                                                      const Divider(),
+                                                      ListTile(
+                                                        onTap: (() {
+                                                          Navigator.pop(
+                                                              context);
+                                                          cubit
+                                                              .requestPermission(
+                                                                  ImageSource
+                                                                      .camera);
+                                                        }),
+                                                        title: Text(
+                                                          'Camera',
+                                                          style: GoogleFonts
+                                                              .quicksand(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                        ),
+                                                      ),
+                                                      const Divider(),
+                                                      ListTile(
+                                                        onTap: (() {
+                                                          Navigator.pop(
+                                                              context);
+                                                          cubit
+                                                              .requestPermission(
+                                                                  ImageSource
+                                                                      .gallery);
+                                                        }),
+                                                        title: Text(
+                                                          'Gallery',
+                                                          style: GoogleFonts
+                                                              .quicksand(
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            fontSize: 16,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Divider(),
+                                                      spaceHeightWidget(20)
+                                                    ],
+                                                  ),
+                                                )));
                                       }),
                                     )),
 
