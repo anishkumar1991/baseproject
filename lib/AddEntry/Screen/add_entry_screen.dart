@@ -7,6 +7,7 @@ import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/common/common_button.dart';
@@ -574,8 +575,11 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                           cubit.previewAndSubmitList();
                                           Navigator.pushNamed(context,
                                               RoutePath.addEntryPreviewSubmit);
-                                        }else{
-                                          EasyLoading.showToast("Please fill all required field",toastPosition: EasyLoadingToastPosition.top);
+                                        } else {
+                                          EasyLoading.showToast(
+                                              "Please fill all required field",
+                                              toastPosition:
+                                                  EasyLoadingToastPosition.top);
                                         }
                                       },
                                       padding: const EdgeInsets.all(12),

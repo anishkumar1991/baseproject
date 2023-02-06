@@ -14,7 +14,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   List<SangathanData> sangathanDataList = [];
   List<Locations> locationList = [];
-  int countryStateId = 03;
+  int countryStateId = 14;
   int? dataLevelId;
   int? locationId;
 
