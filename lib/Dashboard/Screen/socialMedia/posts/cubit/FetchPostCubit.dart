@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Storage/user_storage_service.dart';
 
 import 'package:twitter_api_v2/twitter_api_v2.dart' as v2;
 
@@ -19,13 +20,10 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
   FetchPostsCubit() : super(InitialFetchPostState());
   final api = FetchPostsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
-  String? auth =
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiVG9NSDhudmI3MjloUHlpTXpLNDdoUU5jIn0.k75ssSFfj32l5q0MQSDn7dTeYdeUe1REW7ZzQfv4xR8";
-
   Future<void> fetchPosts() async {
     emit(FetchingPostsState());
     try {
-      final res = await api.getPosts(auth!, "25");
+      final res = await api.getPosts('Bearer ${StorageService.userAuthToken}', "25");
       if (res.response.statusCode == 200) {
         print("api working");
 
@@ -109,7 +107,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
   Future<void> sendLike(String postId) async {
     try {
       final res =
-          await api.sendLike(auth!, {"post_id": postId, "reaction": "like"});
+          await api.sendLike('Bearer ${StorageService.userAuthToken}', {"post_id": postId, "reaction": "like"});
       if (res.response.statusCode == 200) {
         print("like button api working");
       } else {

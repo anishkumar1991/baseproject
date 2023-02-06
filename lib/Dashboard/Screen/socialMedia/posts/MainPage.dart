@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
@@ -23,19 +24,6 @@ class SocialMediaPage extends StatelessWidget {
     return Scaffold(
         key: socialMediaPageKey,
         drawer: const CustomDrawerWidget(),
-        // appBar: AppBar(
-        //   elevation: 0,
-        //   // backgroundColor: const Color(0xFFFFFFFF),
-        //   title: const Text(
-        //     "Social Media",
-        //     style: TextStyle(
-        //         fontFamily: 'Tw Cen MT',
-        //         color: Colors.black,
-        //         fontSize: 20,
-        //         fontWeight: FontWeight.w400),
-        //   ),
-        //   centerTitle: true,
-        // ),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 60),
           child: Column(
@@ -46,22 +34,15 @@ class SocialMediaPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
                     children: [
-                      InkWell(
-                        onTap: (() {
-                          socialMediaPageKey.currentState!.openDrawer();
-                        }),
-                        child: Container(
+                      Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: AppColor.greyColor.withOpacity(0.1)),
-                          child: Image.asset(
-                            AppIcons.drawerIcon,
-                            height: 10,
-                            color: AppColor.greyColor,
-                          ),
-                        ),
-                      ),
+                          child: IconButton(
+                            icon: Icon(FontAwesomeIcons.bell),
+                            onPressed: () {},
+                          )),
                       const Padding(
                         padding: EdgeInsets.only(left: 100),
                         child: Text("Social Media",
@@ -102,7 +83,7 @@ class SocialMediaPage extends StatelessWidget {
                                               ),
                                               margin: const EdgeInsets.only(
                                                   right: 20),
-                                              height: 400,
+                                              height: 250,
                                             ),
                                           )).toList(),
                                 ),

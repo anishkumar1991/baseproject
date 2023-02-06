@@ -260,8 +260,8 @@ class Poll {
 
   int id;
   String chartType;
-  int totalVotes;
-  int myOption;
+  int? totalVotes;
+  int? myOption;
   List<Option> options;
 
   factory Poll.fromJson(Map<String, dynamic> json) => Poll(

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../Storage/user_storage_service.dart';
 import '../network/model/HorizontalTileModel.dart';
 import '../network/service/HorizontalTileAPI.dart';
 import 'HorizontalTileState.dart';
@@ -14,9 +15,8 @@ class HorizontalTileCubit extends Cubit<HorizontalTileState> {
   Future getData() async {
     emit(HorizontalTileLoading());
     try {
-      String? token =
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiVG9NSDhudmI3MjloUHlpTXpLNDdoUU5jIn0.k75ssSFfj32l5q0MQSDn7dTeYdeUe1REW7ZzQfv4xR8";
-      final res = await api.getReels('Bearer $token');
+
+      final res = await api.getReels('Bearer ${StorageService.userAuthToken}');
       print(res.response.requestOptions.uri);
       print('RESPONSE OF NEW CALL=${res.response.statusCode}');
       print(res.data);

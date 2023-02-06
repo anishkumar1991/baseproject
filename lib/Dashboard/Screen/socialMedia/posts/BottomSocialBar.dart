@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:like_button/like_button.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/Share.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/ShareOnWhatsapp.dart';
-
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/ShareCubit.dart';
 import 'cubit/ShareState.dart';
@@ -77,7 +76,8 @@ class BottomSocialBar extends StatelessWidget {
               onPressed: () {
                 shareOnWhatsapp(context, SocialMedia.whatsapp, index);
               },
-              icon: const Icon(FontAwesomeIcons.whatsapp, color: Color(0xFF1FAF38)),
+              icon: const Icon(FontAwesomeIcons.whatsapp,
+                  color: Color(0xFF1FAF38)),
             ),
             Text(cubit1.tempModel!.posts[index].shares.whatsapp.toString()),
           ],
