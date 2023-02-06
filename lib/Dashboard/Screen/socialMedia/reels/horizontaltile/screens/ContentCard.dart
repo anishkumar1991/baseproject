@@ -37,23 +37,42 @@ class _ContentCardState extends State<ContentCard> {
             Positioned(
                 bottom: 1,
                 left: 8,
-                child: Text(
-                  widget.title,
-                  style: TextStyle(
-                      fontFamily: 'Tw Cen Mt',
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400),
+                child: Row(
+                  children: [
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                          fontFamily: 'Tw Cen Mt',
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(width: 4,),
+                    Container(
+                      width: 12,
+                      height: 12,
+                      child: Image.asset(
+                        "assets/images/eye.png",
+                        fit: BoxFit.fill,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
                 )),
             Positioned(
-                bottom: 20,
-                left: 8,
-                child: Text(widget.views,
-                    style: TextStyle(
-                        fontFamily: 'Tw Cen Mt',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                        color: Colors.white))),
+              bottom: 20,
+              left: 8,
+              child: Row(
+                children: [
+                  Text(widget.views,
+                      style: TextStyle(
+                          fontFamily: 'Tw Cen Mt',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
+                          color: Colors.white))
+                ],
+              ),
+            ),
           ],
         ),
       ),
