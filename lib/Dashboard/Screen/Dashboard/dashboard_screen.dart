@@ -19,7 +19,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   TextEditingController searchTextController = TextEditingController();
   int selectIndex = 0;
-  List<Widget> pages = [const SocialMediaPage(), HomePage(), const MenuPage()];
+  List<Widget> pages = [ SocialMediaPage(), HomePage(), const MenuPage()];
 
   @override
   Widget build(BuildContext context) {
