@@ -13,8 +13,6 @@ import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 
 class SocialMediaPage extends StatelessWidget {
-  final socialMediaPageKey = GlobalKey<ScaffoldState>();
-
   SocialMediaPage({Key? key}) : super(key: key);
 
   @override
@@ -22,7 +20,6 @@ class SocialMediaPage extends StatelessWidget {
     final cubit = context.read<FetchPostsCubit>();
     cubit.fetchPosts();
     return Scaffold(
-        key: socialMediaPageKey,
         drawer: const CustomDrawerWidget(),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 60),
@@ -35,16 +32,15 @@ class SocialMediaPage extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: AppColor.greyColor.withOpacity(0.1)),
                           child: IconButton(
-                            icon: Icon(FontAwesomeIcons.bell),
+                            icon: const Icon(FontAwesomeIcons.bell),
                             onPressed: () {},
                           )),
                       const Padding(
-                        padding: EdgeInsets.only(left: 100),
+                        padding: EdgeInsets.only(left: 80),
                         child: Text("Social Media",
                             style: TextStyle(
                                 fontFamily: 'Tw Cen MT',
@@ -70,7 +66,8 @@ class SocialMediaPage extends StatelessWidget {
                             highlightColor: Colors.grey.withOpacity(0.1),
                             child: SingleChildScrollView(
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 10),
+                                padding:
+                                    const EdgeInsets.only(left: 5, right: 5),
                                 child: Column(
                                   children: List.generate(
                                       5,
@@ -81,8 +78,6 @@ class SocialMediaPage extends StatelessWidget {
                                               decoration: const BoxDecoration(
                                                 color: Colors.white,
                                               ),
-                                              margin: const EdgeInsets.only(
-                                                  right: 20),
                                               height: 250,
                                             ),
                                           )).toList(),

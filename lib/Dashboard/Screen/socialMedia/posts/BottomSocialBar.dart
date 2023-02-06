@@ -18,8 +18,6 @@ class BottomSocialBar extends StatelessWidget {
     final cubit1 = context.read<FetchPostsCubit>();
     final cubit2 = context.read<ShareCubit>();
     var id = cubit1.tempModel!.posts[index].id.toString();
-    var tempcount = cubit1.tempModel!.posts[index].shares.other;
-    var temp1 = tempcount + 1;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,14 +52,16 @@ class BottomSocialBar extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () {
-                    cubit2.shareToAll(index);
+                    cubit2.shareToAll(id);
                     share(context, index);
                   },
                   icon: const Icon(Icons.share_outlined)),
               BlocBuilder<ShareCubit, ShareState>(
                 builder: (context, state) {
-                  if (state is ShareToAllState) {
-                    return Text(temp1.toString());
+                  if (state is SharedToAll) {
+                    var temp = cubit1.tempModel!.posts[index].shares.other;
+                    temp = temp + 1;
+                    return Text(temp.toString());
                   }
                   return Text(
                       cubit1.tempModel!.posts[index].shares.other.toString());
@@ -74,12 +74,23 @@ class BottomSocialBar extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
+                cubit2.shareToWhatsapp(id);
                 shareOnWhatsapp(context, SocialMedia.whatsapp, index);
               },
               icon: const Icon(FontAwesomeIcons.whatsapp,
                   color: Color(0xFF1FAF38)),
             ),
-            Text(cubit1.tempModel!.posts[index].shares.whatsapp.toString()),
+            BlocBuilder<ShareCubit, ShareState>(
+              builder: (context, state) {
+                if (state is SharedToWhatsapp) {
+                  var temp = cubit1.tempModel!.posts[index].shares.whatsapp;
+                  temp = temp + 1;
+                  return Text(temp.toString());
+                }
+                return Text(
+                    cubit1.tempModel!.posts[index].shares.whatsapp.toString());
+              },
+            ),
           ],
         ),
       ],

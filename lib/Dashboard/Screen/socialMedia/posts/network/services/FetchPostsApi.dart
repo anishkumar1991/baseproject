@@ -14,4 +14,8 @@ abstract class FetchPostsApi {
   @POST("/api/mobile/v1/posts/react")
   Future<HttpResponse> sendLike(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
+
+  @POST("/api/mobile/v1/posts/share")
+  Future<HttpResponse> share(
+      @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

@@ -1,7 +1,8 @@
 
 abstract class ShareState {}
 class InitialShareState extends ShareState{}
-class ShareToAllState extends ShareState {
-  int index;
-  ShareToAllState(this.index);
-}
+
+
+class SharedToWhatsapp extends ShareState{}
+class SharedToAll extends ShareState{}
+
