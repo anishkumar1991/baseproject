@@ -14,6 +14,9 @@ class TextFormFieldLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: TextInputType.phone,
+      style: TextStyle(fontSize: 16),
+      textAlign: TextAlign.left,
+
       controller: controller,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
@@ -24,9 +27,6 @@ class TextFormFieldLogin extends StatelessWidget {
       ],
       maxLength: 10,
       validator: ((value) {
-        // if (!RegExp('[a-zA-Z0-9&%=]+').hasMatch(value!)) {
-        //   return 'Please Enter Valid Number';
-        // }
         if (value?.isEmpty ?? false) {
           return 'Please Enter Mobile Number';
         } else if (value?.length != 10) {
@@ -39,13 +39,20 @@ class TextFormFieldLogin extends StatelessWidget {
       decoration: InputDecoration(
           counterText: '',
           prefixIcon: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 10),
-            child: Text(
-              '+91',
-              style: GoogleFonts.poppins(
-                  color: AppColor.textGreyColor, fontSize: 16),
+            padding: const EdgeInsets.only(left: 8,right: 5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 2.0),
+                  child: Text(
+                    '+91',style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
             ),
           ),
+          prefixIconConstraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.15),
           errorStyle: const TextStyle(color: AppColor.redColor),
           hintText: '000-000-00-00',
           focusedBorder:

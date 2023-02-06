@@ -126,5 +126,14 @@
   "pleaseEnterData": "कृपया डेटा दर्ज करें",
   "logOut" : "लॉग आउट",
   "logOutDes" : "क्या आप लॉग आउट करना चाहते हैं?",
-  "welcome":"नमस्ते"
+  "welcome":"नमस्ते",
+  "shaktiKendraCreation": "शक्ति केंद्र क्रिएशन",
+  "vidhanSabha" : "विधानसभा",
+  "filter": "फ़िल्टर",
+    "shaktikendr" : "शक्ति केंद्र ",
+    "mandal": "मंडल",
+     "buth": "बूथ",
+     "makeShaktikendr": "शक्तिकेंद्र बनाये",
+      "deletrShaktiKendrTitle":"इस शक्ति केंद्र को हटाना चाहते हैं?",
+       "deleteShaktiKendr":"की प्रविष्टियां हटा दी जाएंगी।"
 }

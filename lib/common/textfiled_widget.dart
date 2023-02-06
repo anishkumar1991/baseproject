@@ -17,6 +17,7 @@ class TextFieldWidget extends StatelessWidget {
       this.onChanged,
       this.inpurborder,
       this.hintText,
+        this.preFix,
       this.validator,
       this.errorText,
       this.initialValue});
@@ -25,6 +26,7 @@ class TextFieldWidget extends StatelessWidget {
 
   final TextEditingController? controller;
   final String title;
+  final Widget? preFix;
   final TextInputType? keyboardType;
   ValueChanged<String>? onChanged;
   final bool? readOnly;
@@ -55,6 +57,7 @@ class TextFieldWidget extends StatelessWidget {
           decoration: InputDecoration(
               border: inpurborder,
               hintText: hintText,
+              prefixIcon: preFix,
               labelText: labelText,
               errorText: errorText,
               labelStyle: GoogleFonts.poppins(

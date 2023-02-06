@@ -1319,6 +1319,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Shakti Kendra Creation`
+  String get shaktiKendraCreation {
+    return Intl.message(
+      'Shakti Kendra Creation',
+      name: 'shaktiKendraCreation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Assembly`
+  String get vidhanSabha {
+    return Intl.message(
+      'Assembly',
+      name: 'vidhanSabha',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter`
+  String get filter {
+    return Intl.message(
+      'Filter',
+      name: 'filter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shakti kendr`
+  String get shaktikendr {
+    return Intl.message(
+      'Shakti kendr',
+      name: 'shaktikendr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Board`
+  String get mandal {
+    return Intl.message(
+      'Board',
+      name: 'mandal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booths`
+  String get buth {
+    return Intl.message(
+      'Booths',
+      name: 'buth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Make shakti kendr`
+  String get makeShaktikendr {
+    return Intl.message(
+      'Make shakti kendr',
+      name: 'makeShaktikendr',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Want to remove this shakti kendr?`
+  String get deletrShaktiKendrTitle {
+    return Intl.message(
+      'Want to remove this shakti kendr?',
+      name: 'deletrShaktiKendrTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `entries will be deleted.`
+  String get deleteShaktiKendr {
+    return Intl.message(
+      'entries will be deleted.',
+      name: 'deleteShaktiKendr',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

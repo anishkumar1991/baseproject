@@ -13,6 +13,8 @@ import '../Dashboard/Screen/homePage/screens/edit_date/edit_date_screen.dart';
 import '../Dashboard/Screen/homePage/screens/guest_list/guest_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
+import '../Dashboard/Screen/homePage/screens/shakti_kendra/screen/edit_shakti_kendr.dart';
+import '../Dashboard/Screen/homePage/screens/shakti_kendra/shakti_kendra_screen.dart';
 import '../Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/edit_address/edit_address_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/edit_business/edit_business_screen.dart';
@@ -186,6 +188,20 @@ class RouteGenerator {
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const AddEntryPreviewSubmit();
+          },
+        );
+        case RoutePath.shaktiKendraScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const ShaktiKendraScreen();
+          },
+        );
+        case RoutePath.editShaktiKendraScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const EditShaktiKendraScreen();
           },
         );
       case RoutePath.editEducationScreen:

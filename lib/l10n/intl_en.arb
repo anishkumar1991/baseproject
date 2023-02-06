@@ -126,5 +126,14 @@
   "pleaseEnterData": "Please enter data",
   "logOut" : "Log Out",
   "logOutDes" : "Are you sure you want to log out?",
-  "welcome":"Welcome"
+  "welcome":"Welcome",
+  "shaktiKendraCreation": "Shakti Kendra Creation",
+  "vidhanSabha" : "Assembly",
+  "filter": "Filter",
+  "shaktikendr" : "Shakti kendr",
+  "mandal" : "Board",
+  "buth": "Booths",
+  "makeShaktikendr": "Make shakti kendr",
+  "deletrShaktiKendrTitle":"Want to remove this shakti kendr?",
+  "deleteShaktiKendr":"entries will be deleted."
 }
