@@ -45,18 +45,21 @@ class _OptionsScreenState extends State<OptionsScreen> {
                   ),
                   Row(
                     children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        child: Image.asset(
-                          "assets/images/eye2.png",
-                          fit: BoxFit.fill,
-                          color: Colors.white,
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 3),
+                        child: Container(
+                          width: 12,
+                          height: 12,
+                          child: Image.asset(
+                            "assets/images/eye2.png",
+                            fit: BoxFit.fill,
+                            color: Colors.white,
 
+                          ),
                         ),
                       ),
                       SizedBox(
-                        width: 6,
+                        width: 3,
                       ),
                       Text(
                         widget.views,
