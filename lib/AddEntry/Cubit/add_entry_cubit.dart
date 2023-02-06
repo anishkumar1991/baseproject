@@ -8,10 +8,12 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
@@ -38,6 +40,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   List multiSelectionList = [];
   String? otpText;
   List<DataEntryField>? entryField = [];
+  TextInputType textInputType = TextInputType.text;
 
   List<DropdownData> categoryData = [];
   List<CastData> castData = [];
@@ -347,7 +350,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       try {
         final res = await api.getAddEntryFormStructure(
             '${StorageService.userAuthToken}',
-            'Mozilla/5.0 (Linux; Android 5.0.2; SAMSUNG SM-T550 Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/3.3...',
+            'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D',
             levelID,
             countryId);
         if (res.response.statusCode == 200) {
@@ -749,5 +752,84 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     String? urlDownload = await snapshot?.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
     return urlDownload;
+  }
+
+  getTextFieldValidation({required String fieldName, required dynamic value}) {
+    if (fieldName == 'phone') {
+      if (value.toString().length != 10) {
+        return 'Mobile number should be 10 digit';
+      }
+    }
+    if (fieldName == 'age') {
+      if (value.isNotEmpty) {
+        if (value.length != 2) {
+          return 'Age should be 2 digit';
+        }
+      }
+    }
+    if (fieldName == 'pinCode') {
+      if (value.isNotEmpty) {
+        if (value.toString().length != 6) {
+          return 'PinCode should be 6 digit';
+        }
+      }
+    }
+    if (fieldName == 'whatsappNo') {
+      if (value.isNotEmpty) {
+        if (value.toString().length != 10) {
+          return 'Whatsapp No should be 10 digit';
+        }
+      }
+    }
+  }
+
+  getTextInputType({required String fieldType}) {
+    if (fieldType == 'phone') {
+      return TextInputType.phone;
+    }
+    if (fieldType == 'age') {
+      return TextInputType.number;
+    }
+    if (fieldType == 'aadhaarNumber') {
+      return TextInputType.number;
+    }
+    if (fieldType == 'whatsappNo') {
+      return TextInputType.number;
+    }
+    if (fieldType == 'pinCode') {
+      return TextInputType.number;
+    }
+    if (fieldType == 'landline') {
+      return TextInputType.phone;
+    }
+    if (fieldType == 'std_code') {
+      return TextInputType.number;
+    }
+  }
+
+  addTextInputFormatters({required String fieldType}) {
+    if (fieldType == 'phone') {
+      return [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '*#########',
+            filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
+      ];
+    }
+    if (fieldType == 'whatsappNo') {
+      return [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '*#########',
+            filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
+      ];
+    }
+    if (fieldType == 'age') {
+      return [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+      ];
+    }
   }
 }

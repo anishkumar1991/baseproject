@@ -15,6 +15,7 @@ class AppColor {
   static const Color greyColor = Color(0xFF666666);
   static const Color brownColor = Color(0xFF903A1E);
   static const Color white = Colors.white;
+  static const Color red = Colors.red;
   static const Color black = Colors.black;
   static const Color transparent = Colors.transparent;
   static const Color brown200 = Color(0xFFFFEBDF);
@@ -46,6 +47,8 @@ class AppColor {
   static Color redShade100 = Colors.red.shade100;
   static Color redShade600 = Colors.red.shade600;
   static Color redLight = const Color(0xFFC45358);
+
+  static Color black700 = const Color(0xFF49454F);
 
   /// gradient colors
   static const Color purple50 = Color(0xFFE6E5FD);

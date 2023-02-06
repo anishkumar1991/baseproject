@@ -69,5 +69,6 @@ class AppIcons {
   static const String cameraIcon = "assets/images/camera_icon.png";
   static const String calenderIcon = "assets/images/calander_icon.png";
   static const String fillBuisnessIcon = "assets/images/fill_buisness_icon.png";
+  static const String vidhanSabha = "assets/images/vidhansabha.png";
   static const String eye = "assets/images/eye.png";
 }

@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("व्यवसाय डिलीटेड"),
         "businessUpdated":
             MessageLookupByLibrary.simpleMessage("व्यवसाय अपडेटेड"),
+        "buth": MessageLookupByLibrary.simpleMessage("बूथ"),
         "cancel": MessageLookupByLibrary.simpleMessage("रद्द करें"),
         "caste": MessageLookupByLibrary.simpleMessage("जाती"),
         "category": MessageLookupByLibrary.simpleMessage("श्रेणी"),
@@ -73,6 +74,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "dateToFrom":
             MessageLookupByLibrary.simpleMessage("दिनांक  ( कब से - कब तक)*"),
         "delete": MessageLookupByLibrary.simpleMessage("डिलीट"),
+        "deleteShaktiKendr": MessageLookupByLibrary.simpleMessage(
+            "की प्रविष्टियां हटा दी जाएंगी।"),
+        "deletrShaktiKendrTitle": MessageLookupByLibrary.simpleMessage(
+            "इस शक्ति केंद्र को हटाना चाहते हैं?"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("प्रवास का विषय"),
         "dialogSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -95,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
+        "filter": MessageLookupByLibrary.simpleMessage("फ़िल्टर"),
         "fullName": MessageLookupByLibrary.simpleMessage("पूरा नाम"),
         "functionAdd": MessageLookupByLibrary.simpleMessage(
             "स्थान ( कार्यक्रम स्थल का पता )"),
@@ -118,8 +124,11 @@ class MessageLookup extends MessageLookupByLibrary {
                 "संगठन से जुड़े कार्यक्रम एवं जानकारी प्राप्त करने हेतु लॉगिन करे"),
         "lokSabha": MessageLookupByLibrary.simpleMessage("लोकसभा"),
         "makeProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम बनायें"),
+        "makeShaktikendr":
+            MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र बनाये"),
         "makeTourSchedules": MessageLookupByLibrary.simpleMessage(
             "प्रवास के अंतरगर्त कार्यक्रम बनाये"),
+        "mandal": MessageLookupByLibrary.simpleMessage("मंडल"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("मोबाइल न."),
         "myEvent": MessageLookupByLibrary.simpleMessage("मेरे कार्यक्रम"),
         "name": MessageLookupByLibrary.simpleMessage("नाम"),
@@ -165,6 +174,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "shaktiKendraCreation":
+            MessageLookupByLibrary.simpleMessage("शक्ति केंद्र क्रिएशन"),
+        "shaktikendr": MessageLookupByLibrary.simpleMessage("शक्ति केंद्र "),
         "skipAddNewEntry": MessageLookupByLibrary.simpleMessage(
             "छोड़ें और नई प्रविष्टि जोड़ें"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
@@ -192,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "verify": MessageLookupByLibrary.simpleMessage("सत्यापित करना"),
         "verifyWithOtp":
             MessageLookupByLibrary.simpleMessage("ओटीपी से वेरिफाई करें"),
+        "vidhanSabha": MessageLookupByLibrary.simpleMessage("विधानसभा"),
         "view": MessageLookupByLibrary.simpleMessage("देखें"),
         "viewProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम देखें"),
         "viewToursEvents":

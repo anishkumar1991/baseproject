@@ -195,11 +195,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             if (state.dataUnit.data?.isNotEmpty ?? false) {
               cubit.filterDtaSelectedIndex = 0;
               cubit.dataUnitList = state.dataUnit.data!;
-              cubit.morchaData = UnitData(
-                  name: 'Morcha',
-                  id: cubit.coreSangathanList?.isEmpty ?? false
-                      ? cubit.dataUnitList.first.id
-                      : null);
+              // cubit.morchaData = UnitData(
+              //     name: 'Morcha',
+              //     id: cubit.coreSangathanList == null
+              //         ? cubit.dataUnitList.first.id
+              //         : null);
               cubit.morchaList.clear();
               for (var i = 0; i < cubit.dataUnitList.length; i++) {
                 if (cubit.dataUnitList[i].name == 'Core Sangathan') {
@@ -209,19 +209,20 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         cubit.coreSangathanList?.first.id.toString() ?? "";
                   }
                   cubit.unitId = cubit.dataUnitList[i].id;
-
-                  print('first Unit Id=${cubit.unitId}');
-                  print('first subUnitId=${cubit.subUnitId}');
                 }
+
                 if (cubit.dataUnitList[i].name?.contains('Morcha') ?? false) {
                   cubit.morchaList.add(cubit.dataUnitList[i]);
                   if (cubit.coreSangathanList?.isEmpty ??
                       false || cubit.coreSangathanList == null) {
                     cubit.unitId = cubit.morchaList.first.id;
+                    cubit.morchaData.id = cubit.morchaList.first.id;
                     cubit.morchaData.name = cubit.morchaList.first.name;
                   }
                 }
               }
+              print('first Unit Id=${cubit.unitId}');
+              print('first subUnitId=${cubit.subUnitId}');
               // context.read<ZilaDataCubit>().getEntryData(data: {
               //   "level": widget.dataLevelId,
               //   "unit": cubit.unitId,
@@ -274,7 +275,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   )
                 : Row(
                     children: [
-                      cubit.coreSangathanList?.isNotEmpty ?? false
+                      cubit.coreSangathanList != null
                           ? ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,

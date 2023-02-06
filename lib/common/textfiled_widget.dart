@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../Values/app_colors.dart';
@@ -17,14 +18,17 @@ class TextFieldWidget extends StatelessWidget {
       this.onChanged,
       this.inpurborder,
       this.hintText,
+        this.preFix,
       this.validator,
       this.errorText,
-      this.initialValue});
+      this.initialValue,
+      this.textInputFormatter});
 
   final String? initialValue;
 
   final TextEditingController? controller;
   final String title;
+  final Widget? preFix;
   final TextInputType? keyboardType;
   ValueChanged<String>? onChanged;
   final bool? readOnly;
@@ -36,6 +40,7 @@ class TextFieldWidget extends StatelessWidget {
   final int? maxLines;
   final FormFieldValidator? validator;
   final String? errorText;
+  final List<TextInputFormatter>? textInputFormatter;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +51,7 @@ class TextFieldWidget extends StatelessWidget {
         TextFormField(
           initialValue: initialValue,
           maxLines: maxLines,
+          inputFormatters: textInputFormatter,
           controller: controller,
           readOnly: readOnly ?? false,
           keyboardType: keyboardType,
@@ -55,6 +61,7 @@ class TextFieldWidget extends StatelessWidget {
           decoration: InputDecoration(
               border: inpurborder,
               hintText: hintText,
+              prefixIcon: preFix,
               labelText: labelText,
               errorText: errorText,
               labelStyle: GoogleFonts.poppins(
