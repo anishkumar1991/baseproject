@@ -346,7 +346,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (state is GetAddEntryFormStructureLoadingState) {
       try {
         final res = await api.getAddEntryFormStructure(
-            '${StorageService.userAuthToken}', levelID, countryId);
+            '${StorageService.userAuthToken}',
+            'Mozilla/5.0 (Linux; Android 5.0.2; SAMSUNG SM-T550 Build/LRX22G) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/3.3...',
+            levelID,
+            countryId);
         if (res.response.statusCode == 200) {
           AddEntryFormStructure addEntryFormStructure =
               AddEntryFormStructure.fromJson(res.data);

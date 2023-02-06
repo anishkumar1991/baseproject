@@ -20,6 +20,7 @@ abstract class AddEntryApi {
       '/zila/api/data_entry/form_structure?level_id={levelID}&type_id=1&country_state_id={countryStateId}&is_app=true')
   Future<HttpResponse> getAddEntryFormStructure(
       @Header('Authorization') String token,
+      @Header('User-Agent') String userAgent,
       @Path('levelID') String levelID,
       @Path('countryStateId') countryStateId);
 

@@ -76,12 +76,16 @@ class _AddEntryApi implements AddEntryApi {
   @override
   Future<HttpResponse<dynamic>> getAddEntryFormStructure(
     token,
+    userAgent,
     levelID,
     countryStateId,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
+    final _headers = <String, dynamic>{
+      r'Authorization': token,
+      r'User-Agent': userAgent,
+    };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result =
