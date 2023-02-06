@@ -22,7 +22,7 @@ class Polls extends StatelessWidget {
               const Text(
                 'Peoples Poll',
                 style: TextStyle(
-                    fontFamily: "TwCenMT",
+                    fontFamily: "Tw Cen MT",
                     fontWeight: FontWeight.w700,
                     fontSize: 20),
               ),
@@ -32,7 +32,7 @@ class Polls extends StatelessWidget {
               const Text(
                 'Who will win the 2024 Elections?',
                 style: TextStyle(
-                    fontFamily: "TwCenMT",
+                    fontFamily: "Tw Cen MT",
                     fontWeight: FontWeight.w400,
                     fontSize: 20,
                     color: Color(0xFF666666)),

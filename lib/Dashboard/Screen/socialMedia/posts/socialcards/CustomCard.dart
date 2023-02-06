@@ -22,8 +22,9 @@ class CustomCard extends StatelessWidget {
     //   initialVideoId: '6M3zfM-LO34',
     //   flags: const YoutubePlayerFlags(enableCaption: false, autoPlay: false),
     // );
-    return Card(
-        elevation: 2,
+    return Material(
+        elevation: 3,
+
         child: Column(
           children: [
             tempkey == 2 ? ImageCard(index: index) : const Text(""),
@@ -32,7 +33,7 @@ class CustomCard extends StatelessWidget {
               child: Text(
                 cubit1.tempModel!.posts[index!].title.toString(),
                 style: const TextStyle(
-                    fontFamily: 'TwCenMT',
+                    fontFamily: 'Tw Cen MT',
                     fontSize: 16,
                     fontWeight: FontWeight.w400),
               ),

@@ -13,12 +13,16 @@ class ImageCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<FetchPostsCubit>();
-    return SizedBox(
-      height: 300,
-      child: ClipRRect(
-        child: Image.network(
-          cubit.tempModel!.posts[index!].postData.images!.first.toString(),
-          fit: BoxFit.fitHeight,
+    return Padding(
+      padding: const EdgeInsets.only(left: 5, right: 5),
+      child: SizedBox(
+        height: 300,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.network(
+            cubit.tempModel!.posts[index!].postData.images!.first.toString(),
+            fit: BoxFit.fitHeight,
+          ),
         ),
       ),
     );
