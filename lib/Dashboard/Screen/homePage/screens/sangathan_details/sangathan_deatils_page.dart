@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -27,8 +28,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
     if (StorageService.userData?.user?.countryStateId == 0 ||
         StorageService.userData?.user?.countryStateId == null) {
       await context.read<SangathanDetailsCubit>().getAllotedLocations();
-      Future.delayed(Duration.zero).then((value){
-        if(context.read<SangathanDetailsCubit>().locationList.isNotEmpty){
+      Future.delayed(Duration.zero).then((value) {
+        if (context.read<SangathanDetailsCubit>().locationList.isNotEmpty) {
           showLocationBottomSheet();
         }
       });
@@ -57,23 +58,23 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /*spaceHeightWidget(10),*/
-           /* appbar(),*/
+            /* appbar(),*/
             spaceHeightWidget(20),
             Row(
-                children: [
-                  IconButton(
-                      splashRadius: 20,
-                      onPressed: (() {
-                        Navigator.pop(context);
-                      }),
-                      icon: const Icon(Icons.arrow_back)),
-                  Text(
-                    S.of(context).sangathan,
-                    style: GoogleFonts.quicksand(
-                        fontSize: 18, fontWeight: FontWeight.w600),
-                  )
-                ],
-              ),
+              children: [
+                IconButton(
+                    splashRadius: 20,
+                    onPressed: (() {
+                      Navigator.pop(context);
+                    }),
+                    icon: const Icon(Icons.arrow_back)),
+                Text(
+                  S.of(context).sangathan,
+                  style: GoogleFonts.quicksand(
+                      fontSize: 18, fontWeight: FontWeight.w600),
+                )
+              ],
+            ),
             spaceHeightWidget(10),
 
             /// sangathan grid view
@@ -219,7 +220,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                             ))
                                         .toList())
                                 : Expanded(
-                                  child: Center(
+                                    child: Center(
                                       child: Text(
                                         S.of(context).noDataAvailable,
                                         textAlign: TextAlign.center,
@@ -228,7 +229,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                             fontWeight: FontWeight.w400),
                                       ),
                                     ),
-                                ),
+                                  ),
                           ],
                         ),
                       )),
@@ -315,15 +316,22 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            data.iconUrl != null
-                                ? Image.network(
-                                    data.iconUrl!,
-                                    height: 32,
-                                    errorBuilder:
-                                        ((context, error, stackTrace) =>
-                                            const SizedBox()),
-                                  )
-                                : const SizedBox.shrink(),
+                            CachedNetworkImage(
+                              imageUrl: data.iconUrl!,
+                              height: 32,
+                              errorWidget: ((context, url, error) =>
+                                  const SizedBox()),
+                            ),
+                            // data.iconUrl != null
+                            //     ? Image.network(
+                            //         data.iconUrl!,
+                            //         height: 32,
+                            //         errorBuilder:
+                            //             ((context, error, stackTrace) =>
+                            //                 const SizedBox()),
+
+                            //       )
+                            //     : const SizedBox.shrink(),
                             spaceHeightWidget(4),
                             FittedBox(
                               child: Text(

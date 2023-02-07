@@ -71,6 +71,7 @@ class RouteGenerator {
               personData: data.personData,
               levelName: data.levelName,
               personID: data.personID,
+              isEditEntry: data.isEditEntry,
             );
           },
         );

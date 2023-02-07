@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -37,6 +39,7 @@ class AddEntryPage extends StatefulWidget {
       this.countryStateId,
       this.subUnitId,
       this.personData,
+      required this.isEditEntry,
       this.personID})
       : super(key: key);
   final String type;
@@ -44,7 +47,7 @@ class AddEntryPage extends StatefulWidget {
   final int? unitId;
   final int? countryStateId;
   final int? personID;
-
+  final bool isEditEntry;
   final String? subUnitId;
 
   final int? levelName;
@@ -126,6 +129,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     cubit.entryField![i].fieldName ?? "", cubit),
                 title: cubit.entryField![i].displayNameForUI ?? "",
                 hintText: 'Select ${cubit.entryField![i].displayNameForUI}',
+                isMandatoryField: cubit.entryField![i].mandatoryField ?? false,
                 validator: (dynamic value) {
                   if (cubit.entryField![i].mandatoryField ?? false) {
                     if (value == null) {
@@ -198,6 +202,26 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                   cubit)
                               .split("/")
                               .last,
+                          onTapImagePrivew: (() {
+                            showDialog(
+                                context: context,
+                                builder: ((context) => AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          IconButton(
+                                              onPressed: (() {}),
+                                              icon: Icon(Icons.close)),
+                                          Container(
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: FileImage(File(
+                                                          cubit.allImagePickerList[
+                                                              0]["value"]))))),
+                                        ],
+                                      ),
+                                    )));
+                          }),
                           onTap: (() async {
                             // await cubit.pickFile(
                             //     "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
@@ -252,6 +276,36 @@ class _AddEntryPageState extends State<AddEntryPage> {
                             cubit)
                         .split("/")
                         .last,
+                    onTapImagePrivew: (() {
+                      showDialog(
+                          context: context,
+                          builder: ((context) => AlertDialog(
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    IconButton(
+                                        onPressed: (() {
+                                          Navigator.pop(context);
+                                        }),
+                                        icon: const Icon(Icons.close)),
+                                    Container(
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: FileImage(File(
+                                                    cubit.allImagePickerList[0]
+                                                        ["value"]))))),
+                                    Expanded(
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: FileImage(File(cubit
+                                                          .allImagePickerList[0]
+                                                      ["value"]))))),
+                                    ),
+                                  ],
+                                ),
+                              )));
+                    }),
                     onTap: (() async {
                       // await cubit.pickFile(
                       //     "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
@@ -312,8 +366,10 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       value: value,
                       mandatoryField:
                           cubit.entryField![i].mandatoryField ?? false,
-                      displayNameForUI: cubit.entryField![i].displayNameForUI ??
-                          "") /*{
+                      displayNameForUI:
+                          cubit.entryField![i].displayNameForUI ?? ""),
+                  isMandatoryField: cubit.entryField![i].mandatoryField ?? false
+                  /*{
                     if (cubit.entryField![i].mandatoryField ?? false) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
@@ -394,6 +450,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
           spaceHeightWidget(20),
 
           TextFieldWidget(
+            onTap: (() async {
+              cubit.selectedDoaDate(context);
+            }),
             readOnly: true,
             controller: cubit.dobController,
             title: cubit.entryField![i].displayNameForUI ?? "",
@@ -407,14 +466,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
 
               return null;
             }),
-            suffixWidget: GestureDetector(
-              onTap: () async {
-                cubit.selectedDoaDate(context);
-              },
-              child: const Icon(
-                Icons.calendar_month_outlined,
-                color: AppColor.black,
-              ),
+            suffixWidget: const Icon(
+              Icons.calendar_month_outlined,
+              color: AppColor.black,
             ),
             hintText: cubit.date,
           ),
@@ -463,105 +517,104 @@ class _AddEntryPageState extends State<AddEntryPage> {
     final cubit = context.read<AddEntryCubit>();
     return Scaffold(
       body: SafeArea(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                    splashRadius: 20,
-                    onPressed: (() {
-                      Navigator.pop(context);
-                    }),
-                    icon: const Icon(Icons.arrow_back)),
-                const Text(
-                  'Add Entry',
-                  style: TextStyle(
-                      fontFamily: 'Tw Cen MT',
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.textBlackColor),
-                )
-              ],
-            ),
-            Expanded(
-              flex: 2,
-              child: BlocConsumer<AddEntryCubit, AddEntryState>(
-                listener: (context, state) {
-                  if (state is AddEntryErrorState) {
-                    EasyLoading.showError(state.error);
-                  }
-                },
-                builder: (context, state) {
-                  if (state is DropDownValueFetchedState) {
-                    cubit.categorySelected = null;
-                    cubit.nativeStateSelected = null;
-                    cubit.qualificationSelected = null;
-                    cubit.religionSelected = null;
-                    cubit.professionSelected = null;
-                    cubit.designationSelected = null;
-                    // cubit.dropdownData = state.category.data;
-                    cubit.categoryData = state.category.data!.personCategory!;
-                    cubit.nativeStateData = state.category.data!.nativeState!;
-                    cubit.qualificationData =
-                        state.category.data!.personEducation!;
-                    cubit.religionData = state.category.data!.religion!;
-                    cubit.professionData =
-                        state.category.data!.personProfession!;
-                    context.read<AddEntryCubit>().getDesignationDropdown(data: {
-                      "type": "Designation",
-                      "data_level": widget.leaveId,
-                      "country_state_id": widget.countryStateId ??
-                          StorageService.userData?.user?.countryStateId,
-                      "unit_id": widget.unitId,
-                      "sub_unit_id": widget.subUnitId
-                    });
-                  } else if (state is CastFetchedState) {
-                    cubit.castSelected = null;
-                    cubit.castData = state.cast.data!;
-                    cubit.getInitialCasteData(widget.personData);
-                  } else if (state is DesignationDropDownSuccessState) {
-                    cubit.designationData = [];
-                    cubit.designationData = state.designationList.data ?? [];
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                  splashRadius: 20,
+                  onPressed: (() {
+                    Navigator.pop(context);
+                  }),
+                  icon: const Icon(Icons.arrow_back)),
+              Text(
+                '${widget.isEditEntry ? S.of(context).edit : S.of(context).adds} ${S.of(context).entry}',
+                style: const TextStyle(
+                    fontFamily: 'Tw Cen MT',
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                    color: AppColor.textBlackColor),
+              )
+            ],
+          ),
+          Expanded(
+            flex: 2,
+            child: BlocConsumer<AddEntryCubit, AddEntryState>(
+              listener: (context, state) {
+                if (state is AddEntryErrorState) {
+                  EasyLoading.showError(state.error);
+                }
+              },
+              builder: (context, state) {
+                if (state is DropDownValueFetchedState) {
+                  cubit.categorySelected = null;
+                  cubit.nativeStateSelected = null;
+                  cubit.qualificationSelected = null;
+                  cubit.religionSelected = null;
+                  cubit.professionSelected = null;
+                  cubit.designationSelected = null;
+                  // cubit.dropdownData = state.category.data;
+                  cubit.categoryData = state.category.data!.personCategory!;
+                  cubit.nativeStateData = state.category.data!.nativeState!;
+                  cubit.qualificationData =
+                      state.category.data!.personEducation!;
+                  cubit.religionData = state.category.data!.religion!;
+                  cubit.professionData = state.category.data!.personProfession!;
+                  context.read<AddEntryCubit>().getDesignationDropdown(data: {
+                    "type": "Designation",
+                    "data_level": widget.leaveId,
+                    "country_state_id": widget.countryStateId ??
+                        StorageService.userData?.user?.countryStateId,
+                    "unit_id": widget.unitId,
+                    "sub_unit_id": widget.subUnitId
+                  });
+                } else if (state is CastFetchedState) {
+                  cubit.castSelected = null;
+                  cubit.castData = state.cast.data!;
+                  cubit.getInitialCasteData(widget.personData);
+                } else if (state is DesignationDropDownSuccessState) {
+                  cubit.designationData = [];
+                  cubit.designationData = state.designationList.data ?? [];
 
-                    context.read<AddEntryCubit>().getAddEntryFormStructure(
-                        levelID: widget.leaveId.toString(),
-                        countryId: widget.countryStateId ??
-                            StorageService.userData?.user?.countryStateId);
-                  } else if (state is GetAddEntryFormStructureSuccessState) {
-                    if (state.addEntryFormStructure.dataEntryField == null) {
-                      cubit.entryField = null;
-                    } else {
-                      cubit.entryField =
-                          state.addEntryFormStructure.dataEntryField ?? [];
-                    }
-                    if (widget.personData != null) {
-                      cubit.getInitialTextfieldData(widget.personData);
-                      cubit.getInitialUserprofileImageData(widget.personData);
-                      cubit.getInitialGenderData(widget.personData);
-                      cubit.getInitialDOBData(widget.personData);
-                      cubit
-                          .getInitialMultiSelectionFieldData(widget.personData);
-                      cubit.getInitialDropdownData(widget.personData);
-                    }
+                  context.read<AddEntryCubit>().getAddEntryFormStructure(
+                      levelID: widget.leaveId.toString(),
+                      countryId: widget.countryStateId ??
+                          StorageService.userData?.user?.countryStateId);
+                } else if (state is GetAddEntryFormStructureSuccessState) {
+                  if (state.addEntryFormStructure.dataEntryField == null) {
+                    cubit.entryField = null;
+                  } else {
+                    cubit.entryField =
+                        state.addEntryFormStructure.dataEntryField ?? [];
                   }
-                  return cubit.entryField == null
-                      ? const Center(
-                          child: Text(
-                            "No form available",
-                            textAlign: TextAlign.center,
-                          ),
-                        )
-                      : cubit.entryField!.isEmpty
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : SingleChildScrollView(
-                              child: Form(
-                                key: _formKey,
+                  if (widget.personData != null) {
+                    cubit.getInitialTextfieldData(widget.personData);
+                    cubit.getInitialUserprofileImageData(widget.personData);
+                    cubit.getInitialGenderData(widget.personData);
+                    cubit.getInitialDOBData(widget.personData);
+                    cubit.getInitialMultiSelectionFieldData(widget.personData);
+                    cubit.getInitialDropdownData(widget.personData);
+                  }
+                }
+                return cubit.entryField == null
+                    ? const Center(
+                        child: Text(
+                          "No form available",
+                          textAlign: TextAlign.center,
+                        ),
+                      )
+                    : cubit.entryField!.isEmpty
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : SingleChildScrollView(
+                            child: Form(
+                              key: _formKey,
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 18),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -632,55 +685,69 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                               ),
                                       ],
                                     ),
-                                    spaceHeightWidget(20),
+                                    spaceHeightWidget(10),
 
                                     /// Here Secondary logic
-                                    Text(
-                                      'Fill Secondary Information',
-                                      style: GoogleFonts.quicksand(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    spaceHeightWidget(20),
-                                    for (int i = 0;
-                                        i < cubit.entryField!.length;
-                                        i++)
-                                      if (cubit.entryField![i].primary == false)
-                                        formFieldWidget(cubit, i),
-                                    spaceHeightWidget(20),
+                                    ExpansionTile(
+                                      iconColor: AppColor.black,
+                                      collapsedIconColor: AppColor.black,
+                                      tilePadding: EdgeInsets.zero,
+                                      title: Text(
+                                        'Fill Secondary Information',
+                                        style: GoogleFonts.quicksand(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      children: [
+                                        //spaceHeightWidget(10),
+                                        for (int i = 0;
+                                            i < cubit.entryField!.length;
+                                            i++)
+                                          if (cubit.entryField![i].primary ==
+                                              false)
+                                            formFieldWidget(cubit, i),
+                                        spaceHeightWidget(10),
 
-                                    /// Here Secondary multi check
-                                    Wrap(
-                                      runSpacing: 5.0,
-                                      spacing: 5.0,
-                                      children: <Widget>[
-                                        for (var item in cubit.entryField!)
-                                          if (DynamicUIHandler
-                                              .multiSelectionField
-                                              .contains(item.formControlName))
-                                            if (item.primary == false)
-                                              IntrinsicWidth(
-                                                child: SelectPropertyBox(
-                                                  value: cubit.allMultiFieldData
-                                                      .any((element) => element
-                                                          .values
-                                                          .contains(item
-                                                              .formControlName)),
-                                                  title:
-                                                      item.displayNameForUI ??
-                                                          "",
-                                                  onChanged: (value) {
-                                                    cubit.getAllMultiCheckData(
-                                                      item.formControlName ??
-                                                          "",
-                                                      value,
-                                                    );
-                                                  },
-                                                ),
-                                              ),
+                                        /// Here Secondary multi check
+                                        Wrap(
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.start,
+                                          runSpacing: 5.0,
+                                          spacing: 5.0,
+                                          children: <Widget>[
+                                            for (var item in cubit.entryField!)
+                                              if (DynamicUIHandler
+                                                  .multiSelectionField
+                                                  .contains(
+                                                      item.formControlName))
+                                                if (item.primary == false)
+                                                  IntrinsicWidth(
+                                                    child: SelectPropertyBox(
+                                                      value: cubit
+                                                          .allMultiFieldData
+                                                          .any((element) => element
+                                                              .values
+                                                              .contains(item
+                                                                  .formControlName)),
+                                                      title:
+                                                          item.displayNameForUI ??
+                                                              "",
+                                                      onChanged: (value) {
+                                                        cubit
+                                                            .getAllMultiCheckData(
+                                                          item.formControlName ??
+                                                              "",
+                                                          value,
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                          ],
+                                        ),
+                                        spaceHeightWidget(20),
                                       ],
                                     ),
-                                    spaceHeightWidget(30),
+                                    spaceHeightWidget(10),
                                     CommonButton(
                                       onTap: () {
                                         FocusScope.of(context).unfocus();
@@ -709,12 +776,12 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                   ],
                                 ),
                               ),
-                            );
-                },
-              ),
-            )
-          ],
-        ),
+                            ),
+                          );
+              },
+            ),
+          )
+        ],
       )),
     );
   }

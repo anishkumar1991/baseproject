@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("विषय एवं अंतर्दृष्टि"),
         "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
         "addBooth": MessageLookupByLibrary.simpleMessage("ऐड बूथ"),
+        "addEntry": MessageLookupByLibrary.simpleMessage("ऐड एंट्री"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
             "कार्यक्रम में उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता जिनका नाम आप जोड़ना चाहते है।"),
         "addOptional":
@@ -46,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("एड्रेस डिलीटेड"),
         "addressUpdated":
             MessageLookupByLibrary.simpleMessage("एड्रेस अपडेटेड"),
+        "adds": MessageLookupByLibrary.simpleMessage("ऐड"),
         "age": MessageLookupByLibrary.simpleMessage("उम्र"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),

@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Theme and Insight"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addBooth": MessageLookupByLibrary.simpleMessage("Add Booth"),
+        "addEntry": MessageLookupByLibrary.simpleMessage("Add Entry"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
             "The guest / participant / activist present in the program whose name you want to add."),
         "addOptional":
@@ -46,6 +47,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Address Deleted"),
         "addressUpdated":
             MessageLookupByLibrary.simpleMessage("Address Updated"),
+        "adds": MessageLookupByLibrary.simpleMessage("Add"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),

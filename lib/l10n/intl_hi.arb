@@ -143,5 +143,7 @@
        "language": "भाषा",
        "submit" : "सबमिट",
        "boothSelect" : "बूथ का चयन करें",
-       "addBooth" : "ऐड बूथ"
+       "addBooth" : "ऐड बूथ",
+       "addEntry":"ऐड एंट्री",
+       "adds":"ऐड"
 }

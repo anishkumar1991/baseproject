@@ -1,24 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
 class UploadCard extends StatelessWidget {
-  const UploadCard({super.key, required this.onTap, this.uploadedFilePath});
+  const UploadCard(
+      {super.key,
+      required this.onTap,
+      this.uploadedFilePath,
+      this.onTapImagePrivew});
 
   final GestureTapCallback? onTap;
+  final GestureTapCallback? onTapImagePrivew;
+
   final String? uploadedFilePath;
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
-            child: Text(
-          uploadedFilePath ?? '',
-        )),
+        // Flexible(
+        //     child: Text(
+        //   uploadedFilePath ?? '',
+        // )),
+        uploadedFilePath?.isNotEmpty ?? false
+            ? InkWell(
+                onTap: onTapImagePrivew,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColor.greenshade900),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        AppIcons.galleryColorImage,
+                        height: 15,
+                        color: AppColor.greenshade900,
+                      ),
+                      spaceWidthWidget(5),
+                      Text(
+                        'File uploaded',
+                        style: TextStyle(
+                            color: AppColor.greenshade900, fontSize: 12),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            : const SizedBox.shrink(),
         spaceHeightWidget(8),
         CommonButton(
           onTap: onTap,

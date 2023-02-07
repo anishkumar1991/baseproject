@@ -1489,6 +1489,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Add Entry`
+  String get addEntry {
+    return Intl.message(
+      'Add Entry',
+      name: 'addEntry',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get adds {
+    return Intl.message(
+      'Add',
+      name: 'adds',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

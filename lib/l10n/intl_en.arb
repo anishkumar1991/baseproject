@@ -143,5 +143,7 @@
     "language": "Language",
     "submit" : "Submit",
     "boothSelect" : "Select Booth",
-    "addBooth" : "Add Booth"
+    "addBooth" : "Add Booth",
+    "addEntry":"Add Entry",
+    "adds":"Add"
 }
