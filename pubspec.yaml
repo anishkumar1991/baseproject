@@ -82,7 +82,8 @@ dependencies:
   like_button: ^2.0.5
   mask_text_input_formatter: ^2.4.0
   govt_documents_validator: ^0.0.1
-  
+  swipe: ^0.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

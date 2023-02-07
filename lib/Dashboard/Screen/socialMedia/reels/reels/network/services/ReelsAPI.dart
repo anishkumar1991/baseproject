@@ -3,7 +3,7 @@ import 'package:retrofit/retrofit.dart';
 
 part 'ReelsAPI.g.dart';
 
-@RestApi(baseUrl: "https://saral-social-staging.ccdms.in")
+ @RestApi(baseUrl: "https://saral-social-staging.ccdms.in")
 abstract class ReelsAPI {
   factory ReelsAPI(Dio dio) = _ReelsAPI;
 

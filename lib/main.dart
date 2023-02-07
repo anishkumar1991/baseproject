@@ -108,6 +108,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => ShaktiKendraCubit()),
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
+        BlocProvider(create: (context) => ShareCubit()),
+
       ],
       child: BlocBuilder<LanguageCubit, Locale>(
         builder: (context,lang){

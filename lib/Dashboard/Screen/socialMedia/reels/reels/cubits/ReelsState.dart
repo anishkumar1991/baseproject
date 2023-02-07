@@ -12,4 +12,6 @@ class ReelsFetchedState extends ReelsState {
   ReelsFetchedState(this.reelsModel);
 }
 
-class ReelsErrorState extends ReelsState {}
+class ReelsErrorState extends ReelsState {
+
+}

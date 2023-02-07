@@ -2,7 +2,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 enum SocialMedia { whatsapp }
 
-Future shareOnWhatsapp(SocialMedia socialMedia) async {
+Future shareOnWhatsapp(SocialMedia socialMedia, SocialMedia whatsapp, int index) async {
   const text = "Shared from Whatsapp";
   final urlShare = Uri.encodeComponent("https://youtu.be/arzXF2HTX9g");
   final urlimage = Uri.encodeComponent("https://i.imgur.com/OVeZPK1.jpg");
