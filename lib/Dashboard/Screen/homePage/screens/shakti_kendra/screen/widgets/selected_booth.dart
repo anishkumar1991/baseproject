@@ -69,7 +69,7 @@ class SelectedBooth extends StatelessWidget {
                     color: AppColor.red
                 ),
                 child: const Padding(
-                  padding: EdgeInsets.all(3.0),
+                  padding: EdgeInsets.all(5.0),
                   child: Icon(
                     Icons.close,
                     color: AppColor.white,

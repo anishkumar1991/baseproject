@@ -81,42 +81,42 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
             spaceHeightWidget(24),
 
             /// shakti kendr card
-            // InkWell(
-            //   onTap: (){
-            //     Navigator.pushNamed(context, RoutePath.shaktiKendraScreen);
-            //   },
-            //   child: Container(
-            //     padding: const EdgeInsets.all(12),
-            //     width: MediaQuery.of(context).size.width,
-            //     color: AppColor.purple50.withOpacity(0.6),
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       children: [
-            //         Text(
-            //           S.of(context).createShaktiKendra,
-            //           style: GoogleFonts.quicksand(
-            //               fontSize: 18, fontWeight: FontWeight.w600),
-            //         ),
-            //         Container(
-            //             padding: const EdgeInsets.all(2),
-            //             decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(4),
-            //                 gradient: const LinearGradient(
-            //                     begin: Alignment.topLeft,
-            //                     end: Alignment.bottomRight,
-            //                     colors: [
-            //                       AppColor.purple50,
-            //                       AppColor.orange200,
-            //                     ])),
-            //             child: Image.asset(
-            //               AppIcons.shaktikendraImage,
-            //               height: 35,
-            //             ))
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // spaceHeightWidget(20),
+            InkWell(
+              onTap: (){
+                Navigator.pushNamed(context, RoutePath.shaktiKendraScreen);
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                width: MediaQuery.of(context).size.width,
+                color: AppColor.purple50.withOpacity(0.6),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      S.of(context).createShaktiKendra,
+                      style: GoogleFonts.quicksand(
+                          fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  AppColor.purple50,
+                                  AppColor.orange200,
+                                ])),
+                        child: Image.asset(
+                          AppIcons.shaktikendraImage,
+                          height: 35,
+                        ))
+                  ],
+                ),
+              ),
+            ),
+            spaceHeightWidget(20),
 
             /// close shakti kendr card
             //

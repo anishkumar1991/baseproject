@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/widgets/header_widget_shakti_kendra.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/route/route_path.dart';
+import '../../../../../Storage/user_storage_service.dart';
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../Values/space_width_widget.dart';
@@ -20,6 +21,16 @@ class ShaktiKendraScreen extends StatefulWidget {
 }
 
 class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
+  void initState() {
+    apiCall();
+    super.initState();
+  }
+
+  apiCall() {
+    context.read<ShaktiKendraCubit>().getDropDownValueOfVidhanSabha(
+        id: StorageService.userData!.user!.countryStateId!);
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<ShaktiKendraCubit>(context);
@@ -88,9 +99,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                           fontWeight: FontWeight.w400,
                           fontSize: 14),
                     ),
-                    trailing: SizedBox(
+                    trailing: const SizedBox(
                       height: double.infinity,
-                      child: const Icon(
+                      child: Icon(
                         Icons.expand_more,
                         color: AppColor.textBlackColor,
                         size: 24,
@@ -128,7 +139,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                             },
                             onEdit: () {
                               Navigator.pushNamed(
-                                  context, RoutePath.editShaktiKendraScreen);
+                                  context, RoutePath.editShaktiKendraScreen,
+                                  arguments: {'isEdit': true});
                             });
                       }),
                 ),
@@ -137,6 +149,11 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
               CommonButton(
                   borderRadius: 10,
                   title: S.of(context).makeShaktikendr,
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, RoutePath.editShaktiKendraScreen,
+                        arguments: {'isEdit': false});
+                  },
                   style:
                       GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
                   padding: const EdgeInsets.symmetric(vertical: 10)),
@@ -338,34 +355,35 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
               color: AppColor.pravasCradColor.withOpacity(0.3)),
           child: Column(
             children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.filter_list,
-                    color: AppColor.naturalBlackColor,
-                    size: 22,
-                  ),
-                  spaceWidthWidget(10),
-                  Text(
-                    S.of(context).filter,
-                    style: GoogleFonts.poppins(
-                        color: AppColor.naturalBlackColor,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14),
-                  ),
-                  const Spacer(),
-                  InkWell(
-                      onTap: () {
-                        cubit.isExpanded = !cubit.isExpanded;
-                        cubit.emitState();
-                      },
-                      child: Icon(
-                        !cubit.isExpanded
-                            ? Icons.keyboard_arrow_down
-                            : Icons.keyboard_arrow_up_sharp,
-                        color: AppColor.naturalBlackColor,
-                      ))
-                ],
+              InkWell(
+                onTap: (){
+                  cubit.isExpanded = !cubit.isExpanded;
+                  cubit.emitState();
+                },
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.filter_list,
+                      color: AppColor.naturalBlackColor,
+                      size: 22,
+                    ),
+                    spaceWidthWidget(10),
+                    Text(
+                      S.of(context).filter,
+                      style: GoogleFonts.poppins(
+                          color: AppColor.naturalBlackColor,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14),
+                    ),
+                    const Spacer(),
+                    Icon(
+                      !cubit.isExpanded
+                          ? Icons.keyboard_arrow_down
+                          : Icons.keyboard_arrow_up_sharp,
+                      color: AppColor.naturalBlackColor,
+                    )
+                  ],
+                ),
               ),
               spaceHeightWidget(cubit.isExpanded ? 10 : 0),
               cubit.isExpanded
@@ -429,12 +447,15 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("${S.of(context).deletrShaktiKendrTitle}?",
-                        textAlign: TextAlign.left,
-                        style: textStyleWithPoppin(
-                            fontSize: 16,
-                            color: AppColor.black.withOpacity(0.9),
-                            fontWeight: FontWeight.w400)),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("${S.of(context).deletrShaktiKendrTitle}?",
+                          textAlign: TextAlign.left,
+                          style: textStyleWithPoppin(
+                              fontSize: 16,
+                              color: AppColor.black.withOpacity(0.9),
+                              fontWeight: FontWeight.w400)),
+                    ),
                     spaceHeightWidget(10),
                     Align(
                         alignment: Alignment.centerLeft,
@@ -502,17 +523,6 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                spaceHeightWidget(10),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: 5,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: AppColor.borderColor),
-                  ),
-                ),
                 spaceHeightWidget(30),
                 Text(
                   text ?? '',
@@ -522,9 +532,10 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                 ),
                 spaceHeightWidget(30),
                 Expanded(
-                  child: ListView.builder(
+                  child: vidhanSabha.data?.locations?.isNotEmpty ?? false ? ListView.builder(
+                    padding: EdgeInsets.zero,
                       shrinkWrap: true,
-                      itemCount: cubit.partyzilaList.length,
+                      itemCount: vidhanSabha.data?.locations?.length,
                       physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Column(
@@ -532,14 +543,14 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                cubit.zilaSelected = cubit.partyzilaList[index];
+                                cubit.zilaSelected = vidhanSabha.data?.locations?[index].name ?? '';
                                 cubit.emitState();
                                 Navigator.pop(context);
                               },
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Text(
-                                  cubit.partyzilaList[index] ?? '',
+                                  vidhanSabha.data?.locations?[index].name ?? '',
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.poppins(
                                       color: AppColor.black, fontSize: 16),
@@ -553,7 +564,13 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                             spaceHeightWidget(15),
                           ],
                         );
-                      }),
+                      })
+                      : Text(
+                    S.of(context).noDataAvailable,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.poppins(
+                        color: AppColor.black, fontSize: 16),
+                  ),
                 )
               ],
             ),

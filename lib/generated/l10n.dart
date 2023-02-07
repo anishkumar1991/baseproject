@@ -1459,6 +1459,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Submit`
+  String get submit {
+    return Intl.message(
+      'Submit',
+      name: 'submit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Booth`
+  String get boothSelect {
+    return Intl.message(
+      'Select Booth',
+      name: 'boothSelect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Booth`
+  String get addBooth {
+    return Intl.message(
+      'Add Booth',
+      name: 'addBooth',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

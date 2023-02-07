@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ThemeandInsight":
             MessageLookupByLibrary.simpleMessage("विषय एवं अंतर्दृष्टि"),
         "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
+        "addBooth": MessageLookupByLibrary.simpleMessage("ऐड बूथ"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
             "कार्यक्रम में उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता जिनका नाम आप जोड़ना चाहते है।"),
         "addOptional":
@@ -50,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
         "boothDes": MessageLookupByLibrary.simpleMessage(
             "सबमिट कर सभी बूथों को इस शक्ति केंद्र से जोड़ा जाएगा।"),
+        "boothSelect": MessageLookupByLibrary.simpleMessage("बूथ का चयन करें"),
         "boothSelectedTitle": MessageLookupByLibrary.simpleMessage(
             "बूथ पहले से ही अन्य शक्ति केंद्र में हैं"),
         "business": MessageLookupByLibrary.simpleMessage("व्यवसाय"),
@@ -193,6 +195,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("प्रवास और कार्यक्रम सूची"),
         "subject": MessageLookupByLibrary.simpleMessage("विषय"),
+        "submit": MessageLookupByLibrary.simpleMessage("सबमिट"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
         "total": MessageLookupByLibrary.simpleMessage("कुल"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("कुल कार्यक्रम"),

@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ThemeandInsight":
             MessageLookupByLibrary.simpleMessage("Theme and Insight"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addBooth": MessageLookupByLibrary.simpleMessage("Add Booth"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
             "The guest / participant / activist present in the program whose name you want to add."),
         "addOptional":
@@ -50,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
         "boothDes": MessageLookupByLibrary.simpleMessage(
             "By submitting all the booths will be connected to this Shakti Kendra."),
+        "boothSelect": MessageLookupByLibrary.simpleMessage("Select Booth"),
         "boothSelectedTitle": MessageLookupByLibrary.simpleMessage(
             "Booths are already in other shakti kendr"),
         "business": MessageLookupByLibrary.simpleMessage("Business"),
@@ -191,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("Stay and program list"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
+        "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("Total Program"),
