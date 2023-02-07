@@ -54,7 +54,6 @@ class _HomePageState extends State<HomePage> {
                     return Swiper(
                       index: widget.index,
                       controller: SwiperController(),
-
                       itemBuilder: (BuildContext context, int index) {
                         return ContentScreen(
                           src: state.reelsModel.reels[index].postData.reel,

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/screens/share/cubits/ShareCubit.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/screens/share/cubits/ShareState.dart';
-
-import '../cubits/ReelsCubit.dart';
 
 class OptionsScreen extends StatefulWidget {
   final int index;
@@ -22,10 +17,11 @@ class OptionsScreen extends StatefulWidget {
 }
 
 class _OptionsScreenState extends State<OptionsScreen> {
-  @override
+  bool reveal = false;
+
   Widget build(BuildContext context) {
     // final cubit1 = context.read<ReelsCubit>();
-    // final cubit2 = context.read<ShareCubit>();
+    // final cubit2 = context.read<ReelShareCubit>();
     // var id = cubit1.model?.reels[widget.index].id.toString();
     // var shareToAllCount = cubit1.model!.reels[widget.index].shares.other;
     // var shareToWhatsapp = cubit1.model!.reels[widget.index].shares.whatsapp;
@@ -42,14 +38,22 @@ class _OptionsScreenState extends State<OptionsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 100,
+                    height: 150,
                   ),
-                  Text(
-                    widget.title,
-                    style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white),
+                  Container(
+
+                    width: 260,
+                    height: 100,
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        widget.title,
+                        style: GoogleFonts.montserrat(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 5,
@@ -59,8 +63,8 @@ class _OptionsScreenState extends State<OptionsScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 3),
                         child: Container(
-                          width: 12,
-                          height: 12,
+                          width: 16,
+                          height: 16,
                           child: Image.asset(
                             "assets/images/eye2.png",
                             fit: BoxFit.fill,
@@ -69,13 +73,13 @@ class _OptionsScreenState extends State<OptionsScreen> {
                         ),
                       ),
                       SizedBox(
-                        width: 3,
+                        width: 5,
                       ),
                       Text(
                         widget.views,
                         style: GoogleFonts.montserrat(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                             color: Colors.white),
                       ),
                     ],

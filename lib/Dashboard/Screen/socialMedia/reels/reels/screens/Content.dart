@@ -19,6 +19,8 @@ class ContentScreen extends StatefulWidget {
 }
 
 class _ContentScreenState extends State<ContentScreen> {
+  ScrollController _controller = ScrollController();
+
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
   bool _liked = false;
@@ -27,6 +29,15 @@ class _ContentScreenState extends State<ContentScreen> {
   void initState() {
     super.initState();
     initializePlayer();
+  }
+
+  void _onScrollEvent() {
+    final extentAfter = _controller.position.extentAfter;
+    print("Extent after: $extentAfter");
+    if (extentAfter < 300) {
+      // Load new items
+      print("-----------SHOWING AFTER SWIPPING${_videoPlayerController.value.position}");
+    }
   }
 
   Future initializePlayer() async {
@@ -38,7 +49,7 @@ class _ContentScreenState extends State<ContentScreen> {
       showControls: false,
       looping: true,
       autoInitialize: true,
-
+      aspectRatio: 10 / 20,
     );
     setState(() {});
   }
@@ -55,19 +66,24 @@ class _ContentScreenState extends State<ContentScreen> {
     print("--------URL ------->${widget.src}");
     return Stack(
       fit: StackFit.expand,
+
       children: [
         _chewieController != null &&
-                _chewieController!.videoPlayerController.value.isInitialized
+            _chewieController!.videoPlayerController.value.isInitialized
             ? GestureDetector(
-                onTap: () {
-                  print("--------------->${_videoPlayerController.value.position}");
+          onTap: () {
+                  print(
+                      "--------------->${_videoPlayerController.value.position}");
                 },
-                child: Chewie(
-                  controller: _chewieController!,
+                child: AspectRatio(
+                  aspectRatio: _videoPlayerController.value.aspectRatio,
+                  child: Chewie(
+                    controller: _chewieController!,
+                  ),
                 ),
               )
             : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircularProgressIndicator(),
                   SizedBox(height: 10),
@@ -78,10 +94,13 @@ class _ContentScreenState extends State<ContentScreen> {
           Center(
             child: LikeIcon(),
           ),
-        OptionsScreen(
-          title: widget.title,
-          views: widget.views,
-          index: widget.index,
+        Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: OptionsScreen(
+            title: widget.title,
+            views: widget.views,
+            index: widget.index,
+          ),
         )
       ],
     );
