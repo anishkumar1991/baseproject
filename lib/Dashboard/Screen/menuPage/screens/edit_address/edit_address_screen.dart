@@ -141,10 +141,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             controller: cubit.pinCodeCtr,
                             title: '',
                             labelText: S.of(context).PinCode,
+                            maxLength: 6,
                             onChanged: (value) {
                               cubit.emitState();
                             },
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.number,
                             suffixWidget: cubit.pinCodeCtr.text.isNotEmpty
                                 ? InkWell(
                               onTap: () {

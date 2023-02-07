@@ -19,6 +19,7 @@ class TextFieldWidget extends StatelessWidget {
       this.inpurborder,
       this.hintText,
       this.preFix,
+      this.maxLength,
       this.validator,
       this.errorText,
       this.initialValue,
@@ -41,6 +42,7 @@ class TextFieldWidget extends StatelessWidget {
   final FormFieldValidator? validator;
   final String? errorText;
   final List<TextInputFormatter>? textInputFormatter;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class TextFieldWidget extends StatelessWidget {
         TextFormField(
           initialValue: initialValue,
           maxLines: maxLines,
+          maxLength: maxLength,
           inputFormatters: textInputFormatter,
           controller: controller,
           readOnly: readOnly ?? false,
@@ -59,7 +62,7 @@ class TextFieldWidget extends StatelessWidget {
           onChanged: onChanged,
           onTap: onTap,
           decoration: InputDecoration(
-            
+              counterText: '',
               border: inpurborder,
               hintText: hintText,
               prefixIcon: preFix,

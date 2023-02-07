@@ -70,4 +70,6 @@ class AppIcons {
   static const String calenderIcon = "assets/images/calander_icon.png";
   static const String fillBuisnessIcon = "assets/images/fill_buisness_icon.png";
   static const String vidhanSabha = "assets/images/vidhansabha.png";
+  static const String booth = "assets/images/booth.png";
+  static const String mandal = "assets/images/mandal.png";
 }

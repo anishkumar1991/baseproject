@@ -1,11 +1,20 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../../../AddEntry/network/model/category_model.dart';
 import '../../../../../../Storage/user_storage_service.dart';
+import '../../personal_info/cubit/personal_info_cubit.dart';
 import '../network/api/user_detail_api.dart';
 import '../network/model/user_detail_model.dart';
+import '../widgets/photo_selction_bottom_sheet.dart';
 
 part 'profile_state.dart';
 DropdownValueModel? dropDownValue;
@@ -13,7 +22,13 @@ DropdownValueModel? dropDownValue;
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
 
+
   UserDetailModel? userDetails;
+  File? imageFile;
+  XFile? image;
+  UploadTask? task;
+  bool isTrue = false;
+  String? urlDownload;
   bool showAddress = false;
   bool showEducation = false;
   bool showBusiness = false;
@@ -23,6 +38,33 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   emitState() {
     emit(ProfileInitial());
+  }
+  Future<void> selectImageForProfile({int? id,BuildContext? context}) async {
+    emit(ProfileInitial());
+    await selectOption(context: context!);
+    emit(ImageSelectForProfileSuccess());
+  }
+
+  uploadImageToFirebase({BuildContext? context}) async {
+    EasyLoading.show();
+    final imageTemp = File(image!.path);
+    imageFile = imageTemp;
+    final destination = '${userDetails?.data?.id}/${userDetails?.data?.id}_userProfile';
+    task = FirebaseApi.uploadFile(destination, imageFile!);
+    final snapshot = await task!.whenComplete(() {
+      EasyLoading.dismiss();
+      EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
+    });
+    urlDownload = await snapshot.ref.getDownloadURL();
+    print('Image Download-Link: $urlDownload');
+    if(urlDownload != null){
+      Future.delayed(Duration.zero).then((value){
+        context!.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+          "avatar": urlDownload,
+        });
+      });
+    }
+    EasyLoading.dismiss();
   }
 
   Future getUserDetails() async {

@@ -7,6 +7,8 @@ class ProfileInitial extends ProfileState {}
 
 class ProfileLoadingState extends ProfileState {}
 
+class ImageSelectForProfileSuccess extends ProfileInitial {}
+
 class ErrorState extends ProfileState {
   final String error;
   ErrorState(this.error);

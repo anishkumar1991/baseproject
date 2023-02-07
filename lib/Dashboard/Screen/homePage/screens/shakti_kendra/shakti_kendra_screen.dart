@@ -36,89 +36,68 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
               spaceHeightWidget(10),
               headerWidgetShaktiKendra(context),
               spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
-              // Row(
-              //   children: [
-              //     Container(
-              //       height: 47,
-              //       width: 47,
-              //       padding: EdgeInsets.all(8),
-              //       decoration: BoxDecoration(
-              //         borderRadius: BorderRadius.circular(10),
-              //         gradient: const LinearGradient(
-              //             colors: [
-              //               AppColor.purple50,
-              //               AppColor.orange200,
-              //             ],
-              //             begin: FractionalOffset(0.0, 0.0),
-              //             end: FractionalOffset(1.0, 0.0),
-              //             stops: [0.0, 1.0],
-              //             tileMode: TileMode.clamp),
-              //       ),
-              //       child: Image.asset(AppIcons.vidhanSabha),
-              //     ),
-              //     spaceWidthWidget(10),
-              //
-              //     /// dropdown location
-              //     dropdownLocation(),
-              //   ],
-              // ),
-              ListTile(
-                horizontalTitleGap: 8,
-                dense: true,
-                contentPadding: EdgeInsets.zero,
-                leading: Container(
-                  height: 47,
-                  width: 47,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                        colors: [
-                          AppColor.purple50,
-                          AppColor.orange200,
-                        ],
-                        begin: FractionalOffset(0.0, 0.0),
-                        end: FractionalOffset(1.0, 0.0),
-                        stops: [0.0, 1.0],
-                        tileMode: TileMode.clamp),
-                  ),
-                  child: Image.asset(AppIcons.vidhanSabha),
-                ),
-                title:  Text(
-                  S.of(context).vidhanSabha,
-                  style: GoogleFonts.poppins(
-                      color: AppColor.black700,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14),
-                ),
-                subtitle: Text(
-                  cubit.zilaSelected,
-                  style: GoogleFonts.poppins(
-                      color: AppColor.black700,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14),
-                ),
-                trailing: SizedBox(
-                  height: double.infinity,
-                  child: InkWell(
-                    onTap: (){
+              BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
+                builder: (context, state) {
+                  return ListTile(
+                    horizontalTitleGap: 8,
+                    onTap: () {
                       showModalBottomSheet(
                           context: context,
                           shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28.0),
-                      ),
-                      builder: (builder) {
-                      return bottom(
-                      context: context, cubit: cubit, text: '',);
-                      });
+                            borderRadius: BorderRadius.circular(28.0),
+                          ),
+                          builder: (builder) {
+                            return bottom(
+                              context: context,
+                              cubit: cubit,
+                              text: S.of(context).vidhanSabha,
+                            );
+                          });
                     },
-                    child: const Icon(
-                      Icons.expand_more,
-                      color: AppColor.textBlackColor,
-                      size: 24,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    leading: Container(
+                      height: 47,
+                      width: 47,
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(
+                            colors: [
+                              AppColor.purple50,
+                              AppColor.orange200,
+                            ],
+                            begin: FractionalOffset(0.0, 0.0),
+                            end: FractionalOffset(1.0, 0.0),
+                            stops: [0.0, 1.0],
+                            tileMode: TileMode.clamp),
+                      ),
+                      child: Image.asset(AppIcons.vidhanSabha),
                     ),
-                  ),
-                ),
+                    title: Text(
+                      S.of(context).vidhanSabha,
+                      style: GoogleFonts.poppins(
+                          color: AppColor.black700,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14),
+                    ),
+                    subtitle: Text(
+                      cubit.zilaSelected,
+                      style: GoogleFonts.poppins(
+                          color: AppColor.black700,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14),
+                    ),
+                    trailing: SizedBox(
+                      height: double.infinity,
+                      child: const Icon(
+                        Icons.expand_more,
+                        color: AppColor.textBlackColor,
+                        size: 24,
+                      ),
+                    ),
+                  );
+                },
               ),
               const Divider(
                 color: AppColor.black,
@@ -148,7 +127,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                   mandalName: "अटल विहारी वाजपई");
                             },
                             onEdit: () {
-                              Navigator.pushNamed(context, RoutePath.editShaktiKendraScreen);
+                              Navigator.pushNamed(
+                                  context, RoutePath.editShaktiKendraScreen);
                             });
                       }),
                 ),
@@ -276,7 +256,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3.16),
                       color: AppColor.dividerColor.withOpacity(0.5)),
-                  child: const Icon(Icons.mode_edit_outlined, color: AppColor.black),
+                  child: const Icon(Icons.mode_edit_outlined,
+                      color: AppColor.black),
                 ),
               ),
             ),
@@ -334,7 +315,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3.16),
                         color: AppColor.dividerColor.withOpacity(0.5)),
-                    child: const Icon(Icons.delete_outline, color: AppColor.black),
+                    child:
+                        const Icon(Icons.delete_outline, color: AppColor.black),
                   ),
                 ),
               ],
@@ -504,7 +486,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
   }
 
   bottom(
-      {required BuildContext context,required ShaktiKendraCubit cubit,required String text}) {
+      {required BuildContext context,
+      required ShaktiKendraCubit cubit,
+      required String text}) {
     return Container(
       color: Colors.transparent,
       child: Container(
@@ -541,24 +525,16 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                   child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: cubit.partyzilaList.length,
+                      physics: BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
                               onTap: () {
-                                // if (text == S.of(context).category) {
-                                //   id = list?[index].id ?? 0;
-                                //   controller.text = list?[index].name ?? '';
-                                //   context
-                                //       .read<PersonalInfoCubit>()
-                                //       .getCasteDropDownValue(id: id.toString());
-                                //   Navigator.pop(context, id);
-                                // } else {
-                                //   id = list?[index].id ?? 0;
-                                //   controller.text = list?[index].name ?? '';
-                                //   Navigator.pop(context, id);
-                                // }
+                                cubit.zilaSelected = cubit.partyzilaList[index];
+                                cubit.emitState();
+                                Navigator.pop(context);
                               },
                               child: SizedBox(
                                 width: double.infinity,

@@ -4,12 +4,14 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../../../../Values/app_colors.dart';
 import '../../../../../../Values/icons.dart';
+import '../cubit/profile_cubit.dart';
 import 'header_widget_profile_screen.dart';
 
 class MyAppBar extends StatelessWidget {
   double persantage;
   String img;
-   MyAppBar({Key? key,required this.persantage,required this.img}) : super(key: key);
+  ProfileCubit cubit;
+   MyAppBar({Key? key,required this.persantage,required this.img,required this.cubit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,42 +87,57 @@ class MyAppBar extends StatelessWidget {
                   height: 110,
                   child: Stack(
                     children: [
-                      CircularPercentIndicator(
-                        radius: 50,
-                        progressColor: AppColor.progressGreenColor,
-                        percent: persantage,
-                        center: ClipRRect(
-                          borderRadius: BorderRadius.circular(350),
-                          child: img != '' ? Image.network(
-                            img,
-                            height: 84,
-                            width: 84,
-                            fit: BoxFit.cover,
-                            errorBuilder:
-                                (BuildContext context, Object exception, StackTrace? stackTrace) {
-                              return const Icon(Icons.person,size: 25);
-                            },
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              }
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes != null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            },
-                          ): Container(
-                              color: AppColor.white,
+                      InkWell(
+                        onTap: (){
+                          print("open bottomSheet");
+                          cubit.selectImageForProfile(id: cubit.userDetails?.data?.id,context: context);
+                        },
+                        child: CircularPercentIndicator(
+                          radius: 50,
+                          progressColor: AppColor.progressGreenColor,
+                          percent: persantage,
+                          center: ClipRRect(
+                            borderRadius: BorderRadius.circular(350),
+                            child: cubit.imageFile == null ? img != '' ? Image.network(
+                              img,
                               height: 84,
                               width: 84,
-                              child: Image.asset(AppIcons.sangathanLogo)),
+                              fit: BoxFit.cover,
+                              errorBuilder:
+                                  (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                return const Icon(Icons.person,size: 25);
+                              },
+                              loadingBuilder: (BuildContext context, Widget child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child;
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                            ): Container(
+                                color: AppColor.white,
+                                height: 84,
+                                width: 84,
+                                child: Image.asset(AppIcons.sangathanLogo)) : Image.file(
+                              cubit.imageFile!,
+                              height: 84,
+                              width: 84,
+                              fit: BoxFit.cover,
+                              errorBuilder:
+                                  (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                return const Icon(Icons.person,size: 25);
+                              },
+                            ),
+                          ),
+                          backgroundColor: AppColor.greyColor.withOpacity(0.3),
                         ),
-                        backgroundColor: AppColor.greyColor.withOpacity(0.3),
                       ),
                       Positioned(
                         bottom: 5,

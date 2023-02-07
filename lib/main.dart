@@ -34,6 +34,7 @@ import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubi
 import 'Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
+import 'Login/Cubit/language_cubit/lan_cubit.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
@@ -78,6 +79,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => ShareCubit()),
         BlocProvider(create: (context) => ReelsCubit()),
@@ -105,26 +107,31 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        useInheritedMediaQuery: true,
-        title: AppStrings.appTitle,
-        builder: EasyLoading.init(),
-        localizationsDelegates: const [
-          S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        locale: const Locale.fromSubtags(languageCode: 'hi'),
-        onGenerateRoute: RouteGenerator.generatorRoute,
-        initialRoute: RoutePath.splashScreenPage,
-        theme: Theme.of(context).copyWith(
-          colorScheme: Theme.of(context).colorScheme.copyWith(
+      child: BlocBuilder<LanguageCubit, Locale>(
+        builder: (context,lang){
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            useInheritedMediaQuery: true,
+            title: AppStrings.appTitle,
+            builder: EasyLoading.init(),
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            // locale: const Locale.fromSubtags(languageCode: 'hi'),
+            locale: lang,
+            onGenerateRoute: RouteGenerator.generatorRoute,
+            initialRoute: RoutePath.splashScreenPage,
+            theme: Theme.of(context).copyWith(
+              colorScheme: Theme.of(context).colorScheme.copyWith(
                 primary: AppColor.primaryColor,
               ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -11,12 +11,14 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/splash_screen/network/model/user_profile_model.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../../Login/Cubit/language_cubit/lan_cubit.dart';
 import '../../../../../Login/Cubit/login_cubit.dart';
 import '../../../../../Login/Cubit/login_state.dart';
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../generated/l10n.dart';
+import '../../../../../main.dart';
 import '../../../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../../../../Cubit/dashboard_cubit.dart';
 import 'cubit/profile_cubit.dart';
@@ -29,7 +31,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
   }
@@ -60,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 cubit.userDetails = state.data;
                 context.read<ProfileCubit>().getDropdownData();
               }
-            }else if(state is ProfileLoadingState){
+            } else if (state is ProfileLoadingState) {
               return Shimmer.fromColors(
                 baseColor: AppColor.greyColor.withOpacity(0.3),
                 highlightColor: Colors.grey.withOpacity(0.1),
@@ -69,14 +70,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.36,
                       child: MyAppBar(
+                          cubit: cubit,
                           img: cubit.userDetails?.data?.avatar ?? '',
                           persantage:
-                          cubit.userDetails?.data?.percentage?.toDouble() !=
-                              null
-                              ? ((cubit.userDetails?.data?.percentage
-                              ?.toDouble())! /
-                              100)
-                              : 0.00),
+                              cubit.userDetails?.data?.percentage?.toDouble() !=
+                                      null
+                                  ? ((cubit.userDetails?.data?.percentage
+                                          ?.toDouble())! /
+                                      100)
+                                  : 0.00),
                     ),
                     Text(
                       cubit.userDetails?.data?.name ?? '',
@@ -97,15 +99,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Column(
                       children: List.generate(
                           3,
-                              (index) => Container(
-                            decoration: BoxDecoration(
-                                color: AppColor.white,
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            margin: const EdgeInsets.only(top: 20),
-                            height: MediaQuery.of(context).size.width * 0.3,
-                            width: MediaQuery.of(context).size.width * 0.95,
-                          )).toList(),
+                          (index) => Container(
+                                decoration: BoxDecoration(
+                                    color: AppColor.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                margin: const EdgeInsets.only(top: 20),
+                                height: MediaQuery.of(context).size.width * 0.3,
+                                width: MediaQuery.of(context).size.width * 0.95,
+                              )).toList(),
                     )
                   ],
                 ),
@@ -116,6 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.36,
                   child: MyAppBar(
+                      cubit: cubit,
                       img: cubit.userDetails?.data?.avatar ?? '',
                       persantage:
                           cubit.userDetails?.data?.percentage?.toDouble() !=
@@ -170,44 +172,119 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         spaceHeightWidget(15),
                         customDivider(),
 
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 5.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              S.of(context).language,
+                              style: textStyleWithPoppin(
+                                  fontSize: 14,
+                                  color: AppColor.naturalBlackColor
+                                      .withOpacity(0.5),
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 12),
+                          child: customDivider(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 5.0),
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  showConfirmDialog();
+                                },
+                                child: Text(
+                                  "English",
+                                  style: textStyleWithPoppin(
+                                      fontSize: 14,
+                                      color: AppColor.naturalBlackColor
+                                          .withOpacity(0.5),
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ),
+                              Spacer(),
+                              Switch(
+                                activeTrackColor: AppColor.primaryColor,
+                                thumbColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.selected)) {
+                                    return AppColor.primaryColor;
+                                  }
+                                  return AppColor.white;
+                                }),
+                                value: cubit.isTrue,
+                                onChanged: (bool value) {
+                                  cubit.isTrue = value;
+                                  Locale myLocale =
+                                      Localizations.localeOf(context);
+                                  print("========= ${myLocale.toString()}");
+                                  if (myLocale.toString() == 'en') {
+                                    context
+                                        .read<LanguageCubit>()
+                                        .changeLang(context, 'hi');
+                                  } else if(myLocale.toString() == 'hi'){
+                                    context
+                                        .read<LanguageCubit>()
+                                        .changeLang(context, 'en');
+                                  }
+                                  cubit.emitState();
+                                },
+                              )
+                            ],
+                          ),
+                        ),
 
                         BlocListener<LoginCubit, LoginState>(
-                          listener: (context, state) {
-                            if (state is UserLogOutSuccessState) {
-                              EasyLoading.showSuccess(state.msg);
+                            listener: (context, state) {
+                              if (state is UserLogOutSuccessState) {
+                                EasyLoading.showSuccess(state.msg);
 
-                              Navigator.pushNamedAndRemoveUntil(context, RoutePath.loginScreen, (route) => false);
-                              context.read<DashBoardCubit>().onTapIcons(0);
-                            } else if (state is LogOutLoadingState) {
-                              EasyLoading.show();
-                            } else if (state is UserLogOutFaieldState) {
-                              EasyLoading.showError(state.error);
-                            }
-                          },
-                          child: InkWell(
-                            onTap: () async {
-                              showConfirmDialog();
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    RoutePath.loginScreen, (route) => false);
+                                context.read<DashBoardCubit>().onTapIcons(0);
+                              } else if (state is LogOutLoadingState) {
+                                EasyLoading.show();
+                              } else if (state is UserLogOutFaieldState) {
+                                EasyLoading.showError(state.error);
+                              }
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 15.0, vertical: 15.0),
                               child: Row(
                                 children: [
-                                  Image.asset(AppIcons.logOutIcon,
-                                      height: 18,
-                                      width: 18,
-                                      color: AppColor.naturalBlackColor
-                                          .withOpacity(0.5)),
-                                  spaceWidthWidget(8),
-                                  Text(
-                                    "Logout",
-                                    style: textStyleWithPoppin(
-                                        fontSize: 14,
-                                        color: AppColor.naturalBlackColor
-                                            .withOpacity(0.5),
-                                        fontWeight: FontWeight.w500),
+                                  InkWell(
+                                    onTap: () {
+                                      showConfirmDialog();
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(AppIcons.logOutIcon,
+                                            height: 18,
+                                            width: 18,
+                                            color: AppColor.naturalBlackColor
+                                                .withOpacity(0.5)),
+                                        spaceWidthWidget(8),
+                                        Text(
+                                          "Logout",
+                                          style: textStyleWithPoppin(
+                                              fontSize: 14,
+                                              color: AppColor.naturalBlackColor
+                                                  .withOpacity(0.5),
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  const Spacer(),
+                                  Spacer(),
                                   Text(
                                     "Version 2.11",
                                     style: textStyleWithPoppin(
@@ -218,9 +295,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ],
                               ),
-                            ),
-                          )
-                        ),
+                            )),
                       ],
                     ),
                   ),
@@ -233,7 +308,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  sizedBoxRow(){
+  sizedBoxRow() {
     return Row(
       children: const [
         SizedBox(width: 100),
@@ -255,7 +330,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.phoneNumber != '' ? cubit.userDetails?.data?.phoneNumber ?? "-" : "-",
+            cubit.userDetails?.data?.phoneNumber != ''
+                ? cubit.userDetails?.data?.phoneNumber ?? "-"
+                : "-",
             style: textStyleWithPoppin(
                 fontSize: 14,
                 color: AppColor.naturalBlackColor,
@@ -269,7 +346,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.dob != '' ? cubit.userDetails?.data?.dob ?? "-" : "-",
+            cubit.userDetails?.data?.dob != ''
+                ? cubit.userDetails?.data?.dob ?? "-"
+                : "-",
             style: textStyleWithPoppin(
                 fontSize: 14,
                 color: AppColor.naturalBlackColor,
@@ -292,7 +371,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.gender != '' ? cubit.userDetails?.data?.gender ?? '-' : "-",
+            cubit.userDetails?.data?.gender != ''
+                ? cubit.userDetails?.data?.gender ?? '-'
+                : "-",
             style: textStyleWithPoppin(
                 fontSize: 14,
                 color: AppColor.naturalBlackColor,
@@ -300,9 +381,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Spacer(),
           InkWell(
-            onTap: (){
-              Navigator.pushNamed(
-                  context, RoutePath.personalInformationScreen,
+            onTap: () {
+              Navigator.pushNamed(context, RoutePath.personalInformationScreen,
                   arguments: cubit.userDetails?.toJson());
             },
             child: Padding(
@@ -317,7 +397,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         fontWeight: FontWeight.w500),
                   ),
                   spaceWidthWidget(8),
-                  const Icon(Icons.edit_outlined, size: 18, color: AppColor.blue)
+                  const Icon(Icons.edit_outlined,
+                      size: 18, color: AppColor.blue)
                 ],
               ),
             ),
@@ -338,23 +419,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return AlertDialog(
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(23),
-              borderSide: BorderSide.none
+              borderSide: BorderSide.none),
+          title: Text("${S.of(context).logOut}?",
+              style: textStyleWithPoppin(
+                  fontSize: 20,
+                  color: AppColor.black,
+                  fontWeight: FontWeight.w400)),
+          content: Text(
+            S.of(context).logOutDes,
+            style: textStyleWithPoppin(
+                fontSize: 14,
+                color: AppColor.black,
+                fontWeight: FontWeight.w400),
           ),
-          title:  Text("${S.of(context).logOut}?",style: textStyleWithPoppin(fontSize: 20,color: AppColor.black,fontWeight: FontWeight.w400)),
-          content:  Text(S.of(context).logOutDes,style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w400),),
           actions: <Widget>[
             TextButton(
                 onPressed: () => Navigator.pop(context),
-                child:  Text((S.of(context).noThanks),
+                child: Text(
+                  (S.of(context).noThanks),
                 )),
             TextButton(
               onPressed: () async {
                 await context.read<LoginCubit>().logOut();
                 userProfileModel = UserProfileModel();
               },
-              child:  Text(S.of(context).logOut),
+              child: Text(S.of(context).logOut),
             ),
-
           ],
         );
       },

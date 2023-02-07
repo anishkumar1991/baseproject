@@ -140,7 +140,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             spaceHeightWidget(15),
             GestureDetector(
               onTap: () {
-                cubit.selectImage();
+                cubit.selectImage(context: context);
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

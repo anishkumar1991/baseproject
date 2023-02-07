@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     context.read<HomePageCubit>().getClientAppLists();
     return Scaffold(
       key: homePageScaffoldGlobalKey,
-      drawer: const CustomDrawerWidget(),
+      // drawer: const CustomDrawerWidget(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -45,18 +45,19 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   InkWell(
                     onTap: (() {
-                      homePageScaffoldGlobalKey.currentState!.openDrawer();
+                    //  homePageScaffoldGlobalKey.currentState!.openDrawer();
                     }),
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: AppColor.greyColor.withOpacity(0.1)),
-                      child: Image.asset(
-                        AppIcons.drawerIcon,
-                        height: 10,
-                        color: AppColor.greyColor,
-                      ),
+                      // child: Image.asset(
+                      //   AppIcons.notification,
+                      //   height: 10,
+                      //   color: AppColor.greyColor,
+                      // ),
+                      child: Icon(Icons.notifications,color: AppColor.greyColor,size: 20,)
                     ),
                   ),
                   Image.asset(
