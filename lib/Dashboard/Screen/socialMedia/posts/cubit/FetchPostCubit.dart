@@ -20,10 +20,12 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
   FetchPostsCubit() : super(InitialFetchPostState());
   final api = FetchPostsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
+
   Future<void> fetchPosts() async {
     emit(FetchingPostsState());
     try {
-      final res = await api.getPosts('Bearer ${StorageService.userAuthToken}', "25");
+      final res =
+          await api.getPosts('Bearer ${StorageService.userAuthToken}', "25");
       if (res.response.statusCode == 200) {
         print("api working");
 
@@ -106,8 +108,8 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
 
   Future<void> sendLike(String postId) async {
     try {
-      final res =
-          await api.sendLike('Bearer ${StorageService.userAuthToken}', {"post_id": postId, "reaction": "like"});
+      final res = await api.sendLike('Bearer ${StorageService.userAuthToken}',
+          {"post_id": postId, "reaction": "like"});
       if (res.response.statusCode == 200) {
         print("like button api working");
       } else {

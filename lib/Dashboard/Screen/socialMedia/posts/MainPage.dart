@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/Polls.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/TwitterCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../Values/app_colors.dart';
@@ -95,7 +96,7 @@ class SocialMediaPage extends StatelessWidget {
                         // if (state.model.posts[index].postType == "Link" &&
                         //     state.model.posts[index].postData.link?.linkType ==
                         //         "twitter") {
-                        //   return CustomCardTwitter(index: index);
+                        //   return TwitterCard();
                         // }
                         if (state.model.posts[index].postType == "Image") {
                           return Padding(
@@ -121,6 +122,8 @@ class SocialMediaPage extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 20),
+
         ],
       ),
     ));
