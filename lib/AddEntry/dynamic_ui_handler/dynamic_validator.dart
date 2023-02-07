@@ -39,7 +39,7 @@ class DynamicValidator {
       }
     } else if (fieldName == 'aadhaarNumber') {
       if (value!.isNotEmpty) {
-        if (value.toString().length != 14) {
+        if (value.toString().length != 12) {
           return 'Aadhaar Number should be 12 digit';
         }
       }
@@ -120,7 +120,7 @@ class DynamicValidator {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(
-            mask: '#### #### ####',
+            mask: '############',
             filter: {"#": RegExp(r'[0-9]')},
             type: MaskAutoCompletionType.lazy)
       ];
