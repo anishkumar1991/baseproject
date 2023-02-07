@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../BottomSocialBar.dart';
-
 class Polls extends StatelessWidget {
   const Polls({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -41,7 +38,6 @@ class Polls extends StatelessWidget {
                 height: 20,
               ),
               ListView.separated(
-
                   shrinkWrap: true,
                   itemCount: 4,
                   physics: const NeverScrollableScrollPhysics(),
@@ -49,8 +45,8 @@ class Polls extends StatelessWidget {
                   itemBuilder: ((context, index) {
                     return Container(
                       decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Colors.grey.withOpacity(0.4)),
+                          border:
+                              Border.all(color: Colors.grey.withOpacity(0.4)),
                           borderRadius: BorderRadius.circular(30)),
                       child: Row(
                         children: [
@@ -58,7 +54,6 @@ class Polls extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               value: index == 2 ? true : false,
-
                               onChanged: ((value) {})),
                           const Text('BJP',
                               style: TextStyle(
@@ -71,7 +66,7 @@ class Polls extends StatelessWidget {
                     );
                   })),
               SizedBox(height: 10),
-             // BottomSocialBar(),
+              // BottomSocialBar(),
             ],
           ),
         ),

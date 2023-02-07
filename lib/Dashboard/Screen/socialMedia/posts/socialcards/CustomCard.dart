@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../BottomSocialBar.dart';
 import '../cubit/FetchPostCubit.dart';
@@ -24,8 +23,6 @@ class CustomCard extends StatelessWidget {
     // );
     return SizedBox(
       child: Card(
-
-
           elevation: 3,
           child: Column(
             children: [

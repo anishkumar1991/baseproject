@@ -100,6 +100,8 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => EditBusinessCubit()),
         BlocProvider(create: (context) => MenuScreenCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
+        BlocProvider(create: (context) => ShareCubit()),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

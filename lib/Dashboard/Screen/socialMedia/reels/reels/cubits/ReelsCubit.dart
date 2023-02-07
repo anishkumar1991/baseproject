@@ -7,6 +7,8 @@ import '../network/services/ReelsAPI.dart';
 import 'ReelsState.dart';
 
 class ReelsCubit extends Cubit<ReelsState> {
+  ReelsModel? model;
+
   ReelsCubit() : super(ReelsInitialState());
 
   final api = ReelsAPI(Dio(BaseOptions(
@@ -15,7 +17,6 @@ class ReelsCubit extends Cubit<ReelsState> {
   Future getReelsData() async {
     emit(ReelsLoadingState());
     try {
-
       final res = await api.getReels('Bearer ${StorageService.userAuthToken}');
       print(
           'URL Is Here------------------------->${res.response.requestOptions.uri}');
@@ -23,9 +24,10 @@ class ReelsCubit extends Cubit<ReelsState> {
           'Status Code Is Here------------------------->${res.response.statusCode}');
       print('Data is Here------------------------->${res.data}');
       if (res.response.statusCode == 200) {
-        ReelsModel model = ReelsModel.fromJson(res.data);
+        model = ReelsModel.fromJson(res.data);
+
         print('here is the model data from api---->${res.response.data}');
-        emit(ReelsFetchedState(model));
+        emit(ReelsFetchedState(model!));
       } else {
         emit(ReelsErrorState());
       }

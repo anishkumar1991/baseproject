@@ -9,9 +9,10 @@ class ContentScreen extends StatefulWidget {
   final String? src;
   final String title;
   final String views;
+  final int index;
 
   const ContentScreen(
-      {Key? k, required this.title, required this.views, this.src});
+      {Key? k, required this.title, required this.views, this.src, required this.index});
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -37,6 +38,7 @@ class _ContentScreenState extends State<ContentScreen> {
       showControls: false,
       looping: true,
       autoInitialize: true,
+
     );
     setState(() {});
   }
@@ -50,16 +52,15 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("--------URL ------->${widget.src}");
     return Stack(
       fit: StackFit.expand,
       children: [
         _chewieController != null &&
                 _chewieController!.videoPlayerController.value.isInitialized
             ? GestureDetector(
-                onDoubleTap: () {
-                  setState(() {
-                    _liked = !_liked;
-                  });
+                onTap: () {
+                  print("--------------->${_videoPlayerController.value.position}");
                 },
                 child: Chewie(
                   controller: _chewieController!,
@@ -80,6 +81,7 @@ class _ContentScreenState extends State<ContentScreen> {
         OptionsScreen(
           title: widget.title,
           views: widget.views,
+          index: widget.index,
         )
       ],
     );
