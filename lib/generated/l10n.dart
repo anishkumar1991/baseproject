@@ -1409,6 +1409,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Write the name of shakti kendr`
+  String get enterShaktiKendrName {
+    return Intl.message(
+      'Write the name of shakti kendr',
+      name: 'enterShaktiKendrName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected booth`
+  String get selectedBooth {
+    return Intl.message(
+      'Selected booth',
+      name: 'selectedBooth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booths are already in other shakti kendr`
+  String get boothSelectedTitle {
+    return Intl.message(
+      'Booths are already in other shakti kendr',
+      name: 'boothSelectedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `By submitting all the booths will be connected to this Shakti Kendra.`
+  String get boothDes {
+    return Intl.message(
+      'By submitting all the booths will be connected to this Shakti Kendra.',
+      name: 'boothDes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Language`
+  String get language {
+    return Intl.message(
+      'Language',
+      name: 'language',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

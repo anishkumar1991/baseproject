@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:sangathan/Dashboard/Screen/menuPage/screens/personal_info/widgets/photo_selction_bottom_sheet_personal_info.dart';
 
 import '../../../../../../AddEntry/network/model/cast_model.dart';
 import '../../../../../../Storage/user_storage_service.dart';
@@ -144,17 +145,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     return DateFormat('yyyy-MM-dd').format(date);
   }
 
-  Future<void> selectImage() async {
+  Future<void> selectImage({BuildContext? context}) async {
     emit(PersonalInfoInitial());
-    try {
-      image = await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (image == null) return;
-      final imageTemp = File(image!.path);
-      imageFile = imageTemp;
-      print("Image Path : $imageFile");
-    } catch (e) {
-      print('Failed to pick image: $e');
-    }
+    await selectOption(context: context!);
     emit(ImageSelectSuccess());
   }
 }

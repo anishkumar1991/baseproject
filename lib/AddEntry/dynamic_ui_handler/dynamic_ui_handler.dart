@@ -1,3 +1,5 @@
+import '../network/model/category_model.dart';
+
 class DynamicUIHandler {
   static List<String> dropdowns = [
     "designation",
@@ -6,6 +8,7 @@ class DynamicUIHandler {
     "religionId",
     "professionId",
     "educationId",
+    "blood_group"
   ];
   static List<String> textfield = [
     "name",
@@ -38,7 +41,6 @@ class DynamicUIHandler {
     "linkedinProfile",
     "Salutation",
     "sub_caste",
-    "blood_group"
   ];
   static List<String> multiSelectionField = ["car", "bike", "smartphone"];
 
@@ -57,4 +59,15 @@ class DynamicUIHandler {
   static List<String> radioButton = ["gender"];
 
   static List<String> imagePicker = ["photo"];
+
+  static List<DropdownData> bloodGroupList = [
+    DropdownData(id: 1, name: "A+"),
+    DropdownData(id: 2, name: "O+"),
+    DropdownData(id: 3, name: "B+"),
+    DropdownData(id: 4, name: "AB+"),
+    DropdownData(id: 5, name: "A-"),
+    DropdownData(id: 6, name: "O-"),
+    DropdownData(id: 7, name: "B-"),
+    DropdownData(id: 8, name: "AB-"),
+  ];
 }

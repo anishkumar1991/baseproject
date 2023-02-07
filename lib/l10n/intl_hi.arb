@@ -135,5 +135,10 @@
      "buth": "बूथ",
      "makeShaktikendr": "शक्तिकेंद्र बनाये",
       "deletrShaktiKendrTitle":"इस शक्ति केंद्र को हटाना चाहते हैं?",
-       "deleteShaktiKendr":"की प्रविष्टियां हटा दी जाएंगी।"
+       "deleteShaktiKendr":"की प्रविष्टियां हटा दी जाएंगी।",
+       "enterShaktiKendrName":"शक्तिकेंद्र का नाम लिखे",
+       "selectedBooth" : "चयनित बूथ",
+       "boothSelectedTitle" : "बूथ पहले से ही अन्य शक्ति केंद्र में हैं",
+       "boothDes": "सबमिट कर सभी बूथों को इस शक्ति केंद्र से जोड़ा जाएगा।",
+       "language": "भाषा"
 }

@@ -4,3 +4,4 @@ part of 'edit_shakti_kendr_cubit.dart';
 abstract class EditShaktiKendrState {}
 
 class EditShaktiKendrInitial extends EditShaktiKendrState {}
+class LoadingEditShaktiKendraState extends EditShaktiKendrInitial {}

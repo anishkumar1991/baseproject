@@ -48,6 +48,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
+        "boothDes": MessageLookupByLibrary.simpleMessage(
+            "By submitting all the booths will be connected to this Shakti Kendra."),
+        "boothSelectedTitle": MessageLookupByLibrary.simpleMessage(
+            "Booths are already in other shakti kendr"),
         "business": MessageLookupByLibrary.simpleMessage("Business"),
         "businessDeleted":
             MessageLookupByLibrary.simpleMessage("Business Deleted"),
@@ -95,6 +99,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "educationUpdated":
             MessageLookupByLibrary.simpleMessage("Education Updated"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
+        "enterShaktiKendrName": MessageLookupByLibrary.simpleMessage(
+            "Write the name of shakti kendr"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
@@ -108,6 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
         "logOut": MessageLookupByLibrary.simpleMessage("Log Out"),
@@ -172,6 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "selectedBooth": MessageLookupByLibrary.simpleMessage("Selected booth"),
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("Shakti Kendra Creation"),
         "shaktikendr": MessageLookupByLibrary.simpleMessage("Shakti kendr"),

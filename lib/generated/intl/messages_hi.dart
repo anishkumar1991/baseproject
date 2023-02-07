@@ -48,6 +48,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("उम्र"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
+        "boothDes": MessageLookupByLibrary.simpleMessage(
+            "सबमिट कर सभी बूथों को इस शक्ति केंद्र से जोड़ा जाएगा।"),
+        "boothSelectedTitle": MessageLookupByLibrary.simpleMessage(
+            "बूथ पहले से ही अन्य शक्ति केंद्र में हैं"),
         "business": MessageLookupByLibrary.simpleMessage("व्यवसाय"),
         "businessDeleted":
             MessageLookupByLibrary.simpleMessage("व्यवसाय डिलीटेड"),
@@ -97,6 +101,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "educationUpdated":
             MessageLookupByLibrary.simpleMessage("शिक्षा अपडेटेड"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("ओटीपी दर्ज करें"),
+        "enterShaktiKendrName":
+            MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र का नाम लिखे"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
@@ -112,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "home": MessageLookupByLibrary.simpleMessage("होम"),
+        "language": MessageLookupByLibrary.simpleMessage("भाषा"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
         "logOut": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
@@ -174,6 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "selectedBooth": MessageLookupByLibrary.simpleMessage("चयनित बूथ"),
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र क्रिएशन"),
         "shaktikendr": MessageLookupByLibrary.simpleMessage("शक्ति केंद्र "),

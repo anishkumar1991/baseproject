@@ -135,5 +135,10 @@
   "buth": "Booths",
   "makeShaktikendr": "Make shakti kendr",
   "deletrShaktiKendrTitle":"Want to remove this shakti kendr?",
-  "deleteShaktiKendr":"entries will be deleted."
+  "deleteShaktiKendr":"entries will be deleted.",
+  "enterShaktiKendrName":"Write the name of shakti kendr",
+  "selectedBooth": "Selected booth",
+   "boothSelectedTitle" : "Booths are already in other shakti kendr",
+    "boothDes": "By submitting all the booths will be connected to this Shakti Kendra.",
+    "language": "Language"
 }
