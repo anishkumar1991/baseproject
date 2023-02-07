@@ -316,7 +316,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
               ),
             ),
           )
-        : SizedBox();
+        :const SizedBox();
   }
 
   gettingFilePath(String key, AddEntryCubit cubit) {

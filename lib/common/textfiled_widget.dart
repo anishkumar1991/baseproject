@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../Values/app_colors.dart';
 
@@ -23,6 +24,7 @@ class TextFieldWidget extends StatelessWidget {
       this.validator,
       this.errorText,
       this.initialValue,
+      this.isMandatoryField = false,
       this.textInputFormatter});
 
   final String? initialValue;
@@ -43,17 +45,31 @@ class TextFieldWidget extends StatelessWidget {
   final String? errorText;
   final List<TextInputFormatter>? textInputFormatter;
   final int? maxLength;
+  final bool isMandatoryField;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(title),
+            spaceWidthWidget(5),
+            isMandatoryField
+                ? const Text(
+                    '*',
+                    style: TextStyle(color: AppColor.red),
+                  )
+                : const SizedBox.shrink()
+          ],
+        ),
         TextFormField(
           initialValue: initialValue,
           maxLines: maxLines,
           maxLength: maxLength,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           inputFormatters: textInputFormatter,
           controller: controller,
           readOnly: readOnly ?? false,

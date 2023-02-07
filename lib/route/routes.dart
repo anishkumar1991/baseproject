@@ -71,6 +71,7 @@ class RouteGenerator {
               personData: data.personData,
               levelName: data.levelName,
               personID: data.personID,
+              isEditEntry: data.isEditEntry,
             );
           },
         );
@@ -201,7 +202,13 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return const EditShaktiKendraScreen();
+            Map<String, dynamic>? map = {};
+            bool? isEdit;
+            if (settings.arguments != null) {
+              map = settings.arguments as Map<String, dynamic>;
+              isEdit = map['isEdit'];
+            }
+            return  EditShaktiKendraScreen(isEdit: isEdit);
           },
         );
       case RoutePath.editEducationScreen:

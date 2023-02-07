@@ -814,34 +814,34 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     return age;
   }
 
-  getTextFieldValidation({required String fieldName, required dynamic value}) {
-    if (fieldName == 'phone') {
-      if (value.toString().length != 10) {
-        return 'Mobile number should be 10 digit';
-      }
-    }
-    if (fieldName == 'age') {
-      if (value.isNotEmpty) {
-        if (value.length != 2) {
-          return 'Age should be 2 digit';
-        }
-      }
-    }
-    if (fieldName == 'pinCode') {
-      if (value.isNotEmpty) {
-        if (value.toString().length != 6) {
-          return 'PinCode should be 6 digit';
-        }
-      }
-    }
-    if (fieldName == 'whatsappNo') {
-      if (value.isNotEmpty) {
-        if (value.toString().length != 10) {
-          return 'Whatsapp No should be 10 digit';
-        }
-      }
-    }
-  }
+  // getTextFieldValidation({required String fieldName, required dynamic value}) {
+  //   if (fieldName == 'phone') {
+  //     if (value.toString().length != 10) {
+  //       return 'Mobile number should be 10 digit';
+  //     }
+  //   }
+  //   if (fieldName == 'age') {
+  //     if (value.isNotEmpty) {
+  //       if (value.length != 2) {
+  //         return 'Age should be 2 digit';
+  //       }
+  //     }
+  //   }
+  //   if (fieldName == 'pinCode') {
+  //     if (value.isNotEmpty) {
+  //       if (value.toString().length != 6) {
+  //         return 'PinCode should be 6 digit';
+  //       }
+  //     }
+  //   }
+  //   if (fieldName == 'whatsappNo') {
+  //     if (value.isNotEmpty) {
+  //       if (value.toString().length != 10) {
+  //         return 'Whatsapp No should be 10 digit';
+  //       }
+  //     }
+  //   }
+  // }
 
   getTextInputType({required String fieldType}) {
     if (fieldType == 'phone') {
@@ -869,7 +869,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (fieldType == 'pannaNumber') {
       return TextInputType.number;
     }
+    if (fieldType == 'primary_member_id') {
+      return TextInputType.number;
+    }
   }
-
-  
 }

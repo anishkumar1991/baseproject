@@ -162,6 +162,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         leaveId: widget.dataLevelId ?? 0,
                         unitId: cubit.unitId,
                         subUnitId: cubit.subUnitId,
+                        isEditEntry: false,
                         levelName: cubit.levelNameId,
                         countryStateId: widget.countryStateId,
                         personData: null,
@@ -170,7 +171,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               }),
               icon: const Icon(Icons.add),
               label: Text(
-                'Add Entry',
+                S.of(context).addEntry,
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
@@ -467,6 +468,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                             context, RoutePath.addEntryScreen,
                                             arguments: AddEntryPage(
                                               type: widget.type!,
+                                              isEditEntry: true,
                                               leaveId: widget.dataLevelId ?? 0,
                                               unitId: cubit.unitId,
                                               subUnitId: cubit.subUnitId,
@@ -511,6 +513,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                         countryStateId: widget.countryStateId,
                                         levelName: cubit.levelNameId,
                                         personID: data?.id,
+                                        isEditEntry: true,
                                         personData: data?.toJson(),
                                       ));
                                 }),

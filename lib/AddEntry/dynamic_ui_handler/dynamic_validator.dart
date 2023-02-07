@@ -55,10 +55,24 @@ class DynamicValidator {
           return 'STD code Number should be 5 digit';
         }
       }
+    } else if (fieldName == 'primary_member_id') {
+      if (value!.isNotEmpty) {
+        if (value.toString().length != 10) {
+          return 'Primary Member Id should be 10 digit';
+        }
+      }
     } else if (fieldName == 'pannaNumber') {
       if (value!.isNotEmpty) {
         if (value.toString().length > 3) {
           return 'Panna number maximum 3 digit';
+        }
+      }
+    } else if (fieldName == 'email') {
+      if (value!.isNotEmpty) {
+        if (!RegExp(
+                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            .hasMatch(value)) {
+          return 'Please Enter Valid Email';
         }
       }
     } else if (fieldName == "voterId") {
@@ -116,6 +130,22 @@ class DynamicValidator {
             filter: {"#": RegExp(r'[0-9]')},
             type: MaskAutoCompletionType.lazy)
       ];
+    } else if (fieldType == 'pinCode') {
+      return [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '######',
+            filter: {"#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
+      ];
+    } else if (fieldType == 'primary_member_id') {
+      return [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '##########',
+            filter: {"#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
+      ];
     } else if (fieldType == "aadhaarNumber") {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
@@ -127,6 +157,10 @@ class DynamicValidator {
     } else if (fieldType == "pannaNumber") {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '###',
+            filter: {"#": RegExp(r'[1-9]')},
+            type: MaskAutoCompletionType.lazy)
       ];
     }
   }

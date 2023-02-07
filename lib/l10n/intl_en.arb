@@ -140,5 +140,10 @@
   "selectedBooth": "Selected booth",
    "boothSelectedTitle" : "Booths are already in other shakti kendr",
     "boothDes": "By submitting all the booths will be connected to this Shakti Kendra.",
-    "language": "Language"
+    "language": "Language",
+    "submit" : "Submit",
+    "boothSelect" : "Select Booth",
+    "addBooth" : "Add Booth",
+    "addEntry":"Add Entry",
+    "adds":"Add"
 }
