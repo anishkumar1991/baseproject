@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/delete_reason_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../Storage/user_storage_service.dart';
 import '../network/api/data_entry_api.dart';
@@ -213,5 +214,12 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     print('unitId=$unitId');
     print('subUnitId=$subUnitId');
     emit(ZilaChangedState());
+  }
+  Future<void> makePhoneCall({required String phoneNumber}) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: phoneNumber,
+    );
+    await launchUrl(launchUri);
   }
 }

@@ -12,6 +12,7 @@ class DynamicValidator {
         return 'Please enter ${displayNameForUI ?? ""}';
       }
     }
+
     if (fieldName == 'phone') {
       if (value.toString().length != 10) {
         return 'Mobile number should be 10 digit';
@@ -40,6 +41,18 @@ class DynamicValidator {
       if (value!.isNotEmpty) {
         if (value.toString().length != 14) {
           return 'Aadhaar Number should be 12 digit';
+        }
+      }
+    } else if (fieldName == 'landline') {
+      if (value!.isNotEmpty) {
+        if (value.toString().length != 8) {
+          return 'Landline Number should be 8 digit';
+        }
+      }
+    } else if (fieldName == 'std_code') {
+      if (value!.isNotEmpty) {
+        if (value.toString().length != 5) {
+          return 'STD code Number should be 5 digit';
         }
       }
     } else if (fieldName == 'pannaNumber') {
@@ -82,6 +95,26 @@ class DynamicValidator {
     } else if (fieldType == 'age') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '##',
+            filter: {"#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
+      ];
+    } else if (fieldType == 'std_code') {
+      return [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '#####',
+            filter: {"#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
+      ];
+    } else if (fieldType == 'landline') {
+      return [
+        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+        MaskTextInputFormatter(
+            mask: '########',
+            filter: {"#": RegExp(r'[0-9]')},
+            type: MaskAutoCompletionType.lazy)
       ];
     } else if (fieldType == "aadhaarNumber") {
       return [

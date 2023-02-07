@@ -3,22 +3,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
+import 'package:sangathan/AddEntry/Screen/widget/image_picker_bottomsheet.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
+
+import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_validator.dart';
+
 import 'package:sangathan/Values/app_colors.dart';
-import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/common/otp_field_widget.dart';
-import 'package:sangathan/common/textfiled_widget.dart';
 
 import '../../Storage/user_storage_service.dart';
+import '../../Values/space_height_widget.dart';
+import '../../common/textfiled_widget.dart';
 import '../../generated/l10n.dart';
 import '../../route/route_path.dart';
 import '../Cubit/add_entry_cubit.dart';
 import '../Cubit/add_entry_state.dart';
-import '../dynamic_ui_handler/dynamic_validator.dart';
 import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/custom_radio_button.dart';
 import 'widget/select_boxs.dart';
@@ -195,8 +199,21 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               .split("/")
                               .last,
                           onTap: (() async {
-                            await cubit.pickFile(
-                                "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                            // await cubit.pickFile(
+                            //     "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                            showModalBottomSheet(
+                                context: context,
+                                builder: ((context) => ImagePickerBottomSheet(
+                                        onTapCamera: (() async {
+                                      Navigator.pop(context);
+                                      await cubit.pickFileFromCamera(
+                                          "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                                    }), onTapGallery: (() async {
+                                      Navigator.pop(context);
+
+                                      await cubit.pickFile(
+                                          "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                                    }))));
                           }),
                         ),
                       ],
@@ -236,8 +253,21 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         .split("/")
                         .last,
                     onTap: (() async {
-                      await cubit.pickFile(
-                          "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                      // await cubit.pickFile(
+                      //     "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                      showModalBottomSheet(
+                          context: context,
+                          builder: ((context) =>
+                              ImagePickerBottomSheet(onTapCamera: (() async {
+                                Navigator.pop(context);
+                                await cubit.pickFileFromCamera(
+                                    "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                              }), onTapGallery: (() async {
+                                Navigator.pop(context);
+
+                                await cubit.pickFile(
+                                    "${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url");
+                              }))));
                     }),
                   ),
                 ],
@@ -304,6 +334,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     //     }
                     //   }
                     // }
+
                   }*/
                   ,
                   textInputFormatter: DynamicValidator.addTextInputFormatters(
@@ -360,41 +391,68 @@ class _AddEntryPageState extends State<AddEntryPage> {
         /// Here calender view
         else if (DynamicUIHandler.calenderView
             .contains(cubit.entryField![i].fieldName)) ...[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              spaceHeightWidget(20),
-              Text(cubit.entryField![i].displayNameForUI ?? ""),
-              spaceHeightWidget(8),
-              BlocBuilder<AddEntryCubit, AddEntryState>(
-                builder: (context, state) {
-                  return Row(
-                    children: [
-                      Text(
-                        cubit.date,
-                        style: const TextStyle(
-                          color: AppColor.greyColor,
-                        ),
-                      ),
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: () async {
-                          cubit.selectedDoaDate(context);
-                        },
-                        child: const Icon(Icons.calendar_month_outlined),
-                      )
-                    ],
-                  );
-                },
+          spaceHeightWidget(20),
+
+          TextFieldWidget(
+            readOnly: true,
+            controller: cubit.dobController,
+            title: cubit.entryField![i].displayNameForUI ?? "",
+            validator: ((value) {
+              if (value.isNotEmpty) {
+                if (cubit.calculateAge(DateFormat("dd-MMM-yyyy").parse(value)) <
+                    16) {
+                  return 'DOB should be 16 or above year';
+                }
+              }
+
+              return null;
+            }),
+            suffixWidget: GestureDetector(
+              onTap: () async {
+                cubit.selectedDoaDate(context);
+              },
+              child: const Icon(
+                Icons.calendar_month_outlined,
+                color: AppColor.black,
               ),
-              spaceHeightWidget(4),
-              const Divider(
-                height: 2,
-                thickness: 1.5,
-                color: AppColor.textBlackColor,
-              )
-            ],
-          )
+            ),
+            hintText: cubit.date,
+          ),
+          // Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: [
+          //     spaceHeightWidget(20),
+          //     Text(cubit.entryField![i].displayNameForUI ?? ""),
+          //     spaceHeightWidget(8),
+          //     BlocBuilder<AddEntryCubit, AddEntryState>(
+          //       builder: (context, state) {
+          //         return Row(
+          //           children: [
+          //             Text(
+          //               cubit.date,
+          //               style: const TextStyle(
+          //                 color: AppColor.greyColor,
+          //               ),
+          //             ),
+          //             const Spacer(),
+          //             GestureDetector(
+          //               onTap: () async {
+          //                 cubit.selectedDoaDate(context);
+          //               },
+          //               child: const Icon(Icons.calendar_month_outlined),
+          //             )
+          //           ],
+          //         );
+          //       },
+          //     ),
+          //     spaceHeightWidget(4),
+          //     const Divider(
+          //       height: 2,
+          //       thickness: 1.5,
+          //       color: AppColor.textBlackColor,
+          //     )
+          //   ],
+          // )
         ]
       ],
     );
@@ -517,88 +575,18 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                       onTap: (() {
                                         showModalBottomSheet(
                                             context: context,
-                                            builder: ((context) => Padding(
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            'Choose',
-                                                            style: GoogleFonts
-                                                                .quicksand(
-                                                                    fontSize:
-                                                                        20,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800),
-                                                          ),
-                                                          IconButton(
-                                                              onPressed: (() {
-                                                                Navigator.pop(
-                                                                    context);
-                                                              }),
-                                                              icon: const Icon(
-                                                                Icons.close,
-                                                                size: 25,
-                                                              ))
-                                                        ],
-                                                      ),
-                                                      const Divider(),
-                                                      ListTile(
-                                                        onTap: (() {
-                                                          Navigator.pop(
-                                                              context);
-                                                          cubit
-                                                              .requestPermission(
-                                                                  ImageSource
-                                                                      .camera);
-                                                        }),
-                                                        title: Text(
-                                                          'Camera',
-                                                          style: GoogleFonts
-                                                              .quicksand(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                        ),
-                                                      ),
-                                                      const Divider(),
-                                                      ListTile(
-                                                        onTap: (() {
-                                                          Navigator.pop(
-                                                              context);
-                                                          cubit
-                                                              .requestPermission(
-                                                                  ImageSource
-                                                                      .gallery);
-                                                        }),
-                                                        title: Text(
-                                                          'Gallery',
-                                                          style: GoogleFonts
-                                                              .quicksand(
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            fontSize: 16,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Divider(),
-                                                      spaceHeightWidget(20)
-                                                    ],
-                                                  ),
-                                                )));
+                                            builder: ((context) =>
+                                                ImagePickerBottomSheet(
+                                                    onTapCamera: (() async {
+                                                  Navigator.pop(context);
+                                                  await cubit.requestPermission(
+                                                      ImageSource.camera);
+                                                }), onTapGallery: (() async {
+                                                  Navigator.pop(context);
+
+                                                  await cubit.requestPermission(
+                                                      ImageSource.gallery);
+                                                }))));
                                       }),
                                     )),
 

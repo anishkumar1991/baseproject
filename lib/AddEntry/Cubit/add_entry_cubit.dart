@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
@@ -49,9 +50,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   List<DropdownData> religionData = [];
 
   List<DesignationData> designationData = [];
-
+  TextEditingController dobController = TextEditingController();
   List<Widget> addEntryFormPrimary = [];
   List<Widget> addEntryFormSecondary = [];
+  File? cameraFile;
 
   CastData? castSelected;
   DropdownData? categorySelected;
@@ -230,10 +232,11 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         context: context,
         initialDate: dateTime,
         firstDate: DateTime(1900, 8),
-        lastDate: DateTime(2101));
+        lastDate: DateTime.now());
     if (picked != null && picked != dateTime) {
       dateTime = picked;
       date = ddMMMYYYYfromDateTime(dateTime);
+      dobController.text = date;
       emit(DobSelectedState(date));
     }
   }
@@ -286,6 +289,27 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         Map<String, dynamic> json = {
           "fieldName": fieldType,
           "value": result.files.single.path!,
+        };
+        allImagePickerList.add(json);
+      }
+    }
+    print(allImagePickerList);
+    emit(FilePickedState());
+  }
+
+  Future<void> pickFileFromCamera(String fieldType) async {
+    emit(AddEntryLoadingState());
+    PickedFile? pickedFile =
+        await ImagePicker.platform.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      int index = allImagePickerList
+          .indexWhere((element) => element["fieldName"] == fieldType);
+      if (index >= 0) {
+        allImagePickerList[index]["value"] = pickedFile.path;
+      } else {
+        Map<String, dynamic> json = {
+          "fieldName": fieldType,
+          "value": pickedFile.path,
         };
         allImagePickerList.add(json);
       }
@@ -777,6 +801,19 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     return urlDownload;
   }
 
+  int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+    if (birthDate.month > currentDate.month) {
+      age--;
+    } else if (currentDate.month == birthDate.month) {
+      if (birthDate.day > currentDate.day) {
+        age--;
+      }
+    }
+    return age;
+  }
+
   getTextFieldValidation({required String fieldName, required dynamic value}) {
     if (fieldName == 'phone') {
       if (value.toString().length != 10) {
@@ -828,8 +865,11 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (fieldType == 'std_code') {
       return TextInputType.number;
     }
+
     if (fieldType == 'pannaNumber') {
       return TextInputType.number;
     }
   }
+
+  
 }

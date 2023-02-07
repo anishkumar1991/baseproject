@@ -18,7 +18,7 @@ class TextFieldWidget extends StatelessWidget {
       this.onChanged,
       this.inpurborder,
       this.hintText,
-        this.preFix,
+      this.preFix,
       this.validator,
       this.errorText,
       this.initialValue,
@@ -59,6 +59,7 @@ class TextFieldWidget extends StatelessWidget {
           onChanged: onChanged,
           onTap: onTap,
           decoration: InputDecoration(
+            
               border: inpurborder,
               hintText: hintText,
               prefixIcon: preFix,

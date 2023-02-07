@@ -13,12 +13,12 @@ import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../AddEntry/Cubit/add_entry_cubit.dart';
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import '../../../../../Storage/user_storage_service.dart';
 import 'cubit/zila_data_state.dart';
-import 'network/model/data_unit_model.dart';
 
 class ZilaDataScreen extends StatefulWidget {
   const ZilaDataScreen(
@@ -496,77 +496,105 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                       label: S.of(context).delete,
                                     ),
                                   ]),
-                              child: Row(
-                                children: [
-                                  ClipRRect(
-                                      borderRadius: BorderRadius.circular(30),
-                                      child: Image.network(
-                                        data?.photo ?? '',
-                                        height: 56,
-                                        width: 56,
-                                        fit: BoxFit.cover,
-                                        errorBuilder:
-                                            ((context, error, stackTrace) =>
-                                                Container(
-                                                  height: 56,
-                                                  width: 56,
-                                                  color: AppColor.navyBlue,
-                                                  child: const Icon(
-                                                    Icons.person,
-                                                    color: AppColor.white,
-                                                    size: 28,
-                                                  ),
-                                                )),
-                                      )),
-                                  spaceWidthWidget(16),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          AutoSizeText(
-                                            Localizations.localeOf(context)
-                                                        .toString() ==
-                                                    "hi"
-                                                ? data?.hindiName ?? ''
-                                                : data?.englishName ?? '',
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColor.textBlackColor),
-                                          ),
-                                          spaceWidthWidget(5),
-                                          Image.asset(
-                                            AppIcons.verifyIcon,
-                                            height: 10,
-                                          )
-                                        ],
+                              child: InkWell(
+                                onTap: (() {
+                                  context
+                                      .read<AddEntryCubit>()
+                                      .cleanAllVariableData();
+                                  Navigator.pushNamed(
+                                      context, RoutePath.addEntryScreen,
+                                      arguments: AddEntryPage(
+                                        type: widget.type!,
+                                        leaveId: widget.dataLevelId ?? 0,
+                                        unitId: cubit.unitId,
+                                        subUnitId: cubit.subUnitId,
+                                        countryStateId: widget.countryStateId,
+                                        levelName: cubit.levelNameId,
+                                        personID: data?.id,
+                                        personData: data?.toJson(),
+                                      ));
+                                }),
+                                child: Row(
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: Image.network(
+                                          data?.photo ?? '',
+                                          height: 56,
+                                          width: 56,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              ((context, error, stackTrace) =>
+                                                  Container(
+                                                    height: 56,
+                                                    width: 56,
+                                                    color: AppColor.navyBlue,
+                                                    child: const Icon(
+                                                      Icons.person,
+                                                      color: AppColor.white,
+                                                      size: 28,
+                                                    ),
+                                                  )),
+                                        )),
+                                    spaceWidthWidget(16),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            AutoSizeText(
+                                              Localizations.localeOf(context)
+                                                          .toString() ==
+                                                      "hi"
+                                                  ? data?.hindiName ?? ''
+                                                  : data?.englishName ?? '',
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      AppColor.textBlackColor),
+                                            ),
+                                            spaceWidthWidget(5),
+                                            Image.asset(
+                                              AppIcons.verifyIcon,
+                                              height: 10,
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          data?.designationName ?? '',
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 10,
+                                              color: AppColor.greyColor),
+                                        ),
+                                        Text(
+                                          "+91- ${data?.phone ?? ''}",
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                              color: AppColor.greyColor),
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    InkWell(
+                                      onTap: (() {
+                                        if (data?.phone != null) {
+                                          cubit.makePhoneCall(
+                                              phoneNumber: data?.phone ?? '');
+                                        }
+                                      }),
+                                      child: Image.asset(
+                                        AppIcons.callIcon,
+                                        height: 20,
                                       ),
-                                      Text(
-                                        data?.designationName ?? '',
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            color: AppColor.greyColor),
-                                      ),
-                                      Text(
-                                        "+91- ${data?.phone ?? ''}",
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
-                                            color: AppColor.greyColor),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Image.asset(
-                                    AppIcons.callIcon,
-                                    height: 20,
-                                  ),
-                                  spaceWidthWidget(4)
-                                ],
+                                    ),
+                                    spaceWidthWidget(4)
+                                  ],
+                                ),
                               ),
                             ),
                             index + 1 == cubit.dataList?.length
