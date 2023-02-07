@@ -18,6 +18,8 @@ class BottomSocialBar extends StatelessWidget {
     final cubit1 = context.read<FetchPostsCubit>();
     final cubit2 = context.read<ShareCubit>();
     var id = cubit1.tempModel!.posts[index].id.toString();
+    var shareToAllCount = cubit1.tempModel!.posts[index].shares.other;
+    var shareToWhatsapp = cubit1.tempModel!.posts[index].shares.whatsapp;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -59,12 +61,10 @@ class BottomSocialBar extends StatelessWidget {
               BlocBuilder<ShareCubit, ShareState>(
                 builder: (context, state) {
                   if (state is SharedToAll) {
-                    var temp = cubit1.tempModel!.posts[index].shares.other;
-                    temp = temp + 1;
-                    return Text(temp.toString());
+                    shareToAllCount = shareToAllCount + 1;
+                    return Text(shareToAllCount.toString());
                   }
-                  return Text(
-                      cubit1.tempModel!.posts[index].shares.other.toString());
+                  return Text(shareToAllCount.toString());
                 },
               ),
             ],
@@ -83,12 +83,10 @@ class BottomSocialBar extends StatelessWidget {
             BlocBuilder<ShareCubit, ShareState>(
               builder: (context, state) {
                 if (state is SharedToWhatsapp) {
-                  var temp = cubit1.tempModel!.posts[index].shares.whatsapp;
-                  temp = temp + 1;
-                  return Text(temp.toString());
+                  shareToWhatsapp = shareToWhatsapp + 1;
+                  return Text(shareToWhatsapp.toString());
                 }
-                return Text(
-                    cubit1.tempModel!.posts[index].shares.whatsapp.toString());
+                return Text(shareToWhatsapp.toString());
               },
             ),
           ],

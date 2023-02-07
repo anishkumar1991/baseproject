@@ -9,9 +9,9 @@ import '../cubit/FetchPostCubit.dart';
 
 Future<void> share(BuildContext context, int index) async {
   final cubit = context.read<FetchPostsCubit>();
-  String urlimage = cubit.tempModel!.posts[index].postData.images!.first
-      .toString();
-  final text = "${cubit.tempModel!.posts[index].title.toString()} \n\n";
+  String urlimage =
+      cubit.tempModel!.posts[index].postData.images!.first.toString();
+  final text = cubit.tempModel!.posts[index].sharingContent;
   final url = Uri.parse(urlimage);
   final response = await http.get(url);
   final bytes = response.bodyBytes;

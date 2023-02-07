@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/Polls.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../Values/app_colors.dart';
@@ -51,7 +52,7 @@ class SocialMediaPage extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             child: ListView(
               children: [
@@ -100,6 +101,12 @@ class SocialMediaPage extends StatelessWidget {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: CustomCard(tempkey: 2, index: index),
+                          );
+                        }
+                        if (state.model.posts[index].postType == "Poll") {
+                          return  Padding(
+                            padding: const EdgeInsets.only(top: 18),
+                            child: Polls(tempindex: index),
                           );
                         }
 

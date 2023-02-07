@@ -6,6 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../BottomSocialBar.dart';
 import '../cubit/FetchPostCubit.dart';
 import 'ImageCard.dart';
+import 'Polls.dart';
 
 class CustomCard extends StatelessWidget {
   final int tempkey;
@@ -24,7 +25,6 @@ class CustomCard extends StatelessWidget {
     // );
     return Material(
         elevation: 3,
-
         child: Column(
           children: [
             tempkey == 2 ? ImageCard(index: index) : const Text(""),
