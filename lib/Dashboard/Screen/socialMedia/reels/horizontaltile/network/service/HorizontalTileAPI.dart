@@ -8,5 +8,5 @@ abstract class HorizontalTileAPI {
   factory HorizontalTileAPI(Dio dio) = _HorizontalTileAPI;
 
   @GET('/api/mobile/v1/reels')
-  Future<HttpResponse> getReels(@Header('Authorization') String token);
+  Future<HttpResponse> getReels(@Header('Authorization') String token,@Query("size") String size);
 }

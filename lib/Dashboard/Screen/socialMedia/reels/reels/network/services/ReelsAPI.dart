@@ -8,5 +8,5 @@ abstract class ReelsAPI {
   factory ReelsAPI(Dio dio) = _ReelsAPI;
 
   @GET('/api/mobile/v1/reels')
-  Future<HttpResponse> getReels(@Header('Authorization') String token);
+  Future<HttpResponse> getReels(@Header('Authorization') String token,@Query("size") String size);
 }

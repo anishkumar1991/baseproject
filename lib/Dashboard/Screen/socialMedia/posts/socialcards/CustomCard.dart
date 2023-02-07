@@ -26,7 +26,7 @@ class CustomCard extends StatelessWidget {
         elevation: 3,
         child: Column(
           children: [
-            tempkey == 2 ? ImageCard(index: index) : const Text(""),
+            tempkey == 2 ? ImageCard(tempindex: index) : const Text(""),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 20, top: 10),
               child: Text(

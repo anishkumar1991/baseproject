@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/Polls.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/TwitterCard.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/topBar.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../Values/app_colors.dart';
-import '../../../../Values/icons.dart';
-import '../../../../common/appstyle.dart';
-import '../../homePage/widget/custom_drawer_widget.dart';
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 
 class SocialMediaPage extends StatelessWidget {
-  SocialMediaPage({Key? key}) : super(key: key);
+  const SocialMediaPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +22,7 @@ class SocialMediaPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                children: [
-                  Container(
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColor.greyColor.withOpacity(0.1)),
-                      child: IconButton(
-                        icon: const Icon(FontAwesomeIcons.bell),
-                        onPressed: () {},
-                      )),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 80),
-                    child: Text("Social Media",
-                        style: TextStyle(
-                            fontFamily: 'Tw Cen MT',
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400)),
-                  )
-                ],
-              ),
-            ),
-          ),
+          const TopBar(),
           const SizedBox(height: 20),
           Expanded(
             child: ListView(
@@ -105,7 +75,7 @@ class SocialMediaPage extends StatelessWidget {
                           );
                         }
                         if (state.model.posts[index].postType == "Poll") {
-                          return  Padding(
+                          return Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: Polls(tempindex: index),
                           );
@@ -123,7 +93,6 @@ class SocialMediaPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-
         ],
       ),
     ));

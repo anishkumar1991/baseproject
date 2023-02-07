@@ -21,9 +21,12 @@ class _ReelsAPI implements ReelsAPI {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> getReels(token) async {
+  Future<HttpResponse<dynamic>> getReels(
+    token,
+    size,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'size': size};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};

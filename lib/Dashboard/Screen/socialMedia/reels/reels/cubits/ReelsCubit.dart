@@ -17,7 +17,8 @@ class ReelsCubit extends Cubit<ReelsState> {
   Future getReelsData() async {
     emit(ReelsLoadingState());
     try {
-      final res = await api.getReels('Bearer ${StorageService.userAuthToken}');
+      final res =
+          await api.getReels('Bearer ${StorageService.userAuthToken}', "20");
       print(
           'URL Is Here------------------------->${res.response.requestOptions.uri}');
       print(
