@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/Share.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/ShareOnWhatsapp.dart';
 
 class OptionsScreen extends StatefulWidget {
   final int index;
@@ -20,11 +25,9 @@ class _OptionsScreenState extends State<OptionsScreen> {
   bool reveal = false;
 
   Widget build(BuildContext context) {
-    // final cubit1 = context.read<ReelsCubit>();
-    // final cubit2 = context.read<ReelShareCubit>();
-    // var id = cubit1.model?.reels[widget.index].id.toString();
-    // var shareToAllCount = cubit1.model!.reels[widget.index].shares.other;
-    // var shareToWhatsapp = cubit1.model!.reels[widget.index].shares.whatsapp;
+    final cubit = context.read<ReelShareCubit>();
+    final cubit1 = context.read<ReelsCubit>();
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -41,7 +44,6 @@ class _OptionsScreenState extends State<OptionsScreen> {
                     height: 150,
                   ),
                   Container(
-
                     width: 260,
                     height: 100,
                     child: Align(
@@ -103,14 +105,19 @@ class _OptionsScreenState extends State<OptionsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.end,
                               size: 20,
-                              circleColor: CircleColor(
+                              circleColor: const CircleColor(
                                   start: Color(0xff00ddff),
                                   end: Color(0xff0099cc)),
-                              bubblesColor: BubblesColor(
+                              bubblesColor: const BubblesColor(
                                 dotPrimaryColor: Color(0xff33b5e5),
                                 dotSecondaryColor: Color(0xff0099cc),
                               ),
                               likeBuilder: (bool isLiked) {
+                                isLiked
+                                    ? cubit.sendReelLike(cubit1
+                                        .model!.reels[widget.index].id
+                                        .toString())
+                                    : null;
                                 return Icon(
                                   Icons.thumb_up_alt,
                                   color: isLiked ? Colors.blue : Colors.white,
@@ -119,8 +126,8 @@ class _OptionsScreenState extends State<OptionsScreen> {
                               },
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 16, right: 12),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 16, right: 12),
                             child: Text(
                               "Like",
                               style: TextStyle(
@@ -130,58 +137,48 @@ class _OptionsScreenState extends State<OptionsScreen> {
                           )
                         ],
                       ),
-                      SizedBox(height: 3),
+                      const SizedBox(height: 3),
                       IconButton(
-                          onPressed: () {},
-                          icon: Icon(
+                          onPressed: () {
+                            cubit.shareReelToWhatsapp(cubit1
+                                .model!.reels[widget.index].id
+                                .toString());
+                            shareOnWhatsapp(
+                                context, SocialMedia.whatsapp, widget.index);
+                          },
+                          icon: const Icon(
                             FontAwesomeIcons.whatsapp,
                             color: Colors.white,
                           )),
-                      // BlocBuilder<ShareCubit, ShareState>(
-                      //   builder: (context, state) {
-                      //     if (state is SharedToWhatsapp) {
-                      //       shareToWhatsapp = shareToWhatsapp + 1;
-                      //       return Text(shareToWhatsapp.toString());
-                      //     }
-                      //     return Text(shareToWhatsapp.toString());
-                      //   },
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 6),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 6),
                         child: Text(
                           "Whatsapp",
                           style: TextStyle(
                               fontWeight: FontWeight.w600, color: Colors.white),
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       IconButton(
                           onPressed: () {
-                            // cubit2.shareToWhatsapp(id!);
-                            // shareToWhatsapp;
+                            cubit.shareReelToAll(cubit1
+                                .model!.reels[widget.index].id
+                                .toString());
+                            share(context, widget.index);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.share,
                             color: Colors.white,
                           )),
-                      // BlocBuilder<ShareCubit, ShareState>(
-                      //   builder: (context, state) {
-                      //     if (state is SharedToAll) {
-                      //       shareToAllCount = shareToAllCount + 1;
-                      //       return Text(shareToAllCount.toString());
-                      //     }
-                      //     return Text(shareToAllCount.toString());
-                      //   },
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 6),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 6),
                         child: Text(
                           "Share",
                           style: TextStyle(
                               fontWeight: FontWeight.w600, color: Colors.white),
                         ),
                       ),
-                      SizedBox(height: 150),
+                      const SizedBox(height: 150),
                     ],
                   ),
                 ),

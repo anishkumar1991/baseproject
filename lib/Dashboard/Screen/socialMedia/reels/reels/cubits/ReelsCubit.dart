@@ -14,6 +14,7 @@ class ReelsCubit extends Cubit<ReelsState> {
   final api = ReelsAPI(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
+
   Future getReelsData() async {
     emit(ReelsLoadingState());
     try {

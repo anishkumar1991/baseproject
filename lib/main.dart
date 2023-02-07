@@ -35,6 +35,7 @@ import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubi
 import 'Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
+import 'Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
 import 'Login/Cubit/language_cubit/lan_cubit.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
@@ -80,6 +81,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => PollCubit()),
