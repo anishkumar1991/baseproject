@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
@@ -60,6 +59,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   DropdownData? professionSelected;
   DropdownData? nativeStateSelected;
   DropdownData? religionSelected;
+  DropdownData? bloodGroupSelected;
   DesignationData? designationSelected;
   String? profileImageUrl;
   DesignationData? selectedDesignationData;
@@ -213,6 +213,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "professionId") {
       professionSelected = value;
+
+      getAllDropDownData(value, dropdownType);
+    } else if (dropdownType == "blood_group") {
+      bloodGroupSelected = value;
 
       getAllDropDownData(value, dropdownType);
     } else {}
@@ -447,6 +451,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     nativeStateSelected = null;
     religionSelected = null;
     designationSelected = null;
+    bloodGroupSelected = null;
     profileImageUrl = null;
     selectedDesignationData = null;
     initialUserprofileURL = null;
@@ -529,6 +534,16 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             if (index >= 0) {
               professionSelected = professionData[index];
               getAllDropDownData(professionData[index], item.key);
+            }
+          }
+        } else if (item.key == "blood_group") {
+          if (item.value != null || item.value != "") {
+            int index = DynamicUIHandler.bloodGroupList
+                .indexWhere((element) => element.name == item.value);
+            if (index >= 0) {
+              bloodGroupSelected = DynamicUIHandler.bloodGroupList[index];
+              getAllDropDownData(
+                  DynamicUIHandler.bloodGroupList[index], item.key);
             }
           }
         }
@@ -666,7 +681,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (personID != null && personID != "") {
       map.addEntries({"personId": "$personID"}.entries);
     }
-
     for (int i = 0; i < (entryField?.length ?? 0); i++) {
       for (var item in finalAllDataList.entries) {
         if (entryField?[i].fieldName == item.key) {
@@ -682,6 +696,15 @@ class AddEntryCubit extends Cubit<AddEntryState> {
                   name: 'userprofile');
               map.addEntries(
                   {"${entryField?[i].formControlName}": url}.entries);
+            }
+          } else if (item.key == "blood_group") {
+            for (int i = 0; i < (DynamicUIHandler.bloodGroupList.length); i++) {
+              if (DynamicUIHandler.bloodGroupList[i].id.toString() ==
+                  item.value) {
+                map.addEntries({
+                  "blood_group": "${DynamicUIHandler.bloodGroupList[i].name}"
+                }.entries);
+              }
             }
           } else {
             map.addEntries(
@@ -805,31 +828,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (fieldType == 'std_code') {
       return TextInputType.number;
     }
-  }
-
-  addTextInputFormatters({required String fieldType}) {
-    if (fieldType == 'phone') {
-      return [
-        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '*#########',
-            filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
-      ];
-    }
-    if (fieldType == 'whatsappNo') {
-      return [
-        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '*#########',
-            filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
-      ];
-    }
-    if (fieldType == 'age') {
-      return [
-        FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-      ];
+    if (fieldType == 'pannaNumber') {
+      return TextInputType.number;
     }
   }
 }

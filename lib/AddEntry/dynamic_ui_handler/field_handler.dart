@@ -15,6 +15,8 @@ class FieldHandler extends AddEntryCubit {
       return cubit.religionData;
     } else if (dropdownType == "profession") {
       return cubit.professionData;
+    } else if (dropdownType == "blood_group") {
+      return cubit.bloodGroupSelected;
     } else {
       return [];
     }
@@ -34,6 +36,8 @@ class FieldHandler extends AddEntryCubit {
       return cubit.religionSelected;
     } else if (dropdownType == "professionId") {
       return cubit.professionSelected;
+    } else if (dropdownType == "blood_group") {
+      return cubit.bloodGroupSelected;
     } else {
       return null;
     }
@@ -104,6 +108,8 @@ class FieldHandler extends AddEntryCubit {
       return cubit.religionSelected?.name;
     } else if (dropdownType == "professionId") {
       return cubit.professionSelected?.name;
+    } else if (dropdownType == "blood_group") {
+      return cubit.bloodGroupSelected?.name;
     } else {
       return null;
     }

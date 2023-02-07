@@ -7,7 +7,6 @@ import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/common/common_button.dart';
@@ -19,6 +18,7 @@ import '../../generated/l10n.dart';
 import '../../route/route_path.dart';
 import '../Cubit/add_entry_cubit.dart';
 import '../Cubit/add_entry_state.dart';
+import '../dynamic_ui_handler/dynamic_validator.dart';
 import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/custom_radio_button.dart';
 import 'widget/select_boxs.dart';
@@ -110,6 +110,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   return cubit.religionData;
                 } else if (dropdownType == "professionId") {
                   return cubit.professionData;
+                } else if (dropdownType == "blood_group") {
+                  return DynamicUIHandler.bloodGroupList;
                 } else {
                   return [];
                 }
@@ -160,21 +162,29 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       children: [
                         TextFieldWidget(
                             initialValue: item.value.toString(),
-                            validator: (value) {
-                              if (cubit.entryField![i].mandatoryField ??
-                                  false) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
-                                }
-                              }
-                              return null;
-                            },
+                            textInputFormatter:
+                                DynamicValidator.addTextInputFormatters(
+                                    fieldType:
+                                        cubit.entryField![i].fieldName ?? ''),
+                            validator: (value) =>
+                                DynamicValidator.getTextFieldValidation(
+                                    fieldName:
+                                        cubit.entryField![i].fieldName ?? '',
+                                    value: value,
+                                    mandatoryField:
+                                        cubit.entryField![i].mandatoryField ??
+                                            false,
+                                    displayNameForUI: cubit
+                                            .entryField![i].displayNameForUI ??
+                                        ""),
                             onChanged: (value) {
                               FieldHandler.onUpdate(i, value,
                                   cubit.entryField![i].fieldName ?? "", cubit);
                             },
                             title: cubit.entryField![i].displayNameForUI ?? "",
-                            keyboardType: TextInputType.text,
+                            keyboardType: cubit.getTextInputType(
+                                fieldType:
+                                    cubit.entryField![i].fieldName ?? ''),
                             hintText:
                                 'Enter Your ${cubit.entryField![i].displayNameForUI}'),
                         spaceHeightWidget(8),
@@ -198,22 +208,17 @@ class _AddEntryPageState extends State<AddEntryPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextFieldWidget(
-                      validator: (value) {
-                        if (cubit.entryField![i].mandatoryField ?? false) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
-                          }
-                        }
-                        // if (cubit.entryField![i].fieldName == 'whatsappNo') {
-                        //   if (value.isNotEmpty) {
-                        //     if (value.toString().length != 10) {
-                        //       return 'Whatsapp No should be 10 digit';
-                        //     }
-                        //   }
-                        // }
-
-                        return null;
-                      },
+                      textInputFormatter:
+                          DynamicValidator.addTextInputFormatters(
+                              fieldType: cubit.entryField![i].fieldName ?? ''),
+                      validator: (value) =>
+                          DynamicValidator.getTextFieldValidation(
+                              fieldName: cubit.entryField![i].fieldName ?? '',
+                              value: value,
+                              mandatoryField:
+                                  cubit.entryField![i].mandatoryField ?? false,
+                              displayNameForUI:
+                                  cubit.entryField![i].displayNameForUI ?? ""),
                       onChanged: (value) {
                         FieldHandler.onUpdate(i, value,
                             cubit.entryField![i].fieldName ?? "", cubit);
@@ -245,31 +250,51 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   if (item.value != null || item.value != "") ...[
                     TextFieldWidget(
                         initialValue: item.value.toString(),
-                        validator: (value) {
-                          if (cubit.entryField![i].mandatoryField ?? false) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
-                            }
-                          }
-
-                          return null;
-                        },
+                        textInputFormatter:
+                            DynamicValidator.addTextInputFormatters(
+                                fieldType:
+                                    cubit.entryField![i].fieldName ?? ''),
+                        validator: (value) =>
+                            DynamicValidator.getTextFieldValidation(
+                                fieldName: cubit.entryField![i].fieldName ?? '',
+                                value: value,
+                                mandatoryField:
+                                    cubit.entryField![i].mandatoryField ??
+                                        false,
+                                displayNameForUI:
+                                    cubit.entryField![i].displayNameForUI ??
+                                        ""),
                         onChanged: (value) {
                           FieldHandler.onUpdate(i, value,
                               cubit.entryField![i].fieldName ?? "", cubit);
                         },
                         title: cubit.entryField![i].displayNameForUI ?? "",
-                        keyboardType: TextInputType.text,
+                        keyboardType: cubit.getTextInputType(
+                            fieldType: cubit.entryField![i].fieldName ?? ''),
                         hintText:
                             'Enter Your ${cubit.entryField![i].displayNameForUI}')
                   ]
               ]
             ] else ...[
               TextFieldWidget(
-                  validator: (value) {
+                  validator: (value) => DynamicValidator.getTextFieldValidation(
+                      fieldName: cubit.entryField![i].fieldName ?? '',
+                      value: value,
+                      mandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
+                      displayNameForUI: cubit.entryField![i].displayNameForUI ??
+                          "") /*{
                     if (cubit.entryField![i].mandatoryField ?? false) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
+                      }
+                    } else {
+                      if (value == null || value.isEmpty) {
+                        return DynamicValidator.getTextFieldValidation(
+                            fieldName: cubit.entryField![i].fieldName ?? '',
+                            value: value);
+                      } else {
+                        return null;
                       }
                     }
                     // if (cubit.entryField![i].fieldName == 'age') {
@@ -279,14 +304,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     //     }
                     //   }
                     // }
-
-                    cubit.getTextFieldValidation(
-                        fieldName: cubit.entryField![i].fieldName ?? '',
-                        value: value);
-
-                    return null;
-                  },
-                  textInputFormatter: cubit.addTextInputFormatters(
+                  }*/
+                  ,
+                  textInputFormatter: DynamicValidator.addTextInputFormatters(
                       fieldType: cubit.entryField![i].fieldName ?? ''),
                   onChanged: (value) {
                     FieldHandler.onUpdate(
