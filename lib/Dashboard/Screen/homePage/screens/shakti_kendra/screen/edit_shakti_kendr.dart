@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/cubit/shakti_kendra_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/header_widget_edit_shakti_kendra.dart';
@@ -19,14 +20,14 @@ import 'cubit/edit_shakti_kendr_cubit.dart';
 
 class EditShaktiKendraScreen extends StatefulWidget {
   bool? isEdit;
-   EditShaktiKendraScreen({Key? key,this.isEdit = false}) : super(key: key);
+
+  EditShaktiKendraScreen({Key? key, this.isEdit = false}) : super(key: key);
 
   @override
   State<EditShaktiKendraScreen> createState() => _EditShaktiKendraScreenState();
 }
 
 class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
-
   void initState() {
     apiCall();
     super.initState();
@@ -69,7 +70,10 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                     borderRadius: BorderRadius.circular(28.0),
                                   ),
                                   builder: (builder) {
-                                    return VidhanSabhaBottomSheet(cubit: cubit,text: S.of(context).vidhanSabha,context: context);
+                                    return VidhanSabhaBottomSheet(
+                                        cubit: cubit,
+                                        text: S.of(context).vidhanSabha,
+                                        context: context);
                                   });
                             },
                             dense: true,
@@ -100,7 +104,9 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                   fontSize: 14),
                             ),
                             subtitle: Text(
-                              cubit.zilaSelected,
+                              cubit.zilaSelected == ""
+                                  ? S.of(context).vidhanSabha
+                                  : cubit.zilaSelected,
                               style: GoogleFonts.poppins(
                                   color: AppColor.black700,
                                   fontWeight: FontWeight.w400,
@@ -126,9 +132,8 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                           horizontalTitleGap: 8,
                           tileColor: AppColor.pravasCradColor.withOpacity(0.2),
                           shape: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide.none
-                          ),
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none),
                           dense: true,
                           contentPadding: EdgeInsets.only(left: 5),
                           leading: Container(
@@ -163,11 +168,9 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                   contentPadding: EdgeInsets.zero,
                                   border: InputBorder.none,
                                   hintText: S.of(context).shaktikendr,
-                                  isDense: true
-                              ),
+                                  isDense: true),
                             ),
-                          )
-                      ),
+                          )),
                       spaceHeightWidget(10),
                       BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
                         builder: (context, state) {
@@ -180,7 +183,10 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                     borderRadius: BorderRadius.circular(28.0),
                                   ),
                                   builder: (builder) {
-                                    return MandalBottomSheet(cubit: cubit,context: context,text: S.of(context).mandal);
+                                    return MandalBottomSheet(
+                                        cubit: cubit,
+                                        context: context,
+                                        text: S.of(context).mandal);
                                   });
                             },
                             dense: true,
@@ -211,7 +217,9 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                   fontSize: 14),
                             ),
                             subtitle: Text(
-                              cubit.mandalSelected,
+                              cubit.mandalSelected == ''
+                                  ? S.of(context).mandal
+                                  : cubit.mandalSelected,
                               style: GoogleFonts.poppins(
                                   color: AppColor.black700,
                                   fontWeight: FontWeight.w400,
@@ -238,15 +246,25 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                           return ListTile(
                             horizontalTitleGap: 8,
                             onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: AppColor.white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  builder: (builder) {
-                                    return SelectBooth(cubit: cubit);
-                                  });
+                              if (context
+                                      .read<EditShaktiKendrCubit>()
+                                      .zilaSelected ==
+                                  '') {
+                                EasyLoading.showToast(
+                                    "Please Select Vidhansabha first",
+                                    toastPosition:
+                                        EasyLoadingToastPosition.top);
+                              } else {
+                                showModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: AppColor.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    builder: (builder) {
+                                      return SelectBooth(cubit: cubit);
+                                    });
+                              }
                             },
                             dense: true,
                             contentPadding: EdgeInsets.zero,
@@ -275,13 +293,49 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14),
                             ),
-                            subtitle: Text(
-                              cubit.boothSelected,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.black700,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14),
-                            ),
+                            subtitle: cubit.chekedValue.isEmpty
+                                ? Text(
+                                    S.of(context).buth,
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.black700,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  )
+                                : SizedBox(
+                                    height: 25,
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: cubit.chekedValue.length,
+                                        itemBuilder: (context, index) {
+                                          return Row(
+                                            children: [
+                                              Text(
+                                                cubit.chekedValue[index]
+                                                    .toString(),
+                                                style: GoogleFonts.poppins(
+                                                    color: AppColor.black700,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 14),
+                                              ),
+                                              index + 1 ==
+                                                      cubit.chekedValue.length
+                                                  ? SizedBox.shrink()
+                                                  : Text(
+                                                      ",",
+                                                      style:
+                                                          GoogleFonts.poppins(
+                                                              color: AppColor
+                                                                  .black700,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              fontSize: 14),
+                                                    ),
+                                            ],
+                                          );
+                                        }),
+                                  ),
                             trailing: const SizedBox(
                               height: double.infinity,
                               child: Icon(
@@ -297,41 +351,53 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                         color: AppColor.black,
                         thickness: 1,
                       ),
-                      widget.isEdit ?? false ? Column(
-                        children: [
-                          spaceHeightWidget(10),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              S.of(context).selectedBooth,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.naturalBlackColor, fontSize: 16,fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          spaceHeightWidget(10),
-                          SelectedBooth(title: 'Govt. Senior Secondary Girls High',subTitle: "High School",leadingText: '102',onClose: (){}),
-                          spaceHeightWidget(20),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              S.of(context).boothSelectedTitle,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.black.withOpacity(0.7), fontSize: 16,fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                          spaceHeightWidget(5),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              S.of(context).boothDes,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.naturalBlackColor.withOpacity(0.7), fontSize: 13),
-                            ),
-                          ),
-                          spaceHeightWidget(10),
-                          WarningBooth()
-                        ],
-                      ) : SizedBox.shrink()
+                      widget.isEdit ?? false
+                          ? Column(
+                              children: [
+                                spaceHeightWidget(10),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    S.of(context).selectedBooth,
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.naturalBlackColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                spaceHeightWidget(10),
+                                SelectedBooth(
+                                    title: 'Govt. Senior Secondary Girls High',
+                                    subTitle: "High School",
+                                    leadingText: '102',
+                                    onClose: () {}),
+                                spaceHeightWidget(20),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    S.of(context).boothSelectedTitle,
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.black.withOpacity(0.7),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                                spaceHeightWidget(5),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    S.of(context).boothDes,
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.naturalBlackColor
+                                            .withOpacity(0.7),
+                                        fontSize: 13),
+                                  ),
+                                ),
+                                spaceHeightWidget(10),
+                                WarningBooth()
+                              ],
+                            )
+                          : SizedBox.shrink()
                     ],
                   ),
                 ),
@@ -339,10 +405,12 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
               spaceHeightWidget(15),
               CommonButton(
                   borderRadius: 15,
-                  title:widget.isEdit ?? false ? S.of(context).submit : S.of(context).makeShaktikendr,
+                  title: widget.isEdit ?? false
+                      ? S.of(context).submit
+                      : S.of(context).makeShaktikendr,
                   width: MediaQuery.of(context).size.width * 0.6,
                   style:
-                  GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
+                      GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
                   padding: const EdgeInsets.symmetric(vertical: 10)),
               spaceHeightWidget(15),
             ],
@@ -354,10 +422,10 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
 
   bottom(
       {required BuildContext context,
-        required EditShaktiKendrCubit cubit,
-        required String selectedVar,
-        required List list,
-        required String text}) {
+      required EditShaktiKendrCubit cubit,
+      required String selectedVar,
+      required List list,
+      required String text}) {
     return Container(
       color: Colors.transparent,
       child: Container(
@@ -405,7 +473,6 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                 cubit.emitState();
                                 Navigator.pop(context, selectedVar);
                               },
-
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Text(

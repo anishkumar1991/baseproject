@@ -13,8 +13,8 @@ class LanguageCubit extends Cubit<LanguageState> {
 
   changeStartLang() async {
     GetStorage box = GetStorage();
-    String langCode = box.read('lang');
-    if (langCode != '') {
+    String langCode = box.read('lang') ?? 'hi';
+    if (langCode != null) {
       lang = langCode;
       emit(LanguageLoadingState());
     } else {

@@ -49,6 +49,8 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 cubit.zilaSelected = vidhanSabha.data?.locations?[index].name ?? '';
+                                cubit.zilaId = vidhanSabha.data?.locations?[index].id;
+                                cubit.getBoothValuew(id: cubit.zilaId ?? 236);
                                 cubit.emitState();
                                 Navigator.pop(context);
                               },

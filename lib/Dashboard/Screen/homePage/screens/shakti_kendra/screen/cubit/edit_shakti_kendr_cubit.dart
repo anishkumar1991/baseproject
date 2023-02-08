@@ -12,21 +12,15 @@ part 'edit_shakti_kendr_state.dart';
 class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
   EditShaktiKendrCubit() : super(EditShaktiKendrInitial());
 
-  List<String> partyzilaList = ["First","Seconf","Thiurs"];
-  String zilaSelected = "First";
-  String mandalSelected = "First";
-  String boothSelected = "First";
+  String zilaSelected = '' ;
+  int? zilaId;
+  String zilaSelectedName = "";
+  String mandalSelected = "";
+  String boothSelected = "";
   Mandal mandal = Mandal();
+  Booth boothData = Booth();
 
-  List chekedValue = [
-    BoothSelection(id: 0,number: "125",booth: "Govt. Upper Primary School, 4-5 NWD",isCheck: false),
-    BoothSelection(id: 1,number: "126",booth: "Govt. Aadarsh senior secondary school,right part sardarpura khalsa",isCheck: false),
-    BoothSelection(id: 2,number: "127",booth: "Govt. Aadarsh senior secondary school,right part sardarpura khalsa",isCheck: false),
-    BoothSelection(id: 3,number: "128",booth: "Govt. Aadarsh senior secondary school,right part sardarpura khalsa 2",isCheck: false),
-    BoothSelection(id: 4,number: "129",booth: "Booth 2",isCheck: false),
-    BoothSelection(id: 5,number: "130",booth: "Govt. Upper Primary School, 4-5 NWD",isCheck: false),
-    BoothSelection(id: 6,number: "131",booth: "Govt. Upper Primary School, 4-5 NWD",isCheck: false),
-  ];
+  List<int> chekedValue = [  ];
 
   final api = GetDropDownValue(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
@@ -48,6 +42,30 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
       if (res.response.statusCode == 200) {
         Mandal data = Mandal.fromJson(res.response.data);
         mandal = data;
+      } else {
+        print('error=${res.data['message']}');
+      }
+    } catch (e) {
+      print('error=$e');
+    }
+  }
+
+  getBoothValuew({required int id}) async {
+    try {
+      emit(LoadingEditShaktiKendraState());
+      StorageService.getUserAuthToken();
+      var res =
+          await api.getBooth('Bearer ${StorageService.userAuthToken}',id);
+      print(
+          "------------------------------------ booth DropDownValue  ----------------------------");
+      print("token  :${StorageService.userAuthToken}");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        Booth data = Booth.fromJson(res.response.data);
+        boothData = data;
       } else {
         print('error=${res.data['message']}');
       }

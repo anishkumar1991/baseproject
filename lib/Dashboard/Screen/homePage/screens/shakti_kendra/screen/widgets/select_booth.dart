@@ -45,7 +45,7 @@ class SelectBooth extends StatelessWidget {
                     builder: (context, state) {
                   return ListView.builder(
                       shrinkWrap: true,
-                      itemCount: cubit.chekedValue.length,
+                      itemCount: cubit.boothData.data?.length,
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Padding(
@@ -61,11 +61,14 @@ class SelectBooth extends StatelessWidget {
                                       side: MaterialStateBorderSide.resolveWith(
                                             (states) => BorderSide(width: 1.0, color: AppColor.naturalBlackColor),
                                       ),
-                                      value: cubit.chekedValue[index].isCheck,
+                                      value: cubit.chekedValue.contains(cubit.boothData.data?[index].id),
                                       onChanged: (value) {
-                                        print(cubit.chekedValue[index].isCheck);
-                                        cubit.chekedValue[index].isCheck =
-                                            value!;
+
+                                        if(cubit.chekedValue.contains(cubit.boothData.data?[index].id)){
+                                          cubit.chekedValue.removeAt(index);
+                                        }else{
+                                          cubit.chekedValue.add(cubit.boothData.data?[index].id ?? 0);
+                                        }
                                         cubit.emitState();
                                       }),
                                   Container(
@@ -76,7 +79,7 @@ class SelectBooth extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(11),
                                         color: index == 2 ? AppColor.orange :AppColor.blue),
                                     child: Text(
-                                      cubit.chekedValue[index].number,
+                                      cubit.boothData.data?[index].number ?? '',
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.poppins(
                                           color: AppColor.white, fontSize: 12),
@@ -85,7 +88,7 @@ class SelectBooth extends StatelessWidget {
                                   spaceWidthWidget(10),
                                   Expanded(
                                     child: Text(
-                                      cubit.chekedValue[index].booth,
+                                      cubit.boothData.data?[index].name ?? '',
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 3,
                                       textAlign: TextAlign.left,
@@ -111,6 +114,10 @@ class SelectBooth extends StatelessWidget {
               CommonButton(
                   borderRadius: 0,
                   title: S.of(context).addBooth,
+                  onTap: (){
+                    Navigator.pop(context);
+                    print("========================  ${cubit.chekedValue}");
+                  },
                   width: MediaQuery.of(context).size.width,
                   style:
                       GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
