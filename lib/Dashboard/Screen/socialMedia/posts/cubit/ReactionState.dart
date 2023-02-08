@@ -4,4 +4,3 @@ class ReactionInitialState extends ReactionState{}
 
 
 class ReactionSend extends ReactionState{}
-
