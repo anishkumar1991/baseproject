@@ -10,6 +10,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
@@ -33,7 +34,9 @@ import 'Dashboard/Screen/menuPage/screens/edit_education/cubit/edit_education__c
 import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
+import 'Dashboard/Screen/socialMedia/posts/cubit/ReactionCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
+import 'Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
 import 'Login/Cubit/language_cubit/lan_cubit.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
@@ -41,8 +44,8 @@ import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(
-  RemoteMessage message,
-) async {
+    RemoteMessage message,
+    ) async {
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
@@ -72,7 +75,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     LocalNotificationService.initialize(context);
     firebaseNotification(context);
-
     super.initState();
   }
 
@@ -80,8 +82,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LanguageCubit()..changeStartLang()),
+        BlocProvider(create: (create) => ReelShareCubit()),
+        BlocProvider(create: (create) => ReactionCubit()),
+
+        BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
+        BlocProvider(create: (context) => PollCubit()),
         BlocProvider(create: (context) => ShareCubit()),
         BlocProvider(create: (context) => ReelsCubit()),
         BlocProvider(create: (context) => FetchPostsCubit()),
@@ -107,11 +113,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => ShaktiKendraCubit()),
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
+        BlocProvider(create: (context) => ShareCubit()),
+
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context, lang) {
-          final cubit = context.read<LanguageCubit>();
-          // cubit.changeStartLang();
+        builder: (context,lang){
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             useInheritedMediaQuery: true,
@@ -124,13 +130,14 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            locale: Locale.fromSubtags(languageCode: cubit.lang ?? "hi"),
+            locale: const Locale.fromSubtags(languageCode: 'hi'),
+            // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
             initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                    primary: AppColor.primaryColor,
-                  ),
+                primary: AppColor.primaryColor,
+              ),
             ),
           );
         },

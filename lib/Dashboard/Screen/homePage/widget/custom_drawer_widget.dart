@@ -97,7 +97,8 @@ class _CustomDrawerWidgetState extends State<CustomDrawerWidget> {
                               listener: (context, state) {
                                 if (state is UserLogOutSuccessState) {
                                   EasyLoading.showSuccess(state.msg);
-                                  Navigator.pushNamedAndRemoveUntil(context, RoutePath.loginScreen, (route) => false);
+                                  Navigator.pushNamedAndRemoveUntil(context,
+                                      RoutePath.loginScreen, (route) => false);
                                 } else if (state is LogOutLoadingState) {
                                   EasyLoading.show();
                                 } else if (state is UserLogOutFaieldState) {

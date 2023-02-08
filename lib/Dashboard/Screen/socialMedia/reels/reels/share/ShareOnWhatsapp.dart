@@ -2,21 +2,20 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../cubit/FetchPostCubit.dart';
-
 enum SocialMedia { whatsapp }
 
 Future shareOnWhatsapp(
     BuildContext context, SocialMedia socialMedia, int index) async {
-  final cubit = context.read<FetchPostsCubit>();
+  final cubit = context.read<ReelsCubit>();
   // String urlimage = cubit.tempModel!.posts[index].postData.images!.first
   //     .toString();
-  final text = cubit.tempModel!.posts[index].sharingContent;
+  final text = cubit.model!.reels[index].sharingContent;
   // final url = Uri.parse(urlimage);
   // final response = await http.get(url);
   // final bytes = response.bodyBytes;

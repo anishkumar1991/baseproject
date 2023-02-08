@@ -3,6 +3,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../posts/cubit/FetchPostCubit.dart';
 import '../cubits/ReelsCubit.dart';
 import '../cubits/ReelsState.dart';
@@ -52,13 +53,13 @@ class _HomePageState extends State<HomePage> {
                     print(state.reelsModel.reels.length);
                     return Swiper(
                       index: widget.index,
-
+                      controller: SwiperController(),
                       itemBuilder: (BuildContext context, int index) {
                         return ContentScreen(
                           src: state.reelsModel.reels[index].postData.reel,
                           title: state.reelsModel.reels[index].title,
                           views: state.reelsModel.reels[index].viewCount
-                              .toString(),
+                              .toString(), index: index,
                         );
                         // src: videos[index % videos.length]);
                       },

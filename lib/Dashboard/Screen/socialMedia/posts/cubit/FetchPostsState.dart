@@ -15,5 +15,7 @@ class PostsFetchedState extends FetchPostsState{
   PostsFetchedState(this.model);
 }
 
+class ReactionSendState extends FetchPostsState{}
+
 
 

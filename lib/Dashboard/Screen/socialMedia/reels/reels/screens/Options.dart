@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/Utils/Whatsapp.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/Share.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/ShareOnWhatsapp.dart';
 
 class OptionsScreen extends StatefulWidget {
+  final int index;
   final String title;
   final String views;
 
-  const OptionsScreen({Key? key, required this.title, required this.views})
+  const OptionsScreen(
+      {Key? key, required this.title, required this.views, required this.index})
       : super(key: key);
 
   @override
@@ -16,8 +22,12 @@ class OptionsScreen extends StatefulWidget {
 }
 
 class _OptionsScreenState extends State<OptionsScreen> {
-  @override
+  bool reveal = false;
+
   Widget build(BuildContext context) {
+    final cubit = context.read<ReelShareCubit>();
+    final cubit1 = context.read<ReelsCubit>();
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -31,26 +41,51 @@ class _OptionsScreenState extends State<OptionsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 100,
+                    height: 150,
                   ),
-                  Text(
-                    widget.title,
-                    style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white),
+                  Container(
+                    width: 260,
+                    height: 100,
+                    child: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        widget.title,
+                        style: GoogleFonts.montserrat(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.white),
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 5,
                   ),
-                  Text(
-                    widget.views,
-                    style: GoogleFonts.montserrat(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                  )
-                  // SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 3),
+                        child: Container(
+                          width: 16,
+                          height: 16,
+                          child: Image.asset(
+                            "assets/images/eye2.png",
+                            fit: BoxFit.fill,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        widget.views,
+                        style: GoogleFonts.montserrat(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ],
               ),
               Expanded(
@@ -60,55 +95,90 @@ class _OptionsScreenState extends State<OptionsScreen> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child: LikeButton(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          size: 20,
-                          circleColor: CircleColor(
-                              start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                          bubblesColor: BubblesColor(
-                            dotPrimaryColor: Color(0xff33b5e5),
-                            dotSecondaryColor: Color(0xff0099cc),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 14),
+                            child: LikeButton(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              size: 20,
+                              circleColor: const CircleColor(
+                                  start: Color(0xff00ddff),
+                                  end: Color(0xff0099cc)),
+                              bubblesColor: const BubblesColor(
+                                dotPrimaryColor: Color(0xff33b5e5),
+                                dotSecondaryColor: Color(0xff0099cc),
+                              ),
+                              likeBuilder: (bool isLiked) {
+                                isLiked
+                                    ? cubit.sendReelLike(cubit1
+                                        .model!.reels[widget.index].id
+                                        .toString())
+                                    : null;
+                                return Icon(
+                                  Icons.thumb_up_alt,
+                                  color: isLiked ? Colors.blue : Colors.white,
+                                  size: 30,
+                                );
+                              },
+                            ),
                           ),
-                          likeBuilder: (bool isLiked) {
-                            return Icon(
-                              Icons.thumb_up_alt,
-                              color:
-                                  isLiked ? Colors.blue : Colors.white,
-                              size: 30,
-                            );
-                          },
-                        ),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 16, right: 12),
+                            child: Text(
+                              "Like",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
+                            ),
+                          )
+                        ],
                       ),
-                      // IconButton(
-                      //     onPressed: () {
-                      //
-                      //     },
-                      //     icon: Icon(
-                      //       Icons.thumb_up_alt,
-                      //       color: Colors.white,
-                      //     )),
-                      SizedBox(height: 40),
+                      const SizedBox(height: 3),
                       IconButton(
                           onPressed: () {
-                            shareOnWhatsapp(SocialMedia.whatsapp);
+                            cubit.shareReelToWhatsapp(cubit1
+                                .model!.reels[widget.index].id
+                                .toString());
+                            shareOnWhatsapp(
+                                context, SocialMedia.whatsapp, widget.index);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             FontAwesomeIcons.whatsapp,
                             color: Colors.white,
                           )),
-                      SizedBox(height: 20),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 6),
+                        child: Text(
+                          "Whatsapp",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
                       IconButton(
                           onPressed: () {
-                            shareOnWhatsapp(SocialMedia.whatsapp);
+                            cubit.shareReelToAll(cubit1
+                                .model!.reels[widget.index].id
+                                .toString());
+                            share(context, widget.index);
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.share,
                             color: Colors.white,
                           )),
-                      SizedBox(height: 150),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 6),
+                        child: Text(
+                          "Share",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600, color: Colors.white),
+                        ),
+                      ),
+                      const SizedBox(height: 150),
                     ],
                   ),
                 ),
