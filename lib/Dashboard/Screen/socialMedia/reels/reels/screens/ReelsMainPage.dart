@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                       },
                       // preloadPagesCount: 4,
                       // itemCount: state.reelsModel.reels.length,
-                      scrollDirection: Axis.vertical, itemCount: 4,
+                      scrollDirection: Axis.vertical, itemCount: state.reelsModel.reels.length,
                     );
                   } else {
                     return Center(
