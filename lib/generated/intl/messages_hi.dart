@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "राजनैतिक एवं सामाजिक विषयों  की जानकारी एवं तथ्य प्राप्त करे ।"),
         "ThemeandInsight":
             MessageLookupByLibrary.simpleMessage("विषय एवं अंतर्दृष्टि"),
+        "aadharNumber": MessageLookupByLibrary.simpleMessage(
+            "आधार संख्या १२ अंकों की होनी चाहिए"),
         "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
         "addBooth": MessageLookupByLibrary.simpleMessage("ऐड बूथ"),
         "addEntry": MessageLookupByLibrary.simpleMessage("ऐड एंट्री"),
@@ -49,6 +51,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("एड्रेस अपडेटेड"),
         "adds": MessageLookupByLibrary.simpleMessage("ऐड"),
         "age": MessageLookupByLibrary.simpleMessage("उम्र"),
+        "ageError":
+            MessageLookupByLibrary.simpleMessage("उम्र २ अंकों की होनी चाहिए"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
         "boothDes": MessageLookupByLibrary.simpleMessage(
@@ -98,13 +102,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("प्रोफ़ाइल से हटाएं?"),
         "digitCodeHasBeenSent": MessageLookupByLibrary.simpleMessage(
             "एक 6 अंकों का कोड भेजा गया है"),
+        "dobError": MessageLookupByLibrary.simpleMessage(
+            "जन्म दिनांक १६ या उससे अधिक वर्ष होनी चाहिए"),
         "edit": MessageLookupByLibrary.simpleMessage("एडिट"),
         "education": MessageLookupByLibrary.simpleMessage("शिक्षा"),
         "educationDeleted":
             MessageLookupByLibrary.simpleMessage("शिक्षा डिलीटेड"),
         "educationUpdated":
             MessageLookupByLibrary.simpleMessage("शिक्षा अपडेटेड"),
+        "emailAddress":
+            MessageLookupByLibrary.simpleMessage("कृपया मान्य ईमेल दर्ज करें"),
+        "enter": MessageLookupByLibrary.simpleMessage("दर्ज करें"),
+        "enterName":
+            MessageLookupByLibrary.simpleMessage("कृपया नाम दर्ज करें"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("ओटीपी दर्ज करें"),
+        "enterPhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "फोन नंबर १० अंकों का होना चाहिए"),
         "enterShaktiKendrName":
             MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र का नाम लिखे"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
@@ -122,6 +135,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "home": MessageLookupByLibrary.simpleMessage("होम"),
+        "landlineNumber": MessageLookupByLibrary.simpleMessage(
+            "लैंडलाइन नंबर ८ अंकों का होना चाहिए"),
         "language": MessageLookupByLibrary.simpleMessage("भाषा"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
@@ -157,8 +172,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "phoneNumber":
             MessageLookupByLibrary.simpleMessage("फ़ोन नंबर ( वैकल्पिक )"),
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
+        "pincode": MessageLookupByLibrary.simpleMessage(
+            "पिनकोड ६ अंकों का होना चाहिए"),
+        "please": MessageLookupByLibrary.simpleMessage("कृपया"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("कृपया स्थान चुनें"),
+        "pleaseEnter": MessageLookupByLibrary.simpleMessage("कृपया दर्ज करें"),
         "pleaseEnterData":
             MessageLookupByLibrary.simpleMessage("कृपया डेटा दर्ज करें"),
         "pleaseSelectReason":
@@ -166,6 +185,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "position": MessageLookupByLibrary.simpleMessage("पद"),
         "post": MessageLookupByLibrary.simpleMessage("पद"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
+        "primaryMemberId": MessageLookupByLibrary.simpleMessage(
+            "प्राथमिक सदस्य आईडी १० अंकों की होनी चाहिए"),
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
         "reasonforDeletion": MessageLookupByLibrary.simpleMessage(
@@ -182,6 +203,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeAll": MessageLookupByLibrary.simpleMessage("सभी देखें"),
         "seeLess": MessageLookupByLibrary.simpleMessage("कम देखें"),
         "seeMore": MessageLookupByLibrary.simpleMessage("जयादा देखे"),
+        "selectDesignation":
+            MessageLookupByLibrary.simpleMessage("कृपया पद चुनें"),
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
@@ -196,6 +219,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "state": MessageLookupByLibrary.simpleMessage("स्टेट"),
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("प्रवास और कार्यक्रम सूची"),
+        "stdCodeNumber": MessageLookupByLibrary.simpleMessage(
+            "एसटीडी कोड संख्या ५ अंकों की होनी चाहिए"),
         "subject": MessageLookupByLibrary.simpleMessage("विषय"),
         "submit": MessageLookupByLibrary.simpleMessage("सबमिट"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
@@ -222,7 +247,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम देखें"),
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("प्रवास और  कार्याक्रम देखे"),
+        "voterId": MessageLookupByLibrary.simpleMessage(
+            "कृपया मान्य मतदाता आईडी दर्ज करें"),
         "welcome": MessageLookupByLibrary.simpleMessage("नमस्ते"),
+        "whatsappNumber": MessageLookupByLibrary.simpleMessage(
+            "व्हाट्सएप नंबर १० डिजिट का होना चाहिए"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("वर्ष ( कब से )"),
         "yearTo": MessageLookupByLibrary.simpleMessage("वर्ष ( कब तक )"),
         "years": MessageLookupByLibrary.simpleMessage("वर्ष"),

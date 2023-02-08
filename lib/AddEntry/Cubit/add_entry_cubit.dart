@@ -8,12 +8,10 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sangathan/AddEntry/network/model/cast_model.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
@@ -813,35 +811,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
     return age;
   }
-
-  // getTextFieldValidation({required String fieldName, required dynamic value}) {
-  //   if (fieldName == 'phone') {
-  //     if (value.toString().length != 10) {
-  //       return 'Mobile number should be 10 digit';
-  //     }
-  //   }
-  //   if (fieldName == 'age') {
-  //     if (value.isNotEmpty) {
-  //       if (value.length != 2) {
-  //         return 'Age should be 2 digit';
-  //       }
-  //     }
-  //   }
-  //   if (fieldName == 'pinCode') {
-  //     if (value.isNotEmpty) {
-  //       if (value.toString().length != 6) {
-  //         return 'PinCode should be 6 digit';
-  //       }
-  //     }
-  //   }
-  //   if (fieldName == 'whatsappNo') {
-  //     if (value.isNotEmpty) {
-  //       if (value.toString().length != 10) {
-  //         return 'Whatsapp No should be 10 digit';
-  //       }
-  //     }
-  //   }
-  // }
 
   getTextInputType({required String fieldType}) {
     if (fieldType == 'phone') {

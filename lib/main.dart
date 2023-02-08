@@ -109,7 +109,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => SangathanDetailsCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context,lang){
+        builder: (context, lang) {
           final cubit = context.read<LanguageCubit>();
           // cubit.changeStartLang();
           return MaterialApp(
@@ -124,13 +124,13 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            locale:  Locale.fromSubtags(languageCode: cubit.lang!),
+            locale: Locale.fromSubtags(languageCode: cubit.lang ?? "hi"),
             onGenerateRoute: RouteGenerator.generatorRoute,
             initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: AppColor.primaryColor,
-              ),
+                    primary: AppColor.primaryColor,
+                  ),
             ),
           );
         },

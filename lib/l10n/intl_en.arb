@@ -145,5 +145,21 @@
     "boothSelect" : "Select Booth",
     "addBooth" : "Add Booth",
     "addEntry":"Add Entry",
-    "adds":"Add"
+    "adds":"Add",
+    "enterName":"Please Enter Name",
+    "selectDesignation":"Please Select Designation",
+    "enterPhoneNumber":"Phone Number should be 10 digit",
+    "primaryMemberId":"Primary Member id should be 10 digit",
+    "ageError":"Age should be 2 digit",
+    "whatsappNumber":"Whatsapp Number should be 10 digit",
+    "stdCodeNumber":"STD Code Number should be 5 digit",
+    "landlineNumber":"Landline Number should be 8 digit",
+    "emailAddress":"Please Enter Valid Email",
+    "dobError":"DOB Should be 16 or above year",
+    "pincode":"Pin code should be 6 digit",
+    "voterId":"Enter valid voter id",
+    "aadharNumber":"Aadhaar Number should be 12 digit",
+    "pleaseEnter":"Please Enter",
+    "please":"Please",
+    "enter":"Enter"
 }

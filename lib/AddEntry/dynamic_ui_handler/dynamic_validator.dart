@@ -1,26 +1,29 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:sangathan/generated/l10n.dart';
 
 class DynamicValidator {
   static String? getTextFieldValidation(
       {required String fieldName,
       String? value,
       bool? mandatoryField,
+      required BuildContext context,
       String? displayNameForUI}) {
     if (mandatoryField ?? false) {
       if (value == null || value.isEmpty) {
-        return 'Please enter ${displayNameForUI ?? ""}';
+        return '${S.of(context).please} ${displayNameForUI ?? ""} ${S.of(context).enter}';
       }
     }
 
     if (fieldName == 'phone') {
       if (value.toString().length != 10) {
-        return 'Mobile number should be 10 digit';
+        return S.of(context).enterPhoneNumber;
       }
     } else if (fieldName == 'age') {
       if (value!.isNotEmpty) {
         if (value.length != 2) {
-          return 'Age should be 2 digit';
+          return S.of(context).ageError;
         } else {
           return null;
         }
@@ -28,37 +31,37 @@ class DynamicValidator {
     } else if (fieldName == 'pinCode') {
       if (value!.isNotEmpty) {
         if (value.toString().length != 6) {
-          return 'Pin code should be 6 digit';
+          return S.of(context).pincode;
         }
       }
     } else if (fieldName == 'whatsappNo') {
       if (value!.isNotEmpty) {
         if (value.toString().length != 10) {
-          return 'Whatsapp No should be 10 digit';
+          return S.of(context).whatsappNumber;
         }
       }
     } else if (fieldName == 'aadhaarNumber') {
       if (value!.isNotEmpty) {
         if (value.toString().length != 12) {
-          return 'Aadhaar Number should be 12 digit';
+          return S.of(context).aadharNumber;
         }
       }
     } else if (fieldName == 'landline') {
       if (value!.isNotEmpty) {
         if (value.toString().length != 8) {
-          return 'Landline Number should be 8 digit';
+          return S.of(context).landlineNumber;
         }
       }
     } else if (fieldName == 'std_code') {
       if (value!.isNotEmpty) {
         if (value.toString().length != 5) {
-          return 'STD code Number should be 5 digit';
+          return S.of(context).stdCodeNumber;
         }
       }
     } else if (fieldName == 'primary_member_id') {
       if (value!.isNotEmpty) {
         if (value.toString().length != 10) {
-          return 'Primary Member Id should be 10 digit';
+          return S.of(context).primaryMemberId;
         }
       }
     } else if (fieldName == 'pannaNumber') {
@@ -72,14 +75,14 @@ class DynamicValidator {
         if (!RegExp(
                 r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
             .hasMatch(value)) {
-          return 'Please Enter Valid Email';
+          return S.of(context).emailAddress;
         }
       }
     } else if (fieldName == "voterId") {
       if (value!.isNotEmpty) {
         RegExp regex = RegExp(r'^([a-zA-Z]){3}([0-9]){7}$');
         if (!regex.hasMatch(value)) {
-          return 'Enter valid voter Id';
+          return S.of(context).voterId;
         } else {
           return null;
         }
@@ -87,6 +90,7 @@ class DynamicValidator {
     } else {
       return null;
     }
+    return null;
   }
 
   static addTextInputFormatters({required String fieldType}) {
