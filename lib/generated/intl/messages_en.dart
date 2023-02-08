@@ -35,6 +35,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Get information and facts about political and social subjects."),
         "ThemeandInsight":
             MessageLookupByLibrary.simpleMessage("Theme and Insight"),
+        "aadharNumber": MessageLookupByLibrary.simpleMessage(
+            "Aadhaar Number should be 12 digit"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addBooth": MessageLookupByLibrary.simpleMessage("Add Booth"),
         "addEntry": MessageLookupByLibrary.simpleMessage("Add Entry"),
@@ -49,6 +51,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Address Updated"),
         "adds": MessageLookupByLibrary.simpleMessage("Add"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
+        "ageError":
+            MessageLookupByLibrary.simpleMessage("Age should be 2 digit"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
         "boothDes": MessageLookupByLibrary.simpleMessage(
@@ -96,13 +100,21 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete from profile?"),
         "digitCodeHasBeenSent":
             MessageLookupByLibrary.simpleMessage("6 digit code has been sent"),
+        "dobError": MessageLookupByLibrary.simpleMessage(
+            "DOB Should be 16 or above year"),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "education": MessageLookupByLibrary.simpleMessage("Education"),
         "educationDeleted":
             MessageLookupByLibrary.simpleMessage("Education Deleted"),
         "educationUpdated":
             MessageLookupByLibrary.simpleMessage("Education Updated"),
+        "emailAddress":
+            MessageLookupByLibrary.simpleMessage("Please Enter Valid Email"),
+        "enter": MessageLookupByLibrary.simpleMessage("Enter"),
+        "enterName": MessageLookupByLibrary.simpleMessage("Please Enter Name"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
+        "enterPhoneNumber": MessageLookupByLibrary.simpleMessage(
+            "Phone Number should be 10 digit"),
         "enterShaktiKendrName": MessageLookupByLibrary.simpleMessage(
             "Write the name of shakti kendr"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
@@ -118,6 +130,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "landlineNumber": MessageLookupByLibrary.simpleMessage(
+            "Landline Number should be 8 digit"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
@@ -154,8 +168,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "phoneNumber":
             MessageLookupByLibrary.simpleMessage("Mobile Number (optional)"),
         "photoMax": MessageLookupByLibrary.simpleMessage("Photo ( max 2 )"),
+        "pincode":
+            MessageLookupByLibrary.simpleMessage("Pin code should be 6 digit"),
+        "please": MessageLookupByLibrary.simpleMessage("Please"),
         "pleaseChoosePlace":
             MessageLookupByLibrary.simpleMessage("Please choose location"),
+        "pleaseEnter": MessageLookupByLibrary.simpleMessage("Please Enter"),
         "pleaseEnterData":
             MessageLookupByLibrary.simpleMessage("Please enter data"),
         "pleaseSelectReason":
@@ -163,6 +181,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "position": MessageLookupByLibrary.simpleMessage("position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
+        "primaryMemberId": MessageLookupByLibrary.simpleMessage(
+            "Primary Member id should be 10 digit"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "program": MessageLookupByLibrary.simpleMessage("Program"),
         "reasonforDeletion": MessageLookupByLibrary.simpleMessage(
@@ -179,6 +199,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
         "seeLess": MessageLookupByLibrary.simpleMessage("See less"),
         "seeMore": MessageLookupByLibrary.simpleMessage("See more"),
+        "selectDesignation":
+            MessageLookupByLibrary.simpleMessage("Please Select Designation"),
         "selectLoksabha":
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
         "selectPravasLevel":
@@ -194,6 +216,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "state": MessageLookupByLibrary.simpleMessage("State"),
         "stayAndProgramList":
             MessageLookupByLibrary.simpleMessage("Stay and program list"),
+        "stdCodeNumber": MessageLookupByLibrary.simpleMessage(
+            "STD Code Number should be 5 digit"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
@@ -218,7 +242,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewProgram": MessageLookupByLibrary.simpleMessage("View Program"),
         "viewToursEvents":
             MessageLookupByLibrary.simpleMessage("View Tours & Events"),
+        "voterId": MessageLookupByLibrary.simpleMessage("Enter valid voter id"),
         "welcome": MessageLookupByLibrary.simpleMessage("Welcome"),
+        "whatsappNumber": MessageLookupByLibrary.simpleMessage(
+            "Whatsapp Number should be 10 digit"),
         "yearFrom": MessageLookupByLibrary.simpleMessage("Years (From)"),
         "yearTo": MessageLookupByLibrary.simpleMessage("Years (To)"),
         "years": MessageLookupByLibrary.simpleMessage("Years"),

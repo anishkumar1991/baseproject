@@ -1509,6 +1509,166 @@ class S {
       args: [],
     );
   }
+
+  /// `Please Enter Name`
+  String get enterName {
+    return Intl.message(
+      'Please Enter Name',
+      name: 'enterName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Designation`
+  String get selectDesignation {
+    return Intl.message(
+      'Please Select Designation',
+      name: 'selectDesignation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone Number should be 10 digit`
+  String get enterPhoneNumber {
+    return Intl.message(
+      'Phone Number should be 10 digit',
+      name: 'enterPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary Member id should be 10 digit`
+  String get primaryMemberId {
+    return Intl.message(
+      'Primary Member id should be 10 digit',
+      name: 'primaryMemberId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Age should be 2 digit`
+  String get ageError {
+    return Intl.message(
+      'Age should be 2 digit',
+      name: 'ageError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Whatsapp Number should be 10 digit`
+  String get whatsappNumber {
+    return Intl.message(
+      'Whatsapp Number should be 10 digit',
+      name: 'whatsappNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `STD Code Number should be 5 digit`
+  String get stdCodeNumber {
+    return Intl.message(
+      'STD Code Number should be 5 digit',
+      name: 'stdCodeNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Landline Number should be 8 digit`
+  String get landlineNumber {
+    return Intl.message(
+      'Landline Number should be 8 digit',
+      name: 'landlineNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Enter Valid Email`
+  String get emailAddress {
+    return Intl.message(
+      'Please Enter Valid Email',
+      name: 'emailAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DOB Should be 16 or above year`
+  String get dobError {
+    return Intl.message(
+      'DOB Should be 16 or above year',
+      name: 'dobError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pin code should be 6 digit`
+  String get pincode {
+    return Intl.message(
+      'Pin code should be 6 digit',
+      name: 'pincode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter valid voter id`
+  String get voterId {
+    return Intl.message(
+      'Enter valid voter id',
+      name: 'voterId',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aadhaar Number should be 12 digit`
+  String get aadharNumber {
+    return Intl.message(
+      'Aadhaar Number should be 12 digit',
+      name: 'aadharNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Enter`
+  String get pleaseEnter {
+    return Intl.message(
+      'Please Enter',
+      name: 'pleaseEnter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please`
+  String get please {
+    return Intl.message(
+      'Please',
+      name: 'please',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter`
+  String get enter {
+    return Intl.message(
+      'Enter',
+      name: 'enter',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

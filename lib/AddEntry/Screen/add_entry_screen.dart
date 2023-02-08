@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_picker_bottomsheet.dart';
+import 'package:sangathan/AddEntry/Screen/widget/image_preview_dialog.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
 
@@ -176,6 +177,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         cubit.entryField![i].fieldName ?? ''),
                             validator: (value) =>
                                 DynamicValidator.getTextFieldValidation(
+                                    context: context,
                                     fieldName:
                                         cubit.entryField![i].fieldName ?? '',
                                     value: value,
@@ -203,24 +205,18 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               .split("/")
                               .last,
                           onTapImagePrivew: (() {
+                            int index = cubit.allImagePickerList.indexWhere(
+                                (element) =>
+                                    element["fieldName"]
+                                        .toString()
+                                        .split("_")[0] ==
+                                    (cubit.entryField![i].fieldName ?? "")
+                                        .split(RegExp(r"[A-Z]"))[0]);
                             showDialog(
                                 context: context,
-                                builder: ((context) => AlertDialog(
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          IconButton(
-                                              onPressed: (() {}),
-                                              icon: Icon(Icons.close)),
-                                          Container(
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: FileImage(File(
-                                                          cubit.allImagePickerList[
-                                                              0]["value"]))))),
-                                        ],
-                                      ),
-                                    )));
+                                builder: ((context) => ImagePreViewDialog(
+                                    path: cubit.allImagePickerList[index]
+                                        ["value"])));
                           }),
                           onTap: (() async {
                             // await cubit.pickFile(
@@ -254,6 +250,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               fieldType: cubit.entryField![i].fieldName ?? ''),
                       validator: (value) =>
                           DynamicValidator.getTextFieldValidation(
+                              context: context,
                               fieldName: cubit.entryField![i].fieldName ?? '',
                               value: value,
                               mandatoryField:
@@ -277,34 +274,16 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         .split("/")
                         .last,
                     onTapImagePrivew: (() {
+                      int index = cubit.allImagePickerList.indexWhere(
+                          (element) =>
+                              element["fieldName"].toString().split("_")[0] ==
+                              (cubit.entryField![i].fieldName ?? "")
+                                  .split(RegExp(r"[A-Z]"))[0]);
+
                       showDialog(
                           context: context,
-                          builder: ((context) => AlertDialog(
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                        onPressed: (() {
-                                          Navigator.pop(context);
-                                        }),
-                                        icon: const Icon(Icons.close)),
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: FileImage(File(
-                                                    cubit.allImagePickerList[0]
-                                                        ["value"]))))),
-                                    Expanded(
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: FileImage(File(cubit
-                                                          .allImagePickerList[0]
-                                                      ["value"]))))),
-                                    ),
-                                  ],
-                                ),
-                              )));
+                          builder: ((context) => ImagePreViewDialog(
+                              path: cubit.allImagePickerList[index]["value"])));
                     }),
                     onTap: (() async {
                       // await cubit.pickFile(
@@ -340,6 +319,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                     cubit.entryField![i].fieldName ?? ''),
                         validator: (value) =>
                             DynamicValidator.getTextFieldValidation(
+                                context: context,
                                 fieldName: cubit.entryField![i].fieldName ?? '',
                                 value: value,
                                 mandatoryField:
@@ -362,6 +342,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
             ] else ...[
               TextFieldWidget(
                   validator: (value) => DynamicValidator.getTextFieldValidation(
+                      context: context,
                       fieldName: cubit.entryField![i].fieldName ?? '',
                       value: value,
                       mandatoryField:
@@ -460,7 +441,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
               if (value.isNotEmpty) {
                 if (cubit.calculateAge(DateFormat("dd-MMM-yyyy").parse(value)) <
                     16) {
-                  return 'DOB should be 16 or above year';
+                  return S.of(context).dobError;
                 }
               }
 
