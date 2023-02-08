@@ -72,6 +72,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     LocalNotificationService.initialize(context);
     firebaseNotification(context);
+
     super.initState();
   }
 
@@ -79,7 +80,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => LanguageCubit()),
+        BlocProvider(create: (context) => LanguageCubit()..changeStartLang()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => ShareCubit()),
         BlocProvider(create: (context) => ReelsCubit()),
@@ -107,8 +108,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
       ],
-      child: BlocBuilder<LanguageCubit, Locale>(
+      child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context,lang){
+          final cubit = context.read<LanguageCubit>();
+          // cubit.changeStartLang();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             useInheritedMediaQuery: true,
@@ -121,8 +124,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            // locale: const Locale.fromSubtags(languageCode: 'hi'),
-            locale: lang,
+            locale:  Locale.fromSubtags(languageCode: cubit.lang!),
             onGenerateRoute: RouteGenerator.generatorRoute,
             initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(

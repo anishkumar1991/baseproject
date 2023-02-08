@@ -49,7 +49,7 @@ class SelectBooth extends StatelessWidget {
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -58,6 +58,9 @@ class SelectBooth extends StatelessWidget {
                                   Checkbox(
                                       checkColor: Colors.green,
                                       activeColor: AppColor.white,
+                                      side: MaterialStateBorderSide.resolveWith(
+                                            (states) => BorderSide(width: 1.0, color: AppColor.naturalBlackColor),
+                                      ),
                                       value: cubit.chekedValue[index].isCheck,
                                       onChanged: (value) {
                                         print(cubit.chekedValue[index].isCheck);
@@ -65,14 +68,13 @@ class SelectBooth extends StatelessWidget {
                                             value!;
                                         cubit.emitState();
                                       }),
-                                  spaceWidthWidget(10),
                                   Container(
                                     margin: EdgeInsets.only(top: 1),
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(11),
-                                        color: AppColor.orange),
+                                        color: index == 2 ? AppColor.orange :AppColor.blue),
                                     child: Text(
                                       cubit.chekedValue[index].number,
                                       textAlign: TextAlign.center,

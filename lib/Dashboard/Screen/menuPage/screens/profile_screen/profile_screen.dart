@@ -33,6 +33,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
+    dynamic lang = context.read<LanguageCubit>().changeStartLang();
+    if(lang.toString() == 'hi'){
+      context.read<ProfileCubit>().isTrue = false;
+     }else{
+      context.read<ProfileCubit>().isTrue = true;
+    }
   }
 
   @override
@@ -212,29 +218,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               Spacer(),
                               Switch(
                                 activeTrackColor: AppColor.primaryColor,
+                                inactiveTrackColor: AppColor.pravasCradColor,
                                 thumbColor:
                                     MaterialStateProperty.resolveWith<Color>(
                                         (Set<MaterialState> states) {
                                   if (states.contains(MaterialState.selected)) {
                                     return AppColor.primaryColor;
                                   }
-                                  return AppColor.white;
+                                  return AppColor.blue;
                                 }),
                                 value: cubit.isTrue,
                                 onChanged: (bool value) {
                                   cubit.isTrue = value;
-                                  Locale myLocale =
-                                      Localizations.localeOf(context);
-                                  print("========= ${myLocale.toString()}");
-                                  if (myLocale.toString() == 'en') {
-                                    context
-                                        .read<LanguageCubit>()
-                                        .changeLang(context, 'hi');
-                                  } else if(myLocale.toString() == 'hi'){
-                                    context
-                                        .read<LanguageCubit>()
-                                        .changeLang(context, 'en');
-                                  }
+                                  context
+                                      .read<LanguageCubit>()
+                                      .changeLang(context);
                                   cubit.emitState();
                                 },
                               )
@@ -274,7 +272,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 .withOpacity(0.5)),
                                         spaceWidthWidget(8),
                                         Text(
-                                          "Logout",
+                                          S.of(context).logOut,
                                           style: textStyleWithPoppin(
                                               fontSize: 14,
                                               color: AppColor.naturalBlackColor
