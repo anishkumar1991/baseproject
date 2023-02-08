@@ -49,7 +49,7 @@ class _FetchPostsApi implements FetchPostsApi {
   }
 
   @override
-  Future<HttpResponse<dynamic>> sendLike(
+  Future<HttpResponse<dynamic>> sendReaction(
     token,
     data,
   ) async {

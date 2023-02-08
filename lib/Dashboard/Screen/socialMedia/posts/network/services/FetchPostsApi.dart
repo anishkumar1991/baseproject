@@ -12,7 +12,7 @@ abstract class FetchPostsApi {
       @Header('Authorization') String token, @Query("size") String size);
 
   @POST("/api/mobile/v1/posts/react")
-  Future<HttpResponse> sendLike(
+  Future<HttpResponse> sendReaction(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 
   @POST("/api/mobile/v1/posts/share")

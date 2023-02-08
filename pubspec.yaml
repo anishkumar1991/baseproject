@@ -86,6 +86,8 @@ dependencies:
   carousel_slider: ^4.2.1
 
   cached_network_image: ^3.2.3
+  flutter_reaction_button: ^2.0.1+2
+  characters: ^1.2.1
 
 dev_dependencies:
   flutter_test:

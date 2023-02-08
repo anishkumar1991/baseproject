@@ -34,6 +34,7 @@ import 'Dashboard/Screen/menuPage/screens/edit_education/cubit/edit_education__c
 import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
+import 'Dashboard/Screen/socialMedia/posts/cubit/ReactionCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
 import 'Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
 import 'Login/Cubit/language_cubit/lan_cubit.dart';
@@ -82,6 +83,8 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
+        BlocProvider(create: (create) => ReactionCubit()),
+
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => PollCubit()),
