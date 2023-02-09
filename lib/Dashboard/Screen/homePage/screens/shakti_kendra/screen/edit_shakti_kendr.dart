@@ -56,7 +56,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
               spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
               Expanded(
                 child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
                       BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
@@ -135,7 +135,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide.none),
                           dense: true,
-                          contentPadding: EdgeInsets.only(left: 5),
+                          contentPadding: const EdgeInsets.only(left: 5),
                           leading: Container(
                             height: 47,
                             width: 47,
@@ -320,7 +320,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                               ),
                                               index + 1 ==
                                                       cubit.chekedValue.length
-                                                  ? SizedBox.shrink()
+                                                  ? const SizedBox.shrink()
                                                   : Text(
                                                       ",",
                                                       style:
@@ -394,10 +394,10 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                   ),
                                 ),
                                 spaceHeightWidget(10),
-                                WarningBooth()
+                                const WarningBooth()
                               ],
                             )
-                          : SizedBox.shrink()
+                          : const SizedBox.shrink()
                     ],
                   ),
                 ),
@@ -452,7 +452,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                 ),
                 spaceHeightWidget(30),
                 Text(
-                  text ?? '',
+                  text,
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                       color: AppColor.borderColor, fontSize: 16),

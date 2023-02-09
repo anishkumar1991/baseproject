@@ -33,6 +33,13 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? deleteId;
   int? levelNameId;
   int? dependentLevelNameId;
+  int selectedFilterIndex = 0;
+  void onTapFilterOptions(int index) {
+    emit(LoadingState());
+    selectedFilterIndex = index;
+    emit(ZilaChangedState());
+  }
+
   final api =
       DataEntryApi(Dio(BaseOptions(validateStatus: ((status) => true))));
 
@@ -47,6 +54,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(LoadingState());
     dependentDropdownSelected = value;
     dependentLevelNameId = value?.id;
+    levelNameId = dependentLevelNameId;
     emit(ZilaChangedState());
   }
 

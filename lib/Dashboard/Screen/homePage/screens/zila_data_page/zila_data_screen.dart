@@ -5,6 +5,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/a_to_z_filter_widget.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/designation_filter_widget.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/new_entry_filter_widget.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
@@ -128,47 +131,64 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 /// unit data widget
                 dataUnit(cubit),
                 spaceHeightWidget(20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(S.of(context).entry,
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                        )),
-                    BlocBuilder<ZilaDataCubit, ZilaDataState>(
-                      builder: (context, state) {
-                        if (state is EntryDataFetchedState) {
-                          if (state.data.data != null) {
-                            cubit.dataList = state.data.data!.data!;
-                          }
-                        }
-                        return Text(
-                            "${S.of(context).total}:${cubit.dataList?.length ?? 0}",
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 12,
-                                color: AppColor.greyColor));
-                      },
-                    )
-                  ],
-                ),
+                cubit.dataList?.isEmpty ?? false
+                    ? const SizedBox.shrink()
+                    : Expanded(
+                        child: BlocBuilder<ZilaDataCubit, ZilaDataState>(
+                          builder: (context, state) {
+                            if (state is EntryDataFetchedState) {
+                              if (state.data.data != null) {
+                                cubit.dataList = state.data.data!.data!;
+                              }
+                            }
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(S.of(context).entry,
+                                        style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 18,
+                                        )),
+                                    Text(
+                                        "${S.of(context).total}:${cubit.dataList?.length ?? 0}",
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12,
+                                            color: AppColor.greyColor))
+                                  ],
+                                ),
+                                spaceHeightWidget(10),
+                                entryFilterWidget(cubit),
+                                spaceHeightWidget(10),
+                                Expanded(
+                                    child: SingleChildScrollView(
+                                  physics: const BouncingScrollPhysics(),
+                                  child: Column(
+                                    children: [
+                                      spaceHeightWidget(10),
+                                      if (cubit.selectedFilterIndex == 0) ...[
+                                        const NewEntryFilterPage(),
+                                      ] else if (cubit.selectedFilterIndex ==
+                                          1) ...[
+                                        const DesignationFilterPage()
+                                      ] else ...[
+                                        const AtoZfilterPage(),
+                                      ]
 
-                spaceHeightWidget(10),
-                entryFilterWidget(),
-                spaceHeightWidget(10),
-                Expanded(
-                    child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      spaceHeightWidget(10),
-
-                      /// person list
-                      entryDetails(cubit)
-                    ],
-                  ),
-                ))
+                                      /// person list
+                                      //entryDetails(cubit)
+                                    ],
+                                  ),
+                                ))
+                              ],
+                            );
+                          },
+                        ),
+                      ),
               ],
             ),
           ),
@@ -564,49 +584,56 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                                   )),
                                         )),
                                     spaceWidthWidget(16),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            AutoSizeText(
-                                              Localizations.localeOf(context)
-                                                          .toString() ==
-                                                      "hi"
-                                                  ? data?.hindiName ?? ''
-                                                  : data?.englishName ?? '',
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w600,
-                                                  color:
-                                                      AppColor.textBlackColor),
-                                            ),
-                                            spaceWidthWidget(5),
-                                            Image.asset(
-                                              AppIcons.verifyIcon,
-                                              height: 10,
-                                            )
-                                          ],
-                                        ),
-                                        Text(
-                                          data?.designationName ?? '',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 10,
-                                              color: AppColor.greyColor),
-                                        ),
-                                        Text(
-                                          "+91- ${data?.phone ?? ''}",
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12,
-                                              color: AppColor.greyColor),
-                                        ),
-                                      ],
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Flexible(
+                                                child: AutoSizeText(
+                                                  Localizations.localeOf(
+                                                                  context)
+                                                              .toString() ==
+                                                          "hi"
+                                                      ? data?.hindiName ?? ''
+                                                      : data?.englishName ?? '',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  style: GoogleFonts.poppins(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color: AppColor
+                                                          .textBlackColor),
+                                                ),
+                                              ),
+                                              spaceWidthWidget(5),
+                                              Image.asset(
+                                                AppIcons.verifyIcon,
+                                                height: 10,
+                                              )
+                                            ],
+                                          ),
+                                          Text(
+                                            data?.designationName ?? '',
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 10,
+                                                color: AppColor.greyColor),
+                                          ),
+                                          Text(
+                                            "+91- ${data?.phone ?? ''}",
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                                color: AppColor.greyColor),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    const Spacer(),
                                     InkWell(
                                       onTap: (() {
                                         if (data?.phone != null) {
@@ -859,53 +886,112 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-  Widget entryFilterWidget() {
-    return Container(
-      height: 32,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColor.greyColor.withOpacity(0.5))),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                S.of(context).newEntry,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    color: AppColor.textBlackColor),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                height: 32,
-                color: AppColor.navyBlue400,
-                child: Center(
-                  child: Text(
-                    S.of(context).post,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: AppColor.white),
+  Widget entryFilterWidget(ZilaDataCubit cubit) {
+    return BlocBuilder<ZilaDataCubit, ZilaDataState>(
+      builder: (context, state) {
+        return Container(
+          height: 32,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColor.greyColor.withOpacity(0.5))),
+          child: IntrinsicHeight(
+            child: Row(
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: (() {
+                      cubit.onTapFilterOptions(0);
+                    }),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: cubit.selectedFilterIndex == 0
+                              ? AppColor.navyBlue400
+                              : AppColor.white,
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              bottomLeft: Radius.circular(20))),
+                      height: 32,
+                      child: Center(
+                        child: Text(
+                          S.of(context).newEntry,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              color: cubit.selectedFilterIndex == 0
+                                  ? AppColor.white
+                                  : AppColor.textBlackColor),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                const VerticalDivider(
+                  width: 1,
+                  color: AppColor.greyColor,
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: (() {
+                      cubit.onTapFilterOptions(1);
+                    }),
+                    child: Container(
+                      height: 32,
+                      color: cubit.selectedFilterIndex == 1
+                          ? AppColor.navyBlue400
+                          : AppColor.white,
+                      child: Center(
+                        child: Text(
+                          S.of(context).post,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              color: cubit.selectedFilterIndex == 1
+                                  ? AppColor.white
+                                  : AppColor.textBlackColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const VerticalDivider(
+                  width: 1,
+                  color: AppColor.greyColor,
+                ),
+                Expanded(
+                  child: InkWell(
+                    onTap: (() {
+                      cubit.onTapFilterOptions(2);
+                    }),
+                    child: Container(
+                      height: 32,
+                      decoration: BoxDecoration(
+                          color: cubit.selectedFilterIndex == 2
+                              ? AppColor.navyBlue400
+                              : AppColor.white,
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(20),
+                              bottomRight: Radius.circular(20))),
+                      child: Center(
+                        child: Text(
+                          'A to Z',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              color: cubit.selectedFilterIndex == 2
+                                  ? AppColor.white
+                                  : AppColor.textBlackColor),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: Text(
-                'A to Z',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14,
-                    color: AppColor.textBlackColor),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -1047,6 +1133,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   cubit.dataList = [];
                 }
               }
+
               return DropdownButtonHideUnderline(
                   child: DropdownButton(
                       isDense: true,
