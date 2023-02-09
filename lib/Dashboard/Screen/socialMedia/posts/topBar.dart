@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
 import '../../../../Values/app_colors.dart';
-import '../../notification/screens/NotificationScreen.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class TopBar extends StatelessWidget {
                   onTap: (() {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return const NotificationScreen();
+                        return const NotificationMainScreen();
                       },
                     ));
                   }),
