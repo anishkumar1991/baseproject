@@ -37,6 +37,7 @@ import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ReactionCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
 import 'Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
+import 'Dashboard/Screen/whatsapp/screens/WhatsappScreen.dart';
 import 'Login/Cubit/language_cubit/lan_cubit.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
@@ -134,6 +135,7 @@ class _MyAppState extends State<MyApp> {
             locale: const Locale.fromSubtags(languageCode: 'hi'),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
+            // home: WhatsappScreen(),
             initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
