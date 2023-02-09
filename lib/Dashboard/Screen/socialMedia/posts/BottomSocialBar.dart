@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:like_button/like_button.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/FetchPostsState.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/ReactionState.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/Share.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/ShareOnWhatsapp.dart';
+
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/ReactionCubit.dart';
 import 'cubit/ShareCubit.dart';
 import 'cubit/ShareState.dart';
-import 'package:characters/characters.dart';
 
 class BottomSocialBar extends StatelessWidget {
   final int index;
