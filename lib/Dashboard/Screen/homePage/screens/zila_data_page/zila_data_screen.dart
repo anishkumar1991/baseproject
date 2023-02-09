@@ -229,11 +229,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               cubit.coreSangathanList = null;
               cubit.filterDtaSelectedIndex = 0;
               cubit.dataUnitList = state.dataUnit.data!;
-              // cubit.morchaData = UnitData(
-              //     name: 'Morcha',
-              //     id: cubit.coreSangathanList == null
-              //         ? cubit.dataUnitList.first.id
-              //         : null);
+
               for (var i = 0; i < cubit.dataUnitList.length; i++) {
                 if (cubit.dataUnitList[i].name == 'Core Sangathan') {
                   if (cubit.dataUnitList[i].subUnits?.isNotEmpty ?? false) {
@@ -254,13 +250,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   }
                 }
               }
-              print('first Unit Id=${cubit.unitId}');
-              print('first subUnitId=${cubit.subUnitId}');
-              // context.read<ZilaDataCubit>().getEntryData(data: {
-              //   "level": widget.dataLevelId,
-              //   "unit": cubit.unitId,
-              //   "level_name": cubit.levelNameId
-              // });
             } else {
               cubit.morchaList.clear();
               cubit.dataUnitList.clear();
@@ -268,11 +257,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               cubit.unitId = null;
               cubit.subUnitId = "";
             }
-            context.read<ZilaDataCubit>().getEntryData(data: {
-              "level": widget.dataLevelId,
-              "unit": cubit.unitId,
-              "level_name": cubit.levelNameId
-            });
+            if (cubit.levelNameId != null) {
+              context.read<ZilaDataCubit>().getEntryData(data: {
+                "level": widget.dataLevelId,
+                "unit": cubit.unitId,
+                "level_name": cubit.levelNameId
+              });
+            }
           }
           if (state is LoadingState) {
             return Shimmer.fromColors(
@@ -945,18 +936,20 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 cubit.partyzilaList = state.data;
                 cubit.levelNameId = cubit.partyzilaList.first.id;
                 cubit.zilaSelected = cubit.partyzilaList.first;
-                context.read<ZilaDataCubit>().getUnitData(data: {
-                  "type": "Unit",
-                  "data_level": widget.dataLevelId,
-                  "country_state_id": widget.countryStateId ??
-                      StorageService.userData?.user?.countryStateId
-                });
+
                 print('cubit.levelNameId==${cubit.levelNameId}');
                 if (widget.type == "Mandal" ||
                     widget.type == "Booth" ||
                     widget.type == "Shakti Kendra") {
                   DropdownHandler.dynamicDependentDropdown(
                       context, widget.type ?? "", cubit.levelNameId.toString());
+                } else {
+                  context.read<ZilaDataCubit>().getUnitData(data: {
+                    "type": "Unit",
+                    "data_level": widget.dataLevelId,
+                    "country_state_id": widget.countryStateId ??
+                        StorageService.userData?.user?.countryStateId
+                  });
                 }
               }
               return DropdownButtonHideUnderline(
@@ -1036,18 +1029,22 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             builder: (context, state) {
               final cubit = BlocProvider.of<ZilaDataCubit>(context);
               if (state is DependentDropdownSuccessState) {
+                cubit.levelNameId = null;
                 cubit.dependentDropdownList = state.dependentDropdownData;
+                context.read<ZilaDataCubit>().getUnitData(data: {
+                  "type": "Unit",
+                  "data_level": widget.dataLevelId,
+                  "country_state_id": widget.countryStateId ??
+                      StorageService.userData?.user?.countryStateId
+                });
                 if (cubit.dependentDropdownList.isNotEmpty) {
                   cubit.dependentDropdownSelected =
                       cubit.dependentDropdownList.first;
                   cubit.dependentLevelNameId =
                       cubit.dependentDropdownList.first.id;
                   cubit.levelNameId = cubit.dependentLevelNameId;
-                  context.read<ZilaDataCubit>().getEntryData(data: {
-                    "level": widget.dataLevelId,
-                    "unit": cubit.unitId,
-                    "level_name": cubit.levelNameId
-                  });
+                } else {
+                  cubit.dataList = [];
                 }
               }
               return DropdownButtonHideUnderline(
