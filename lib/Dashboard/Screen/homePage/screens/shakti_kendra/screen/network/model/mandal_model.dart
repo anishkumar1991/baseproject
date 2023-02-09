@@ -1,18 +1,26 @@
 class Mandal {
-  Data? data;
+  bool? success;
+  List<Data>? data;
   String? message;
 
-  Mandal({this.data, this.message});
+  Mandal({this.success, this.data, this.message});
 
   Mandal.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    success = json['success'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['message'] = this.message;
     return data;
@@ -20,38 +28,12 @@ class Mandal {
 }
 
 class Data {
-  String? locationType;
-  List<Locations>? locations;
-
-  Data({this.locationType, this.locations});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    locationType = json['location_type'];
-    if (json['locations'] != null) {
-      locations = <Locations>[];
-      json['locations'].forEach((v) {
-        locations!.add(new Locations.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['location_type'] = this.locationType;
-    if (this.locations != null) {
-      data['locations'] = this.locations!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Locations {
   int? id;
   String? name;
 
-  Locations({this.id, this.name});
+  Data({this.id, this.name});
 
-  Locations.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

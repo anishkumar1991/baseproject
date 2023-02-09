@@ -226,16 +226,16 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   Future<void> selectedDoaDate(BuildContext context) async {
     emit(AddEntryLoadingState());
     final DateTime? picked = await showDatePicker(
-        locale: const Locale.fromSubtags(languageCode: 'en'),
+        // locale: const Locale.fromSubtags(languageCode: 'en'),
         context: context,
-        initialDate: dateTime,
+        initialDate: DateTime(DateTime.now().year - 16, 1),
         firstDate: DateTime(1900, 8),
-        lastDate: DateTime.now());
+        lastDate: DateTime(DateTime.now().year - 16, 1));
     if (picked != null && picked != dateTime) {
       dateTime = picked;
-      date = ddMMMYYYYfromDateTime(dateTime);
-      dobController.text = date;
-      emit(DobSelectedState(date));
+      date = picked.toString();
+      dobController.text = ddMMMYYYYfromDateTime(dateTime);
+      emit(DobSelectedState(picked.toString()));
     }
   }
 
@@ -465,7 +465,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
     addEntryFormPrimary = [];
     addEntryFormSecondary = [];
-
+    dobController.clear();
     castSelected = null;
     categorySelected = null;
     qualificationSelected = null;

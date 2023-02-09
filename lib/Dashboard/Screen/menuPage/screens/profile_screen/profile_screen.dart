@@ -33,12 +33,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
-    dynamic lang = context.read<LanguageCubit>().changeStartLang();
-    if(lang.toString() == 'hi'){
-      context.read<ProfileCubit>().isTrue = false;
-     }else{
-      context.read<ProfileCubit>().isTrue = true;
-    }
+    context.read<ProfileCubit>().getSwitchValue();
   }
 
   @override

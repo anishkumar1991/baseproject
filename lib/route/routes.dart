@@ -204,11 +204,21 @@ class RouteGenerator {
           builder: (context) {
             Map<String, dynamic>? map = {};
             bool? isEdit;
+            String? vidhanSabhaName;
+            int? vidhanSabhaId;
+            String? mandalName;
+            String? shaktiKendrName;
+            List<int>? boothId;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
               isEdit = map['isEdit'];
+              vidhanSabhaName = map['vidhanSabhaName'];
+              vidhanSabhaId = map['vidhanSabhaId'];
+              mandalName = map['mandalName'];
+              shaktiKendrName = map['shaktiKendrName'];
+              boothId = map['boothId'];
             }
-            return  EditShaktiKendraScreen(isEdit: isEdit);
+            return  EditShaktiKendraScreen(isEdit: isEdit,vidhanSabhaId: vidhanSabhaId,vidhanSabhaName: vidhanSabhaName,mandalName: mandalName,shaktiKendrName: shaktiKendrName,boothId: boothId);
           },
         );
       case RoutePath.editEducationScreen:

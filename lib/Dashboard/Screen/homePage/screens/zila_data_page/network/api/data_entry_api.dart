@@ -27,4 +27,8 @@ abstract class DataEntryApi {
   @GET('/zila/api/data/delete_data_entry?id={id}&deletion_reason={reason}')
   Future<HttpResponse> deletePerson(@Header('Authorization') String token,
       @Path('id') int id, @Path('reason') String reason);
+
+  @GET('/zila/api/{remainingURL}')
+  Future<HttpResponse> dynamicDropdown(@Header('Authorization') String token,
+      @Path('remainingURL') String reason);
 }

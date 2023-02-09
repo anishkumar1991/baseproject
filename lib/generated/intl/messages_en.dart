@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createShaktiKendra":
             MessageLookupByLibrary.simpleMessage("Create Shakti Kendra"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("Data Entry"),
+        "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
+            "Data Unit is empty So you can\'t add entry"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("Date and Time *"),
         "dateTo": MessageLookupByLibrary.simpleMessage("Date (To)"),
         "dateToFrom": MessageLookupByLibrary.simpleMessage("Date (From To)"),
@@ -156,8 +158,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
         "newEntry": MessageLookupByLibrary.simpleMessage("New Entry"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noBoothAvailable":
+            MessageLookupByLibrary.simpleMessage("No booth available"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("No Data Available"),
+        "noDataUnit":
+            MessageLookupByLibrary.simpleMessage("No Data Unit are available"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("No organizations available"),
         "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
@@ -220,6 +226,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "STD Code Number should be 5 digit"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
+        "sureToDelete":
+            MessageLookupByLibrary.simpleMessage("Are you sure to delete?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("Total Program"),

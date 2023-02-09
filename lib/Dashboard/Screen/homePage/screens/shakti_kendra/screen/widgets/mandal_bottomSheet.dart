@@ -10,7 +10,9 @@ class MandalBottomSheet extends StatelessWidget {
   BuildContext? context;
   EditShaktiKendrCubit cubit;
   String? text;
-   MandalBottomSheet({Key? key,this.context,this.text,required this.cubit}) : super(key: key);
+
+  MandalBottomSheet({Key? key, this.context, this.text, required this.cubit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,45 +38,49 @@ class MandalBottomSheet extends StatelessWidget {
                 ),
                 spaceHeightWidget(30),
                 Expanded(
-                  child: cubit.mandal.data?.locations?.isNotEmpty ?? false ? ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount: cubit.mandal.data?.locations?.length,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                cubit.mandalSelected = cubit.mandal.data?.locations?[index].name ?? '';
-                                cubit.emitState();
-                                Navigator.pop(context);
-                              },
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  cubit.mandal.data?.locations?[index].name ?? '',
-                                  textAlign: TextAlign.left,
-                                  style: GoogleFonts.poppins(
-                                      color: AppColor.black, fontSize: 16),
+                  child: cubit.mandal.data?.isNotEmpty ?? false
+                      ? ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          itemCount: cubit.mandal.data?.length,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    cubit.mandalSelected =
+                                        cubit.mandal.data?[index].name ?? '';
+                                    cubit.mandalId =
+                                        cubit.mandal.data?[index].id;
+                                    cubit.emitState();
+                                    Navigator.pop(context);
+                                  },
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Text(
+                                      cubit.mandal.data?[index].name ?? '',
+                                      textAlign: TextAlign.left,
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.black, fontSize: 16),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            spaceHeightWidget(15),
-                            const Divider(
-                              color: AppColor.borderColor,
-                            ),
-                            spaceHeightWidget(15),
-                          ],
-                        );
-                      })
+                                spaceHeightWidget(15),
+                                const Divider(
+                                  color: AppColor.borderColor,
+                                ),
+                                spaceHeightWidget(15),
+                              ],
+                            );
+                          })
                       : Text(
-                    S.of(context).noDataAvailable,
-                    textAlign: TextAlign.left,
-                    style: GoogleFonts.poppins(
-                        color: AppColor.black, fontSize: 16),
-                  ),
+                          S.of(context).noDataAvailable,
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.poppins(
+                              color: AppColor.black, fontSize: 16),
+                        ),
                 )
               ],
             ),

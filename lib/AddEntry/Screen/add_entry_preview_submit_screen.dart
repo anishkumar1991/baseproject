@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:sangathan/AddEntry/Screen/widget/custom_textfield.dart';
 
 import '../../Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
@@ -27,6 +28,13 @@ class AddEntryPreviewSubmit extends StatefulWidget {
 }
 
 class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
+  String dateDDMMMYYYY(String date) {
+    DateTime tempDate = DateFormat("yyyy-MM-dd").parse(date);
+    var outputFormat = DateFormat('dd MMM yyyy');
+    var outputDate = outputFormat.format(tempDate);
+    return outputDate;
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AddEntryCubit>();
@@ -238,6 +246,12 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                       hintText: item.value,
                       suffixWidget:
                           uploadImage(gettingFilePath(item.key, cubit))),
+                ] else if (DynamicUIHandler.calenderView
+                    .contains(item.key)) ...[
+                  CommonTextField(
+                    title: FieldHandler.getFieldName(item.key, cubit),
+                    hintText: dateDDMMMYYYY(item.value),
+                  )
                 ] else ...[
                   spaceHeightWidget(8),
                   if (DynamicUIHandler.dropdowns.contains(item.key))
@@ -316,7 +330,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
               ),
             ),
           )
-        :const SizedBox();
+        : const SizedBox();
   }
 
   gettingFilePath(String key, AddEntryCubit cubit) {

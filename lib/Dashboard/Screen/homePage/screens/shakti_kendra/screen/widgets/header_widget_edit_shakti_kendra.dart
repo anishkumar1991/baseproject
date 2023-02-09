@@ -7,7 +7,7 @@ Widget headerWidgetEditShaktiKendra(BuildContext context) {
   return Row(
     children: [
       InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
           child: const Icon(Icons.arrow_back, size: 25)),

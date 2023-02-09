@@ -12,4 +12,12 @@ abstract class GetDropDownValue {
   @GET('/zila/api/data/required_locations?location_type=CountryState&location_id={id}&required_location_type=AssemblyConstituency')
   Future<HttpResponse> getVidhanSabhaValue(
       @Header('Authorization') String token, @Path('id') int id);
+
+  @GET('/zila/api/shakti_kendra/ac_sks_with_booths?ac={id}')
+  Future<HttpResponse> getShaktiKenr(
+      @Header('Authorization') String token, @Path('id') int id);
+
+  @GET('/api/v1/shakti_kendras/delete?shakti_kendra_id={id}&confirm_delete=true')
+  Future<HttpResponse> deleteShaktiKendr(
+      @Header('Authorization') String token, @Path('id') int id);
 }

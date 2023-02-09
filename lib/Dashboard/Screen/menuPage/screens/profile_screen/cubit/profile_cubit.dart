@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 
@@ -32,6 +33,17 @@ class ProfileCubit extends Cubit<ProfileState> {
   bool showAddress = false;
   bool showEducation = false;
   bool showBusiness = false;
+  GetStorage box = GetStorage();
+
+
+  getSwitchValue(){
+    String langCode = box.read('lang') ?? 'hi';
+    if(langCode == 'hi'){
+      isTrue = false;
+    }else{
+      isTrue = true;
+    }
+  }
 
   final api = UserDetailApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));

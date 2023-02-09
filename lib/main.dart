@@ -44,8 +44,8 @@ import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(
-  RemoteMessage message,
-) async {
+    RemoteMessage message,
+    ) async {
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
@@ -84,6 +84,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (create) => ReactionCubit()),
+
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => PollCubit()),
@@ -113,9 +114,11 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
         BlocProvider(create: (context) => ShareCubit()),
+
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context, lang) {
+        builder: (context,lang){
+          final cubit = context.read<LanguageCubit>();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             useInheritedMediaQuery: true,
@@ -134,8 +137,8 @@ class _MyAppState extends State<MyApp> {
             initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                    primary: AppColor.primaryColor,
-                  ),
+                primary: AppColor.primaryColor,
+              ),
             ),
           );
         },

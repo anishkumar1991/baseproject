@@ -1669,6 +1669,46 @@ class S {
       args: [],
     );
   }
+
+  /// `No Data Unit are available`
+  String get noDataUnit {
+    return Intl.message(
+      'No Data Unit are available',
+      name: 'noDataUnit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure to delete?`
+  String get sureToDelete {
+    return Intl.message(
+      'Are you sure to delete?',
+      name: 'sureToDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No booth available`
+  String get noBoothAvailable {
+    return Intl.message(
+      'No booth available',
+      name: 'noBoothAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data Unit is empty So you can't add entry`
+  String get dataUnitEmptyError {
+    return Intl.message(
+      'Data Unit is empty So you can\'t add entry',
+      name: 'dataUnitEmptyError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -81,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createShaktiKendra":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र  निर्माण"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("डाटा एंट्री"),
+        "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
+            "डेटा यूनिट उपलब्ध नहीं है इसलिए आप ऐड एंट्री नहीं कर सकते"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("दिनांक और समय * "),
         "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )"),
         "dateToFrom":
@@ -161,8 +163,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
         "newEntry": MessageLookupByLibrary.simpleMessage("नवीन एंट्री"),
         "no": MessageLookupByLibrary.simpleMessage("नहीं"),
+        "noBoothAvailable":
+            MessageLookupByLibrary.simpleMessage("कोई बूथ उपलब्ध नहीं है"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("कोई डेटा उपलब्ध नहीं है"),
+        "noDataUnit": MessageLookupByLibrary.simpleMessage(
+            "कोई डेटा यूनिट उपलब्ध नहीं है"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
         "noThanks": MessageLookupByLibrary.simpleMessage("जी नहीं, धन्यवाद"),
@@ -223,6 +229,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "एसटीडी कोड संख्या ५ अंकों की होनी चाहिए"),
         "subject": MessageLookupByLibrary.simpleMessage("विषय"),
         "submit": MessageLookupByLibrary.simpleMessage("सबमिट"),
+        "sureToDelete":
+            MessageLookupByLibrary.simpleMessage("क्या वाकई हटाना है?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
         "total": MessageLookupByLibrary.simpleMessage("कुल"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("कुल कार्यक्रम"),
