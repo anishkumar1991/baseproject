@@ -1,13 +1,23 @@
-
 import 'package:flutter/material.dart';
 
-class NewEntryFilterPage extends StatelessWidget {
-  const NewEntryFilterPage({super.key});
+import 'entry_detail_list.dart';
 
+class NewEntryFilterPage extends StatelessWidget {
+  NewEntryFilterPage({
+    Key? key,
+    this.type,
+    this.dataLevelId,
+    this.countryStateId,
+  }) : super(key: key);
+  final String? type;
+  final int? dataLevelId;
+  final int? countryStateId;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('a'),
+    return EntryDetailsList(
+      type: type,
+      dataLevelId: dataLevelId,
+      countryStateId: countryStateId,
     );
   }
 }

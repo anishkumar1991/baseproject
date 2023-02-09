@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/intl.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/delete_reason_model.dart';
@@ -33,11 +34,34 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? deleteId;
   int? levelNameId;
   int? dependentLevelNameId;
-  int selectedFilterIndex = 0;
+  int selectedFilterIndex = 1;
   void onTapFilterOptions(int index) {
     emit(LoadingState());
     selectedFilterIndex = index;
     emit(ZilaChangedState());
+  }
+
+  void filterData() {
+    emit(LoadingState());
+
+    if (selectedFilterIndex == 0) {
+      dataList!.sort(
+        (a, b) {
+          DateTime aDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+              .parse(a.createdAt ?? "");
+          DateTime bDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+              .parse(b.createdAt ?? "");
+
+          return bDate.compareTo(aDate);
+        },
+      );
+    } else if (selectedFilterIndex == 1) {
+      dataList!.sort((a, b) =>
+          a.designationName.toString().compareTo(b.designationName.toString()));
+    } else if (selectedFilterIndex == 2) {
+      dataList!.sort((a, b) => a.name.toString().compareTo(b.name.toString()));
+    }
+    emit(FilterChnagedState());
   }
 
   final api =

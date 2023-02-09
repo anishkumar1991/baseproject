@@ -171,13 +171,25 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                     children: [
                                       spaceHeightWidget(10),
                                       if (cubit.selectedFilterIndex == 0) ...[
-                                        const NewEntryFilterPage(),
+                                        NewEntryFilterPage(
+                                          type: widget.type,
+                                          dataLevelId: widget.dataLevelId,
+                                          countryStateId: widget.countryStateId,
+                                        ),
                                       ] else if (cubit.selectedFilterIndex ==
                                           1) ...[
-                                        const DesignationFilterPage()
+                                        DesignationFilterPage(
+                                          type: widget.type,
+                                          dataLevelId: widget.dataLevelId,
+                                          countryStateId: widget.countryStateId,
+                                        )
                                       ] else ...[
-                                        const AtoZfilterPage(),
-                                      ]
+                                        AtoZfilterPage(
+                                          type: widget.type,
+                                          dataLevelId: widget.dataLevelId,
+                                          countryStateId: widget.countryStateId,
+                                        ),
+                                      ],
 
                                       /// person list
                                       //entryDetails(cubit)
@@ -901,6 +913,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   child: InkWell(
                     onTap: (() {
                       cubit.onTapFilterOptions(0);
+                      cubit.filterData();
                     }),
                     child: Container(
                       decoration: BoxDecoration(
@@ -934,6 +947,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   child: InkWell(
                     onTap: (() {
                       cubit.onTapFilterOptions(1);
+                      cubit.filterData();
                     }),
                     child: Container(
                       height: 32,
@@ -962,6 +976,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   child: InkWell(
                     onTap: (() {
                       cubit.onTapFilterOptions(2);
+                      cubit.filterData();
                     }),
                     child: Container(
                       height: 32,
@@ -1016,12 +1031,16 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             builder: (context, state) {
               final cubit = BlocProvider.of<ZilaDataCubit>(context);
               if (state is PartyZilaSelectedState) {
+                cubit.selectedFilterIndex = 1;
+
                 context.read<ZilaDataCubit>().getDeleteReason();
 
                 cubit.zilaSelected = null;
                 cubit.partyzilaList = state.data;
-                cubit.levelNameId = cubit.partyzilaList.first.id;
-                cubit.zilaSelected = cubit.partyzilaList.first;
+                if (cubit.partyzilaList.isNotEmpty) {
+                  cubit.levelNameId = cubit.partyzilaList.first.id;
+                  cubit.zilaSelected = cubit.partyzilaList.first;
+                }
 
                 print('cubit.levelNameId==${cubit.levelNameId}');
                 if (widget.type == "Mandal" ||
