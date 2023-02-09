@@ -39,6 +39,7 @@ static const Color notificationTextColor = Color(0xFF2F2F2F);
   static const Color pinkColor = Color(0xFFecdfe5);
   static const Color lightGreenColor = Color(0xFFF1F8EF);
   static const Color darkBlue = Color(0xFF5F5390);
+  static const Color boothContainerColour = Color(0xFF154a7a);
   static Color greyWithOpacity01 = Colors.grey.withOpacity(0.1);
   static Color green = const Color(0xFFdfeeee);
 

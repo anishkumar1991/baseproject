@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/cubit/shakti_kendra_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/network/model/vidhanSabha_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/header_widget_edit_shakti_kendra.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/mandal_bottomSheet.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/select_booth.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/selected_booth.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/vidhanSabha_bottomSheet.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/warning_booth.dart';
-
-import '../../../../../../Storage/user_storage_service.dart';
 import '../../../../../../Values/app_colors.dart';
 import '../../../../../../Values/icons.dart';
 import '../../../../../../Values/space_height_widget.dart';
@@ -25,6 +19,7 @@ class EditShaktiKendraScreen extends StatefulWidget {
   String? mandalName;
   String? shaktiKendrName;
   int? vidhanSabhaId;
+  int? shaktiKendrId;
   List<int>? boothId;
 
   EditShaktiKendraScreen(
@@ -34,6 +29,7 @@ class EditShaktiKendraScreen extends StatefulWidget {
       this.vidhanSabhaName,
       this.shaktiKendrName,
       this.mandalName,
+      this.shaktiKendrId,
       this.boothId})
       : super(key: key);
 
@@ -57,6 +53,8 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
       context.read<EditShaktiKendrCubit>().mandalSelected =
           widget.mandalName ?? '';
       context.read<EditShaktiKendrCubit>().chekedValue = widget.boothId ?? [];
+      context.read<EditShaktiKendrCubit>().shaktiKendrId =
+          widget.shaktiKendrId ?? 0;
 
       context
           .read<EditShaktiKendrCubit>()
@@ -362,7 +360,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                                       cubit.chekedValue.length
                                                   ? const SizedBox.shrink()
                                                   : Text(
-                                                      ",",
+                                                      ", ",
                                                       style:
                                                           GoogleFonts.poppins(
                                                               color: AppColor
@@ -391,53 +389,53 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                         color: AppColor.black,
                         thickness: 1,
                       ),
-                      widget.isEdit ?? false
-                          ? Column(
-                              children: [
-                                spaceHeightWidget(10),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    S.of(context).selectedBooth,
-                                    style: GoogleFonts.poppins(
-                                        color: AppColor.naturalBlackColor,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                spaceHeightWidget(10),
-                                SelectedBooth(
-                                    title: 'Govt. Senior Secondary Girls High',
-                                    subTitle: "High School",
-                                    leadingText: '102',
-                                    onClose: () {}),
-                                spaceHeightWidget(20),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    S.of(context).boothSelectedTitle,
-                                    style: GoogleFonts.poppins(
-                                        color: AppColor.black.withOpacity(0.7),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                spaceHeightWidget(5),
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    S.of(context).boothDes,
-                                    style: GoogleFonts.poppins(
-                                        color: AppColor.naturalBlackColor
-                                            .withOpacity(0.7),
-                                        fontSize: 13),
-                                  ),
-                                ),
-                                spaceHeightWidget(10),
-                                const WarningBooth()
-                              ],
-                            )
-                          : const SizedBox.shrink()
+                      // widget.isEdit ?? false
+                      //     ? Column(
+                      //         children: [
+                      //           spaceHeightWidget(10),
+                      //           Align(
+                      //             alignment: Alignment.centerLeft,
+                      //             child: Text(
+                      //               S.of(context).selectedBooth,
+                      //               style: GoogleFonts.poppins(
+                      //                   color: AppColor.naturalBlackColor,
+                      //                   fontSize: 16,
+                      //                   fontWeight: FontWeight.w500),
+                      //             ),
+                      //           ),
+                      //           spaceHeightWidget(10),
+                      //           SelectedBooth(
+                      //               title: 'Govt. Senior Secondary Girls High',
+                      //               subTitle: "High School",
+                      //               leadingText: '102',
+                      //               onClose: () {}),
+                      //           spaceHeightWidget(20),
+                      //           Align(
+                      //             alignment: Alignment.centerLeft,
+                      //             child: Text(
+                      //               S.of(context).boothSelectedTitle,
+                      //               style: GoogleFonts.poppins(
+                      //                   color: AppColor.black.withOpacity(0.7),
+                      //                   fontSize: 16,
+                      //                   fontWeight: FontWeight.w500),
+                      //             ),
+                      //           ),
+                      //           spaceHeightWidget(5),
+                      //           Align(
+                      //             alignment: Alignment.centerLeft,
+                      //             child: Text(
+                      //               S.of(context).boothDes,
+                      //               style: GoogleFonts.poppins(
+                      //                   color: AppColor.naturalBlackColor
+                      //                       .withOpacity(0.7),
+                      //                   fontSize: 13),
+                      //             ),
+                      //           ),
+                      //           spaceHeightWidget(10),
+                      //           const WarningBooth()
+                      //         ],
+                      //       )
+                      //     : const SizedBox.shrink()
                     ],
                   ),
                 ),
@@ -458,10 +456,12 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                           toastPosition: EasyLoadingToastPosition.top);
                     } else {
                       await cubit.createAndEditShaktiKendr(
+                          context: context,
                           skName: cubit.shaktiKendrCtr.text,
                           vidhanSabhaId: cubit.zilaId,
                           mandalId: cubit.mandalId,
-                          booth: cubit.selectedBooth);
+                          booth: cubit.selectedBooth,
+                          isEdit: widget.isEdit);
                       Future.delayed(Duration.zero).then((value) {
                         Navigator.pop(context);
                       });
@@ -472,7 +472,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                       : S.of(context).makeShaktikendr,
                   width: MediaQuery.of(context).size.width * 0.6,
                   style:
-                      GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
+                  GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
                   padding: const EdgeInsets.symmetric(vertical: 10)),
               spaceHeightWidget(15),
             ],

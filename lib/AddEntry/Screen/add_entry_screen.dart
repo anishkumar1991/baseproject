@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -670,6 +669,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
 
                                     /// Here Secondary logic
                                     ExpansionTile(
+                                      expandedCrossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       iconColor: AppColor.black,
                                       collapsedIconColor: AppColor.black,
                                       tilePadding: EdgeInsets.zero,

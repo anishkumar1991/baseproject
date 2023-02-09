@@ -22,7 +22,6 @@ import 'widget/designation_filter_widget.dart';
 
 import 'widget/filter_options_widget.dart';
 
-
 class ZilaDataScreen extends StatefulWidget {
   const ZilaDataScreen(
       {super.key, required this.type, this.countryStateId, this.dataLevelId});
@@ -174,6 +173,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                   ],
                                 ),
                                 spaceHeightWidget(10),
+
+                                /// filter options
                                 const FilterOptions(),
                                 Expanded(
                                   child: SingleChildScrollView(
@@ -203,7 +204,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                                 widget.countryStateId,
                                           ),
                                         ]
-
                                       ],
                                     ),
                                   ),
@@ -225,9 +225,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   borderRadius: BorderRadius.circular(16)),
               backgroundColor: AppColor.buttonOrangeBackGroundColor,
               onPressed: (() {
-                if (cubit.dataUnitList?.isEmpty ?? true) {
+                if (cubit.coreSangathanList?.isEmpty ??
+                    true && cubit.morchaList.isEmpty) {
                   EasyLoading.showError(S.of(context).dataUnitEmptyError);
-
                 } else {
                   context.read<AddEntryCubit>().cleanAllVariableData();
                   Navigator.pushNamed(context, RoutePath.addEntryScreen,
@@ -311,7 +311,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
           return SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-
             child: cubit.dataUnitList == null
                 ? Shimmer.fromColors(
                     baseColor: AppColor.greyColor.withOpacity(0.3),
@@ -327,15 +326,15 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                   width: 140,
                                   color: AppColor.white,
                                 )).toList(),
-
                       ),
                     ))
-                : cubit.dataUnitList?.isEmpty ?? true
+                : cubit.coreSangathanList?.isEmpty ??
+                        true && cubit.morchaList.isEmpty
                     ? Padding(
                         padding: EdgeInsets.only(
                             left: MediaQuery.of(context).size.width * 0.20),
                         child: Text(
-                          S.of(context).noDataAvailable,
+                          S.of(context).noDataUnit,
                           textAlign: TextAlign.center,
                           style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
@@ -472,7 +471,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-
   Widget dropdownMainLocation() {
     return Expanded(
       child: Column(
@@ -554,6 +552,15 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           .toList(),
                       onChanged: ((value) async {
                         cubit.onChnageZila(value);
+                        if (widget.type == "Mandal" ||
+                            widget.type == "Booth" ||
+                            widget.type == "Shakti Kendra") {
+                          DropdownHandler.dynamicDependentDropdown(
+                              context,
+                              widget.type ?? "",
+                              cubit.levelNameId.toString(),
+                              widget.countryStateId ?? 0);
+                        }
                         if (widget.type != "Mandal" &&
                             widget.type != "Booth" &&
                             widget.type != "Shakti Kendra") {
@@ -564,15 +571,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                             "unit": cubit.unitId,
                             "level_name": cubit.levelNameId
                           });
-                        }
-                        if (widget.type == "Mandal" ||
-                            widget.type == "Booth" ||
-                            widget.type == "Shakti Kendra") {
-                          DropdownHandler.dynamicDependentDropdown(
-                              context,
-                              widget.type ?? "",
-                              cubit.levelNameId.toString(),
-                              widget.countryStateId ?? 0);
                         }
                       })));
             },

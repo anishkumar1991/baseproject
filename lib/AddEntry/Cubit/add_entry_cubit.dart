@@ -228,9 +228,11 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     final DateTime? picked = await showDatePicker(
         // locale: const Locale.fromSubtags(languageCode: 'en'),
         context: context,
-        initialDate: DateTime(DateTime.now().year - 16, 1),
+        initialDate: DateTime(
+            DateTime.now().year - 16, DateTime.now().month, DateTime.now().day),
         firstDate: DateTime(1900, 8),
-        lastDate: DateTime(DateTime.now().year - 16, 1));
+        lastDate: DateTime(DateTime.now().year - 16, DateTime.now().month,
+            DateTime.now().day));
     if (picked != null && picked != dateTime) {
       dateTime = picked;
       date = picked.toString();
