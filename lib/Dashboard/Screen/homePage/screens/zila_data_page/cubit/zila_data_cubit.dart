@@ -22,7 +22,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Locations? zilaSelected;
   Locations? dependentDropdownSelected;
   int filterDtaSelectedIndex = 0;
-  List<UnitData> dataUnitList = [];
+  List<UnitData>? dataUnitList;
   int? unitId;
   String subUnitId = "";
   List<SubUnits>? coreSangathanList = [];
@@ -34,7 +34,9 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? deleteId;
   int? levelNameId;
   int? dependentLevelNameId;
+
   int selectedFilterIndex = 1;
+
   void onTapFilterOptions(int index) {
     emit(LoadingState());
     selectedFilterIndex = index;
