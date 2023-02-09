@@ -34,13 +34,17 @@ class CustomReactionButton extends StatelessWidget {
         } else if (reaction == 5) {
           await cubit.sendReaction(id, "angry");
         }
-        print('reaction changed at $reaction');
       },
+      initialReaction: Reaction(
+        icon: const Icon(Icons.thumb_up_alt_sharp, size: 30),
+        value: 0,
+      ),
       reactions: [
         Reaction(
           title: Text(cubit1.tempModel!.posts[index].reactions[1].reaction.name
               .toString()),
-          icon: Image.asset("assets/images/likeicon.png", height: 35),
+          icon: const Icon(Icons.thumb_up_alt_sharp,
+              color: Colors.blue, size: 30),
           value: 1,
         ),
         Reaction(

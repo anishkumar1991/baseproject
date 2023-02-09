@@ -31,7 +31,7 @@ class AppColor {
   static const Color purpleColor = Color(0xFF912E60);
   static const Color buttonOrangeBackGroundColor = Color(0xFFFF9559);
   static const Color textGreyColor = Color(0xFF000000);
-
+static const Color notificationTextColor = Color(0xFF2F2F2F);
   static const Color yellow100Color = Color(0xFFFFF3EA);
   static const Color blue = Color(0xFF0D8BD2);
   static const Color tealColor = Color(0xFF259aab);

@@ -24,11 +24,10 @@ class _PollsState extends State<Polls> {
   Widget build(BuildContext context) {
     final cubit = context.read<FetchPostsCubit>();
     final cubit1 = context.read<PollCubit>();
-    return Material(
-      elevation: 4,
-      child: Screenshot(
-
-        controller: widget.screenshotController,
+    return Screenshot(
+      controller: widget.screenshotController,
+      child: Material(
+        elevation: 4,
         child: Padding(
           padding: const EdgeInsets.only(top: 16, left: 16, right: 19),
           child: Column(

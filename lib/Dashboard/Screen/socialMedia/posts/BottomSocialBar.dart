@@ -77,14 +77,21 @@ class BottomSocialBar extends StatelessWidget {
               IconButton(
                   onPressed: () async {
                     if (cubit1.tempModel!.posts[index].postType == "Poll") {
-                      final image1 = await screenshotController!.capture();
+                      final text =
+                          cubit1.tempModel!.posts[index].sharingContent;
+
+                      double pixelRatio =
+                          MediaQuery.of(context).devicePixelRatio;
+                      final image1 = await screenshotController!.capture(
+                          pixelRatio: pixelRatio,
+                          delay: const Duration(milliseconds: 10));
                       Uint8List bytes = image1!;
                       final directory =
                           await getApplicationDocumentsDirectory();
-                      final path = ('${directory.path}/codepassionately.png');
+                      final path = ('${directory.path}/image.png');
                       File(path).writeAsBytesSync(bytes);
                       XFile file = XFile(path);
-                      await Share.shareXFiles([file]);
+                      await Share.shareXFiles(text: text, [file]);
                     } else {
                       cubit2.shareToAll(id);
                       share(context, index);

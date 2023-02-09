@@ -117,7 +117,7 @@ class _MyAppState extends State<MyApp> {
 
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context, lang) {
+        builder: (context,lang){
           final cubit = context.read<LanguageCubit>();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
