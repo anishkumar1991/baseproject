@@ -33,7 +33,6 @@ import 'Dashboard/Screen/menuPage/screens/edit_business/cubit/edit_business_cubi
 import 'Dashboard/Screen/menuPage/screens/edit_education/cubit/edit_education__cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
-import 'Dashboard/Screen/notification/screens/NotificationScreen.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ReactionCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
@@ -45,8 +44,8 @@ import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(
-    RemoteMessage message,
-    ) async {
+  RemoteMessage message,
+) async {
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
@@ -85,7 +84,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (create) => ReactionCubit()),
-
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => PollCubit()),
@@ -115,10 +113,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
         BlocProvider(create: (context) => ShareCubit()),
-
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context,lang){
+        builder: (context, lang) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             useInheritedMediaQuery: true,
@@ -134,11 +131,11 @@ class _MyAppState extends State<MyApp> {
             locale: const Locale.fromSubtags(languageCode: 'hi'),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
-            home:  NotificationScreen(),
+            initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: AppColor.primaryColor,
-              ),
+                    primary: AppColor.primaryColor,
+                  ),
             ),
           );
         },

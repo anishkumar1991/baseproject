@@ -36,7 +36,9 @@ class _NotificationScreenState extends State<NotificationScreen>
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
             icon: Image.asset(
               "assets/images/notificationBackIcon.png",
               height: 16.74,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../Values/app_colors.dart';
+import '../../notification/screens/NotificationScreen.dart';
 
 class TopBar extends StatelessWidget {
   const TopBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(
@@ -18,7 +19,11 @@ class TopBar extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: InkWell(
                   onTap: (() {
-                    //  homePageScaffoldGlobalKey.currentState!.openDrawer();
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const NotificationScreen();
+                      },
+                    ));
                   }),
                   child: Container(
                       padding: const EdgeInsets.all(8),
@@ -57,7 +62,6 @@ class TopBar extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   '',
-
                 ),
               ),
             )
