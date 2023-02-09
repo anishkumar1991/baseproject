@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                           src: state.reelsModel.reels[index].postData.reel,
                           title: state.reelsModel.reels[index].title,
                           views: state.reelsModel.reels[index].viewCount
-                              .toString(), index: index,
+                              .toString(), index: index, id: state.reelsModel.reels[index].id.toString(),
                         );
                         // src: videos[index % videos.length]);
                       },

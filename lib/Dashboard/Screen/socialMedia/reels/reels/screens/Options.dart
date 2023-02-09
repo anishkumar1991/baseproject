@@ -5,16 +5,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/Share.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/ShareOnWhatsapp.dart';
+
+import '../share/sharingstorage.dart';
 
 class OptionsScreen extends StatefulWidget {
   final int index;
+  final String id;
   final String title;
   final String views;
+  final String src;
 
   const OptionsScreen(
-      {Key? key, required this.title, required this.views, required this.index})
+      {Key? key,
+      required this.title,
+      required this.views,
+      required this.index,
+      required this.src,
+      required this.id})
       : super(key: key);
 
   @override
@@ -25,6 +33,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
   bool reveal = false;
 
   Widget build(BuildContext context) {
+    String? savePath;
     final cubit = context.read<ReelShareCubit>();
     final cubit1 = context.read<ReelsCubit>();
 
@@ -161,10 +170,10 @@ class _OptionsScreenState extends State<OptionsScreen> {
                       const SizedBox(height: 4),
                       IconButton(
                           onPressed: () {
-                            cubit.shareReelToAll(cubit1
-                                .model!.reels[widget.index].id
-                                .toString());
-                            share(context, widget.index);
+                            cubit.shareReelToAll(
+                                "https://fluttercampus.com/sample.pdf");
+                            ReelDownloadshare(
+                                context, widget.index, widget.src);
                           },
                           icon: const Icon(
                             Icons.share,
@@ -178,6 +187,9 @@ class _OptionsScreenState extends State<OptionsScreen> {
                               fontWeight: FontWeight.w600, color: Colors.white),
                         ),
                       ),
+                      const SizedBox(height: 4),
+
+
                       const SizedBox(height: 150),
                     ],
                   ),

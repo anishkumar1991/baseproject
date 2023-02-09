@@ -6,13 +6,14 @@ import 'LikeIcon.dart';
 import 'Options.dart';
 
 class ContentScreen extends StatefulWidget {
-  final String? src;
+  final String src;
   final String title;
   final String views;
   final int index;
+  final String id;
 
   const ContentScreen(
-      {Key? k, required this.title, required this.views, this.src, required this.index});
+      {Key? k, required this.title, required this.views, required this.src, required this.index, required this.id});
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -75,11 +76,8 @@ class _ContentScreenState extends State<ContentScreen> {
                   print(
                       "--------------->${_videoPlayerController.value.position}");
                 },
-                child: AspectRatio(
-                  aspectRatio: _videoPlayerController.value.aspectRatio,
-                  child: Chewie(
-                    controller: _chewieController!,
-                  ),
+                child: Chewie(
+                  controller: _chewieController!,
                 ),
               )
             : Column(
@@ -97,9 +95,11 @@ class _ContentScreenState extends State<ContentScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: OptionsScreen(
+            id: widget.id,
             title: widget.title,
             views: widget.views,
             index: widget.index,
+            src: widget.src,
           ),
         )
       ],
