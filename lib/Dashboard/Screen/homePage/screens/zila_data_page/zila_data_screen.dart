@@ -13,12 +13,12 @@ import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../AddEntry/Cubit/add_entry_cubit.dart';
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import '../../../../../Storage/user_storage_service.dart';
 import 'cubit/zila_data_state.dart';
+import 'dropdown_handler/dropdown_handler.dart';
 
 class ZilaDataScreen extends StatefulWidget {
   const ZilaDataScreen(
@@ -36,12 +36,16 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
   @override
   void initState() {
     context.read<ZilaDataCubit>().dataList = null;
-    context.read<ZilaDataCubit>().getPartyZila(
+    context.read<ZilaDataCubit>().partyzilaList = [];
+    context.read<ZilaDataCubit>().dependentDropdownList = [];
+    context.read<ZilaDataCubit>().dependentDropdownSelected = null;
+    context.read<ZilaDataCubit>().zilaSelected = null;
+    DropdownHandler.dynamicSangathanDropdown(context, widget.type ?? "");
+    /* context.read<ZilaDataCubit>().getPartyZila(
         id: widget.countryStateId ??
-            StorageService.userData!.user!.countryStateId!);
-    print('data_leve${widget.dataLevelId}');
+            StorageService.userData!.user!.countryStateId!);*/
+    print('data_level :${widget.dataLevelId}');
     print('country_state_id${widget.countryStateId}');
-
     super.initState();
   }
 
@@ -86,13 +90,39 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     spaceWidthWidget(8),
 
                     /// dropdown location
-                    dropdownLocation(),
+                    dropdownMainLocation(),
                   ],
                 ),
                 const Divider(
                   thickness: 1.2,
                   color: AppColor.textBlackColor,
                 ),
+                spaceHeightWidget(13),
+
+                /// dependent dropdown
+                if (widget.type == "Mandal" ||
+                    widget.type == "Booth" ||
+                    widget.type == "Shakti Kendra") ...[
+                  Row(
+                    children: [
+                      spaceWidthWidget(8),
+                      const Icon(
+                        Icons.location_on_outlined,
+                        color: AppColor.textBlackColor,
+                      ),
+                      spaceWidthWidget(8),
+
+                      /// dropdown location
+                      dependentDropdownLocation(),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: 1.2,
+                    color: AppColor.textBlackColor,
+                  ),
+                ] else
+                  const SizedBox(),
+
                 spaceHeightWidget(13),
 
                 /// unit data widget
@@ -888,13 +918,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     );
   }
 
-  Widget dropdownLocation() {
+  Widget dropdownMainLocation() {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${widget.type}',
+            '${DropdownHandler.mainDropdownName(widget.type ?? "")}',
             style: GoogleFonts.roboto(
                 color: AppColor.greyColor,
                 fontWeight: FontWeight.w400,
@@ -912,7 +942,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 context.read<ZilaDataCubit>().getDeleteReason();
 
                 cubit.zilaSelected = null;
-                cubit.partyzilaList = state.data.data!;
+                cubit.partyzilaList = state.data;
                 cubit.levelNameId = cubit.partyzilaList.first.id;
                 cubit.zilaSelected = cubit.partyzilaList.first;
                 context.read<ZilaDataCubit>().getUnitData(data: {
@@ -922,11 +952,18 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       StorageService.userData?.user?.countryStateId
                 });
                 print('cubit.levelNameId==${cubit.levelNameId}');
+                if (widget.type == "Mandal" ||
+                    widget.type == "Booth" ||
+                    widget.type == "Shakti Kendra") {
+                  DropdownHandler.dynamicDependentDropdown(
+                      context, widget.type ?? "", cubit.levelNameId.toString());
+                }
               }
               return DropdownButtonHideUnderline(
                   child: DropdownButton(
                       isDense: true,
-                      hint: Text('Select ${widget.type}',
+                      hint: Text(
+                          'Select ${DropdownHandler.mainDropdownName(widget.type ?? "")}',
                           style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w400,
                               color: AppColor.greyColor,
@@ -953,6 +990,97 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           .toList(),
                       onChanged: ((value) async {
                         cubit.onChnageZila(value);
+                        if (widget.type != "Mandal" &&
+                            widget.type != "Booth" &&
+                            widget.type != "Shakti Kendra") {
+                          await context
+                              .read<ZilaDataCubit>()
+                              .getEntryData(data: {
+                            "level": widget.dataLevelId,
+                            "unit": cubit.unitId,
+                            "level_name": cubit.levelNameId
+                          });
+                        }
+                        if (widget.type == "Mandal" ||
+                            widget.type == "Booth" ||
+                            widget.type == "Shakti Kendra") {
+                          DropdownHandler.dynamicDependentDropdown(context,
+                              widget.type ?? "", cubit.levelNameId.toString());
+                        }
+                      })));
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget dependentDropdownLocation() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
+            style: GoogleFonts.roboto(
+                color: AppColor.greyColor,
+                fontWeight: FontWeight.w400,
+                fontSize: 14),
+          ),
+          BlocConsumer<ZilaDataCubit, ZilaDataState>(
+            listener: ((context, state) {
+              if (state is GetPartZilaErrorState) {
+                EasyLoading.showError(state.error);
+              }
+            }),
+            builder: (context, state) {
+              final cubit = BlocProvider.of<ZilaDataCubit>(context);
+              if (state is DependentDropdownSuccessState) {
+                cubit.dependentDropdownList = state.dependentDropdownData;
+                if (cubit.dependentDropdownList.isNotEmpty) {
+                  cubit.dependentDropdownSelected =
+                      cubit.dependentDropdownList.first;
+                  cubit.dependentLevelNameId =
+                      cubit.dependentDropdownList.first.id;
+                  cubit.levelNameId = cubit.dependentLevelNameId;
+                  context.read<ZilaDataCubit>().getEntryData(data: {
+                    "level": widget.dataLevelId,
+                    "unit": cubit.unitId,
+                    "level_name": cubit.levelNameId
+                  });
+                }
+              }
+              return DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                      isDense: true,
+                      hint: Text(
+                          'Select ${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
+                          style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.greyColor,
+                              fontSize: 16)),
+                      value: cubit.dependentDropdownSelected,
+                      icon: const Icon(
+                        Icons.expand_more,
+                        color: AppColor.textBlackColor,
+                        size: 24,
+                      ),
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: AppColor.textBlackColor),
+                      isExpanded: true,
+                      items: cubit.dependentDropdownList
+                          .map((e) => DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e.name ?? '',
+                                style: GoogleFonts.roboto(
+                                    fontWeight: FontWeight.w400, fontSize: 16),
+                              )))
+                          .toList(),
+                      onChanged: ((value) async {
+                        cubit.onDependentDropdown(value);
                         await context.read<ZilaDataCubit>().getEntryData(data: {
                           "level": widget.dataLevelId,
                           "unit": cubit.unitId,

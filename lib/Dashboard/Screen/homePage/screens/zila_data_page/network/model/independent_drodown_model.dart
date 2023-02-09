@@ -48,7 +48,7 @@ class IndependentData {
 class Locations {
   int? id;
   String? name;
-  String? number;
+  dynamic number;
   int? mandalId;
   String? mandalName;
 
