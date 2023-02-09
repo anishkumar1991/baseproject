@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meta/meta.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/network/api/mandal_api.dart';
@@ -8,6 +9,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/model/booth_selection_model.dart'
     as data;
 import '../../../../../../../Storage/user_storage_service.dart';
+import '../../cubit/shakti_kendra_cubit.dart';
 import '../model/booth_selection_model.dart';
 
 part 'edit_shakti_kendr_state.dart';
@@ -16,7 +18,7 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
   EditShaktiKendrCubit() : super(EditShaktiKendrInitial());
 
   String zilaSelected = '';
-
+  int? shaktiKendrId;
   int? zilaId;
   int? mandalId;
   String zilaSelectedName = "";
@@ -81,18 +83,12 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
   }
 
   createAndEditShaktiKendr(
-      {int? vidhanSabhaId, int? mandalId, String? skName, List? booth}) async {
+      {int? vidhanSabhaId, int? mandalId, String? skName, List? booth,bool? isEdit,required BuildContext context}) async {
     try {
       EasyLoading.show();
       emit(LoadingEditShaktiKendraState());
       StorageService.getUserAuthToken();
-      var res = await api.createAndEditShaktiKendr(
-          'Bearer ${StorageService.userAuthToken}', {
-        "ac": vidhanSabhaId,
-        "mandal": mandalId,
-        "sk_name": skName,
-        "booths": booth
-      });
+      var res = await apiCalling(isEdit: isEdit,booth: booth,mandalId: mandalId,vidhanSabhaId: vidhanSabhaId,skName: skName);
       print(
           "------------------------------------ booth DropDownValue  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
@@ -106,6 +102,9 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
         EasyLoading.dismiss();
         EasyLoading.showToast(data.message ?? '',
             toastPosition: EasyLoadingToastPosition.top);
+        Future.delayed(Duration.zero).then((value) => {
+        context.read<ShaktiKendraCubit>().getShaktiKendra(id: zilaId ?? 236)
+        });
       } else {
         EasyLoading.dismiss();
         EasyLoading.showToast("${res.data['message']}",
@@ -116,6 +115,34 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
       EasyLoading.dismiss();
       EasyLoading.showToast("Something Went Wrong");
       print('error=$e');
+    }
+  }
+
+  apiCalling(
+      {int? vidhanSabhaId,
+      int? mandalId,
+      String? skName,
+      List? booth,
+      bool? isEdit}) async {
+
+    if(isEdit == true){
+      print("=================================================== $shaktiKendrId");
+      return await api.createAndEditShaktiKendr(
+          'Bearer ${StorageService.userAuthToken}', {
+        "ac": vidhanSabhaId,
+        "mandal": mandalId,
+        "sk_name": skName,
+        "booths": booth,
+        "sk": shaktiKendrId
+      });
+    }else{
+      return await api.createAndEditShaktiKendr(
+          'Bearer ${StorageService.userAuthToken}', {
+        "ac": vidhanSabhaId,
+        "mandal": mandalId,
+        "sk_name": skName,
+        "booths": booth
+      });
     }
   }
 

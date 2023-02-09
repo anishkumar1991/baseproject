@@ -7,6 +7,20 @@ class ShaktiKendraInitial extends ShaktiKendraState {}
 
 class LoadingShaktiKendraState extends ShaktiKendraInitial {}
 
+class FatchDataVidhanSabhaState extends ShaktiKendraInitial {
+  final VidhanSabha data;
+
+  FatchDataVidhanSabhaState(this.data);
+}
+
+class ErrorVidhanSabhaState extends ShaktiKendraInitial {
+  final String error;
+
+  ErrorVidhanSabhaState({required this.error});
+}
+
+class LoadingShaktiKendraDetailState extends ShaktiKendraInitial {}
+
 class ZilaChangedShaktiKendraState extends ShaktiKendraInitial {}
 
 class FilterChangeState extends ShaktiKendraInitial {}

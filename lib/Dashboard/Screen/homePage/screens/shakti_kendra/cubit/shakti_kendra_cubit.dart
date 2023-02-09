@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/model/delete_model.dart';
 
@@ -31,7 +32,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
-    emit(LoadingShaktiKendraState());
+   // emit(());
   }
 
   Future getDropDownValueOfVidhanSabha({required int id}) async {
@@ -49,19 +50,20 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         VidhanSabha data = VidhanSabha.fromJson(res.response.data);
-        vidhanSabha = data;
-        getShaktiKendra(id: vidhanSabha.data?.locations?.first.id ?? 357);
+        emit(FatchDataVidhanSabhaState(data));
       } else {
+        emit(ErrorVidhanSabhaState(error: 'someting went wrong'));
         print('error=${res.data['message']}');
       }
     } catch (e) {
+      emit( ErrorVidhanSabhaState(error: e.toString()));
       print('error=$e');
     }
   }
 
   getShaktiKendra({required int id}) async {
     try {
-      emit(LoadingShaktiKendraState());
+      emit(LoadingShaktiKendraDetailState());
       StorageService.getUserAuthToken();
       var res =
           await api.getShaktiKenr('Bearer ${StorageService.userAuthToken}', id);
@@ -75,7 +77,6 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         ShaktiKendr data = ShaktiKendr.fromJson(res.response.data);
-        // shaktiKendr = data;
         emit(ShaktiKendraFatchData(data));
       } else {
         emit(ShaktiKendraErrorState(res.data['message']));
@@ -129,13 +130,32 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
       }
     } catch (e) {
       EasyLoading.dismiss();
-      emit(ShaktiKendraErrorState('Something Went Wrong'));
+      emit(DeleteShaktiKendraErrorState('Something Went Wrong'));
     }
   }
 
   getBoothId(List<Booths>? booths) {}
 
   changeFilter() {
+    if(isSelectedIndex == 0){
+      shaktiKendr.data?.sort(
+            (a, b) {
+          DateTime aDate =
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(a.createdAt ?? "");
+          DateTime bDate =
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(b.createdAt ?? "");
+          return bDate.compareTo(aDate);
+        },
+      );
+    }else if(isSelectedIndex == 1){
+      shaktiKendr.data?.sort((a, b){
+        return (a.mandal?.name?.toLowerCase() ?? 'z').compareTo((b.mandal?.name?.toLowerCase()) ?? 'z');
+      });
+    }else if(isSelectedIndex == 2){
+      shaktiKendr.data?.sort((a, b){
+        return (a.name?.toLowerCase() ?? 'z').compareTo((b.name?.toLowerCase()) ?? 'z');
+      });
+    }
     emit(LoadingShaktiKendraState());
     // emit(FilterChangeState());
   }

@@ -205,6 +205,7 @@ class RouteGenerator {
             Map<String, dynamic>? map = {};
             bool? isEdit;
             String? vidhanSabhaName;
+            int? shaktiKendrId;
             int? vidhanSabhaId;
             String? mandalName;
             String? shaktiKendrName;
@@ -217,8 +218,9 @@ class RouteGenerator {
               mandalName = map['mandalName'];
               shaktiKendrName = map['shaktiKendrName'];
               boothId = map['boothId'];
+              shaktiKendrId = map['shaktiKendrId'];
             }
-            return  EditShaktiKendraScreen(isEdit: isEdit,vidhanSabhaId: vidhanSabhaId,vidhanSabhaName: vidhanSabhaName,mandalName: mandalName,shaktiKendrName: shaktiKendrName,boothId: boothId);
+            return  EditShaktiKendraScreen(isEdit: isEdit,vidhanSabhaId: vidhanSabhaId,vidhanSabhaName: vidhanSabhaName,mandalName: mandalName,shaktiKendrName: shaktiKendrName,boothId: boothId,shaktiKendrId: shaktiKendrId);
           },
         );
       case RoutePath.editEducationScreen:
