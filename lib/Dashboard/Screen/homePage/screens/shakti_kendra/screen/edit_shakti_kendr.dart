@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/cubit/shakti_kendra_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/network/model/vidhanSabha_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/header_widget_edit_shakti_kendra.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/mandal_bottomSheet.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/select_booth.dart';
@@ -20,8 +21,21 @@ import 'cubit/edit_shakti_kendr_cubit.dart';
 
 class EditShaktiKendraScreen extends StatefulWidget {
   bool? isEdit;
+  String? vidhanSabhaName;
+  String? mandalName;
+  String? shaktiKendrName;
+  int? vidhanSabhaId;
+  List<int>? boothId;
 
-  EditShaktiKendraScreen({Key? key, this.isEdit = false}) : super(key: key);
+  EditShaktiKendraScreen(
+      {Key? key,
+      this.isEdit = false,
+      this.vidhanSabhaId,
+      this.vidhanSabhaName,
+      this.shaktiKendrName,
+      this.mandalName,
+      this.boothId})
+      : super(key: key);
 
   @override
   State<EditShaktiKendraScreen> createState() => _EditShaktiKendraScreenState();
@@ -34,8 +48,23 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
   }
 
   apiCall() {
-    context.read<EditShaktiKendrCubit>().getDropDownValueOfmandal(
-        id: StorageService.userData!.user!.countryStateId!, zilaId: 255);
+    if (widget.isEdit == true) {
+      context.read<EditShaktiKendrCubit>().zilaSelected =
+          widget.vidhanSabhaName ?? '';
+      context.read<EditShaktiKendrCubit>().zilaId = widget.vidhanSabhaId ?? 236;
+      context.read<EditShaktiKendrCubit>().shaktiKendrCtr.text =
+          widget.shaktiKendrName ?? '';
+      context.read<EditShaktiKendrCubit>().mandalSelected =
+          widget.mandalName ?? '';
+      context.read<EditShaktiKendrCubit>().chekedValue = widget.boothId ?? [];
+
+      context
+          .read<EditShaktiKendrCubit>()
+          .getDropDownValueOfmandal(id: widget.vidhanSabhaId ?? 236);
+      context
+          .read<EditShaktiKendrCubit>()
+          .getBoothValuew(id: widget.vidhanSabhaId ?? 236);
+    }
   }
 
   @override
@@ -164,6 +193,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                           subtitle: SizedBox(
                             height: 20,
                             child: TextField(
+                              controller: cubit.shaktiKendrCtr,
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.zero,
                                   border: InputBorder.none,
@@ -177,17 +207,27 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                           return ListTile(
                             horizontalTitleGap: 8,
                             onTap: () async {
-                              await showModalBottomSheet(
-                                  context: context,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(28.0),
-                                  ),
-                                  builder: (builder) {
-                                    return MandalBottomSheet(
-                                        cubit: cubit,
-                                        context: context,
-                                        text: S.of(context).mandal);
-                                  });
+                              if (context
+                                      .read<EditShaktiKendrCubit>()
+                                      .zilaSelected ==
+                                  '') {
+                                EasyLoading.showToast(
+                                    "Please Select Vidhansabha first",
+                                    toastPosition:
+                                        EasyLoadingToastPosition.top);
+                              } else {
+                                await showModalBottomSheet(
+                                    context: context,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(28.0),
+                                    ),
+                                    builder: (builder) {
+                                      return MandalBottomSheet(
+                                          cubit: cubit,
+                                          context: context,
+                                          text: S.of(context).mandal);
+                                    });
+                              }
                             },
                             dense: true,
                             contentPadding: EdgeInsets.zero,
@@ -405,6 +445,28 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
               spaceHeightWidget(15),
               CommonButton(
                   borderRadius: 15,
+                  onTap: () async {
+                    cubit.emitState();
+                    if (cubit.zilaSelected == "") {
+                      EasyLoading.showToast("Please select vidhanSabha",
+                          toastPosition: EasyLoadingToastPosition.top);
+                    } else if (cubit.shaktiKendrCtr.text.isEmpty) {
+                      EasyLoading.showToast("Please enter shakti kendr name",
+                          toastPosition: EasyLoadingToastPosition.top);
+                    } else if (cubit.mandalSelected == "") {
+                      EasyLoading.showToast("Please select mandal",
+                          toastPosition: EasyLoadingToastPosition.top);
+                    } else {
+                      await cubit.createAndEditShaktiKendr(
+                          skName: cubit.shaktiKendrCtr.text,
+                          vidhanSabhaId: cubit.zilaId,
+                          mandalId: cubit.mandalId,
+                          booth: cubit.selectedBooth);
+                      Future.delayed(Duration.zero).then((value) {
+                        Navigator.pop(context);
+                      });
+                    }
+                  },
                   title: widget.isEdit ?? false
                       ? S.of(context).submit
                       : S.of(context).makeShaktikendr,

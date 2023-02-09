@@ -156,6 +156,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nameOfTour": MessageLookupByLibrary.simpleMessage("Name Of Tour"),
         "newEntry": MessageLookupByLibrary.simpleMessage("New Entry"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noBoothAvailable":
+            MessageLookupByLibrary.simpleMessage("No booth available"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("No Data Available"),
         "noDataUnit":

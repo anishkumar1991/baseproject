@@ -163,5 +163,6 @@
   "please":"कृपया",
   "enter":"दर्ज करें",
   "noDataUnit":"कोई डेटा यूनिट उपलब्ध नहीं है",
-  "sureToDelete":"क्या वाकई हटाना है?"
+  "sureToDelete":"क्या वाकई हटाना है?",
+  "noBoothAvailable" : "कोई बूथ उपलब्ध नहीं है"
 }

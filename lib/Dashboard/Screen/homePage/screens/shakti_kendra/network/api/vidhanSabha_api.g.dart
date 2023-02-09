@@ -94,7 +94,7 @@ class _GetDropDownValue implements GetDropDownValue {
     )
             .compose(
               _dio.options,
-              '/api/v1/shakti_kendras/delete?shakti_kendra_id=${id}&confirm_delete=false',
+              '/api/v1/shakti_kendras/delete?shakti_kendra_id=${id}&confirm_delete=true',
               queryParameters: queryParameters,
               data: _data,
             )

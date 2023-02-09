@@ -161,6 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "nameOfTour": MessageLookupByLibrary.simpleMessage("प्रवास का नाम*"),
         "newEntry": MessageLookupByLibrary.simpleMessage("नवीन एंट्री"),
         "no": MessageLookupByLibrary.simpleMessage("नहीं"),
+        "noBoothAvailable":
+            MessageLookupByLibrary.simpleMessage("कोई बूथ उपलब्ध नहीं है"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("कोई डेटा उपलब्ध नहीं है"),
         "noDataUnit": MessageLookupByLibrary.simpleMessage(

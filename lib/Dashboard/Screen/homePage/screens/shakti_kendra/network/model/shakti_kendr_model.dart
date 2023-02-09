@@ -34,15 +34,15 @@ class Data {
   String? updatedAt;
   int? assemblyConstituencyId;
   int? mandalId;
-  Null? number;
+  String? number;
   Null? documentId;
   Null? deletedAt;
   Null? mahaSystemId;
   int? createdById;
   int? skPeople;
   List<Booths>? booths;
-  CreatedBy? createdBy;
-  CreatedBy? mandal;
+  Mandal? mandal;
+  Mandal? createdBy;
 
   Data(
       {this.id,
@@ -58,8 +58,8 @@ class Data {
         this.createdById,
         this.skPeople,
         this.booths,
-        this.createdBy,
-        this.mandal});
+        this.mandal,
+        this.createdBy});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -80,11 +80,11 @@ class Data {
         booths!.add(new Booths.fromJson(v));
       });
     }
-    createdBy = json['created_by'] != null
-        ? new CreatedBy.fromJson(json['created_by'])
-        : null;
     mandal =
-    json['mandal'] != null ? new CreatedBy.fromJson(json['mandal']) : null;
+    json['mandal'] != null ? new Mandal.fromJson(json['mandal']) : null;
+    createdBy = json['created_by'] != null
+        ? new Mandal.fromJson(json['created_by'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -104,11 +104,11 @@ class Data {
     if (this.booths != null) {
       data['booths'] = this.booths!.map((v) => v.toJson()).toList();
     }
-    if (this.createdBy != null) {
-      data['created_by'] = this.createdBy!.toJson();
-    }
     if (this.mandal != null) {
       data['mandal'] = this.mandal!.toJson();
+    }
+    if (this.createdBy != null) {
+      data['created_by'] = this.createdBy!.toJson();
     }
     return data;
   }
@@ -139,13 +139,13 @@ class Booths {
   }
 }
 
-class CreatedBy {
+class Mandal {
   int? id;
   String? name;
 
-  CreatedBy({this.id, this.name});
+  Mandal({this.id, this.name});
 
-  CreatedBy.fromJson(Map<String, dynamic> json) {
+  Mandal.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

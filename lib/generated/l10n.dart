@@ -1689,6 +1689,16 @@ class S {
       args: [],
     );
   }
+
+  /// `No booth available`
+  String get noBoothAvailable {
+    return Intl.message(
+      'No booth available',
+      name: 'noBoothAvailable',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

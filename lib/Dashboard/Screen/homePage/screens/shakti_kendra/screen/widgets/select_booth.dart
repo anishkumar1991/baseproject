@@ -59,15 +59,25 @@ class SelectBooth extends StatelessWidget {
                                       checkColor: Colors.green,
                                       activeColor: AppColor.white,
                                       side: MaterialStateBorderSide.resolveWith(
-                                            (states) => BorderSide(width: 1.0, color: AppColor.naturalBlackColor),
+                                        (states) => BorderSide(
+                                            width: 1.0,
+                                            color: AppColor.naturalBlackColor),
                                       ),
-                                      value: cubit.chekedValue.contains(cubit.boothData.data?[index].id),
+                                      value: cubit.chekedValue.contains(
+                                          cubit.boothData.data?[index].id),
                                       onChanged: (value) {
-
-                                        if(cubit.chekedValue.contains(cubit.boothData.data?[index].id)){
-                                          cubit.chekedValue.removeAt(index);
-                                        }else{
-                                          cubit.chekedValue.add(cubit.boothData.data?[index].id ?? 0);
+                                        if (cubit.chekedValue.contains(
+                                            cubit.boothData.data?[index].id)) {
+                                          cubit.chekedValue.remove(
+                                              cubit.boothData.data?[index].id);
+                                          cubit.selectedBooth.remove(
+                                              cubit.boothData.data?[index]);
+                                        } else {
+                                          cubit.chekedValue.add(
+                                              cubit.boothData.data?[index].id ??
+                                                  0);
+                                          cubit.selectedBooth.add(
+                                              cubit.boothData.data![index]);
                                         }
                                         cubit.emitState();
                                       }),
@@ -77,7 +87,9 @@ class SelectBooth extends StatelessWidget {
                                         horizontal: 10),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(11),
-                                        color: index == 2 ? AppColor.orange :AppColor.blue),
+                                        color: index == 2
+                                            ? AppColor.orange
+                                            : AppColor.blue),
                                     child: Text(
                                       cubit.boothData.data?[index].number ?? '',
                                       textAlign: TextAlign.center,
@@ -114,7 +126,7 @@ class SelectBooth extends StatelessWidget {
               CommonButton(
                   borderRadius: 0,
                   title: S.of(context).addBooth,
-                  onTap: (){
+                  onTap: () {
                     Navigator.pop(context);
                     print("========================  ${cubit.chekedValue}");
                   },

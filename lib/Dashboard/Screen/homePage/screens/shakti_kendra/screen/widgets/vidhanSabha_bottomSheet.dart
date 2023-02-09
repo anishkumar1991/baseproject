@@ -8,10 +8,13 @@ import '../../cubit/shakti_kendra_cubit.dart';
 import '../cubit/edit_shakti_kendr_cubit.dart';
 
 class VidhanSabhaBottomSheet extends StatelessWidget {
-   BuildContext? context;
-   EditShaktiKendrCubit cubit;
-   String? text;
-   VidhanSabhaBottomSheet({Key? key,this.context,this.text,required this.cubit}) : super(key: key);
+  BuildContext? context;
+  EditShaktiKendrCubit cubit;
+  String? text;
+
+  VidhanSabhaBottomSheet(
+      {Key? key, this.context, this.text, required this.cubit})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,47 +40,56 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                 ),
                 spaceHeightWidget(30),
                 Expanded(
-                  child: vidhanSabha.data?.locations?.isNotEmpty ?? false ? ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount: vidhanSabha.data?.locations?.length,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                cubit.zilaSelected = vidhanSabha.data?.locations?[index].name ?? '';
-                                cubit.zilaId = vidhanSabha.data?.locations?[index].id;
-                                cubit.getBoothValuew(id: cubit.zilaId ?? 236);
-                                cubit.emitState();
-                                Navigator.pop(context);
-                              },
-                              child: SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  vidhanSabha.data?.locations?[index].name ?? '',
-                                  textAlign: TextAlign.left,
-                                  style: GoogleFonts.poppins(
-                                      color: AppColor.black, fontSize: 16),
+                  child: vidhanSabha.data?.locations?.isNotEmpty ?? false
+                      ? ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          itemCount: vidhanSabha.data?.locations?.length,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    cubit.zilaSelected = vidhanSabha
+                                            .data?.locations?[index].name ??
+                                        '';
+                                    cubit.zilaId =
+                                        vidhanSabha.data?.locations?[index].id;
+                                    cubit.getBoothValuew(
+                                        id: cubit.zilaId ?? 236);
+                                    cubit.getDropDownValueOfmandal(
+                                        id: cubit.zilaId ?? 236);
+                                    cubit.emitState();
+                                    Navigator.pop(context);
+                                  },
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Text(
+                                      vidhanSabha
+                                              .data?.locations?[index].name ??
+                                          '',
+                                      textAlign: TextAlign.left,
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.black, fontSize: 16),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            spaceHeightWidget(15),
-                            const Divider(
-                              color: AppColor.borderColor,
-                            ),
-                            spaceHeightWidget(15),
-                          ],
-                        );
-                      })
+                                spaceHeightWidget(15),
+                                const Divider(
+                                  color: AppColor.borderColor,
+                                ),
+                                spaceHeightWidget(15),
+                              ],
+                            );
+                          })
                       : Text(
-                    S.of(context).noDataAvailable,
-                    textAlign: TextAlign.left,
-                    style: GoogleFonts.poppins(
-                        color: AppColor.black, fontSize: 16),
-                  ),
+                          S.of(context).noDataAvailable,
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.poppins(
+                              color: AppColor.black, fontSize: 16),
+                        ),
                 )
               ],
             ),

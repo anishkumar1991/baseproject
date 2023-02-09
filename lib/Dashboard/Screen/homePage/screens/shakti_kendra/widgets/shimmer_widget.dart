@@ -12,7 +12,7 @@ class ShimmerWidget extends StatelessWidget {
       baseColor: AppColor.greyColor.withOpacity(0.3),
       highlightColor: Colors.grey.withOpacity(0.1),
       child: Column(
-        children:  [
+        children: [
           ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: 5,
@@ -22,7 +22,8 @@ class ShimmerWidget extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Container(
-                    padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+                    padding:
+                        const EdgeInsets.only(left: 8, right: 8, bottom: 8),
                     decoration: BoxDecoration(
                         border: Border.all(color: AppColor.dividerColor),
                         borderRadius: BorderRadius.circular(8)),
@@ -49,8 +50,16 @@ class ShimmerWidget extends StatelessWidget {
                                   tileMode: TileMode.clamp),
                             ),
                           ),
-                          title: Container(height: 10,width: 30,color: AppColor.white,),
-                          subtitle: Container(height: 10,width: 30,color: AppColor.white,),
+                          title: Container(
+                            height: 10,
+                            width: 30,
+                            color: AppColor.white,
+                          ),
+                          subtitle: Container(
+                            height: 10,
+                            width: 30,
+                            color: AppColor.white,
+                          ),
                           trailing: Container(
                             height: 38,
                             width: 38,
@@ -78,7 +87,8 @@ class ShimmerWidget extends StatelessWidget {
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3.16),
-                                  color: AppColor.dividerColor.withOpacity(0.5)),
+                                  color:
+                                      AppColor.dividerColor.withOpacity(0.5)),
                             ),
                           ],
                         )

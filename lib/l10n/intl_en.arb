@@ -163,5 +163,6 @@
     "please":"Please",
     "enter":"Enter",
     "noDataUnit":"No Data Unit are available",
-    "sureToDelete":"Are you sure to delete?"
+    "sureToDelete":"Are you sure to delete?",
+    "noBoothAvailable" : "No booth available"
 }

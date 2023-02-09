@@ -10,7 +10,10 @@ class WarningBooth extends StatelessWidget {
   final String? title;
   final String? subTitle;
   final VoidCallback? onClose;
-  const WarningBooth({Key? key,this.onClose,this.subTitle,this.leadingText,this.title}) : super(key: key);
+
+  const WarningBooth(
+      {Key? key, this.onClose, this.subTitle, this.leadingText, this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +22,8 @@ class WarningBooth extends StatelessWidget {
         shrinkWrap: true,
         itemCount: 3,
         physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (context,index){
-          return  Padding(
+        itemBuilder: (context, index) {
+          return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: DottedBorder(
               color: AppColor.blue,
@@ -38,17 +41,15 @@ class WarningBooth extends StatelessWidget {
                       horizontalTitleGap: 10,
                       shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none
-                      ),
+                          borderSide: BorderSide.none),
                       dense: true,
-                      contentPadding: EdgeInsets.only(left: 10,right: 10),
+                      contentPadding: EdgeInsets.only(left: 10, right: 10),
                       leading: Container(
                         margin: EdgeInsets.only(top: 1),
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(11),
-                            color: AppColor.orange
-                        ),
+                            color: AppColor.orange),
                         child: Text(
                           leadingText ?? '102',
                           textAlign: TextAlign.center,
@@ -73,12 +74,10 @@ class WarningBooth extends StatelessWidget {
                       trailing: SizedBox(
                         height: double.infinity,
                         child: InkWell(
-                          onTap: (){},
+                          onTap: () {},
                           child: Container(
                             decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColor.red
-                            ),
+                                shape: BoxShape.circle, color: AppColor.red),
                             child: const Padding(
                               padding: EdgeInsets.all(5.0),
                               child: Icon(
@@ -91,7 +90,11 @@ class WarningBooth extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Divider(color: AppColor.naturalBlackColor.withOpacity(0.8),indent: 15,endIndent: 15,),
+                    Divider(
+                      color: AppColor.naturalBlackColor.withOpacity(0.8),
+                      indent: 15,
+                      endIndent: 15,
+                    ),
                     Text(
                       "Current Shakti Kendra- Test ABC Shakti kendra",
                       style: GoogleFonts.poppins(
