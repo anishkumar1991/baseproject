@@ -1699,6 +1699,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Data Unit is empty So you can't add entry`
+  String get dataUnitEmptyError {
+    return Intl.message(
+      'Data Unit is empty So you can\'t add entry',
+      name: 'dataUnitEmptyError',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

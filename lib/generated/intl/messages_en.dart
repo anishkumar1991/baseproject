@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createShaktiKendra":
             MessageLookupByLibrary.simpleMessage("Create Shakti Kendra"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("Data Entry"),
+        "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
+            "Data Unit is empty So you can\'t add entry"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("Date and Time *"),
         "dateTo": MessageLookupByLibrary.simpleMessage("Date (To)"),
         "dateToFrom": MessageLookupByLibrary.simpleMessage("Date (From To)"),
