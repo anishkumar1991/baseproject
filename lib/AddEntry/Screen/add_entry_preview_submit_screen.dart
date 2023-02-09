@@ -56,31 +56,33 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
               EasyLoading.showError(state.errorString);
             }
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: SingleChildScrollView(
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                    splashRadius: 20,
+                    onPressed: (() {
+                      Navigator.pop(context);
+                    }),
+                    icon: const Icon(Icons.arrow_back)),
+                const Text(
+                  'Add Entry',
+                  style: TextStyle(
+                      fontFamily: 'Tw Cen MT',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      color: AppColor.textBlackColor),
+                )
+              ],
+            ),
+            Expanded(
+                child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                            splashRadius: 20,
-                            onPressed: (() {
-                              Navigator.pop(context);
-                            }),
-                            icon: const Icon(Icons.arrow_back)),
-                        const Text(
-                          'Add Entry',
-                          style: TextStyle(
-                              fontFamily: 'Tw Cen MT',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.textBlackColor),
-                        )
-                      ],
-                    ),
                     for (var item in cubit.finalAllDataList.entries)
                       if (item.key == "photo") ...[
                         if (item.value.toString().contains("http")) ...[
@@ -126,19 +128,28 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                         multiCheckBox(cubit, i),
 
                     /// Here Secondary logic
-                    Text(
-                      'Fill Secondary Information',
-                      style: GoogleFonts.quicksand(
-                          fontSize: 20, fontWeight: FontWeight.w600),
+                    ExpansionTile(
+                      expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                      iconColor: AppColor.black,
+                      collapsedIconColor: AppColor.black,
+                      tilePadding: EdgeInsets.zero,
+                      initiallyExpanded: true,
+                      title: Text(
+                        'Fill Secondary Information',
+                        style: GoogleFonts.quicksand(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                      children: [
+                        spaceHeightWidget(20),
+                        for (int i = 0; i < cubit.entryField!.length; i++)
+                          if (cubit.entryField![i].primary == false)
+                            nonEditableField(cubit, i),
+                        for (int i = 0; i < cubit.entryField!.length; i++)
+                          if (cubit.entryField![i].primary == false)
+                            multiCheckBox(cubit, i),
+                        spaceHeightWidget(20),
+                      ],
                     ),
-                    spaceHeightWidget(20),
-                    for (int i = 0; i < cubit.entryField!.length; i++)
-                      if (cubit.entryField![i].primary == false)
-                        nonEditableField(cubit, i),
-                    for (int i = 0; i < cubit.entryField!.length; i++)
-                      if (cubit.entryField![i].primary == false)
-                        multiCheckBox(cubit, i),
-                    spaceHeightWidget(20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -163,49 +174,49 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                             onTap: (() {
                               cubit.pressAddEntrySubmitButton();
                               /* showDialog(
-                                context: context,
-                                builder: ((context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(
-                                            20)),
-                                    content: Padding(
-                                      padding: const EdgeInsets.all(
-                                          12.0),
-                                      child: Column(
-                                        mainAxisSize:
-                                        MainAxisSize.min,
-                                        children: [
-                                          verifyOtpDialogButton(
-                                              context, cubit),
-                                          spaceHeightWidget(15),
-                                          CommonButton(
-                                            backGroundcolor:
-                                            AppColor.white,
-                                            height: 45,
-                                            onTap: (() {
-                                              Navigator.pop(
-                                                  context);
-                                              Navigator.pop(
-                                                  context);
-                                            }),
-                                            title:
-                                            'Skip & Add new entry',
-                                            style: GoogleFonts
-                                                .quicksand(
-                                                color: AppColor
-                                                    .buttonOrangeBackGroundColor,
-                                                fontSize: 16,
-                                                fontWeight:
-                                                FontWeight
-                                                    .w700),
-                                          ),
-                                        ],
-                                      ),
+                              context: context,
+                              builder: ((context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                          20)),
+                                  content: Padding(
+                                    padding: const EdgeInsets.all(
+                                        12.0),
+                                    child: Column(
+                                      mainAxisSize:
+                                      MainAxisSize.min,
+                                      children: [
+                                        verifyOtpDialogButton(
+                                            context, cubit),
+                                        spaceHeightWidget(15),
+                                        CommonButton(
+                                          backGroundcolor:
+                                          AppColor.white,
+                                          height: 45,
+                                          onTap: (() {
+                                            Navigator.pop(
+                                                context);
+                                            Navigator.pop(
+                                                context);
+                                          }),
+                                          title:
+                                          'Skip & Add new entry',
+                                          style: GoogleFonts
+                                              .quicksand(
+                                              color: AppColor
+                                                  .buttonOrangeBackGroundColor,
+                                              fontSize: 16,
+                                              fontWeight:
+                                              FontWeight
+                                                  .w700),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                }));*/
+                                  ),
+                                );
+                              }));*/
                             }),
                             padding: const EdgeInsets.all(12),
                             title: 'Submit',
@@ -218,10 +229,12 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                         )
                       ],
                     ),
-                    spaceHeightWidget(50),
-                  ]),
-            ),
-          ),
+                  ],
+                ),
+              ),
+            )),
+            spaceHeightWidget(50),
+          ]),
         ),
       ),
     );
