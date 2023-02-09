@@ -226,7 +226,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   Future<void> selectedDoaDate(BuildContext context) async {
     emit(AddEntryLoadingState());
     final DateTime? picked = await showDatePicker(
-        locale: const Locale.fromSubtags(languageCode: 'en'),
+       // locale: const Locale.fromSubtags(languageCode: 'en'),
         context: context,
         initialDate: dateTime,
         firstDate: DateTime(1900, 8),

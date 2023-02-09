@@ -158,6 +158,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("No Data Available"),
+        "noDataUnit":
+            MessageLookupByLibrary.simpleMessage("No Data Unit are available"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("No organizations available"),
         "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
@@ -220,6 +222,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "STD Code Number should be 5 digit"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
+        "sureToDelete":
+            MessageLookupByLibrary.simpleMessage("Are you sure to delete?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("Total Program"),

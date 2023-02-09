@@ -163,6 +163,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("नहीं"),
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("कोई डेटा उपलब्ध नहीं है"),
+        "noDataUnit": MessageLookupByLibrary.simpleMessage(
+            "कोई डेटा यूनिट उपलब्ध नहीं है"),
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
         "noThanks": MessageLookupByLibrary.simpleMessage("जी नहीं, धन्यवाद"),
@@ -223,6 +225,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "एसटीडी कोड संख्या ५ अंकों की होनी चाहिए"),
         "subject": MessageLookupByLibrary.simpleMessage("विषय"),
         "submit": MessageLookupByLibrary.simpleMessage("सबमिट"),
+        "sureToDelete":
+            MessageLookupByLibrary.simpleMessage("क्या वाकई हटाना है?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
         "total": MessageLookupByLibrary.simpleMessage("कुल"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("कुल कार्यक्रम"),

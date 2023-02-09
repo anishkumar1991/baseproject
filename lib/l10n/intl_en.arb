@@ -161,5 +161,7 @@
     "aadharNumber":"Aadhaar Number should be 12 digit",
     "pleaseEnter":"Please Enter",
     "please":"Please",
-    "enter":"Enter"
+    "enter":"Enter",
+    "noDataUnit":"No Data Unit are available",
+    "sureToDelete":"Are you sure to delete?"
 }

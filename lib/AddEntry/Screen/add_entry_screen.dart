@@ -134,7 +134,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                 validator: (dynamic value) {
                   if (cubit.entryField![i].mandatoryField ?? false) {
                     if (value == null) {
-                      return 'Please select ${cubit.entryField![i].displayNameForUI ?? ""}';
+                      return '${S.of(context).please} ${cubit.entryField![i].displayNameForUI ?? ""} ${S.of(context).enter}';
                     }
                   }
                   return null;

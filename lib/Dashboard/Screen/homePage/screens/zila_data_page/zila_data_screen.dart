@@ -194,6 +194,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         builder: (context, state) {
           if (state is UnitDataFetchedState) {
             if (state.dataUnit.data?.isNotEmpty ?? false) {
+              cubit.dataUnitList.clear();
+              cubit.morchaList.clear();
+              cubit.coreSangathanList = null;
               cubit.filterDtaSelectedIndex = 0;
               cubit.dataUnitList = state.dataUnit.data!;
               // cubit.morchaData = UnitData(
@@ -201,7 +204,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               //     id: cubit.coreSangathanList == null
               //         ? cubit.dataUnitList.first.id
               //         : null);
-              cubit.morchaList.clear();
               for (var i = 0; i < cubit.dataUnitList.length; i++) {
                 if (cubit.dataUnitList[i].name == 'Core Sangathan') {
                   if (cubit.dataUnitList[i].subUnits?.isNotEmpty ?? false) {
@@ -265,9 +267,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             child: cubit.dataUnitList.isEmpty
                 ? Padding(
                     padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.15),
+                        left: MediaQuery.of(context).size.width * 0.20),
                     child: Text(
-                      'No Data Unit are available',
+                      S.of(context).noDataAvailable,
+                      textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
@@ -276,7 +279,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   )
                 : Row(
                     children: [
-                      cubit.coreSangathanList != null
+                      cubit.coreSangathanList?.isNotEmpty ?? false
                           ? ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
@@ -724,7 +727,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                         context: context,
                                         builder: ((context) => AlertDialog(
                                               content: Text(
-                                                'Are you sure to delete?',
+                                                S.of(context).sureToDelete,
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.w600,
                                                     color: AppColor
