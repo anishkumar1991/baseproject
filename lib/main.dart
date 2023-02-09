@@ -33,6 +33,7 @@ import 'Dashboard/Screen/menuPage/screens/edit_business/cubit/edit_business_cubi
 import 'Dashboard/Screen/menuPage/screens/edit_education/cubit/edit_education__cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
 import 'Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
+import 'Dashboard/Screen/notification/screens/NotificationScreen.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/FetchPostCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ReactionCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
@@ -133,7 +134,7 @@ class _MyAppState extends State<MyApp> {
             locale: const Locale.fromSubtags(languageCode: 'hi'),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
-            initialRoute: RoutePath.splashScreenPage,
+            home:  NotificationScreen(),
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
                 primary: AppColor.primaryColor,
