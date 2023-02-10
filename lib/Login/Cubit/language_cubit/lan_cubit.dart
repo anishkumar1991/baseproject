@@ -23,13 +23,8 @@ class LanguageCubit extends Cubit<LanguageState> {
     }
   }
 
-  void changeLang(context) async {
-    Locale myLocale = Localizations.localeOf(context);
-    if (myLocale.toString() == 'hi') {
-      lang = 'en';
-    } else {
-      lang = 'hi';
-    }
+  void changeLang(context, String langString) async {
+    lang = langString;
     emit(LanguageLoadingState());
     GetStorage box = GetStorage();
     box.write('lang', lang);

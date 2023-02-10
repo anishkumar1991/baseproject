@@ -25,6 +25,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   File? imageFile;
   String date = 'दिनांक';
   DateTime dateTime = DateTime.now();
+  final formKey = GlobalKey<FormState>();
   bool ischecked = false;
   bool isLoading = false;
   Gender value = Gender.male;
@@ -44,10 +45,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final TextEditingController statusCtr = TextEditingController();
   final TextEditingController castCtr = TextEditingController();
 
+
   final api = UpdatePersonalDetailsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
-
-
 
   emitState(){
     emit(PersonalInfoInitial());
@@ -147,8 +147,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
 
   Future<void> selectImage({BuildContext? context}) async {
     emit(PersonalInfoInitial());
-    await selectOption(context: context!);
-    emit(ImageSelectSuccess());
+    var imageFile = await selectOption(context: context!);
+    print("=-======================================================================= $imageFile");
+    emit(ImageSelectSuccess(imgFile: imageFile));
   }
 }
 

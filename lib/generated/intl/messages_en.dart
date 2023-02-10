@@ -112,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Education Updated"),
         "emailAddress":
             MessageLookupByLibrary.simpleMessage("Please Enter Valid Email"),
+        "english": MessageLookupByLibrary.simpleMessage("English"),
         "enter": MessageLookupByLibrary.simpleMessage("Enter"),
         "enterName": MessageLookupByLibrary.simpleMessage("Please Enter Name"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
@@ -133,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
+        "hindi": MessageLookupByLibrary.simpleMessage("Hindi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "Landline Number should be 8 digit"),

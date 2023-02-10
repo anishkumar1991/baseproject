@@ -114,6 +114,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("शिक्षा अपडेटेड"),
         "emailAddress":
             MessageLookupByLibrary.simpleMessage("कृपया मान्य ईमेल दर्ज करें"),
+        "english": MessageLookupByLibrary.simpleMessage("अंग्रेज़ी"),
         "enter": MessageLookupByLibrary.simpleMessage("दर्ज करें"),
         "enterName":
             MessageLookupByLibrary.simpleMessage("कृपया नाम दर्ज करें"),
@@ -138,6 +139,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionType":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
+        "hindi": MessageLookupByLibrary.simpleMessage("हिंदी"),
         "home": MessageLookupByLibrary.simpleMessage("होम"),
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "लैंडलाइन नंबर ८ अंकों का होना चाहिए"),

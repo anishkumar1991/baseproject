@@ -495,9 +495,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     professionData = [];
     nativeStateData = [];
     religionData = [];
-
+    districtDropdownData = [];
     designationData = [];
-
+    districtSelected = null;
     addEntryFormPrimary = [];
     addEntryFormSecondary = [];
     dobController.clear();

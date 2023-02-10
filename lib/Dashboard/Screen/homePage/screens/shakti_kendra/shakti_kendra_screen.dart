@@ -54,11 +54,13 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
               BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
                 builder: (context, state) {
                   final cubit = context.read<ShaktiKendraCubit>();
-                  if(state is FatchDataVidhanSabhaState){
+                  if (state is FatchDataVidhanSabhaState) {
                     vidhanSabha = state.data;
-                    cubit.zilaSelectedName = vidhanSabha.data?.locations?.first.name ?? '';
-                    cubit.getShaktiKendra(id: vidhanSabha.data?.locations?.first.id ?? 357);
-                  }else if(state is ErrorVidhanSabhaState){
+                    cubit.zilaSelectedName =
+                        vidhanSabha.data?.locations?.first.name ?? '';
+                    cubit.getShaktiKendra(
+                        id: vidhanSabha.data?.locations?.first.id ?? 357);
+                  } else if (state is ErrorVidhanSabhaState) {
                     EasyLoading.showError(state.error);
                     vidhanSabha.data?.locations = [];
                     cubit.shaktiKendr.data = [];
@@ -205,8 +207,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                   .mandalSelected = "";
                               context.read<EditShaktiKendrCubit>().chekedValue =
                                   [];
-                              context.read<EditShaktiKendrCubit>().selectedBooth =
-                                  [];
+                              context
+                                  .read<EditShaktiKendrCubit>()
+                                  .selectedBooth = [];
                               Navigator.pushNamed(
                                   context, RoutePath.editShaktiKendraScreen,
                                   arguments: {'isEdit': false});
@@ -280,9 +283,11 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                   context.read<EditShaktiKendrCubit>().mandalSelected = "";
                   context.read<EditShaktiKendrCubit>().chekedValue = [];
                   List<int> boothId = [];
+                  List<int> boothNumber = [];
                   if (data.booths?.isNotEmpty ?? false) {
                     for (int i = 0; i < (data.booths?.length ?? 0); i++) {
                       boothId.add(data.booths?[i].id ?? 0);
+                      boothNumber.add(int.parse(data.booths?[i].number ?? ''));
                     }
                   }
                   Navigator.pushNamed(context, RoutePath.editShaktiKendraScreen,
@@ -295,7 +300,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                         "mandalName": data.mandal?.name,
                         "shaktiKendrName": data.name,
                         "boothId": boothId,
-                        "shaktiKendrId": data.id
+                        "shaktiKendrId": data.id,
+                        "boothNumber": boothNumber
                       });
                 },
                 child: Container(
@@ -363,7 +369,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                         return Row(
                                           children: [
                                             Text(
-                                              data.booths![index].id.toString(),
+                                              data.booths![index].number
+                                                  .toString(),
                                               style: GoogleFonts.poppins(
                                                   color: AppColor.black700,
                                                   fontWeight: FontWeight.w400,
@@ -389,57 +396,72 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                 ),
                 const Spacer(),
                 BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
-               builder: (context,state){
-                 if(state is DeleteDataShaktiKendraLoadingState){
-                   EasyLoading.show();
-                 }else if(state is DeleteShaktiKendraFatchDataState){
-                   EasyLoading.dismiss();
-                   if (state.data.data?.askConfirmation == true) {
-                     dataEntryDeleteDialog(
-                       context: context,
-                       onDelete: () {
-                         Navigator.pop(context);
-                         context.read<ShaktiKendraCubit>().deleteShaktiKendr(
-                             id: data.id!, context: context, isConfirmDelete: true);
-                       },
-                       title: state.data.data?.message?.trim().trimLeft(),
-                       subTitle: '',
-                     );
-                     context.read<ShaktiKendraCubit>().getShaktiKendra(id: context.read<ShaktiKendraCubit>().zilaSelected?.id ?? 357);
-                   } else {
-                     EasyLoading.showSuccess(state.data.data?.message ?? '');
-                     context.read<ShaktiKendraCubit>().getShaktiKendra(id: context.read<ShaktiKendraCubit>().zilaSelected?.id ?? 357);
-                   }
-                 }else if( state is DeleteShaktiKendraErrorState){
-                   EasyLoading.dismiss();
-                   EasyLoading.showToast(state.error);
-                 }
-                 return InkWell(
-                   onTap: () {
-                     dataEntryDeleteDialog(
-                         title: "${S.of(context).deletrShaktiKendrTitle}?",
-                         subTitle:
-                         "${data.mandal?.name}\n${S.of(context).deleteShaktiKendr}",
-                         context: context,
-                         onDelete: () {
-                           Navigator.pop(context);
-                           context.read<ShaktiKendraCubit>().deleteShaktiKendr(id: data.id!,
-                               context: context,
-                               isConfirmDelete: false);
-                         });
-                   },
-                   child: Container(
-                     height: 38,
-                     width: 38,
-                     padding: const EdgeInsets.all(8),
-                     decoration: BoxDecoration(
-                         borderRadius: BorderRadius.circular(3.16),
-                         color: AppColor.dividerColor.withOpacity(0.5)),
-                     child:
-                     const Icon(Icons.delete_outline, color: AppColor.black),
-                   ),
-                 );
-               },
+                  builder: (context, state) {
+                    if (state is DeleteDataShaktiKendraLoadingState) {
+                      EasyLoading.show();
+                    } else if (state is DeleteShaktiKendraFatchDataState) {
+                      EasyLoading.dismiss();
+                      if (state.data.data?.askConfirmation == true) {
+                        dataEntryDeleteDialog(
+                          context: context,
+                          onDelete: () {
+                            Navigator.pop(context);
+                            context.read<ShaktiKendraCubit>().deleteShaktiKendr(
+                                id: data.id!,
+                                context: context,
+                                isConfirmDelete: true);
+                          },
+                          title: state.data.data?.message?.trim().trimLeft(),
+                          subTitle: '',
+                        );
+                        context.read<ShaktiKendraCubit>().getShaktiKendra(
+                            id: context
+                                    .read<ShaktiKendraCubit>()
+                                    .zilaSelected
+                                    ?.id ??
+                                357);
+                      } else {
+                        EasyLoading.showSuccess(state.data.data?.message ?? '');
+                        context.read<ShaktiKendraCubit>().getShaktiKendra(
+                            id: context
+                                    .read<ShaktiKendraCubit>()
+                                    .zilaSelected
+                                    ?.id ??
+                                357);
+                      }
+                    } else if (state is DeleteShaktiKendraErrorState) {
+                      EasyLoading.dismiss();
+                      EasyLoading.showToast(state.error);
+                    }
+                    return InkWell(
+                      onTap: () {
+                        dataEntryDeleteDialog(
+                            title: "${S.of(context).deletrShaktiKendrTitle}?",
+                            subTitle:
+                                "${data.mandal?.name}\n${S.of(context).deleteShaktiKendr}",
+                            context: context,
+                            onDelete: () {
+                              Navigator.pop(context);
+                              context
+                                  .read<ShaktiKendraCubit>()
+                                  .deleteShaktiKendr(
+                                      id: data.id!,
+                                      context: context,
+                                      isConfirmDelete: false);
+                            });
+                      },
+                      child: Container(
+                        height: 38,
+                        width: 38,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3.16),
+                            color: AppColor.dividerColor.withOpacity(0.5)),
+                        child: const Icon(Icons.delete_outline,
+                            color: AppColor.black),
+                      ),
+                    );
+                  },
                 ),
               ],
             )
@@ -583,7 +605,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                     cubit.zilaSelectedName = vidhanSabha
                                             .data?.locations?[index].name ??
                                         '';
-                                    cubit.getShaktiKendra(id: cubit.zilaSelected?.id ?? 357);
+                                    cubit.getShaktiKendra(
+                                        id: cubit.zilaSelected?.id ?? 357);
                                     Navigator.pop(context);
                                   },
                                   child: SizedBox(

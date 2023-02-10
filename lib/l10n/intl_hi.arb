@@ -168,5 +168,7 @@
   "dataUnitEmptyError":"डेटा यूनिट उपलब्ध नहीं है इसलिए आप ऐड एंट्री नहीं कर सकते",
   "selectVidhansabhaFirst" : "कृपया पहले विधानसभा का चयन करें",
   "selectMandalFirst" : "कृपया पहले मंडल का चयन करें",
-  "enterShkatiKendrName" : "कृपया शक्ति केंद्र नाम दर्ज करें"
+  "enterShkatiKendrName" : "कृपया शक्ति केंद्र नाम दर्ज करें",
+  "english" : "अंग्रेज़ी",
+  "hindi" : "हिंदी"
 }

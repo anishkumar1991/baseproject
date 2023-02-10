@@ -21,6 +21,7 @@ class EditShaktiKendraScreen extends StatefulWidget {
   String? shaktiKendrName;
   int? vidhanSabhaId;
   int? shaktiKendrId;
+  List<int>? boothNumber;
   List<int>? boothId;
 
   EditShaktiKendraScreen(
@@ -31,6 +32,7 @@ class EditShaktiKendraScreen extends StatefulWidget {
       this.shaktiKendrName,
       this.mandalName,
       this.shaktiKendrId,
+      this.boothNumber,
       this.boothId})
       : super(key: key);
 
@@ -53,13 +55,14 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
           widget.shaktiKendrName ?? '';
       context.read<EditShaktiKendrCubit>().mandalSelected =
           widget.mandalName ?? '';
-      context.read<EditShaktiKendrCubit>().chekedValue = widget.boothId ?? [];
+      context.read<EditShaktiKendrCubit>().chekedValue =
+          widget.boothNumber ?? [];
+      context.read<EditShaktiKendrCubit>().selectedBooth = widget.boothId ?? [];
       context.read<EditShaktiKendrCubit>().shaktiKendrId =
           widget.shaktiKendrId ?? 0;
 
-      context
-          .read<EditShaktiKendrCubit>()
-          .getDropDownValueOfmandal(id: widget.vidhanSabhaId ?? 236,isEdit: widget.isEdit);
+      context.read<EditShaktiKendrCubit>().getDropDownValueOfmandal(
+          id: widget.vidhanSabhaId ?? 236, isEdit: widget.isEdit);
     }
   }
 
@@ -476,7 +479,8 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                       borderRadius: 15,
                       onTap: () async {
                         if (cubit.zilaSelected == "") {
-                          EasyLoading.showToast(S.of(context).selectVidhansabhaFirst,
+                          EasyLoading.showToast(
+                              S.of(context).selectVidhansabhaFirst,
                               toastPosition: EasyLoadingToastPosition.top);
                         } else if (cubit.shaktiKendrCtr.text.isEmpty) {
                           EasyLoading.showToast(
@@ -486,15 +490,21 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                           EasyLoading.showToast(S.of(context).selectMandalFirst,
                               toastPosition: EasyLoadingToastPosition.top);
                         } else {
+                          List<Map<String, dynamic>> tempBooth = [];
+                          for (var element in cubit.selectedBooth) {
+                            tempBooth.add({"id": element});
+                          }
+
                           await cubit.createAndEditShaktiKendr(
                               context: context,
                               skName: cubit.shaktiKendrCtr.text,
                               vidhanSabhaId: cubit.zilaId,
                               mandalId: cubit.mandalId,
-                              booth: cubit.selectedBooth,
+                              booth: tempBooth,
                               isEdit: widget.isEdit);
                           Future.delayed(Duration.zero).then((value) {
                             Navigator.pop(context);
+                            cubit.selectedBooth = [];
                           });
                         }
                       },

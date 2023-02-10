@@ -29,7 +29,7 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
   TextEditingController shaktiKendrCtr = TextEditingController();
 
   List<int> chekedValue = [];
-  List<Map<String, dynamic>> selectedBooth = [];
+  List<int> selectedBooth = [];
 
   final api = GetDropDownValue(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));

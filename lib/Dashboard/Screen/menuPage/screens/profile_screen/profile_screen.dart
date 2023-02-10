@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/profile_screen/widgets/profile_address_tile.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/profile_screen/widgets/profile_business_screen.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/profile_screen/widgets/profile_education_screen.dart';
@@ -33,7 +34,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
-    context.read<ProfileCubit>().getSwitchValue();
   }
 
   @override
@@ -99,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     spaceHeightWidget(30),
                     Column(
                       children: List.generate(
-                          3,
+                          2,
                           (index) => Container(
                                 decoration: BoxDecoration(
                                     color: AppColor.white,
@@ -172,69 +172,88 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ProfileBusinessScreen(cubit: cubit),
                         spaceHeightWidget(15),
                         customDivider(),
-
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 5.0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              S.of(context).language,
-                              style: textStyleWithPoppin(
-                                  fontSize: 14,
-                                  color: AppColor.naturalBlackColor
-                                      .withOpacity(0.5),
-                                  fontWeight: FontWeight.w500),
+                        // Padding(
+                        //   padding: EdgeInsets.symmetric(horizontal: 12),
+                        //   child: customDivider(),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 15.0, vertical: 5.0),
+                        //   child: Row(
+                        //     children: [
+                        //       InkWell(
+                        //         onTap: () {
+                        //           showConfirmDialog();
+                        //         },
+                        //         child: Text(
+                        //           "English",
+                        //           style: textStyleWithPoppin(
+                        //               fontSize: 14,
+                        //               color: AppColor.naturalBlackColor
+                        //                   .withOpacity(0.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //       ),
+                        //       Spacer(),
+                        //       Switch(
+                        //         activeTrackColor: AppColor.primaryColor,
+                        //         inactiveTrackColor: AppColor.pravasCradColor,
+                        //         thumbColor:
+                        //             MaterialStateProperty.resolveWith<Color>(
+                        //                 (Set<MaterialState> states) {
+                        //           if (states.contains(MaterialState.selected)) {
+                        //             return AppColor.primaryColor;
+                        //           }
+                        //           return AppColor.blue;
+                        //         }),
+                        //         value: cubit.isTrue,
+                        //         onChanged: (bool value) {
+                        //           cubit.isTrue = value;
+                        //           context
+                        //               .read<LanguageCubit>()
+                        //               .changeLang(context);
+                        //           cubit.emitState();
+                        //         },
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                        InkWell(
+                          onTap: () async {
+                            await showModalBottomSheet(
+                                context: context,
+                                shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(28.0),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12),
-                          child: customDivider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 5.0),
-                          child: Row(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  showConfirmDialog();
-                                },
-                                child: Text(
-                                  "English",
+                            builder: (builder) {
+                            return bottom(
+                            context: context,
+                            text: S.of(context).language);
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15.0, vertical: 8.0),
+                            child: Row(
+                              children: [
+                                Image.asset(AppIcons.language,
+                                    height: 18,
+                                    width: 18,
+                                    color: AppColor.naturalBlackColor
+                                        .withOpacity(0.5)),
+                                spaceWidthWidget(8),
+                                Text(
+                                  S.of(context).language,
                                   style: textStyleWithPoppin(
                                       fontSize: 14,
                                       color: AppColor.naturalBlackColor
                                           .withOpacity(0.5),
                                       fontWeight: FontWeight.w500),
                                 ),
-                              ),
-                              Spacer(),
-                              Switch(
-                                activeTrackColor: AppColor.primaryColor,
-                                inactiveTrackColor: AppColor.pravasCradColor,
-                                thumbColor:
-                                    MaterialStateProperty.resolveWith<Color>(
-                                        (Set<MaterialState> states) {
-                                  if (states.contains(MaterialState.selected)) {
-                                    return AppColor.primaryColor;
-                                  }
-                                  return AppColor.blue;
-                                }),
-                                value: cubit.isTrue,
-                                onChanged: (bool value) {
-                                  cubit.isTrue = value;
-                                  context
-                                      .read<LanguageCubit>()
-                                      .changeLang(context);
-                                  cubit.emitState();
-                                },
-                              )
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-
                         BlocListener<LoginCubit, LoginState>(
                             listener: (context, state) {
                               if (state is UserLogOutSuccessState) {
@@ -298,16 +317,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
       ),
-    );
-  }
-
-  sizedBoxRow() {
-    return Row(
-      children: const [
-        SizedBox(width: 100),
-        Spacer(),
-        SizedBox(width: 100),
-      ],
     );
   }
 
@@ -443,4 +452,72 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
+  bottom(
+      {required BuildContext context,
+        required String text}) {
+    return Container(
+      color: Colors.transparent,
+      child: Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28.0),
+                  topRight: Radius.circular(28.0))),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                spaceHeightWidget(30),
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      color: AppColor.borderColor, fontSize: 16),
+                ),
+                spaceHeightWidget(30),
+                languageRow(text: S.of(context).english,press: (){
+                  context
+                      .read<LanguageCubit>()
+                      .changeLang(context,"en");
+                  Navigator.pop(context);
+                  // cubit.emitState();
+                }),
+                const Divider(
+                  color: AppColor.borderColor,
+                ),
+                languageRow(text: S.of(context).hindi,press: (){
+                  context
+                      .read<LanguageCubit>()
+                      .changeLang(context,"hi");
+                  Navigator.pop(context);
+                  // cubit.emitState();
+                })
+              ],
+            ),
+          )),
+    );
+  }
+
+  languageRow({String? text,VoidCallback? press}){
+    return InkWell(
+      onTap: press,
+      child: SizedBox(
+        width: double.infinity,
+        child:Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
+          child: Text(
+            text!,
+            textAlign: TextAlign.left,
+            style: GoogleFonts.poppins(
+                color: AppColor.black,
+                fontSize: 16),
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
 }

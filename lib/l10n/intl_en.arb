@@ -168,5 +168,7 @@
     "dataUnitEmptyError":"Data Unit is empty So you can't add entry",
     "selectVidhansabhaFirst" : "Please Select Vidhansabha first",
     "selectMandalFirst" : "Please Select Mandal first",
-    "enterShkatiKendrName" : "Please enter shakti kendr name"
+    "enterShkatiKendrName" : "Please enter shakti kendr name",
+    "english" : "English",
+    "hindi" : "Hindi"
 }
