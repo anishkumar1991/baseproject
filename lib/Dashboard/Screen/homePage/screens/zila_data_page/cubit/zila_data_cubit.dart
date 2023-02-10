@@ -22,7 +22,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
 
   Locations? zilaSelected;
   Locations? dependentDropdownSelected;
-  int filterDtaSelectedIndex = 0;
+  //int filterDtaSelectedIndex = 0;
   List<UnitData>? dataUnitList;
   int? unitId;
   String subUnitId = "";
@@ -38,6 +38,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   ScrollController controller = ScrollController();
 
   int selectedFilterIndex = 1;
+  //bool isMorchaSelected = false;
+  
 
   void onTapFilterOptions(int index) {
     emit(LoadingState());
@@ -50,7 +52,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   void animateToIndex(int index) {
     controller.animateTo(
       index * _height,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
     );
   }
@@ -75,7 +77,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     } else if (selectedFilterIndex == 2) {
       dataList!.sort((a, b) => a.name.toString().compareTo(b.name.toString()));
     }
-    emit(FilterChnagedState());
+    emit(FilterChangedState());
   }
 
   final api =
@@ -216,10 +218,9 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  void onTapFilterData(
-      {required int index, required String id, required int? unitsId}) {
+  void onTapFilterData({required String id, required int? unitsId}) {
     emit(LoadingState());
-    filterDtaSelectedIndex = index;
+    morchaData = UnitData(name: 'Morcha');
     unitId = unitsId;
     subUnitId = id;
     print('unitId=$unitId');
