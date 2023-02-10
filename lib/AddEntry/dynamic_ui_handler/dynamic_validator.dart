@@ -162,8 +162,8 @@ class DynamicValidator {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(
-            mask: '###',
-            filter: {"#": RegExp(r'[1-9]')},
+            mask: '*##',
+            filter: {"*": RegExp(r'^[1-9]$'), "#": RegExp(r'[0-9]')},
             type: MaskAutoCompletionType.lazy)
       ];
     }

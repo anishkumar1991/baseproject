@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
@@ -21,7 +22,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
 
   Locations? zilaSelected;
   Locations? dependentDropdownSelected;
-  int filterDtaSelectedIndex = 0;
+  //int filterDtaSelectedIndex = 0;
   List<UnitData>? dataUnitList;
   int? unitId;
   String subUnitId = "";
@@ -34,13 +35,26 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? deleteId;
   int? levelNameId;
   int? dependentLevelNameId;
+  ScrollController controller = ScrollController();
 
   int selectedFilterIndex = 1;
+  //bool isMorchaSelected = false;
+  
 
   void onTapFilterOptions(int index) {
     emit(LoadingState());
     selectedFilterIndex = index;
     emit(ZilaChangedState());
+  }
+
+  final double _height = 150.0;
+
+  void animateToIndex(int index) {
+    controller.animateTo(
+      index * _height,
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   void filterData() {
@@ -63,7 +77,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     } else if (selectedFilterIndex == 2) {
       dataList!.sort((a, b) => a.name.toString().compareTo(b.name.toString()));
     }
-    emit(FilterChnagedState());
+    emit(FilterChangedState());
   }
 
   final api =
@@ -204,10 +218,9 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  void onTapFilterData(
-      {required int index, required String id, required int? unitsId}) {
+  void onTapFilterData({required String id, required int? unitsId}) {
     emit(LoadingState());
-    filterDtaSelectedIndex = index;
+    morchaData = UnitData(name: 'Morcha');
     unitId = unitsId;
     subUnitId = id;
     print('unitId=$unitId');

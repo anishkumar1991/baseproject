@@ -112,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Education Updated"),
         "emailAddress":
             MessageLookupByLibrary.simpleMessage("Please Enter Valid Email"),
+        "english": MessageLookupByLibrary.simpleMessage("English"),
         "enter": MessageLookupByLibrary.simpleMessage("Enter"),
         "enterName": MessageLookupByLibrary.simpleMessage("Please Enter Name"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
@@ -119,6 +120,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Phone Number should be 10 digit"),
         "enterShaktiKendrName": MessageLookupByLibrary.simpleMessage(
             "Write the name of shakti kendr"),
+        "enterShkatiKendrName": MessageLookupByLibrary.simpleMessage(
+            "Please enter shakti kendr name"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
@@ -131,6 +134,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
+        "hindi": MessageLookupByLibrary.simpleMessage("Hindi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "Landline Number should be 8 digit"),
@@ -209,8 +213,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Select Designation"),
         "selectLoksabha":
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
+        "selectMandalFirst":
+            MessageLookupByLibrary.simpleMessage("Please Select Mandal first"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
+            "Please Select Vidhansabha first"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("Selected booth"),
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("Shakti Kendra Creation"),

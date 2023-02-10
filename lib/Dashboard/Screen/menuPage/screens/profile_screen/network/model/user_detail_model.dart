@@ -12,7 +12,7 @@ class UserDetailModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
@@ -38,29 +38,29 @@ class Data {
   String? voterId;
   String? phoneNumber;
   String? avatar;
-  List<dynamic>? designation;
+  List<Designation>? designation;
   int? percentage;
   Category? religion;
 
   Data(
       {this.id,
-        this.name,
-        this.phoneNumbers,
-        this.dob,
-        this.addresses,
-        this.gender,
-        this.category,
-        this.caste,
-        this.educationalDetails,
-        this.professionalDetails,
-        this.username,
-        this.email,
-        this.voterId,
-        this.phoneNumber,
-        this.avatar,
-        this.designation,
-        this.percentage,
-        this.religion});
+      this.name,
+      this.phoneNumbers,
+      this.dob,
+      this.addresses,
+      this.gender,
+      this.category,
+      this.caste,
+      this.educationalDetails,
+      this.professionalDetails,
+      this.username,
+      this.email,
+      this.voterId,
+      this.phoneNumber,
+      this.avatar,
+      this.designation,
+      this.percentage,
+      this.religion});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -74,9 +74,8 @@ class Data {
       });
     }
     gender = json['gender'];
-    category = json['category'] != null
-        ? Category.fromJson(json['category'])
-        : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
     caste = json['caste'] != null ? Category.fromJson(json['caste']) : null;
     if (json['educational_details'] != null) {
       educationalDetails = <EducationalDetails>[];
@@ -96,19 +95,18 @@ class Data {
     phoneNumber = json['phone_number'];
     avatar = json['avatar'];
     if (json['designation'] != null) {
-      designation = <dynamic>[];
+      designation = <Designation>[];
       json['designation'].forEach((v) {
-        designation?.add(designation);
+        designation!.add(Designation.fromJson(v));
       });
     }
     percentage = json['percentage'];
-    religion = json['religion'] != null
-        ? Category.fromJson(json['religion'])
-        : null;
+    religion =
+        json['religion'] != null ? Category.fromJson(json['religion']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
     data['phone_numbers'] = phoneNumbers;
@@ -158,12 +156,12 @@ class Addresses {
 
   Addresses(
       {this.area,
-        this.city,
-        this.uuid,
-        this.state,
-        this.pinCode,
-        this.forAddress,
-        this.houseNumber});
+      this.city,
+      this.uuid,
+      this.state,
+      this.pinCode,
+      this.forAddress,
+      this.houseNumber});
 
   Addresses.fromJson(Map<String, dynamic> json) {
     area = json['area'];
@@ -176,7 +174,7 @@ class Addresses {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['area'] = area;
     data['city'] = city;
     data['uuid'] = uuid;
@@ -200,7 +198,7 @@ class Category {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
     return data;
@@ -226,7 +224,7 @@ class EducationalDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['uuid'] = uuid;
     data['level'] = level;
     data['end_year'] = endYear;
@@ -255,12 +253,57 @@ class ProfessionalDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['uuid'] = uuid;
     data['end_year'] = endYear;
     data['org_name'] = orgName;
     data['position'] = position;
     data['start_year'] = startYear;
+    return data;
+  }
+}
+
+class Designation {
+  String? state;
+  String? type;
+  String? dataLevel;
+  String? levelName;
+  String? unit;
+  String? subUnit;
+  String? designation;
+  String? location;
+
+  Designation(
+      {this.state,
+      this.type,
+      this.dataLevel,
+      this.levelName,
+      this.unit,
+      this.subUnit,
+      this.designation,
+      this.location});
+
+  Designation.fromJson(Map<String, dynamic> json) {
+    state = json['state'];
+    type = json['type'];
+    dataLevel = json['data_level'];
+    levelName = json['level_name'];
+    unit = json['unit'];
+    subUnit = json['sub_unit'];
+    designation = json['designation'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['state'] = state;
+    data['type'] = type;
+    data['data_level'] = dataLevel;
+    data['level_name'] = levelName;
+    data['unit'] = unit;
+    data['sub_unit'] = subUnit;
+    data['designation'] = designation;
+    data['location'] = location;
     return data;
   }
 }

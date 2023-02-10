@@ -17,6 +17,8 @@ class FieldHandler extends AddEntryCubit {
       return cubit.professionData;
     } else if (dropdownType == "blood_group") {
       return cubit.bloodGroupSelected;
+    } else if (dropdownType == "district") {
+      return cubit.districtDropdownData;
     } else {
       return [];
     }
@@ -38,6 +40,8 @@ class FieldHandler extends AddEntryCubit {
       return cubit.professionSelected;
     } else if (dropdownType == "blood_group") {
       return cubit.bloodGroupSelected;
+    } else if (dropdownType == "district") {
+      return cubit.districtSelected;
     } else {
       return null;
     }
@@ -110,6 +114,8 @@ class FieldHandler extends AddEntryCubit {
       return cubit.professionSelected?.name;
     } else if (dropdownType == "blood_group") {
       return cubit.bloodGroupSelected?.name;
+    } else if (dropdownType == "district") {
+      return cubit.districtSelected?.name;
     } else {
       return null;
     }
@@ -119,7 +125,6 @@ class FieldHandler extends AddEntryCubit {
 
   static getDropdownKeys(String dropdownType, List<DataEntryField> entryField) {
     for (int i = 0; i < entryField.length; i++) {
-      print(entryField[i].fieldName);
       if (entryField[i].fieldName == dropdownType) {
         return entryField[i].formControlName ?? "";
       } else {

@@ -17,7 +17,7 @@ abstract class GetDropDownValue {
   Future<HttpResponse> getShaktiKenr(
       @Header('Authorization') String token, @Path('id') int id);
 
-  @GET('/api/v1/shakti_kendras/delete?shakti_kendra_id={id}&confirm_delete=true')
+  @GET('/api/v1/shakti_kendras/delete?shakti_kendra_id={id}&confirm_delete={isConfirm}')
   Future<HttpResponse> deleteShaktiKendr(
-      @Header('Authorization') String token, @Path('id') int id);
+      @Header('Authorization') String token, @Path('id') int id, @Path('isConfirm') bool isConfirm);
 }

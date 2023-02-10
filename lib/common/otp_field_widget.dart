@@ -4,20 +4,29 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 class CustomOtpTextField extends StatefulWidget {
-  CustomOtpTextField(
-      {Key? key,
-      required this.controller,
-      required this.otpText,
-      required this.onComplete,
-      required this.onChange,
-      this.fieldWidth})
-      : super(key: key);
-  TextEditingController controller;
+  CustomOtpTextField({
+    Key? key,
+    required this.controller,
+    required this.otpText,
+    required this.onComplete,
+    required this.onChange,
+    this.shape,
+    this.activeColor,
+    this.activeFillColor,
+    this.fieldWidth,
+    this.inactiveFillColor,
+    this.selectedFillColor,
+  }) : super(key: key);
+  final TextEditingController controller;
   String otpText;
   double? fieldWidth;
   Function(String) onChange;
-    Function(String) onComplete;
-
+  Function(String) onComplete;
+  PinCodeFieldShape? shape;
+  Color? selectedFillColor;
+  Color? activeFillColor;
+  Color? inactiveFillColor;
+  Color? activeColor;
 
   @override
   State<CustomOtpTextField> createState() => _CustomOtpTextFieldState();
@@ -27,6 +36,7 @@ class _CustomOtpTextFieldState extends State<CustomOtpTextField> {
   @override
   Widget build(BuildContext context) {
     return PinCodeTextField(
+      autoDisposeControllers: false,
       length: 6,
       obscureText: false,
       inputFormatters: <TextInputFormatter>[
@@ -37,14 +47,16 @@ class _CustomOtpTextFieldState extends State<CustomOtpTextField> {
       cursorColor: AppColor.orange,
       animationType: AnimationType.fade,
       pinTheme: PinTheme(
-        shape: PinCodeFieldShape.box,
+        shape: widget.shape ?? PinCodeFieldShape.box,
         borderRadius: BorderRadius.circular(5),
         fieldHeight: 45,
         fieldWidth: widget.fieldWidth ?? 45,
-        selectedFillColor: AppColor.greyWithOpacity01,
-        activeFillColor: AppColor.greyWithOpacity01,
-        inactiveFillColor: AppColor.greyWithOpacity01,
-        activeColor: AppColor.greyColor.withOpacity(0.3),
+        selectedFillColor:
+            widget.selectedFillColor ?? AppColor.greyWithOpacity01,
+        activeFillColor: widget.activeFillColor ?? AppColor.greyWithOpacity01,
+        inactiveFillColor:
+            widget.inactiveFillColor ?? AppColor.greyWithOpacity01,
+        activeColor: widget.activeColor ?? AppColor.greyColor.withOpacity(0.3),
         borderWidth: 1,
         selectedColor: AppColor.greyColor.withOpacity(0.3),
         inactiveColor: AppColor.greyColor.withOpacity(0.3),
@@ -52,7 +64,7 @@ class _CustomOtpTextFieldState extends State<CustomOtpTextField> {
       animationDuration: const Duration(milliseconds: 300),
       enableActiveFill: true,
       controller: widget.controller,
-      onCompleted:((v) => widget.onComplete(v)),
+      onCompleted: ((v) => widget.onComplete(v)),
       onChanged: ((value) => widget.onChange(value)),
       beforeTextPaste: (text) {
         print("Allowing to paste $text");

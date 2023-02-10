@@ -4,7 +4,11 @@ part of 'personal_info_cubit.dart';
 abstract class PersonalInfoState {}
 
 class PersonalInfoInitial extends PersonalInfoState {}
-class ImageSelectSuccess extends PersonalInfoState {}
+class FatchDataToPhoneNumberState extends PersonalInfoState {}
+class ImageSelectSuccess extends PersonalInfoState {
+ var imgFile;
+  ImageSelectSuccess({this.imgFile});
+}
 class LoadingState extends PersonalInfoState {}
 class UpdateDataState extends PersonalInfoInitial {
   final UserDetailModel data;

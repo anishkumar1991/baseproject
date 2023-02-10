@@ -9,7 +9,7 @@ import '../../../../../../Values/space_height_widget.dart';
 import '../cubit/personal_info_cubit.dart';
 
 selectOption({required BuildContext context}){
-  return showModalBottomSheet(
+  var file = showModalBottomSheet(
       context: context,
       builder: ((context){
         final cubit = context.read<PersonalInfoCubit>();
@@ -53,8 +53,6 @@ selectOption({required BuildContext context}){
               const Divider(),
               ListTile(
                 onTap: (() async {
-                  Navigator.pop(
-                      context);
                   try {
                     cubit.image = await ImagePicker().pickImage(source: ImageSource.camera);
                     if (cubit.image == null) return;
@@ -65,6 +63,10 @@ selectOption({required BuildContext context}){
                   } catch (e) {
                     print('Failed to pick image: $e');
                   }
+                  Future.delayed(Duration.zero).then((value){
+                    Navigator.pop(
+                        context, cubit.imageFile);
+                  });
                 }),
                 title: Text(
                   'Camera',
@@ -79,8 +81,6 @@ selectOption({required BuildContext context}){
               const Divider(),
               ListTile(
                 onTap: (() async {
-                  Navigator.pop(
-                      context);
                   try {
                     cubit.image = await ImagePicker().pickImage(source: ImageSource.gallery);
                     if (cubit.image == null) return;
@@ -91,6 +91,10 @@ selectOption({required BuildContext context}){
                   } catch (e) {
                     print('Failed to pick image: $e');
                   }
+                  Future.delayed(Duration.zero).then((value){
+                    Navigator.pop(
+                        context, cubit.imageFile);
+                  });
                 }),
                 title: Text(
                   'Gallery',
@@ -108,4 +112,6 @@ selectOption({required BuildContext context}){
           ),
         );
       }));
+
+  return file;
 }

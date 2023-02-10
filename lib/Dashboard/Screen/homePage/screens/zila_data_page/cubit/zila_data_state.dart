@@ -98,4 +98,4 @@ class DependentDropdownErrorState extends ZilaDataState {
 
   DependentDropdownErrorState(this.errorMsg);
 }
-class FilterChnagedState extends ZilaDataState{}
+class FilterChangedState extends ZilaDataState{}

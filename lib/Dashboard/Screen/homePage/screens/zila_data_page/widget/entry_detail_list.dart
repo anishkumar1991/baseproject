@@ -28,6 +28,7 @@ class EntryDetailsList extends StatelessWidget {
   final String? type;
   final int? dataLevelId;
   final int? countryStateId;
+
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ZilaDataCubit>();
@@ -232,9 +233,16 @@ class EntryDetailsList extends StatelessWidget {
                                                 phoneNumber: data?.phone ?? '');
                                           }
                                         }),
-                                        child: Image.asset(
-                                          AppIcons.callIcon,
-                                          height: 20,
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Image.asset(
+                                              AppIcons.callIcon,
+                                              height: 20,
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       spaceWidthWidget(4)

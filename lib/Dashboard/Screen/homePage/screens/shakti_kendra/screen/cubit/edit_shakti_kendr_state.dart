@@ -26,7 +26,7 @@ class ErrorBoothEditShaktiKendraState extends EditShaktiKendrInitial {
   ErrorBoothEditShaktiKendraState({required this.error});
 }
 
-class LoadingEditAndCreateShaktiKendraState extends EditShaktiKendrInitial {}
+class LoadingEditAndCreateEditShaktiKendraState extends EditShaktiKendrInitial {}
 class FatchDataEditAndCreateEditShaktiKendraState extends EditShaktiKendrInitial {
   final Booth data;
   FatchDataEditAndCreateEditShaktiKendraState({required this.data});
