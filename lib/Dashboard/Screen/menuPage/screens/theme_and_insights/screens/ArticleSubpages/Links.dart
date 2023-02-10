@@ -17,7 +17,7 @@ class Links extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Container(
-          width: 320,
+          width: MediaQuery.of(context).size.width,
           height: 90,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -70,7 +70,7 @@ class Links extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Container(
-          width: 320,
+          width: MediaQuery.of(context).size.width,
           height: 90,
           decoration: BoxDecoration(
             color: Colors.white,

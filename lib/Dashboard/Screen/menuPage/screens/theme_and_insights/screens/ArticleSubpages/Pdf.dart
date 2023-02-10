@@ -17,7 +17,7 @@ class Pdf extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Container(
-          width: 320,
+          width: MediaQuery.of(context).size.width,
           height: 63,
           decoration: BoxDecoration(
             color: const Color(0xFFDBF2FF),
@@ -52,7 +52,7 @@ class Pdf extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Container(
-          width: 320,
+          width: MediaQuery.of(context).size.width,
           height: 63,
           decoration: BoxDecoration(
             color: const Color(0xFFDBF2FF),

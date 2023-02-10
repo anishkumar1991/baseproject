@@ -9,7 +9,7 @@ class ShortIntro extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 320,
+          width: MediaQuery.of(context).size.width,
           height: 126,
           decoration: BoxDecoration(
             border: Border.all(
@@ -42,7 +42,7 @@ class ShortIntro extends StatelessWidget {
                         width: 263,
                         height: 30,
                         child: Text(
-                          "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर राज्य पर संविधान की धारा 356 लागू नहीं होती।",
+                          "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर ",
                           style: GoogleFonts.poppins(
                               fontSize: 13, fontWeight: FontWeight.w400),
                         ),
@@ -51,30 +51,6 @@ class ShortIntro extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 10,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Icon(
-                          Icons.circle_rounded,
-                          size: 6,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Container(
-                        width: 263,
-                        height: 30,
-                        child: Text(
-                          "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर राज्य पर संविधान की धारा 356 लागू नहीं होती।",
-                          style: GoogleFonts.poppins(
-                              fontSize: 13, fontWeight: FontWeight.w400),
-                        ),
-                      )
-                    ],
                   ),
                 ],
               ),
@@ -88,7 +64,7 @@ class ShortIntro extends StatelessWidget {
         Stack(
           children: [
             Container(
-              width: 320,
+              width: MediaQuery.of(context).size.width,
               height: 160,
               decoration: BoxDecoration(
                 border: Border.all(
@@ -98,31 +74,23 @@ class ShortIntro extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 color: Colors.white,
               ),
-              child: Container(
-                width: 263,
-                height: 80,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "पहले देश के लिए अधिकतर जो स्कीम बनती थी, जो कानून बनते थे, उनमें लिखा होता था- Except J and K. अब ये इतिहास की बात हो चुकी है।,"
-                      "शांति और विकास के जिस मार्ग पर जम्मू और कश्मीर बढ़ रहा है, उसने राज्य में नए उद्योगों के आने का मार्ग भी बनाया है। आज जम्मू-कश्मीर आत्मनिर्भर भारत अभियान में अपना योगदान दे रहा है|",
-                      style: GoogleFonts.poppins(
-                          fontSize: 13, fontWeight: FontWeight.w500),
+              child: Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 80,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "पहले देश के लिए अधिकतर जो स्कीम बनती थी, जो कानून बनते थे, उनमें लिखा होता था- Except J and K. अब ये इतिहास की बात हो चुकी है।,",
+                        style: GoogleFonts.poppins(
+                            fontSize: 13, fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-            Positioned(
-                bottom: 12,
-                left: 82,
-                right: 14,
-                child: Text(
-                  "- प्रधानमंत्री नरेन्द्र मोदी",
-                  style: GoogleFonts.poppins(
-                      fontSize: 13, fontWeight: FontWeight.w700),
-                )),
             Positioned(
                 bottom: 14,
                 right: 14,
