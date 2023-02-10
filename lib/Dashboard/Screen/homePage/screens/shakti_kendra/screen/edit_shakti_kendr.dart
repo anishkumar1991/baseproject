@@ -59,10 +59,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
 
       context
           .read<EditShaktiKendrCubit>()
-          .getDropDownValueOfmandal(id: widget.vidhanSabhaId ?? 236);
-      context
-          .read<EditShaktiKendrCubit>()
-          .getBoothValuew(id: widget.vidhanSabhaId ?? 236);
+          .getDropDownValueOfmandal(id: widget.vidhanSabhaId ?? 236,isEdit: widget.isEdit);
     }
   }
 
