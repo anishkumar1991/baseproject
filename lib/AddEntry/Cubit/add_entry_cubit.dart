@@ -36,7 +36,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   File? voterFilePicked;
   String? initialUserprofileURL;
   List multiSelectionList = [];
-  String? otpText;
   List<DataEntryField>? entryField = [];
   TextInputType textInputType = TextInputType.text;
 
@@ -50,10 +49,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   List<DesignationData> designationData = [];
   TextEditingController dobController = TextEditingController();
+  int? personId;
   List<Widget> addEntryFormPrimary = [];
   List<Widget> addEntryFormSecondary = [];
   File? cameraFile;
-
   CastData? castSelected;
   DropdownData? categorySelected;
   DropdownData? qualificationSelected;
@@ -468,21 +467,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(DisposeState());
   }
 
-  Timer? timer;
-  int count = 30;
-
-  Future<void> startTimer() async {
-    emit(TimerLoadingState());
-    if (count == 0) {
-      emit(TimerStopState());
-    } else {
-      await Future.delayed(const Duration(seconds: 1));
-      count--;
-      emit(TimerRunningState(count));
-      startTimer();
-    }
-  }
-
   /// the method call when user leave all add entry page
   cleanAllVariableData() {
     multiSelectionList = [];
@@ -840,7 +824,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         if (res.data["success"] == true && res.data["duplication"] == false) {
-          emit(SubmitAddEntrySuccessState(res.data["message"]));
+          personId = res.data["data"][0]["id"];
+          emit(SubmitAddEntrySuccessState(
+              res.data["message"], res.data["data"][0]["phone"]));
         } else {
           Map<String, dynamic>? msg = res.data;
           emit(SubmitAddEntryErrorState(msg?['message'] ?? ''));

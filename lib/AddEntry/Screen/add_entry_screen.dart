@@ -13,7 +13,6 @@ import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_validator.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/common/common_button.dart';
-import 'package:sangathan/common/otp_field_widget.dart';
 
 import '../../Storage/user_storage_service.dart';
 import '../../Values/space_height_widget.dart';
@@ -55,7 +54,6 @@ class AddEntryPage extends StatefulWidget {
 }
 
 class _AddEntryPageState extends State<AddEntryPage> {
-  TextEditingController otpFieldController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -763,94 +761,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
           )
         ],
       )),
-    );
-  }
-
-  CommonButton verifyOtpDialogButton(
-      BuildContext context, AddEntryCubit cubit) {
-    return CommonButton(
-      height: 45,
-      onTap: (() {
-        Navigator.pop(context);
-        cubit.count = 30;
-        cubit.startTimer();
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: ((context) {
-              return BlocBuilder<AddEntryCubit, AddEntryState>(
-                builder: (context, state) {
-                  return AlertDialog(
-                    content: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          S.of(context).verifyWithOtp,
-                          style: GoogleFonts.quicksand(
-                              color: AppColor.greyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        spaceHeightWidget(14),
-                        Text(
-                          'Enter OTP sent to 9988776655',
-                          style: GoogleFonts.quicksand(
-                              color: AppColor.greyColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        CustomOtpTextField(
-                          controller: otpFieldController,
-                          otpText: cubit.otpText ?? '',
-                          fieldWidth: 25,
-                          onChange: ((p0) {}),
-                          onComplete: ((p0) {}),
-                        ),
-                        spaceHeightWidget(26),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                                onPressed: cubit.count == 0 ? (() {}) : null,
-                                child: Text(
-                                  S.of(context).resend,
-                                  style: GoogleFonts.quicksand(
-                                      fontSize: 10,
-                                      color: AppColor.navyBlue,
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w500),
-                                )),
-                            Text(
-                              'OTP in 00:${cubit.count}',
-                              style: GoogleFonts.quicksand(
-                                  color: AppColor.greyColor,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        spaceHeightWidget(32),
-                        CommonButton(
-                          title: S.of(context).verify,
-                          height: 45,
-                          margin: const EdgeInsets.symmetric(horizontal: 40),
-                          style: GoogleFonts.quicksand(
-                              color: AppColor.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
-            }));
-      }),
-      title: S.of(context).verifyWithOtp,
-      style: GoogleFonts.quicksand(
-          color: AppColor.white, fontSize: 16, fontWeight: FontWeight.w700),
     );
   }
 }

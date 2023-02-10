@@ -226,8 +226,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र क्रिएशन"),
         "shaktikendr": MessageLookupByLibrary.simpleMessage("शक्ति केंद्र "),
-        "skipAddNewEntry": MessageLookupByLibrary.simpleMessage(
-            "छोड़ें और नई प्रविष्टि जोड़ें"),
+        "skipAddNewEntry":
+            MessageLookupByLibrary.simpleMessage("छोड़ें और नई ऐड एंट्री करें"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
             "कृपया (कब से) वर्ष पहले दर्ज करें"),
         "state": MessageLookupByLibrary.simpleMessage("स्टेट"),

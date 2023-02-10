@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
@@ -44,8 +45,8 @@ import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(
-    RemoteMessage message,
-    ) async {
+  RemoteMessage message,
+) async {
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
@@ -84,7 +85,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (create) => ReactionCubit()),
-
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => PollCubit()),
@@ -114,10 +114,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
         BlocProvider(create: (context) => ShareCubit()),
-
+        BlocProvider(create: (context) => VerifyPersonCubit()),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context,lang){
+        builder: (context, lang) {
           final cubit = context.read<LanguageCubit>();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -137,8 +137,8 @@ class _MyAppState extends State<MyApp> {
             initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: AppColor.primaryColor,
-              ),
+                    primary: AppColor.primaryColor,
+                  ),
             ),
           );
         },

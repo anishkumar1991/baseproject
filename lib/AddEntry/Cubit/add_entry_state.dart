@@ -112,8 +112,8 @@ class SubmitAddEntryLoadingState extends AddEntryState {}
 
 class SubmitAddEntrySuccessState extends AddEntryState {
   final String message;
-
-  SubmitAddEntrySuccessState(this.message);
+  final String mobileNo;
+  SubmitAddEntrySuccessState(this.message,this.mobileNo);
 }
 
 class SubmitAddEntryErrorState extends AddEntryState {
