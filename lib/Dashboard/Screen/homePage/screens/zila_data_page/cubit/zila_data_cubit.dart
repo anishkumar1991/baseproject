@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
@@ -34,6 +35,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? deleteId;
   int? levelNameId;
   int? dependentLevelNameId;
+  ScrollController controller = ScrollController();
 
   int selectedFilterIndex = 1;
 
@@ -41,6 +43,16 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(LoadingState());
     selectedFilterIndex = index;
     emit(ZilaChangedState());
+  }
+
+  final double _height = 150.0;
+
+  void animateToIndex(int index) {
+    controller.animateTo(
+      index * _height,
+      duration: Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   void filterData() {

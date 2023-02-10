@@ -309,44 +309,44 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             }
           }
 
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: cubit.dataUnitList == null
-                ? Shimmer.fromColors(
-                    baseColor: AppColor.greyColor.withOpacity(0.3),
-                    highlightColor: Colors.grey.withOpacity(0.1),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                            3,
-                            (index) => Container(
-                                  margin: const EdgeInsets.only(right: 20),
-                                  height: 30,
-                                  width: 140,
-                                  color: AppColor.white,
-                                )).toList(),
-                      ),
-                    ))
-                : cubit.coreSangathanList?.isEmpty ??
-                        true && cubit.morchaList.isEmpty
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.20),
-                        child: Text(
-                          S.of(context).noDataUnit,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
+          return cubit.dataUnitList == null
+              ? Shimmer.fromColors(
+                  baseColor: AppColor.greyColor.withOpacity(0.3),
+                  highlightColor: Colors.grey.withOpacity(0.1),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          3,
+                          (index) => Container(
+                                margin: const EdgeInsets.only(right: 20),
+                                height: 30,
+                                width: 140,
+                                color: AppColor.white,
+                              )).toList(),
+                    ),
+                  ))
+              : cubit.coreSangathanList?.isEmpty ??
+                      true && cubit.morchaList.isEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.20),
+                      child: Text(
+                        S.of(context).noDataUnit,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
                         ),
-                      )
-                    : Row(
-                        children: [
-                          cubit.coreSangathanList?.isNotEmpty ?? false
-                              ? ListView.builder(
+                      ),
+                    )
+                  : Row(
+                      children: [
+                        cubit.coreSangathanList?.isNotEmpty ?? false
+                            ? Expanded(
+                              child: ListView.builder(
                                   shrinkWrap: true,
+                                  controller: cubit.controller,
                                   scrollDirection: Axis.horizontal,
                                   itemCount:
                                       cubit.coreSangathanList?.length ?? 0,
@@ -354,101 +354,26 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                     final data =
                                         cubit.coreSangathanList![index];
 
-                                    return InkWell(
-                                      onTap: (() async {
-                                        for (var i = 0;
-                                            i <
-                                                (cubit.dataUnitList?.length ??
-                                                    0);
-                                            i++) {
-                                          if (cubit.dataUnitList?[i].name ==
-                                              'Core Sangathan') {
-                                            cubit.unitId =
-                                                cubit.dataUnitList?[i].id;
-                                          }
-                                        }
-                                        cubit.onTapFilterData(
-                                            index: index,
-                                            id: data.id.toString(),
-                                            unitsId: cubit.unitId);
-                                        await context
-                                            .read<ZilaDataCubit>()
-                                            .getEntryData(data: {
-                                          "level": widget.dataLevelId,
-                                          "unit": cubit.unitId,
-                                          "level_name": cubit.levelNameId
-                                        });
-                                      }),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16),
-                                        margin:
-                                            const EdgeInsets.only(right: 16),
-                                        decoration: BoxDecoration(
-                                          color: cubit.subUnitId ==
-                                                  data.id.toString()
-                                              ? AppColor
-                                                  .buttonOrangeBackGroundColor
-                                              : AppColor.orange300Color,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Center(
-                                            child: Text(data.name ?? '',
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18,
-                                                    color: cubit.subUnitId ==
-                                                            data.id.toString()
-                                                        ? AppColor.white
-                                                        : AppColor.greyColor))),
-                                      ),
-                                    );
-                                  }))
-                              : const SizedBox.shrink(),
-                          cubit.morchaList.isNotEmpty
-                              ? InkWell(
-                                  onTap: (() {}),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    margin: const EdgeInsets.only(right: 16),
-                                    decoration: BoxDecoration(
-                                        color:
-                                            cubit.unitId == cubit.morchaData.id
-                                                ? AppColor
-                                                    .buttonOrangeBackGroundColor
-                                                : AppColor.orange300Color,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Row(
+                                    return Row(
                                       children: [
-                                        Text(
-                                          cubit.morchaData.name ?? '',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 18,
-                                              color: cubit.unitId ==
-                                                      cubit.morchaData.id
-                                                  ? AppColor.white
-                                                  : AppColor.greyColor),
-                                        ),
-                                        PopupMenuButton(
-                                          icon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: cubit.unitId ==
-                                                    cubit.morchaData.id
-                                                ? AppColor.white
-                                                : AppColor.greyColor,
-                                          ),
-                                          itemBuilder: ((context) {
-                                            return cubit.morchaList
-                                                .map((e) => PopupMenuItem(
-                                                    value: e,
-                                                    child: Text(e.name ?? '')))
-                                                .toList();
-                                          }),
-                                          onSelected: ((value) async {
-                                            cubit.onSelectMorcha(value);
+                                        InkWell(
+                                          onTap: (() async {
+                                            cubit.animateToIndex(index);
+                                            for (var i = 0;
+                                                i <
+                                                    (cubit.dataUnitList?.length ??
+                                                        0);
+                                                i++) {
+                                              if (cubit.dataUnitList?[i].name ==
+                                                  'Core Sangathan') {
+                                                cubit.unitId =
+                                                    cubit.dataUnitList?[i].id;
+                                              }
+                                            }
+                                            cubit.onTapFilterData(
+                                                index: index,
+                                                id: data.id.toString(),
+                                                unitsId: cubit.unitId);
                                             await context
                                                 .read<ZilaDataCubit>()
                                                 .getEntryData(data: {
@@ -457,15 +382,99 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                               "level_name": cubit.levelNameId
                                             });
                                           }),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16),
+                                            margin:
+                                                const EdgeInsets.only(right: 16),
+                                            decoration: BoxDecoration(
+                                              color: cubit.subUnitId ==
+                                                      data.id.toString()
+                                                  ? AppColor
+                                                      .buttonOrangeBackGroundColor
+                                                  : AppColor.orange300Color,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Center(
+                                                child: Text(data.name ?? '',
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight: FontWeight.w500,
+                                                        fontSize: 18,
+                                                        color: cubit.subUnitId ==
+                                                                data.id.toString()
+                                                            ? AppColor.white
+                                                            : AppColor.greyColor))),
+                                          ),
+                                        ),
+                                        index + 1 == cubit.coreSangathanList?.length ?    cubit.morchaList.isNotEmpty
+                                            ? InkWell(
+                                          onTap: (() {}),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 16,vertical: 10),
+                                            margin: const EdgeInsets.only(right: 16),
+                                            decoration: BoxDecoration(
+                                                color:
+                                                cubit.unitId == cubit.morchaData.id
+                                                    ? AppColor
+                                                    .buttonOrangeBackGroundColor
+                                                    : AppColor.orange300Color,
+                                                borderRadius: BorderRadius.circular(8)),
+                                            child: Row(
+                                              children: [
+                                                PopupMenuButton(
+                                                  itemBuilder: ((context) {
+                                                    return cubit.morchaList
+                                                        .map((e) => PopupMenuItem(
+                                                        value: e,
+                                                        child: Text(e.name ?? '')))
+                                                        .toList();
+                                                  }),
+                                                  onSelected: ((value) async {
+                                                    cubit.onSelectMorcha(value);
+                                                    await context
+                                                        .read<ZilaDataCubit>()
+                                                        .getEntryData(data: {
+                                                      "level": widget.dataLevelId,
+                                                      "unit": cubit.unitId,
+                                                      "level_name": cubit.levelNameId
+                                                    });
+                                                  }),
+                                                  child:    Row(
+                                                    children: [
+                                                      Text(
+                                            cubit.morchaData.name ?? '',
+                                              style: GoogleFonts.poppins(
+                                                      fontWeight: FontWeight.w500,
+                                                      fontSize: 18,
+                                                      color: cubit.unitId ==
+                                                          cubit.morchaData.id
+                                                          ? AppColor.white
+                                                          : AppColor.greyColor),
+                                            ),
+                                                      Icon(
+                                                        Icons.arrow_drop_down,
+                                                        color: cubit.unitId ==
+                                                            cubit.morchaData.id
+                                                            ? AppColor.white
+                                                            : AppColor.greyColor,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
                                         )
+                                            : const SizedBox.shrink() : SizedBox.shrink()
                                       ],
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox.shrink()
-                        ],
-                      ),
-          );
+                                    );
+                                  })),
+                            )
+                            : const SizedBox.shrink(),
+                      ],
+                    );
         },
       ),
     );
