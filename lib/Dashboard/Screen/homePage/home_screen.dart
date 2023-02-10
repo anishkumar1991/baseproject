@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/widget/MannKiBaatCard.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/WhatsappCardWidget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
 import 'package:sangathan/Values/app_colors.dart';
@@ -8,6 +9,7 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/size_config.dart';
 import 'package:sangathan/route/route_path.dart';
 
+import '../mannKiBaat/screens/FormPage.dart';
 import '../notification/screens/NotificatioMainScreen.dart';
 import '../whatsapp/screens/WhatsappScreen.dart';
 import 'cubit/home_page_cubit.dart';
@@ -220,12 +222,19 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 20,
                       ),
+                      /// mann ki baat widget
 
+                      MannKiBaatCard(),
                       /// whatsapp card widget
-
+                      const SizedBox(
+                        height: 20,
+                      ),
                       WhatsappCardWidget(),
 
+
+
                       /// pravas card widget
+
                       /* const PravasCardWidget(),*/
                       // const SizedBox(
                       //   height: 14,
