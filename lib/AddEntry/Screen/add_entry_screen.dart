@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,9 +10,7 @@ import 'package:sangathan/AddEntry/Screen/widget/image_picker_bottomsheet.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_preview_dialog.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
-
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_validator.dart';
-
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/common/otp_field_widget.dart';
@@ -278,7 +275,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               element["fieldName"].toString().split("_")[0] ==
                               (cubit.entryField![i].fieldName ?? "")
                                   .split(RegExp(r"[A-Z]"))[0]);
-
                       showDialog(
                           context: context,
                           builder: ((context) => ImagePreViewDialog(
@@ -571,6 +567,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   }
                   if (widget.personData != null) {
                     cubit.getInitialTextfieldData(widget.personData);
+                    cubit.getInitialImageUrls(widget.personData);
                     cubit.getInitialUserprofileImageData(widget.personData);
                     cubit.getInitialGenderData(widget.personData);
                     cubit.getInitialDOBData(widget.personData);

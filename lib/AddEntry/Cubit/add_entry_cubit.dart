@@ -691,6 +691,23 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
+  /// Get initial image urls
+  getInitialImageUrls(Map<String, dynamic>? personData) {
+    if (personData != null && entryField != null) {
+      for (var item in personData.entries) {
+        if (DynamicUIHandler.filePickerUrl.contains(item.key)) {
+          if (item.value != null && item.value != "") {
+            Map<String, dynamic> json = {
+              "fieldName": item.key,
+              "value": item.value,
+            };
+            allImagePickerList.add(json);
+          }
+        }
+      }
+    }
+  }
+
   /// Final submit button process
 
   pressAddEntrySubmitButton() async {
