@@ -64,28 +64,28 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                 print(datePicked.toString());
               },
               child: Container(
+                  decoration: const BoxDecoration(
+                      color: Color(0xFFD5EDFA),
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
                   child: Row(
                     children: [
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Image.asset(
                         "assets/images/notificationDateIcon.png",
                         width: 12,
                         height: 13.33,
                       ),
-                      SizedBox(width: 9),
+                      const SizedBox(width: 9),
                       Text(
                         "Filter by Date",
                         style: GoogleFonts.poppins(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: Color(0xFF333333)),
+                            color: const Color(0xFF333333)),
                       ),
-                      SizedBox(width: 14),
+                      const SizedBox(width: 14),
                     ],
-                  ),
-                  decoration: BoxDecoration(
-                      color: Color(0xFFD5EDFA),
-                      borderRadius: BorderRadius.all(Radius.circular(8)))),
+                  )),
             ),
           ),
         ],
@@ -102,10 +102,10 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
               child: Column(
                 children: [
                   TabBar(
-                    unselectedLabelColor: Color(0xFF666666),
+                    unselectedLabelColor: const Color(0xFF666666),
                     indicatorWeight: 2,
                     indicator: BoxDecoration(
-                      color: Color(0xFF447EFF),
+                      color: const Color(0xFF447EFF),
                       borderRadius: BorderRadius.circular(22),
                     ),
                     controller: tabController,
@@ -139,7 +139,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-                children: [
+                children: const [
                   CircularScreen(),
                   ReportScreen(),
                   NotificationScreen(),

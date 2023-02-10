@@ -10,6 +10,9 @@ import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/pravas_create_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
+import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
+import 'package:sangathan/Dashboard/Screen/notification/screens/NotificationScreen.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
@@ -46,8 +49,8 @@ import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(
-    RemoteMessage message,
-    ) async {
+  RemoteMessage message,
+) async {
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
@@ -86,7 +89,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (create) => ReactionCubit()),
-
+        BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
         BlocProvider(create: (context) => PollCubit()),
@@ -116,10 +119,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => EditShaktiKendrCubit()),
         BlocProvider(create: (context) => SangathanDetailsCubit()),
         BlocProvider(create: (context) => ShareCubit()),
-
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
-        builder: (context,lang){
+        builder: (context, lang) {
           final cubit = context.read<LanguageCubit>();
           return MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -136,12 +138,12 @@ class _MyAppState extends State<MyApp> {
             locale: const Locale.fromSubtags(languageCode: 'hi'),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
-            // home: WhatsappScreen(),
+            // home: NotificationMainScreen(),
             initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
-                primary: AppColor.primaryColor,
-              ),
+                    primary: AppColor.primaryColor,
+                  ),
             ),
           );
         },
