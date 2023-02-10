@@ -54,8 +54,6 @@ class SelectBooth extends StatelessWidget {
                             itemCount: cubit.boothData.data?.length,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
-                              print(
-                                  "====================================================================== ${cubit.boothData.data?.length}");
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
@@ -83,16 +81,14 @@ class SelectBooth extends StatelessWidget {
                                                       .id)) {
                                                 cubit.chekedValue.remove(cubit
                                                     .boothData.data?[index].id);
-                                                cubit.selectedBooth.remove(cubit
-                                                    .boothData.data?[index]);
+                                                cubit.selectedBooth.remove({"id" : cubit.boothData.data?[index].id});
                                               } else {
                                                 cubit.chekedValue.add(cubit
                                                         .boothData
                                                         .data?[index]
                                                         .id ??
                                                     0);
-                                                cubit.selectedBooth.add(cubit
-                                                    .boothData.data![index]);
+                                                cubit.selectedBooth.add({"id" : cubit.boothData.data?[index].id});
                                               }
                                               cubit.emitState();
                                             }),

@@ -1709,6 +1709,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Please Select Vidhansabha first`
+  String get selectVidhansabhaFirst {
+    return Intl.message(
+      'Please Select Vidhansabha first',
+      name: 'selectVidhansabhaFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Mandal first`
+  String get selectMandalFirst {
+    return Intl.message(
+      'Please Select Mandal first',
+      name: 'selectMandalFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter shakti kendr name`
+  String get enterShkatiKendrName {
+    return Intl.message(
+      'Please enter shakti kendr name',
+      name: 'enterShkatiKendrName',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

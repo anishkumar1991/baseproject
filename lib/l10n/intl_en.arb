@@ -165,5 +165,8 @@
     "noDataUnit":"No Data Unit are available",
     "sureToDelete":"Are you sure to delete?",
     "noBoothAvailable" : "No booth available",
-    "dataUnitEmptyError":"Data Unit is empty So you can't add entry"
+    "dataUnitEmptyError":"Data Unit is empty So you can't add entry",
+    "selectVidhansabhaFirst" : "Please Select Vidhansabha first",
+    "selectMandalFirst" : "Please Select Mandal first",
+    "enterShkatiKendrName" : "Please enter shakti kendr name"
 }

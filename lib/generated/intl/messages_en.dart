@@ -119,6 +119,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Phone Number should be 10 digit"),
         "enterShaktiKendrName": MessageLookupByLibrary.simpleMessage(
             "Write the name of shakti kendr"),
+        "enterShkatiKendrName": MessageLookupByLibrary.simpleMessage(
+            "Please enter shakti kendr name"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
@@ -209,8 +211,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Select Designation"),
         "selectLoksabha":
             MessageLookupByLibrary.simpleMessage("Select Loksabha"),
+        "selectMandalFirst":
+            MessageLookupByLibrary.simpleMessage("Please Select Mandal first"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
+            "Please Select Vidhansabha first"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("Selected booth"),
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("Shakti Kendra Creation"),

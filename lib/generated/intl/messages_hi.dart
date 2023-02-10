@@ -122,6 +122,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "फोन नंबर १० अंकों का होना चाहिए"),
         "enterShaktiKendrName":
             MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र का नाम लिखे"),
+        "enterShkatiKendrName": MessageLookupByLibrary.simpleMessage(
+            "कृपया शक्ति केंद्र नाम दर्ज करें"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
@@ -212,8 +214,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectDesignation":
             MessageLookupByLibrary.simpleMessage("कृपया पद चुनें"),
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
+        "selectMandalFirst":
+            MessageLookupByLibrary.simpleMessage("कृपया पहले मंडल का चयन करें"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
+            "कृपया पहले विधानसभा का चयन करें"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("चयनित बूथ"),
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र क्रिएशन"),

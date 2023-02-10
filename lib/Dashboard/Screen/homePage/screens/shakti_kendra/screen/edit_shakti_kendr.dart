@@ -11,6 +11,7 @@ import '../../../../../../Values/icons.dart';
 import '../../../../../../Values/space_height_widget.dart';
 import '../../../../../../common/common_button.dart';
 import '../../../../../../generated/l10n.dart';
+import '../cubit/shakti_kendra_cubit.dart';
 import 'cubit/edit_shakti_kendr_cubit.dart';
 
 class EditShaktiKendraScreen extends StatefulWidget {
@@ -202,6 +203,13 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                       spaceHeightWidget(10),
                       BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
                         builder: (context, state) {
+                          if (state is FatchDataMandalEditShaktiKendraState) {
+                            context.read<EditShaktiKendrCubit>().mandal =
+                                state.data;
+                          } else if (state
+                              is ErrorMandalEditShaktiKendraState) {
+                            EasyLoading.showToast(state.error);
+                          }
                           return ListTile(
                             horizontalTitleGap: 8,
                             onTap: () async {
@@ -210,7 +218,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                       .zilaSelected ==
                                   '') {
                                 EasyLoading.showToast(
-                                    "Please Select Vidhansabha first",
+                                    S.of(context).selectVidhansabhaFirst,
                                     toastPosition:
                                         EasyLoadingToastPosition.top);
                               } else {
@@ -281,6 +289,12 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                       spaceHeightWidget(10),
                       BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
                         builder: (context, state) {
+                          if (state is FatchDataBoothEditShaktiKendraState) {
+                            context.read<EditShaktiKendrCubit>().boothData =
+                                state.data;
+                          } else if (state is ErrorBoothEditShaktiKendraState) {
+                            EasyLoading.showToast(state.error);
+                          }
                           return ListTile(
                             horizontalTitleGap: 8,
                             onTap: () {
@@ -289,7 +303,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                       .zilaSelected ==
                                   '') {
                                 EasyLoading.showToast(
-                                    "Please Select Vidhansabha first",
+                                    S.of(context).selectVidhansabhaFirst,
                                     toastPosition:
                                         EasyLoadingToastPosition.top);
                               } else {
@@ -441,39 +455,61 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                 ),
               ),
               spaceHeightWidget(15),
-              CommonButton(
-                  borderRadius: 15,
-                  onTap: () async {
-                    cubit.emitState();
-                    if (cubit.zilaSelected == "") {
-                      EasyLoading.showToast("Please select vidhanSabha",
-                          toastPosition: EasyLoadingToastPosition.top);
-                    } else if (cubit.shaktiKendrCtr.text.isEmpty) {
-                      EasyLoading.showToast("Please enter shakti kendr name",
-                          toastPosition: EasyLoadingToastPosition.top);
-                    } else if (cubit.mandalSelected == "") {
-                      EasyLoading.showToast("Please select mandal",
-                          toastPosition: EasyLoadingToastPosition.top);
-                    } else {
-                      await cubit.createAndEditShaktiKendr(
-                          context: context,
-                          skName: cubit.shaktiKendrCtr.text,
-                          vidhanSabhaId: cubit.zilaId,
-                          mandalId: cubit.mandalId,
-                          booth: cubit.selectedBooth,
-                          isEdit: widget.isEdit);
-                      Future.delayed(Duration.zero).then((value) {
-                        Navigator.pop(context);
-                      });
-                    }
-                  },
-                  title: widget.isEdit ?? false
-                      ? S.of(context).submit
-                      : S.of(context).makeShaktikendr,
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  style:
-                  GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
-                  padding: const EdgeInsets.symmetric(vertical: 10)),
+              BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
+                builder: (context, state) {
+                  if (state is LoadingEditAndCreateEditShaktiKendraState) {
+                    EasyLoading.show();
+                  } else if (state
+                      is FatchDataEditAndCreateEditShaktiKendraState) {
+                    context.read<EditShaktiKendrCubit>().boothData = state.data;
+                    EasyLoading.dismiss();
+                    EasyLoading.showToast(state.data.message ?? '',
+                        toastPosition: EasyLoadingToastPosition.top);
+                    Future.delayed(Duration.zero).then((value) => {
+                          context.read<ShaktiKendraCubit>().getShaktiKendra(
+                              id: context.read<EditShaktiKendrCubit>().zilaId ??
+                                  236)
+                        });
+                  } else if (state is ErrorEditAndCreateEditShaktiKendraState) {
+                    EasyLoading.dismiss();
+                    EasyLoading.showToast(state.error,
+                        toastPosition: EasyLoadingToastPosition.top);
+                  }
+                  return CommonButton(
+                      borderRadius: 15,
+                      onTap: () async {
+                        if (cubit.zilaSelected == "") {
+                          EasyLoading.showToast(S.of(context).selectVidhansabhaFirst,
+                              toastPosition: EasyLoadingToastPosition.top);
+                        } else if (cubit.shaktiKendrCtr.text.isEmpty) {
+                          EasyLoading.showToast(
+                              S.of(context).enterShkatiKendrName,
+                              toastPosition: EasyLoadingToastPosition.top);
+                        } else if (cubit.mandalSelected == "") {
+                          EasyLoading.showToast(S.of(context).selectMandalFirst,
+                              toastPosition: EasyLoadingToastPosition.top);
+                        } else {
+                          await cubit.createAndEditShaktiKendr(
+                              context: context,
+                              skName: cubit.shaktiKendrCtr.text,
+                              vidhanSabhaId: cubit.zilaId,
+                              mandalId: cubit.mandalId,
+                              booth: cubit.selectedBooth,
+                              isEdit: widget.isEdit);
+                          Future.delayed(Duration.zero).then((value) {
+                            Navigator.pop(context);
+                          });
+                        }
+                      },
+                      title: widget.isEdit ?? false
+                          ? S.of(context).submit
+                          : S.of(context).makeShaktikendr,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      style: GoogleFonts.poppins(
+                          color: AppColor.white, fontSize: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 10));
+                },
+              ),
               spaceHeightWidget(15),
             ],
           ),
