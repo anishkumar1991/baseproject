@@ -8,7 +8,8 @@ class DynamicUIHandler {
     "religionId",
     "professionId",
     "educationId",
-    "blood_group"
+    "blood_group",
+    "district",
   ];
   static List<String> textfield = [
     "name",
@@ -20,7 +21,7 @@ class DynamicUIHandler {
     "address",
     "village",
     "tehsil",
-    "district",
+
     "pinCode",
     "qualification",
     "voterId",

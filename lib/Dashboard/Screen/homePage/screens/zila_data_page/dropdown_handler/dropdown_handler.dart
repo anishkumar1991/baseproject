@@ -13,7 +13,8 @@ class DropdownHandler {
           .getPartyZila(remainingURL: "data/allotted_locations", type: type);
     } else if (type == "Zila" || type == "Mandal") {
       context.read<ZilaDataCubit>().getPartyZila(
-          remainingURL: "data_entry/party_zilas?state_id=14", type: type);
+          remainingURL: "data_entry/party_zilas?state_id=$countryID",
+          type: type);
     } else if (type == "Vibhag") {
       context.read<ZilaDataCubit>().getPartyZila(
           remainingURL:

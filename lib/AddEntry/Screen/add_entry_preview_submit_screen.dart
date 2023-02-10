@@ -29,10 +29,18 @@ class AddEntryPreviewSubmit extends StatefulWidget {
 
 class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   String dateDDMMMYYYY(String date) {
-    DateTime tempDate = DateFormat("yyyy-MM-dd").parse(date);
-    var outputFormat = DateFormat('dd MMM yyyy');
-    var outputDate = outputFormat.format(tempDate);
-    return outputDate;
+    if (date.contains("/")) {
+      DateTime tempDate =
+          DateFormat("dd-MM-yyyy").parse(date.replaceAll("/", "-"));
+      var outputFormat = DateFormat('dd MMM yyyy');
+      var outputDate = outputFormat.format(tempDate);
+      return outputDate;
+    } else {
+      DateTime tempDate = DateFormat("yyyy-MM-dd").parse(date);
+      var outputFormat = DateFormat('dd MMM yyyy');
+      var outputDate = outputFormat.format(tempDate);
+      return outputDate;
+    }
   }
 
   @override
@@ -261,6 +269,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           uploadImage(gettingFilePath(item.key, cubit))),
                 ] else if (DynamicUIHandler.calenderView
                     .contains(item.key)) ...[
+                  spaceHeightWidget(8),
                   CommonTextField(
                     title: FieldHandler.getFieldName(item.key, cubit),
                     hintText: dateDDMMMYYYY(item.value),

@@ -85,12 +85,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   context.read<AddEntryCubit>().disposePage();
-  //   super.dispose();
-  // }
-
   formFieldWidget(AddEntryCubit cubit, int i) {
     return Column(
       children: [
@@ -116,6 +110,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   return cubit.professionData;
                 } else if (dropdownType == "blood_group") {
                   return DynamicUIHandler.bloodGroupList;
+                } else if (dropdownType == "district") {
+                  return cubit.districtDropdownData;
                 } else {
                   return [];
                 }
@@ -387,6 +383,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
         /// Here radio button
         else if (DynamicUIHandler.radioButton
             .contains(cubit.entryField![i].fieldName)) ...[
+          spaceHeightWidget(20),
           BlocBuilder<AddEntryCubit, AddEntryState>(
             builder: (context, state) {
               return Row(
@@ -395,9 +392,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   Text(
                     cubit.entryField![i].displayNameForUI ?? "",
                     style: GoogleFonts.roboto(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.greyColor),
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                   CustomRadioButton(
                     title: 'Male',
@@ -554,6 +550,11 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   cubit.designationData = [];
                   cubit.designationData = state.designationList.data ?? [];
 
+                  context
+                      .read<AddEntryCubit>()
+                      .getDistrictDropdown(widget.countryStateId.toString());
+                } else if (state is DistrictDropdownSuccessState) {
+                  cubit.districtDropdownData = state.districtDropdownData;
                   context.read<AddEntryCubit>().getAddEntryFormStructure(
                       levelID: widget.leaveId.toString(),
                       countryId: widget.countryStateId ??

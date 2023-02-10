@@ -121,3 +121,17 @@ class SubmitAddEntryErrorState extends AddEntryState {
 
   SubmitAddEntryErrorState(this.errorString);
 }
+
+class DistrictDropdownLoadingState extends AddEntryState {}
+
+class DistrictDropdownSuccessState extends AddEntryState {
+  final List<DropdownData> districtDropdownData;
+
+  DistrictDropdownSuccessState(this.districtDropdownData);
+}
+
+class DistrictDropdownErrorState extends AddEntryState {
+  final String errorMsg;
+
+  DistrictDropdownErrorState(this.errorMsg);
+}

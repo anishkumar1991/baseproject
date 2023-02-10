@@ -46,6 +46,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   List<DropdownData> professionData = [];
   List<DropdownData> nativeStateData = [];
   List<DropdownData> religionData = [];
+  List<DropdownData> districtDropdownData = [];
 
   List<DesignationData> designationData = [];
   TextEditingController dobController = TextEditingController();
@@ -60,6 +61,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   DropdownData? nativeStateSelected;
   DropdownData? religionSelected;
   DropdownData? bloodGroupSelected;
+  DropdownData? districtSelected;
   DesignationData? designationSelected;
   String? profileImageUrl;
   DesignationData? selectedDesignationData;
@@ -217,6 +219,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "blood_group") {
       bloodGroupSelected = value;
+
+      getAllDropDownData(value, dropdownType);
+    } else if (dropdownType == "district") {
+      districtSelected = value;
 
       getAllDropDownData(value, dropdownType);
     } else {}
@@ -406,6 +412,33 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
+  ///District dropdown API methods
+  Future getDistrictDropdown(String countryId) async {
+    try {
+      emit(DistrictDropdownLoadingState());
+      final res = await api.getDistrictDropdownData(
+          'Bearer ${StorageService.userAuthToken}', countryId.toString());
+      print(
+          "------------------------------------ District ----------------------------");
+      print("Country id static 3  :$countryId");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        List data = res.data["data"];
+        var dataDistrict =
+            data.map((data) => DropdownData.fromJson(data)).toList();
+        emit(DistrictDropdownSuccessState(dataDistrict));
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(DistrictDropdownErrorState(msg?['errors'] ?? ''));
+      }
+    } catch (e) {
+      emit(DistrictDropdownErrorState('Something Went Wrong'));
+    }
+  }
+
   ///Designation dropdown API methods
   Future getDesignationDropdown({required Map<String, dynamic> data}) async {
     try {
@@ -568,6 +601,15 @@ class AddEntryCubit extends Cubit<AddEntryState> {
               bloodGroupSelected = DynamicUIHandler.bloodGroupList[index];
               getAllDropDownData(
                   DynamicUIHandler.bloodGroupList[index], item.key);
+            }
+          }
+        } else if (item.key == "district") {
+          if (item.value != null || item.value != "") {
+            int index = districtDropdownData
+                .indexWhere((element) => element.name == item.value);
+            if (index >= 0) {
+              districtSelected = districtDropdownData[index];
+              getAllDropDownData(districtDropdownData[index], item.key);
             }
           }
         }
@@ -745,6 +787,13 @@ class AddEntryCubit extends Cubit<AddEntryState> {
                 map.addEntries({
                   "blood_group": "${DynamicUIHandler.bloodGroupList[i].name}"
                 }.entries);
+              }
+            }
+          } else if (item.key == "district") {
+            for (int i = 0; i < (districtDropdownData.length); i++) {
+              if (districtDropdownData[i].id.toString() == item.value) {
+                map.addEntries(
+                    {"district": "${districtDropdownData[i].name}"}.entries);
               }
             }
           } else {
