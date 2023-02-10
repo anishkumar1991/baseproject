@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
-
+import '../../../../../../../Values/string.dart';
 part 'ReelsAPI.g.dart';
 
- @RestApi(baseUrl: "https://saral-social-staging.ccdms.in")
+ @RestApi(baseUrl:AppStrings.socialmediabaseUrl)
 abstract class ReelsAPI {
   factory ReelsAPI(Dio dio) = _ReelsAPI;
 

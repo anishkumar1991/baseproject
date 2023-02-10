@@ -21,6 +21,7 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
 
 import 'AddEntry/Cubit/add_entry_cubit.dart';
+import 'Dashboard/Screen/homePage/home_screen.dart';
 import 'Dashboard/Screen/homePage/screens/create_function_page/create_function_cubit/create_function_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/guest_list/cubit/guest_cubit.dart';
