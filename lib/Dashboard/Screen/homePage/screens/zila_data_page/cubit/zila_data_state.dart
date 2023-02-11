@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/data_unit_model.dart';
 
+import '../network/model/booth_pannas_status_model.dart';
 import '../network/model/data_entry_model.dart';
 import '../network/model/delete_reason_model.dart';
 import '../network/model/independent_drodown_model.dart';
@@ -98,4 +99,37 @@ class DependentDropdownErrorState extends ZilaDataState {
 
   DependentDropdownErrorState(this.errorMsg);
 }
-class FilterChnagedState extends ZilaDataState{}
+
+class FilterChangedState extends ZilaDataState {}
+
+/// booth pannas status
+
+class BoothPannasStatusLoadingState extends ZilaDataState {}
+
+class BoothPannasStatusSuccessState extends ZilaDataState {
+  final BoothPannasStatus boothPannasStatus;
+
+  BoothPannasStatusSuccessState(this.boothPannasStatus);
+}
+
+class BoothPannasStatusErrorState extends ZilaDataState {
+  final String errorMsg;
+
+  BoothPannasStatusErrorState(this.errorMsg);
+}
+
+/// refresh ui
+
+class NoDataFoundState extends ZilaDataState {}
+
+/// panna kramaank state
+
+class PannaKramaankLoadingState extends ZilaDataState {}
+
+class PannaKramaankSuccessState extends ZilaDataState {
+  final IndependentDropdownModel pannaKramaankListData;
+
+  PannaKramaankSuccessState(this.pannaKramaankListData);
+}
+
+class PannaKramaankErrorState extends ZilaDataState {}

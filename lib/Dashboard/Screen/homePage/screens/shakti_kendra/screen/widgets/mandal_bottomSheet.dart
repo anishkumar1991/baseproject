@@ -59,19 +59,22 @@ class MandalBottomSheet extends StatelessWidget {
                                   },
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child: Text(
-                                      cubit.mandal.data?[index].name ?? '',
-                                      textAlign: TextAlign.left,
-                                      style: GoogleFonts.poppins(
-                                          color: AppColor.black, fontSize: 16),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      child: Text(
+                                        cubit.mandal.data?[index].name ?? '',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.poppins(
+                                            color: AppColor.black, fontSize: 16),
+                                      ),
                                     ),
                                   ),
                                 ),
-                                spaceHeightWidget(15),
-                                const Divider(
+                                index + 1 == cubit.mandal.data?.length
+                                    ? SizedBox.shrink()
+                                    : const Divider(
                                   color: AppColor.borderColor,
                                 ),
-                                spaceHeightWidget(15),
                               ],
                             );
                           })

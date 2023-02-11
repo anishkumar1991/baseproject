@@ -67,7 +67,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     onPressed: (() {
                       Navigator.pop(context);
                     }),
-                    icon: const Icon(Icons.arrow_back)),
+                    icon: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: const Icon(Icons.arrow_back),
+                    )),
                 Text(
                   S.of(context).sangathan,
                   style: GoogleFonts.quicksand(

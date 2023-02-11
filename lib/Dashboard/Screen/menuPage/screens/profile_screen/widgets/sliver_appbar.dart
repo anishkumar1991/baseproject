@@ -89,7 +89,6 @@ class MyAppBar extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: (){
-                          print("open bottomSheet");
                           cubit.selectImageForProfile(id: cubit.userDetails?.data?.id,context: context);
                         },
                         child: CircularPercentIndicator(

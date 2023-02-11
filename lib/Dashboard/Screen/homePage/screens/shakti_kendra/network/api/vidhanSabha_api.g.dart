@@ -80,6 +80,7 @@ class _GetDropDownValue implements GetDropDownValue {
   Future<HttpResponse<dynamic>> deleteShaktiKendr(
     token,
     id,
+    isConfirm,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -94,7 +95,7 @@ class _GetDropDownValue implements GetDropDownValue {
     )
             .compose(
               _dio.options,
-              '/api/v1/shakti_kendras/delete?shakti_kendra_id=${id}&confirm_delete=true',
+              '/api/v1/shakti_kendras/delete?shakti_kendra_id=${id}&confirm_delete=${isConfirm}',
               queryParameters: queryParameters,
               data: _data,
             )

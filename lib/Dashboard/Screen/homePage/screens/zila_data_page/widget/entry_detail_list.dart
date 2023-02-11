@@ -9,6 +9,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../../AddEntry/Cubit/add_entry_cubit.dart';
 import '../../../../../../AddEntry/Screen/add_entry_screen.dart';
+import '../../../../../../AddEntry/VerifyPerson/screen/submit_dialog.dart';
 import '../../../../../../Values/app_colors.dart';
 import '../../../../../../Values/icons.dart';
 import '../../../../../../Values/space_height_widget.dart';
@@ -28,6 +29,7 @@ class EntryDetailsList extends StatelessWidget {
   final String? type;
   final int? dataLevelId;
   final int? countryStateId;
+
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ZilaDataCubit>();
@@ -86,7 +88,19 @@ class EntryDetailsList extends StatelessWidget {
                                     children: [
                                       SlidableAction(
                                         padding: EdgeInsets.zero,
-                                        onPressed: ((context) {}),
+                                        onPressed: ((context) {
+                                          showDialog(
+                                              context: context,
+                                              builder: ((context) {
+                                                return SubmitDialog(
+                                                  mobileNo: data?.phone ?? '',
+                                                  personId: data?.id ?? 0,
+                                                  onTapSkip: (() {
+                                                    Navigator.pop(context);
+                                                  }),
+                                                );
+                                              }));
+                                        }),
                                         backgroundColor: AppColor.greenshade100,
                                         foregroundColor: AppColor.greenshade900,
                                         icon: Icons.verified_user,
@@ -119,6 +133,8 @@ class EntryDetailsList extends StatelessWidget {
                                       SlidableAction(
                                         padding: EdgeInsets.zero,
                                         onPressed: ((context) async {
+                                          print(
+                                              'data?.otpStatus=${data?.otpStatus}');
                                           cubit.getDeleteId(data?.id);
 
                                           /// Data Entry Delete Dialog
@@ -141,7 +157,7 @@ class EntryDetailsList extends StatelessWidget {
                                         arguments: AddEntryPage(
                                           type: type!,
                                           leaveId: dataLevelId ?? 0,
-                                          unitId: cubit.unitId,
+                                          unitId: cubit.unitId ?? "",
                                           subUnitId: cubit.subUnitId,
                                           countryStateId: countryStateId,
                                           levelName: cubit.levelNameId,
@@ -201,11 +217,12 @@ class EntryDetailsList extends StatelessWidget {
                                                             .textBlackColor),
                                                   ),
                                                 ),
-                                                // spaceWidthWidget(5),
-                                                // Image.asset(
-                                                //   AppIcons.verifyIcon,
-                                                //   height: 10,
-                                                // )
+                                                //   spaceWidthWidget(5),
+                                                //  const Icon(
+                                                //     Icons.verified,
+                                                //     color: AppColor.blue,
+                                                //     size: 12,
+                                                //   )
                                               ],
                                             ),
                                             Text(
@@ -232,9 +249,16 @@ class EntryDetailsList extends StatelessWidget {
                                                 phoneNumber: data?.phone ?? '');
                                           }
                                         }),
-                                        child: Image.asset(
-                                          AppIcons.callIcon,
-                                          height: 20,
+                                        child: Container(
+                                          margin: const EdgeInsets.only(
+                                              left: 10,
+                                              top: 10,
+                                              bottom: 10,
+                                              right: 4),
+                                          child: Image.asset(
+                                            AppIcons.callIcon,
+                                            height: 20,
+                                          ),
                                         ),
                                       ),
                                       spaceWidthWidget(4)

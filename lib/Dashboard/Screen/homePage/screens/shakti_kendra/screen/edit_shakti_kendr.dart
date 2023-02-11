@@ -5,12 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/header_widget_edit_shakti_kendra.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/mandal_bottomSheet.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/select_booth.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/selected_booth.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/vidhanSabha_bottomSheet.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/warning_booth.dart';
+
 import '../../../../../../Values/app_colors.dart';
 import '../../../../../../Values/icons.dart';
 import '../../../../../../Values/space_height_widget.dart';
 import '../../../../../../common/common_button.dart';
 import '../../../../../../generated/l10n.dart';
+import '../cubit/shakti_kendra_cubit.dart';
+import '../network/model/shakti_kendr_model.dart';
 import 'cubit/edit_shakti_kendr_cubit.dart';
 
 class EditShaktiKendraScreen extends StatefulWidget {
@@ -20,6 +25,8 @@ class EditShaktiKendraScreen extends StatefulWidget {
   String? shaktiKendrName;
   int? vidhanSabhaId;
   int? shaktiKendrId;
+  ShaktiKendr? shaktiKendr;
+  List? boothNumber;
   List<int>? boothId;
 
   EditShaktiKendraScreen(
@@ -27,9 +34,11 @@ class EditShaktiKendraScreen extends StatefulWidget {
       this.isEdit = false,
       this.vidhanSabhaId,
       this.vidhanSabhaName,
+      this.shaktiKendr,
       this.shaktiKendrName,
       this.mandalName,
       this.shaktiKendrId,
+      this.boothNumber,
       this.boothId})
       : super(key: key);
 
@@ -38,7 +47,9 @@ class EditShaktiKendraScreen extends StatefulWidget {
 }
 
 class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
+  @override
   void initState() {
+    context.read<EditShaktiKendrCubit>().emitState();
     apiCall();
     super.initState();
   }
@@ -52,16 +63,10 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
           widget.shaktiKendrName ?? '';
       context.read<EditShaktiKendrCubit>().mandalSelected =
           widget.mandalName ?? '';
-      context.read<EditShaktiKendrCubit>().chekedValue = widget.boothId ?? [];
       context.read<EditShaktiKendrCubit>().shaktiKendrId =
           widget.shaktiKendrId ?? 0;
-
-      context
-          .read<EditShaktiKendrCubit>()
-          .getDropDownValueOfmandal(id: widget.vidhanSabhaId ?? 236);
-      context
-          .read<EditShaktiKendrCubit>()
-          .getBoothValuew(id: widget.vidhanSabhaId ?? 236);
+      context.read<EditShaktiKendrCubit>().getDropDownValueOfmandal(
+          id: widget.vidhanSabhaId ?? 236, isEdit: widget.isEdit);
     }
   }
 
@@ -202,6 +207,13 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                       spaceHeightWidget(10),
                       BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
                         builder: (context, state) {
+                          if (state is FatchDataMandalEditShaktiKendraState) {
+                            context.read<EditShaktiKendrCubit>().mandal =
+                                state.data;
+                          } else if (state
+                              is ErrorMandalEditShaktiKendraState) {
+                            EasyLoading.showToast(state.error);
+                          }
                           return ListTile(
                             horizontalTitleGap: 8,
                             onTap: () async {
@@ -210,7 +222,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                       .zilaSelected ==
                                   '') {
                                 EasyLoading.showToast(
-                                    "Please Select Vidhansabha first",
+                                    S.of(context).selectVidhansabhaFirst,
                                     toastPosition:
                                         EasyLoadingToastPosition.top);
                               } else {
@@ -281,15 +293,31 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                       spaceHeightWidget(10),
                       BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
                         builder: (context, state) {
+                          final cubit = context.read<EditShaktiKendrCubit>();
+                          if (state is FatchDataBoothEditShaktiKendraState) {
+                            cubit.boothData = state.data;
+                            if (widget.isEdit == true) {
+                              for (int i = 0;
+                                  i < (cubit.boothData.data?.length ?? 0);
+                                  i++) {
+                                if (widget.boothNumber!.contains(int.parse(
+                                    cubit.boothData.data?[i].number ?? ''))) {
+                                  cubit.chekedValue
+                                      .add(cubit.boothData.data![i]);
+                                  cubit.selectedBooth
+                                      .add(cubit.boothData.data![i].id!);
+                                }
+                              }
+                            }
+                          } else if (state is ErrorBoothEditShaktiKendraState) {
+                            EasyLoading.showToast(state.error);
+                          }
                           return ListTile(
                             horizontalTitleGap: 8,
                             onTap: () {
-                              if (context
-                                      .read<EditShaktiKendrCubit>()
-                                      .zilaSelected ==
-                                  '') {
+                              if (cubit.zilaSelected == '') {
                                 EasyLoading.showToast(
-                                    "Please Select Vidhansabha first",
+                                    S.of(context).selectVidhansabhaFirst,
                                     toastPosition:
                                         EasyLoadingToastPosition.top);
                               } else {
@@ -297,10 +325,13 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                     context: context,
                                     backgroundColor: AppColor.white,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(28.0),
                                     ),
                                     builder: (builder) {
-                                      return SelectBooth(cubit: cubit);
+                                      return SelectBooth(
+                                          cubit: cubit,
+                                          shaktiKendrDataList:
+                                              widget.shaktiKendr?.data ?? []);
                                     });
                               }
                             },
@@ -350,7 +381,8 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                             children: [
                                               Text(
                                                 cubit.chekedValue[index]
-                                                    .toString(),
+                                                        .number ??
+                                                    '',
                                                 style: GoogleFonts.poppins(
                                                     color: AppColor.black700,
                                                     fontWeight: FontWeight.w400,
@@ -389,91 +421,133 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                         color: AppColor.black,
                         thickness: 1,
                       ),
-                      // widget.isEdit ?? false
-                      //     ? Column(
-                      //         children: [
-                      //           spaceHeightWidget(10),
-                      //           Align(
-                      //             alignment: Alignment.centerLeft,
-                      //             child: Text(
-                      //               S.of(context).selectedBooth,
-                      //               style: GoogleFonts.poppins(
-                      //                   color: AppColor.naturalBlackColor,
-                      //                   fontSize: 16,
-                      //                   fontWeight: FontWeight.w500),
-                      //             ),
-                      //           ),
-                      //           spaceHeightWidget(10),
-                      //           SelectedBooth(
-                      //               title: 'Govt. Senior Secondary Girls High',
-                      //               subTitle: "High School",
-                      //               leadingText: '102',
-                      //               onClose: () {}),
-                      //           spaceHeightWidget(20),
-                      //           Align(
-                      //             alignment: Alignment.centerLeft,
-                      //             child: Text(
-                      //               S.of(context).boothSelectedTitle,
-                      //               style: GoogleFonts.poppins(
-                      //                   color: AppColor.black.withOpacity(0.7),
-                      //                   fontSize: 16,
-                      //                   fontWeight: FontWeight.w500),
-                      //             ),
-                      //           ),
-                      //           spaceHeightWidget(5),
-                      //           Align(
-                      //             alignment: Alignment.centerLeft,
-                      //             child: Text(
-                      //               S.of(context).boothDes,
-                      //               style: GoogleFonts.poppins(
-                      //                   color: AppColor.naturalBlackColor
-                      //                       .withOpacity(0.7),
-                      //                   fontSize: 13),
-                      //             ),
-                      //           ),
-                      //           spaceHeightWidget(10),
-                      //           const WarningBooth()
-                      //         ],
-                      //       )
-                      //     : const SizedBox.shrink()
+                      BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
+                          builder: (context, state) {
+                        return Column(
+                          children: [
+                            cubit.chekedValue.isNotEmpty
+                                ? Column(
+                                    children: [
+                                      spaceHeightWidget(10),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          S.of(context).selectedBooth,
+                                          style: GoogleFonts.poppins(
+                                              color: AppColor.naturalBlackColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      spaceHeightWidget(10),
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
+                            SelectedBooth(cubit: cubit),
+                            cubit.alreadyExitBooth.isNotEmpty
+                                ? Column(
+                                    children: [
+                                      spaceHeightWidget(20),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          S.of(context).boothSelectedTitle,
+                                          style: GoogleFonts.poppins(
+                                              color: AppColor.black
+                                                  .withOpacity(0.7),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      spaceHeightWidget(5),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          S.of(context).boothDes,
+                                          style: GoogleFonts.poppins(
+                                              color: AppColor.naturalBlackColor
+                                                  .withOpacity(0.7),
+                                              fontSize: 13),
+                                        ),
+                                      ),
+                                      spaceHeightWidget(10),
+                                    ],
+                                  )
+                                : const SizedBox.shrink(),
+                            WarningBooth(
+                                cubit: cubit,
+                                shaktiKendrName: widget.isEdit == true
+                                    ? "${S.of(context).currentSk} - ${widget.shaktiKendrName}"
+                                    : "${S.of(context).currentSk} - ${cubit.shaktiKendrCtr.text}")
+                          ],
+                        );
+                      })
                     ],
                   ),
                 ),
               ),
               spaceHeightWidget(15),
-              CommonButton(
-                  borderRadius: 15,
-                  onTap: () async {
-                    cubit.emitState();
-                    if (cubit.zilaSelected == "") {
-                      EasyLoading.showToast("Please select vidhanSabha",
-                          toastPosition: EasyLoadingToastPosition.top);
-                    } else if (cubit.shaktiKendrCtr.text.isEmpty) {
-                      EasyLoading.showToast("Please enter shakti kendr name",
-                          toastPosition: EasyLoadingToastPosition.top);
-                    } else if (cubit.mandalSelected == "") {
-                      EasyLoading.showToast("Please select mandal",
-                          toastPosition: EasyLoadingToastPosition.top);
-                    } else {
-                      await cubit.createAndEditShaktiKendr(
-                          context: context,
-                          skName: cubit.shaktiKendrCtr.text,
-                          vidhanSabhaId: cubit.zilaId,
-                          mandalId: cubit.mandalId,
-                          booth: cubit.selectedBooth,
-                          isEdit: widget.isEdit);
-                      Future.delayed(Duration.zero).then((value) {
-                        Navigator.pop(context);
-                      });
-                    }
-                  },
-                  title: widget.isEdit ?? false
-                      ? S.of(context).submit
-                      : S.of(context).makeShaktikendr,
-                  width: MediaQuery.of(context).size.width * 0.6,
-                  style:
-                  GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
-                  padding: const EdgeInsets.symmetric(vertical: 10)),
+              BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
+                builder: (context, state) {
+                  if (state is LoadingEditAndCreateEditShaktiKendraState) {
+                    EasyLoading.show();
+                  } else if (state
+                      is FatchDataEditAndCreateEditShaktiKendraState) {
+                    context.read<EditShaktiKendrCubit>().boothData = state.data;
+                    EasyLoading.dismiss();
+                    EasyLoading.showToast(state.data.message ?? '',
+                        toastPosition: EasyLoadingToastPosition.top);
+                    Future.delayed(Duration.zero).then((value) => {
+                          context.read<ShaktiKendraCubit>().getShaktiKendra(
+                              id: context.read<EditShaktiKendrCubit>().zilaId ??
+                                  236)
+                        });
+                  } else if (state is ErrorEditAndCreateEditShaktiKendraState) {
+                    EasyLoading.dismiss();
+                    EasyLoading.showToast(state.error,
+                        toastPosition: EasyLoadingToastPosition.top);
+                  }
+                  return CommonButton(
+                      borderRadius: 15,
+                      onTap: () async {
+                        if (cubit.zilaSelected == "") {
+                          EasyLoading.showToast(
+                              S.of(context).selectVidhansabhaFirst,
+                              toastPosition: EasyLoadingToastPosition.top);
+                        } else if (cubit.shaktiKendrCtr.text.isEmpty) {
+                          EasyLoading.showToast(
+                              S.of(context).enterShkatiKendrName,
+                              toastPosition: EasyLoadingToastPosition.top);
+                        } else if (cubit.mandalSelected == "") {
+                          EasyLoading.showToast(S.of(context).selectMandalFirst,
+                              toastPosition: EasyLoadingToastPosition.top);
+                        } else {
+                          List<Map<String, dynamic>> tempBooth = [];
+                          for (var element in cubit.selectedBooth) {
+                            tempBooth.add({"id": element});
+                          }
+
+                          await cubit.createAndEditShaktiKendr(
+                              context: context,
+                              skName: cubit.shaktiKendrCtr.text,
+                              vidhanSabhaId: cubit.zilaId,
+                              mandalId: cubit.mandalId,
+                              booth: tempBooth,
+                              isEdit: widget.isEdit);
+                          Future.delayed(Duration.zero).then((value) {
+                            Navigator.pop(context);
+                          });
+                        }
+                      },
+                      title: widget.isEdit ?? false
+                          ? S.of(context).submit
+                          : S.of(context).makeShaktikendr,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      style: GoogleFonts.poppins(
+                          color: AppColor.white, fontSize: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 10));
+                },
+              ),
               spaceHeightWidget(15),
             ],
           ),

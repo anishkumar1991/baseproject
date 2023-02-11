@@ -52,6 +52,8 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
+                                    cubit.chekedValue = [];
+                                    cubit.mandalSelected = '';
                                     cubit.zilaSelected = vidhanSabha
                                             .data?.locations?[index].name ??
                                         '';
@@ -61,26 +63,28 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                         id: cubit.zilaId ?? 236);
                                     cubit.getDropDownValueOfmandal(
                                         id: cubit.zilaId ?? 236);
-                                    cubit.emitState();
                                     Navigator.pop(context);
                                   },
                                   child: SizedBox(
                                     width: double.infinity,
-                                    child: Text(
-                                      vidhanSabha
-                                              .data?.locations?[index].name ??
-                                          '',
-                                      textAlign: TextAlign.left,
-                                      style: GoogleFonts.poppins(
-                                          color: AppColor.black, fontSize: 16),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      child: Text(
+                                        vidhanSabha
+                                                .data?.locations?[index].name ??
+                                            '',
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.poppins(
+                                            color: AppColor.black, fontSize: 16),
+                                      ),
                                     ),
                                   ),
                                 ),
-                                spaceHeightWidget(15),
-                                const Divider(
+                                index + 1 == vidhanSabha.data?.locations?.length
+                                    ? SizedBox.shrink()
+                                    : const Divider(
                                   color: AppColor.borderColor,
                                 ),
-                                spaceHeightWidget(15),
                               ],
                             );
                           })

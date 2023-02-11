@@ -10,11 +10,13 @@ import 'package:sangathan/common/common_button.dart';
 import '../../../../../../../Values/app_colors.dart';
 import '../../../../../../../Values/space_height_widget.dart';
 import '../../../../../../../generated/l10n.dart';
+import '../../network/model/shakti_kendr_model.dart' as shaktiKendr;
 
 class SelectBooth extends StatelessWidget {
   EditShaktiKendrCubit cubit;
+  List<shaktiKendr.Data> shaktiKendrDataList;
 
-  SelectBooth({Key? key, required this.cubit}) : super(key: key);
+  SelectBooth({Key? key, required this.cubit,required this.shaktiKendrDataList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,80 +56,74 @@ class SelectBooth extends StatelessWidget {
                             itemCount: cubit.boothData.data?.length,
                             physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) {
-                              print(
-                                  "====================================================================== ${cubit.boothData.data?.length}");
                               return Padding(
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        Checkbox(
-                                            checkColor: Colors.green,
-                                            activeColor: AppColor.white,
-                                            side: MaterialStateBorderSide
-                                                .resolveWith(
-                                              (states) => const BorderSide(
-                                                  width: 1.0,
-                                                  color: AppColor
-                                                      .naturalBlackColor),
+                                    InkWell(
+                                      onTap: () async {
+                                        if (cubit.chekedValue.contains(cubit.boothData.data![index])) {
+                                          cubit.chekedValue.remove(cubit.boothData.data![index]);
+                                          cubit.selectedBooth.remove(cubit.boothData.data?[index].id);
+                                          await cubit.alreadyExitBoothInOtherSk(isAdd: false,boothId: cubit.boothData.data?[index].id ?? 0,shaktiKendrDataList: shaktiKendrDataList);
+                                        } else {
+                                          cubit.chekedValue.add(cubit.boothData.data![index]);
+                                          cubit.selectedBooth.add(cubit.boothData.data?[index].id ?? 0);
+                                          print(cubit.boothData.data?[index].id);
+                                          await cubit.alreadyExitBoothInOtherSk(isAdd: true,boothId: cubit.boothData.data?[index].id ?? 0,shaktiKendrDataList: shaktiKendrDataList);
+                                        }
+                                        cubit.emitState();
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Checkbox(
+                                              checkColor: Colors.green,
+                                              activeColor: AppColor.white,
+                                              side: MaterialStateBorderSide
+                                                  .resolveWith(
+                                                (states) => const BorderSide(
+                                                    width: 1.0,
+                                                    color: AppColor
+                                                        .naturalBlackColor),
+                                              ),
+                                              value: cubit.chekedValue.contains(cubit.boothData.data![index]),
+                                              onChanged: (value) {
+                                              }),
+                                          Container(
+                                            width: 35,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(11),
+                                                color: AppColor
+                                                    .boothContainerColour),
+                                            child: Text(
+                                              cubit.boothData.data?[index]
+                                                      .number ??
+                                                  '',
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.poppins(
+                                                  color: AppColor.white,
+                                                  fontSize: 12),
                                             ),
-                                            value: cubit.chekedValue.contains(
-                                                cubit
-                                                    .boothData.data?[index].id),
-                                            onChanged: (value) {
-                                              if (cubit.chekedValue.contains(
-                                                  cubit.boothData.data?[index]
-                                                      .id)) {
-                                                cubit.chekedValue.remove(cubit
-                                                    .boothData.data?[index].id);
-                                                cubit.selectedBooth.remove(cubit
-                                                    .boothData.data?[index]);
-                                              } else {
-                                                cubit.chekedValue.add(cubit
-                                                        .boothData
-                                                        .data?[index]
-                                                        .id ??
-                                                    0);
-                                                cubit.selectedBooth.add(cubit
-                                                    .boothData.data![index]);
-                                              }
-                                              cubit.emitState();
-                                            }),
-                                        Container(
-                                          width: 35,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(11),
-                                              color: AppColor
-                                                  .boothContainerColour),
-                                          child: Text(
-                                            cubit.boothData.data?[index]
-                                                    .number ??
-                                                '',
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                                color: AppColor.white,
-                                                fontSize: 12),
                                           ),
-                                        ),
-                                        spaceWidthWidget(10),
-                                        Expanded(
-                                          child: Text(
-                                            cubit.boothData.data?[index].name ??
-                                                '',
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 3,
-                                            textAlign: TextAlign.left,
-                                            style: GoogleFonts.poppins(
-                                                color: AppColor.black
-                                                    .withOpacity(0.8),
-                                                fontSize: 13),
+                                          spaceWidthWidget(10),
+                                          Expanded(
+                                            child: Text(
+                                              cubit.boothData.data?[index].name ??
+                                                  '',
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 3,
+                                              textAlign: TextAlign.left,
+                                              style: GoogleFonts.poppins(
+                                                  color: AppColor.black
+                                                      .withOpacity(0.8),
+                                                  fontSize: 13),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                     index + 1 == cubit.boothData.data?.length
                                         ? SizedBox.shrink()

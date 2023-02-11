@@ -25,6 +25,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   File? imageFile;
   String date = 'दिनांक';
   DateTime dateTime = DateTime.now();
+  final formKey = GlobalKey<FormState>();
   bool ischecked = false;
   bool isLoading = false;
   Gender value = Gender.male;
@@ -44,14 +45,38 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final TextEditingController statusCtr = TextEditingController();
   final TextEditingController castCtr = TextEditingController();
 
+
   final api = UpdatePersonalDetailsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
-
-
 
   emitState(){
     emit(PersonalInfoInitial());
   }
+
+  int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    print("===>>> ${DateTime.now()}");
+    print("===>>> ${birthDate}");
+    int age = currentDate.year - birthDate.year;
+    if (birthDate.month > currentDate.month) {
+      age--;
+    } else if (currentDate.month == birthDate.month) {
+      if (birthDate.day > currentDate.day) {
+        age--;
+      }
+    }
+    return age;
+  }
+
+  String calculateYear({required String dob}){
+    return daysBetween(from: DateFormat("yyyy-MM-dd").parse(dob), to: DateTime.now()).toString();
+  }
+  int daysBetween({required DateTime from, required DateTime to}) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inDays / 365).round();
+  }
+
 
   Future getCasteDropDownValue({required String id}) async {
     try {
@@ -110,7 +135,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     updatePersonalDetails(data: {
       "name": nameCtr.text,
       "username": userNameCtr.text,
-      "phone_number": mobileNumberCtr.text,
+      "phone_numbers": mobileNumberCtr.text,
       "dob": boiCtr.text,
       "gender": value.name,
       "avatar": urlDownload,
@@ -147,8 +172,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
 
   Future<void> selectImage({BuildContext? context}) async {
     emit(PersonalInfoInitial());
-    await selectOption(context: context!);
-    emit(ImageSelectSuccess());
+    var imageFile = await selectOption(context: context!);
+    print("=-======================================================================= $imageFile");
+    emit(ImageSelectSuccess(imgFile: imageFile));
   }
 }
 

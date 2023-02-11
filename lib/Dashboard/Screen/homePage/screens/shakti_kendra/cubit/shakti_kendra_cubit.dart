@@ -24,7 +24,6 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
   String zilaSelectedName = '';
   int isSelectedIndex = 0;
   bool isExpanded = false;
-  List<String> partyzilaList = ["First", "Seconf", "Thiurs"];
   List<String> filterList = ["नवीन एंट्री", "मंडल", "A - Z"];
   ShaktiKendr shaktiKendr = ShaktiKendr();
 
@@ -32,7 +31,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
-   // emit(());
+   emit((LoadingShaktiKendraState()));
   }
 
   Future getDropDownValueOfVidhanSabha({required int id}) async {
@@ -93,10 +92,9 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
       required BuildContext context,
       bool? isConfirmDelete}) async {
     try {
-      EasyLoading.show();
+      emit(DeleteDataShaktiKendraLoadingState());
       StorageService.getUserAuthToken();
-      var res = await api.deleteShaktiKendr(
-          'Bearer ${StorageService.userAuthToken}', id);
+      var res = await api.deleteShaktiKendr('Bearer ${StorageService.userAuthToken}', id,isConfirmDelete!);
       print(
           "------------------------------------ Delete Shakti Kendra Value  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
@@ -106,30 +104,29 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        EasyLoading.dismiss();
         DeleteModel data = DeleteModel.fromJson(res.response.data);
-        if (data.data?.askConfirmation == true) {
-          dataEntryDeleteDialog(
-            context: context,
-            onDelete: () {
-              Navigator.pop(context);
-              deleteShaktiKendr(
-                  id: id, context: context, isConfirmDelete: true);
-            },
-            title: data.data?.message?.trim().trimLeft(),
-            subTitle: '',
-          );
-          getShaktiKendra(id: zilaSelected?.id ?? 357);
-        } else {
-          EasyLoading.showSuccess(data.data?.message ?? '');
-          getShaktiKendra(id: zilaSelected?.id ?? 357);
-        }
+        emit(DeleteShaktiKendraFatchDataState(data));
+        // if (data.data?.askConfirmation == true) {
+        //   dataEntryDeleteDialog(
+        //     context: context,
+        //     onDelete: () {
+        //       Navigator.pop(context);
+        //       deleteShaktiKendr(
+        //           id: id, context: context, isConfirmDelete: true);
+        //     },
+        //     title: data.data?.message?.trim().trimLeft(),
+        //     subTitle: '',
+        //   );
+        //   getShaktiKendra(id: zilaSelected?.id ?? 357);
+        // } else {
+        //   EasyLoading.showSuccess(data.data?.message ?? '');
+        //   getShaktiKendra(id: zilaSelected?.id ?? 357);
+        // }
       } else {
         emit(DeleteShaktiKendraErrorState(res.data['message']));
         print('error=${res.data['message']}');
       }
     } catch (e) {
-      EasyLoading.dismiss();
       emit(DeleteShaktiKendraErrorState('Something Went Wrong'));
     }
   }

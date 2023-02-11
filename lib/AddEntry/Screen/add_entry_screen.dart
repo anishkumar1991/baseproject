@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,12 +10,9 @@ import 'package:sangathan/AddEntry/Screen/widget/image_picker_bottomsheet.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_preview_dialog.dart';
 import 'package:sangathan/AddEntry/Screen/widget/upload_file_widget.dart';
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_ui_handler.dart';
-
 import 'package:sangathan/AddEntry/dynamic_ui_handler/dynamic_validator.dart';
-
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/common/common_button.dart';
-import 'package:sangathan/common/otp_field_widget.dart';
 
 import '../../Storage/user_storage_service.dart';
 import '../../Values/space_height_widget.dart';
@@ -44,7 +40,7 @@ class AddEntryPage extends StatefulWidget {
       : super(key: key);
   final String type;
   final int leaveId;
-  final int? unitId;
+  final dynamic unitId;
   final int? countryStateId;
   final int? personID;
   final bool isEditEntry;
@@ -58,7 +54,6 @@ class AddEntryPage extends StatefulWidget {
 }
 
 class _AddEntryPageState extends State<AddEntryPage> {
-  TextEditingController otpFieldController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -78,7 +73,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
     final cubit = context.read<AddEntryCubit>();
     cubit.type = 1;
     cubit.levelId = widget.leaveId;
-    cubit.unitId = widget.unitId;
+    cubit.unitId = widget.unitId ?? "";
     cubit.from = "${widget.type}Entry";
     cubit.subUnitId = widget.subUnitId ?? "";
     cubit.levelName = widget.levelName;
@@ -87,12 +82,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
     cubit.entryField = [];
     super.initState();
   }
-
-  // @override
-  // void dispose() {
-  //   context.read<AddEntryCubit>().disposePage();
-  //   super.dispose();
-  // }
 
   formFieldWidget(AddEntryCubit cubit, int i) {
     return Column(
@@ -119,6 +108,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   return cubit.professionData;
                 } else if (dropdownType == "blood_group") {
                   return DynamicUIHandler.bloodGroupList;
+                } else if (dropdownType == "district") {
+                  return cubit.districtDropdownData;
                 } else {
                   return [];
                 }
@@ -183,9 +174,11 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                     mandatoryField:
                                         cubit.entryField![i].mandatoryField ??
                                             false,
-                                    displayNameForUI: cubit
-                                            .entryField![i].displayNameForUI ??
-                                        ""),
+                                    displayNameForUI:
+                                        cubit.entryField![i].displayNameForUI ??
+                                            ""),
+                            isMandatoryField:
+                                cubit.entryField![i].mandatoryField ?? false,
                             onChanged: (value) {
                               FieldHandler.onUpdate(i, value,
                                   cubit.entryField![i].fieldName ?? "", cubit);
@@ -256,6 +249,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                   cubit.entryField![i].mandatoryField ?? false,
                               displayNameForUI:
                                   cubit.entryField![i].displayNameForUI ?? ""),
+                      isMandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
                       onChanged: (value) {
                         FieldHandler.onUpdate(i, value,
                             cubit.entryField![i].fieldName ?? "", cubit);
@@ -278,7 +273,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               element["fieldName"].toString().split("_")[0] ==
                               (cubit.entryField![i].fieldName ?? "")
                                   .split(RegExp(r"[A-Z]"))[0]);
-
                       showDialog(
                           context: context,
                           builder: ((context) => ImagePreViewDialog(
@@ -327,6 +321,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                 displayNameForUI:
                                     cubit.entryField![i].displayNameForUI ??
                                         ""),
+                        isMandatoryField:
+                            cubit.entryField![i].mandatoryField ?? false,
                         onChanged: (value) {
                           FieldHandler.onUpdate(i, value,
                               cubit.entryField![i].fieldName ?? "", cubit);
@@ -391,6 +387,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
         /// Here radio button
         else if (DynamicUIHandler.radioButton
             .contains(cubit.entryField![i].fieldName)) ...[
+          spaceHeightWidget(20),
           BlocBuilder<AddEntryCubit, AddEntryState>(
             builder: (context, state) {
               return Row(
@@ -399,9 +396,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   Text(
                     cubit.entryField![i].displayNameForUI ?? "",
                     style: GoogleFonts.roboto(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.greyColor),
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                   CustomRadioButton(
                     title: 'Male',
@@ -547,7 +543,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     "data_level": widget.leaveId,
                     "country_state_id": widget.countryStateId ??
                         StorageService.userData?.user?.countryStateId,
-                    "unit_id": widget.unitId,
+                    "unit_id": widget.unitId ?? "",
                     "sub_unit_id": widget.subUnitId
                   });
                 } else if (state is CastFetchedState) {
@@ -558,6 +554,11 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   cubit.designationData = [];
                   cubit.designationData = state.designationList.data ?? [];
 
+                  context
+                      .read<AddEntryCubit>()
+                      .getDistrictDropdown(widget.countryStateId.toString());
+                } else if (state is DistrictDropdownSuccessState) {
+                  cubit.districtDropdownData = state.districtDropdownData;
                   context.read<AddEntryCubit>().getAddEntryFormStructure(
                       levelID: widget.leaveId.toString(),
                       countryId: widget.countryStateId ??
@@ -571,6 +572,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   }
                   if (widget.personData != null) {
                     cubit.getInitialTextfieldData(widget.personData);
+                    cubit.getInitialImageUrls(widget.personData);
                     cubit.getInitialUserprofileImageData(widget.personData);
                     cubit.getInitialGenderData(widget.personData);
                     cubit.getInitialDOBData(widget.personData);
@@ -738,7 +740,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         if (form.validate()) {
                                           cubit.previewAndSubmitList();
                                           Navigator.pushNamed(context,
-                                              RoutePath.addEntryPreviewSubmit);
+                                              RoutePath.addEntryPreviewSubmit,
+                                              arguments: widget.isEditEntry);
                                         } else {
                                           EasyLoading.showToast(
                                               "Please fill all required field",
@@ -765,94 +768,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
           )
         ],
       )),
-    );
-  }
-
-  CommonButton verifyOtpDialogButton(
-      BuildContext context, AddEntryCubit cubit) {
-    return CommonButton(
-      height: 45,
-      onTap: (() {
-        Navigator.pop(context);
-        cubit.count = 30;
-        cubit.startTimer();
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: ((context) {
-              return BlocBuilder<AddEntryCubit, AddEntryState>(
-                builder: (context, state) {
-                  return AlertDialog(
-                    content: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          S.of(context).verifyWithOtp,
-                          style: GoogleFonts.quicksand(
-                              color: AppColor.greyColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        spaceHeightWidget(14),
-                        Text(
-                          'Enter OTP sent to 9988776655',
-                          style: GoogleFonts.quicksand(
-                              color: AppColor.greyColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        CustomOtpTextField(
-                          controller: otpFieldController,
-                          otpText: cubit.otpText ?? '',
-                          fieldWidth: 25,
-                          onChange: ((p0) {}),
-                          onComplete: ((p0) {}),
-                        ),
-                        spaceHeightWidget(26),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                                onPressed: cubit.count == 0 ? (() {}) : null,
-                                child: Text(
-                                  S.of(context).resend,
-                                  style: GoogleFonts.quicksand(
-                                      fontSize: 10,
-                                      color: AppColor.navyBlue,
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w500),
-                                )),
-                            Text(
-                              'OTP in 00:${cubit.count}',
-                              style: GoogleFonts.quicksand(
-                                  color: AppColor.greyColor,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
-                        spaceHeightWidget(32),
-                        CommonButton(
-                          title: S.of(context).verify,
-                          height: 45,
-                          margin: const EdgeInsets.symmetric(horizontal: 40),
-                          style: GoogleFonts.quicksand(
-                              color: AppColor.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              );
-            }));
-      }),
-      title: S.of(context).verifyWithOtp,
-      style: GoogleFonts.quicksand(
-          color: AppColor.white, fontSize: 16, fontWeight: FontWeight.w700),
     );
   }
 }

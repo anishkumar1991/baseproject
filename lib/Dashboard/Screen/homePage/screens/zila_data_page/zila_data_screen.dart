@@ -15,12 +15,12 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../../AddEntry/Cubit/add_entry_cubit.dart';
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import '../../../../../Storage/user_storage_service.dart';
+import '../../../../../Values/icons.dart';
 import 'cubit/zila_data_state.dart';
 import 'dropdown_handler/dropdown_handler.dart';
-
 import 'widget/designation_filter_widget.dart';
-
 import 'widget/filter_options_widget.dart';
+import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
 class ZilaDataScreen extends StatefulWidget {
   const ZilaDataScreen(
@@ -37,6 +37,7 @@ class ZilaDataScreen extends StatefulWidget {
 class _ZilaDataScreenState extends State<ZilaDataScreen> {
   @override
   void initState() {
+    print(widget.type);
     context.read<ZilaDataCubit>().dataList = null;
     context.read<ZilaDataCubit>().partyzilaList = [];
 
@@ -57,6 +58,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ZilaDataCubit>();
+
     return Scaffold(
       body: SafeArea(
           child:
@@ -107,6 +109,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 /// dependent dropdown
                 if (widget.type == "Mandal" ||
                     widget.type == "Booth" ||
+                    widget.type == "Panna" ||
                     widget.type == "Shakti Kendra") ...[
                   Row(
                     children: [
@@ -131,7 +134,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 spaceHeightWidget(13),
 
                 /// unit data widget
-                dataUnit(cubit),
+                if (widget.type == "Panna")
+                  boothPannaStatusWidget()
+                else
+                  dataUnit(cubit),
                 spaceHeightWidget(20),
                 Expanded(
                   child: BlocBuilder<ZilaDataCubit, ZilaDataState>(
@@ -155,27 +161,33 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           : Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(S.of(context).entry,
-                                        style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 18,
-                                        )),
-                                    Text(
-                                        "${S.of(context).total}:${cubit.dataList?.length ?? 0}",
-                                        style: GoogleFonts.poppins(
+                                if (widget.type == "Panna")
+                                  const SizedBox()
+                                else
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(S.of(context).entry,
+                                          style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w500,
-                                            fontSize: 12,
-                                            color: AppColor.greyColor))
-                                  ],
-                                ),
-                                spaceHeightWidget(10),
+                                            fontSize: 18,
+                                          )),
+                                      Text(
+                                          "${S.of(context).total}:${cubit.dataList?.length ?? 0}",
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12,
+                                              color: AppColor.greyColor))
+                                    ],
+                                  ),
+                                spaceHeightWidget(5),
 
                                 /// filter options
-                                const FilterOptions(),
+                                if (widget.type == "Panna")
+                                  pannaNumberSelectionWidget()
+                                else
+                                  const FilterOptions(),
                                 Expanded(
                                   child: SingleChildScrollView(
                                     child: Column(
@@ -225,22 +237,37 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   borderRadius: BorderRadius.circular(16)),
               backgroundColor: AppColor.buttonOrangeBackGroundColor,
               onPressed: (() {
-                if (cubit.coreSangathanList?.isEmpty ??
-                    true && cubit.morchaList.isEmpty) {
-                  EasyLoading.showError(S.of(context).dataUnitEmptyError);
-                } else {
+                if (widget.type == "Panna") {
                   context.read<AddEntryCubit>().cleanAllVariableData();
                   Navigator.pushNamed(context, RoutePath.addEntryScreen,
                       arguments: AddEntryPage(
                         type: widget.type ?? '',
                         leaveId: widget.dataLevelId ?? 0,
-                        unitId: cubit.unitId,
+                        unitId: cubit.unitId ?? "",
                         subUnitId: cubit.subUnitId,
                         isEditEntry: false,
                         levelName: cubit.levelNameId,
                         countryStateId: widget.countryStateId,
                         personData: null,
                       ));
+                } else {
+                  if (cubit.coreSangathanList?.isEmpty ??
+                      true && cubit.morchaList.isEmpty) {
+                    EasyLoading.showError(S.of(context).dataUnitEmptyError);
+                  } else {
+                    context.read<AddEntryCubit>().cleanAllVariableData();
+                    Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                        arguments: AddEntryPage(
+                          type: widget.type ?? '',
+                          leaveId: widget.dataLevelId ?? 0,
+                          unitId: cubit.unitId,
+                          subUnitId: cubit.subUnitId,
+                          isEditEntry: false,
+                          levelName: cubit.levelNameId,
+                          countryStateId: widget.countryStateId,
+                          personData: null,
+                        ));
+                  }
                 }
               }),
               icon: const Icon(Icons.add),
@@ -253,6 +280,83 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               ));
         },
       ),
+    );
+  }
+
+  Widget pannaNumberSelectionWidget() {
+    var cubit = context.read<ZilaDataCubit>();
+    return Row(
+      children: [
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  builder: (builder) {
+                    return PannaNoListBottomSheetWidget(
+                      acId: cubit.acId ?? 0,
+                      boothID: cubit.levelNameId ?? 0,
+                    );
+                  });
+            },
+            child: Container(
+              height: 60,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: AppColor.dividerColor,
+                    style: BorderStyle.solid,
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Row(children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  child: Image(
+                    image: AssetImage(
+                      AppIcons.fileListIcon,
+                    ),
+                    width: 20,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(S.of(context).pannaNo,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                        )),
+                    Text("6",
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                        ))
+                  ],
+                )),
+                const Icon(Icons.keyboard_arrow_down),
+              ]),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        const Image(
+          image: AssetImage(
+            AppIcons.pdfIcon,
+          ),
+          width: 60,
+        )
+      ],
     );
   }
 
@@ -270,7 +374,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             if (state.dataUnit.data?.isNotEmpty ?? false) {
               cubit.morchaList.clear();
               cubit.coreSangathanList = null;
-              cubit.filterDtaSelectedIndex = 0;
+              cubit.morchaData.name = 'Morcha';
+
+              //cubit.filterDtaSelectedIndex = 0;
               cubit.dataUnitList = state.dataUnit.data!;
 
               for (var i = 0; i < (cubit.dataUnitList?.length ?? 0); i++) {
@@ -303,170 +409,298 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             if (cubit.levelNameId != null) {
               context.read<ZilaDataCubit>().getEntryData(data: {
                 "level": widget.dataLevelId,
-                "unit": cubit.unitId,
+                "unit": cubit.unitId ?? "",
                 "level_name": cubit.levelNameId
               });
             }
           }
 
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: cubit.dataUnitList == null
-                ? Shimmer.fromColors(
-                    baseColor: AppColor.greyColor.withOpacity(0.3),
-                    highlightColor: Colors.grey.withOpacity(0.1),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                            3,
-                            (index) => Container(
-                                  margin: const EdgeInsets.only(right: 20),
-                                  height: 30,
-                                  width: 140,
-                                  color: AppColor.white,
-                                )).toList(),
-                      ),
-                    ))
-                : cubit.coreSangathanList?.isEmpty ??
-                        true && cubit.morchaList.isEmpty
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width * 0.20),
-                        child: Text(
-                          S.of(context).noDataUnit,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
+          return cubit.dataUnitList == null
+              ? Shimmer.fromColors(
+                  baseColor: AppColor.greyColor.withOpacity(0.3),
+                  highlightColor: Colors.grey.withOpacity(0.1),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          3,
+                          (index) => Container(
+                                margin: const EdgeInsets.only(right: 20),
+                                height: 30,
+                                width: 140,
+                                color: AppColor.white,
+                              )).toList(),
+                    ),
+                  ))
+              : cubit.coreSangathanList?.isEmpty ??
+                      true && cubit.morchaList.isEmpty
+                  ? Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.20),
+                      child: Text(
+                        S.of(context).noDataUnit,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
                         ),
-                      )
-                    : Row(
-                        children: [
-                          cubit.coreSangathanList?.isNotEmpty ?? false
-                              ? ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount:
-                                      cubit.coreSangathanList?.length ?? 0,
-                                  itemBuilder: ((context, index) {
-                                    final data =
-                                        cubit.coreSangathanList![index];
-
-                                    return InkWell(
-                                      onTap: (() async {
-                                        for (var i = 0;
-                                            i <
-                                                (cubit.dataUnitList?.length ??
-                                                    0);
-                                            i++) {
-                                          if (cubit.dataUnitList?[i].name ==
-                                              'Core Sangathan') {
-                                            cubit.unitId =
-                                                cubit.dataUnitList?[i].id;
-                                          }
-                                        }
-                                        cubit.onTapFilterData(
-                                            index: index,
-                                            id: data.id.toString(),
-                                            unitsId: cubit.unitId);
-                                        await context
-                                            .read<ZilaDataCubit>()
-                                            .getEntryData(data: {
-                                          "level": widget.dataLevelId,
-                                          "unit": cubit.unitId,
-                                          "level_name": cubit.levelNameId
-                                        });
-                                      }),
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16),
-                                        margin:
-                                            const EdgeInsets.only(right: 16),
-                                        decoration: BoxDecoration(
-                                          color: cubit.subUnitId ==
-                                                  data.id.toString()
-                                              ? AppColor
-                                                  .buttonOrangeBackGroundColor
-                                              : AppColor.orange300Color,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Center(
-                                            child: Text(data.name ?? '',
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 18,
-                                                    color: cubit.subUnitId ==
-                                                            data.id.toString()
-                                                        ? AppColor.white
-                                                        : AppColor.greyColor))),
-                                      ),
-                                    );
-                                  }))
-                              : const SizedBox.shrink(),
-                          cubit.morchaList.isNotEmpty
-                              ? InkWell(
-                                  onTap: (() {}),
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 16),
-                                    margin: const EdgeInsets.only(right: 16),
-                                    decoration: BoxDecoration(
-                                        color:
-                                            cubit.unitId == cubit.morchaData.id
-                                                ? AppColor
-                                                    .buttonOrangeBackGroundColor
-                                                : AppColor.orange300Color,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          cubit.morchaData.name ?? '',
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 18,
-                                              color: cubit.unitId ==
-                                                      cubit.morchaData.id
-                                                  ? AppColor.white
-                                                  : AppColor.greyColor),
-                                        ),
-                                        PopupMenuButton(
-                                          icon: Icon(
-                                            Icons.arrow_drop_down,
-                                            color: cubit.unitId ==
-                                                    cubit.morchaData.id
-                                                ? AppColor.white
-                                                : AppColor.greyColor,
-                                          ),
-                                          itemBuilder: ((context) {
-                                            return cubit.morchaList
-                                                .map((e) => PopupMenuItem(
-                                                    value: e,
-                                                    child: Text(e.name ?? '')))
-                                                .toList();
-                                          }),
-                                          onSelected: ((value) async {
-                                            cubit.onSelectMorcha(value);
-                                            await context
-                                                .read<ZilaDataCubit>()
-                                                .getEntryData(data: {
-                                              "level": widget.dataLevelId,
-                                              "unit": cubit.unitId,
-                                              "level_name": cubit.levelNameId
-                                            });
-                                          }),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox.shrink()
-                        ],
                       ),
-          );
+                    )
+                  : Row(
+                      children: [
+                        cubit.coreSangathanList?.isNotEmpty ?? false
+                            ? Expanded(
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    controller: cubit.controller,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount:
+                                        cubit.coreSangathanList?.length ?? 0,
+                                    itemBuilder: ((context, index) {
+                                      final data =
+                                          cubit.coreSangathanList![index];
+
+                                      return Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: (() async {
+                                              cubit.animateToIndex(index);
+                                              for (var i = 0;
+                                                  i <
+                                                      (cubit.dataUnitList
+                                                              ?.length ??
+                                                          0);
+                                                  i++) {
+                                                if (cubit.dataUnitList?[i]
+                                                        .name ==
+                                                    'Core Sangathan') {
+                                                  cubit.unitId =
+                                                      cubit.dataUnitList?[i].id;
+                                                }
+                                              }
+                                              cubit.onTapFilterData(
+                                                  id: data.id.toString(),
+                                                  unitsId: cubit.unitId);
+                                              await context
+                                                  .read<ZilaDataCubit>()
+                                                  .getEntryData(data: {
+                                                "level": widget.dataLevelId,
+                                                "unit": cubit.unitId ?? "",
+                                                "level_name": cubit.levelNameId
+                                              });
+                                            }),
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16),
+                                              margin: const EdgeInsets.only(
+                                                  right: 16),
+                                              decoration: BoxDecoration(
+                                                color: cubit.subUnitId ==
+                                                        data.id.toString()
+                                                    ? AppColor
+                                                        .buttonOrangeBackGroundColor
+                                                    : AppColor.orange300Color,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Center(
+                                                  child: Text(data.name ?? '',
+                                                      style: GoogleFonts.poppins(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 18,
+                                                          color: cubit.subUnitId ==
+                                                                  data.id
+                                                                      .toString()
+                                                              ? AppColor.white
+                                                              : AppColor
+                                                                  .greyColor))),
+                                            ),
+                                          ),
+                                          index + 1 ==
+                                                  cubit
+                                                      .coreSangathanList?.length
+                                              ? cubit.morchaList.isNotEmpty
+                                                  ? Container(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 16,
+                                                          vertical: 10),
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                              right: 16),
+                                                      decoration: BoxDecoration(
+                                                          color: cubit.unitId ==
+                                                                  cubit
+                                                                      .morchaData
+                                                                      .id
+                                                              ? AppColor
+                                                                  .buttonOrangeBackGroundColor
+                                                              : AppColor
+                                                                  .orange300Color,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8)),
+                                                      child: Row(
+                                                        children: [
+                                                          PopupMenuButton(
+                                                            itemBuilder:
+                                                                ((context) {
+                                                              return cubit
+                                                                  .morchaList
+                                                                  .map((e) => PopupMenuItem(
+                                                                      value: e,
+                                                                      child: Text(
+                                                                          e.name ??
+                                                                              '')))
+                                                                  .toList();
+                                                            }),
+                                                            onSelected:
+                                                                ((value) async {
+                                                              cubit
+                                                                  .onSelectMorcha(
+                                                                      value);
+                                                              await context
+                                                                  .read<
+                                                                      ZilaDataCubit>()
+                                                                  .getEntryData(
+                                                                      data: {
+                                                                    "level": widget
+                                                                        .dataLevelId,
+                                                                    "unit":
+                                                                        cubit.unitId ??
+                                                                            "",
+                                                                    "level_name":
+                                                                        cubit
+                                                                            .levelNameId
+                                                                  });
+                                                            }),
+                                                            child: Row(
+                                                              children: [
+                                                                Text(
+                                                                  cubit.morchaData
+                                                                          .name ??
+                                                                      '',
+                                                                  style: GoogleFonts.poppins(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          18,
+                                                                      color: cubit.unitId ==
+                                                                              cubit
+                                                                                  .morchaData.id
+                                                                          ? AppColor
+                                                                              .white
+                                                                          : AppColor
+                                                                              .greyColor),
+                                                                ),
+                                                                Icon(
+                                                                  Icons
+                                                                      .arrow_drop_down,
+                                                                  color: cubit.unitId ==
+                                                                          cubit
+                                                                              .morchaData
+                                                                              .id
+                                                                      ? AppColor
+                                                                          .white
+                                                                      : AppColor
+                                                                          .greyColor,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : const SizedBox.shrink()
+                                              : const SizedBox.shrink()
+                                        ],
+                                      );
+                                    })),
+                              )
+                            : const SizedBox.shrink(),
+                      ],
+                    );
         },
+      ),
+    );
+  }
+
+  Widget boothPannaStatusWidget() {
+    return BlocBuilder<ZilaDataCubit, ZilaDataState>(
+      builder: (context, state) {
+        final cubit = BlocProvider.of<ZilaDataCubit>(context);
+        if (state is BoothPannasStatusSuccessState) {
+          cubit.boothPannasStatus = state.boothPannasStatus;
+          if (cubit.levelNameId != null) {
+            context.read<ZilaDataCubit>().getEntryData(data: {
+              "level": widget.dataLevelId,
+              "unit": cubit.unitId ?? "",
+              "level_name": cubit.levelNameId
+            });
+          }
+        }
+        return cubit.dataList?.isEmpty ?? true
+            ? const SizedBox()
+            : Container(
+                padding: const EdgeInsets.all(10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: AppColor.pannaStatusColor,
+                    borderRadius: BorderRadius.circular(8)),
+                child: IntrinsicHeight(
+                  child: Row(children: [
+                    Expanded(
+                      child: boothPannaStatusColumn(S.of(context).totalPanna,
+                          cubit.boothPannasStatus?.data?.total ?? 0),
+                    ),
+                    const VerticalDivider(
+                      color: AppColor.dividerColor,
+                      width: 1,
+                    ),
+                    Expanded(
+                      child: boothPannaStatusColumn(S.of(context).pannaParmukh,
+                          cubit.boothPannasStatus?.data?.pramukh ?? 0),
+                    ),
+                    const VerticalDivider(
+                      color: AppColor.dividerColor,
+                      width: 1,
+                    ),
+                    Expanded(
+                      child: boothPannaStatusColumn(S.of(context).panaaSamiti,
+                          cubit.boothPannasStatus?.data?.samiti ?? 0),
+                    )
+                  ]),
+                ),
+              );
+      },
+    );
+  }
+
+  boothPannaStatusColumn(String title, int value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        children: [
+          Text(title,
+              textAlign: TextAlign.center,
+              style: GoogleFonts.poppins(
+                color: AppColor.black700,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              )),
+          const SizedBox(
+            height: 5,
+          ),
+          Text("$value",
+              style: GoogleFonts.poppins(
+                color: AppColor.black700,
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              )),
+        ],
       ),
     );
   }
@@ -501,11 +735,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 if (cubit.partyzilaList.isNotEmpty) {
                   cubit.levelNameId = cubit.partyzilaList.first.id;
                   cubit.zilaSelected = cubit.partyzilaList.first;
+                  cubit.acId = cubit.partyzilaList.first.id;
                 }
-
-                print('cubit.levelNameId==${cubit.levelNameId}');
                 if (widget.type == "Mandal" ||
                     widget.type == "Booth" ||
+                    widget.type == "Panna" ||
                     widget.type == "Shakti Kendra") {
                   DropdownHandler.dynamicDependentDropdown(
                       context,
@@ -554,6 +788,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         cubit.onChnageZila(value);
                         if (widget.type == "Mandal" ||
                             widget.type == "Booth" ||
+                            widget.type == "Panna" ||
                             widget.type == "Shakti Kendra") {
                           DropdownHandler.dynamicDependentDropdown(
                               context,
@@ -563,12 +798,13 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         }
                         if (widget.type != "Mandal" &&
                             widget.type != "Booth" &&
+                            widget.type != "Panna" &&
                             widget.type != "Shakti Kendra") {
                           await context
                               .read<ZilaDataCubit>()
                               .getEntryData(data: {
                             "level": widget.dataLevelId,
-                            "unit": cubit.unitId,
+                            "unit": cubit.unitId ?? "",
                             "level_name": cubit.levelNameId
                           });
                         }
@@ -603,12 +839,19 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               if (state is DependentDropdownSuccessState) {
                 cubit.levelNameId = null;
                 cubit.dependentDropdownList = state.dependentDropdownData;
-                context.read<ZilaDataCubit>().getUnitData(data: {
-                  "type": "Unit",
-                  "data_level": widget.dataLevelId,
-                  "country_state_id": widget.countryStateId ??
-                      StorageService.userData?.user?.countryStateId
-                });
+                if (widget.type == "Panna") {
+                  if (cubit.dependentDropdownList.isNotEmpty) {
+                    context.read<ZilaDataCubit>().getBoothPannasStatus(
+                        cubit.dependentDropdownList.first.id ?? 0);
+                  }
+                } else {
+                  context.read<ZilaDataCubit>().getUnitData(data: {
+                    "type": "Unit",
+                    "data_level": widget.dataLevelId,
+                    "country_state_id": widget.countryStateId ??
+                        StorageService.userData?.user?.countryStateId
+                  });
+                }
                 if (cubit.dependentDropdownList.isNotEmpty) {
                   cubit.dependentDropdownSelected =
                       cubit.dependentDropdownList.first;
@@ -617,6 +860,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   cubit.levelNameId = cubit.dependentLevelNameId;
                 } else {
                   cubit.dataList = [];
+                  cubit.onDataFound();
                 }
               }
 
@@ -651,9 +895,15 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           .toList(),
                       onChanged: ((value) async {
                         cubit.onDependentDropdown(value);
+                        if (widget.type == "Panna") {
+                          await context
+                              .read<ZilaDataCubit>()
+                              .getBoothPannasStatus(
+                                  cubit.dependentDropdownList.first.id ?? 0);
+                        }
                         await context.read<ZilaDataCubit>().getEntryData(data: {
                           "level": widget.dataLevelId,
-                          "unit": cubit.unitId,
+                          "unit": cubit.unitId ?? "",
                           "level_name": cubit.levelNameId
                         });
                       })));

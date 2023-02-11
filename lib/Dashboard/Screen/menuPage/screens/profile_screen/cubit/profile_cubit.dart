@@ -28,7 +28,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   File? imageFile;
   XFile? image;
   UploadTask? task;
-  bool isTrue = false;
   String? urlDownload;
   bool showAddress = false;
   bool showEducation = false;
@@ -36,14 +35,6 @@ class ProfileCubit extends Cubit<ProfileState> {
   GetStorage box = GetStorage();
 
 
-  getSwitchValue(){
-    String langCode = box.read('lang') ?? 'hi';
-    if(langCode == 'hi'){
-      isTrue = false;
-    }else{
-      isTrue = true;
-    }
-  }
 
   final api = UserDetailApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));

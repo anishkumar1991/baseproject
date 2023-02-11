@@ -225,7 +225,7 @@ class _ProfileBusinessScreenState extends State<ProfileBusinessScreen> {
                     );
                   })
               : const SizedBox.shrink(),
-          widget.cubit.userDetails!.data!.professionalDetails!.length > 1
+          (widget.cubit.userDetails?.data!.professionalDetails!.length ?? 0) > 1
               ? GestureDetector(
                   onTap: () {
                     widget.cubit.showBusiness = !widget.cubit.showBusiness;

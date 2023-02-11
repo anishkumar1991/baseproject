@@ -20,42 +20,42 @@ class ImageNotUploaded extends StatelessWidget {
     final cubit = BlocProvider.of<AddEntryCubit>(context);
     return BlocBuilder<AddEntryCubit, AddEntryState>(
       builder: (context, state) {
-        return Column(
-          children: [
-            initialUserprofileURL != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(5),
-                    child: Image.network(
-                      cubit.initialUserprofileURL ?? "",
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Image.asset(
+        return GestureDetector(
+          onTap: onTap,
+          child: Column(
+            children: [
+              initialUserprofileURL != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child: Image.network(
+                        cubit.initialUserprofileURL ?? "",
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            AppIcons.personLogo,
+                            height: 68,
+                          );
+                        },
+                      ),
+                    )
+                  : cubit.file == null
+                      ? Image.asset(
                           AppIcons.personLogo,
                           height: 68,
-                        );
-                      },
-                    ),
-                  )
-                : cubit.file == null
-                    ? Image.asset(
-                        AppIcons.personLogo,
-                        height: 68,
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(5),
-                        child: Image.file(
-                          cubit.file!,
-                          height: 100,
-                          width: 100,
-                          fit: BoxFit.cover,
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(5),
+                          child: Image.file(
+                            cubit.file!,
+                            height: 100,
+                            width: 100,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-            spaceHeightWidget(8),
-            GestureDetector(
-              onTap: onTap,
-              child: ClipRRect(
+              spaceHeightWidget(8),
+              ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
                   width: 105,
@@ -86,8 +86,8 @@ class ImageNotUploaded extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

@@ -116,7 +116,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                           ///OTP Text Field
                           CustomOtpTextField(
                             controller: otpFieldController,
-                            otpText: otpText,
                             onChange: ((value) {
                               otpText = value;
                               print('onChange=$otpText');

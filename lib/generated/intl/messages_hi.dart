@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्याक्रम बनाएँ"),
         "createShaktiKendra":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र  निर्माण"),
+        "currentSk":
+            MessageLookupByLibrary.simpleMessage("वर्तमान शक्ति केंद्र"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("डाटा एंट्री"),
         "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
             "डेटा यूनिट उपलब्ध नहीं है इसलिए आप ऐड एंट्री नहीं कर सकते"),
@@ -114,6 +116,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("शिक्षा अपडेटेड"),
         "emailAddress":
             MessageLookupByLibrary.simpleMessage("कृपया मान्य ईमेल दर्ज करें"),
+        "english": MessageLookupByLibrary.simpleMessage("अंग्रेज़ी"),
         "enter": MessageLookupByLibrary.simpleMessage("दर्ज करें"),
         "enterName":
             MessageLookupByLibrary.simpleMessage("कृपया नाम दर्ज करें"),
@@ -122,6 +125,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "फोन नंबर १० अंकों का होना चाहिए"),
         "enterShaktiKendrName":
             MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र का नाम लिखे"),
+        "enterShkatiKendrName": MessageLookupByLibrary.simpleMessage(
+            "कृपया शक्ति केंद्र नाम दर्ज करें"),
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
@@ -136,6 +141,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionType":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
+        "hindi": MessageLookupByLibrary.simpleMessage("हिंदी"),
         "home": MessageLookupByLibrary.simpleMessage("होम"),
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "लैंडलाइन नंबर ८ अंकों का होना चाहिए"),
@@ -175,6 +181,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "organization": MessageLookupByLibrary.simpleMessage("संगठन का नाम"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
+        "panaaSamiti": MessageLookupByLibrary.simpleMessage("पन्ना समिति "),
+        "pannaKramaank": MessageLookupByLibrary.simpleMessage("पन्ना क्रमांक "),
+        "pannaNo": MessageLookupByLibrary.simpleMessage("पन्ना संख्या"),
+        "pannaParmukh": MessageLookupByLibrary.simpleMessage("पन्ना प्रमुख"),
         "phoneNumber":
             MessageLookupByLibrary.simpleMessage("फ़ोन नंबर ( वैकल्पिक )"),
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
@@ -212,14 +222,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectDesignation":
             MessageLookupByLibrary.simpleMessage("कृपया पद चुनें"),
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
+        "selectMandalFirst":
+            MessageLookupByLibrary.simpleMessage("कृपया पहले मंडल का चयन करें"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
+            "कृपया पहले विधानसभा का चयन करें"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("चयनित बूथ"),
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र क्रिएशन"),
         "shaktikendr": MessageLookupByLibrary.simpleMessage("शक्ति केंद्र "),
-        "skipAddNewEntry": MessageLookupByLibrary.simpleMessage(
-            "छोड़ें और नई प्रविष्टि जोड़ें"),
+        "skipAddNewEntry":
+            MessageLookupByLibrary.simpleMessage("छोड़ें और नई ऐड एंट्री करें"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
             "कृपया (कब से) वर्ष पहले दर्ज करें"),
         "state": MessageLookupByLibrary.simpleMessage("स्टेट"),
@@ -233,6 +247,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("क्या वाकई हटाना है?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
         "total": MessageLookupByLibrary.simpleMessage("कुल"),
+        "totalPanna": MessageLookupByLibrary.simpleMessage("कुल पन्ना"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("कुल कार्यक्रम"),
         "totalTravelSoFar":
             MessageLookupByLibrary.simpleMessage("अब तक की कुल यात्रा -"),

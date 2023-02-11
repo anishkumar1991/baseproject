@@ -13,7 +13,8 @@ class DropdownHandler {
           .getPartyZila(remainingURL: "data/allotted_locations", type: type);
     } else if (type == "Zila" || type == "Mandal") {
       context.read<ZilaDataCubit>().getPartyZila(
-          remainingURL: "data_entry/party_zilas?state_id=14", type: type);
+          remainingURL: "data_entry/party_zilas?state_id=$countryID",
+          type: type);
     } else if (type == "Vibhag") {
       context.read<ZilaDataCubit>().getPartyZila(
           remainingURL:
@@ -26,7 +27,8 @@ class DropdownHandler {
           type: type);
     } else if (type == "Vidhan Sabha" ||
         type == "Shakti Kendra" ||
-        type == "Booth") {
+        type == "Booth" ||
+        type == "Panna") {
       context.read<ZilaDataCubit>().getPartyZila(
           remainingURL:
               "data/required_locations?location_type=CountryState&location_id=$countryID&required_location_type=AssemblyConstituency",
@@ -41,7 +43,7 @@ class DropdownHandler {
           remainingURL:
               "data/required_locations?location_type=CountryState&location_id=$countryID&required_location_type=Mandal&zila_id=$id",
           type: type);
-    } else if (type == "Booth") {
+    } else if (type == "Booth" || type == "Panna") {
       context.read<ZilaDataCubit>().getDependentDropdownData(
           remainingURL:
               "data/required_locations?location_type=CountryState&location_id=$countryID&required_location_type=Booth&ac_id=$id",
@@ -65,6 +67,7 @@ class DropdownHandler {
     } else if (type == "Lok Sabha") {
       return "Lok Sabha";
     } else if (type == "Vidhan Sabha" ||
+        type == "Panna" ||
         type == "Shakti Kendra" ||
         type == "Booth") {
       return "Vidhan Sabha";
@@ -74,7 +77,7 @@ class DropdownHandler {
   static dependentDropdownName(String type) {
     if (type == "Mandal") {
       return "Mandal";
-    } else if (type == "Booth") {
+    } else if (type == "Booth" || type == "Panna") {
       return "Booth";
     } else if (type == "Shakti Kendra") {
       return "Shakti Kendra";

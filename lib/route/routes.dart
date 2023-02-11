@@ -13,6 +13,7 @@ import '../Dashboard/Screen/homePage/screens/edit_date/edit_date_screen.dart';
 import '../Dashboard/Screen/homePage/screens/guest_list/guest_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
+import '../Dashboard/Screen/homePage/screens/shakti_kendra/network/model/shakti_kendr_model.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/screen/edit_shakti_kendr.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/shakti_kendra_screen.dart';
 import '../Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
@@ -177,10 +178,7 @@ class RouteGenerator {
               isNew = map['isNew'];
             }
             return EditAddressScreen(
-              index: index,
-              addresses: addresses,
-              isNew: isNew
-            );
+                index: index, addresses: addresses, isNew: isNew);
           },
         );
 
@@ -188,17 +186,19 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return const AddEntryPreviewSubmit();
+            return AddEntryPreviewSubmit(
+              isEdit: settings.arguments as bool,
+            );
           },
         );
-        case RoutePath.shaktiKendraScreen:
+      case RoutePath.shaktiKendraScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
             return const ShaktiKendraScreen();
           },
         );
-        case RoutePath.editShaktiKendraScreen:
+      case RoutePath.editShaktiKendraScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
@@ -210,6 +210,8 @@ class RouteGenerator {
             String? mandalName;
             String? shaktiKendrName;
             List<int>? boothId;
+            List<int>? boothNumber;
+            ShaktiKendr? shaktiKendr;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
               isEdit = map['isEdit'];
@@ -219,8 +221,20 @@ class RouteGenerator {
               shaktiKendrName = map['shaktiKendrName'];
               boothId = map['boothId'];
               shaktiKendrId = map['shaktiKendrId'];
+              boothNumber = map['boothNumber'];
+              shaktiKendr = map['shaktiKendr'];
             }
-            return  EditShaktiKendraScreen(isEdit: isEdit,vidhanSabhaId: vidhanSabhaId,vidhanSabhaName: vidhanSabhaName,mandalName: mandalName,shaktiKendrName: shaktiKendrName,boothId: boothId,shaktiKendrId: shaktiKendrId);
+            return EditShaktiKendraScreen(
+              isEdit: isEdit,
+              vidhanSabhaId: vidhanSabhaId,
+              vidhanSabhaName: vidhanSabhaName,
+              mandalName: mandalName,
+              shaktiKendrName: shaktiKendrName,
+              boothNumber: boothNumber,
+              shaktiKendrId: shaktiKendrId,
+              boothId: boothId,
+              shaktiKendr: shaktiKendr,
+            );
           },
         );
       case RoutePath.editEducationScreen:
@@ -238,10 +252,9 @@ class RouteGenerator {
               isNew = map['isNew'];
             }
             return EditEducationScreen(
-              index: index,
-              educationalDetails: educationalDetails,
-              isNew: isNew
-            );
+                index: index,
+                educationalDetails: educationalDetails,
+                isNew: isNew);
           },
         );
       case RoutePath.editBusinessScreen:

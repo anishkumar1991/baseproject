@@ -112,12 +112,26 @@ class SubmitAddEntryLoadingState extends AddEntryState {}
 
 class SubmitAddEntrySuccessState extends AddEntryState {
   final String message;
-
-  SubmitAddEntrySuccessState(this.message);
+  final String mobileNo;
+  SubmitAddEntrySuccessState(this.message,this.mobileNo);
 }
 
 class SubmitAddEntryErrorState extends AddEntryState {
   final String errorString;
 
   SubmitAddEntryErrorState(this.errorString);
+}
+
+class DistrictDropdownLoadingState extends AddEntryState {}
+
+class DistrictDropdownSuccessState extends AddEntryState {
+  final List<DropdownData> districtDropdownData;
+
+  DistrictDropdownSuccessState(this.districtDropdownData);
+}
+
+class DistrictDropdownErrorState extends AddEntryState {
+  final String errorMsg;
+
+  DistrictDropdownErrorState(this.errorMsg);
 }

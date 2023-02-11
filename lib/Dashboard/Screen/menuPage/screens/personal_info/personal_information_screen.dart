@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/personal_info/widgets/header_widget_personal_info_screen.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
@@ -83,6 +85,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             spaceHeightWidget(15),
             BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
               builder: (context, state) {
+                if(state is ImageSelectSuccess){
+                  cubit.imageFile = state.imgFile;
+                }
                 return cubit.imageFile == null
                     ? Container(
                         height: 100,
@@ -138,24 +143,31 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               },
             ),
             spaceHeightWidget(15),
-            GestureDetector(
-              onTap: () {
-                cubit.selectImage(context: context);
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(AppIcons.cameraIcon, height: 20, width: 20),
-                  spaceWidthWidget(5),
-                  Text(
-                    "Update",
-                    style: textStyleWithPoppin(
-                        fontSize: 14,
-                        color: AppColor.orange,
-                        fontWeight: FontWeight.w500),
+            BlocBuilder<PersonalInfoCubit,PersonalInfoState>(
+              builder: (context,state){
+                if(state is ImageSelectSuccess){
+                  cubit.imageFile = state.imgFile;
+                }
+                return GestureDetector(
+                  onTap: () {
+                    cubit.selectImage(context: context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(AppIcons.cameraIcon, height: 20, width: 20),
+                      spaceWidthWidget(5),
+                      Text(
+                        "Update",
+                        style: textStyleWithPoppin(
+                            fontSize: 14,
+                            color: AppColor.orange,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
             spaceHeightWidget(15),
             Expanded(
@@ -163,18 +175,22 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.nameCtr,
-                        title: '',
-                        labelText: S.of(context).fullName,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.nameCtr.text.isNotEmpty
-                            ? InkWell(
+                  Form(
+                    key: cubit.formKey,
+                    child: Column(
+                      children: [
+                        BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
+                          builder: (context, state) {
+                            return TextFieldWidget(
+                              controller: cubit.nameCtr,
+                              title: '',
+                              labelText: S.of(context).fullName,
+                              onChanged: (value) {
+                                cubit.emitState();
+                              },
+                              keyboardType: TextInputType.emailAddress,
+                              suffixWidget: cubit.nameCtr.text.isNotEmpty
+                                  ? InkWell(
                                 onTap: () {
                                   cubit.nameCtr.clear();
                                   cubit.emitState();
@@ -189,23 +205,24 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ),
                                 ),
                               )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(15),
-                  BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.userNameCtr,
-                        title: '',
-                        labelText: S.of(context).userName,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.emailAddress,
-                        suffixWidget: cubit.userNameCtr.text.isNotEmpty
-                            ? InkWell(
+                                  : const SizedBox.shrink(),
+                            );
+                          },
+                        ),
+                        spaceHeightWidget(15),
+                        BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
+                          builder: (context, state) {
+                            return TextFieldWidget(
+                              controller: cubit.userNameCtr,
+                              title: '',
+                              labelText: S.of(context).userName,
+                              onChanged: (value) {
+                                cubit.emitState();
+                              },
+                              maxLength: 15,
+                              keyboardType: TextInputType.emailAddress,
+                              suffixWidget: cubit.userNameCtr.text.isNotEmpty
+                                  ? InkWell(
                                 onTap: () {
                                   cubit.userNameCtr.clear();
                                   cubit.emitState();
@@ -220,23 +237,40 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   ),
                                 ),
                               )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(15),
-                  BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.mobileNumberCtr,
-                        title: '',
-                        labelText: S.of(context).mobileNumber,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        keyboardType: TextInputType.number,
-                        suffixWidget: cubit.mobileNumberCtr.text.isNotEmpty
-                            ? InkWell(
+                                  : const SizedBox.shrink(),
+                            );
+                          },
+                        ),
+                        spaceHeightWidget(15),
+                        BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
+                          builder: (context, state) {
+                            return TextFieldWidget(
+                              controller: cubit.mobileNumberCtr,
+                              title: '',
+                              labelText: S.of(context).mobileNumber,
+                              onChanged: (value) {
+                              },
+                              textInputFormatter : <TextInputFormatter>[
+                                FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                                MaskTextInputFormatter(
+                                  mask: '*#########',
+                                  filter: {"*" : RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
+                                  type: MaskAutoCompletionType.lazy
+                                )
+                              ],
+                              validator: ((value) {
+                                if (value?.isEmpty ?? false) {
+                                  return 'Please Enter Mobile Number';
+                                } else if (value?.length  != 10) {
+                                  return 'Mobile number should be 10 digit';
+                                } else if (RegExp(r'0000000000').hasMatch(value!)) {
+                                  return 'This Number is Not Valid Number';
+                                }
+                                return null;
+                              }),
+
+                              keyboardType: TextInputType.number,
+                              suffixWidget: InkWell(
                                 onTap: () {
                                   cubit.mobileNumberCtr.clear();
                                   cubit.emitState();
@@ -250,152 +284,167 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     width: 5,
                                   ),
                                 ),
-                              )
-                            : const SizedBox.shrink(),
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(15),
-                  BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
-                    builder: (context, state) {
-                      return Column(
-                        children: [
-                          TextFieldWidget(
-                              controller: cubit.boiCtr,
+                              ),
+                            );
+                          },
+                        ),
+                        spaceHeightWidget(15),
+                        BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
+                          builder: (context, state) {
+                            return Column(
+                              children: [
+                                TextFieldWidget(
+                                    controller: cubit.boiCtr,
+                                    title: '',
+                                    readOnly: true,
+                                    labelText: S.of(context).boi,
+                                    onChanged: (value) {
+                                      cubit.emitState();
+                                    },
+                                    keyboardType: TextInputType.emailAddress,
+                                    validator: ((value) {
+                                      if (value.isNotEmpty) {
+                                        if (cubit.calculateAge(DateFormat("yyyy-MM-dd").parse(value)) < 16) {
+                                          return S.of(context).dobError;
+                                        }
+                                      }
+
+                                      return null;
+                                    }),
+                                    suffixWidget: InkWell(
+                                        onTap: () {
+                                          cubit.editBoi(context);
+                                        },
+                                        child: Image.asset(AppIcons.calenderIcon))),
+                                spaceHeightWidget(5),
+                                ( widget.userDetails.data?.dob != '' &&  widget.userDetails.data?.dob != null) ? Row(
+                                  children: [
+                                    Text(
+                                      "${S.of(context).age}:",
+                                      style: textStyleWithPoppin(
+                                          fontSize: 11,
+                                          color: AppColor.naturalBlackColor,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    spaceWidthWidget(3),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 1.0),
+                                      child: Text(
+                                        "${cubit.calculateYear(dob: cubit.boiCtr.text)} ${S.of(context).years}",
+                                        style: textStyleWithPoppin(
+                                            fontSize: 10,
+                                            color: AppColor.naturalBlackColor,
+                                            fontWeight: FontWeight.w200),
+                                      ),
+                                    ),
+                                  ],
+                                ) : SizedBox.shrink(),
+                              ],
+                            );
+                          },
+                        ),
+                        spaceHeightWidget(5),
+                        BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
+                          builder: (context, state) {
+                            return TextFieldWidget(
+                                controller: cubit.religionCtr,
+                                readOnly: true,
+                                title: '',
+                                labelText: S.of(context).religion,
+                                onChanged: (value) {
+                                  cubit.emitState();
+                                },
+                                keyboardType: TextInputType.emailAddress,
+                                onTap: () async {
+                                  await showModalBottomSheet(
+                                      context: context,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(28.0),
+                                      ),
+                                      builder: (builder) {
+                                        return bottom(
+                                            context: context,
+                                            dropDownList:
+                                            dropDownValue?.data?.religion,
+                                            text: S.of(context).religion,
+                                            id: cubit.religionId ?? 0,
+                                            controller: cubit.religionCtr);
+                                      }).then((value) {
+                                    cubit.religionId = value;
+                                  });
+                                },
+                                suffixWidget: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: AppColor.black,
+                                ));
+                          },
+                        ),
+                        spaceHeightWidget(15),
+                        BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
+                          builder: (context, state) {
+                            return TextFieldWidget(
+                                controller: cubit.statusCtr,
+                                readOnly: true,
+                                title: '',
+                                labelText: S.of(context).grade,
+                                onChanged: (value) {
+                                  cubit.emitState();
+                                },
+                                keyboardType: TextInputType.emailAddress,
+                                onTap: () async {
+                                  await showModalBottomSheet(
+                                      context: context,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(28.0),
+                                      ),
+                                      builder: (builder) {
+                                        return bottom(
+                                            context: context,
+                                            dropDownList:
+                                            dropDownValue?.data?.personCategory,
+                                            text: S.of(context).category,
+                                            id: cubit.gradeId ?? 0,
+                                            controller: cubit.statusCtr);
+                                      }).then((value) {
+                                    cubit.gradeId = value;
+                                  });
+                                },
+                                suffixWidget: const Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  color: AppColor.black,
+                                ));
+                          },
+                        ),
+                        spaceHeightWidget(15),
+                        BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
+                          builder: (context, state) {
+                            return TextFieldWidget(
+                              controller: cubit.castCtr,
                               title: '',
-                              readOnly: true,
-                              labelText: S.of(context).boi,
+                              labelText: S.of(context).caste,
                               onChanged: (value) {
                                 cubit.emitState();
                               },
+                              readOnly: true,
                               keyboardType: TextInputType.emailAddress,
-                              suffixWidget: InkWell(
-                                  onTap: () {
-                                    cubit.editBoi(context);
-                                  },
-                                  child: Image.asset(AppIcons.calenderIcon))),
-                          spaceHeightWidget(5),
-                         ( widget.userDetails.data?.dob != '' &&  widget.userDetails.data?.dob != null) ? Row(
-                            children: [
-                              Text(
-                                "${S.of(context).age}:",
-                                style: textStyleWithPoppin(
-                                    fontSize: 11,
-                                    color: AppColor.naturalBlackColor,
-                                    fontWeight: FontWeight.w500),
+                              onTap: () {
+                                if(cubit.statusCtr.text.isEmpty){
+                                  EasyLoading.showToast(S.of(context).pleaseSelectCategory);
+                                }else{
+                                  showCastData(cubit: cubit);
+                                }
+                              },
+                              suffixWidget: const Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color: AppColor.black,
                               ),
-                              spaceWidthWidget(3),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 1.0),
-                                child: Text(
-                                  "${daysBetween(from: DateFormat("yyyy-MM-dd").parse(widget.userDetails.data?.dob ?? ""), to: DateTime.now()).toString()} ${S.of(context).years}",
-                                  style: textStyleWithPoppin(
-                                      fontSize: 10,
-                                      color: AppColor.naturalBlackColor,
-                                      fontWeight: FontWeight.w200),
-                                ),
-                              ),
-                            ],
-                          ) : SizedBox.shrink(),
-                        ],
-                      );
-                    },
-                  ),
-                  spaceHeightWidget(5),
-                  BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                          controller: cubit.religionCtr,
-                          readOnly: true,
-                          title: '',
-                          labelText: S.of(context).religion,
-                          onChanged: (value) {
-                            cubit.emitState();
+                            );
                           },
-                          keyboardType: TextInputType.emailAddress,
-                          onTap: () async {
-                            await showModalBottomSheet(
-                                context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28.0),
-                                ),
-                                builder: (builder) {
-                                  return bottom(
-                                      context: context,
-                                      dropDownList:
-                                          dropDownValue?.data?.religion,
-                                      text: S.of(context).religion,
-                                      id: cubit.religionId ?? 0,
-                                      controller: cubit.religionCtr);
-                                }).then((value) {
-                              cubit.religionId = value;
-                            });
-                          },
-                          suffixWidget: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: AppColor.black,
-                          ));
-                    },
-                  ),
-                  spaceHeightWidget(15),
-                  BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                          controller: cubit.statusCtr,
-                          readOnly: true,
-                          title: '',
-                          labelText: S.of(context).grade,
-                          onChanged: (value) {
-                            cubit.emitState();
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          onTap: () async {
-                            await showModalBottomSheet(
-                                context: context,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(28.0),
-                                ),
-                                builder: (builder) {
-                                  return bottom(
-                                      context: context,
-                                      dropDownList:
-                                      dropDownValue?.data?.personCategory,
-                                      text: S.of(context).category,
-                                      id: cubit.gradeId ?? 0,
-                                      controller: cubit.statusCtr);
-                                }).then((value) {
-                              cubit.gradeId = value;
-                            });
-                          },
-                          suffixWidget: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: AppColor.black,
-                          ));
-                    },
-                  ),
-                  spaceHeightWidget(15),
-                  BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
-                    builder: (context, state) {
-                      return TextFieldWidget(
-                        controller: cubit.castCtr,
-                        title: '',
-                        labelText: S.of(context).caste,
-                        onChanged: (value) {
-                          cubit.emitState();
-                        },
-                        readOnly: true,
-                        keyboardType: TextInputType.emailAddress,
-                        onTap: () {
-                          showCastData(cubit: cubit);
-                        },
-                        suffixWidget: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: AppColor.black,
                         ),
-                      );
-                    },
+                        spaceHeightWidget(15),
+                      ],
+                    ),
                   ),
-                  spaceHeightWidget(15),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -429,23 +478,28 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                     },
                     child: CommonButton(
                       onTap: () {
-                        if (cubit.image != null) {
-                          cubit.getNetworkUrlAndUpdateProfile(
-                              id: widget.userDetails.data?.id);
-                        } else {
-                          print(cubit.religionId);
-                          print(cubit.castId);
-                          print(cubit.gradeId);
-                          cubit.updatePersonalDetails(data: {
-                            "name": cubit.nameCtr.text,
-                            "username": cubit.userNameCtr.text,
-                            "phone_number": cubit.mobileNumberCtr.text,
-                            "dob": cubit.boiCtr.text,
-                            "gender": cubit.value.name,
-                            "religion_id": cubit.religionId,
-                            "cast_id": cubit.castId,
-                            "category_id": cubit.gradeId
-                          });
+                        if( cubit.formKey.currentState!.validate()){
+                          if (cubit.image != null) {
+                            cubit.getNetworkUrlAndUpdateProfile(
+                                id: widget.userDetails.data?.id);
+                          } else {
+                            print(cubit.religionId);
+                            print(cubit.castId);
+                            print(cubit.gradeId);
+                            List phoneNumbers = [];
+                            phoneNumbers.add(cubit.mobileNumberCtr.text);
+                            print(phoneNumbers);
+                            cubit.updatePersonalDetails(data: {
+                              "name": cubit.nameCtr.text,
+                              "username": cubit.userNameCtr.text,
+                              "phone_numbers": phoneNumbers,
+                              "dob": cubit.boiCtr.text,
+                              "gender": cubit.value.name,
+                              "religion_id": cubit.religionId,
+                              "cast_id": cubit.castId,
+                              "category_id": cubit.gradeId
+                            });
+                          }
                         }
                       },
                       title: S.of(context).save,
@@ -467,11 +521,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     );
   }
 
-  int daysBetween({required DateTime from, required DateTime to}) {
-    from = DateTime(from.year, from.month, from.day);
-    to = DateTime(to.year, to.month, to.day);
-    return (to.difference(from).inDays / 365).round();
-  }
+
 
   buildRadioButton({required PersonalInfoCubit cubit}) {
     return Row(
@@ -577,9 +627,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 if (text == S.of(context).category) {
                                   id = list?[index].id ?? 0;
                                   controller.text = list?[index].name ?? '';
-                                  context
-                                      .read<PersonalInfoCubit>()
-                                      .getCasteDropDownValue(id: id.toString());
+                                  context.read<PersonalInfoCubit>().getCasteDropDownValue(id: id.toString());
                                   Navigator.pop(context, id);
                                 } else {
                                   id = list?[index].id ?? 0;
@@ -652,7 +700,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       ),
                       spaceHeightWidget(30),
                       Expanded(
-                        child: cubit.castData?.data != null
+                        child: cubit.castData?.data?.isNotEmpty ?? false
                             ? ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: cubit.castData?.data?.length,

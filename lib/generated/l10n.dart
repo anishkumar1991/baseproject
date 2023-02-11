@@ -1709,6 +1709,126 @@ class S {
       args: [],
     );
   }
+
+  /// `Please Select Vidhansabha first`
+  String get selectVidhansabhaFirst {
+    return Intl.message(
+      'Please Select Vidhansabha first',
+      name: 'selectVidhansabhaFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Mandal first`
+  String get selectMandalFirst {
+    return Intl.message(
+      'Please Select Mandal first',
+      name: 'selectMandalFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter shakti kendr name`
+  String get enterShkatiKendrName {
+    return Intl.message(
+      'Please enter shakti kendr name',
+      name: 'enterShkatiKendrName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get english {
+    return Intl.message(
+      'English',
+      name: 'english',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hindi`
+  String get hindi {
+    return Intl.message(
+      'Hindi',
+      name: 'hindi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please select category first`
+  String get pleaseSelectCategory {
+    return Intl.message(
+      'please select category first',
+      name: 'pleaseSelectCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Panna`
+  String get totalPanna {
+    return Intl.message(
+      'Total Panna',
+      name: 'totalPanna',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panna Parmukh`
+  String get pannaParmukh {
+    return Intl.message(
+      'Panna Parmukh',
+      name: 'pannaParmukh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panaa Samiti`
+  String get panaaSamiti {
+    return Intl.message(
+      'Panaa Samiti',
+      name: 'panaaSamiti',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panna No`
+  String get pannaNo {
+    return Intl.message(
+      'Panna No',
+      name: 'pannaNo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panna No`
+  String get pannaKramaank {
+    return Intl.message(
+      'Panna No',
+      name: 'pannaKramaank',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Shakti Kendra`
+  String get currentSk {
+    return Intl.message(
+      'Current Shakti Kendra',
+      name: 'currentSk',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
