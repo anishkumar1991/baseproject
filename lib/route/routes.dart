@@ -186,7 +186,9 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return const AddEntryPreviewSubmit();
+            return AddEntryPreviewSubmit(
+              isEdit: settings.arguments as bool,
+            );
           },
         );
       case RoutePath.shaktiKendraScreen:

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -7,22 +5,35 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_cubit.dart';
 import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_state.dart';
-import 'package:sangathan/AddEntry/VerifyPerson/screen/verify_person_dialog.dart';
-import 'package:sangathan/AddEntry/cubit/add_entry_cubit.dart';
 
-import '../../../Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import '../../../Values/app_colors.dart';
 import '../../../Values/space_height_widget.dart';
 import '../../../common/common_button.dart';
 import '../../../common/otp_field_widget.dart';
 import '../../../generated/l10n.dart';
-import '../../../route/route_path.dart';
 
-class SubmitDialog extends StatelessWidget {
-  const SubmitDialog({Key? key, required this.mobileNo, required this.personId})
+class SubmitDialog extends StatefulWidget {
+  const SubmitDialog(
+      {Key? key,
+      required this.mobileNo,
+      required this.personId,
+      required this.onTapSkip})
       : super(key: key);
   final String mobileNo;
   final int personId;
+  final GestureTapCallback onTapSkip;
+
+  @override
+  State<SubmitDialog> createState() => _SubmitDialogState();
+}
+
+class _SubmitDialogState extends State<SubmitDialog> {
+  @override
+  void initState() {
+    context.read<VerifyPersonCubit>().otpFieldController.clear();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final verifyPersonCubit = context.read<VerifyPersonCubit>();
@@ -35,7 +46,9 @@ class SubmitDialog extends StatelessWidget {
             if (state is SendOTPErrorState) {
               EasyLoading.showError(state.error);
             }
+
             if (state is SendOTPSuccessful) {
+              EasyLoading.showToast(state.message);
               verifyPersonCubit.count = 60;
               if (verifyPersonCubit.timer?.isActive ?? false) {
                 verifyPersonCubit.timer?.cancel();
@@ -45,7 +58,23 @@ class SubmitDialog extends StatelessWidget {
                   context: context,
                   barrierDismissible: false,
                   builder: ((context) {
-                    return BlocBuilder<VerifyPersonCubit, VerifyPersonState>(
+                    return BlocConsumer<VerifyPersonCubit, VerifyPersonState>(
+                      listener: ((context, state) {
+                        if (state is ResendOTPErrorState) {
+                          EasyLoading.showToast(state.message);
+                        }
+                        if (state is VeifyOTPErrorState) {
+                          EasyLoading.showError(state.message);
+                        }
+                        if (state is ResendOTPSuccessState) {
+                          EasyLoading.showToast(state.message);
+                          verifyPersonCubit.count = 60;
+                          verifyPersonCubit.startTimer();
+                        }
+                        if (state is VeifyOTPSuccessState) {
+                          print('VERIFY OTP SUCCESS');
+                        }
+                      }),
                       builder: (context, state) {
                         return AlertDialog(
                           content: Column(
@@ -62,7 +91,7 @@ class SubmitDialog extends StatelessWidget {
                               ),
                               spaceHeightWidget(14),
                               Text(
-                                'Enter OTP sent to $mobileNo',
+                                'Enter OTP sent to ${widget.mobileNo}',
                                 style: GoogleFonts.quicksand(
                                     color: AppColor.greyColor,
                                     fontSize: 12,
@@ -75,11 +104,17 @@ class SubmitDialog extends StatelessWidget {
                                 selectedFillColor: AppColor.white,
                                 controller:
                                     verifyPersonCubit.otpFieldController,
-                                otpText: verifyPersonCubit.otpText ?? '',
                                 fieldWidth: 35,
                                 shape: PinCodeFieldShape.underline,
-                                onChange: ((p0) {}),
-                                onComplete: ((p0) {}),
+                                onChange: ((value) {
+                                  verifyPersonCubit.otpText = value;
+                                  print(' otp=${verifyPersonCubit.otpText}');
+                                }),
+                                onComplete: ((v) {
+                                  verifyPersonCubit.otpText = v;
+                                  print(
+                                      'complete otp=${verifyPersonCubit.otpText}');
+                                }),
                               ),
                               spaceHeightWidget(15),
                               Row(
@@ -87,8 +122,11 @@ class SubmitDialog extends StatelessWidget {
                                 children: [
                                   TextButton(
                                       onPressed: verifyPersonCubit.count == 0
-                                          ? (() {
-                                              verifyPersonCubit.startTimer();
+                                          ? (() async {
+                                              print(
+                                                  'prsonId=${widget.personId}');
+                                              await verifyPersonCubit.reSendOTP(
+                                                  personId: widget.personId);
                                             })
                                           : null,
                                       child: Text(
@@ -111,10 +149,18 @@ class SubmitDialog extends StatelessWidget {
                               ),
                               spaceHeightWidget(32),
                               CommonButton(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-
+                                onTap: () async {
+                                  // Navigator.pop(context);
+                                  // Navigator.pop(context);
+                                  if (verifyPersonCubit.otpText.isNotEmpty &&
+                                      verifyPersonCubit.otpText.length >= 6) {
+                                    await verifyPersonCubit.verifyOTP(
+                                        personId: widget.personId,
+                                        otp: verifyPersonCubit.otpText);
+                                  } else {
+                                    EasyLoading.showError(
+                                        S.of(context).enterOTP);
+                                  }
                                   // if (cubit.timer?.isActive ?? false) {
                                   //   cubit.timer?.cancel();
                                   // }
@@ -145,7 +191,7 @@ class SubmitDialog extends StatelessWidget {
                   // final cubits = BlocProvider.of<AddEntryCubit>(context);
 
                   //Navigator.pop(context);
-                  verifyPersonCubit.sendOTP(personId: personId);
+                  verifyPersonCubit.sendOTP(personId: widget.personId);
                 }),
                 title: S.of(context).verifyWithOtp,
                 style: GoogleFonts.quicksand(
@@ -157,16 +203,20 @@ class SubmitDialog extends StatelessWidget {
               CommonButton(
                 backGroundcolor: AppColor.white,
                 height: 45,
-                onTap: (() {
-                  final cubit = context.read<AddEntryCubit>();
-                  context.read<ZilaDataCubit>().getEntryData(data: {
-                    "level": cubit.levelId,
-                    "unit": cubit.unitId,
-                    "level_name": cubit.levelName
-                  });
-                  Navigator.popUntil(
-                      context, ModalRoute.withName(RoutePath.zilaDataPage));
-                }),
+                onTap: widget.onTapSkip,
+                // (() {
+                //   // context.read<AddEntryCubit>();
+                //   final cubit =
+                //       BlocProvider.of<AddEntryCubit>(context, listen: false);
+                //   BlocProvider.of<ZilaDataCubit>(context, listen: false)
+                //       .getEntryData(data: {
+                //     "level": cubit.levelId,
+                //     "unit": cubit.unitId,
+                //     "level_name": cubit.levelName
+                //   });
+                //   Navigator.popUntil(
+                //       context, ModalRoute.withName(RoutePath.zilaDataPage));
+                // }),
                 title: S.of(context).skipAddNewEntry,
                 style: GoogleFonts.quicksand(
                     color: AppColor.buttonOrangeBackGroundColor,

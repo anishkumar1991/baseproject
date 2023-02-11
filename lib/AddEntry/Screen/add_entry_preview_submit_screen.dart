@@ -6,13 +6,17 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:sangathan/AddEntry/Screen/widget/custom_textfield.dart';
+import 'package:sangathan/AddEntry/Screen/widget/image_preview_dialog.dart';
 import 'package:sangathan/AddEntry/VerifyPerson/screen/submit_dialog.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 
 import '../../Values/app_colors.dart';
 import '../../Values/icons.dart';
 import '../../Values/space_height_widget.dart';
 import '../../Values/space_width_widget.dart';
 import '../../common/common_button.dart';
+import '../../generated/l10n.dart';
+import '../../route/route_path.dart';
 import '../Cubit/add_entry_cubit.dart';
 import '../Cubit/add_entry_state.dart';
 import '../dynamic_ui_handler/dynamic_ui_handler.dart';
@@ -20,8 +24,9 @@ import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/select_boxs.dart';
 
 class AddEntryPreviewSubmit extends StatefulWidget {
-  const AddEntryPreviewSubmit({Key? key}) : super(key: key);
-
+  const AddEntryPreviewSubmit({Key? key, this.isEdit = false})
+      : super(key: key);
+  final bool isEdit;
   @override
   State<AddEntryPreviewSubmit> createState() => _AddEntryPreviewSubmitState();
 }
@@ -51,14 +56,28 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
             listener: (context, state) {
               if (state is SubmitAddEntrySuccessState) {
                 EasyLoading.showSuccess(state.message);
-                showDialog(
-                    context: context,
-                    builder: ((context) {
-                      return SubmitDialog(
-                        mobileNo: state.mobileNo,
-                        personId: cubit.personId ?? 0,
-                      );
-                    }));
+                widget.isEdit
+                    ? Navigator.popUntil(
+                        context, ModalRoute.withName(RoutePath.zilaDataPage))
+                    : showDialog(
+                        context: context,
+                        builder: ((context) {
+                          return SubmitDialog(
+                            mobileNo: state.mobileNo,
+                            personId: cubit.personId ?? 0,
+                            onTapSkip: (() {
+                              BlocProvider.of<ZilaDataCubit>(context,
+                                      listen: false)
+                                  .getEntryData(data: {
+                                "level": cubit.levelId,
+                                "unit": cubit.unitId,
+                                "level_name": cubit.levelName
+                              });
+                              Navigator.popUntil(context,
+                                  ModalRoute.withName(RoutePath.zilaDataPage));
+                            }),
+                          );
+                        }));
               }
               if (state is SubmitAddEntryErrorState) {
                 EasyLoading.showError(state.errorString);
@@ -75,9 +94,9 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                         Navigator.pop(context);
                       }),
                       icon: const Icon(Icons.arrow_back)),
-                  const Text(
-                    'Add Entry',
-                    style: TextStyle(
+                  Text(
+                    '${widget.isEdit ? S.of(context).edit : S.of(context).adds} ${S.of(context).entry}',
+                    style: const TextStyle(
                         fontFamily: 'Tw Cen MT',
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -205,56 +224,75 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   }
 
   nonEditableField(AddEntryCubit cubit, int i) {
-    return IgnorePointer(
-      child: Column(
-        children: [
-          for (var item in cubit.finalAllDataList.entries) ...[
-            if (cubit.entryField![i].fieldName == item.key) ...[
-              if (DynamicUIHandler.dropdowns.contains(item.key) ||
-                  DynamicUIHandler.textfield.contains(item.key) ||
-                  DynamicUIHandler.radioButton.contains(item.key) ||
-                  DynamicUIHandler.calenderView.contains(item.key) ||
-                  (DynamicUIHandler.filePickerUrl.contains(item.key)))
-                if ((DynamicUIHandler.filePicker.contains(item.key)) ||
-                    (DynamicUIHandler.filePickerUrl.contains(item.key))) ...[
-                  spaceHeightWidget(8),
-                  CommonTextField(
-                      title: FieldHandler.getFieldName(item.key, cubit),
-                      hintText: item.value,
-                      suffixWidget:
-                          uploadImage(gettingFilePath(item.key, cubit))),
-                ] else if (DynamicUIHandler.calenderView
-                    .contains(item.key)) ...[
-                  spaceHeightWidget(8),
-                  CommonTextField(
+    return Column(
+      children: [
+        for (var item in cubit.finalAllDataList.entries) ...[
+          if (cubit.entryField![i].fieldName == item.key) ...[
+            if (DynamicUIHandler.dropdowns.contains(item.key) ||
+                DynamicUIHandler.textfield.contains(item.key) ||
+                DynamicUIHandler.radioButton.contains(item.key) ||
+                DynamicUIHandler.calenderView.contains(item.key) ||
+                (DynamicUIHandler.filePickerUrl.contains(item.key)))
+              if ((DynamicUIHandler.filePicker.contains(item.key)) ||
+                  (DynamicUIHandler.filePickerUrl.contains(item.key))) ...[
+                spaceHeightWidget(8),
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: [
+                    IgnorePointer(
+                      child: CommonTextField(
+                        isMandatoryField:
+                            cubit.entryField![i].mandatoryField ?? false,
+                        title: FieldHandler.getFieldName(item.key, cubit),
+                        hintText: item.value,
+                      ),
+                    ),
+                    uploadImage(gettingFilePath(item.key, cubit), cubit, i),
+                  ],
+                ),
+              ] else if (DynamicUIHandler.calenderView.contains(item.key)) ...[
+                spaceHeightWidget(8),
+                IgnorePointer(
+                  child: CommonTextField(
+                    isMandatoryField:
+                        cubit.entryField![i].mandatoryField ?? false,
                     title: FieldHandler.getFieldName(item.key, cubit),
                     hintText: dateDDMMMYYYY(item.value),
-                  )
-                ] else ...[
-                  spaceHeightWidget(8),
-                  if (DynamicUIHandler.dropdowns.contains(item.key))
-                    CommonTextField(
+                  ),
+                )
+              ] else ...[
+                spaceHeightWidget(8),
+                if (DynamicUIHandler.dropdowns.contains(item.key))
+                  IgnorePointer(
+                    child: CommonTextField(
+                      isMandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
                       title: FieldHandler.getFieldName(item.key, cubit),
                       hintText: FieldHandler.getDropdownSelectedValueName(
                           item.key, cubit),
-                    )
-                  else
-                    CommonTextField(
+                    ),
+                  )
+                else
+                  IgnorePointer(
+                    child: CommonTextField(
+                      isMandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
                       title: FieldHandler.getFieldName(item.key, cubit),
                       hintText: item.value,
-                    )
-                ],
-            ] else ...[
-              const SizedBox()
-            ],
-          ]
-        ],
-      ),
+                    ),
+                  )
+              ],
+          ] else ...[
+            const SizedBox()
+          ],
+        ]
+      ],
     );
   }
 
   multiCheckBox(AddEntryCubit cubit, int i) {
     return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.start,
       runSpacing: 5.0,
       spacing: 5.0,
       children: <Widget>[
@@ -272,11 +310,22 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
     );
   }
 
-  uploadImage(String fileName) {
+  Widget uploadImage(String fileName, AddEntryCubit cubit, int i) {
     return fileName != null && fileName != ""
         ? FittedBox(
             fit: BoxFit.scaleDown,
-            child: GestureDetector(
+            child: InkWell(
+              onTap: (() {
+                print('dddd');
+                int index = cubit.allImagePickerList.indexWhere((element) =>
+                    element["fieldName"].toString().split("_")[0] ==
+                    (cubit.entryField![i].fieldName ?? "")
+                        .split(RegExp(r"[A-Z]"))[0]);
+                showDialog(
+                    context: context,
+                    builder: ((context) => ImagePreViewDialog(
+                        path: cubit.allImagePickerList[index]["value"])));
+              }),
               child:
                   //  Container(
                   //   width: 200,

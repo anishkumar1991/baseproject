@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
+import '../../../Values/space_width_widget.dart';
+
 class CommonTextField extends StatelessWidget {
   final String? title;
   final String? hintText;
@@ -16,7 +18,7 @@ class CommonTextField extends StatelessWidget {
   final Widget? prefixWidget;
   final EdgeInsets? contentPadding;
   final Widget? suffixWidget;
-
+  final bool isMandatoryField;
   const CommonTextField(
       {this.title,
       this.hintText,
@@ -30,6 +32,7 @@ class CommonTextField extends StatelessWidget {
       this.prefixWidget,
       this.contentPadding,
       this.suffixWidget,
+      this.isMandatoryField = false,
       Key? key})
       : super(key: key);
 
@@ -52,11 +55,22 @@ class CommonTextField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(title ?? '',
-                  style: GoogleFonts.quicksand(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColor.textBlackColor.withOpacity(0.6))),
+              Row(
+                children: [
+                  Text(title ?? '',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.textBlackColor.withOpacity(0.6))),
+                  spaceWidthWidget(5),
+                  isMandatoryField
+                      ? const Text(
+                          '*',
+                          style: TextStyle(color: AppColor.red),
+                        )
+                      : const SizedBox.shrink()
+                ],
+              ),
               Expanded(
                 child: TextFormField(
                   validator: (value) {

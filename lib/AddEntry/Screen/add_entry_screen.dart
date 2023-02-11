@@ -174,9 +174,11 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                     mandatoryField:
                                         cubit.entryField![i].mandatoryField ??
                                             false,
-                                    displayNameForUI: cubit
-                                            .entryField![i].displayNameForUI ??
-                                        ""),
+                                    displayNameForUI:
+                                        cubit.entryField![i].displayNameForUI ??
+                                            ""),
+                            isMandatoryField:
+                                cubit.entryField![i].mandatoryField ?? false,
                             onChanged: (value) {
                               FieldHandler.onUpdate(i, value,
                                   cubit.entryField![i].fieldName ?? "", cubit);
@@ -247,6 +249,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                   cubit.entryField![i].mandatoryField ?? false,
                               displayNameForUI:
                                   cubit.entryField![i].displayNameForUI ?? ""),
+                      isMandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
                       onChanged: (value) {
                         FieldHandler.onUpdate(i, value,
                             cubit.entryField![i].fieldName ?? "", cubit);
@@ -317,6 +321,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                 displayNameForUI:
                                     cubit.entryField![i].displayNameForUI ??
                                         ""),
+                        isMandatoryField:
+                            cubit.entryField![i].mandatoryField ?? false,
                         onChanged: (value) {
                           FieldHandler.onUpdate(i, value,
                               cubit.entryField![i].fieldName ?? "", cubit);
@@ -430,7 +436,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
               if (value.isNotEmpty) {
                 if (cubit.calculateAge(DateFormat("dd-MMM-yyyy").parse(value)) <
                     16) {
-                  return S.of(context).dobError ;
+                  return S.of(context).dobError;
                 }
               }
 
@@ -734,7 +740,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         if (form.validate()) {
                                           cubit.previewAndSubmitList();
                                           Navigator.pushNamed(context,
-                                              RoutePath.addEntryPreviewSubmit);
+                                              RoutePath.addEntryPreviewSubmit,
+                                              arguments: widget.isEditEntry);
                                         } else {
                                           EasyLoading.showToast(
                                               "Please fill all required field",

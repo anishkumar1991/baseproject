@@ -7,7 +7,6 @@ class CustomOtpTextField extends StatefulWidget {
   CustomOtpTextField({
     Key? key,
     required this.controller,
-    required this.otpText,
     required this.onComplete,
     required this.onChange,
     this.shape,
@@ -18,7 +17,6 @@ class CustomOtpTextField extends StatefulWidget {
     this.selectedFillColor,
   }) : super(key: key);
   final TextEditingController controller;
-  String otpText;
   double? fieldWidth;
   Function(String) onChange;
   Function(String) onComplete;

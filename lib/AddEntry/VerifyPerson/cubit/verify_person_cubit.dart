@@ -15,7 +15,7 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
 
   Timer? timer;
   int count = 60;
-  String? otpText;
+  String otpText = '';
   final api = VerifyPersonApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
@@ -34,7 +34,6 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
 
   Future sendOTP({required int personId}) async {
     emit(SendOTPLoadingState());
-
     try {
       final res =
           await api.sendOTP('${StorageService.userAuthToken}', personId);
@@ -57,6 +56,63 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
     } catch (e) {
       print(e.toString());
       emit(SendOTPErrorState("Something went wrong!"));
+    }
+  }
+
+  Future reSendOTP({required int personId}) async {
+    emit(ResendOTPLoadingState());
+    try {
+      final res = await api.reSendOTP(
+          '${StorageService.userAuthToken}', {'person_id': personId});
+      if (res.response.statusCode == 200) {
+        Map<String, dynamic>? msg = res.data;
+        emit(ResendOTPSuccessState(msg?['message'] ?? ''));
+        print(
+            "------------------------------------ ReSend OTP ----------------------------");
+        print("personId:$personId");
+
+        print("Status code : ${res.response.statusCode}");
+        print("Response :${res.data}");
+        print("token : ${StorageService.userAuthToken}");
+        print(
+            "------------------------------------ ------------------------ ----------------------------");
+      } else {
+        print("Status code : ${res.response.statusCode}");
+
+        Map<String, dynamic>? msg = res.data;
+        emit(ResendOTPErrorState(msg?['message'] ?? ''));
+      }
+    } catch (e) {
+      print(e.toString());
+      emit(ResendOTPErrorState("Something went wrong!"));
+    }
+  }
+
+  Future verifyOTP({required int personId, required String otp}) async {
+    emit(VeifyOTPLoadingState());
+
+    try {
+      final res = await api.verifyOTP('${StorageService.userAuthToken}',
+          {'person_id': personId, 'otp': otp});
+      if (res.response.statusCode == 200) {
+        Map<String, dynamic>? msg = res.data;
+        //emit(VeifyOTPSuccessState(msg?['message'] ?? ''));
+        print(
+            "------------------------------------ Verify OTP ----------------------------");
+        print("personId:$personId");
+
+        print("Status code : ${res.response.statusCode}");
+        print("Response :${res.data}");
+        print("token : ${StorageService.userAuthToken}");
+        print(
+            "------------------------------------ ------------------------ ----------------------------");
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(VeifyOTPErrorState(msg?['message'] ?? ''));
+      }
+    } catch (e) {
+      print(e.toString());
+      emit(VeifyOTPErrorState("Something went wrong!"));
     }
   }
 }
