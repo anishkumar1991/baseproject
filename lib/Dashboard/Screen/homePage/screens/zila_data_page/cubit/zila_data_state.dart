@@ -121,3 +121,15 @@ class BoothPannasStatusErrorState extends ZilaDataState {
 /// refresh ui
 
 class NoDataFoundState extends ZilaDataState {}
+
+/// panna kramaank state
+
+class PannaKramaankLoadingState extends ZilaDataState {}
+
+class PannaKramaankSuccessState extends ZilaDataState {
+  final IndependentDropdownModel pannaKramaankListData;
+
+  PannaKramaankSuccessState(this.pannaKramaankListData);
+}
+
+class PannaKramaankErrorState extends ZilaDataState {}

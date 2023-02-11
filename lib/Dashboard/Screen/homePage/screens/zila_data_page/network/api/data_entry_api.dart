@@ -21,6 +21,11 @@ abstract class DataEntryApi {
   Future<HttpResponse> getBoothPannasStatus(
       @Header('Authorization') String token, @Path('id') int id);
 
+  @GET(
+      '/zila/api/data/required_locations?location_type=Booth&location_id={boothID}&ac_id={acId}&required_location_type=Panna')
+  Future<HttpResponse> getPannaKramaank(@Header('Authorization') String token,
+      @Path('acId') int acId, @Path('boothID') int boothID);
+
   @POST('/zila/api/dashboard/get_filter_options')
   Future<HttpResponse> getDataUnits(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);

@@ -8,6 +8,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/selected_booth.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/vidhanSabha_bottomSheet.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/warning_booth.dart';
+
 import '../../../../../../Values/app_colors.dart';
 import '../../../../../../Values/icons.dart';
 import '../../../../../../Values/space_height_widget.dart';
@@ -46,7 +47,9 @@ class EditShaktiKendraScreen extends StatefulWidget {
 }
 
 class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
+  @override
   void initState() {
+    context.read<EditShaktiKendrCubit>().emitState();
     apiCall();
     super.initState();
   }
@@ -322,7 +325,7 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                                     context: context,
                                     backgroundColor: AppColor.white,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
+                                      borderRadius: BorderRadius.circular(28.0),
                                     ),
                                     builder: (builder) {
                                       return SelectBooth(

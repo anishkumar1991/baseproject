@@ -39,7 +39,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? levelNameId;
   int? dependentLevelNameId;
   ScrollController controller = ScrollController();
-
+  int? acId;
   int selectedFilterIndex = 1;
 
   //bool isMorchaSelected = false;
@@ -90,6 +90,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(LoadingState());
     zilaSelected = value;
     levelNameId = value?.id;
+    acId = value?.id;
     emit(ZilaChangedState());
   }
 
@@ -163,37 +164,37 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
 
   Future getDependentDropdownData(
       {required String remainingURL, required String type}) async {
-    /*   try {*/
-    emit(DependentDropdownLoadingState());
-    final res = await api.dynamicDropdown(
-        'Bearer ${StorageService.userAuthToken}', remainingURL);
+    try {
+      emit(DependentDropdownLoadingState());
+      final res = await api.dynamicDropdown(
+          'Bearer ${StorageService.userAuthToken}', remainingURL);
 
-    print(
-        "------------------------------------ dependent Dropdown Data $type ----------------------------");
-    print("remainingURL:$remainingURL");
-    print("Status code : ${res.response.statusCode}");
-    print("Response :${res.data}");
-    print(
-        "------------------------------------ ------------------------ ----------------------------");
-    if (res.response.statusCode == 200) {
-      if (type == "Zila") {
-        List data = res.data["data"];
-        var dataLocation =
-            data.map((data) => Locations.fromJson(data)).toList();
-        emit(DependentDropdownSuccessState(dataLocation));
+      print(
+          "------------------------------------ dependent Dropdown Data $type ----------------------------");
+      print("remainingURL:$remainingURL");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        if (type == "Zila") {
+          List data = res.data["data"];
+          var dataLocation =
+              data.map((data) => Locations.fromJson(data)).toList();
+          emit(DependentDropdownSuccessState(dataLocation));
+        } else {
+          IndependentDropdownModel data =
+              IndependentDropdownModel.fromJson(res.data);
+          emit(DependentDropdownSuccessState(data.data?.locations ?? []));
+        }
       } else {
-        IndependentDropdownModel data =
-            IndependentDropdownModel.fromJson(res.data);
-        emit(DependentDropdownSuccessState(data.data?.locations ?? []));
+        Map<String, dynamic>? msg = res.data;
+        emit(DependentDropdownErrorState(msg?['errors'] ?? ''));
       }
-    } else {
-      Map<String, dynamic>? msg = res.data;
-      emit(DependentDropdownErrorState(msg?['errors'] ?? ''));
-    }
-    /*} catch (e) {
+    } catch (e) {
       print(e);
       emit(GetPartZilaErrorState('Something Went Wrong'));
-    }*/
+    }
   }
 
   Future getUnitData({required Map<String, dynamic> data}) async {
@@ -278,6 +279,31 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       }
     } catch (e) {
       emit(BoothPannasStatusErrorState('Something Went Wrong'));
+    }
+  }
+
+  /// here, Get Panna Kramaank
+  Future getPannaKramaankList(int boothID, int acId) async {
+    try {
+      emit(PannaKramaankLoadingState());
+      final res = await api.getPannaKramaank(
+          'Bearer ${StorageService.userAuthToken}', acId, boothID);
+      print(
+          "------------------------------------ Panna Kramaank ----------------------------");
+      print("Url :${res.response.realUri}");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        IndependentDropdownModel data =
+            IndependentDropdownModel.fromJson(res.data);
+        emit(PannaKramaankSuccessState(data));
+      } else {
+        emit(PannaKramaankErrorState());
+      }
+    } catch (e) {
+      emit(PannaKramaankErrorState());
     }
   }
 

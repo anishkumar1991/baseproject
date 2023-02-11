@@ -284,6 +284,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
   }
 
   Widget pannaNumberSelectionWidget() {
+    var cubit = context.read<ZilaDataCubit>();
     return Row(
       children: [
         Expanded(
@@ -295,7 +296,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   builder: (builder) {
-                    return const PannaNoListBottomSheetWidget();
+                    return PannaNoListBottomSheetWidget(
+                      acId: cubit.acId ?? 0,
+                      boothID: cubit.levelNameId ?? 0,
+                    );
                   });
             },
             child: Container(
@@ -731,6 +735,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 if (cubit.partyzilaList.isNotEmpty) {
                   cubit.levelNameId = cubit.partyzilaList.first.id;
                   cubit.zilaSelected = cubit.partyzilaList.first;
+                  cubit.acId = cubit.partyzilaList.first.id;
                 }
                 if (widget.type == "Mandal" ||
                     widget.type == "Booth" ||
