@@ -218,34 +218,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //     ],
                         //   ),
                         // ),
-                        InkWell(
-                          onTap: () async {
-                            await showModalBottomSheet(
-                                context: context,
-                                shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28.0),
-                            ),
-                            builder: (builder) {
-                            return bottom(
-                            context: context,
-                            text: S.of(context).language);
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 8.0),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 15.0),
+                          child: InkWell(
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                  context: context,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(28.0),
+                                  ),
+                                  builder: (builder) {
+                                    return bottom(
+                                        context: context,
+                                        text: S.of(context).language);
+                                  });
+                            },
                             child: Row(
                               children: [
-                                Image.asset(AppIcons.language,
-                                    height: 18,
-                                    width: 18,
-                                    color: AppColor.naturalBlackColor
-                                        .withOpacity(0.5)),
-                                spaceWidthWidget(8),
+                                Row(
+                                  children: [
+                                    Image.asset(AppIcons.language,
+                                        height: 18,
+                                        width: 18,
+                                        color: AppColor.naturalBlackColor
+                                            .withOpacity(0.5)),
+                                    spaceWidthWidget(8),
+                                    Text(
+                                      S.of(context).language,
+                                      style: textStyleWithPoppin(
+                                          fontSize: 14,
+                                          color: AppColor.naturalBlackColor
+                                              .withOpacity(0.5),
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
+                                Spacer(),
                                 Text(
-                                  S.of(context).language,
+                                  checkLang(),
                                   style: textStyleWithPoppin(
-                                      fontSize: 14,
+                                      fontSize: 11,
                                       color: AppColor.naturalBlackColor
                                           .withOpacity(0.5),
                                       fontWeight: FontWeight.w500),
@@ -308,6 +321,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             )),
+                        spaceHeightWidget(50)
                       ],
                     ),
                   ),
@@ -318,6 +332,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
+  }
+
+ String checkLang(){
+    String currentLang = S.of(context).hindi;
+    if(Localizations.localeOf(context).languageCode == 'en'){
+      currentLang = S.of(context).english;
+    }
+    return currentLang;
   }
 
   buildMobileRow({required ProfileCubit cubit}) {

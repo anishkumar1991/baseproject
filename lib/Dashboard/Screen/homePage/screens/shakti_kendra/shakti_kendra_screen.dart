@@ -210,9 +210,14 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                               context
                                   .read<EditShaktiKendrCubit>()
                                   .selectedBooth = [];
+                              context.read<EditShaktiKendrCubit>().alreadyExitBooth = [];
                               Navigator.pushNamed(
                                   context, RoutePath.editShaktiKendraScreen,
-                                  arguments: {'isEdit': false});
+                                  arguments: {'isEdit': false,
+                                    "shaktiKendr":
+                                    context.read<ShaktiKendraCubit>().shaktiKendr,
+                                  });
+
                             }
                           },
                           style: GoogleFonts.poppins(
@@ -282,6 +287,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                   context.read<EditShaktiKendrCubit>().zilaSelected = "";
                   context.read<EditShaktiKendrCubit>().mandalSelected = "";
                   context.read<EditShaktiKendrCubit>().chekedValue = [];
+                  context.read<EditShaktiKendrCubit>().selectedBooth = [];
+                  context.read<EditShaktiKendrCubit>().alreadyExitBooth = [];
                   List<int> boothId = [];
                   List<int> boothNumber = [];
                   if (data.booths?.isNotEmpty ?? false) {
@@ -301,7 +308,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                         "shaktiKendrName": data.name,
                         "boothId": boothId,
                         "shaktiKendrId": data.id,
-                        "boothNumber": boothNumber
+                        "boothNumber": boothNumber,
+                        "shaktiKendr":
+                            context.read<ShaktiKendraCubit>().shaktiKendr
                       });
                 },
                 child: Container(
@@ -415,11 +424,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                           subTitle: '',
                         );
                         context.read<ShaktiKendraCubit>().getShaktiKendra(
-                            id: context
-                                    .read<ShaktiKendraCubit>()
-                                    .zilaSelected
-                                    ?.id ??
-                                357);
+                            id: context.read<ShaktiKendraCubit>().zilaSelected?.id ?? 357);
                       } else {
                         EasyLoading.showSuccess(state.data.data?.message ?? '');
                         context.read<ShaktiKendraCubit>().getShaktiKendra(

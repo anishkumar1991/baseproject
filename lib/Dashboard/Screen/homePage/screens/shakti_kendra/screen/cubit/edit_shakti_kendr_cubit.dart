@@ -10,7 +10,12 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen
     as data;
 import '../../../../../../../Storage/user_storage_service.dart';
 import '../../cubit/shakti_kendra_cubit.dart';
+import '../../network/model/shakti_kendr_model.dart' as shaktiKendr;
+import '../../network/model/shakti_kendr_model.dart ';
+import '../model/booth_selection_model.dart' as booth;
 import '../model/booth_selection_model.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/network/model/mandal_model.dart'
+    as mandalModel;
 
 part 'edit_shakti_kendr_state.dart';
 
@@ -24,15 +29,48 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
   String zilaSelectedName = "";
   String mandalSelected = "";
   String boothSelected = "";
-  Mandal mandal = Mandal();
+  mandalModel.Mandal mandal = mandalModel.Mandal();
   Booth boothData = Booth();
   TextEditingController shaktiKendrCtr = TextEditingController();
+  List<booth.Data> selectedBoothDetails = [];
 
-  List<int> chekedValue = [];
+  List<booth.Data> chekedValue = [];
   List<int> selectedBooth = [];
+  List<shaktiKendr.Booths> alreadyExitBooth = [];
 
   final api = GetDropDownValue(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
+
+  alreadyExitBoothInOtherSk(
+      {required int boothId,
+      required bool isAdd,
+      required List<shaktiKendr.Data> shaktiKendrDataList}) {
+    for (int i = 0; i < shaktiKendrDataList.length; i++) {
+      for (int j = 0; j < (shaktiKendrDataList[i].booths?.length ?? 0); j++) {
+        if (shaktiKendrDataList[i].booths?[j].id == boothId) {
+          if (isAdd == true) {
+            alreadyExitBooth.add(shaktiKendrDataList[i].booths![j]);
+            emit(AlreadyExistBoothFatchDataState());
+          } else {
+            alreadyExitBooth.remove(shaktiKendrDataList[i].booths![j]);
+            emit(AlreadyExistBoothFatchDataState());
+          }
+        }
+      }
+    }
+  }
+
+  removeSelectedBooth({required booth.Data selectedBooth}) {
+    chekedValue.removeWhere((element) => element.id == selectedBooth.id);
+    alreadyExitBooth.removeWhere((element) => element.id == selectedBooth.id);
+    emit(AlreadyExistBoothFatchDataState());
+  }
+
+  removeExistBooth({required dynamic booth}) {
+    chekedValue.removeWhere((element) => element.number == booth.number);
+    alreadyExitBooth.removeWhere((element) => element.id == booth.id);
+    emit(AlreadyExistBoothFatchDataState());
+  }
 
   Future getDropDownValueOfmandal({required int id, bool? isEdit}) async {
     try {
@@ -48,7 +86,8 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        Mandal data = Mandal.fromJson(res.response.data);
+        mandalModel.Mandal data =
+            mandalModel.Mandal.fromJson(res.response.data);
         if (isEdit == true) {
           getBoothValuew(id: id);
         }

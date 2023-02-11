@@ -8,7 +8,7 @@ class EditShaktiKendrInitial extends EditShaktiKendrState {}
 class LoadingEditShaktiKendraState extends EditShaktiKendrInitial {}
 class LoadingMandalEditShaktiKendraState extends EditShaktiKendrInitial {}
 class FatchDataMandalEditShaktiKendraState extends EditShaktiKendrInitial {
-  final Mandal data;
+  final mandalModel.Mandal data;
   FatchDataMandalEditShaktiKendraState({required this.data});
 }
 class ErrorMandalEditShaktiKendraState extends EditShaktiKendrInitial {
@@ -35,3 +35,5 @@ class ErrorEditAndCreateEditShaktiKendraState extends EditShaktiKendrInitial {
   final String error;
   ErrorEditAndCreateEditShaktiKendraState({required this.error});
 }
+
+class AlreadyExistBoothFatchDataState extends EditShaktiKendrInitial {}

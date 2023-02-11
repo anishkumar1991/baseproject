@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्याक्रम बनाएँ"),
         "createShaktiKendra":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र  निर्माण"),
+        "currentSk":
+            MessageLookupByLibrary.simpleMessage("वर्तमान शक्ति केंद्र"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("डाटा एंट्री"),
         "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
             "डेटा यूनिट उपलब्ध नहीं है इसलिए आप ऐड एंट्री नहीं कर सकते"),

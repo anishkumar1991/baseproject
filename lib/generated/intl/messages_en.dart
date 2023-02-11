@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createProgram": MessageLookupByLibrary.simpleMessage("Create program"),
         "createShaktiKendra":
             MessageLookupByLibrary.simpleMessage("Create Shakti Kendra"),
+        "currentSk":
+            MessageLookupByLibrary.simpleMessage("Current Shakti Kendra"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("Data Entry"),
         "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
             "Data Unit is empty So you can\'t add entry"),

@@ -209,6 +209,7 @@ class RouteGenerator {
             String? shaktiKendrName;
             List<int>? boothId;
             List<int>? boothNumber;
+            ShaktiKendr? shaktiKendr;
             if (settings.arguments != null) {
               map = settings.arguments as Map<String, dynamic>;
               isEdit = map['isEdit'];
@@ -219,6 +220,7 @@ class RouteGenerator {
               boothId = map['boothId'];
               shaktiKendrId = map['shaktiKendrId'];
               boothNumber = map['boothNumber'];
+              shaktiKendr = map['shaktiKendr'];
             }
             return EditShaktiKendraScreen(
               isEdit: isEdit,
@@ -229,6 +231,7 @@ class RouteGenerator {
               boothNumber: boothNumber,
               shaktiKendrId: shaktiKendrId,
               boothId: boothId,
+              shaktiKendr: shaktiKendr,
             );
           },
         );

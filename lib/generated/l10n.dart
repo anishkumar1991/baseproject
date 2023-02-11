@@ -1819,6 +1819,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Current Shakti Kendra`
+  String get currentSk {
+    return Intl.message(
+      'Current Shakti Kendra',
+      name: 'currentSk',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

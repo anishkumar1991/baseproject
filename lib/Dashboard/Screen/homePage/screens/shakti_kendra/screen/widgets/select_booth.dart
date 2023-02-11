@@ -10,11 +10,13 @@ import 'package:sangathan/common/common_button.dart';
 import '../../../../../../../Values/app_colors.dart';
 import '../../../../../../../Values/space_height_widget.dart';
 import '../../../../../../../generated/l10n.dart';
+import '../../network/model/shakti_kendr_model.dart' as shaktiKendr;
 
 class SelectBooth extends StatelessWidget {
   EditShaktiKendrCubit cubit;
+  List<shaktiKendr.Data> shaktiKendrDataList;
 
-  SelectBooth({Key? key, required this.cubit}) : super(key: key);
+  SelectBooth({Key? key, required this.cubit,required this.shaktiKendrDataList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,17 +63,16 @@ class SelectBooth extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     InkWell(
-                                      onTap: (){
-                                        if (cubit.chekedValue.contains(
-                                            int.parse(cubit.boothData
-                                                .data![index].number!))) {
-                                          cubit.chekedValue.remove(int.parse(cubit.boothData.data?[index].number ?? ''));
+                                      onTap: () async {
+                                        if (cubit.chekedValue.contains(cubit.boothData.data![index])) {
+                                          cubit.chekedValue.remove(cubit.boothData.data![index]);
                                           cubit.selectedBooth.remove(cubit.boothData.data?[index].id);
-                                          print("==============================================  ${cubit.selectedBooth}");
+                                          await cubit.alreadyExitBoothInOtherSk(isAdd: false,boothId: cubit.boothData.data?[index].id ?? 0,shaktiKendrDataList: shaktiKendrDataList);
                                         } else {
-                                          cubit.chekedValue.add(int.parse(cubit.boothData.data?[index].number ?? ''));
+                                          cubit.chekedValue.add(cubit.boothData.data![index]);
                                           cubit.selectedBooth.add(cubit.boothData.data?[index].id ?? 0);
-                                          print("==============================================  ${cubit.selectedBooth}");
+                                          print(cubit.boothData.data?[index].id);
+                                          await cubit.alreadyExitBoothInOtherSk(isAdd: true,boothId: cubit.boothData.data?[index].id ?? 0,shaktiKendrDataList: shaktiKendrDataList);
                                         }
                                         cubit.emitState();
                                       },
@@ -87,9 +88,7 @@ class SelectBooth extends StatelessWidget {
                                                     color: AppColor
                                                         .naturalBlackColor),
                                               ),
-                                              value: cubit.chekedValue.contains(
-                                                  int.parse(cubit.boothData
-                                                      .data![index].number!)),
+                                              value: cubit.chekedValue.contains(cubit.boothData.data![index]),
                                               onChanged: (value) {
                                               }),
                                           Container(
