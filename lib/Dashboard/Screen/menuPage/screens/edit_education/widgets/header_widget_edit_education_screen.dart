@@ -9,14 +9,22 @@ Widget headerWidgetEditEducation(BuildContext context) {
   return Row(
     children: [
       InkWell(
-          onTap: (){
+          onTap: () {
             Navigator.pop(context);
           },
-          child: const Icon(Icons.arrow_back, size: 25,color: AppColor.black,)),
+          child: const Padding(
+            padding: EdgeInsets.all(5.0),
+            child: Icon(
+              Icons.arrow_back,
+              size: 25,
+              color: AppColor.black,
+            ),
+          )),
       spaceWidthWidget(10),
       Text(
         S.of(context).education,
-        style: textStyleWithPoppin(fontSize: 16,color: AppColor.black,fontWeight: FontWeight.w400),
+        style: textStyleWithPoppin(
+            fontSize: 16, color: AppColor.black, fontWeight: FontWeight.w400),
       )
     ],
   );

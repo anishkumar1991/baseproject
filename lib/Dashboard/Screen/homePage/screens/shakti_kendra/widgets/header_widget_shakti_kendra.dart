@@ -10,7 +10,10 @@ Widget headerWidgetShaktiKendra(BuildContext context) {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Icon(Icons.arrow_back, size: 25)),
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: const Icon(Icons.arrow_back, size: 25),
+          )),
       spaceWidthWidget(10),
       Text(
         S.of(context).shaktiKendraCreation,

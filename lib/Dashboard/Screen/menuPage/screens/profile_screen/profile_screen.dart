@@ -332,8 +332,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.phoneNumber != ''
-                ? cubit.userDetails?.data?.phoneNumber ?? "-"
+            cubit.userDetails?.data?.phoneNumbers?.isNotEmpty ?? false
+                ? cubit.userDetails?.data?.phoneNumbers?.first ?? "-"
                 : "-",
             style: textStyleWithPoppin(
                 fontSize: 14,

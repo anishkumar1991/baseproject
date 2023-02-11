@@ -261,11 +261,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               validator: ((value) {
                                 if (value?.isEmpty ?? false) {
                                   return 'Please Enter Mobile Number';
-                                } else if (value?.length != 10) {
+                                } else if (value?.length  != 10) {
                                   return 'Mobile number should be 10 digit';
                                 } else if (RegExp(r'0000000000').hasMatch(value!)) {
                                   return 'This Number is Not Valid Number';
                                 }
+                                return null;
                               }),
 
                               keyboardType: TextInputType.number,
@@ -301,6 +302,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                       cubit.emitState();
                                     },
                                     keyboardType: TextInputType.emailAddress,
+                                    validator: ((value) {
+                                      if (value.isNotEmpty) {
+                                        if (cubit.calculateAge(DateFormat("yyyy-MM-dd").parse(value)) < 16) {
+                                          return S.of(context).dobError;
+                                        }
+                                      }
+
+                                      return null;
+                                    }),
                                     suffixWidget: InkWell(
                                         onTap: () {
                                           cubit.editBoi(context);
@@ -320,7 +330,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 1.0),
                                       child: Text(
-                                        "${daysBetween(from: DateFormat("yyyy-MM-dd").parse(widget.userDetails.data?.dob ?? ""), to: DateTime.now()).toString()} ${S.of(context).years}",
+                                        "${cubit.calculateYear(dob: cubit.boiCtr.text)} ${S.of(context).years}",
                                         style: textStyleWithPoppin(
                                             fontSize: 10,
                                             color: AppColor.naturalBlackColor,
@@ -418,7 +428,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               readOnly: true,
                               keyboardType: TextInputType.emailAddress,
                               onTap: () {
-                                showCastData(cubit: cubit);
+                                if(cubit.statusCtr.text.isEmpty){
+                                  EasyLoading.showToast(S.of(context).pleaseSelectCategory);
+                                }else{
+                                  showCastData(cubit: cubit);
+                                }
                               },
                               suffixWidget: const Icon(
                                 Icons.keyboard_arrow_down_rounded,
@@ -472,10 +486,13 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             print(cubit.religionId);
                             print(cubit.castId);
                             print(cubit.gradeId);
+                            List phoneNumbers = [];
+                            phoneNumbers.add(cubit.mobileNumberCtr.text);
+                            print(phoneNumbers);
                             cubit.updatePersonalDetails(data: {
                               "name": cubit.nameCtr.text,
                               "username": cubit.userNameCtr.text,
-                              "phone_number": cubit.mobileNumberCtr.text,
+                              "phone_numbers": phoneNumbers,
                               "dob": cubit.boiCtr.text,
                               "gender": cubit.value.name,
                               "religion_id": cubit.religionId,
@@ -504,11 +521,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     );
   }
 
-  int daysBetween({required DateTime from, required DateTime to}) {
-    from = DateTime(from.year, from.month, from.day);
-    to = DateTime(to.year, to.month, to.day);
-    return (to.difference(from).inDays / 365).round();
-  }
+
 
   buildRadioButton({required PersonalInfoCubit cubit}) {
     return Row(
@@ -614,9 +627,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 if (text == S.of(context).category) {
                                   id = list?[index].id ?? 0;
                                   controller.text = list?[index].name ?? '';
-                                  context
-                                      .read<PersonalInfoCubit>()
-                                      .getCasteDropDownValue(id: id.toString());
+                                  context.read<PersonalInfoCubit>().getCasteDropDownValue(id: id.toString());
                                   Navigator.pop(context, id);
                                 } else {
                                   id = list?[index].id ?? 0;
@@ -689,7 +700,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       ),
                       spaceHeightWidget(30),
                       Expanded(
-                        child: cubit.castData?.data != null
+                        child: cubit.castData?.data?.isNotEmpty ?? false
                             ? ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: cubit.castData?.data?.length,

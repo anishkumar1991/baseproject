@@ -170,5 +170,6 @@
   "selectMandalFirst" : "कृपया पहले मंडल का चयन करें",
   "enterShkatiKendrName" : "कृपया शक्ति केंद्र नाम दर्ज करें",
   "english" : "अंग्रेज़ी",
-  "hindi" : "हिंदी"
+  "hindi" : "हिंदी",
+  "pleaseSelectCategory" : "कृपया पहले श्रेणी का चयन करें"
 }

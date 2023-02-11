@@ -430,7 +430,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
               if (value.isNotEmpty) {
                 if (cubit.calculateAge(DateFormat("dd-MMM-yyyy").parse(value)) <
                     16) {
-                  return S.of(context).dobError;
+                  return S.of(context).dobError ;
                 }
               }
 

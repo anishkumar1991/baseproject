@@ -190,6 +190,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseEnter": MessageLookupByLibrary.simpleMessage("कृपया दर्ज करें"),
         "pleaseEnterData":
             MessageLookupByLibrary.simpleMessage("कृपया डेटा दर्ज करें"),
+        "pleaseSelectCategory": MessageLookupByLibrary.simpleMessage(
+            "कृपया पहले श्रेणी का चयन करें"),
         "pleaseSelectReason":
             MessageLookupByLibrary.simpleMessage("कृपया हटाने का कारण चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),

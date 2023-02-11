@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/menuPage/screens/edit_address/widgets/header_widget_edit_address_screen.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
@@ -204,28 +205,29 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             controller: cubit.stateCtr,
                             title: '',
                             labelText: S.of(context).state,
+                            readOnly: true,
                             onChanged: (value) {
                               cubit.emitState();
                             },
-                            keyboardType: TextInputType.emailAddress,
-                            suffixWidget: cubit.stateCtr.text.isNotEmpty
-                                ? InkWell(
-                              onTap: () {
-                                cubit.stateCtr.clear();
-                                cubit.emitState();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 16.0, left: 15, right: 15),
-                                child: Image.asset(
-                                  AppIcons.clearIcon,
-                                  height: 2,
-                                  width: 5,
-                                ),
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                  context: context,
+                                  shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28.0),
                               ),
-                            )
-                                : const SizedBox.shrink(),
-                          );
+                              builder: (builder) {
+                              return stateBottomSheetValue(
+                                controller: cubit.stateCtr,
+                                text: S.of(context).state,
+                                context: context
+                              );
+                              });
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            suffixWidget: const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: AppColor.black,
+                            ));
                         },
                       ),
                       spaceHeightWidget(25),
@@ -437,6 +439,74 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
           ],
         );
       },
+    );
+  }
+
+  stateBottomSheetValue(
+      {required BuildContext context,
+        required String text,
+        required TextEditingController controller}) {
+    return Container(
+      color: Colors.transparent,
+      child: Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(28.0),
+                  topRight: Radius.circular(28.0))),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                spaceHeightWidget(30),
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      color: AppColor.borderColor, fontSize: 16),
+                ),
+                spaceHeightWidget(30),
+                // Expanded(
+                //   child: ListView.builder(
+                //       shrinkWrap: true,
+                //       itemCount: list?.length,
+                //       itemBuilder: (context, index) {
+                //         return Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             InkWell(
+                //               onTap: () {
+                //                 if (text == S.of(context).category) {
+                //                   controller.text = list?[index].name ?? '';
+                //                   Navigator.pop(context);
+                //                 } else {
+                //                   controller.text = list?[index].name ?? '';
+                //                   Navigator.pop(context);
+                //                 }
+                //               },
+                //               child: SizedBox(
+                //                 width: double.infinity,
+                //                 child: Text(
+                //                   list?[index].name ?? '',
+                //                   textAlign: TextAlign.left,
+                //                   style: GoogleFonts.poppins(
+                //                       color: AppColor.black, fontSize: 16),
+                //                 ),
+                //               ),
+                //             ),
+                //             spaceHeightWidget(15),
+                //             const Divider(
+                //               color: AppColor.borderColor,
+                //             ),
+                //             spaceHeightWidget(15),
+                //           ],
+                //         );
+                //       }),
+                // )
+              ],
+            ),
+          )),
     );
   }
 }

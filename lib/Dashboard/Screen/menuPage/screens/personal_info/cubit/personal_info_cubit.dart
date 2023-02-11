@@ -53,6 +53,31 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     emit(PersonalInfoInitial());
   }
 
+  int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    print("===>>> ${DateTime.now()}");
+    print("===>>> ${birthDate}");
+    int age = currentDate.year - birthDate.year;
+    if (birthDate.month > currentDate.month) {
+      age--;
+    } else if (currentDate.month == birthDate.month) {
+      if (birthDate.day > currentDate.day) {
+        age--;
+      }
+    }
+    return age;
+  }
+
+  String calculateYear({required String dob}){
+    return daysBetween(from: DateFormat("yyyy-MM-dd").parse(dob), to: DateTime.now()).toString();
+  }
+  int daysBetween({required DateTime from, required DateTime to}) {
+    from = DateTime(from.year, from.month, from.day);
+    to = DateTime(to.year, to.month, to.day);
+    return (to.difference(from).inDays / 365).round();
+  }
+
+
   Future getCasteDropDownValue({required String id}) async {
     try {
       emit(PersonalInfoInitial());
@@ -110,7 +135,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     updatePersonalDetails(data: {
       "name": nameCtr.text,
       "username": userNameCtr.text,
-      "phone_number": mobileNumberCtr.text,
+      "phone_numbers": mobileNumberCtr.text,
       "dob": boiCtr.text,
       "gender": value.name,
       "avatar": urlDownload,

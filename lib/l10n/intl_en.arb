@@ -170,5 +170,6 @@
     "selectMandalFirst" : "Please Select Mandal first",
     "enterShkatiKendrName" : "Please enter shakti kendr name",
     "english" : "English",
-    "hindi" : "Hindi"
+    "hindi" : "Hindi",
+    "pleaseSelectCategory" : "please select category first"
 }

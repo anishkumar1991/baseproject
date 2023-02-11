@@ -186,6 +186,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseEnter": MessageLookupByLibrary.simpleMessage("Please Enter"),
         "pleaseEnterData":
             MessageLookupByLibrary.simpleMessage("Please enter data"),
+        "pleaseSelectCategory": MessageLookupByLibrary.simpleMessage(
+            "please select category first"),
         "pleaseSelectReason":
             MessageLookupByLibrary.simpleMessage("Please Select Reason"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
