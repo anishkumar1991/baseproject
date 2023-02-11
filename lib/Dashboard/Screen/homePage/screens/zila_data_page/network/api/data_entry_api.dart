@@ -17,6 +17,10 @@ abstract class DataEntryApi {
   Future<HttpResponse> partyzilas(
       @Header('Authorization') String token, @Path('id') int id);
 
+  @GET('/zila/api/data/booth_pannas_stats?booth_id={id}')
+  Future<HttpResponse> getBoothPannasStatus(
+      @Header('Authorization') String token, @Path('id') int id);
+
   @POST('/zila/api/dashboard/get_filter_options')
   Future<HttpResponse> getDataUnits(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);

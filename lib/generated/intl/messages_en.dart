@@ -175,6 +175,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Name of organization"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("OTP Verification"),
+        "panaaSamiti": MessageLookupByLibrary.simpleMessage("Panaa Samiti"),
+        "pannaKramaank": MessageLookupByLibrary.simpleMessage("Panna No"),
+        "pannaNo": MessageLookupByLibrary.simpleMessage("Panna No"),
+        "pannaParmukh": MessageLookupByLibrary.simpleMessage("Panna Parmukh"),
         "phoneNumber":
             MessageLookupByLibrary.simpleMessage("Mobile Number (optional)"),
         "photoMax": MessageLookupByLibrary.simpleMessage("Photo ( max 2 )"),
@@ -240,6 +244,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Are you sure to delete?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
+        "totalPanna": MessageLookupByLibrary.simpleMessage("Total Panna"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("Total Program"),
         "totalTravelSoFar":
             MessageLookupByLibrary.simpleMessage("Total Travel So Far"),

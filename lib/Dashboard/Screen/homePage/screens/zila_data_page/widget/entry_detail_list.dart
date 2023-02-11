@@ -142,7 +142,7 @@ class EntryDetailsList extends StatelessWidget {
                                         arguments: AddEntryPage(
                                           type: type!,
                                           leaveId: dataLevelId ?? 0,
-                                          unitId: cubit.unitId,
+                                          unitId: cubit.unitId ?? "",
                                           subUnitId: cubit.subUnitId,
                                           countryStateId: countryStateId,
                                           levelName: cubit.levelNameId,

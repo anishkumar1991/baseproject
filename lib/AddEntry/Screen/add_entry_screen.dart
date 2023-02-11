@@ -40,7 +40,7 @@ class AddEntryPage extends StatefulWidget {
       : super(key: key);
   final String type;
   final int leaveId;
-  final int? unitId;
+  final dynamic unitId;
   final int? countryStateId;
   final int? personID;
   final bool isEditEntry;
@@ -73,7 +73,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
     final cubit = context.read<AddEntryCubit>();
     cubit.type = 1;
     cubit.levelId = widget.leaveId;
-    cubit.unitId = widget.unitId;
+    cubit.unitId = widget.unitId ?? "";
     cubit.from = "${widget.type}Entry";
     cubit.subUnitId = widget.subUnitId ?? "";
     cubit.levelName = widget.levelName;
@@ -537,7 +537,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     "data_level": widget.leaveId,
                     "country_state_id": widget.countryStateId ??
                         StorageService.userData?.user?.countryStateId,
-                    "unit_id": widget.unitId,
+                    "unit_id": widget.unitId ?? "",
                     "sub_unit_id": widget.subUnitId
                   });
                 } else if (state is CastFetchedState) {

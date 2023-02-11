@@ -10,6 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../Storage/user_storage_service.dart';
 import '../network/api/data_entry_api.dart';
+import '../network/model/booth_pannas_status_model.dart';
 import '../network/model/data_entry_model.dart';
 import '../network/model/independent_drodown_model.dart';
 
@@ -22,6 +23,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
 
   Locations? zilaSelected;
   Locations? dependentDropdownSelected;
+  BoothPannasStatus? boothPannasStatus;
+
   //int filterDtaSelectedIndex = 0;
   List<UnitData>? dataUnitList;
   int? unitId;
@@ -38,8 +41,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   ScrollController controller = ScrollController();
 
   int selectedFilterIndex = 1;
+
   //bool isMorchaSelected = false;
-  
 
   void onTapFilterOptions(int index) {
     emit(LoadingState());
@@ -253,6 +256,31 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
+  /// here, Get booth panna status based on booth id
+  Future getBoothPannasStatus(int boothID) async {
+    try {
+      emit(BoothPannasStatusLoadingState());
+      final res = await api.getBoothPannasStatus(
+          'Bearer ${StorageService.userAuthToken}', boothID);
+      print(
+          "------------------------------------ get Booth Panna Status ----------------------------");
+
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        BoothPannasStatus data = BoothPannasStatus.fromJson(res.data);
+        emit(BoothPannasStatusSuccessState(data));
+      } else {
+        Map<String, dynamic>? msg = res.data;
+        emit(BoothPannasStatusErrorState(msg?['errors'] ?? ''));
+      }
+    } catch (e) {
+      emit(BoothPannasStatusErrorState('Something Went Wrong'));
+    }
+  }
+
   void onTapDeleteResonData(int? index, String? data) {
     emit(ChangingDeleteReasonState());
     selectedDeleteResonIndex = index;
@@ -323,5 +351,9 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       path: phoneNumber,
     );
     await launchUrl(launchUri);
+  }
+
+  onDataFound() {
+    emit(NoDataFoundState());
   }
 }

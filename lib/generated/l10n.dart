@@ -1769,6 +1769,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Total Panna`
+  String get totalPanna {
+    return Intl.message(
+      'Total Panna',
+      name: 'totalPanna',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panna Parmukh`
+  String get pannaParmukh {
+    return Intl.message(
+      'Panna Parmukh',
+      name: 'pannaParmukh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panaa Samiti`
+  String get panaaSamiti {
+    return Intl.message(
+      'Panaa Samiti',
+      name: 'panaaSamiti',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panna No`
+  String get pannaNo {
+    return Intl.message(
+      'Panna No',
+      name: 'pannaNo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Panna No`
+  String get pannaKramaank {
+    return Intl.message(
+      'Panna No',
+      name: 'pannaKramaank',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

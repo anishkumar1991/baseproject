@@ -179,6 +179,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "organization": MessageLookupByLibrary.simpleMessage("संगठन का नाम"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
+        "panaaSamiti": MessageLookupByLibrary.simpleMessage("पन्ना समिति "),
+        "pannaKramaank": MessageLookupByLibrary.simpleMessage("पन्ना क्रमांक "),
+        "pannaNo": MessageLookupByLibrary.simpleMessage("पन्ना संख्या"),
+        "pannaParmukh": MessageLookupByLibrary.simpleMessage("पन्ना प्रमुख"),
         "phoneNumber":
             MessageLookupByLibrary.simpleMessage("फ़ोन नंबर ( वैकल्पिक )"),
         "photoMax": MessageLookupByLibrary.simpleMessage("फोटो ( अधिकतम  2  )"),
@@ -190,8 +194,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseEnter": MessageLookupByLibrary.simpleMessage("कृपया दर्ज करें"),
         "pleaseEnterData":
             MessageLookupByLibrary.simpleMessage("कृपया डेटा दर्ज करें"),
-        "pleaseSelectCategory": MessageLookupByLibrary.simpleMessage(
-            "कृपया पहले श्रेणी का चयन करें"),
         "pleaseSelectReason":
             MessageLookupByLibrary.simpleMessage("कृपया हटाने का कारण चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
@@ -243,6 +245,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("क्या वाकई हटाना है?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
         "total": MessageLookupByLibrary.simpleMessage("कुल"),
+        "totalPanna": MessageLookupByLibrary.simpleMessage("कुल पन्ना"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("कुल कार्यक्रम"),
         "totalTravelSoFar":
             MessageLookupByLibrary.simpleMessage("अब तक की कुल यात्रा -"),

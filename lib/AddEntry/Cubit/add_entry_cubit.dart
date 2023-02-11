@@ -75,7 +75,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   ///   API required parameter
   int? type;
   int? levelId;
-  int? unitId;
+  dynamic unitId;
   String? subUnitId;
   int? levelName;
   int? personID;
