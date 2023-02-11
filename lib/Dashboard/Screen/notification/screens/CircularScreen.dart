@@ -4,12 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationState.dart';
 import '../cubit/NotificationCubit.dart';
 import '../widgets/FileTypeIcons.dart';
+import 'package:intl/intl.dart';
 
 class CircularScreen extends StatelessWidget {
   const CircularScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var time = null;
+    var temptimeshow;
     final cubit = context.read<NotificationCubit>();
     cubit.fetchNotification();
 
@@ -27,95 +30,121 @@ class CircularScreen extends StatelessWidget {
             ),
           );
         }
-        return Column(
-          children: [
-            const Divider(
-              color: Color(0xFF979797),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, top: 15),
-              child: Row(
-                children: [
-                  Text(
-                    "Today",
-                    style: GoogleFonts.quicksand(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: const Color(0xFF2F2F2F)),
-                  ),
-                  Text(
-                    " - Monday, Jan 23",
-                    style: GoogleFonts.quicksand(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: const Color(0xFF666666)),
-                  ),
-                ],
+        if (state is NotificationFetchedState) {
+          return Column(
+            children: [
+              const Divider(
+                color: Color(0xFF979797),
               ),
-            ),
-            SizedBox(height: 10),
-            BlocBuilder<NotificationCubit, NotificationState>(
-              builder: (context, state) {
-                if (state is NotificationFetchedState) {
-                  return Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: cubit.tempModel!.notificationsList.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 15, top: 15),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         "Today",
+              //         style: GoogleFonts.quicksand(
+              //             fontWeight: FontWeight.w600,
+              //             fontSize: 14,
+              //             color: const Color(0xFF2F2F2F)),
+              //       ),
+              //       Text(
+              //         " - Monday, Jan 23",
+              //         style: GoogleFonts.quicksand(
+              //             fontWeight: FontWeight.w600,
+              //             fontSize: 14,
+              //             color: const Color(0xFF666666)),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              SizedBox(height: 10),
+              BlocBuilder<NotificationCubit, NotificationState>(
+                builder: (context, state) {
+                  if (state is NotificationFetchedState) {
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: cubit.tempModel!.notificationsList?.length,
+                        itemBuilder: (context, index) {
+                          time =
+                              cubit.tempModel!.notificationsList![index].time;
+                          var temptime = time.split(":");
+                          print(int.parse(temptime[0]));
+                          print(int.parse(temptime[1]));
+                          if (int.parse(temptime[0]) >= 12) {
+                            if (int.parse(temptime[1]) > 0) temptimeshow = "PM";
+                          } else {
+                            temptimeshow = "AM";
+                          }
+                          var showtime = temptime[0] +
+                              ":" +
+                              temptime[1] +
+                              " " +
+                              temptimeshow;
 
-                            ListTile(
-                              leading: CustomFileIcon(
-                                  FileType: cubit.tempModel!
-                                      .notificationsList[index].uploadFile),
-                              title: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "10:30 AM",
-                                    style: GoogleFonts.quicksand(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        color: const Color(0xFF262626)),
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListTile(
+                                  leading: CustomFileIcon(
+                                      FileType: cubit
+                                          .tempModel!
+                                          .notificationsList![index]
+                                          .uploadFile),
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        showtime.toString(),
+                                        style: GoogleFonts.quicksand(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                            color: const Color(0xFF262626)),
+                                      ),
+                                      Text(
+                                        cubit
+                                            .tempModel!
+                                            .notificationsList![index]
+                                            .notificationTitle
+                                            .toString(),
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 13,
+                                            color: const Color(0xFF262626)),
+                                      ),
+                                      const SizedBox(height: 4),
+                                    ],
                                   ),
-                                  Text(
-                                    cubit.tempModel!.notificationsList[index]
-                                        .notificationTitle,
+                                  subtitle: Text(
+                                    cubit.tempModel!.notificationsList![index]
+                                        .description
+                                        .toString(),
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 13,
-                                        color: const Color(0xFF262626)),
+                                        fontSize: 10,
+                                        color: const Color(0xFF999999)),
                                   ),
-                                  const SizedBox(height: 4),
-                                ],
-                              ),
-                              subtitle: Text(
-                                cubit.tempModel!.notificationsList[index]
-                                    .description,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 10,
-                                    color: const Color(0xFF999999)),
-                              ),
-                            ),
-                            const Divider(
-                              endIndent: 20,
-                              indent: 20,
-                              color: Color(0xFF979797),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  );
-                }
-                return const Text("fetching");
-              },
-            ),
-          ],
-        );
+                                ),
+                                const Divider(
+                                  endIndent: 20,
+                                  indent: 20,
+                                  color: Color(0xFF979797),
+                                ),
+                              ],
+                            );
+
+                        },
+                      ),
+                    );
+                  }
+                  return const Text("fetching");
+                },
+              ),
+            ],
+          );
+        }
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

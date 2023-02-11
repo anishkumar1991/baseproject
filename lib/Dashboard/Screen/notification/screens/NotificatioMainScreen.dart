@@ -1,8 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/app_colors.dart';
-
 import 'CircularScreen.dart';
 import 'NotificationScreen.dart';
 import 'ReportScreen.dart';
