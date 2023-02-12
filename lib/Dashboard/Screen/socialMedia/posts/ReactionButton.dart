@@ -18,8 +18,8 @@ class CustomReactionButton extends StatelessWidget {
     final cubit1 = context.read<FetchPostsCubit>();
 
     return ReactionButton(
-      boxPadding: const EdgeInsets.all(12),
-      boxReactionSpacing: 7,
+      boxPadding: const EdgeInsets.all(8),
+      boxReactionSpacing: 5,
       boxElevation: 10,
       itemScale: 0.2,
       onReactionChanged: (reaction) async {
@@ -36,7 +36,7 @@ class CustomReactionButton extends StatelessWidget {
         }
       },
       initialReaction: Reaction(
-        icon: const Icon(Icons.thumb_up_alt_sharp, size: 30),
+        icon: const Icon(Icons.thumb_up_alt_sharp, size: 27),
         value: 0,
       ),
       reactions: [
@@ -44,31 +44,31 @@ class CustomReactionButton extends StatelessWidget {
           title: Text(cubit1.tempModel!.posts[index].reactions[1].reaction.name
               .toString()),
           icon: const Icon(Icons.thumb_up_alt_sharp,
-              color: Colors.blue, size: 30),
+              color: Colors.blue, size: 27),
           value: 1,
         ),
         Reaction(
           title: Text(cubit1.tempModel!.posts[index].reactions[2].reaction.name
               .toString()),
-          icon: Image.asset("assets/images/hearticon.png", height: 35),
+          icon: Image.asset("assets/images/hearticon.png", height: 32),
           value: 2,
         ),
         Reaction(
           title: Text(cubit1.tempModel!.posts[index].reactions[3].reaction.name
               .toString()),
-          icon: Image.asset("assets/images/wowicon.png", height: 35),
+          icon: Image.asset("assets/images/wowicon.png", height: 32),
           value: 3,
         ),
         Reaction(
           title: Text(cubit1.tempModel!.posts[index].reactions[4].reaction.name
               .toString()),
-          icon: Image.asset("assets/images/sadicon.png", height: 35),
+          icon: Image.asset("assets/images/sadicon.png", height: 32),
           value: 4,
         ),
         Reaction(
           title: Text(cubit1.tempModel!.posts[index].reactions[5].reaction.name
               .toString()),
-          icon: Image.asset("assets/images/angryicon.png", height: 35),
+          icon: Image.asset("assets/images/angryicon.png", height: 31),
           value: 5,
         ),
       ],

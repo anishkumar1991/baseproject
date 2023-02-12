@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
+import 'package:sangathan/Values/string.dart';
 
 part 'FetchPostsApi.g.dart';
 
-@RestApi(baseUrl: "https://saral-social-staging.ccdms.in")
+@RestApi(baseUrl:AppStrings.socialmediabaseUrl)
 abstract class FetchPostsApi {
   factory FetchPostsApi(Dio dio) = _FetchPostsApi;
 

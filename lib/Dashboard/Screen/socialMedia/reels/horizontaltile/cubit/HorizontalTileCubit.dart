@@ -15,8 +15,8 @@ class HorizontalTileCubit extends Cubit<HorizontalTileState> {
   Future getData() async {
     emit(HorizontalTileLoading());
     try {
-
-      final res = await api.getReels('Bearer ${StorageService.userAuthToken}',"20");
+      final res =
+          await api.getReels('Bearer ${StorageService.userAuthToken}', "20");
       print(res.response.requestOptions.uri);
       print('RESPONSE OF NEW CALL=${res.response.statusCode}');
       print(res.data);
@@ -25,10 +25,10 @@ class HorizontalTileCubit extends Cubit<HorizontalTileState> {
         print(model.success);
         emit(HorizontalTileFetchedState(model));
       } else {
-        emit(HorizontalTileError());
+        emit(HorizontalTileError("Something went wrong!"));
       }
     } catch (e) {
-      emit(HorizontalTileError());
+      emit(HorizontalTileError("Something went wrong!"));
     }
   }
 }

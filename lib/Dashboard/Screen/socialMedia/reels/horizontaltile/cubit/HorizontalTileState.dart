@@ -12,4 +12,8 @@ class HorizontalTileFetchedState extends HorizontalTileState {
   HorizontalTileFetchedState(this.htModel);
 }
 
-class HorizontalTileError extends HorizontalTileState {}
+class HorizontalTileError extends HorizontalTileState {
+  final String error;
+
+  HorizontalTileError(this.error);
+}

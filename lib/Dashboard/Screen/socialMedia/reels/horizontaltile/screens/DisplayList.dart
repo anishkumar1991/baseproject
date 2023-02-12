@@ -84,9 +84,34 @@ class _DisplayListState extends State<DisplayList> {
                     }),
               ),
             );
-          } else {
-            return Text('error');
+          } else if (state is HorizontalTileError) {
+            return Text(state.error);
           }
+          return Center(
+            child: Shimmer.fromColors(
+              baseColor: AppColor.greyColor.withOpacity(0.3),
+              highlightColor: Colors.grey.withOpacity(0.1),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: List.generate(
+                        4,
+                        (index) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white,
+                              ),
+                              margin: const EdgeInsets.only(right: 20),
+                              height: 152,
+                              width: 117,
+                            )).toList(),
+                  ),
+                ),
+              ),
+            ),
+          );
         },
       ),
     );
