@@ -1,190 +1,155 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationState.dart';
+import '../cubit/NotificationCubit.dart';
+import '../widgets/FileTypeIcons.dart';
+import 'package:intl/intl.dart';
 
 class ReportScreen extends StatelessWidget {
   const ReportScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Divider(
-          color: Color(0xFF979797),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15, top: 15),
-          child: Row(
+    var time = null;
+    var temptimeshow;
+    final cubit = context.read<NotificationCubit>();
+    cubit.fetchNotification();
+
+    return BlocBuilder<NotificationCubit, NotificationState>(
+      builder: (context, state) {
+        if (state is NotificationFetchingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state is NotificationErrorState) {
+          return Center(
+            child: Text(
+              state.error,
+              style: GoogleFonts.quicksand(
+                  fontWeight: FontWeight.w600, fontSize: 20),
+            ),
+          );
+        }
+        if (state is NotificationFetchedState) {
+          return Column(
             children: [
-              Text(
-                "Today",
-                style: GoogleFonts.quicksand(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    color: Color(0xFF2F2F2F)),
+              const Divider(
+                color: Color(0xFF979797),
               ),
-              Text(
-                " - Monday, Jan 23",
-                style: GoogleFonts.quicksand(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    color: Color(0xFF666666)),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 15, top: 15),
+              //   child: Row(
+              //     children: [
+              //       Text(
+              //         "Today",
+              //         style: GoogleFonts.quicksand(
+              //             fontWeight: FontWeight.w600,
+              //             fontSize: 14,
+              //             color: const Color(0xFF2F2F2F)),
+              //       ),
+              //       Text(
+              //         " - Monday, Jan 23",
+              //         style: GoogleFonts.quicksand(
+              //             fontWeight: FontWeight.w600,
+              //             fontSize: 14,
+              //             color: const Color(0xFF666666)),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              const SizedBox(height: 10),
+              BlocBuilder<NotificationCubit, NotificationState>(
+                builder: (context, state) {
+                  if (state is NotificationFetchedState) {
+                    return Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: cubit.tempModel!.notificationsList?.length,
+                        itemBuilder: (context, index) {
+                          time =
+                              cubit.tempModel!.notificationsList![index].time;
+                          var temptime = time.split(":");
+
+                          if (int.parse(temptime[0]) >= 12) {
+                            if (int.parse(temptime[1]) > 0) temptimeshow = "PM";
+                          } else {
+                            temptimeshow = "AM";
+                          }
+                          var showtime = temptime[0] +
+                              ":" +
+                              temptime[1] +
+                              " " +
+                              temptimeshow;
+
+                          if (cubit
+                                  .tempModel!.notificationsList![index].sType ==
+                              "report") {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ListTile(
+                                  leading: CustomFileIcon(
+                                      FileType: cubit
+                                          .tempModel!
+                                          .notificationsList![index]
+                                          .uploadFile),
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        showtime.toString(),
+                                        style: GoogleFonts.quicksand(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                            color: const Color(0xFF262626)),
+                                      ),
+                                      Text(
+                                        cubit
+                                            .tempModel!
+                                            .notificationsList![index]
+                                            .notificationTitle
+                                            .toString(),
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 13,
+                                            color: const Color(0xFF262626)),
+                                      ),
+                                      const SizedBox(height: 4),
+                                    ],
+                                  ),
+                                  subtitle: Text(
+                                    cubit.tempModel!.notificationsList![index]
+                                        .description
+                                        .toString(),
+                                    style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 10,
+                                        color: const Color(0xFF999999)),
+                                  ),
+                                ),
+                                const Divider(
+                                  endIndent: 20,
+                                  indent: 20,
+                                  color: Color(0xFF979797),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
+                      ),
+                    );
+                  }
+                  return const Text("fetching");
+                },
               ),
             ],
-          ),
-        ),
-        ListTile(
-            leading: Container(
-              width: 34,
-              height: 34,
-              child: Padding(
-                padding: const EdgeInsets.all(7),
-                child: Image.asset("assets/images/notificationPdfIcon.png"),
-              ),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFFD2B3),
-                  borderRadius: BorderRadius.all(Radius.circular(4))),
-            ),
-            title: Text(
-              "10:30 AM",
-              style: GoogleFonts.quicksand(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                  color: Color(0xFF262626)),
-            ),
-            subtitle: Text(
-              "राष्ट्रीय कार्यकारिणी बैठक",
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13,
-                  color: Color(0xFF262626)),
-            ),
-            trailing: IconButton(
-              onPressed: () {},
-              icon:
-              Icon(Icons.file_download_outlined, color: Color(0xFF000000)),
-            )),
-        Divider(
-          endIndent: 20,
-          indent: 20,
-          color: Color(0xFF979797),
-        ),
-        ListTile(
-          leading: Container(
-            width: 34,
-            height: 34,
-            child: Padding(
-              padding: const EdgeInsets.all(6.5),
-              child: Image.asset("assets/images/notificationImageIcon.png"),
-            ),
-            decoration: BoxDecoration(
-                color: Color(0xFF99DAFF),
-                borderRadius: BorderRadius.all(Radius.circular(4))),
-          ),
-          title: Text(
-            "10:30 AM",
-            style: GoogleFonts.quicksand(
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-                color: Color(0xFF262626)),
-          ),
-          subtitle: Text(
-            "राष्ट्रीय कार्यकारिणी बैठक",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w400,
-                fontSize: 13,
-                color: Color(0xFF262626)),
-          ),
-        ),
-        Divider(
-          color: Color(0xFF979797),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 15, top: 15),
-          child: Row(
-            children: [
-              Text(
-                "Yesterday",
-                style: GoogleFonts.quicksand(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    color: Color(0xFF2F2F2F)),
-              ),
-              Text(
-                " - Sunday, Jan 23",
-                style: GoogleFonts.quicksand(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
-                    color: Color(0xFF666666)),
-              ),
-            ],
-          ),
-        ),
-        ListTile(
-          leading: Container(
-            width: 34,
-            height: 34,
-            child: Padding(
-              padding: const EdgeInsets.all(6.5),
-              child: Image.asset("assets/images/notificationLinkIcon.png"),
-            ),
-            decoration: BoxDecoration(
-                color: Color(0xFFFFAECB),
-                borderRadius: BorderRadius.all(Radius.circular(4))),
-          ),
-          title: Text(
-            "10:30 AM",
-            style: GoogleFonts.quicksand(
-                fontWeight: FontWeight.w600,
-                fontSize: 12,
-                color: Color(0xFF262626)),
-          ),
-          subtitle: Text(
-            "राष्ट्रीय कार्यकारिणी बैठक",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w400,
-                fontSize: 13,
-                color: Color(0xFF262626)),
-          ),
-        ),
-        Divider(
-          endIndent: 20,
-          indent: 20,
-          color: Color(0xFF979797),
-        ),
-        ListTile(
-            leading: Container(
-              width: 34,
-              height: 34,
-              child: Padding(
-                padding: const EdgeInsets.all(7),
-                child: Image.asset("assets/images/notificationPdfIcon.png"),
-              ),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFFD2B3),
-                  borderRadius: BorderRadius.all(Radius.circular(4))),
-            ),
-            title: Text(
-              "10:30 AM",
-              style: GoogleFonts.quicksand(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12,
-                  color: Color(0xFF262626)),
-            ),
-            subtitle: Text(
-              "राष्ट्रीय कार्यकारिणी बैठक",
-              style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13,
-                  color: Color(0xFF262626)),
-            ),
-            trailing: IconButton(
-              onPressed: () {},
-              icon:
-              Icon(Icons.file_download_outlined, color: Color(0xFF000000)),
-            )),
-      ],
+          );
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
     );
   }
 }

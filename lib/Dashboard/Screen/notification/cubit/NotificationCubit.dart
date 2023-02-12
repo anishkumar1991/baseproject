@@ -30,10 +30,10 @@ class NotificationCubit extends Cubit<NotificationState> {
         emit(NotificationFetchedState());
         tempModel = model;
       } else {
-        emit(NotificationErrorState("Something Happening Wrong"));
+        emit(NotificationErrorState("Something Went Wrong"));
       }
     } on Exception catch (e) {
-      emit(NotificationErrorState(e.toString()));
+      emit(NotificationErrorState("Something Went Wrong"));
     }
   }
 }

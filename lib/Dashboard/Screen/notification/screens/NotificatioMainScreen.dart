@@ -4,6 +4,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'CircularScreen.dart';
 import 'NotificationScreen.dart';
 import 'ReportScreen.dart';
+import 'package:intl/intl.dart';
 
 class NotificationMainScreen extends StatefulWidget {
   const NotificationMainScreen({Key? key}) : super(key: key);
@@ -59,7 +60,8 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                     firstDate: DateTime(2021),
                     lastDate: DateTime.now());
 
-                print(datePicked.toString());
+                print(
+                    "today date ${DateFormat("d MMMM").format(DateTime.now())}");
               },
               child: Container(
                   decoration: const BoxDecoration(

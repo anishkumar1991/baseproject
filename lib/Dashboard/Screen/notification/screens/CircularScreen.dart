@@ -57,7 +57,7 @@ class CircularScreen extends StatelessWidget {
               //     ],
               //   ),
               // ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               BlocBuilder<NotificationCubit, NotificationState>(
                 builder: (context, state) {
                   if (state is NotificationFetchedState) {
@@ -69,8 +69,7 @@ class CircularScreen extends StatelessWidget {
                           time =
                               cubit.tempModel!.notificationsList![index].time;
                           var temptime = time.split(":");
-                          print(int.parse(temptime[0]));
-                          print(int.parse(temptime[1]));
+
                           if (int.parse(temptime[0]) >= 12) {
                             if (int.parse(temptime[1]) > 0) temptimeshow = "PM";
                           } else {
@@ -82,58 +81,65 @@ class CircularScreen extends StatelessWidget {
                               " " +
                               temptimeshow;
 
+                          if (cubit.tempModel!.notificationsList![index]
+                                      .sType ==
+                                  "circular") {
                             return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  leading: CustomFileIcon(
-                                      FileType: cubit
-                                          .tempModel!
-                                          .notificationsList![index]
-                                          .uploadFile),
-                                  title: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        showtime.toString(),
-                                        style: GoogleFonts.quicksand(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
-                                            color: const Color(0xFF262626)),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ListTile(
+                                      leading: CustomFileIcon(
+                                          FileType: cubit
+                                              .tempModel!
+                                              .notificationsList![index]
+                                              .uploadFile),
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            showtime.toString(),
+                                            style: GoogleFonts.quicksand(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                                color: const Color(0xFF262626)),
+                                          ),
+                                          Text(
+                                            cubit
+                                                .tempModel!
+                                                .notificationsList![index]
+                                                .notificationTitle
+                                                .toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 13,
+                                                color: const Color(0xFF262626)),
+                                          ),
+                                          const SizedBox(height: 4),
+                                        ],
                                       ),
-                                      Text(
+                                      subtitle: Text(
                                         cubit
                                             .tempModel!
                                             .notificationsList![index]
-                                            .notificationTitle
+                                            .description
                                             .toString(),
                                         style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 13,
-                                            color: const Color(0xFF262626)),
+                                            fontSize: 10,
+                                            color: const Color(0xFF999999)),
                                       ),
-                                      const SizedBox(height: 4),
-                                    ],
-                                  ),
-                                  subtitle: Text(
-                                    cubit.tempModel!.notificationsList![index]
-                                        .description
-                                        .toString(),
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 10,
-                                        color: const Color(0xFF999999)),
-                                  ),
-                                ),
-                                const Divider(
-                                  endIndent: 20,
-                                  indent: 20,
-                                  color: Color(0xFF979797),
-                                ),
-                              ],
-                            );
-
+                                    ),
+                                    const Divider(
+                                      endIndent: 20,
+                                      indent: 20,
+                                      color: Color(0xFF979797),
+                                    ),
+                                  ],
+                                );
+                          } else {
+                            return const SizedBox();
+                          }
                         },
                       ),
                     );

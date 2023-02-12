@@ -39,15 +39,15 @@ class NotificationsList {
 
   NotificationsList(
       {this.notificationTitle,
-        this.description,
-        this.sType,
-        this.share,
-        this.uploadFile,
-        this.date,
-        this.time,
-        this.attachmentType,
-        this.link,
-        this.fcm});
+      this.description,
+      this.sType,
+      this.share,
+      this.uploadFile,
+      this.date,
+      this.time,
+      this.attachmentType,
+      this.link,
+      this.fcm});
 
   NotificationsList.fromJson(Map<String, dynamic> json) {
     notificationTitle = json['notification_title'];
