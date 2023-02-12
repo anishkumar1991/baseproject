@@ -138,8 +138,8 @@ class _MyAppState extends State<MyApp> {
             locale:  Locale.fromSubtags(languageCode: cubit.lang!),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
-            home: NotificationMainScreen(),
-            // initialRoute: RoutePath.splashScreenPage,
+            // home: NotificationMainScreen(),
+            initialRoute: RoutePath.splashScreenPage,
             theme: Theme.of(context).copyWith(
               colorScheme: Theme.of(context).colorScheme.copyWith(
                     primary: AppColor.primaryColor,
