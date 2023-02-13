@@ -7,7 +7,7 @@ class CustomFileIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (FileType == "PDF") {
+    if (FileType == "PDF" || FileType == "pdf") {
       return Container(
         width: 34,
         height: 34,
@@ -19,7 +19,7 @@ class CustomFileIcon extends StatelessWidget {
           child: Image.asset("assets/images/notificationPdfIcon.png"),
         ),
       );
-    } else if (FileType == "Image") {
+    } else if (FileType == "Image" || FileType == "image") {
       return Container(
         width: 34,
         height: 34,
@@ -31,7 +31,7 @@ class CustomFileIcon extends StatelessWidget {
           child: Image.asset("assets/images/notificationImageIcon.png"),
         ),
       );
-    } else if (FileType == "Link") {
+    } else if (FileType == "Link" || FileType == "link") {
       return Container(
         width: 34,
         height: 34,
@@ -48,7 +48,7 @@ class CustomFileIcon extends StatelessWidget {
         width: 34,
         height: 34,
         decoration: const BoxDecoration(
-            color: Color(0xFFFFAECB),
+            color: Colors.grey,
             borderRadius: BorderRadius.all(Radius.circular(4))),
         child: Padding(
           padding: const EdgeInsets.all(6.5),

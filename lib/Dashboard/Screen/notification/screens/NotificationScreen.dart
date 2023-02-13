@@ -66,7 +66,6 @@ class NotificationScreen extends StatelessWidget {
                         physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: cubit.tempModel!.notificationsList?.length,
-                        reverse: true,
                         itemBuilder: (context, index) {
                           time =
                               cubit.tempModel!.notificationsList![index].time;

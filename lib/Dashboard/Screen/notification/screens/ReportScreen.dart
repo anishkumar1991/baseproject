@@ -64,7 +64,6 @@ class ReportScreen extends StatelessWidget {
                     return Flexible(
                       child: ListView.builder(
                         physics: const ScrollPhysics(),
-                        reverse: true,
                         shrinkWrap: true,
                         itemCount: cubit.tempModel!.notificationsList?.length,
                         itemBuilder: (context, index) {
