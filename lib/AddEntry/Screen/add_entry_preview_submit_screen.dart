@@ -27,6 +27,7 @@ class AddEntryPreviewSubmit extends StatefulWidget {
   const AddEntryPreviewSubmit({Key? key, this.isEdit = false})
       : super(key: key);
   final bool isEdit;
+
   @override
   State<AddEntryPreviewSubmit> createState() => _AddEntryPreviewSubmitState();
 }
@@ -233,12 +234,48 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                 DynamicUIHandler.radioButton.contains(item.key) ||
                 DynamicUIHandler.calenderView.contains(item.key) ||
                 (DynamicUIHandler.filePickerUrl.contains(item.key)))
-              if ((DynamicUIHandler.filePicker.contains(item.key)) ||
-                  (DynamicUIHandler.filePickerUrl.contains(item.key))) ...[
-                spaceHeightWidget(8),
-                Stack(
-                  alignment: Alignment.centerRight,
-                  children: [
+              if (item.value != "")
+                if ((DynamicUIHandler.filePicker.contains(item.key)) ||
+                    (DynamicUIHandler.filePickerUrl.contains(item.key))) ...[
+                  spaceHeightWidget(8),
+                  Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      IgnorePointer(
+                        child: CommonTextField(
+                          isMandatoryField:
+                              cubit.entryField![i].mandatoryField ?? false,
+                          title: FieldHandler.getFieldName(item.key, cubit),
+                          hintText: item.value,
+                        ),
+                      ),
+                      uploadImage(gettingFilePath(item.key, cubit), cubit, i),
+                    ],
+                  ),
+                ] else if (DynamicUIHandler.calenderView
+                    .contains(item.key)) ...[
+                  spaceHeightWidget(8),
+                  IgnorePointer(
+                    child: CommonTextField(
+                      isMandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
+                      title: FieldHandler.getFieldName(item.key, cubit),
+                      hintText: dateDDMMMYYYY(item.value),
+                    ),
+                  )
+                ] else ...[
+                  spaceHeightWidget(8),
+                  if (DynamicUIHandler.dropdowns.contains(item.key))
+                    IgnorePointer(
+                      child: CommonTextField(
+                        isMandatoryField:
+                            cubit.entryField![i].mandatoryField ?? false,
+                        title: FieldHandler.getFieldName(item.key, cubit),
+                        hintText: FieldHandler.getDropdownSelectedValueName(
+                            item.key, cubit),
+                      ),
+                    )
+                  else
                     IgnorePointer(
                       child: CommonTextField(
                         isMandatoryField:
@@ -246,42 +283,8 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                         title: FieldHandler.getFieldName(item.key, cubit),
                         hintText: item.value,
                       ),
-                    ),
-                    uploadImage(gettingFilePath(item.key, cubit), cubit, i),
-                  ],
-                ),
-              ] else if (DynamicUIHandler.calenderView.contains(item.key)) ...[
-                spaceHeightWidget(8),
-                IgnorePointer(
-                  child: CommonTextField(
-                    isMandatoryField:
-                        cubit.entryField![i].mandatoryField ?? false,
-                    title: FieldHandler.getFieldName(item.key, cubit),
-                    hintText: dateDDMMMYYYY(item.value),
-                  ),
-                )
-              ] else ...[
-                spaceHeightWidget(8),
-                if (DynamicUIHandler.dropdowns.contains(item.key))
-                  IgnorePointer(
-                    child: CommonTextField(
-                      isMandatoryField:
-                          cubit.entryField![i].mandatoryField ?? false,
-                      title: FieldHandler.getFieldName(item.key, cubit),
-                      hintText: FieldHandler.getDropdownSelectedValueName(
-                          item.key, cubit),
-                    ),
-                  )
-                else
-                  IgnorePointer(
-                    child: CommonTextField(
-                      isMandatoryField:
-                          cubit.entryField![i].mandatoryField ?? false,
-                      title: FieldHandler.getFieldName(item.key, cubit),
-                      hintText: item.value,
-                    ),
-                  )
-              ],
+                    )
+                ],
           ] else ...[
             const SizedBox()
           ],

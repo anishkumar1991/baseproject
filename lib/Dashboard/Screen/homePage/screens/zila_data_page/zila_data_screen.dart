@@ -292,9 +292,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
             onTap: () {
               showModalBottomSheet(
                   context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20))),
                   builder: (builder) {
                     return PannaNoListBottomSheetWidget(
                       acId: cubit.acId ?? 0,

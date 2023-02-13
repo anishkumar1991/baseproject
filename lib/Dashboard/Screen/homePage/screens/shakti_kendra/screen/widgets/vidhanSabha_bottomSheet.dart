@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../../../../../Values/app_colors.dart';
 import '../../../../../../../Values/space_height_widget.dart';
 import '../../../../../../../generated/l10n.dart';
@@ -51,7 +50,7 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 InkWell(
-                                  onTap: () {
+                                  onTap: () async {
                                     cubit.chekedValue = [];
                                     cubit.mandalSelected = '';
                                     cubit.zilaSelected = vidhanSabha
@@ -59,23 +58,27 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                         '';
                                     cubit.zilaId =
                                         vidhanSabha.data?.locations?[index].id;
-                                    cubit.getBoothValuew(
+                                    Future.delayed(Duration.zero).then((value) {
+                                      Navigator.pop(context);
+                                    });
+                                    await cubit.getBoothValuew(
+                                    id: cubit.zilaId ?? 236);
+                                    await cubit.getDropDownValueOfmandal(
                                         id: cubit.zilaId ?? 236);
-                                    cubit.getDropDownValueOfmandal(
-                                        id: cubit.zilaId ?? 236);
-                                    Navigator.pop(context);
                                   },
                                   child: SizedBox(
                                     width: double.infinity,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
                                       child: Text(
                                         vidhanSabha
                                                 .data?.locations?[index].name ??
                                             '',
                                         textAlign: TextAlign.left,
                                         style: GoogleFonts.poppins(
-                                            color: AppColor.black, fontSize: 16),
+                                            color: AppColor.black,
+                                            fontSize: 16),
                                       ),
                                     ),
                                   ),
@@ -83,8 +86,8 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                 index + 1 == vidhanSabha.data?.locations?.length
                                     ? SizedBox.shrink()
                                     : const Divider(
-                                  color: AppColor.borderColor,
-                                ),
+                                        color: AppColor.borderColor,
+                                      ),
                               ],
                             );
                           })

@@ -58,6 +58,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                     vidhanSabha = state.data;
                     cubit.zilaSelectedName =
                         vidhanSabha.data?.locations?.first.name ?? '';
+                    cubit.zilaSelected = vidhanSabha.data?.locations?.first;
                     cubit.getShaktiKendra(
                         id: vidhanSabha.data?.locations?.first.id ?? 357);
                   } else if (state is ErrorVidhanSabhaState) {
@@ -426,13 +427,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                         context.read<ShaktiKendraCubit>().getShaktiKendra(
                             id: context.read<ShaktiKendraCubit>().zilaSelected?.id ?? 357);
                       } else {
-                        EasyLoading.showSuccess(state.data.data?.message ?? '');
+                        EasyLoading.showSuccess(state.data.message ?? '');
                         context.read<ShaktiKendraCubit>().getShaktiKendra(
-                            id: context
-                                    .read<ShaktiKendraCubit>()
-                                    .zilaSelected
-                                    ?.id ??
-                                357);
+                            id: context.read<ShaktiKendraCubit>().zilaSelected?.id ?? 357);
                       }
                     } else if (state is DeleteShaktiKendraErrorState) {
                       EasyLoading.dismiss();
@@ -447,9 +444,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                             context: context,
                             onDelete: () {
                               Navigator.pop(context);
-                              context
-                                  .read<ShaktiKendraCubit>()
-                                  .deleteShaktiKendr(
+                              context.read<ShaktiKendraCubit>().deleteShaktiKendr(
                                       id: data.id!,
                                       context: context,
                                       isConfirmDelete: false);
