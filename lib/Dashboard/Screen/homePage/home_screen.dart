@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/MannKiBaatCard.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/WhatsappCardWidget.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/widget/pravas_card_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                         //   height: 10,
                         //   color: AppColor.greyColor,
                         // ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.notifications,
                           color: AppColor.greyColor,
                           size: 20,
@@ -227,15 +228,22 @@ class _HomePageState extends State<HomePage> {
 
                       MannKiBaatCard(),
 
+                      const MannKiBaatCard(),
+
                       /// whatsapp card widget
                       const SizedBox(
                         height: 20,
                       ),
-                      WhatsappCardWidget(),
+                      const WhatsappCardWidget(),
 
                       /// pravas card widget
-
-                      /* const PravasCardWidget(),*/
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const PravasCardWidget(),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       // const SizedBox(
                       //   height: 14,
                       // ),

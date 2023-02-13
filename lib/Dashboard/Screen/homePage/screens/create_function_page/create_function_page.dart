@@ -1,14 +1,13 @@
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/create_function_page/widgets/header_widget_create_function.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/Values/icons.dart';
-
 
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/common_button.dart';
@@ -30,6 +29,11 @@ class CreateFunctionScreen extends StatefulWidget {
 }
 
 class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
+
+  void initState(){
+    context.read<CreateFunctionCubit>().emitState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CreateFunctionCubit>();
@@ -58,7 +62,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             TextFieldWidget(
                                 controller: cubit.functionNameText,
                                 title: '',
-                                labelText:  S.of(context).functionName,
+                                labelText: S.of(context).functionName,
                                 onChanged: (value) {
                                   cubit.emitState();
                                 },
@@ -112,7 +116,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                         )
                                       : const SizedBox.shrink(),
                               title: '',
-                              hintText:  S.of(context).dateAndTime,
+                              hintText: S.of(context).dateAndTime,
                               keyboardType: TextInputType.emailAddress,
                             ),
                             spaceHeightWidget(
@@ -123,9 +127,9 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                 return TextFieldWidget(
                                   controller: cubit.functionTypeText,
                                   title: '',
-                                  hintText:  S.of(context).functionType,
+                                  hintText: S.of(context).functionType,
                                   readOnly: true,
-                                  onTap: (){
+                                  onTap: () {
                                     _modalBottomSheetMenuForFunctionType(
                                         context);
                                   },
@@ -135,11 +139,14 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        const Icon(Icons.info_outline_rounded,
-                                            color: AppColor.blue,size: 22,),
+                                        const Icon(
+                                          Icons.info_outline_rounded,
+                                          color: AppColor.blue,
+                                          size: 22,
+                                        ),
                                         spaceWidthWidget(8),
-                                        const Icon(Icons
-                                            .keyboard_arrow_down_rounded)
+                                        const Icon(
+                                            Icons.keyboard_arrow_down_rounded)
                                       ],
                                     ),
                                   ),
@@ -151,22 +158,21 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             TextFieldWidget(
                               controller: cubit.functionLevelText,
                               title: '',
-                              hintText:  S.of(context).functionLayer,
+                              hintText: S.of(context).functionLayer,
                               readOnly: true,
-                              onTap: (){
-                                _modalBottomSheetMenuForFunctionLevel(
-                                    context);
+                              onTap: () {
+                                _modalBottomSheetMenuForFunctionLevel(context);
                               },
                               keyboardType: TextInputType.emailAddress,
-                              suffixWidget: const Icon(
-                                  Icons.keyboard_arrow_down_rounded),
+                              suffixWidget:
+                                  const Icon(Icons.keyboard_arrow_down_rounded),
                             ),
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.02),
                             TextFieldWidget(
                               controller: cubit.lokSabhaText,
                               title: '',
-                              hintText:  S.of(context).lokSabha,
+                              hintText: S.of(context).lokSabha,
                               readOnly: true,
                               keyboardType: TextInputType.emailAddress,
                               suffixWidget:
@@ -185,7 +191,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                     _modalBottomSheetMenuForPlace(context,
                                         selectedValue: cubit.placeText.text);
                                   },
-                                  hintText:  S.of(context).functionAdd,
+                                  hintText: S.of(context).functionAdd,
                                   keyboardType: TextInputType.emailAddress,
                                   suffixWidget: const Icon(
                                       Icons.info_outline_rounded,
@@ -198,7 +204,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             TextFieldWidget(
                               controller: cubit.subjectText,
                               title: '',
-                              labelText:  S.of(context).subject,
+                              labelText: S.of(context).subject,
                               onChanged: (value) {
                                 cubit.emitState();
                               },
@@ -296,7 +302,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                     )
                                   : const SizedBox.shrink(),
                               title: '',
-                              labelText:  S.of(context).comment,
+                              labelText: S.of(context).comment,
                               keyboardType: TextInputType.emailAddress,
                             ),
                             spaceHeightWidget(
@@ -410,19 +416,53 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             ),
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.07),
-                            widget.isEdit == true || widget.isView == true
-                                ? const SizedBox.shrink()
-                                : CommonButton(
-                                    onTap: () {
-                                      Navigator.pushReplacementNamed(context,
-                                          RoutePath.stayAndProgramListScreen);
-                                    },
-                                    title: S.of(context).save,
-                                    height: 50,
-                                    borderRadius: 7,
-                                    style: const TextStyle(
-                                        fontSize: 20, color: AppColor.white),
-                                  ),
+                            BlocListener<CreateFunctionCubit,
+                                CreateFunctionState>(listener: (context,state){
+                              if (state is CreateFunctionLoadingState) {
+                                EasyLoading.show();
+                              } else if (state is CreateFunctionFatchDataState) {
+                                cubit.createPravasAndFunctionModel = state.data!;
+                                EasyLoading.dismiss();
+                                EasyLoading.showSuccess(state.data?.message ?? '');
+                              } else if (state is CreateFunctionErrorState) {
+                                EasyLoading.dismiss();
+                                EasyLoading.showToast(state.error ?? '');
+                              }
+                            },
+                              child: widget.isEdit == true || widget.isView == true
+                                  ? const SizedBox.shrink()
+                                  : CommonButton(
+                                onTap: () {
+
+                                  /// for now,user token is static
+
+
+                                  cubit.FunctionCreate(data: {
+                                    "pravas_id": "3",
+                                    "name": "ckjdshvhcs",
+                                    "date": "02/02/2023",
+                                    "agenda": "myagends",
+                                    "is_add_attendees": true,
+                                    "chief_guest": "home minister",
+                                    "attendees": 20,
+                                    "address": "ascascac",
+                                    "remark": "ascasc",
+                                    "photo_1":
+                                    "https://firebasestorage.googleapis.com/v0/b/sangathan-b272e.appspot.com/o/sangathan%2F1666003951%2Fcontent%3A%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000031240?alt=media&token=3408acaf-a591-499a-9280-ccc9f10c7d86",
+                                    "photo_2":
+                                    "https://firebasestorage.googleapis.com/v0/b/sangathan-b272e.appspot.com/o/sangathan%2F1666003951%2Fcontent%3A%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000031240?alt=media&token=3408acaf-a591-499a-9280-ccc9f10c7d86"
+                                  });
+                                  // Navigator.pushReplacementNamed(context,
+                                  //     RoutePath.stayAndProgramListScreen);
+                                },
+                                title: S.of(context).save,
+                                height: 50,
+                                borderRadius: 7,
+                                style: const TextStyle(
+                                    fontSize: 20, color: AppColor.white),
+                              ),
+                            ),
+
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.02),
                           ],

@@ -211,7 +211,7 @@ class PravasListScreen extends StatelessWidget {
                                   //function create or update
                                   print("0");
                                   Navigator.pushNamed(context,
-                                      RoutePath.stayAndProgramListScreen);
+                                      RoutePath.createFunctionScreen);
                                 } else {
                                   print("1");
                                   //function create
