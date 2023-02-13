@@ -25,7 +25,9 @@ class InsightsMainPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+;            },
             icon: Icon(
               Icons.arrow_back,
               color: Colors.black,
