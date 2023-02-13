@@ -102,7 +102,7 @@ class _MenuPageState extends State<MenuPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => InsightsMainPage()));
+                          builder: (context) => const InsightsMainPage()));
                 },
                 child: Column(
                   children: [

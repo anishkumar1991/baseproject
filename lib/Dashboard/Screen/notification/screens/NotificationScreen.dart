@@ -100,6 +100,7 @@ class NotificationScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         showtime.toString(),
+                                        // DateFormat("d MMMM").format(DateTime.parse(formattedString)),
                                         style: GoogleFonts.quicksand(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 12,

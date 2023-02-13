@@ -12,7 +12,7 @@ class MainCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => ArticleScreen()));
+            context, MaterialPageRoute(builder: (context) => const ArticleScreen()));
       },
       child: Column(
         children: [
@@ -27,7 +27,7 @@ class MainCard extends StatelessWidget {
           Container(
             child: Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
             ),
           )
         ],

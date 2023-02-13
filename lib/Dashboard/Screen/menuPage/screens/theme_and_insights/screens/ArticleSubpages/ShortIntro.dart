@@ -13,7 +13,7 @@ class ShortIntro extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
-              color: Color(0xFFE6E6E6),
+              color: const Color(0xFFE6E6E6),
             ),
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
@@ -22,22 +22,21 @@ class ShortIntro extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 10,),
-
+              const SizedBox(
+                height: 10,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    child: const Icon(
-                      Icons.circle_rounded,
-                      size: 6,
-                    ),
+                  const Icon(
+                    Icons.circle_rounded,
+                    size: 6,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 4,
                   ),
-                  Container(
+                  SizedBox(
                     width: 263,
                     child: Text(
                       "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर राज्य पर संविधान की धारा 356 लागू नहीं होती।",
@@ -47,23 +46,21 @@ class ShortIntro extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Icon(
-                          Icons.circle_rounded,
-                          size: 6,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Container(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.circle_rounded,
+                    size: 6,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  SizedBox(
                     width: 263,
                     child: Text(
                       "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर राज्य पर संविधान की धारा 356 लागू नहीं होती।",
@@ -77,13 +74,13 @@ class ShortIntro extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.copy),
+                  icon: const Icon(Icons.copy),
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Container(
@@ -91,14 +88,14 @@ class ShortIntro extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
-              color: Color(0xFFE6E6E6),
+              color: const Color(0xFFE6E6E6),
             ),
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
           ),
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -121,7 +118,7 @@ class ShortIntro extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.copy),
+                  icon: const Icon(Icons.copy),
                 ),
               )
             ],
