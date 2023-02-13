@@ -41,7 +41,7 @@ class InsightsMainPage extends StatelessWidget {
       body: Container(
         child: GridView.builder(
           itemCount: 8,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, crossAxisSpacing: 4.0, mainAxisSpacing: 4.0),
           itemBuilder: (BuildContext context, int index) {
             return list[index];

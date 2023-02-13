@@ -104,55 +104,58 @@ class _MenuPageState extends State<MenuPage> {
                       MaterialPageRoute(
                           builder: (context) => const InsightsMainPage()));
                 },
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColor.greyColor.withOpacity(0.2),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "#",
-                                style: TextStyle(fontSize: 25),
+                child: Container(
+                  color: AppColor.greyColor.withOpacity(0),
+                  child: Column(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColor.greyColor.withOpacity(0.2),
                               ),
-                            )),
-                        spaceWidthWidget(10),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 5.0),
-                          child: Text(
-                            S.of(context).ThemeandInsight,
-                            style: textStyleWithPoppin(
-                                fontSize: 14,
-                                color: AppColor.naturalBlackColor,
-                                fontWeight: FontWeight.w500),
+                              child: const Center(
+                                child: Text(
+                                  "#",
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                              )),
+                          spaceWidthWidget(10),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5.0),
+                            child: Text(
+                              S.of(context).ThemeandInsight,
+                              style: textStyleWithPoppin(
+                                  fontSize: 14,
+                                  color: AppColor.naturalBlackColor,
+                                  fontWeight: FontWeight.w500),
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                        const Padding(
-                          padding: EdgeInsets.only(top: 4.0),
-                          child: Icon(Icons.arrow_forward_ios_outlined,
-                              size: 18, color: AppColor.naturalBlackColor),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.12,
-                          right: 4),
-                      child: Text(
-                        S.of(context).ThemeDes,
-                        style: textStyleWithPoppin(
-                            color: AppColor.greyColor.withOpacity(0.7),
-                            fontSize: 13),
+                          const Spacer(),
+                          const Padding(
+                            padding: EdgeInsets.only(top: 4.0),
+                            child: Icon(Icons.arrow_forward_ios_outlined,
+                                size: 18, color: AppColor.naturalBlackColor),
+                          )
+                        ],
                       ),
-                    )
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: MediaQuery.of(context).size.width * 0.12,
+                            right: 4),
+                        child: Text(
+                          S.of(context).ThemeDes,
+                          style: textStyleWithPoppin(
+                              color: AppColor.greyColor.withOpacity(0.7),
+                              fontSize: 13),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
