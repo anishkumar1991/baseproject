@@ -53,15 +53,18 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
     }
   }
 
-  removeSelectedBooth({required booth.Data selectedBooth}) {
-    chekedValue.removeWhere((element) => element.id == selectedBooth.id);
-    alreadyExitBooth.removeWhere((element) => element.id == selectedBooth.id);
+  removeSelectedBooth({required booth.Data showSelectedBooth}) {
+    chekedValue.removeWhere((element) => element.id == showSelectedBooth.id);
+    alreadyExitBooth
+        .removeWhere((element) => element.id == showSelectedBooth.id);
+    selectedBooth.removeWhere(((element) => element == showSelectedBooth.id));
     emit(AlreadyExistBoothFatchDataState());
   }
 
   removeExistBooth({required dynamic booth}) {
     chekedValue.removeWhere((element) => element.number == booth.number);
     alreadyExitBooth.removeWhere((element) => element.id == booth.id);
+    selectedBooth.removeWhere(((element) => element == booth.id));
     emit(AlreadyExistBoothFatchDataState());
   }
 

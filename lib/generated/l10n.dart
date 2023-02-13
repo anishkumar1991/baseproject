@@ -1829,6 +1829,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Please Enter Phone Number`
+  String get enterMobileNumber {
+    return Intl.message(
+      'Please Enter Phone Number',
+      name: 'enterMobileNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This Number is Not Valid Number`
+  String get notValidNumber {
+    return Intl.message(
+      'This Number is Not Valid Number',
+      name: 'notValidNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Person already verified`
+  String get alreadyVerified {
+    return Intl.message(
+      'Person already verified',
+      name: 'alreadyVerified',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

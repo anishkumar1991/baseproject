@@ -51,14 +51,13 @@ class _VerifyPersonApi implements VerifyPersonApi {
   @override
   Future<HttpResponse<dynamic>> reSendOTP(
     token,
-    data,
+    personId,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    _data.addAll(data);
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'GET',
@@ -67,7 +66,7 @@ class _VerifyPersonApi implements VerifyPersonApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/data/person/resend_otp',
+              '/zila/api/data/person/resend_otp?person_id=${personId}',
               queryParameters: queryParameters,
               data: _data,
             )

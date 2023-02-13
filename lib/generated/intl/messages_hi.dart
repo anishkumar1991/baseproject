@@ -54,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ageError":
             MessageLookupByLibrary.simpleMessage("उम्र २ अंकों की होनी चाहिए"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
+        "alreadyVerified": MessageLookupByLibrary.simpleMessage(
+            "व्यक्ति पहले से ही सत्यापित है"),
         "boi": MessageLookupByLibrary.simpleMessage("जन्म दिनांक"),
         "boothDes": MessageLookupByLibrary.simpleMessage(
             "सबमिट कर सभी बूथों को इस शक्ति केंद्र से जोड़ा जाएगा।"),
@@ -118,6 +120,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कृपया मान्य ईमेल दर्ज करें"),
         "english": MessageLookupByLibrary.simpleMessage("अंग्रेज़ी"),
         "enter": MessageLookupByLibrary.simpleMessage("दर्ज करें"),
+        "enterMobileNumber":
+            MessageLookupByLibrary.simpleMessage("कृपया फोन नंबर दर्ज करें"),
         "enterName":
             MessageLookupByLibrary.simpleMessage("कृपया नाम दर्ज करें"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("ओटीपी दर्ज करें"),
@@ -178,6 +182,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
         "noThanks": MessageLookupByLibrary.simpleMessage("जी नहीं, धन्यवाद"),
+        "notValidNumber": MessageLookupByLibrary.simpleMessage(
+            "यह संख्या मान्य संख्या नहीं है"),
         "organization": MessageLookupByLibrary.simpleMessage("संगठन का नाम"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),

@@ -222,16 +222,16 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 20,
                       ),
+
                       /// mann ki baat widget
 
                       MannKiBaatCard(),
+
                       /// whatsapp card widget
                       const SizedBox(
                         height: 20,
                       ),
                       WhatsappCardWidget(),
-
-
 
                       /// pravas card widget
 

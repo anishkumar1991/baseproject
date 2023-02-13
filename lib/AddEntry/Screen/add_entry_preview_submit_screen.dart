@@ -66,6 +66,10 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           return SubmitDialog(
                             mobileNo: state.mobileNo,
                             personId: cubit.personId ?? 0,
+                            levelId: cubit.levelId,
+                            unitId: cubit.unitId,
+                            levelName: cubit.levelName,
+                            isEdit: widget.isEdit,
                             onTapSkip: (() {
                               BlocProvider.of<ZilaDataCubit>(context,
                                       listen: false)
