@@ -37,7 +37,7 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-  Future loginUser({required String mobileNumber}) async {
+    Future loginUser({required String mobileNumber}) async {
     try {
       emit(LoginLoadingState());
       final res = await api.loginUser({'phone_number': mobileNumber});

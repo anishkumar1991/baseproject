@@ -18,4 +18,14 @@ class EndOfTour extends PravasCreateState {
 }
 class AddEntryLoadingState extends PravasCreateState {}
 
+/// CreatePravas
 
+class CreatePravasLoadingState extends PravasCreateState {}
+class CreatePravasFatchDataState extends PravasCreateState {
+ CreatePravasAndFunctionModel? data;
+ CreatePravasFatchDataState({this.data});
+}
+class CreatePravasErrorState extends PravasCreateState {
+ String? error;
+ CreatePravasErrorState({this.error});
+}

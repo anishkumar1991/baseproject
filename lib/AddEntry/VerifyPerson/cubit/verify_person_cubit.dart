@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_state.dart';
 
 import '../../../Storage/user_storage_service.dart';
@@ -35,6 +36,7 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
   Future sendOTP({required int personId}) async {
     emit(SendOTPLoadingState());
     try {
+      EasyLoading.show();
       final res =
           await api.sendOTP('${StorageService.userAuthToken}', personId);
       if (res.response.statusCode == 200) {
@@ -56,14 +58,17 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
     } catch (e) {
       print(e.toString());
       emit(SendOTPErrorState("Something went wrong!"));
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
   Future reSendOTP({required int personId}) async {
     emit(ResendOTPLoadingState());
     try {
+      EasyLoading.show();
       final res = await api.reSendOTP(
-          '${StorageService.userAuthToken}', {'person_id': personId});
+          '${StorageService.userAuthToken}', personId);
       if (res.response.statusCode == 200) {
         Map<String, dynamic>? msg = res.data;
         emit(ResendOTPSuccessState(msg?['message'] ?? ''));
@@ -77,6 +82,7 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
         print(
             "------------------------------------ ------------------------ ----------------------------");
       } else {
+        print("personId:$personId");
         print("Status code : ${res.response.statusCode}");
 
         Map<String, dynamic>? msg = res.data;
@@ -85,6 +91,8 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
     } catch (e) {
       print(e.toString());
       emit(ResendOTPErrorState("Something went wrong!"));
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -92,11 +100,12 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
     emit(VeifyOTPLoadingState());
 
     try {
+      EasyLoading.show();
       final res = await api.verifyOTP('${StorageService.userAuthToken}',
           {'person_id': personId, 'otp': otp});
       if (res.response.statusCode == 200) {
         Map<String, dynamic>? msg = res.data;
-        //emit(VeifyOTPSuccessState(msg?['message'] ?? ''));
+        emit(VeifyOTPSuccessState(msg?['message'] ?? ''));
         print(
             "------------------------------------ Verify OTP ----------------------------");
         print("personId:$personId");
@@ -113,6 +122,8 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
     } catch (e) {
       print(e.toString());
       emit(VeifyOTPErrorState("Something went wrong!"));
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 }

@@ -56,7 +56,7 @@ class SelectedBooth extends StatelessWidget {
                   height: double.infinity,
                   child: InkWell(
                     onTap: (){
-                      cubit.removeSelectedBooth(selectedBooth: cubit.chekedValue[index]);
+                      cubit.removeSelectedBooth(showSelectedBooth: cubit.chekedValue[index]);
                     },
                     child: Container(
                       decoration: const BoxDecoration(

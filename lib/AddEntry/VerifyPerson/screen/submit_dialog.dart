@@ -6,22 +6,32 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_cubit.dart';
 import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_state.dart';
 
+import '../../../Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import '../../../Values/app_colors.dart';
 import '../../../Values/space_height_widget.dart';
 import '../../../common/common_button.dart';
 import '../../../common/otp_field_widget.dart';
 import '../../../generated/l10n.dart';
+import '../../../route/route_path.dart';
 
 class SubmitDialog extends StatefulWidget {
   const SubmitDialog(
       {Key? key,
       required this.mobileNo,
       required this.personId,
+      this.levelId,
+      this.levelName,
+      this.unitId,
+      this.isEdit = false,
       required this.onTapSkip})
       : super(key: key);
   final String mobileNo;
   final int personId;
   final GestureTapCallback onTapSkip;
+  final int? levelId;
+  final int? unitId;
+  final int? levelName;
+  final bool isEdit;
 
   @override
   State<SubmitDialog> createState() => _SubmitDialogState();
@@ -48,7 +58,9 @@ class _SubmitDialogState extends State<SubmitDialog> {
             }
 
             if (state is SendOTPSuccessful) {
-              EasyLoading.showToast(state.message);
+              EasyLoading.showSuccess(state.message);
+              Navigator.pop(context);
+
               verifyPersonCubit.count = 60;
               if (verifyPersonCubit.timer?.isActive ?? false) {
                 verifyPersonCubit.timer?.cancel();
@@ -61,18 +73,39 @@ class _SubmitDialogState extends State<SubmitDialog> {
                     return BlocConsumer<VerifyPersonCubit, VerifyPersonState>(
                       listener: ((context, state) {
                         if (state is ResendOTPErrorState) {
-                          EasyLoading.showToast(state.message);
+                          EasyLoading.showError(state.message);
                         }
                         if (state is VeifyOTPErrorState) {
                           EasyLoading.showError(state.message);
                         }
                         if (state is ResendOTPSuccessState) {
-                          EasyLoading.showToast(state.message);
+                          EasyLoading.showSuccess(state.message);
                           verifyPersonCubit.count = 60;
                           verifyPersonCubit.startTimer();
                         }
                         if (state is VeifyOTPSuccessState) {
-                          print('VERIFY OTP SUCCESS');
+                          EasyLoading.showSuccess(state.message);
+                          if (widget.isEdit) {
+                            Navigator.pop(context);
+                            BlocProvider.of<ZilaDataCubit>(context,
+                                    listen: false)
+                                .getEntryData(data: {
+                              "level": widget.levelId,
+                              "unit": widget.unitId,
+                              "level_name": widget.levelName
+                            });
+                          } else {
+                            Navigator.pop(context);
+                            BlocProvider.of<ZilaDataCubit>(context,
+                                    listen: false)
+                                .getEntryData(data: {
+                              "level": widget.levelId,
+                              "unit": widget.unitId,
+                              "level_name": widget.levelName
+                            });
+                            Navigator.popUntil(context,
+                                ModalRoute.withName(RoutePath.zilaDataPage));
+                          }
                         }
                       }),
                       builder: (context, state) {
@@ -152,6 +185,7 @@ class _SubmitDialogState extends State<SubmitDialog> {
                                 onTap: () async {
                                   // Navigator.pop(context);
                                   // Navigator.pop(context);
+                                  print('Otp Tap Verify');
                                   if (verifyPersonCubit.otpText.isNotEmpty &&
                                       verifyPersonCubit.otpText.length >= 6) {
                                     await verifyPersonCubit.verifyOTP(

@@ -177,5 +177,8 @@
   "panaaSamiti": "पन्ना समिति ",
   "pannaNo": "पन्ना संख्या",
   "pannaKramaank": "पन्ना क्रमांक ",
-  "currentSk" : "वर्तमान शक्ति केंद्र"
+  "currentSk" : "वर्तमान शक्ति केंद्र",
+  "enterMobileNumber":"कृपया फोन नंबर दर्ज करें",
+  "notValidNumber":"यह संख्या मान्य संख्या नहीं है",
+  "alreadyVerified":"व्यक्ति पहले से ही सत्यापित है"
 }

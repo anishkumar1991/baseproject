@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/guest_list/widgets/header_widget_guest_list.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/guest_list/widgets/shimmer.dart';
 
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
@@ -11,116 +13,210 @@ import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
 import 'cubit/guest_cubit.dart';
 
-class GuestListScreen extends StatelessWidget {
+class GuestListScreen extends StatefulWidget {
   const GuestListScreen({Key? key}) : super(key: key);
+
+  @override
+  State<GuestListScreen> createState() => _GuestListScreenState();
+}
+
+class _GuestListScreenState extends State<GuestListScreen> {
+
+  apiCall() async {
+    await context.read<GuestCubit>().GetGuestList();
+  }
+
+  @override
+  void initState() {
+    apiCall();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<GuestCubit>(context);
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: MediaQuery
+            .of(context)
+            .size
+            .height,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+        margin: EdgeInsets.only(top: MediaQuery
+            .of(context)
+            .padding
+            .top),
+        child: BlocListener<GuestCubit, GuestState>(
+          listener: (context, state) {
+            if (state is CreateGuestLoadingState) {
+              EasyLoading.show();
+            } else if (state is CreateGuestFatchDataState) {
+              cubit.createPravasAndFunctionModel = state.data!;
+              EasyLoading.showSuccess(state.data?.message ?? '');
+            } else if (state is CreateGuestErrorState) {
+              EasyLoading.showToast(state.error ?? '');
+            }
+          },
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-               spaceHeightWidget(10),
-               headerWidgetGuestList(context),
-               spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
-               TextFieldWidget(
-                 controller: cubit.nameCtr,
-                 title: '',
-                 labelText: S.of(context).name,
-                 keyboardType: TextInputType.emailAddress,
-               ),
-               TextFieldWidget(
-                 controller: cubit.phoneNumber,
-                 title: '',
-                 labelText: S.of(context).phoneNumber,
-                 keyboardType: TextInputType.emailAddress,
-               ),
-               TextFieldWidget(
-                 controller: cubit.position,
-                 title: '',
-                 labelText: S.of(context).position,
-                 keyboardType: TextInputType.emailAddress,
-               ),
-               spaceHeightWidget(30),
-               CommonButton(
-                 onTap: () {
-
-                 },
-                 title: S.of(context).add,
-                 height: 50,
-                 borderRadius: 7,
-                 style: const TextStyle(fontSize: 20, color: AppColor.white),
-               ),
-               spaceHeightWidget(20),
-               ListView.builder(
-                   shrinkWrap: true,
-                   itemCount: 7,
-                   physics: const NeverScrollableScrollPhysics(),
-                   padding: EdgeInsets.zero,
-                   itemBuilder: (context,index){
-                 return Padding(
-                   padding: const EdgeInsets.all(5.0),
-                   child: Container(
-                     padding: const EdgeInsets.all(10),
-                     decoration: BoxDecoration(
-                       color: AppColor.greyWithOpacity01,
-                       borderRadius: BorderRadius.circular(10)
-                     ),
-                     child: Row(
-                       crossAxisAlignment: CrossAxisAlignment.start,
-                       children: [
-                         Container(
-                           height: 20,
-                           width: 20,
-                           decoration: BoxDecoration(
-                             border: Border.all(color: AppColor.blue.withOpacity(0.2)),
-                             borderRadius: BorderRadius.circular(5),
-                             color: AppColor.white,
-                           ),
-                           child: Center(child: Text("${index + 1}.")),
-                         ),
-                         spaceWidthWidget(10),
-                         Column(
-                           crossAxisAlignment: CrossAxisAlignment.start,
-                           children: [
-                             RichText(
-                               text: TextSpan(
-                                 style: DefaultTextStyle.of(context).style,
-                                 children:  <TextSpan>[
-                                   TextSpan(text: 'प्रवीण प्रणव', style: textStyleWithPoppin(color: AppColor.black,fontSize: 14)),
-                                   const TextSpan(text: '  '),
-                                   TextSpan(text: '( महासचिव )',style: textStyleWithPoppin(color: AppColor.greyColor,fontSize: 12)),
-                                 ],
-                               ),
-                             ),
-                             spaceHeightWidget(5),
-                             Text("9783748362",style: textStyleWithPoppin(color: AppColor.greyColor,fontSize: 10),)
-                           ],
-                         ),
-                         const Spacer(),
-                         Container(
-                           decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(8),
-                             color: AppColor.blue.withOpacity(0.15)
-                           ),
-                           height: 40,
-                           width: 40,
-                           child: const Icon(Icons.edit_outlined,color: AppColor.blue,size: 22,),
-                         )
-                       ],
-                     ),
-                   ),
-                 );
-               })
-             ],
+            children: [
+              spaceHeightWidget(10),
+              headerWidgetGuestList(context),
+              spaceHeightWidget(MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.02),
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextFieldWidget(
+                        controller: cubit.nameCtr,
+                        title: '',
+                        labelText: S
+                            .of(context)
+                            .name,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      TextFieldWidget(
+                        controller: cubit.phoneNumber,
+                        title: '',
+                        labelText: S
+                            .of(context)
+                            .phoneNumber,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      TextFieldWidget(
+                        controller: cubit.position,
+                        title: '',
+                        labelText: S
+                            .of(context)
+                            .position,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      spaceHeightWidget(30),
+                      CommonButton(
+                        onTap: () {
+                          cubit.GuestCreate(data: {
+                            "karyakram_id": "11",
+                            "name": cubit.nameCtr.text,
+                            "phone": cubit.phoneNumber.text,
+                            "designation": cubit.position.text
+                          });
+                        },
+                        title: S
+                            .of(context)
+                            .add,
+                        height: 50,
+                        borderRadius: 7,
+                        style: const TextStyle(
+                            fontSize: 20, color: AppColor.white),
+                      ),
+                      spaceHeightWidget(20),
+                      BlocBuilder<GuestCubit, GuestState>(
+                        builder: (context, state) {
+                          if (state is GetGuestLoadingState) {
+                            return ShimmerList();
+                          } else if (state is GetGuestFatchDataState) {
+                            cubit.guestList = state.data!;
+                          } else if (state is GetGuestErrorState) {
+                            EasyLoading.showToast(state.error ?? '');
+                          }
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: cubit.guestList.data?.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: AppColor.greyWithOpacity01,
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                      Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: AppColor.blue.withOpacity(
+                                                0.2)),
+                                        borderRadius: BorderRadius.circular(5),
+                                        color: AppColor.white,
+                                      ),
+                                      child: Center(
+                                          child: Text("${index + 1}.")),
+                                    ),
+                                    spaceWidthWidget(10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment
+                                          .start,
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width * 0.6,
+                                          child: RichText(
+                                            text: TextSpan(
+                                                style: DefaultTextStyle
+                                                    .of(context)
+                                                    .style,
+                                                children: <TextSpan>[
+                                            TextSpan(text: cubit.guestList.data?[
+                                                index].name,
+                                                style: textStyleWithPoppin(
+                                                    color: AppColor.black,
+                                                    fontSize: 14)),
+                                            const TextSpan(text: '  '),
+                                            TextSpan(text: '( ${cubit.guestList
+                                                .data?[index].designation} )',
+                                                style: textStyleWithPoppin(color: AppColor.greyColor,
+                                                fontSize: 12),),
+                                      ],
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                        ),
+                                  spaceHeightWidget(5),
+                                  Text(cubit.guestList.data?[index].phone
+                                      .toString() ?? '',
+                                    style: textStyleWithPoppin(
+                                        color: AppColor.greyColor,
+                                        fontSize: 10),)
+                                  ],
+                                ),
+                                const Spacer(),
+                                Container(
+                                decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: AppColor.blue.withOpacity(0.15)
+                                ),
+                                height: 40,
+                                width: 40,
+                                child: const Icon(Icons.edit_outlined,color: AppColor.blue,size: 22,),
+                                )
+                                ],
+                                ),
+                                ),
+                                );
+                              });
+                        },
+                      ),
+                      spaceHeightWidget(20),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

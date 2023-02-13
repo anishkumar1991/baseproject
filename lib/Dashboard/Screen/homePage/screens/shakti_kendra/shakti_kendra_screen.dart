@@ -211,14 +211,17 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                               context
                                   .read<EditShaktiKendrCubit>()
                                   .selectedBooth = [];
-                              context.read<EditShaktiKendrCubit>().alreadyExitBooth = [];
+                              context
+                                  .read<EditShaktiKendrCubit>()
+                                  .alreadyExitBooth = [];
                               Navigator.pushNamed(
                                   context, RoutePath.editShaktiKendraScreen,
-                                  arguments: {'isEdit': false,
-                                    "shaktiKendr":
-                                    context.read<ShaktiKendraCubit>().shaktiKendr,
+                                  arguments: {
+                                    'isEdit': false,
+                                    "shaktiKendr": context
+                                        .read<ShaktiKendraCubit>()
+                                        .shaktiKendr,
                                   });
-
                             }
                           },
                           style: GoogleFonts.poppins(
@@ -425,7 +428,11 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                           subTitle: '',
                         );
                         context.read<ShaktiKendraCubit>().getShaktiKendra(
-                            id: context.read<ShaktiKendraCubit>().zilaSelected?.id ?? 357);
+                            id: context
+                                    .read<ShaktiKendraCubit>()
+                                    .zilaSelected
+                                    ?.id ??
+                                357);
                       } else {
                         EasyLoading.showSuccess(state.data.message ?? '');
                         context.read<ShaktiKendraCubit>().getShaktiKendra(

@@ -99,7 +99,6 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
 
   updatePersonalDetails({required Map<String, dynamic> data}) async {
     emit(LoadingState());
-    print("----------------------------");
     try {
       StorageService.getUserAuthToken();
       var res =

@@ -12,7 +12,6 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
-
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
@@ -24,6 +23,7 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
 
 import 'AddEntry/Cubit/add_entry_cubit.dart';
+import 'Dashboard/Screen/homePage/home_screen.dart';
 import 'Dashboard/Screen/homePage/screens/create_function_page/create_function_cubit/create_function_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/guest_list/cubit/guest_cubit.dart';
@@ -87,7 +87,6 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (create) => ReactionCubit()),
-
         BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),
@@ -135,7 +134,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            locale: Locale.fromSubtags(languageCode: cubit.lang!),
+            locale:  Locale.fromSubtags(languageCode: cubit.lang!),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
             // home: NotificationMainScreen(),

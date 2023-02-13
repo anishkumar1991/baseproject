@@ -19,6 +19,7 @@ import '../../../../../../generated/l10n.dart';
 import '../../../../../../route/route_path.dart';
 import '../cubit/zila_data_state.dart';
 
+//27234
 class EntryDetailsList extends StatelessWidget {
   EntryDetailsList({
     Key? key,
@@ -89,17 +90,33 @@ class EntryDetailsList extends StatelessWidget {
                                       SlidableAction(
                                         padding: EdgeInsets.zero,
                                         onPressed: ((context) {
-                                          showDialog(
-                                              context: context,
-                                              builder: ((context) {
-                                                return SubmitDialog(
-                                                  mobileNo: data?.phone ?? '',
-                                                  personId: data?.id ?? 0,
-                                                  onTapSkip: (() {
-                                                    Navigator.pop(context);
-                                                  }),
-                                                );
-                                              }));
+                                          print(
+                                              'status=${data?.otpStatus ?? ""}');
+                                          data?.otpStatus != null
+                                              ? data?.otpStatus == 'verified'
+                                                  ? EasyLoading.showToast(S
+                                                      .of(context)
+                                                      .alreadyVerified)
+                                                  : showDialog(
+                                                      context: context,
+                                                      builder: ((context) {
+                                                        return SubmitDialog(
+                                                          mobileNo:
+                                                              data?.phone ?? '',
+                                                          personId:
+                                                              data?.id ?? 0,
+                                                          levelId: dataLevelId,
+                                                          levelName:
+                                                              cubit.levelNameId,
+                                                          unitId: cubit.unitId,
+                                                          isEdit: true,
+                                                          onTapSkip: (() {
+                                                            Navigator.pop(
+                                                                context);
+                                                          }),
+                                                        );
+                                                      }))
+                                              : null;
                                         }),
                                         backgroundColor: AppColor.greenshade100,
                                         foregroundColor: AppColor.greenshade900,
@@ -217,12 +234,19 @@ class EntryDetailsList extends StatelessWidget {
                                                             .textBlackColor),
                                                   ),
                                                 ),
-                                                //   spaceWidthWidget(5),
-                                                //  const Icon(
-                                                //     Icons.verified,
-                                                //     color: AppColor.blue,
-                                                //     size: 12,
-                                                //   )
+                                                spaceWidthWidget(5),
+                                                data?.otpStatus != null
+                                                    ? data?.otpStatus ==
+                                                            'verified'
+                                                        ? const Icon(
+                                                            Icons.verified,
+                                                            color:
+                                                                AppColor.blue,
+                                                            size: 12,
+                                                          )
+                                                        : const SizedBox
+                                                            .shrink()
+                                                    : const SizedBox.shrink()
                                               ],
                                             ),
                                             Text(
@@ -400,6 +424,12 @@ class EntryDetailsList extends StatelessWidget {
                                               ),
                                               actions: [
                                                 ElevatedButton(
+                                                    onPressed: (() {
+                                                      Navigator.pop(context);
+                                                    }),
+                                                    child:
+                                                        Text(S.of(context).no)),
+                                                ElevatedButton(
                                                     onPressed: (() async {
                                                       Navigator.pop(context);
                                                       await cubit.deletePerson(
@@ -412,12 +442,6 @@ class EntryDetailsList extends StatelessWidget {
                                                     }),
                                                     child: Text(
                                                         S.of(context).yes)),
-                                                ElevatedButton(
-                                                    onPressed: (() {
-                                                      Navigator.pop(context);
-                                                    }),
-                                                    child:
-                                                        Text(S.of(context).no)),
                                               ],
                                             )));
                                   }

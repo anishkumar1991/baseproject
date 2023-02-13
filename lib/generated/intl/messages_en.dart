@@ -54,6 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ageError":
             MessageLookupByLibrary.simpleMessage("Age should be 2 digit"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "alreadyVerified":
+            MessageLookupByLibrary.simpleMessage("Person already verified"),
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
         "boothDes": MessageLookupByLibrary.simpleMessage(
             "By submitting all the booths will be connected to this Shakti Kendra."),
@@ -116,6 +118,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Enter Valid Email"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "enter": MessageLookupByLibrary.simpleMessage("Enter"),
+        "enterMobileNumber":
+            MessageLookupByLibrary.simpleMessage("Please Enter Phone Number"),
         "enterName": MessageLookupByLibrary.simpleMessage("Please Enter Name"),
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
         "enterPhoneNumber": MessageLookupByLibrary.simpleMessage(
@@ -173,6 +177,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("No organizations available"),
         "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
+        "notValidNumber": MessageLookupByLibrary.simpleMessage(
+            "This Number is Not Valid Number"),
         "organization":
             MessageLookupByLibrary.simpleMessage("Name of organization"),
         "otpVerification":

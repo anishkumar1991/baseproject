@@ -178,5 +178,8 @@
   "panaaSamiti": "Panaa Samiti",
   "pannaNo": "Panna No",
   "pannaKramaank": "Panna No",
-  "currentSk" : "Current Shakti Kendra"
+  "currentSk" : "Current Shakti Kendra",
+  "enterMobileNumber":"Please Enter Phone Number",
+  "notValidNumber":"This Number is Not Valid Number",
+  "alreadyVerified":"Person already verified"
 }

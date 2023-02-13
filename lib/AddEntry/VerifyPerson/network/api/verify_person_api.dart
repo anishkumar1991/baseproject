@@ -12,9 +12,9 @@ abstract class VerifyPersonApi {
   Future<HttpResponse> sendOTP(
       @Header('Authorization') String token, @Path('id') int id);
 
-  @GET('/zila/api/data/person/resend_otp')
+  @GET('/zila/api/data/person/resend_otp?person_id={personId}')
   Future<HttpResponse> reSendOTP(
-      @Header('Authorization') String token, @Body() Map<String, dynamic> data);
+      @Header('Authorization') String token, @Path('personId') int personId);
 
   @POST('/zila/api/data/person/verify_otp')
   Future<HttpResponse> verifyOTP(
