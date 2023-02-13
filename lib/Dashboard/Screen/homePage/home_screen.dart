@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
 
                       /// mann ki baat widget
 
-                      MannKiBaatCard(),
+
 
                       const MannKiBaatCard(),
 
