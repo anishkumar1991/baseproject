@@ -32,6 +32,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -96,42 +97,44 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
           children: [
             Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black12),
+                  border: Border.all(color: Colors.black12, width: 1.5),
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30)),
               child: Column(
                 children: [
-                  TabBar(
-                    unselectedLabelColor: const Color(0xFF666666),
-                    indicatorWeight: 2,
-                    indicator: BoxDecoration(
-                      color: const Color(0xFF447EFF),
-                      borderRadius: BorderRadius.circular(22),
+                  Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: TabBar(
+                      unselectedLabelColor: const Color(0xFF666666),
+                      indicator: BoxDecoration(
+                        color: const Color(0xFF447EFF),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      controller: tabController,
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            "Circular",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            "Report",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            "Notification",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
-                    controller: tabController,
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          "Circular",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Report",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      Tab(
-                        child: Text(
-                          "Notification",
-                          style: GoogleFonts.poppins(
-                              fontSize: 14, fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),
