@@ -12,8 +12,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
-import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
-import 'package:sangathan/Dashboard/Screen/notification/screens/NotificationScreen.dart';
+
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
@@ -88,6 +87,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (create) => ReactionCubit()),
+
         BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),

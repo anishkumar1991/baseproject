@@ -86,7 +86,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
 
             /// shakti kendr card
             InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, RoutePath.shaktiKendraScreen);
               },
               child: Container(

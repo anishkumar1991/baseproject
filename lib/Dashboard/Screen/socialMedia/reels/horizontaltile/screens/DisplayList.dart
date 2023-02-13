@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/screens/ReelsMainPage.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../../../Values/app_colors.dart';
@@ -61,27 +62,72 @@ class _DisplayListState extends State<DisplayList> {
               color: Colors.white,
               child: Align(
                 alignment: Alignment.center,
-                child: ListView.builder(
-                    itemCount: state.htModel.reels.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomePage(
-                                        index: index,
-                                      )));
-                        },
-                        child: ContentCard(
-                          views: state.htModel.reels[index].title,
-                          title:
-                              state.htModel.reels[index].viewCount.toString(),
-                          img: state.htModel.reels[index].postData.thumbnailUrl,
-                        ),
-                      );
-                    }),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: ListView.builder(
+                          physics: const ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: 6,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index == 5) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const HomePage(
+                                                index: 5,
+                                              )));
+                                },
+                                child: SizedBox(
+                                  height: 169,
+                                  width: 117,
+                                  child: Card(
+                                    elevation: 4,
+                                    color: AppColor.cardOrangeColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    child: Center(
+                                        child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text("View More",
+                                            style: GoogleFonts.roboto(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w500)),
+                                        const Icon(Icons.arrow_forward, size: 25)
+                                      ],
+                                    )),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomePage(
+                                                index: index,
+                                              )));
+                                },
+                                child: ContentCard(
+                                  views: state.htModel.reels[index].title,
+                                  title: state.htModel.reels[index].viewCount
+                                      .toString(),
+                                  img: state.htModel.reels[index].postData
+                                      .thumbnailUrl,
+                                ),
+                              );
+                            }
+                          }),
+                    ),
+                  ],
+                ),
               ),
             );
           } else if (state is HorizontalTileError) {
