@@ -35,7 +35,7 @@ class TopBar extends StatelessWidget {
                     size: 20,
                   )),
             ),
-            Text(
+            const Text(
               'Social Media',
               style: TextStyle(
                   fontSize: 18,

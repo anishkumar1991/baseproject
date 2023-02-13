@@ -13,18 +13,23 @@ class ContentScreen extends StatefulWidget {
   final String id;
 
   const ContentScreen(
-      {Key? k, required this.title, required this.views, required this.src, required this.index, required this.id});
+      {super.key,
+      Key? k,
+      required this.title,
+      required this.views,
+      required this.src,
+      required this.index,
+      required this.id});
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
 }
 
 class _ContentScreenState extends State<ContentScreen> {
-  ScrollController _controller = ScrollController();
 
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
-  bool _liked = false;
+  final bool _liked = false;
 
   @override
   void initState() {
@@ -32,17 +37,9 @@ class _ContentScreenState extends State<ContentScreen> {
     initializePlayer();
   }
 
-  void _onScrollEvent() {
-    final extentAfter = _controller.position.extentAfter;
-    print("Extent after: $extentAfter");
-    if (extentAfter < 300) {
-      // Load new items
-      print("-----------SHOWING AFTER SWIPPING${_videoPlayerController.value.position}");
-    }
-  }
 
   Future initializePlayer() async {
-    _videoPlayerController = VideoPlayerController.network(widget.src!);
+    _videoPlayerController = VideoPlayerController.network(widget.src);
     await Future.wait([_videoPlayerController.initialize()]);
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
@@ -64,32 +61,26 @@ class _ContentScreenState extends State<ContentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("--------URL ------->${widget.src}");
     return Stack(
       fit: StackFit.expand,
-
       children: [
         _chewieController != null &&
-            _chewieController!.videoPlayerController.value.isInitialized
+                _chewieController!.videoPlayerController.value.isInitialized
             ? GestureDetector(
-          onTap: () {
-                  print(
-                      "--------------->${_videoPlayerController.value.position}");
+                onTap: () {
                 },
                 child: Chewie(
                   controller: _chewieController!,
                 ),
               )
             : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
                   CircularProgressIndicator(),
-                  SizedBox(height: 10),
-                  Text('Fetching Videos...')
                 ],
               ),
         if (_liked)
-          Center(
+          const Center(
             child: LikeIcon(),
           ),
         Padding(

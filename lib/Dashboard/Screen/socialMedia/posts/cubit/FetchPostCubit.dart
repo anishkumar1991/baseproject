@@ -1,12 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
-
-import 'package:twitter_api_v2/twitter_api_v2.dart' as v2;
-
 import '../network/model/FetchPosts.dart';
 import '../network/services/FetchPostsApi.dart';
 import 'FetchPostsState.dart';

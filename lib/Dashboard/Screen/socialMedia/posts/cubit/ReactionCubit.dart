@@ -16,15 +16,12 @@ class ReactionCubit extends Cubit<ReactionState> {
           'Bearer ${StorageService.userAuthToken}',
           {"post_id": postId, "reaction": reaction});
       if (res.response.statusCode == 200) {
-        print("reaction api working");
         emit(ReactionSend());
       } else {
-        print("not api");
         // State? model = States.fromJson(res.data);
         // emit(LoginFaieldState(model.message ?? ''));
       }
     } on Exception catch (e) {
-      print(e.toString());
       // LoginFaieldState(e.toString());
     }
   }

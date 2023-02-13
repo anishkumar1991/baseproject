@@ -15,13 +15,10 @@ class PollCubit extends Cubit<PollState> {
       final res = await api.submitPoll('Bearer ${StorageService.userAuthToken}',
           {"poll_id": pollId, "option_id": optionId});
       if (res.response.statusCode == 200) {
-        print("poll submitted");
         emit(PollChoosed());
       } else {
-        print("not api");
       }
     } on Exception catch (e) {
-      print(e.toString());
       // LoginFaieldState(e.toString());
     }
   }

@@ -17,14 +17,11 @@ class ShareCubit extends Cubit<ShareState> {
           {"post_id": postId, "is_whatsapp": false});
       if (res.response.statusCode == 200) {
         emit(SharedToAll());
-        print("share to all api working");
       } else {
-        print("not api");
         // State? model = States.fromJson(res.data);
         // emit(LoginFaieldState(model.message ?? ''));
       }
     } on Exception catch (e) {
-      print(e.toString());
       // LoginFaieldState(e.toString());
     }
   }
@@ -35,14 +32,11 @@ class ShareCubit extends Cubit<ShareState> {
           {"post_id": postId, "is_whatsapp": true});
       if (res.response.statusCode == 200) {
         emit(SharedToWhatsapp());
-        print("whatsapp sharing working");
       } else {
-        print("not api");
         // State? model = States.fromJson(res.data);
         // emit(LoginFaieldState(model.message ?? ''));
       }
     } on Exception catch (e) {
-      print(e.toString());
       // LoginFaieldState(e.toString());
     }
   }

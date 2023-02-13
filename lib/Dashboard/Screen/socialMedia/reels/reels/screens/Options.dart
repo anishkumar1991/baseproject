@@ -32,8 +32,8 @@ class OptionsScreen extends StatefulWidget {
 class _OptionsScreenState extends State<OptionsScreen> {
   bool reveal = false;
 
+  @override
   Widget build(BuildContext context) {
-    String? savePath;
     final cubit = context.read<ReelShareCubit>();
     final cubit1 = context.read<ReelsCubit>();
 
@@ -42,17 +42,17 @@ class _OptionsScreenState extends State<OptionsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(),
+          const SizedBox(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 150,
                   ),
-                  Container(
+                  SizedBox(
                     width: 260,
                     height: 100,
                     child: Align(
@@ -66,14 +66,14 @@ class _OptionsScreenState extends State<OptionsScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 3),
-                        child: Container(
+                        child: SizedBox(
                           width: 16,
                           height: 16,
                           child: Image.asset(
@@ -83,7 +83,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
@@ -188,8 +188,6 @@ class _OptionsScreenState extends State<OptionsScreen> {
                         ),
                       ),
                       const SizedBox(height: 4),
-
-
                       const SizedBox(height: 150),
                     ],
                   ),

@@ -74,13 +74,13 @@ class _ImageCardState extends State<ImageCard> {
                           return Container(
                             width: 8.0,
                             height: 8.0,
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 vertical: 10.0, horizontal: 2.0),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: currpos == index
-                                  ? Color.fromRGBO(0, 0, 0, 0.9)
-                                  : Color.fromRGBO(0, 0, 0, 0.4),
+                                  ? const Color.fromRGBO(0, 0, 0, 0.9)
+                                  : const Color.fromRGBO(0, 0, 0, 0.4),
                             ),
                           );
                         }).toList(),
