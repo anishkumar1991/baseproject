@@ -61,8 +61,10 @@ class CircularScreen extends StatelessWidget {
               BlocBuilder<NotificationCubit, NotificationState>(
                 builder: (context, state) {
                   if (state is NotificationFetchedState) {
-                    return Expanded(
+                    return Flexible(
                       child: ListView.builder(
+                        physics: const ScrollPhysics(),
+                        reverse: true,
                         shrinkWrap: true,
                         itemCount: cubit.tempModel!.notificationsList?.length,
                         itemBuilder: (context, index) {

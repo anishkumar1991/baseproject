@@ -61,10 +61,12 @@ class NotificationScreen extends StatelessWidget {
               BlocBuilder<NotificationCubit, NotificationState>(
                 builder: (context, state) {
                   if (state is NotificationFetchedState) {
-                    return Expanded(
+                    return Flexible(
                       child: ListView.builder(
+                        physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: cubit.tempModel!.notificationsList?.length,
+                        reverse: true,
                         itemBuilder: (context, index) {
                           time =
                               cubit.tempModel!.notificationsList![index].time;
@@ -136,7 +138,7 @@ class NotificationScreen extends StatelessWidget {
                               ],
                             );
                           } else {
-                            return const SizedBox();
+                            return SizedBox();
                           }
                         },
                       ),
