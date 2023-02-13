@@ -161,27 +161,31 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           multiCheckBox(cubit, i),
 
                       /// Here Secondary logic
-                      ExpansionTile(
-                        expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                        iconColor: AppColor.black,
-                        collapsedIconColor: AppColor.black,
-                        tilePadding: EdgeInsets.zero,
-                        initiallyExpanded: true,
-                        title: Text(
-                          'Fill Secondary Information',
-                          style: GoogleFonts.quicksand(
-                              fontSize: 20, fontWeight: FontWeight.w600),
+                      Theme(
+                        data: Theme.of(context)
+                            .copyWith(dividerColor: Colors.transparent),
+                        child: ExpansionTile(
+                          expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                          iconColor: AppColor.black,
+                          collapsedIconColor: AppColor.black,
+                          tilePadding: EdgeInsets.zero,
+                          initiallyExpanded: true,
+                          title: Text(
+                            'Fill Secondary Information',
+                            style: GoogleFonts.quicksand(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                          children: [
+                            spaceHeightWidget(20),
+                            for (int i = 0; i < cubit.entryField!.length; i++)
+                              if (cubit.entryField![i].primary == false)
+                                nonEditableField(cubit, i),
+                            for (int i = 0; i < cubit.entryField!.length; i++)
+                              if (cubit.entryField![i].primary == false)
+                                multiCheckBox(cubit, i),
+                            spaceHeightWidget(20),
+                          ],
                         ),
-                        children: [
-                          spaceHeightWidget(20),
-                          for (int i = 0; i < cubit.entryField!.length; i++)
-                            if (cubit.entryField![i].primary == false)
-                              nonEditableField(cubit, i),
-                          for (int i = 0; i < cubit.entryField!.length; i++)
-                            if (cubit.entryField![i].primary == false)
-                              multiCheckBox(cubit, i),
-                          spaceHeightWidget(20),
-                        ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
