@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "aadharNumber": MessageLookupByLibrary.simpleMessage(
             "Aadhaar Number should be 12 digit"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addAttendeesHeader": MessageLookupByLibrary.simpleMessage(
+            "Present Guest / Participant / Worker"),
         "addBooth": MessageLookupByLibrary.simpleMessage("Add Booth"),
         "addEntry": MessageLookupByLibrary.simpleMessage("Add Entry"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(

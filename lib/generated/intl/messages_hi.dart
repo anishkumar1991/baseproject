@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "aadharNumber": MessageLookupByLibrary.simpleMessage(
             "आधार संख्या १२ अंकों की होनी चाहिए"),
         "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
+        "addAttendeesHeader": MessageLookupByLibrary.simpleMessage(
+            "उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता"),
         "addBooth": MessageLookupByLibrary.simpleMessage("ऐड बूथ"),
         "addEntry": MessageLookupByLibrary.simpleMessage("ऐड एंट्री"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(

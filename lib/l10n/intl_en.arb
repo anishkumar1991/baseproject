@@ -181,5 +181,6 @@
   "currentSk" : "Current Shakti Kendra",
   "enterMobileNumber":"Please Enter Phone Number",
   "notValidNumber":"This Number is Not Valid Number",
-  "alreadyVerified":"Person already verified"
+  "alreadyVerified":"Person already verified",
+  "addAttendeesHeader" : "Present Guest / Participant / Worker"
 }

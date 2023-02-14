@@ -1869,6 +1869,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Present Guest / Participant / Worker`
+  String get addAttendeesHeader {
+    return Intl.message(
+      'Present Guest / Participant / Worker',
+      name: 'addAttendeesHeader',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

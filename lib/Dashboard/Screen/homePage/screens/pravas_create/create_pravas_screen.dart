@@ -168,6 +168,7 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
               children: [
                 CommonButton(
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.pushNamed(
                         context, RoutePath.createFunctionScreen,
                     arguments: {
