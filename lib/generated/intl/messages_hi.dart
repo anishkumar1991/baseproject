@@ -188,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
         "panaaSamiti": MessageLookupByLibrary.simpleMessage("पन्ना समिति "),
+        "panna": MessageLookupByLibrary.simpleMessage("पन्ना"),
         "pannaKramaank": MessageLookupByLibrary.simpleMessage("पन्ना क्रमांक "),
         "pannaNo": MessageLookupByLibrary.simpleMessage("पन्ना संख्या"),
         "pannaParmukh": MessageLookupByLibrary.simpleMessage("पन्ना प्रमुख"),

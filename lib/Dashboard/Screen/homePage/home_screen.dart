@@ -10,14 +10,10 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/size_config.dart';
 import 'package:sangathan/route/route_path.dart';
 
-import '../mannKiBaat/screens/FormPage.dart';
+import '../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../notification/screens/NotificatioMainScreen.dart';
-import '../whatsapp/screens/WhatsappScreen.dart';
 import 'cubit/home_page_cubit.dart';
 import 'cubit/home_page_state.dart';
-import '../../../splash_screen/cubit/user_profile_cubit.dart';
-import 'widget/custom_drawer_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final homePageScaffoldGlobalKey = GlobalKey<ScaffoldState>();
 
@@ -32,9 +28,15 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController searchTextController = TextEditingController();
 
   @override
+  void initState() {
+    context.read<HomePageCubit>().getClientAppLists();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SizeConfig().getCurrentOrientation(context);
-    context.read<HomePageCubit>().getClientAppLists();
+
     return Scaffold(
       key: homePageScaffoldGlobalKey,
       // drawer: const CustomDrawerWidget(),
@@ -225,8 +227,6 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       /// mann ki baat widget
-
-                      MannKiBaatCard(),
 
                       const MannKiBaatCard(),
 

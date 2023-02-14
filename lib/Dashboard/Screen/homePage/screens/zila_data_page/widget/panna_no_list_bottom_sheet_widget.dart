@@ -25,9 +25,11 @@ class _PannaNoListBottomSheetWidgetState
     extends State<PannaNoListBottomSheetWidget> {
   @override
   void initState() {
-    context
+    ///TODO : here use static data
+    context.read<ZilaDataCubit>().getPannaKramaankList(112731, 3377);
+    /* context
         .read<ZilaDataCubit>()
-        .getPannaKramaankList(widget.boothID, widget.acId);
+        .getPannaKramaankList(widget.boothID, widget.acId);*/
     super.initState();
   }
 
@@ -106,7 +108,7 @@ class _PannaNoListBottomSheetWidgetState
                                 var data = state.pannaKramaankListData.data
                                     ?.locations?[index];
                                 return listTilePanna(
-                                    index: data?.id ?? 0,
+                                    index: data?.number ?? 0,
                                     name: data?.name ?? "");
                               },
                             );

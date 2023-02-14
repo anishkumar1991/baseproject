@@ -18,16 +18,17 @@ import '../../../../../Storage/user_storage_service.dart';
 import '../../../../../Values/icons.dart';
 import 'cubit/zila_data_state.dart';
 import 'dropdown_handler/dropdown_handler.dart';
+import 'panna_pdf_viewer.dart';
 import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
 class ZilaDataScreen extends StatefulWidget {
-  const ZilaDataScreen(
+  ZilaDataScreen(
       {super.key, required this.type, this.countryStateId, this.dataLevelId});
 
   final String? type;
-  final int? countryStateId;
+  int? countryStateId;
   final int? dataLevelId;
 
   @override
@@ -50,8 +51,14 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     /* context.read<ZilaDataCubit>().getPartyZila(
         id: widget.countryStateId ??
             StorageService.userData!.user!.countryStateId!);*/
+
+    /// TODO : here country id is static (just remove condition)
+    if (widget.type == "Panna") {
+      widget.countryStateId = 28;
+    }
     print('data_level :${widget.dataLevelId}');
     print('country_state_id${widget.countryStateId}');
+
     super.initState();
   }
 
@@ -243,8 +250,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         unitId: cubit.unitId ?? "",
                         subUnitId: cubit.subUnitId,
                         isEditEntry: false,
-                        levelName: cubit.levelNameId,
-                        countryStateId: widget.countryStateId,
+                        levelName: widget.dataLevelId,
+
+                        /// TODO : here country id is static when type is panna we need make dynamic in future
+                        countryStateId:
+                            widget.type == "Panna" ? 28 : widget.countryStateId,
                         personData: null,
                       ));
                 } else {
@@ -261,7 +271,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           subUnitId: cubit.subUnitId,
                           isEditEntry: false,
                           levelName: cubit.levelNameId,
-                          countryStateId: widget.countryStateId,
+
+                          ///TODO : here country id is static when type is panna we need make dynamic in future
+                          countryStateId: widget.type == "Panna"
+                              ? 28
+                              : widget.countryStateId,
                           personData: null,
                         ));
                   }
@@ -348,11 +362,22 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         const SizedBox(
           width: 10,
         ),
-        const Image(
-          image: AssetImage(
-            AppIcons.pdfIcon,
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return PannaPdfViewer(
+                  pdfLink: null,
+                );
+              },
+            ));
+          },
+          child: const Image(
+            image: AssetImage(
+              AppIcons.pdfIcon,
+            ),
+            width: 60,
           ),
-          width: 60,
         )
       ],
     );

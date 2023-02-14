@@ -129,6 +129,8 @@ class EntryDetailsList extends StatelessWidget {
                                           context
                                               .read<AddEntryCubit>()
                                               .cleanAllVariableData();
+
+                                          ///TODO : here country id is static when type is panna we need make dynamic in future
                                           Navigator.pushNamed(
                                               context, RoutePath.addEntryScreen,
                                               arguments: AddEntryPage(
@@ -137,8 +139,12 @@ class EntryDetailsList extends StatelessWidget {
                                                 leaveId: dataLevelId ?? 0,
                                                 unitId: cubit.unitId,
                                                 subUnitId: cubit.subUnitId,
-                                                countryStateId: countryStateId,
-                                                levelName: cubit.levelNameId,
+                                                countryStateId: type == "Panna"
+                                                    ? 28
+                                                    : countryStateId,
+                                                levelName: type == "Panna"
+                                                    ? dataLevelId
+                                                    : cubit.levelNameId,
                                                 personID: data?.id,
                                                 personData: data?.toJson(),
                                               ));
@@ -171,13 +177,18 @@ class EntryDetailsList extends StatelessWidget {
                                         .cleanAllVariableData();
                                     Navigator.pushNamed(
                                         context, RoutePath.addEntryScreen,
+
+                                        ///TODO : here country id is static when type is panna we need make dynamic in future
                                         arguments: AddEntryPage(
                                           type: type!,
                                           leaveId: dataLevelId ?? 0,
                                           unitId: cubit.unitId ?? "",
-                                          subUnitId: cubit.subUnitId,
-                                          countryStateId: countryStateId,
-                                          levelName: cubit.levelNameId,
+                                          countryStateId: type == "Panna"
+                                              ? 28
+                                              : countryStateId,
+                                          levelName: type == "Panna"
+                                              ? dataLevelId
+                                              : cubit.levelNameId,
                                           personID: data?.id,
                                           isEditEntry: true,
                                           personData: data?.toJson(),

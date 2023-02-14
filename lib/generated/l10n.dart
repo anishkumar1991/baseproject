@@ -1770,6 +1770,16 @@ class S {
     );
   }
 
+  /// `Panna`
+  String get panna {
+    return Intl.message(
+      'Panna',
+      name: 'panna',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total Panna`
   String get totalPanna {
     return Intl.message(

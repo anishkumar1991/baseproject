@@ -184,6 +184,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("OTP Verification"),
         "panaaSamiti": MessageLookupByLibrary.simpleMessage("Panaa Samiti"),
+        "panna": MessageLookupByLibrary.simpleMessage("Panna"),
         "pannaKramaank": MessageLookupByLibrary.simpleMessage("Panna No"),
         "pannaNo": MessageLookupByLibrary.simpleMessage("Panna No"),
         "pannaParmukh": MessageLookupByLibrary.simpleMessage("Panna Parmukh"),
