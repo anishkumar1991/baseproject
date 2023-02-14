@@ -24,6 +24,7 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging.instance.subscribeToTopic("sangathan");
     FirebaseMessaging.instance.getToken().then((newToken) {
       if (StorageService.getUserFcmToken() == null ||
           StorageService.getUserFcmToken() != newToken) {
@@ -44,7 +45,6 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
   Widget build(BuildContext context) {
     final cubit = context.read<FetchPostsCubit>();
     cubit.fetchPosts();
-    print("user fcm ${StorageService.getUserFcmToken()}");
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 60),

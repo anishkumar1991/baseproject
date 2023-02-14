@@ -25,7 +25,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final cubit = context.read<ReelsCubit>().getReelsData();
+    });
   }
 
   @override
@@ -38,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.black45,
           child: Stack(
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 300,
               ),
               //We need swiper for every content
@@ -46,8 +48,9 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, state) {
                   if (state is ReelsInitialState ||
                       state is ReelsLoadingState) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   } else if (state is ReelsFetchedState) {
+                    print(state.reelsModel.reels.length);
                     return Swiper(
                       index: widget.index,
                       controller: SwiperController(),
@@ -56,16 +59,16 @@ class _HomePageState extends State<HomePage> {
                           src: state.reelsModel.reels[index].postData.reel,
                           title: state.reelsModel.reels[index].title,
                           views: state.reelsModel.reels[index].viewCount
-                              .toString(),
-                          index: index,
-                          id: state.reelsModel.reels[index].id.toString(),
+                              .toString(), index: index, id: state.reelsModel.reels[index].id.toString(),
                         );
+                        // src: videos[index % videos.length]);
                       },
-                      scrollDirection: Axis.vertical,
-                      itemCount: state.reelsModel.reels.length,
+                      // preloadPagesCount: 4,
+                      // itemCount: state.reelsModel.reels.length,
+                      scrollDirection: Axis.vertical, itemCount: state.reelsModel.reels.length,
                     );
                   } else {
-                    return const Center(
+                    return Center(
                       child: Text('Error'),
                     );
                   }
@@ -92,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  icon: const Icon(
+                                  icon: Icon(
                                     Icons.arrow_back,
                                     size: 30,
                                     color: Colors.white,

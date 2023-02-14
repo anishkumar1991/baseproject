@@ -47,7 +47,9 @@ class _ContentCardState extends State<ContentCard> {
                           fontSize: 14,
                           fontWeight: FontWeight.w400),
                     ),
-                    SizedBox(width: 4,),
+                    SizedBox(
+                      width: 4,
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 3),
                       child: Container(

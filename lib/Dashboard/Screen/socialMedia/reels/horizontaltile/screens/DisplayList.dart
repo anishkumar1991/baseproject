@@ -111,7 +111,7 @@ class _DisplayListState extends State<DisplayList> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => HomePage(
+                                          builder: (context) =>  HomePage(
                                                 index: index,
                                               )));
                                 },
