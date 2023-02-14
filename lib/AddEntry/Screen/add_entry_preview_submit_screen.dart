@@ -51,12 +51,21 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<AddEntryCubit>();
+    final zilaCubit = context.read<ZilaDataCubit>();
     return Scaffold(
       body: SafeArea(
         child: BlocListener<AddEntryCubit, AddEntryState>(
             listener: (context, state) {
               if (state is SubmitAddEntrySuccessState) {
                 EasyLoading.showSuccess(state.message);
+                if (widget.isEdit) {
+                  BlocProvider.of<ZilaDataCubit>(context, listen: false)
+                      .getEntryData(data: {
+                    "level": cubit.levelId,
+                    "unit": cubit.unitId,
+                    "level_name": zilaCubit.levelNameId
+                  });
+                }
                 widget.isEdit
                     ? Navigator.popUntil(
                         context, ModalRoute.withName(RoutePath.zilaDataPage))
@@ -76,7 +85,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                                   .getEntryData(data: {
                                 "level": cubit.levelId,
                                 "unit": cubit.unitId,
-                                "level_name": cubit.levelName
+                                "level_name": zilaCubit.levelNameId
                               });
                               Navigator.popUntil(context,
                                   ModalRoute.withName(RoutePath.zilaDataPage));

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/create_function_page/widgets/header_widget_create_function.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/guest_list/cubit/guest_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 import 'package:sangathan/Values/space_width_widget.dart';
@@ -249,6 +250,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             spaceHeightWidget(19),
                             InkWell(
                               onTap: () {
+                                context.read<GuestCubit>().isEdit = false;
                                 Navigator.pushNamed(
                                     context, RoutePath.guestListScreen);
                               },

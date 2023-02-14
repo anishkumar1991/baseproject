@@ -121,7 +121,7 @@ class KaryakartaData {
   String? twitterProfile;
   String? paName;
   String? paNumber;
-  String? nativeState;
+  dynamic nativeState;
   String? votingState;
   String? termStart;
   String? termEnd;

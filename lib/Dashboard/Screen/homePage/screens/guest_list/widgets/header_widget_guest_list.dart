@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/guest_list/cubit/guest_cubit.dart';
 
 import '../../../../../../Values/space_width_widget.dart';
+import '../../../../../../generated/l10n.dart';
 
 
-Widget headerWidgetGuestList(BuildContext context){
+Widget headerWidgetGuestList(BuildContext context,bool isEdit){
   return Row(
     children: [
       InkWell(
           onTap: (){
-            Navigator.pop(context);
+            if(isEdit){
+              context.read<GuestCubit>().editGuest();
+            }else{
+              Navigator.pop(context);
+            }
           },
           child: const Icon(Icons.arrow_back,size: 25)),
       spaceWidthWidget(10),
-      const Text('उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता',style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
+       Text(isEdit == true ? S.of(context).edit  : S.of(context).addAttendeesHeader,style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),)
     ],
   );
 }

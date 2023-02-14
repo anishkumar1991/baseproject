@@ -6,7 +6,6 @@ import '../cubit/zila_data_cubit.dart';
 class DropdownHandler {
   static dynamicSangathanDropdown(
       BuildContext context, String type, int countryID) {
-    print(type);
     if (type == "Pradesh") {
       context
           .read<ZilaDataCubit>()
@@ -57,7 +56,6 @@ class DropdownHandler {
   }
 
   static mainDropdownName(String type) {
-    print(type);
     if (type == "Pradesh") {
       return "Pradesh";
     } else if (type == "Zila" || type == "Mandal") {

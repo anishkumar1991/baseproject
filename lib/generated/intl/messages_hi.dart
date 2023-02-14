@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "aadharNumber": MessageLookupByLibrary.simpleMessage(
             "आधार संख्या १२ अंकों की होनी चाहिए"),
         "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
+        "addAttendeesHeader": MessageLookupByLibrary.simpleMessage(
+            "उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता"),
         "addBooth": MessageLookupByLibrary.simpleMessage("ऐड बूथ"),
         "addEntry": MessageLookupByLibrary.simpleMessage("ऐड एंट्री"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
@@ -188,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
         "panaaSamiti": MessageLookupByLibrary.simpleMessage("पन्ना समिति "),
+        "panna": MessageLookupByLibrary.simpleMessage("पन्ना"),
         "pannaKramaank": MessageLookupByLibrary.simpleMessage("पन्ना क्रमांक "),
         "pannaNo": MessageLookupByLibrary.simpleMessage("पन्ना संख्या"),
         "pannaParmukh": MessageLookupByLibrary.simpleMessage("पन्ना प्रमुख"),

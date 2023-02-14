@@ -18,16 +18,17 @@ import '../../../../../Storage/user_storage_service.dart';
 import '../../../../../Values/icons.dart';
 import 'cubit/zila_data_state.dart';
 import 'dropdown_handler/dropdown_handler.dart';
+import 'panna_pdf_viewer.dart';
 import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
 class ZilaDataScreen extends StatefulWidget {
-  const ZilaDataScreen(
+  ZilaDataScreen(
       {super.key, required this.type, this.countryStateId, this.dataLevelId});
 
   final String? type;
-  final int? countryStateId;
+  int? countryStateId;
   final int? dataLevelId;
 
   @override
@@ -40,18 +41,26 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     print(widget.type);
     context.read<ZilaDataCubit>().dataList = null;
     context.read<ZilaDataCubit>().partyzilaList = [];
+    context.read<ZilaDataCubit>().selectedPannaNo = null;
 
     context.read<ZilaDataCubit>().dataUnitList = null;
     context.read<ZilaDataCubit>().dependentDropdownList = [];
     context.read<ZilaDataCubit>().dependentDropdownSelected = null;
     context.read<ZilaDataCubit>().zilaSelected = null;
+
+    /// TODO : here country id is static (just remove condition)
+    if (widget.type == "Panna") {
+      widget.countryStateId = 28;
+    }
     DropdownHandler.dynamicSangathanDropdown(
         context, widget.type ?? "", widget.countryStateId ?? 0);
     /* context.read<ZilaDataCubit>().getPartyZila(
         id: widget.countryStateId ??
             StorageService.userData!.user!.countryStateId!);*/
+
     print('data_level :${widget.dataLevelId}');
     print('country_state_id${widget.countryStateId}');
+
     super.initState();
   }
 
@@ -142,6 +151,17 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                       if (state is EntryDataFetchedState) {
                         if (state.data.data != null) {
                           cubit.dataList = state.data.data!.data!;
+                        }
+                        context.read<ZilaDataCubit>().getPannaKramaankList(
+                            cubit.levelNameId ?? 0, cubit.acId ?? 0);
+                      }
+
+                      if (state is PannaKramaankSuccessState) {
+                        cubit.pannaKramaankListData =
+                            state.pannaKramaankListData.data?.locations ?? [];
+                        if (cubit.pannaKramaankListData.isNotEmpty) {
+                          cubit.selectedPannaNo =
+                              cubit.pannaKramaankListData.first;
                         }
                       }
                       return cubit.dataList?.isEmpty ?? false
@@ -243,8 +263,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         unitId: cubit.unitId ?? "",
                         subUnitId: cubit.subUnitId,
                         isEditEntry: false,
-                        levelName: cubit.levelNameId,
-                        countryStateId: widget.countryStateId,
+                        levelName: widget.dataLevelId,
+
+                        /// TODO : here country id is static when type is panna we need make dynamic in future
+                        countryStateId:
+                            widget.type == "Panna" ? 28 : widget.countryStateId,
+                        pannaID: cubit.selectedPannaNo?.id,
                         personData: null,
                       ));
                 } else {
@@ -261,7 +285,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           subUnitId: cubit.subUnitId,
                           isEditEntry: false,
                           levelName: cubit.levelNameId,
-                          countryStateId: widget.countryStateId,
+
+                          ///TODO : here country id is static when type is panna we need make dynamic in future
+                          countryStateId: widget.type == "Panna"
+                              ? 28
+                              : widget.countryStateId,
                           personData: null,
                         ));
                   }
@@ -282,79 +310,94 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
   Widget pannaNumberSelectionWidget() {
     var cubit = context.read<ZilaDataCubit>();
-    return Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: () {
-              showModalBottomSheet(
-                  context: context,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))),
-                  builder: (builder) {
-                    return PannaNoListBottomSheetWidget(
-                      acId: cubit.acId ?? 0,
-                      boothID: cubit.levelNameId ?? 0,
-                    );
-                  });
-            },
-            child: Container(
-              height: 60,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColor.dividerColor,
-                    style: BorderStyle.solid,
-                    width: 1.0,
-                  ),
-                  borderRadius: BorderRadius.circular(10)),
-              child: Row(children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                  child: Image(
-                    image: AssetImage(
-                      AppIcons.fileListIcon,
+    return BlocBuilder<ZilaDataCubit, ZilaDataState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      builder: (builder) {
+                        return PannaNoListBottomSheetWidget(
+                          acId: cubit.acId ?? 0,
+                          boothID: cubit.levelNameId ?? 0,
+                        );
+                      });
+                },
+                child: Container(
+                  height: 60,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: AppColor.dividerColor,
+                        style: BorderStyle.solid,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Row(children: [
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                      child: Image(
+                        image: AssetImage(
+                          AppIcons.fileListIcon,
+                        ),
+                        width: 20,
+                      ),
                     ),
-                    width: 20,
-                  ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(S.of(context).pannaNo,
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12,
+                            )),
+                        Text("${cubit.selectedPannaNo?.id ?? ""}",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 13,
+                            ))
+                      ],
+                    )),
+                    const Icon(Icons.keyboard_arrow_down),
+                  ]),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(S.of(context).pannaNo,
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12,
-                        )),
-                    Text("6",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
-                        ))
-                  ],
-                )),
-                const Icon(Icons.keyboard_arrow_down),
-              ]),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        const Image(
-          image: AssetImage(
-            AppIcons.pdfIcon,
-          ),
-          width: 60,
-        )
-      ],
+            const SizedBox(
+              width: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return const PannaPdfViewer(
+                      pdfLink: null,
+                    );
+                  },
+                ));
+              },
+              child: const Image(
+                image: AssetImage(
+                  AppIcons.pdfIcon,
+                ),
+                width: 60,
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 
@@ -645,7 +688,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         final cubit = BlocProvider.of<ZilaDataCubit>(context);
 
         if (state is BoothPannasStatusSuccessState) {
+          cubit.boothPannasStatus = null;
           cubit.boothPannasStatus = state.boothPannasStatus;
+
           if (cubit.levelNameId != null) {
             context.read<ZilaDataCubit>().getEntryData(data: {
               "level": widget.dataLevelId,
@@ -907,17 +952,24 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           .toList(),
                       onChanged: ((value) async {
                         cubit.onDependentDropdown(value);
+                        cubit.selectedPannaNo = null;
                         if (widget.type == "Panna") {
                           await context
                               .read<ZilaDataCubit>()
-                              .getBoothPannasStatus(
-                                  cubit.dependentDropdownList.first.id ?? 0);
+                              .getBoothPannasStatus(value?.id ?? 0);
+                          await context
+                              .read<ZilaDataCubit>()
+                              .getPannaKramaankList(
+                                  cubit.levelNameId ?? 0, cubit.acId ?? 0);
+                        } else {
+                          await context
+                              .read<ZilaDataCubit>()
+                              .getEntryData(data: {
+                            "level": widget.dataLevelId,
+                            "unit": cubit.unitId ?? "",
+                            "level_name": cubit.levelNameId
+                          });
                         }
-                        await context.read<ZilaDataCubit>().getEntryData(data: {
-                          "level": widget.dataLevelId,
-                          "unit": cubit.unitId ?? "",
-                          "level_name": cubit.levelNameId
-                        });
                       })));
             },
           ),

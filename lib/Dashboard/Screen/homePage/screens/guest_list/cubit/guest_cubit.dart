@@ -19,6 +19,8 @@ class GuestCubit extends Cubit<GuestState> {
   TextEditingController position = TextEditingController();
   CreatePravasAndFunctionModel createPravasAndFunctionModel = CreatePravasAndFunctionModel();
   GuestList guestList = GuestList();
+  bool isEdit = false;
+  int? attendeesIdForEdit;
 
   final api = CreateGuest(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
@@ -45,6 +47,49 @@ class GuestCubit extends Cubit<GuestState> {
       print(e);
       emit(CreateGuestErrorState(error: 'Something Went Wrong'));
     }
+  }
+
+  Future GuestUpdate({required Map<String, dynamic> data}) async {
+    emit(UpdateGuestLoadingState());
+    attendeesIdForEdit = null;
+    nameCtr.clear();
+    phoneNumber.clear();
+    position.clear();
+    try {
+      StorageService.getUserAuthToken();
+      final res = await api.GuestUpdate(AppStrings.apiKey,AppStrings.pravasUserToken,data);
+      print(
+          "------------------------------------ Update Guest data  ----------------------------");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        CreatePravasAndFunctionModel data = CreatePravasAndFunctionModel.fromJson(res.data);
+        emit(UpdateGuestFatchDataState(data: data));
+      } else {
+        print('error=${res.data['message']}');
+        emit(UpdateGuestErrorState(error: res.data['message']));
+      }
+    }  catch (e) {
+      print(e);
+      emit(UpdateGuestErrorState(error: 'Something Went Wrong'));
+    }
+  }
+
+  editGuest({int? attendeesId,String? designation,int? phone,String? name}){
+    if(isEdit){
+      attendeesIdForEdit = null;
+      nameCtr.clear();
+      phoneNumber.clear();
+      position.clear();
+    }else{
+      attendeesIdForEdit = attendeesId;
+      nameCtr.text = name ?? '';
+      phoneNumber.text = phone.toString() ?? '';
+      position.text = designation ?? '';
+    }
+    emit(EditAttendeesLoadingState());
   }
 
   Future GetGuestList() async {

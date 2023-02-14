@@ -129,6 +129,8 @@ class EntryDetailsList extends StatelessWidget {
                                           context
                                               .read<AddEntryCubit>()
                                               .cleanAllVariableData();
+
+                                          ///TODO : here country id is static when type is panna we need make dynamic in future
                                           Navigator.pushNamed(
                                               context, RoutePath.addEntryScreen,
                                               arguments: AddEntryPage(
@@ -137,9 +139,19 @@ class EntryDetailsList extends StatelessWidget {
                                                 leaveId: dataLevelId ?? 0,
                                                 unitId: cubit.unitId,
                                                 subUnitId: cubit.subUnitId,
-                                                countryStateId: countryStateId,
-                                                levelName: cubit.levelNameId,
+                                                countryStateId: type == "Panna"
+                                                    ? 28
+                                                    : countryStateId,
+                                                levelName: type == "Panna"
+                                                    ? dataLevelId
+                                                    : cubit.levelNameId,
                                                 personID: data?.id,
+                                                pannaID:
+                                                    data?.pannaNumber == null
+                                                        ? null
+                                                        : int.tryParse(
+                                                            data?.pannaNumber ??
+                                                                "0"),
                                                 personData: data?.toJson(),
                                               ));
                                         }),
@@ -171,15 +183,24 @@ class EntryDetailsList extends StatelessWidget {
                                         .cleanAllVariableData();
                                     Navigator.pushNamed(
                                         context, RoutePath.addEntryScreen,
+
+                                        ///TODO : here country id is static when type is panna we need make dynamic in future
                                         arguments: AddEntryPage(
                                           type: type!,
                                           leaveId: dataLevelId ?? 0,
                                           unitId: cubit.unitId ?? "",
-                                          subUnitId: cubit.subUnitId,
-                                          countryStateId: countryStateId,
-                                          levelName: cubit.levelNameId,
+                                          countryStateId: type == "Panna"
+                                              ? 28
+                                              : countryStateId,
+                                          levelName: type == "Panna"
+                                              ? dataLevelId
+                                              : cubit.levelNameId,
                                           personID: data?.id,
                                           isEditEntry: true,
+                                          pannaID: data?.pannaNumber == null
+                                              ? null
+                                              : int.tryParse(
+                                                  data?.pannaNumber ?? "0"),
                                           personData: data?.toJson(),
                                         ));
                                   }),
@@ -309,162 +330,166 @@ class EntryDetailsList extends StatelessWidget {
     showDialog(
         context: context,
         builder: ((context) {
-          return Dialog(
-            child: BlocBuilder<ZilaDataCubit, ZilaDataState>(
-              builder: (context, state) {
-                return Container(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        S.of(context).reasonforDeletion,
-                        style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: AppColor.textBlackColor),
-                      ),
-                      spaceHeightWidget(14),
-                      ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: ((context, index) => const Divider(
-                                color: AppColor.greyColor,
-                              )),
-                          itemCount: cubit.deleteReasonData?.data
-                                  ?.deletionReasons?.karyakarta?.length ??
-                              0,
-                          itemBuilder: ((context, index) {
-                            final data = cubit.deleteReasonData?.data
-                                ?.deletionReasons?.karyakarta?[index];
-                            return InkWell(
-                              onTap: (() {
-                                cubit.onTapDeleteResonData(index, data);
-                              }),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 20,
-                                    width: 20,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 2,
-                                          color: cubit.selectedDeleteResonIndex ==
-                                                  index
-                                              ? AppColor
-                                                  .buttonOrangeBackGroundColor
-                                              : AppColor.greyColor
-                                                  .withOpacity(0.7)),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Container(
-                                      margin: const EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: cubit.selectedDeleteResonIndex ==
-                                                  index
-                                              ? AppColor
-                                                  .buttonOrangeBackGroundColor
-                                              : AppColor.greyColor
-                                                  .withOpacity(0.7)),
-                                    ),
+          return Dialog(child: StatefulBuilder(
+            builder: (BuildContext context,
+                void Function(void Function()) privateSetState) {
+              return Container(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      S.of(context).reasonforDeletion,
+                      style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.textBlackColor),
+                    ),
+                    spaceHeightWidget(14),
+                    ListView.separated(
+                        shrinkWrap: true,
+                        separatorBuilder: ((context, index) => const Divider(
+                              color: AppColor.greyColor,
+                            )),
+                        itemCount: cubit.deleteReasonData?.data?.deletionReasons
+                                ?.karyakarta?.length ??
+                            0,
+                        itemBuilder: ((context, index) {
+                          final data = cubit.deleteReasonData?.data
+                              ?.deletionReasons?.karyakarta?[index];
+                          return InkWell(
+                            onTap: (() {
+                              context
+                                  .read<ZilaDataCubit>()
+                                  .selectedDeleteResonIndex = index;
+                              context
+                                  .read<ZilaDataCubit>()
+                                  .selectedDeleteReson = data;
+                              privateSetState(() {});
+                            }),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 20,
+                                  width: 20,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 2,
+                                        color: cubit.selectedDeleteResonIndex ==
+                                                index
+                                            ? AppColor
+                                                .buttonOrangeBackGroundColor
+                                            : AppColor.greyColor
+                                                .withOpacity(0.7)),
+                                    shape: BoxShape.circle,
                                   ),
-                                  spaceWidthWidget(6),
-                                  AutoSizeText(
-                                    data ?? '',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 14,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          })),
-                      const Divider(
-                        color: AppColor.greyColor,
-                      ),
-                      spaceHeightWidget(20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Expanded(
-                            child: CommonButton(
-                                onTap: (() {
+                                  child: Container(
+                                    margin: const EdgeInsets.all(2),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: cubit.selectedDeleteResonIndex ==
+                                                index
+                                            ? AppColor
+                                                .buttonOrangeBackGroundColor
+                                            : AppColor.greyColor
+                                                .withOpacity(0.7)),
+                                  ),
+                                ),
+                                spaceWidthWidget(6),
+                                AutoSizeText(
+                                  data ?? '',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 14,
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        })),
+                    const Divider(
+                      color: AppColor.greyColor,
+                    ),
+                    spaceHeightWidget(20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          child: CommonButton(
+                              onTap: (() {
+                                Navigator.pop(context);
+                              }),
+                              bordercolor: AppColor.white,
+                              backGroundcolor: AppColor.white,
+                              title: S.of(context).cancel,
+                              borderRadius: 5,
+                              height: 30,
+                              margin: const EdgeInsets.only(left: 20),
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: AppColor.orange)),
+                        ),
+                        Expanded(
+                          child: CommonButton(
+                              onTap: (() {
+                                if (cubit.selectedDeleteReson == null) {
+                                  EasyLoading.showError(
+                                      S.of(context).pleaseSelectReason);
+                                } else {
                                   Navigator.pop(context);
-                                }),
-                                bordercolor: AppColor.white,
-                                backGroundcolor: AppColor.white,
-                                title: S.of(context).cancel,
-                                borderRadius: 5,
-                                height: 30,
-                                margin: const EdgeInsets.only(left: 20),
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14,
-                                    color: AppColor.orange)),
-                          ),
-                          Expanded(
-                            child: CommonButton(
-                                onTap: (() {
-                                  if (cubit.selectedDeleteReson == null) {
-                                    EasyLoading.showError(
-                                        S.of(context).pleaseSelectReason);
-                                  } else {
-                                    Navigator.pop(context);
 
-                                    showDialog(
-                                        context: context,
-                                        builder: ((context) => AlertDialog(
-                                              content: Text(
-                                                S.of(context).sureToDelete,
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight: FontWeight.w600,
-                                                    color: AppColor
-                                                        .textBlackColor),
-                                              ),
-                                              actions: [
-                                                ElevatedButton(
-                                                    onPressed: (() {
-                                                      Navigator.pop(context);
-                                                    }),
-                                                    child:
-                                                        Text(S.of(context).no)),
-                                                ElevatedButton(
-                                                    onPressed: (() async {
-                                                      Navigator.pop(context);
-                                                      await cubit.deletePerson(
-                                                          deleteDataEntryId:
-                                                              cubit.deleteId ??
-                                                                  0,
-                                                          reason: cubit
-                                                              .selectedDeleteReson!,
-                                                          index: index);
-                                                    }),
-                                                    child: Text(
-                                                        S.of(context).yes)),
-                                              ],
-                                            )));
-                                  }
-                                }),
-                                borderRadius: 5,
-                                height: 35,
-                                margin: const EdgeInsets.only(left: 20),
-                                bordercolor: AppColor.redLight,
-                                backGroundcolor: AppColor.redLight,
-                                title: S.of(context).delete,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14,
-                                    color: AppColor.white)),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          );
+                                  showDialog(
+                                      context: context,
+                                      builder: ((context) => AlertDialog(
+                                            content: Text(
+                                              S.of(context).sureToDelete,
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w600,
+                                                  color:
+                                                      AppColor.textBlackColor),
+                                            ),
+                                            actions: [
+                                              ElevatedButton(
+                                                  onPressed: (() {
+                                                    Navigator.pop(context);
+                                                  }),
+                                                  child:
+                                                      Text(S.of(context).no)),
+                                              ElevatedButton(
+                                                  onPressed: (() async {
+                                                    Navigator.pop(context);
+                                                    await cubit.deletePerson(
+                                                        deleteDataEntryId:
+                                                            cubit.deleteId ?? 0,
+                                                        reason: cubit
+                                                            .selectedDeleteReson!,
+                                                        index: index);
+                                                  }),
+                                                  child:
+                                                      Text(S.of(context).yes)),
+                                            ],
+                                          )));
+                                }
+                              }),
+                              borderRadius: 5,
+                              height: 35,
+                              margin: const EdgeInsets.only(left: 20),
+                              bordercolor: AppColor.redLight,
+                              backGroundcolor: AppColor.redLight,
+                              title: S.of(context).delete,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                  color: AppColor.white)),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+          ));
         }));
   }
 

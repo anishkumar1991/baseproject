@@ -12,6 +12,10 @@ abstract class CreateGuest {
   Future<HttpResponse> GuestCreate(
       @Header('X-API-KEY') String apiKey,@Header('Authorization') String token, @Body() Map<String, dynamic> data);
 
+  @PUT('/backend/api/karyakram/attendees/list')
+  Future<HttpResponse> GuestUpdate(
+      @Header('X-API-KEY') String apiKey,@Header('Authorization') String token, @Body() Map<String, dynamic> data);
+
 
   @GET('/backend/api/karyakram/attendees/list')
   Future<HttpResponse> getGuest(

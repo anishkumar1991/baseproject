@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "aadharNumber": MessageLookupByLibrary.simpleMessage(
             "Aadhaar Number should be 12 digit"),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addAttendeesHeader": MessageLookupByLibrary.simpleMessage(
+            "Present Guest / Participant / Worker"),
         "addBooth": MessageLookupByLibrary.simpleMessage("Add Booth"),
         "addEntry": MessageLookupByLibrary.simpleMessage("Add Entry"),
         "addGuestDetail": MessageLookupByLibrary.simpleMessage(
@@ -184,6 +186,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("OTP Verification"),
         "panaaSamiti": MessageLookupByLibrary.simpleMessage("Panaa Samiti"),
+        "panna": MessageLookupByLibrary.simpleMessage("Panna"),
         "pannaKramaank": MessageLookupByLibrary.simpleMessage("Panna No"),
         "pannaNo": MessageLookupByLibrary.simpleMessage("Panna No"),
         "pannaParmukh": MessageLookupByLibrary.simpleMessage("Panna Parmukh"),

@@ -1770,6 +1770,16 @@ class S {
     );
   }
 
+  /// `Panna`
+  String get panna {
+    return Intl.message(
+      'Panna',
+      name: 'panna',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Total Panna`
   String get totalPanna {
     return Intl.message(
@@ -1855,6 +1865,16 @@ class S {
     return Intl.message(
       'Person already verified',
       name: 'alreadyVerified',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Present Guest / Participant / Worker`
+  String get addAttendeesHeader {
+    return Intl.message(
+      'Present Guest / Participant / Worker',
+      name: 'addAttendeesHeader',
       desc: '',
       args: [],
     );
