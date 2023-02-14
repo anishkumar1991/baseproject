@@ -25,11 +25,9 @@ class _PannaNoListBottomSheetWidgetState
     extends State<PannaNoListBottomSheetWidget> {
   @override
   void initState() {
-    ///TODO : here use static data
-    context.read<ZilaDataCubit>().getPannaKramaankList(112731, 3377);
-    /* context
+    context
         .read<ZilaDataCubit>()
-        .getPannaKramaankList(widget.boothID, widget.acId);*/
+        .getPannaKramaankList(widget.boothID, widget.acId);
     super.initState();
   }
 

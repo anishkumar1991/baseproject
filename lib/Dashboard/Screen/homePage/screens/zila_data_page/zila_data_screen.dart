@@ -46,16 +46,17 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     context.read<ZilaDataCubit>().dependentDropdownList = [];
     context.read<ZilaDataCubit>().dependentDropdownSelected = null;
     context.read<ZilaDataCubit>().zilaSelected = null;
+
+    /// TODO : here country id is static (just remove condition)
+    if (widget.type == "Panna") {
+      widget.countryStateId = 28;
+    }
     DropdownHandler.dynamicSangathanDropdown(
         context, widget.type ?? "", widget.countryStateId ?? 0);
     /* context.read<ZilaDataCubit>().getPartyZila(
         id: widget.countryStateId ??
             StorageService.userData!.user!.countryStateId!);*/
 
-    /// TODO : here country id is static (just remove condition)
-    if (widget.type == "Panna") {
-      widget.countryStateId = 28;
-    }
     print('data_level :${widget.dataLevelId}');
     print('country_state_id${widget.countryStateId}');
 
