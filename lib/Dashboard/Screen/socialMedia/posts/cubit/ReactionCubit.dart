@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../Storage/user_storage_service.dart';
-import '../network/services/FetchPostsApi.dart';
+import '../network/services/fetchposts/FetchPostsApi.dart';
 import 'ReactionState.dart';
 
 class ReactionCubit extends Cubit<ReactionState> {

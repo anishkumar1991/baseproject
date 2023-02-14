@@ -1,21 +1,50 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenState.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/Polls.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/topBar.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
+import 'package:sangathan/Storage/user_storage_service.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../Values/app_colors.dart';
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 
-class SocialMediaPage extends StatelessWidget {
-  const SocialMediaPage({Key? key}) : super(key: key);
+class SocialMediaPage extends StatefulWidget {
+  SocialMediaPage({Key? key}) : super(key: key);
+
+  @override
+  State<SocialMediaPage> createState() => _SocialMediaPageState();
+}
+
+class _SocialMediaPageState extends State<SocialMediaPage> {
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.getToken().then((newToken) {
+      if (StorageService.getUserFcmToken() == null ||
+          StorageService.getUserFcmToken() != newToken) {
+        print("user fcm token previous ${StorageService.getUserFcmToken()}");
+        StorageService.setUserFcmToken(newToken!);
+        sendfcmtoken();
+      }
+    });
+  }
+
+  // fucntion to send fcm token to api
+  Future<void> sendfcmtoken() async {
+    final fcmcubit = context.read<SendFcmTokenCubit>();
+    await fcmcubit.sendFcm(StorageService.getUserFcmToken());
+  }
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<FetchPostsCubit>();
     cubit.fetchPosts();
+    print("user fcm ${StorageService.getUserFcmToken()}");
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 60),

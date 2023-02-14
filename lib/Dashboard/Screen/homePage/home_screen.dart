@@ -226,8 +226,6 @@ class _HomePageState extends State<HomePage> {
 
                       /// mann ki baat widget
 
-
-
                       const MannKiBaatCard(),
 
                       /// whatsapp card widget

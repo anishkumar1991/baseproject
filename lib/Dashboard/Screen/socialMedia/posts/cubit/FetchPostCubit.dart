@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
 import '../network/model/FetchPosts.dart';
-import '../network/services/FetchPostsApi.dart';
+import '../network/services/fetchposts/FetchPostsApi.dart';
 import 'FetchPostsState.dart';
 
 class FetchPostsCubit extends Cubit<FetchPostsState> {

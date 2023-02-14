@@ -13,6 +13,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cu
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
@@ -86,6 +87,8 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
+        BlocProvider(create: (create) => SendFcmTokenCubit()),
+
         BlocProvider(create: (create) => ReactionCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
