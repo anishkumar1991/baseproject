@@ -12,8 +12,9 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
+import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
+import 'package:sangathan/Dashboard/Screen/notification/screens/NotificationScreen.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
@@ -42,7 +43,6 @@ import 'Dashboard/Screen/socialMedia/posts/cubit/ReactionCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
 import 'Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
 import 'Login/Cubit/language_cubit/lan_cubit.dart';
-import 'firebase_options.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
@@ -63,7 +63,6 @@ Future<void> _firebaseMessagingBackgroundHandler(
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await Firebase.initializeApp(name: 'sangathan',options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await GetStorage.init();
   runApp(const MyApp());
@@ -89,8 +88,6 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (create) => ReelShareCubit()),
-        BlocProvider(create: (create) => SendFcmTokenCubit()),
-
         BlocProvider(create: (create) => ReactionCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => LanguageCubit()),

@@ -24,15 +24,20 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
   @override
   void initState() {
     super.initState();
-    FirebaseMessaging.instance.subscribeToTopic("sangathan");
-    FirebaseMessaging.instance.getToken().then((newToken) {
-      if (StorageService.getUserFcmToken() == null ||
-          StorageService.getUserFcmToken() != newToken) {
-        print("user fcm token previous ${StorageService.getUserFcmToken()}");
-        StorageService.setUserFcmToken(newToken!);
-        sendfcmtoken();
-      }
+    FirebaseMessaging.instance.subscribeToTopic("all");
+    FirebaseMessaging.instance.getToken().then((newToken){
+      print(newToken);
     });
+
+
+    // FirebaseMessaging.instance.getToken().then((newToken) {
+    //   if (StorageService.getUserFcmToken() == null ||
+    //       StorageService.getUserFcmToken() != newToken) {
+    //     print("user fcm token previous ${StorageService.getUserFcmToken()}");
+    //     StorageService.setUserFcmToken(newToken!);
+    //     sendfcmtoken();
+    //   }
+    // });
   }
 
   // fucntion to send fcm token to api
@@ -45,6 +50,8 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
   Widget build(BuildContext context) {
     final cubit = context.read<FetchPostsCubit>();
     cubit.fetchPosts();
+    print("user fcm token previous ${StorageService.getUserFcmToken()}");
+
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 60),
