@@ -6,7 +6,7 @@ import 'local_notification_handler.dart';
 
 String deviceTokenToSendPushNotification = '';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 
 Future<void> firebaseNotification(context) async {
   /// ** Here managed the app is in different state
@@ -14,12 +14,12 @@ Future<void> firebaseNotification(context) async {
   /// In this method , when you click on notification app open from terminated state and you can get notification data
   debugPrint("-------------------- FirebaseMessaging -----------------------");
   FirebaseMessaging.instance.getInitialMessage().then(
-    (message) {
+        (message) {
       /// here app is a background state
       debugPrint("FirebaseMessaging.onMessageOpenedApp.listen");
       if (message?.notification != null) {
         final Map<String, String> finalPayLoadData =
-            Map<String, String>.from(message!.data);
+        Map<String, String>.from(message!.data);
         print('App is a background state ------------------$finalPayLoadData');
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           print(
@@ -32,7 +32,7 @@ Future<void> firebaseNotification(context) async {
 
   ///2. This method only call when App in foreground it mean app must be opened
   FirebaseMessaging.onMessage.listen(
-    (message) {
+        (message) {
       debugPrint("FirebaseMessaging.onMessage.listen");
 
       /// here app is a  live state
@@ -49,11 +49,11 @@ Future<void> firebaseNotification(context) async {
 
   /// 3. This method only call when App in background and not terminated
   FirebaseMessaging.onMessageOpenedApp.listen(
-    (message) {
+        (message) {
       debugPrint("FirebaseMessaging.onMessageOpenedApp.listen");
       if (message.notification != null) {
         final Map<String, String> finalPayLoadData =
-            Map<String, String>.from(message.data);
+        Map<String, String>.from(message.data);
         LocalNotificationService.createAndDisplayNotification(
           message: message,
           flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,

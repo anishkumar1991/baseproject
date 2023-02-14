@@ -43,6 +43,7 @@ import 'Dashboard/Screen/socialMedia/posts/cubit/ReactionCubit.dart';
 import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
 import 'Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
 import 'Login/Cubit/language_cubit/lan_cubit.dart';
+import 'firebase_options.dart';
 import 'generated/l10n.dart';
 import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
@@ -62,11 +63,20 @@ Future<void> _firebaseMessagingBackgroundHandler(
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+
+  await Firebase.initializeApp(
+      name: 'sangathan', options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await GetStorage.init();
   runApp(const MyApp());
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 }
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -136,7 +146,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            locale:  Locale.fromSubtags(languageCode: cubit.lang!),
+            locale: Locale.fromSubtags(languageCode: cubit.lang!),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
             // home: NotificationMainScreen(),

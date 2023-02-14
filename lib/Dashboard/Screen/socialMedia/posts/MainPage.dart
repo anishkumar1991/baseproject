@@ -22,28 +22,28 @@ class SocialMediaPage extends StatefulWidget {
 
 class _SocialMediaPageState extends State<SocialMediaPage> {
   @override
-  void initState() {
-    super.initState();
-    FirebaseMessaging.instance.subscribeToTopic("all");
-    FirebaseMessaging.instance.getToken().then((newToken){
-      print(newToken);
-    });
-
-
-    // FirebaseMessaging.instance.getToken().then((newToken) {
-    //   if (StorageService.getUserFcmToken() == null ||
-    //       StorageService.getUserFcmToken() != newToken) {
-    //     print("user fcm token previous ${StorageService.getUserFcmToken()}");
-    //     StorageService.setUserFcmToken(newToken!);
-    //     sendfcmtoken();
-    //   }
-    // });
-  }
+  // void initState() {
+  //   super.initState();
+  //   FirebaseMessaging.instance.subscribeToTopic("all");
+  //   FirebaseMessaging.instance.getToken().then((newToken){
+  //     print(newToken);
+  //   });
+  //
+  //
+  //   // FirebaseMessaging.instance.getToken().then((newToken) {
+  //   //   if (StorageService.getUserFcmToken() == null ||
+  //   //       StorageService.getUserFcmToken() != newToken) {
+  //   //     print("user fcm token previous ${StorageService.getUserFcmToken()}");
+  //   //     StorageService.setUserFcmToken(newToken!);
+  //   //     sendfcmtoken();
+  //   //   }
+  //   // });
+  // }
 
   // fucntion to send fcm token to api
   Future<void> sendfcmtoken() async {
-    final fcmcubit = context.read<SendFcmTokenCubit>();
-    await fcmcubit.sendFcm(StorageService.getUserFcmToken());
+    // final fcmcubit = context.read<SendFcmTokenCubit>();
+    // await fcmcubit.sendFcm(StorageService.getUserFcmToken());
   }
 
   @override

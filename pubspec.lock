@@ -1382,7 +1382,7 @@ packages:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_core
-      sha256: b5cb2525beb38fae36a363f72f8a2db92ed3995d6f0695968412cc6836e3a7b7
+      sha256: "66529f3f102c6501a75811e8d931a1908ad9865ea4d3416c40ac05cf62fdcd44"
       url: "https://pub.dev"
     source: hosted
     version: "20.4.44"
@@ -1398,42 +1398,48 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_pdf
-      url: "https://pub.dartlang.org"
+      sha256: e500ece526fc740aadae04cfeda9cee050f12f14babe7cb34be37cc53605e2e3
+      url: "https://pub.dev"
     source: hosted
     version: "20.4.44"
   syncfusion_flutter_pdfviewer:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_pdfviewer
-      url: "https://pub.dartlang.org"
+      sha256: "04bde1c51d7f513bb8cdf70b3803352c7664195828f37eeb5f4e27968adbca5c"
+      url: "https://pub.dev"
     source: hosted
     version: "20.4.44"
   syncfusion_pdfviewer_macos:
     dependency: transitive
     description:
       name: syncfusion_pdfviewer_macos
-      url: "https://pub.dartlang.org"
+      sha256: "3d87823e85b1bfe44a82d14df476fb60da1ef14f2e4d5064cf22ddf789359ae0"
+      url: "https://pub.dev"
     source: hosted
     version: "20.4.49"
   syncfusion_pdfviewer_platform_interface:
     dependency: transitive
     description:
       name: syncfusion_pdfviewer_platform_interface
-      url: "https://pub.dartlang.org"
+      sha256: "0c8681b1bc48a01fa65f40791a1f9e1f3b792844185e39b671e7f25ea3ff2b5f"
+      url: "https://pub.dev"
     source: hosted
     version: "20.4.49"
   syncfusion_pdfviewer_web:
     dependency: transitive
     description:
       name: syncfusion_pdfviewer_web
-      url: "https://pub.dartlang.org"
+      sha256: "7233b0e5ed5d1824e12ab06af191f338a878473a9dcd1da3571b6c1ff185c3e8"
+      url: "https://pub.dev"
     source: hosted
     version: "20.4.49"
   syncfusion_pdfviewer_windows:
     dependency: transitive
     description:
       name: syncfusion_pdfviewer_windows
-      url: "https://pub.dartlang.org"
+      sha256: "105f2db0b5ebc693f0ca2610a4a410e0d765c2f74dc63f7003df9413875d6584"
+      url: "https://pub.dev"
     source: hosted
     version: "20.4.49"
   synchronized:
