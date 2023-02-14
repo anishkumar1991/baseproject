@@ -98,7 +98,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// here make final value map with key
 
-  previewAndSubmitList() {
+  previewAndSubmitList(int? pannaID) {
     Map<String, dynamic> data = {};
 
     /// For dropdowns
@@ -110,6 +110,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         /* }
         }*/
       }
+    }
+    if (pannaID != null && pannaID != 0) {
+      data.addEntries({"pannaNumber": "$pannaID"}.entries);
     }
 
     /// for text field

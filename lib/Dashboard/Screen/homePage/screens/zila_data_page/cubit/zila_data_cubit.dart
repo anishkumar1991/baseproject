@@ -20,6 +20,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   List<KaryakartaData>? dataList;
   List<Locations> partyzilaList = [];
   List<Locations> dependentDropdownList = [];
+  List<Locations> pannaKramaankListData = [];
 
   Locations? zilaSelected;
   Locations? dependentDropdownSelected;
@@ -41,6 +42,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   ScrollController controller = ScrollController();
   int? acId;
   int selectedFilterIndex = 1;
+  Locations? selectedPannaNo;
 
   //bool isMorchaSelected = false;
 
@@ -380,6 +382,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   }
 
   onDataFound() {
+    emit(LoadingState());
     emit(NoDataFoundState());
   }
 }

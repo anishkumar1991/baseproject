@@ -24,15 +24,8 @@ class PannaNoListBottomSheetWidget extends StatefulWidget {
 class _PannaNoListBottomSheetWidgetState
     extends State<PannaNoListBottomSheetWidget> {
   @override
-  void initState() {
-    context
-        .read<ZilaDataCubit>()
-        .getPannaKramaankList(widget.boothID, widget.acId);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    var cubit = context.read<ZilaDataCubit>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 18),
       child: Column(
@@ -73,45 +66,48 @@ class _PannaNoListBottomSheetWidgetState
                     },
                   );
                 }
-                if (state is PannaKramaankSuccessState) {
-                  return state.pannaKramaankListData.data?.locations == null
-                      ? Center(
-                          heightFactor:
-                              MediaQuery.of(context).size.height * 0.02,
-                          child: Text(
-                            S.of(context).noDataAvailable,
-                            style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                                color: AppColor.black),
-                          ))
-                      : state.pannaKramaankListData.data?.locations?.isEmpty ??
-                              true
-                          ? Center(
-                              heightFactor:
-                                  MediaQuery.of(context).size.height * 0.02,
-                              child: Text(
-                                S.of(context).noDataAvailable,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: AppColor.black),
-                              ))
-                          : ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: state.pannaKramaankListData.data
-                                      ?.locations?.length ??
-                                  0,
-                              itemBuilder: (context, index) {
-                                var data = state.pannaKramaankListData.data
-                                    ?.locations?[index];
-                                return listTilePanna(
-                                    index: data?.number ?? 0,
-                                    name: data?.name ?? "");
-                              },
-                            );
-                }
-                return const SizedBox();
+
+                return cubit.pannaKramaankListData == null
+                    ? Center(
+                        heightFactor: MediaQuery.of(context).size.height * 0.02,
+                        child: Text(
+                          S.of(context).noDataAvailable,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: AppColor.black),
+                        ))
+                    : cubit.pannaKramaankListData.isEmpty
+                        ? Center(
+                            heightFactor:
+                                MediaQuery.of(context).size.height * 0.02,
+                            child: Text(
+                              S.of(context).noDataAvailable,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: AppColor.black),
+                            ))
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: cubit.pannaKramaankListData.length,
+                            itemBuilder: (context, index) {
+                              var data = cubit.pannaKramaankListData[index];
+                              return listTilePanna(
+                                index: data.number ?? 0,
+                                name: data.name ?? "",
+                                onTap: () {
+                                  cubit.selectedPannaNo =
+                                      cubit.pannaKramaankListData[index];
+                                  print(cubit.pannaKramaankListData[index]
+                                      .toJson());
+
+                                  Navigator.pop(context);
+                                  cubit.onDataFound();
+                                },
+                              );
+                            },
+                          );
               },
             ),
           )
@@ -120,52 +116,58 @@ class _PannaNoListBottomSheetWidgetState
     );
   }
 
-  Widget listTilePanna({required int index, required String name}) {
+  Widget listTilePanna(
+      {required int index,
+      required String name,
+      final GestureTapCallback? onTap}) {
     return Column(
       children: [
-        SizedBox(
-          height: 60,
-          width: double.infinity,
-          child: Row(children: [
-            Container(
-              height: 40,
-              width: 40,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: AppColor.dividerColor,
+        GestureDetector(
+          onTap: onTap,
+          child: SizedBox(
+            height: 60,
+            width: double.infinity,
+            child: Row(children: [
+              Container(
+                height: 40,
+                width: 40,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  color: AppColor.dividerColor,
+                ),
+                child: Text("${index + 1}",
+                    style: GoogleFonts.poppins(
+                      color: AppColor.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                    )),
               ),
-              child: Text("${index + 1}",
-                  style: GoogleFonts.poppins(
-                    color: AppColor.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                  )),
-            ),
-            const SizedBox(
-              width: 100,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("पन्ना प्रमुख",
-                      style: GoogleFonts.poppins(
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13,
-                      )),
-                  Text(name,
-                      style: GoogleFonts.poppins(
-                        color: AppColor.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ))
-                ],
+              const SizedBox(
+                width: 100,
               ),
-            ),
-          ]),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("पन्ना प्रमुख",
+                        style: GoogleFonts.poppins(
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 13,
+                        )),
+                    Text(name,
+                        style: GoogleFonts.poppins(
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                        ))
+                  ],
+                ),
+              ),
+            ]),
+          ),
         ),
       ],
     );

@@ -36,6 +36,7 @@ class AddEntryPage extends StatefulWidget {
       this.subUnitId,
       this.personData,
       required this.isEditEntry,
+      this.pannaID,
       this.personID})
       : super(key: key);
   final String type;
@@ -45,6 +46,7 @@ class AddEntryPage extends StatefulWidget {
   final int? personID;
   final bool isEditEntry;
   final String? subUnitId;
+  final int? pannaID;
 
   final int? levelName;
   final Map<String, dynamic>? personData;
@@ -78,7 +80,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
     cubit.subUnitId = widget.subUnitId ?? "";
     cubit.levelName = widget.levelName;
     cubit.personID = widget.personID;
-
+    print(widget.pannaID);
     cubit.entryField = [];
     super.initState();
   }
@@ -335,51 +337,87 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   ]
               ]
             ] else ...[
-              TextFieldWidget(
-                  validator: (value) => DynamicValidator.getTextFieldValidation(
-                      context: context,
-                      fieldName: cubit.entryField![i].fieldName ?? '',
-                      value: value,
-                      mandatoryField:
+              if (cubit.entryField![i].fieldName == "pannaNumber") ...[
+                if (widget.pannaID != null && widget.pannaID != "") ...[
+                  TextFieldWidget(
+                      initialValue: widget.pannaID == null
+                          ? ""
+                          : widget.pannaID.toString(),
+                      readOnly: true,
+                      textInputFormatter:
+                          DynamicValidator.addTextInputFormatters(
+                              fieldType: cubit.entryField![i].fieldName ?? ''),
+                      validator: (value) =>
+                          DynamicValidator.getTextFieldValidation(
+                              context: context,
+                              fieldName: cubit.entryField![i].fieldName ?? '',
+                              value: value,
+                              mandatoryField:
+                                  cubit.entryField![i].mandatoryField ?? false,
+                              displayNameForUI:
+                                  cubit.entryField![i].displayNameForUI ?? ""),
+                      isMandatoryField:
                           cubit.entryField![i].mandatoryField ?? false,
-                      displayNameForUI:
-                          cubit.entryField![i].displayNameForUI ?? ""),
-                  isMandatoryField: cubit.entryField![i].mandatoryField ?? false
-                  /*{
-                    if (cubit.entryField![i].mandatoryField ?? false) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter ${cubit.entryField![i].displayNameForUI ?? ""}';
-                      }
-                    } else {
-                      if (value == null || value.isEmpty) {
-                        return DynamicValidator.getTextFieldValidation(
+                      onChanged: (value) {
+                        FieldHandler.onUpdate(i, value,
+                            cubit.entryField![i].fieldName ?? "", cubit);
+                      },
+                      title: cubit.entryField![i].displayNameForUI ?? "",
+                      keyboardType: cubit.getTextInputType(
+                          fieldType: cubit.entryField![i].fieldName ?? ''),
+                      hintText:
+                          'Enter Your ${cubit.entryField![i].displayNameForUI}'),
+                ] else ...[
+                  TextFieldWidget(
+                      validator: (value) =>
+                          DynamicValidator.getTextFieldValidation(
+                              context: context,
+                              fieldName: cubit.entryField![i].fieldName ?? '',
+                              value: value,
+                              mandatoryField:
+                                  cubit.entryField![i].mandatoryField ?? false,
+                              displayNameForUI:
+                                  cubit.entryField![i].displayNameForUI ?? ""),
+                      isMandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
+                      textInputFormatter:
+                          DynamicValidator.addTextInputFormatters(
+                              fieldType: cubit.entryField![i].fieldName ?? ''),
+                      onChanged: (value) {
+                        FieldHandler.onUpdate(i, value,
+                            cubit.entryField![i].fieldName ?? "", cubit);
+                      },
+                      title: cubit.entryField![i].displayNameForUI ?? "",
+                      keyboardType: cubit.getTextInputType(
+                          fieldType: cubit.entryField![i].fieldName ?? ''),
+                      hintText:
+                          'Enter Your ${cubit.entryField![i].displayNameForUI}')
+                ]
+              ] else ...[
+                TextFieldWidget(
+                    validator: (value) =>
+                        DynamicValidator.getTextFieldValidation(
+                            context: context,
                             fieldName: cubit.entryField![i].fieldName ?? '',
-                            value: value);
-                      } else {
-                        return null;
-                      }
-                    }
-                    // if (cubit.entryField![i].fieldName == 'age') {
-                    //   if (value.isNotEmpty) {
-                    //     if (value.length != 2) {
-                    //       return 'Age should be 2 digit';
-                    //     }
-                    //   }
-                    // }
-
-                  }*/
-                  ,
-                  textInputFormatter: DynamicValidator.addTextInputFormatters(
-                      fieldType: cubit.entryField![i].fieldName ?? ''),
-                  onChanged: (value) {
-                    FieldHandler.onUpdate(
-                        i, value, cubit.entryField![i].fieldName ?? "", cubit);
-                  },
-                  title: cubit.entryField![i].displayNameForUI ?? "",
-                  keyboardType: cubit.getTextInputType(
-                      fieldType: cubit.entryField![i].fieldName ?? ''),
-                  hintText:
-                      'Enter Your ${cubit.entryField![i].displayNameForUI}')
+                            value: value,
+                            mandatoryField:
+                                cubit.entryField![i].mandatoryField ?? false,
+                            displayNameForUI:
+                                cubit.entryField![i].displayNameForUI ?? ""),
+                    isMandatoryField:
+                        cubit.entryField![i].mandatoryField ?? false,
+                    textInputFormatter: DynamicValidator.addTextInputFormatters(
+                        fieldType: cubit.entryField![i].fieldName ?? ''),
+                    onChanged: (value) {
+                      FieldHandler.onUpdate(i, value,
+                          cubit.entryField![i].fieldName ?? "", cubit);
+                    },
+                    title: cubit.entryField![i].displayNameForUI ?? "",
+                    keyboardType: cubit.getTextInputType(
+                        fieldType: cubit.entryField![i].fieldName ?? ''),
+                    hintText:
+                        'Enter Your ${cubit.entryField![i].displayNameForUI}')
+              ]
             ]
           ]
         ]
@@ -738,7 +776,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         final FormState form =
                                             _formKey.currentState!;
                                         if (form.validate()) {
-                                          cubit.previewAndSubmitList();
+                                          cubit.previewAndSubmitList(
+                                              widget.pannaID);
                                           Navigator.pushNamed(context,
                                               RoutePath.addEntryPreviewSubmit,
                                               arguments: widget.isEditEntry);

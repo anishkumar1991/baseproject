@@ -146,6 +146,12 @@ class EntryDetailsList extends StatelessWidget {
                                                     ? dataLevelId
                                                     : cubit.levelNameId,
                                                 personID: data?.id,
+                                                pannaID:
+                                                    data?.pannaNumber == null
+                                                        ? null
+                                                        : int.tryParse(
+                                                            data?.pannaNumber ??
+                                                                "0"),
                                                 personData: data?.toJson(),
                                               ));
                                         }),
@@ -191,6 +197,10 @@ class EntryDetailsList extends StatelessWidget {
                                               : cubit.levelNameId,
                                           personID: data?.id,
                                           isEditEntry: true,
+                                          pannaID: data?.pannaNumber == null
+                                              ? null
+                                              : int.tryParse(
+                                                  data?.pannaNumber ?? "0"),
                                           personData: data?.toJson(),
                                         ));
                                   }),
