@@ -12,8 +12,6 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_create/cubit/
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
-import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
-import 'package:sangathan/Dashboard/Screen/notification/screens/NotificationScreen.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
@@ -23,9 +21,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/string.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
-
 import 'AddEntry/Cubit/add_entry_cubit.dart';
-import 'Dashboard/Screen/homePage/home_screen.dart';
 import 'Dashboard/Screen/homePage/screens/create_function_page/create_function_cubit/create_function_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/edit_date/cubit/edit_date_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/guest_list/cubit/guest_cubit.dart';
@@ -49,9 +45,7 @@ import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(
-  RemoteMessage message,
-) async {
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
@@ -63,20 +57,17 @@ Future<void> _firebaseMessagingBackgroundHandler(
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
       name: 'sangathan', options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await GetStorage.init();
   runApp(const MyApp());
-
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
     badge: true,
     sound: true,
   );
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -88,6 +79,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    FirebaseMessaging.instance
+        .subscribeToTopic("sangathan")
+        .then((value) => debugPrint("subscibed to sangathan"));
     LocalNotificationService.initialize(context);
     firebaseNotification(context);
     super.initState();

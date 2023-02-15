@@ -9,16 +9,16 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   static void initialize(context) {
     /// initializationSettings for iOS
     DarwinInitializationSettings initializationSettingsDarwin =
-    const DarwinInitializationSettings();
+        const DarwinInitializationSettings();
 
     /// initializationSettings for Android
     const initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
@@ -51,18 +51,18 @@ class LocalNotificationService {
         final ByteArrayAndroidBitmap bigPicture = ByteArrayAndroidBitmap(
             await _getByteArrayFromUrl(message?.data["image"]));
         final BigPictureStyleInformation bigPictureStyleInformation =
-        BigPictureStyleInformation(bigPicture,
-            contentTitle: message?.data["title"],
-            htmlFormatContentTitle: true,
-            summaryText: message?.data["body"],
-            htmlFormatSummaryText: true);
+            BigPictureStyleInformation(bigPicture,
+                contentTitle: message?.data["title"],
+                htmlFormatContentTitle: true,
+                summaryText: message?.data["body"],
+                htmlFormatSummaryText: true);
         final android = AndroidNotificationDetails(
             "sangathnapp", "sangathnappchannel",
             importance: Importance.max,
             priority: Priority.high,
             styleInformation: bigPictureStyleInformation);
         const DarwinNotificationDetails darwinNotificationDetails =
-        DarwinNotificationDetails();
+            DarwinNotificationDetails();
         final platform = NotificationDetails(
           android: android,
           iOS: darwinNotificationDetails,
@@ -93,7 +93,7 @@ class LocalNotificationService {
           priority: Priority.high,
         );
         const DarwinNotificationDetails darwinNotificationDetails =
-        DarwinNotificationDetails();
+            DarwinNotificationDetails();
         const platform = NotificationDetails(
           android: android,
           iOS: darwinNotificationDetails,
