@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -62,6 +64,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
   @override
   void initState() {
     context.read<AddEntryCubit>().getDropdownData();
+    log(widget.personData.toString());
     print(
         "----------------------------------------  required parameter  -------------------------------------");
     print("Level name :: ${widget.levelName}");
@@ -200,13 +203,17 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               .split("/")
                               .last,
                           onTapImagePrivew: (() {
-                            int index = cubit.allImagePickerList.indexWhere(
-                                (element) =>
-                                    element["fieldName"]
-                                        .toString()
-                                        .split("_")[0] ==
-                                    (cubit.entryField![i].fieldName ?? "")
-                                        .split(RegExp(r"[A-Z]"))[0]);
+                            print(cubit.entryField![i].fieldName ?? "");
+                            print(
+                                "ss${FieldHandler.getFileName("${(cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]}_url", cubit).split("/").last}");
+                            int index =
+                                cubit.allImagePickerList.indexWhere((element) {
+                              return element["fieldName"]
+                                      .toString()
+                                      .split("_")[0] ==
+                                  (cubit.entryField![i].fieldName ?? "")
+                                      .split(RegExp(r"[A-Z]"))[0];
+                            });
                             showDialog(
                                 context: context,
                                 builder: ((context) => ImagePreViewDialog(

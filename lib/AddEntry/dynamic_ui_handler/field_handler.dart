@@ -76,9 +76,12 @@ class FieldHandler extends AddEntryCubit {
 
   static getFileName(String fieldName, AddEntryCubit cubit) {
     String name = '';
+    print('field=$fieldName');
     for (int i = 0; i < cubit.allImagePickerList.length; i++) {
       if (cubit.allImagePickerList[i]["fieldName"] == fieldName) {
         name = cubit.allImagePickerList[i]["value"];
+        print('fileeeee=$name');
+        print('fieldName=${cubit.allImagePickerList[i]["fieldName"]}');
       }
     }
     return name;

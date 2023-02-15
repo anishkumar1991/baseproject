@@ -73,6 +73,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           .getEntryData(data: {
                         "level": cubit.levelId,
                         "unit": cubit.unitId,
+                        "sub_unit": cubit.subUnitId,
                         "level_name": widget.pannaIDLevelName
                       });
                     } else {
@@ -80,6 +81,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           .getEntryData(data: {
                         "level": cubit.levelId,
                         "unit": cubit.unitId,
+                        "sub_unit": cubit.subUnitId,
                         "level_name": zilaCubit.levelNameId
                       });
                     }
@@ -92,6 +94,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           context: context,
                           builder: ((context) {
                             return SubmitDialog(
+                              subUnitId: cubit.subUnitId??"",
                               mobileNo: state.mobileNo,
                               personId: cubit.personId ?? 0,
                               levelId: cubit.levelId,
@@ -106,6 +109,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                                       .getEntryData(data: {
                                     "level": cubit.levelId,
                                     "unit": cubit.unitId,
+                                    "sub_unit": cubit.subUnitId,
                                     "level_name": widget.pannaIDLevelName
                                   });
                                 } else {
@@ -113,7 +117,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                                           listen: false)
                                       .getEntryData(data: {
                                     "level": cubit.levelId,
-                                    "unit": cubit.unitId,
+                                    "unit": cubit.unitId,"sub_unit": cubit.subUnitId,
                                     "level_name": zilaCubit.levelNameId
                                   });
                                 }

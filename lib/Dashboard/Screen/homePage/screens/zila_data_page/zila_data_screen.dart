@@ -168,6 +168,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                             context.read<ZilaDataCubit>().getEntryData(data: {
                               "level": widget.dataLevelId,
                               "unit": cubit.unitId ?? "",
+                              "sub_unit": cubit.subUnitId,
                               "level_name": cubit.pannaKramaankListData.first.id
                             });
                           }
@@ -266,60 +267,63 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
       ])),
       floatingActionButton: BlocBuilder<ZilaDataCubit, ZilaDataState>(
         builder: (context, state) {
-          return FloatingActionButton.extended(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              backgroundColor: AppColor.buttonOrangeBackGroundColor,
-              onPressed: (() {
-                if (widget.type == "Panna") {
-                  context.read<AddEntryCubit>().cleanAllVariableData();
-                  Navigator.pushNamed(context, RoutePath.addEntryScreen,
-                      arguments: AddEntryPage(
-                        type: widget.type ?? '',
-                        leaveId: widget.dataLevelId ?? 0,
-                        unitId: cubit.unitId ?? "",
-                        subUnitId: cubit.subUnitId,
-                        isEditEntry: false,
-                        levelName: cubit.selectedPannaNo?.id ?? 0,
+          return widget.type == 'Panna' && cubit.pannaKramaankListData.isEmpty
+              ? const SizedBox.shrink()
+              : FloatingActionButton.extended(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  backgroundColor: AppColor.buttonOrangeBackGroundColor,
+                  onPressed: (() {
+                    if (widget.type == "Panna") {
+                      context.read<AddEntryCubit>().cleanAllVariableData();
+                      Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                          arguments: AddEntryPage(
+                            type: widget.type ?? '',
+                            leaveId: widget.dataLevelId ?? 0,
+                            unitId: cubit.unitId ?? "",
+                            subUnitId: cubit.subUnitId,
+                            isEditEntry: false,
+                            levelName: cubit.selectedPannaNo?.id ?? 0,
 
-                        /// TODO : here country id is static when type is panna we need make dynamic in future
-                        countryStateId:
-                            widget.type == "Panna" ? 28 : widget.countryStateId,
-                        pannaID: cubit.selectedPannaNo?.number,
-                        personData: null,
-                      ));
-                } else {
-                  if (cubit.coreSangathanList?.isEmpty ??
-                      true && cubit.morchaList.isEmpty) {
-                    EasyLoading.showError(S.of(context).dataUnitEmptyError);
-                  } else {
-                    context.read<AddEntryCubit>().cleanAllVariableData();
-                    Navigator.pushNamed(context, RoutePath.addEntryScreen,
-                        arguments: AddEntryPage(
-                          type: widget.type ?? '',
-                          leaveId: widget.dataLevelId ?? 0,
-                          unitId: cubit.unitId,
-                          subUnitId: cubit.subUnitId,
-                          isEditEntry: false,
-                          levelName: cubit.levelNameId,
+                            /// TODO : here country id is static when type is panna we need make dynamic in future
+                            countryStateId: widget.type == "Panna"
+                                ? 28
+                                : widget.countryStateId,
+                            pannaID: cubit.selectedPannaNo?.number,
+                            personData: null,
+                          ));
+                    } else {
+                      if (cubit.coreSangathanList?.isEmpty ??
+                          true && cubit.morchaList.isEmpty) {
+                        EasyLoading.showError(S.of(context).dataUnitEmptyError);
+                      } else {
+                        context.read<AddEntryCubit>().cleanAllVariableData();
+                        Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                            arguments: AddEntryPage(
+                              type: widget.type ?? '',
+                              leaveId: widget.dataLevelId ?? 0,
+                              unitId: cubit.unitId,
+                              subUnitId: cubit.subUnitId,
+                              isEditEntry: false,
+                              levelName: cubit.levelNameId,
 
-                          ///TODO : here country id is static when type is panna we need make dynamic in future
-                          countryStateId: widget.type == "Panna"
-                              ? 28
-                              : widget.countryStateId,
-                          personData: null,
-                        ));
-                  }
-                }
-              }),
-              icon: const Icon(Icons.add),
-              label: Text(
-                S.of(context).addEntry,
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: AppColor.white),
-              ));
+                              ///TODO : here country id is static when type is panna we need make dynamic in future
+                              countryStateId: widget.type == "Panna"
+                                  ? 28
+                                  : widget.countryStateId,
+                              personData: null,
+                            ));
+                      }
+                    }
+                  }),
+                  icon: const Icon(Icons.add),
+                  label: Text(
+                    S.of(context).addEntry,
+                    style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        color: AppColor.white),
+                  ));
         },
       ),
     );
@@ -467,6 +471,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               context.read<ZilaDataCubit>().getEntryData(data: {
                 "level": widget.dataLevelId,
                 "unit": cubit.unitId ?? "",
+                "sub_unit": cubit.subUnitId,
                 "level_name": cubit.levelNameId
               });
             }
@@ -554,6 +559,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                                       .getEntryData(data: {
                                                     "level": widget.dataLevelId,
                                                     "unit": cubit.unitId ?? "",
+                                                    "sub_unit": cubit.subUnitId,
                                                     "level_name":
                                                         cubit.levelNameId
                                                   });
@@ -645,6 +651,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                                                           data: {
                                                                         "level":
                                                                             widget.dataLevelId,
+                                                                        "sub_unit":
+                                                                            cubit.subUnitId,
                                                                         "unit":
                                                                             cubit.unitId ??
                                                                                 "",
@@ -871,6 +879,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                               .getEntryData(data: {
                             "level": widget.dataLevelId,
                             "unit": cubit.unitId ?? "",
+                            "sub_unit": cubit.subUnitId,
                             "level_name": cubit.levelNameId
                           });
                         }
@@ -985,6 +994,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         await context.read<ZilaDataCubit>().getEntryData(data: {
                           "level": widget.dataLevelId,
                           "unit": cubit.unitId ?? "",
+                          "sub_unit": cubit.subUnitId,
                           "level_name": cubit.levelNameId
                         });
                       }

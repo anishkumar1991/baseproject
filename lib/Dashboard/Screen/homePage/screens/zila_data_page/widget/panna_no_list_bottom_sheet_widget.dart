@@ -105,6 +105,7 @@ class _PannaNoListBottomSheetWidgetState
                                       .getEntryData(data: {
                                     "level": widget.dataLevelId,
                                     "unit": cubit.unitId ?? "",
+                                    "sub_unit": cubit.subUnitId,
                                     "level_name":
                                         cubit.pannaKramaankListData[index].id
                                   });

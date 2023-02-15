@@ -92,6 +92,7 @@ dependencies:
   dropdown_button2: ^1.9.2
   syncfusion_flutter_pdfviewer: 20.4.44
   syncfusion_flutter_core: 20.4.44
+  keyboard_actions: ^4.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
