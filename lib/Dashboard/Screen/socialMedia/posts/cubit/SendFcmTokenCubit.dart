@@ -12,9 +12,9 @@ class SendFcmTokenCubit extends Cubit<SendFcmTokenState> {
   final api = SendFcmTokenApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
-  Future<void> sendFcm(var fcm) async {
+  Future<void> sendFcm(var fcm, String phone) async {
     try {
-      final res = await api.sendFcm({"fcm_token": fcm, "reaction": "5111909070"});
+      final res = await api.sendFcm({"fcm_token": fcm.toString(), "phone": phone});
       if (res.response.statusCode == 200) {
         print("FCM token sended");
         emit(SendFcmTokenSendedState());
@@ -22,7 +22,7 @@ class SendFcmTokenCubit extends Cubit<SendFcmTokenState> {
         print("fcm not sended");
       }
     } on Exception catch (e) {
-      print("fcm not sended");
+      print("fcm error");
     }
   }
 }

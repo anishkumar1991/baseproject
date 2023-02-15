@@ -14,6 +14,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit
 import 'package:sangathan/Dashboard/Screen/notification/cubit/DatePicCubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
@@ -82,7 +83,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     FirebaseMessaging.instance
         .subscribeToTopic("sangathan")
-        .then((value) => debugPrint("subscibed to sangathan"));
+        .then((value) => debugPrint("subscribed to sangathan"));
     LocalNotificationService.initialize(context);
     firebaseNotification(context);
     super.initState();
@@ -92,6 +93,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (create) => SendFcmTokenCubit()),
         BlocProvider(create: (create) => ReelShareCubit()),
         BlocProvider(create: (create) => DatePicCubit()),
         BlocProvider(create: (create) => ReactionCubit()),

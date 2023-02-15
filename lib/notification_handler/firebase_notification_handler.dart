@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:sangathan/Storage/user_storage_service.dart';
 
 import '../Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
 import 'local_notification_handler.dart';
@@ -15,6 +16,8 @@ Future<void> firebaseNotification(context) async {
   final FirebaseMessaging fcm = FirebaseMessaging.instance;
   final token = await fcm.getToken();
   deviceTokenToSendPushNotification = token.toString();
+  StorageService.setUserFcmToken(deviceTokenToSendPushNotification);
+
   debugPrint("My Device Token :::::: $deviceTokenToSendPushNotification");
 
   /// ** Here managed the app is in different state
