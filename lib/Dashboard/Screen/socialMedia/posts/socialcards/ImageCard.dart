@@ -21,17 +21,20 @@ class _ImageCardState extends State<ImageCard> {
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5),
       child: SizedBox(
-        height: 330,
+        height: 400,
         child:
             cubit.tempModel!.posts[widget.tempindex!].postData.images!.length ==
                     1
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      cubit.tempModel!.posts[widget.tempindex!].postData.images!
-                          .first
-                          .toString(),
-                      fit: BoxFit.fitHeight,
+                ? AspectRatio(
+                    aspectRatio: 16 / 12,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        cubit.tempModel!.posts[widget.tempindex!].postData
+                            .images!.first
+                            .toString(),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   )
                 : Column(
@@ -40,13 +43,16 @@ class _ImageCardState extends State<ImageCard> {
                         itemCount: cubit.tempModel!.posts[widget.tempindex!]
                             .postData.images!.length,
                         itemBuilder: (context, index, realIndex) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Image.network(
-                              cubit.tempModel!.posts[widget.tempindex!].postData
-                                  .images![index]
-                                  .toString(),
-                              fit: BoxFit.fitHeight,
+                          return AspectRatio(
+                            aspectRatio: 16 / 12,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Image.network(
+                                cubit.tempModel!.posts[widget.tempindex!].postData
+                                    .images![index]
+                                    .toString(),
+                                fit: BoxFit.fill,
+                              ),
                             ),
                           );
                         },
@@ -56,7 +62,7 @@ class _ImageCardState extends State<ImageCard> {
                               currpos = index;
                             });
                           },
-                          height: 300,
+                          height: 370,
                           enableInfiniteScroll: true,
                           enlargeCenterPage: true,
                           enlargeFactor: 0.3,

@@ -30,15 +30,16 @@ Future<void> firebaseNotification(context) async {
             Map<String, String>.from(message!.data);
         print('App is a background state ------------------$finalPayLoadData');
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return NotificationMainScreen();
+            },
+          ));
+
           print(
             'A new onMessageOpenedApp event was published!-------------${message.data}----',
           );
         });
-        Navigator.push(context, MaterialPageRoute(
-          builder: (context) {
-            return NotificationMainScreen();
-          },
-        ));
       }
     },
   );
@@ -89,6 +90,5 @@ Future<void> firebaseNotification(context) async {
         debugPrint(">>>>>>>>>>>>>>>>>>>>");
       }
     },
-
   );
 }
