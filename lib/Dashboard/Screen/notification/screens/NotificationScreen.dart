@@ -67,6 +67,14 @@ class NotificationScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: cubit.tempModel!.notificationsList?.length,
                         itemBuilder: (context, index) {
+                          var tempdate =
+                              cubit.tempModel!.notificationsList![index].date;
+                          var tempdate2 = tempdate! + " " + "12:23:42.528083";
+
+                          var printdate = DateFormat("d MMMM")
+                              .format(DateTime.parse(tempdate2));
+
+
                           time =
                               cubit.tempModel!.notificationsList![index].time;
                           var temptime = time.split(":");
@@ -99,7 +107,7 @@ class NotificationScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        showtime.toString(),
+                                        printdate+","+" "+showtime.toString(),
                                         // DateFormat("d MMMM").format(DateTime.parse(formattedString)),
                                         style: GoogleFonts.quicksand(
                                             fontWeight: FontWeight.w600,

@@ -60,9 +60,8 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                     initialDate: DateTime.now(),
                     firstDate: DateTime(2021),
                     lastDate: DateTime.now());
-print(DateTime.now());
-                print(
-                    "today date ${DateFormat("d MMMM").format(DateTime.now())}");
+                print(DateTime.now());
+
               },
               child: Container(
                   decoration: const BoxDecoration(
