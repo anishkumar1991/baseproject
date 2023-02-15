@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Dashboard/Screen/notification/cubit/DatePicCubit.dart';
+import 'package:sangathan/Dashboard/Screen/notification/cubit/DatePicState.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationState.dart';
 import '../cubit/NotificationCubit.dart';
 import '../widgets/FileTypeIcons.dart';
@@ -62,93 +64,203 @@ class ReportScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is NotificationFetchedState) {
                     return Flexible(
-                      child: ListView.builder(
-                        physics: const ScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: cubit.tempModel!.notificationsList?.length,
-                        itemBuilder: (context, index) {
-                          var tempdate =
-                              cubit.tempModel!.notificationsList![index].date;
-                          var tempdate2 = tempdate! + " " + "12:23:42.528083";
+                      child: BlocBuilder<DatePicCubit, DatePicState>(
+                        builder: (context, state) {
+                          if (state is DatePickedStateState) {
+                            return ListView.builder(
+                              physics: const ScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount:
+                                  cubit.tempModel!.notificationsList?.length,
+                              itemBuilder: (context, index) {
+                                var tempdate = cubit
+                                    .tempModel!.notificationsList![index].date;
+                                var tempdate2 =
+                                    tempdate! + " " + "12:23:42.528083";
 
-                          var printdate = DateFormat("d MMMM")
-                              .format(DateTime.parse(tempdate2));
+                                var printdate = DateFormat("d MMMM")
+                                    .format(DateTime.parse(tempdate2));
+                                var comparedate = DateFormat("d MMMM")
+                                    .format(state.datePicked);
+                                time = cubit
+                                    .tempModel!.notificationsList![index].time;
+                                var temptime = time.split(":");
 
-                          time =
-                              cubit.tempModel!.notificationsList![index].time;
-                          var temptime = time.split(":");
+                                if (int.parse(temptime[0]) >= 12) {
+                                  if (int.parse(temptime[1]) > 0)
+                                    temptimeshow = "PM";
+                                } else {
+                                  temptimeshow = "AM";
+                                }
+                                var showtime = temptime[0] +
+                                    ":" +
+                                    temptime[1] +
+                                    " " +
+                                    temptimeshow;
 
-                          if (int.parse(temptime[0]) >= 12) {
-                            if (int.parse(temptime[1]) > 0) temptimeshow = "PM";
-                          } else {
-                            temptimeshow = "AM";
-                          }
-                          var showtime = temptime[0] +
-                              ":" +
-                              temptime[1] +
-                              " " +
-                              temptimeshow;
-
-                          if (cubit
-                                  .tempModel!.notificationsList![index].sType ==
-                              "report") {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ListTile(
-                                  leading: CustomFileIcon(
-                                      FileType: cubit
-                                          .tempModel!
-                                          .notificationsList![index]
-                                          .uploadFile),
-                                  title: Column(
+                                if (cubit.tempModel!.notificationsList![index]
+                                            .sType ==
+                                        "report" &&
+                                    printdate == comparedate) {
+                                  return Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        printdate +
-                                            "," +
-                                            " " +
-                                            showtime.toString(),
-                                        style: GoogleFonts.quicksand(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
-                                            color: const Color(0xFF262626)),
+                                      ListTile(
+                                        leading: CustomFileIcon(
+                                            FileType: cubit
+                                                .tempModel!
+                                                .notificationsList![index]
+                                                .uploadFile),
+                                        title: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              printdate +
+                                                  "," +
+                                                  " " +
+                                                  showtime.toString(),
+                                              style: GoogleFonts.quicksand(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 12,
+                                                  color:
+                                                      const Color(0xFF262626)),
+                                            ),
+                                            Text(
+                                              cubit
+                                                  .tempModel!
+                                                  .notificationsList![index]
+                                                  .notificationTitle
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13,
+                                                  color:
+                                                      const Color(0xFF262626)),
+                                            ),
+                                            const SizedBox(height: 4),
+                                          ],
+                                        ),
+                                        subtitle: Text(
+                                          cubit
+                                              .tempModel!
+                                              .notificationsList![index]
+                                              .description
+                                              .toString(),
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 10,
+                                              color: const Color(0xFF999999)),
+                                        ),
                                       ),
-                                      Text(
+                                      const Divider(
+                                        endIndent: 20,
+                                        indent: 20,
+                                        color: Color(0xFF979797),
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
+                              },
+                            );
+                          }
+                          return ListView.builder(
+                            physics: const ScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount:
+                                cubit.tempModel!.notificationsList?.length,
+                            itemBuilder: (context, index) {
+                              var tempdate = cubit
+                                  .tempModel!.notificationsList![index].date;
+                              var tempdate2 =
+                                  tempdate! + " " + "12:23:42.528083";
+
+                              var printdate = DateFormat("d MMMM")
+                                  .format(DateTime.parse(tempdate2));
+
+                              time = cubit
+                                  .tempModel!.notificationsList![index].time;
+                              var temptime = time.split(":");
+
+                              if (int.parse(temptime[0]) >= 12) {
+                                if (int.parse(temptime[1]) > 0)
+                                  temptimeshow = "PM";
+                              } else {
+                                temptimeshow = "AM";
+                              }
+                              var showtime = temptime[0] +
+                                  ":" +
+                                  temptime[1] +
+                                  " " +
+                                  temptimeshow;
+
+                              if (cubit.tempModel!.notificationsList![index]
+                                      .sType ==
+                                  "report") {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ListTile(
+                                      leading: CustomFileIcon(
+                                          FileType: cubit
+                                              .tempModel!
+                                              .notificationsList![index]
+                                              .uploadFile),
+                                      title: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            printdate +
+                                                "," +
+                                                " " +
+                                                showtime.toString(),
+                                            style: GoogleFonts.quicksand(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 12,
+                                                color: const Color(0xFF262626)),
+                                          ),
+                                          Text(
+                                            cubit
+                                                .tempModel!
+                                                .notificationsList![index]
+                                                .notificationTitle
+                                                .toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 13,
+                                                color: const Color(0xFF262626)),
+                                          ),
+                                          const SizedBox(height: 4),
+                                        ],
+                                      ),
+                                      subtitle: Text(
                                         cubit
                                             .tempModel!
                                             .notificationsList![index]
-                                            .notificationTitle
+                                            .description
                                             .toString(),
                                         style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 13,
-                                            color: const Color(0xFF262626)),
+                                            fontSize: 10,
+                                            color: const Color(0xFF999999)),
                                       ),
-                                      const SizedBox(height: 4),
-                                    ],
-                                  ),
-                                  subtitle: Text(
-                                    cubit.tempModel!.notificationsList![index]
-                                        .description
-                                        .toString(),
-                                    style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 10,
-                                        color: const Color(0xFF999999)),
-                                  ),
-                                ),
-                                const Divider(
-                                  endIndent: 20,
-                                  indent: 20,
-                                  color: Color(0xFF979797),
-                                ),
-                              ],
-                            );
-                          } else {
-                            return const SizedBox();
-                          }
+                                    ),
+                                    const Divider(
+                                      endIndent: 20,
+                                      indent: 20,
+                                      color: Color(0xFF979797),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
+                          );
                         },
                       ),
                     );

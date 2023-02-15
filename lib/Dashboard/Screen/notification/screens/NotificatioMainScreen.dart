@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/app_colors.dart';
+import '../cubit/DatePicCubit.dart';
+import '../cubit/DatePicState.dart';
 import 'CircularScreen.dart';
 import 'NotificationScreen.dart';
 import 'ReportScreen.dart';
@@ -31,6 +34,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<DatePicCubit>();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -52,40 +56,87 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                 color: AppColor.notificationTextColor)),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8, right: 20),
-            child: InkWell(
-              onTap: () async {
-                DateTime? datePicked = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2021),
-                    lastDate: DateTime.now());
-                print(DateTime.now());
+            padding: const EdgeInsets.only(top: 8, bottom: 8, right: 10),
+            child: BlocBuilder<DatePicCubit, DatePicState>(
+              builder: (context, state) {
+                if (state is DatePickedStateState) {
+                  return InkWell(
+                    onTap: () async {
+                      DateTime? datePicked = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2021),
+                          lastDate: DateTime.now());
 
+                      cubit.datePicked(datePicked);
+                    },
+                    child: Container(
+                        decoration: const BoxDecoration(
+                            color: Color(0xFFD5EDFA),
+                            borderRadius: BorderRadius.all(Radius.circular(8))),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 16),
+                            Image.asset(
+                              "assets/images/notificationDateIcon.png",
+                              width: 12,
+                              height: 13.33,
+                            ),
+                            const SizedBox(width: 9),
+                            Text(
+                              "Filter by Date",
+                              style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: const Color(0xFF333333)),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  cubit.dateRemoved();
+                                },
+                                icon: const Icon(
+                                  Icons.cancel_outlined,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        )),
+                  );
+                }
+                return InkWell(
+                  onTap: () async {
+                    DateTime? datePicked = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2021),
+                        lastDate: DateTime.now());
+
+                    cubit.datePicked(datePicked);
+                  },
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          color: Color(0xFFD5EDFA),
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 16),
+                          Image.asset(
+                            "assets/images/notificationDateIcon.png",
+                            width: 12,
+                            height: 13.33,
+                          ),
+                          const SizedBox(width: 9),
+                          Text(
+                            "Filter by Date",
+                            style: GoogleFonts.poppins(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFF333333)),
+                          ),
+                          const SizedBox(width: 14),
+                        ],
+                      )),
+                );
               },
-              child: Container(
-                  decoration: const BoxDecoration(
-                      color: Color(0xFFD5EDFA),
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 16),
-                      Image.asset(
-                        "assets/images/notificationDateIcon.png",
-                        width: 12,
-                        height: 13.33,
-                      ),
-                      const SizedBox(width: 9),
-                      Text(
-                        "Filter by Date",
-                        style: GoogleFonts.poppins(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF333333)),
-                      ),
-                      const SizedBox(width: 14),
-                    ],
-                  )),
             ),
           ),
         ],
