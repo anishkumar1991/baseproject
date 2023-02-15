@@ -24,9 +24,11 @@ import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/select_boxs.dart';
 
 class AddEntryPreviewSubmit extends StatefulWidget {
-  const AddEntryPreviewSubmit({Key? key, this.isEdit = false})
+  const AddEntryPreviewSubmit(
+      {Key? key, this.isEdit = false, this.pannaIDLevelName})
       : super(key: key);
   final bool isEdit;
+  final int? pannaIDLevelName;
 
   @override
   State<AddEntryPreviewSubmit> createState() => _AddEntryPreviewSubmitState();
@@ -52,6 +54,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   Widget build(BuildContext context) {
     final cubit = context.read<AddEntryCubit>();
     final zilaCubit = context.read<ZilaDataCubit>();
+
     return WillPopScope(
       onWillPop: () async {
         EasyLoading.dismiss();
@@ -64,18 +67,28 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                 if (state is SubmitAddEntrySuccessState) {
                   EasyLoading.showSuccess(state.message);
                   if (widget.isEdit) {
-                    BlocProvider.of<ZilaDataCubit>(context, listen: false)
-                        .getEntryData(data: {
-                      "level": cubit.levelId,
-                      "unit": cubit.unitId,
-                      "level_name": zilaCubit.levelNameId
-                    });
+                    if (widget.pannaIDLevelName != null &&
+                        widget.pannaIDLevelName != 0) {
+                      BlocProvider.of<ZilaDataCubit>(context, listen: false)
+                          .getEntryData(data: {
+                        "level": cubit.levelId,
+                        "unit": cubit.unitId,
+                        "level_name": widget.pannaIDLevelName
+                      });
+                    } else {
+                      BlocProvider.of<ZilaDataCubit>(context, listen: false)
+                          .getEntryData(data: {
+                        "level": cubit.levelId,
+                        "unit": cubit.unitId,
+                        "level_name": zilaCubit.levelNameId
+                      });
+                    }
                   }
                   widget.isEdit
                       ? Navigator.popUntil(
                           context, ModalRoute.withName(RoutePath.zilaDataPage))
                       : showDialog(
-                    barrierDismissible: false,
+                          barrierDismissible: false,
                           context: context,
                           builder: ((context) {
                             return SubmitDialog(
@@ -86,13 +99,24 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                               levelName: cubit.levelName,
                               isEdit: widget.isEdit,
                               onTapSkip: (() {
-                                BlocProvider.of<ZilaDataCubit>(context,
-                                        listen: false)
-                                    .getEntryData(data: {
-                                  "level": cubit.levelId,
-                                  "unit": cubit.unitId,
-                                  "level_name": zilaCubit.levelNameId
-                                });
+                                if (widget.pannaIDLevelName != null &&
+                                    widget.pannaIDLevelName != 0) {
+                                  BlocProvider.of<ZilaDataCubit>(context,
+                                          listen: false)
+                                      .getEntryData(data: {
+                                    "level": cubit.levelId,
+                                    "unit": cubit.unitId,
+                                    "level_name": widget.pannaIDLevelName
+                                  });
+                                } else {
+                                  BlocProvider.of<ZilaDataCubit>(context,
+                                          listen: false)
+                                      .getEntryData(data: {
+                                    "level": cubit.levelId,
+                                    "unit": cubit.unitId,
+                                    "level_name": zilaCubit.levelNameId
+                                  });
+                                }
                                 Navigator.popUntil(
                                     context,
                                     ModalRoute.withName(

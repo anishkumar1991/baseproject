@@ -9,11 +9,9 @@ import '../cubit/zila_data_cubit.dart';
 import '../cubit/zila_data_state.dart';
 
 class PannaNoListBottomSheetWidget extends StatefulWidget {
-  final int acId;
-  final int boothID;
+  final int dataLevelId;
 
-  const PannaNoListBottomSheetWidget(
-      {Key? key, required this.acId, required this.boothID})
+  const PannaNoListBottomSheetWidget({Key? key, required this.dataLevelId})
       : super(key: key);
 
   @override
@@ -88,10 +86,12 @@ class _PannaNoListBottomSheetWidgetState
                                   fontSize: 16,
                                   color: AppColor.black),
                             ))
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: cubit.pannaKramaankListData.length,
-                            itemBuilder: (context, index) {
+                        : GridView.count(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
+                            children: List.generate(
+                                cubit.pannaKramaankListData.length, (index) {
                               var data = cubit.pannaKramaankListData[index];
                               return listTilePanna(
                                 index: data.number ?? 0,
@@ -99,15 +99,20 @@ class _PannaNoListBottomSheetWidgetState
                                 onTap: () {
                                   cubit.selectedPannaNo =
                                       cubit.pannaKramaankListData[index];
-                                  print(cubit.pannaKramaankListData[index]
-                                      .toJson());
 
-                                  Navigator.pop(context);
+                                  context
+                                      .read<ZilaDataCubit>()
+                                      .getEntryData(data: {
+                                    "level": widget.dataLevelId,
+                                    "unit": cubit.unitId ?? "",
+                                    "level_name":
+                                        cubit.pannaKramaankListData[index].id
+                                  });
                                   cubit.onDataFound();
+                                  Navigator.pop(context);
                                 },
                               );
-                            },
-                          );
+                            }));
               },
             ),
           )
@@ -120,56 +125,22 @@ class _PannaNoListBottomSheetWidgetState
       {required int index,
       required String name,
       final GestureTapCallback? onTap}) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: SizedBox(
-            height: 60,
-            width: double.infinity,
-            child: Row(children: [
-              Container(
-                height: 40,
-                width: 40,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(7),
-                  color: AppColor.dividerColor,
-                ),
-                child: Text("${index + 1}",
-                    style: GoogleFonts.poppins(
-                      color: AppColor.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    )),
-              ),
-              const SizedBox(
-                width: 100,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("पन्ना प्रमुख",
-                        style: GoogleFonts.poppins(
-                          color: AppColor.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 13,
-                        )),
-                    Text(name,
-                        style: GoogleFonts.poppins(
-                          color: AppColor.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                        ))
-                  ],
-                ),
-              ),
-            ]),
-          ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 50,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(7),
+          color: AppColor.dividerColor,
         ),
-      ],
+        child: Text("$index",
+            style: GoogleFonts.poppins(
+              color: AppColor.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
+            )),
+      ),
     );
   }
 

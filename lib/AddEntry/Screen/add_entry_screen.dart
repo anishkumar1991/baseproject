@@ -22,6 +22,7 @@ import '../../route/route_path.dart';
 import '../Cubit/add_entry_cubit.dart';
 import '../Cubit/add_entry_state.dart';
 import '../dynamic_ui_handler/field_handler.dart';
+import 'add_entry_preview_submit_screen.dart';
 import 'widget/custom_radio_button.dart';
 import 'widget/select_boxs.dart';
 
@@ -778,9 +779,14 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         if (form.validate()) {
                                           cubit.previewAndSubmitList(
                                               widget.pannaID);
-                                          Navigator.pushNamed(context,
-                                              RoutePath.addEntryPreviewSubmit,
-                                              arguments: widget.isEditEntry);
+                                          Navigator.pushNamed(
+                                            context,
+                                            RoutePath.addEntryPreviewSubmit,
+                                            arguments: AddEntryPreviewSubmit(
+                                                isEdit: widget.isEditEntry,
+                                                pannaIDLevelName:
+                                                    widget.levelName),
+                                          );
                                         } else {
                                           EasyLoading.showToast(
                                               "Please fill all required field",

@@ -109,6 +109,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getEntryData({required Map<String, dynamic> data}) async {
     try {
       emit(DataFetchingLoadingState());
+      Map<String, dynamic> offsetData = {"limit": 1000, "offset": 0};
+      data.addEntries(offsetData.entries);
       final res = await api.getPersonList(
           'Bearer ${StorageService.userAuthToken}', data);
       print(
