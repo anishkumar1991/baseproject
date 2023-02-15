@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -113,7 +115,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
           "------------------------------------ Get Entry Data ----------------------------");
       print("data  :$data");
       print("Status code : ${res.response.statusCode}");
-      print("Response :${res.data}");
+      log("Response :${res.data}");
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {

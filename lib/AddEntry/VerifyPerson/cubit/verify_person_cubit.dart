@@ -52,6 +52,7 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
         print(
             "------------------------------------ ------------------------ ----------------------------");
       } else {
+        print("Status code : ${res.response.statusCode}");
         Map<String, dynamic>? msg = res.data;
         emit(SendOTPErrorState(msg?['message'] ?? ''));
       }
@@ -67,8 +68,8 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
     emit(ResendOTPLoadingState());
     try {
       EasyLoading.show();
-      final res = await api.reSendOTP(
-          '${StorageService.userAuthToken}', personId);
+      final res =
+          await api.reSendOTP('${StorageService.userAuthToken}', personId);
       if (res.response.statusCode == 200) {
         Map<String, dynamic>? msg = res.data;
         emit(ResendOTPSuccessState(msg?['message'] ?? ''));
@@ -116,10 +117,13 @@ class VerifyPersonCubit extends Cubit<VerifyPersonState> {
         print(
             "------------------------------------ ------------------------ ----------------------------");
       } else {
+        otpFieldController.clear();
         Map<String, dynamic>? msg = res.data;
         emit(VeifyOTPErrorState(msg?['message'] ?? ''));
       }
     } catch (e) {
+      otpFieldController.clear();
+
       print(e.toString());
       emit(VeifyOTPErrorState("Something went wrong!"));
     } finally {
