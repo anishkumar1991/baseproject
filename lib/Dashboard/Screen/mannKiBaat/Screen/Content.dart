@@ -13,7 +13,7 @@ void Content(BuildContext context) {
           height: 120,
           decoration: BoxDecoration(
               color: Colors.blueGrey.shade50,
-              borderRadius: const BorderRadius.only(
+              borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20))),
           child: Column(
             children: [
@@ -26,7 +26,7 @@ void Content(BuildContext context) {
                       color: AppColor().bordercolor,
                       size: 30,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 20,
                     ),
                     Text(
@@ -48,7 +48,7 @@ void Content(BuildContext context) {
                       color: AppColor().bordercolor,
                       size: 30,
                     ),
-                    const SizedBox(
+                    SizedBox(
                       width: 20,
                     ),
                     Text(

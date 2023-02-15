@@ -1,9 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/mannKiBaat/Utils/AppColor.dart';
 
-import '../../mannKiBaat/Screen/FormPage.dart';
-
+import '../Utils/AppColor.dart';
+import 'FormPage.dart';
 
 class MannKiBaatCard extends StatefulWidget {
   const MannKiBaatCard({Key? key}) : super(key: key);
@@ -23,7 +23,6 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
           colors: [
             Color(0xFF588FC3),
             Color(0x33F9DEB7),
-
             //add more colors for gradient
           ],
           begin: Alignment.topCenter,
@@ -35,17 +34,45 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
       child: Stack(
         children: [
           Positioned(
-              top: 30,
-              left: 20,
+              left: -71,
+              top: 0,
               child: Image.asset(
-                'assets/images/mannkibaaatmodilogo.png',
-                height: 120,
+                "assets/images/mannkibaat/image1.png",
+                height: 131,
+                width: 305,
+              )),
+          Positioned(
+              right:97,
+              bottom:43,
+              child: Text('98 वां संस्करण ', style: GoogleFonts.poppins(
+                textStyle: TextStyle(
+                    fontSize: 18,
+                    color: AppColor().textcolor5,
+                    fontWeight: FontWeight.w700),),),),
+          Positioned(
+            right:12,
+            bottom:44,
+            child: Text('on 26 Feb, 2023 ', style: GoogleFonts.poppins(
+              textStyle: const TextStyle(
+                  fontSize: 10,
+                  color: Colors.blue,
+                  fontWeight: FontWeight.w600),),),),
+          Positioned(
+              top: 45,
+              left: 11,
+              child: Image.asset(
+                'assets/images/mannkibaat/image3.png',
+                height: 146,
                 width: 116,
               )),
           Positioned(
-              right: 24,
+              right: 76,
               top: 15,
-              child: Image.asset("assets/images/mannkibaaatmiclogo.png",height: 63,width: 100,)),
+              child: Image.asset(
+                "assets/images/mannkibaat/image12.png",
+                height: 93,
+                width: 121,
+              )),
           Positioned(
             right: 42,
             bottom: 10,

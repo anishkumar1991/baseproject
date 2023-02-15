@@ -48,8 +48,8 @@ class _ImageCardState extends State<ImageCard> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(10),
                               child: Image.network(
-                                cubit.tempModel!.posts[widget.tempindex!].postData
-                                    .images![index]
+                                cubit.tempModel!.posts[widget.tempindex!]
+                                    .postData.images![index]
                                     .toString(),
                                 fit: BoxFit.fill,
                               ),

@@ -22,7 +22,7 @@ class _DropDownState extends State<DropDown> {
     return DropdownButtonFormField2(
       decoration: InputDecoration(
           prefixIcon: Image.asset(
-        'assets/images/image2.png',
+        'assets/images/mannkibaat/image2.png',
         height: 20,
         width: 14,
       )),
