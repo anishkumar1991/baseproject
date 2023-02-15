@@ -152,7 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "लैंडलाइन नंबर ८ अंकों का होना चाहिए"),
         "language": MessageLookupByLibrary.simpleMessage("भाषा"),
-        "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
+        "later": MessageLookupByLibrary.simpleMessage("बाद में"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
         "logOut": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
@@ -228,6 +228,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeAll": MessageLookupByLibrary.simpleMessage("सभी देखें"),
         "seeLess": MessageLookupByLibrary.simpleMessage("कम देखें"),
         "seeMore": MessageLookupByLibrary.simpleMessage("जयादा देखे"),
+        "selectBoothFirst":
+            MessageLookupByLibrary.simpleMessage("कृपया पहले बूथ का चयन करें"),
         "selectDesignation":
             MessageLookupByLibrary.simpleMessage("कृपया पद चुनें"),
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),

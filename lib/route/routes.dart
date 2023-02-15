@@ -187,8 +187,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
+            final data = args as AddEntryPreviewSubmit;
             return AddEntryPreviewSubmit(
-              isEdit: settings.arguments as bool,
+              isEdit: data.isEdit,
+              pannaIDLevelName: data.pannaIDLevelName,
             );
           },
         );

@@ -128,12 +128,20 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                               ),
                               child: Image.asset(AppIcons.vidhanSabha),
                             ),
-                            title: Text(
-                              S.of(context).vidhanSabha,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.black700,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14),
+                            title: RichText(
+                              text: TextSpan(
+                                style: DefaultTextStyle.of(context).style,
+                                children:  <TextSpan>[
+                                  TextSpan(text: S.of(context).vidhanSabha, style: GoogleFonts.poppins(
+                                      color: AppColor.black700,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14)),
+                                  TextSpan(text: " *", style: GoogleFonts.poppins(
+                                      color: AppColor.red,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14)),
+                                ],
+                              ),
                             ),
                             subtitle: Text(
                               cubit.zilaSelected == ""
@@ -186,12 +194,20 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                             ),
                             child: Image.asset(AppIcons.vidhanSabha),
                           ),
-                          title: Text(
-                            S.of(context).enterShaktiKendrName,
-                            style: GoogleFonts.poppins(
-                                color: AppColor.black700,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14),
+                          title: RichText(
+                            text: TextSpan(
+                              style: DefaultTextStyle.of(context).style,
+                              children:  <TextSpan>[
+                                TextSpan(text:  S.of(context).enterShaktiKendrName, style: GoogleFonts.poppins(
+                                    color: AppColor.black700,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14)),
+                                TextSpan(text: " *", style: GoogleFonts.poppins(
+                                    color: AppColor.red,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14)),
+                              ],
+                            ),
                           ),
                           subtitle: SizedBox(
                             height: 20,
@@ -259,12 +275,20 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                               ),
                               child: Image.asset(AppIcons.mandal),
                             ),
-                            title: Text(
-                              S.of(context).mandal,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.black700,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14),
+                            title: RichText(
+                              text: TextSpan(
+                                style: DefaultTextStyle.of(context).style,
+                                children:  <TextSpan>[
+                                  TextSpan(text:   S.of(context).mandal, style: GoogleFonts.poppins(
+                                      color: AppColor.black700,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14)),
+                                  TextSpan(text: " *", style: GoogleFonts.poppins(
+                                      color: AppColor.red,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14)),
+                                ],
+                              ),
                             ),
                             subtitle: Text(
                               cubit.mandalSelected == ''
@@ -355,12 +379,20 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                               ),
                               child: Image.asset(AppIcons.booth),
                             ),
-                            title: Text(
-                              S.of(context).buth,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.black700,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 14),
+                            title: RichText(
+                              text: TextSpan(
+                                style: DefaultTextStyle.of(context).style,
+                                children:  <TextSpan>[
+                                  TextSpan(text:   S.of(context).buth, style: GoogleFonts.poppins(
+                                      color: AppColor.black700,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14)),
+                                  TextSpan(text: " *", style: GoogleFonts.poppins(
+                                      color: AppColor.red,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14)),
+                                ],
+                              ),
                             ),
                             subtitle: cubit.chekedValue.isEmpty
                                 ? Text(
@@ -521,7 +553,10 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                         } else if (cubit.mandalSelected == "") {
                           EasyLoading.showToast(S.of(context).selectMandalFirst,
                               toastPosition: EasyLoadingToastPosition.top);
-                        } else {
+                        } else if(cubit.chekedValue.isEmpty){
+                          EasyLoading.showToast(S.of(context).selectBoothFirst,
+                              toastPosition: EasyLoadingToastPosition.top);
+                      } else{
                           List<Map<String, dynamic>> tempBooth = [];
                           for (var element in cubit.selectedBooth) {
                             tempBooth.add({"id": element});

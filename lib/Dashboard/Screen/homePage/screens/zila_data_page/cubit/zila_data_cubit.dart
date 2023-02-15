@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,13 +54,13 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(ZilaChangedState());
   }
 
-  final double _height = 150.0;
+  final double _height = 50.0;
 
   void animateToIndex(int index) {
     controller.animateTo(
       index * _height,
       duration: const Duration(seconds: 1),
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.ease,
     );
   }
 
@@ -107,13 +109,15 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getEntryData({required Map<String, dynamic> data}) async {
     try {
       emit(DataFetchingLoadingState());
+      Map<String, dynamic> offsetData = {"limit": 1000, "offset": 0};
+      data.addEntries(offsetData.entries);
       final res = await api.getPersonList(
           'Bearer ${StorageService.userAuthToken}', data);
       print(
           "------------------------------------ Get Entry Data ----------------------------");
       print("data  :$data");
       print("Status code : ${res.response.statusCode}");
-      print("Response :${res.data}");
+      log("Response :${res.data}");
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
@@ -337,7 +341,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
       print(
-          "------------------------------------ ------------------------ ----------------------------");
+          "------------------------------------  ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         Map<String, dynamic>? msg = res.data;
         dataList?.removeAt(index);

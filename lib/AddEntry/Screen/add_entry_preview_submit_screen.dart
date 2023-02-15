@@ -24,9 +24,11 @@ import '../dynamic_ui_handler/field_handler.dart';
 import 'widget/select_boxs.dart';
 
 class AddEntryPreviewSubmit extends StatefulWidget {
-  const AddEntryPreviewSubmit({Key? key, this.isEdit = false})
+  const AddEntryPreviewSubmit(
+      {Key? key, this.isEdit = false, this.pannaIDLevelName})
       : super(key: key);
   final bool isEdit;
+  final int? pannaIDLevelName;
 
   @override
   State<AddEntryPreviewSubmit> createState() => _AddEntryPreviewSubmitState();
@@ -52,191 +54,232 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   Widget build(BuildContext context) {
     final cubit = context.read<AddEntryCubit>();
     final zilaCubit = context.read<ZilaDataCubit>();
-    return Scaffold(
-      body: SafeArea(
-        child: BlocListener<AddEntryCubit, AddEntryState>(
-            listener: (context, state) {
-              if (state is SubmitAddEntrySuccessState) {
-                EasyLoading.showSuccess(state.message);
-                if (widget.isEdit) {
-                  BlocProvider.of<ZilaDataCubit>(context, listen: false)
-                      .getEntryData(data: {
-                    "level": cubit.levelId,
-                    "unit": cubit.unitId,
-                    "level_name": zilaCubit.levelNameId
-                  });
-                }
-                widget.isEdit
-                    ? Navigator.popUntil(
-                        context, ModalRoute.withName(RoutePath.zilaDataPage))
-                    : showDialog(
-                        context: context,
-                        builder: ((context) {
-                          return SubmitDialog(
-                            mobileNo: state.mobileNo,
-                            personId: cubit.personId ?? 0,
-                            levelId: cubit.levelId,
-                            unitId: cubit.unitId,
-                            levelName: cubit.levelName,
-                            isEdit: widget.isEdit,
-                            onTapSkip: (() {
-                              BlocProvider.of<ZilaDataCubit>(context,
-                                      listen: false)
-                                  .getEntryData(data: {
-                                "level": cubit.levelId,
-                                "unit": cubit.unitId,
-                                "level_name": zilaCubit.levelNameId
-                              });
-                              Navigator.popUntil(context,
-                                  ModalRoute.withName(RoutePath.zilaDataPage));
-                            }),
-                          );
-                        }));
-              }
-              if (state is SubmitAddEntryErrorState) {
-                EasyLoading.showError(state.errorString);
-              }
-            },
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                      splashRadius: 20,
-                      onPressed: (() {
-                        Navigator.pop(context);
-                      }),
-                      icon: const Icon(Icons.arrow_back)),
-                  Text(
-                    '${widget.isEdit ? S.of(context).edit : S.of(context).adds} ${S.of(context).entry}',
-                    style: const TextStyle(
-                        fontFamily: 'Tw Cen MT',
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        color: AppColor.textBlackColor),
-                  )
-                ],
-              ),
-              Expanded(
-                  child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (var item in cubit.finalAllDataList.entries)
-                        if (item.key == "photo") ...[
-                          if (item.value.toString().contains("http")) ...[
-                            Center(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(5),
-                                child: Image.network(
-                                  item.value,
-                                  height: 100,
-                                  width: 100,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Image.asset(
-                                      AppIcons.personLogo,
-                                      height: 68,
-                                    );
-                                  },
-                                ),
-                              ),
-                            )
-                          ] else ...[
-                            Center(
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(5),
-                                  child: Image.file(
-                                    height: 115,
-                                    width: 115,
-                                    File(item.value),
-                                    fit: BoxFit.fill,
-                                  )),
-                            )
-                          ]
-                        ] else ...[
-                          const SizedBox()
-                        ],
-                      spaceHeightWidget(20),
-                      for (int i = 0; i < cubit.entryField!.length; i++)
-                        if (cubit.entryField![i].primary ?? false)
-                          nonEditableField(cubit, i),
-                      spaceHeightWidget(20),
-                      for (int i = 0; i < cubit.entryField!.length; i++)
-                        if (cubit.entryField![i].primary ?? false)
-                          multiCheckBox(cubit, i),
 
-                      /// Here Secondary logic
-                      Theme(
-                        data: Theme.of(context)
-                            .copyWith(dividerColor: Colors.transparent),
-                        child: ExpansionTile(
-                          expandedCrossAxisAlignment: CrossAxisAlignment.start,
-                          iconColor: AppColor.black,
-                          collapsedIconColor: AppColor.black,
-                          tilePadding: EdgeInsets.zero,
-                          initiallyExpanded: true,
-                          title: Text(
-                            'Fill Secondary Information',
-                            style: GoogleFonts.quicksand(
-                                fontSize: 20, fontWeight: FontWeight.w600),
-                          ),
+    return WillPopScope(
+      onWillPop: () async {
+        EasyLoading.dismiss();
+        return true;
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: BlocListener<AddEntryCubit, AddEntryState>(
+              listener: (context, state) {
+                if (state is SubmitAddEntrySuccessState) {
+                  EasyLoading.showSuccess(state.message);
+                  if (widget.isEdit) {
+                    if (widget.pannaIDLevelName != null &&
+                        widget.pannaIDLevelName != 0) {
+                      BlocProvider.of<ZilaDataCubit>(context, listen: false)
+                          .getEntryData(data: {
+                        "level": cubit.levelId,
+                        "unit": cubit.unitId,
+                        "level_name": widget.pannaIDLevelName
+                      });
+                    } else {
+                      BlocProvider.of<ZilaDataCubit>(context, listen: false)
+                          .getEntryData(data: {
+                        "level": cubit.levelId,
+                        "unit": cubit.unitId,
+                        "level_name": zilaCubit.levelNameId
+                      });
+                    }
+                  }
+                  widget.isEdit
+                      ? Navigator.popUntil(
+                          context, ModalRoute.withName(RoutePath.zilaDataPage))
+                      : showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: ((context) {
+                            return SubmitDialog(
+                              mobileNo: state.mobileNo,
+                              personId: cubit.personId ?? 0,
+                              levelId: cubit.levelId,
+                              unitId: cubit.unitId,
+                              levelName: cubit.levelName,
+                              isEdit: widget.isEdit,
+                              onTapSkip: (() {
+                                if (widget.pannaIDLevelName != null &&
+                                    widget.pannaIDLevelName != 0) {
+                                  BlocProvider.of<ZilaDataCubit>(context,
+                                          listen: false)
+                                      .getEntryData(data: {
+                                    "level": cubit.levelId,
+                                    "unit": cubit.unitId,
+                                    "level_name": widget.pannaIDLevelName
+                                  });
+                                } else {
+                                  BlocProvider.of<ZilaDataCubit>(context,
+                                          listen: false)
+                                      .getEntryData(data: {
+                                    "level": cubit.levelId,
+                                    "unit": cubit.unitId,
+                                    "level_name": zilaCubit.levelNameId
+                                  });
+                                }
+                                Navigator.popUntil(
+                                    context,
+                                    ModalRoute.withName(
+                                        RoutePath.zilaDataPage));
+                              }),
+                            );
+                          }));
+                }
+                if (state is SubmitAddEntryErrorState) {
+                  EasyLoading.showError(state.errorString);
+                }
+              },
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                            splashRadius: 20,
+                            onPressed: (() {
+                              EasyLoading.dismiss();
+                              Navigator.pop(context);
+                            }),
+                            icon: const Icon(Icons.arrow_back)),
+                        Text(
+                          '${widget.isEdit ? S.of(context).edit : S.of(context).adds} ${S.of(context).entry}',
+                          style: const TextStyle(
+                              fontFamily: 'Tw Cen MT',
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.textBlackColor),
+                        )
+                      ],
+                    ),
+                    Expanded(
+                        child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            for (var item in cubit.finalAllDataList.entries)
+                              if (item.key == "photo") ...[
+                                if (item.value.toString().contains("http")) ...[
+                                  Center(
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: Image.network(
+                                        item.value,
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Image.asset(
+                                            AppIcons.personLogo,
+                                            height: 68,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ] else ...[
+                                  Center(
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(5),
+                                        child: Image.file(
+                                          height: 115,
+                                          width: 115,
+                                          File(item.value),
+                                          fit: BoxFit.fill,
+                                        )),
+                                  )
+                                ]
+                              ] else ...[
+                                const SizedBox()
+                              ],
                             spaceHeightWidget(20),
                             for (int i = 0; i < cubit.entryField!.length; i++)
-                              if (cubit.entryField![i].primary == false)
+                              if (cubit.entryField![i].primary ?? false)
                                 nonEditableField(cubit, i),
-                            for (int i = 0; i < cubit.entryField!.length; i++)
-                              if (cubit.entryField![i].primary == false)
-                                multiCheckBox(cubit, i),
                             spaceHeightWidget(20),
+                            for (int i = 0; i < cubit.entryField!.length; i++)
+                              if (cubit.entryField![i].primary ?? false)
+                                multiCheckBox(cubit, i),
+
+                            /// Here Secondary logic
+                            Theme(
+                              data: Theme.of(context)
+                                  .copyWith(dividerColor: Colors.transparent),
+                              child: ExpansionTile(
+                                expandedCrossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                iconColor: AppColor.black,
+                                collapsedIconColor: AppColor.black,
+                                tilePadding: EdgeInsets.zero,
+                                initiallyExpanded: true,
+                                title: Text(
+                                  'Fill Secondary Information',
+                                  style: GoogleFonts.quicksand(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                children: [
+                                  spaceHeightWidget(20),
+                                  for (int i = 0;
+                                      i < cubit.entryField!.length;
+                                      i++)
+                                    if (cubit.entryField![i].primary == false)
+                                      nonEditableField(cubit, i),
+                                  for (int i = 0;
+                                      i < cubit.entryField!.length;
+                                      i++)
+                                    if (cubit.entryField![i].primary == false)
+                                      multiCheckBox(cubit, i),
+                                  spaceHeightWidget(20),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: CommonButton(
+                                    onTap: (() {
+                                      Navigator.pop(context);
+                                    }),
+                                    padding: const EdgeInsets.all(12),
+                                    title: 'Edit',
+                                    borderRadius: 10,
+                                    backGroundcolor: AppColor.white,
+                                    style: GoogleFonts.quicksand(
+                                        color: AppColor
+                                            .buttonOrangeBackGroundColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                spaceWidthWidget(30),
+                                Expanded(
+                                  child: CommonButton(
+                                    onTap: (() {
+                                      cubit.pressAddEntrySubmitButton();
+                                    }),
+                                    padding: const EdgeInsets.all(12),
+                                    title: 'Submit',
+                                    borderRadius: 10,
+                                    style: GoogleFonts.quicksand(
+                                        color: AppColor.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: CommonButton(
-                              onTap: (() {
-                                Navigator.pop(context);
-                              }),
-                              padding: const EdgeInsets.all(12),
-                              title: 'Edit',
-                              borderRadius: 10,
-                              backGroundcolor: AppColor.white,
-                              style: GoogleFonts.quicksand(
-                                  color: AppColor.buttonOrangeBackGroundColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          ),
-                          spaceWidthWidget(30),
-                          Expanded(
-                            child: CommonButton(
-                              onTap: (() {
-                                cubit.pressAddEntrySubmitButton();
-                              }),
-                              padding: const EdgeInsets.all(12),
-                              title: 'Submit',
-                              borderRadius: 10,
-                              style: GoogleFonts.quicksand(
-                                  color: AppColor.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              )),
-              spaceHeightWidget(50),
-            ])),
+                    )),
+                    spaceHeightWidget(50),
+                  ])),
+        ),
       ),
     );
   }

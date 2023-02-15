@@ -42,7 +42,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     context.read<ZilaDataCubit>().dataList = null;
     context.read<ZilaDataCubit>().partyzilaList = [];
     context.read<ZilaDataCubit>().selectedPannaNo = null;
-
+    context.read<ZilaDataCubit>().selectedPannaNo = null;
+    context.read<ZilaDataCubit>().boothPannasStatus = null;
+    context.read<ZilaDataCubit>().pannaKramaankListData = [];
     context.read<ZilaDataCubit>().dataUnitList = null;
     context.read<ZilaDataCubit>().dependentDropdownList = [];
     context.read<ZilaDataCubit>().dependentDropdownSelected = null;
@@ -152,8 +154,6 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         if (state.data.data != null) {
                           cubit.dataList = state.data.data!.data!;
                         }
-                        context.read<ZilaDataCubit>().getPannaKramaankList(
-                            cubit.levelNameId ?? 0, cubit.acId ?? 0);
                       }
 
                       if (state is PannaKramaankSuccessState) {
@@ -162,26 +162,26 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         if (cubit.pannaKramaankListData.isNotEmpty) {
                           cubit.selectedPannaNo =
                               cubit.pannaKramaankListData.first;
+                          if (cubit.levelNameId != null) {
+                            context.read<ZilaDataCubit>().getEntryData(data: {
+                              "level": widget.dataLevelId,
+                              "unit": cubit.unitId ?? "",
+                              "level_name": cubit.pannaKramaankListData.first.id
+                            });
+                          }
+                        } else {
+                          cubit.dataList = [];
                         }
                       }
-                      return cubit.dataList?.isEmpty ?? false
-                          ? Center(
-                              heightFactor:
-                                  MediaQuery.of(context).size.height * 0.02,
-                              child: Text(
-                                S.of(context).noDataAvailable,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: AppColor.black),
-                              ))
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (widget.type == "Panna")
-                                  const SizedBox()
-                                else
-                                  Row(
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (widget.type == "Panna")
+                            const SizedBox()
+                          else
+                            cubit.dataList?.isEmpty ?? true
+                                ? const SizedBox()
+                                : Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
@@ -198,16 +198,31 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                               color: AppColor.greyColor))
                                     ],
                                   ),
-                                spaceHeightWidget(5),
+                          spaceHeightWidget(5),
 
-                                /// filter options
-                                if (widget.type == "Panna")
-                                  pannaNumberSelectionWidget()
-                                else
-                                  const FilterOptions(),
-                                Expanded(
-                                  child: SingleChildScrollView(
-                                    child: Column(
+                          /// filter options
+                          if (widget.type == "Panna")
+                            pannaNumberSelectionWidget()
+                          else
+                            cubit.dataList?.isEmpty ?? true
+                                ? const SizedBox()
+                                : const FilterOptions(),
+
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: cubit.dataList?.isEmpty ?? false
+                                  ? Center(
+                                      heightFactor:
+                                          MediaQuery.of(context).size.height *
+                                              0.02,
+                                      child: Text(
+                                        S.of(context).noDataAvailable,
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16,
+                                            color: AppColor.black),
+                                      ))
+                                  : Column(
                                       children: [
                                         spaceHeightWidget(10),
                                         if (cubit.selectedFilterIndex == 0) ...[
@@ -235,10 +250,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                         ]
                                       ],
                                     ),
-                                  ),
-                                )
-                              ],
-                            );
+                            ),
+                          )
+                        ],
+                      );
                     },
                   ),
                 ),
@@ -263,12 +278,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         unitId: cubit.unitId ?? "",
                         subUnitId: cubit.subUnitId,
                         isEditEntry: false,
-                        levelName: widget.dataLevelId,
+                        levelName: cubit.selectedPannaNo?.id ?? 0,
 
                         /// TODO : here country id is static when type is panna we need make dynamic in future
                         countryStateId:
                             widget.type == "Panna" ? 28 : widget.countryStateId,
-                        pannaID: cubit.selectedPannaNo?.id,
+                        pannaID: cubit.selectedPannaNo?.number,
                         personData: null,
                       ));
                 } else {
@@ -325,8 +340,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                               topRight: Radius.circular(20))),
                       builder: (builder) {
                         return PannaNoListBottomSheetWidget(
-                          acId: cubit.acId ?? 0,
-                          boothID: cubit.levelNameId ?? 0,
+                          dataLevelId: widget.dataLevelId ?? 0,
                         );
                       });
                 },
@@ -363,7 +377,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                               fontWeight: FontWeight.w500,
                               fontSize: 12,
                             )),
-                        Text("${cubit.selectedPannaNo?.id ?? ""}",
+                        Text("${cubit.selectedPannaNo?.number ?? ""}",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               fontSize: 13,
@@ -382,8 +396,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return const PannaPdfViewer(
-                      pdfLink: null,
+                    return PannaPdfViewer(
+                      pdfLink: cubit.selectedPannaNo?.pdfUrl,
                     );
                   },
                 ));
@@ -690,48 +704,41 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         if (state is BoothPannasStatusSuccessState) {
           cubit.boothPannasStatus = null;
           cubit.boothPannasStatus = state.boothPannasStatus;
-
-          if (cubit.levelNameId != null) {
-            context.read<ZilaDataCubit>().getEntryData(data: {
-              "level": widget.dataLevelId,
-              "unit": cubit.unitId ?? "",
-              "level_name": cubit.levelNameId
-            });
-          }
+          context
+              .read<ZilaDataCubit>()
+              .getPannaKramaankList(cubit.levelNameId ?? 0, cubit.acId ?? 0);
         }
-        return cubit.dataList?.isEmpty ?? true
-            ? const SizedBox()
-            : Container(
-                padding: const EdgeInsets.all(10),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: AppColor.pannaStatusColor,
-                    borderRadius: BorderRadius.circular(8)),
-                child: IntrinsicHeight(
-                  child: Row(children: [
-                    Expanded(
-                      child: boothPannaStatusColumn(S.of(context).totalPanna,
-                          cubit.boothPannasStatus?.data?.total ?? 0),
-                    ),
-                    const VerticalDivider(
-                      color: AppColor.dividerColor,
-                      width: 1,
-                    ),
-                    Expanded(
-                      child: boothPannaStatusColumn(S.of(context).pannaParmukh,
-                          cubit.boothPannasStatus?.data?.pramukh ?? 0),
-                    ),
-                    const VerticalDivider(
-                      color: AppColor.dividerColor,
-                      width: 1,
-                    ),
-                    Expanded(
-                      child: boothPannaStatusColumn(S.of(context).panaaSamiti,
-                          cubit.boothPannasStatus?.data?.samiti ?? 0),
-                    )
-                  ]),
-                ),
-              );
+        return Container(
+          padding: const EdgeInsets.all(10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: AppColor.pannaStatusColor,
+              borderRadius: BorderRadius.circular(8)),
+          child: IntrinsicHeight(
+            child: Row(children: [
+              Expanded(
+                child: boothPannaStatusColumn(S.of(context).totalPanna,
+                    cubit.boothPannasStatus?.data?.total ?? 0),
+              ),
+              const VerticalDivider(
+                color: AppColor.dividerColor,
+                width: 1,
+              ),
+              Expanded(
+                child: boothPannaStatusColumn(S.of(context).pannaParmukh,
+                    cubit.boothPannasStatus?.data?.pramukh ?? 0),
+              ),
+              const VerticalDivider(
+                color: AppColor.dividerColor,
+                width: 1,
+              ),
+              Expanded(
+                child: boothPannaStatusColumn(S.of(context).panaaSamiti,
+                    cubit.boothPannasStatus?.data?.samiti ?? 0),
+              )
+            ]),
+          ),
+        );
       },
     );
   }
@@ -917,60 +924,70 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   cubit.levelNameId = cubit.dependentLevelNameId;
                 } else {
                   cubit.dataList = [];
+                  cubit.selectedPannaNo = null;
+                  cubit.boothPannasStatus = null;
+                  cubit.pannaKramaankListData = [];
                   cubit.onDataFound();
                 }
               }
 
               return DropdownButtonHideUnderline(
-                  child: DropdownButton(
-                      isDense: true,
-                      hint: Text(
-                          'Select ${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
-                          style: GoogleFonts.roboto(
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.greyColor,
-                              fontSize: 16)),
-                      value: cubit.dependentDropdownSelected,
-                      icon: const Icon(
-                        Icons.expand_more,
-                        color: AppColor.textBlackColor,
-                        size: 24,
-                      ),
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 16,
-                          color: AppColor.textBlackColor),
-                      isExpanded: true,
-                      items: cubit.dependentDropdownList
-                          .map((e) => DropdownMenuItem(
-                              value: e,
-                              child: Text(
-                                e.name ?? '',
-                                style: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.w400, fontSize: 16),
-                              )))
-                          .toList(),
-                      onChanged: ((value) async {
-                        cubit.onDependentDropdown(value);
-                        cubit.selectedPannaNo = null;
-                        if (widget.type == "Panna") {
-                          await context
-                              .read<ZilaDataCubit>()
-                              .getBoothPannasStatus(value?.id ?? 0);
-                          await context
-                              .read<ZilaDataCubit>()
-                              .getPannaKramaankList(
-                                  cubit.levelNameId ?? 0, cubit.acId ?? 0);
-                        } else {
-                          await context
-                              .read<ZilaDataCubit>()
-                              .getEntryData(data: {
-                            "level": widget.dataLevelId,
-                            "unit": cubit.unitId ?? "",
-                            "level_name": cubit.levelNameId
-                          });
-                        }
-                      })));
+                  child: SizedBox(
+                height: 50,
+                child: DropdownButton(
+                    isDense: true,
+                    hint: cubit.dependentDropdownList.isNotEmpty
+                        ? Text(
+                            'Select ${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
+                            maxLines: 2,
+                            style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.greyColor,
+                                fontSize: 16))
+                        : Text(
+                            'No ${DropdownHandler.dependentDropdownName(widget.type ?? "")} available',
+                            maxLines: 2,
+                            style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.greyColor,
+                                fontSize: 16)),
+                    value: cubit.dependentDropdownSelected,
+                    icon: const Icon(
+                      Icons.expand_more,
+                      color: AppColor.textBlackColor,
+                      size: 24,
+                    ),
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: AppColor.textBlackColor),
+                    isExpanded: true,
+                    items: cubit.dependentDropdownList
+                        .map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(
+                              e.name ?? '',
+                              overflow: TextOverflow.visible,
+                              style: GoogleFonts.roboto(
+                                  fontWeight: FontWeight.w400, fontSize: 16),
+                            )))
+                        .toList(),
+                    onChanged: ((value) async {
+                      cubit.onDependentDropdown(value);
+                      cubit.selectedPannaNo = null;
+                      if (widget.type == "Panna") {
+                        await context
+                            .read<ZilaDataCubit>()
+                            .getBoothPannasStatus(value?.id ?? 0);
+                      } else {
+                        await context.read<ZilaDataCubit>().getEntryData(data: {
+                          "level": widget.dataLevelId,
+                          "unit": cubit.unitId ?? "",
+                          "level_name": cubit.levelNameId
+                        });
+                      }
+                    })),
+              ));
             },
           ),
         ],

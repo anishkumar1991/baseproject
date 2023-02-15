@@ -36,8 +36,19 @@ class PannaPdfViewer extends StatelessWidget {
           ),
           spaceHeightWidget(20),
           pdfLink == null
-              ? const SizedBox()
-              : SfPdfViewer.network(pdfLink!, canShowPaginationDialog: false),
+              ? Expanded(
+                  child: Center(
+                      child: Text(
+                    S.of(context).noDataAvailable,
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: AppColor.black),
+                  )),
+                )
+              : Expanded(
+                  child: SfPdfViewer.network(pdfLink!,
+                      canShowPaginationDialog: false)),
         ],
       )),
     );

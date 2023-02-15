@@ -62,6 +62,7 @@ class EntryDetailsList extends StatelessWidget {
             }
           }
           if (state is DataFetchingLoadingState) {
+            cubit.dataList = null;
             return shimmerWidget();
           }
           if (state is DeleteReasonFetchedState) {
@@ -98,6 +99,7 @@ class EntryDetailsList extends StatelessWidget {
                                                       .of(context)
                                                       .alreadyVerified)
                                                   : showDialog(
+                                                      barrierDismissible: false,
                                                       context: context,
                                                       builder: ((context) {
                                                         return SubmitDialog(
@@ -143,7 +145,7 @@ class EntryDetailsList extends StatelessWidget {
                                                     ? 28
                                                     : countryStateId,
                                                 levelName: type == "Panna"
-                                                    ? dataLevelId
+                                                    ? cubit.selectedPannaNo?.id
                                                     : cubit.levelNameId,
                                                 personID: data?.id,
                                                 pannaID:
@@ -183,20 +185,19 @@ class EntryDetailsList extends StatelessWidget {
                                         .cleanAllVariableData();
                                     Navigator.pushNamed(
                                         context, RoutePath.addEntryScreen,
-
-                                        ///TODO : here country id is static when type is panna we need make dynamic in future
                                         arguments: AddEntryPage(
                                           type: type!,
+                                          isEditEntry: true,
                                           leaveId: dataLevelId ?? 0,
-                                          unitId: cubit.unitId ?? "",
+                                          unitId: cubit.unitId,
+                                          subUnitId: cubit.subUnitId,
                                           countryStateId: type == "Panna"
                                               ? 28
                                               : countryStateId,
                                           levelName: type == "Panna"
-                                              ? dataLevelId
+                                              ? cubit.selectedPannaNo?.id
                                               : cubit.levelNameId,
                                           personID: data?.id,
-                                          isEditEntry: true,
                                           pannaID: data?.pannaNumber == null
                                               ? null
                                               : int.tryParse(
@@ -238,13 +239,13 @@ class EntryDetailsList extends StatelessWidget {
                                               children: [
                                                 Flexible(
                                                   child: AutoSizeText(
-                                                    Localizations.localeOf(
+                                                    /* Localizations.localeOf(
                                                                     context)
                                                                 .toString() ==
                                                             "hi"
                                                         ? data?.hindiName ?? ''
-                                                        : data?.englishName ??
-                                                            '',
+                                                        : */
+                                                    data?.englishName ?? '',
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 2,
