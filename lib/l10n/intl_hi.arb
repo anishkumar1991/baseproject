@@ -169,6 +169,7 @@
   "dataUnitEmptyError": "डेटा यूनिट उपलब्ध नहीं है इसलिए आप ऐड एंट्री नहीं कर सकते",
   "selectVidhansabhaFirst": "कृपया पहले विधानसभा का चयन करें",
   "selectMandalFirst": "कृपया पहले मंडल का चयन करें",
+    "selectBoothFirst": "कृपया पहले बूथ का चयन करें",
   "enterShkatiKendrName": "कृपया शक्ति केंद्र नाम दर्ज करें",
   "english": "अंग्रेज़ी",
   "hindi": "हिंदी",
@@ -181,5 +182,6 @@
   "enterMobileNumber":"कृपया फोन नंबर दर्ज करें",
   "notValidNumber":"यह संख्या मान्य संख्या नहीं है",
   "alreadyVerified":"व्यक्ति पहले से ही सत्यापित है",
-  "addAttendeesHeader" : "उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता"
+  "addAttendeesHeader" : "उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता",
+    "later" : "बाद में"
 }

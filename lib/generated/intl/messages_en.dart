@@ -147,7 +147,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "Landline Number should be 8 digit"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
-        "later": MessageLookupByLibrary.simpleMessage("Later"),
+        "later": MessageLookupByLibrary.simpleMessage("later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
         "logOut": MessageLookupByLibrary.simpleMessage("Log Out"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
@@ -226,6 +226,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
         "seeLess": MessageLookupByLibrary.simpleMessage("See less"),
         "seeMore": MessageLookupByLibrary.simpleMessage("See more"),
+        "selectBoothFirst":
+            MessageLookupByLibrary.simpleMessage("Please Select Booth first"),
         "selectDesignation":
             MessageLookupByLibrary.simpleMessage("Please Select Designation"),
         "selectLoksabha":

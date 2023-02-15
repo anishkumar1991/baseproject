@@ -98,6 +98,7 @@ class EntryDetailsList extends StatelessWidget {
                                                       .of(context)
                                                       .alreadyVerified)
                                                   : showDialog(
+                                              barrierDismissible: false,
                                                       context: context,
                                                       builder: ((context) {
                                                         return SubmitDialog(

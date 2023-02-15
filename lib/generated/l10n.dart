@@ -360,10 +360,10 @@ class S {
     );
   }
 
-  /// `Later`
+  /// `later`
   String get later {
     return Intl.message(
-      'Later',
+      'later',
       name: 'later',
       desc: '',
       args: [],
@@ -1725,6 +1725,16 @@ class S {
     return Intl.message(
       'Please Select Mandal first',
       name: 'selectMandalFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please Select Booth first`
+  String get selectBoothFirst {
+    return Intl.message(
+      'Please Select Booth first',
+      name: 'selectBoothFirst',
       desc: '',
       args: [],
     );

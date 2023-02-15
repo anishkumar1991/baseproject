@@ -168,6 +168,7 @@
   "dataUnitEmptyError": "Data Unit is empty So you can't add entry",
   "selectVidhansabhaFirst": "Please Select Vidhansabha first",
   "selectMandalFirst": "Please Select Mandal first",
+  "selectBoothFirst": "Please Select Booth first",
   "enterShkatiKendrName": "Please enter shakti kendr name",
   "english": "English",
   "hindi": "Hindi",
@@ -182,5 +183,6 @@
   "enterMobileNumber":"Please Enter Phone Number",
   "notValidNumber":"This Number is Not Valid Number",
   "alreadyVerified":"Person already verified",
-  "addAttendeesHeader" : "Present Guest / Participant / Worker"
+  "addAttendeesHeader" : "Present Guest / Participant / Worker",
+  "later" : "later"
 }

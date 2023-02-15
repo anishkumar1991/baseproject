@@ -275,7 +275,7 @@ class _SubmitDialogState extends State<SubmitDialog> {
                 //   Navigator.popUntil(
                 //       context, ModalRoute.withName(RoutePath.zilaDataPage));
                 // }),
-                title: S.of(context).skipAddNewEntry,
+                title: widget.isEdit ? S.of(context).later :S.of(context).skipAddNewEntry,
                 style: GoogleFonts.quicksand(
                     color: AppColor.buttonOrangeBackGroundColor,
                     fontSize: 16,

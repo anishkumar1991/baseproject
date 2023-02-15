@@ -54,13 +54,13 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(ZilaChangedState());
   }
 
-  final double _height = 150.0;
+  final double _height = 50.0;
 
   void animateToIndex(int index) {
     controller.animateTo(
       index * _height,
       duration: const Duration(seconds: 1),
-      curve: Curves.fastOutSlowIn,
+      curve: Curves.ease,
     );
   }
 
@@ -339,7 +339,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
       print(
-          "------------------------------------ ------------------------ ----------------------------");
+          "------------------------------------  ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         Map<String, dynamic>? msg = res.data;
         dataList?.removeAt(index);
