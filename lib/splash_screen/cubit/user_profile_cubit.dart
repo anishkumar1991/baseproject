@@ -12,7 +12,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
   final api = UserProfileApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
   Future getUserProfileData() async {
-    try {
+   /* try {*/
       emit(UserProfileLoadigState());
       final res = await api
           .getUserProfileDetails('Bearer ${StorageService.userAuthToken}');
@@ -26,9 +26,9 @@ class UserProfileCubit extends Cubit<UserProfileState> {
         Map<String, dynamic>? msg = res.data;
         emit(UserProfileErrorState(msg?['error'] ?? ''));
       }
-    } catch (e) {
+    /*} catch (e) {
       print(e);
       emit(UserProfileErrorState('something went wrong'));
-    }
+    }*/
   }
 }

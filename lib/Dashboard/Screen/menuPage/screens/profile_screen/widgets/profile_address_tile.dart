@@ -76,14 +76,14 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                           Icon(
                             addressIcon(
                                 addressFor: widget.cubit.userDetails?.data
-                                    ?.addresses?.first.forAddress),
+                                    ?.addresses?.first.forWhich),
                             color: AppColor.black.withOpacity(0.7),
                             size: 20,
                           ),
                           spaceWidthWidget(5),
                           Text(
                             widget.cubit.userDetails?.data?.addresses?.first
-                                    .forAddress ??
+                                    .forWhich ??
                                 '',
                             style: textStyleWithPoppin(
                                 fontSize: 13,
@@ -171,14 +171,14 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                               Icon(
                                 addressIcon(
                                     addressFor: widget.cubit.userDetails?.data
-                                        ?.addresses?[index].forAddress),
+                                        ?.addresses?[index].forWhich),
                                 color: AppColor.black.withOpacity(0.7),
                                 size: 20,
                               ),
                               spaceWidthWidget(5),
                               Text(
                                 widget.cubit.userDetails?.data
-                                        ?.addresses?[index].forAddress ??
+                                        ?.addresses?[index].forWhich ??
                                     '',
                                 style: textStyleWithPoppin(
                                     fontSize: 13,

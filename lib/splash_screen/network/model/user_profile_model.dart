@@ -25,7 +25,7 @@ class UserProfileModel {
 class Data {
   int? id;
   String? name;
-  List<dynamic>? phoneNumbers;
+  dynamic phoneNumbers;
   String? dob;
   List<dynamic>? addresses;
   String? gender;
@@ -65,11 +65,15 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    if (json['phone_numbers'] != dynamic) {
-      phoneNumbers = <dynamic>[];
-      json['phone_numbers'].forEach((v) {
-        phoneNumbers!.add(v);
-      });
+    try{
+      if (json['phone_numbers'] != dynamic) {
+        phoneNumbers = <dynamic>[];
+        json['phone_numbers'].forEach((v) {
+          phoneNumbers!.add(v);
+        });
+      }
+    }catch(e){
+      phoneNumbers = json['phone_numbers'];
     }
     dob = json['dob'];
     if (json['addresses'] != dynamic) {

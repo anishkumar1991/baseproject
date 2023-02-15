@@ -152,6 +152,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     builder: (context, state) {
                       if (state is EntryDataFetchedState) {
                         if (state.data.data != null) {
+                          print("------------------- Entry Data Lis Length ------------------");
+                          print("List length :${state.data.data?.data?.length}");
                           cubit.dataList = state.data.data!.data!;
                         }
                       }
@@ -417,7 +419,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
   Widget dataUnit(ZilaDataCubit cubit) {
     return SizedBox(
-      height: widget.type == "Panna" ? 80 : 44,
+      height: widget.type == "Panna" ? 100 : 44,
       child: BlocConsumer<ZilaDataCubit, ZilaDataState>(
         listener: (context, state) {
           if (state is GetDataUnitErrorState) {

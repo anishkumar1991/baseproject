@@ -9,6 +9,7 @@ import '../../../../../../Storage/user_storage_service.dart';
 import '../network/api/vidhanSabha_api.dart';
 import '../network/model/shakti_kendr_model.dart';
 import '../network/model/vidhanSabha_model.dart';
+import '../screen/widgets/delete_confirmation_dialog.dart';
 
 part 'shakti_kendra_state.dart';
 
@@ -102,6 +103,20 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DeleteModel data = DeleteModel.fromJson(res.response.data);
+        if (data.data?.askConfirmation == true) {
+          await dataEntryDeleteDialog(
+            context: context,
+            onDelete: () {
+              Navigator.pop(context);
+              deleteShaktiKendr(
+                  id: id,
+                  context: context,
+                  isConfirmDelete: true);
+            },
+            title: data.data?.message?.trim().trimLeft(),
+            subTitle: '',
+          );
+        }
         emit(DeleteShaktiKendraFatchDataState(data));
         // if (data.data?.askConfirmation == true) {
         //   dataEntryDeleteDialog(

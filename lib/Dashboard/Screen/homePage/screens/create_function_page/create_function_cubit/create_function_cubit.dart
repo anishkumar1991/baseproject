@@ -61,7 +61,6 @@ class CreateFunctionCubit extends Cubit<CreateFunctionState> {
           "------------------------------------ Create Function data  ----------------------------");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print("Response :${AppStrings.pravasUserToken}");
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {

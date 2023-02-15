@@ -87,8 +87,8 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pushNamed(context, RoutePath.profileScreen);
                     },
                     child: Container(
-                      height: 35,
-                      width: 35,
+                      height: 42,
+                      width: 42,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(color: AppColor.dividerColor)),

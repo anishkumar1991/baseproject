@@ -13,6 +13,7 @@ class EditAddressCubit extends Cubit<EditAddressState> {
   final TextEditingController stateCtr = TextEditingController();
 
   String? addressFor;
+  final formKey = GlobalKey<FormState>();
 
   clearData(){
     flatDesCtr.clear();
