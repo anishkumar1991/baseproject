@@ -168,6 +168,7 @@ class ReportScreen extends StatelessWidget {
                             );
                           }
                           return ListView.builder(
+
                             physics: const ScrollPhysics(),
                             shrinkWrap: true,
                             itemCount:

@@ -33,7 +33,7 @@ Future<void> firebaseNotification(context) async {
             Map<String, String>.from(message!.data);
         print('App is a background state ------------------$finalPayLoadData');
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-          Navigator.push(context, MaterialPageRoute(
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
               return NotificationMainScreen();
             },
@@ -59,7 +59,7 @@ Future<void> firebaseNotification(context) async {
           message: message,
           flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
         );
-        Navigator.push(context, MaterialPageRoute(
+        Navigator.of(context).push(MaterialPageRoute(
           builder: (context) {
             return NotificationMainScreen();
           },
@@ -82,7 +82,7 @@ Future<void> firebaseNotification(context) async {
         print(
           "------background---------finalPayLoadData--------------:: $finalPayLoadData",
         );
-        Navigator.push(context, MaterialPageRoute(
+        Navigator.of(context).push(MaterialPageRoute(
           builder: (context) {
             return NotificationMainScreen();
           },
