@@ -84,9 +84,9 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
       if (res.response.statusCode == 200) {
         mandalModel.Mandal data =
             mandalModel.Mandal.fromJson(res.response.data);
-        if (isEdit == true) {
+        // if (isEdit == true) {
           getBoothValuew(id: id);
-        }
+        // }
         emit(FatchDataMandalEditShaktiKendraState(data: data));
       } else {
         emit(ErrorMandalEditShaktiKendraState(
@@ -114,6 +114,7 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         Booth data = Booth.fromJson(res.response.data);
+        // boothData = data;
         emit(FatchDataBoothEditShaktiKendraState(data: data));
       } else {
         emit(ErrorBoothEditShaktiKendraState(

@@ -183,6 +183,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
         "notValidNumber": MessageLookupByLibrary.simpleMessage(
             "This Number is Not Valid Number"),
+        "oopsErrorMsg": MessageLookupByLibrary.simpleMessage(
+            "oops !! something went to wrong please try again later.."),
         "organization":
             MessageLookupByLibrary.simpleMessage("Name of organization"),
         "otpVerification":
@@ -209,6 +211,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Select Reason"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
+        "preparing": MessageLookupByLibrary.simpleMessage("preparing"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "primaryMemberId": MessageLookupByLibrary.simpleMessage(
             "Primary Member id should be 10 digit"),

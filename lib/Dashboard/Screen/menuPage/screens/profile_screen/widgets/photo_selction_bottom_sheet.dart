@@ -53,20 +53,19 @@ Future selectOption({required BuildContext context}){
               const Divider(),
               ListTile(
                 onTap: (() async {
-                  Navigator.pop(
-                      context);
                   try {
                     cubit.image = await ImagePicker().pickImage(source: ImageSource.camera);
                     if (cubit.image == null) return;
                     final imageTemp = File(cubit.image!.path);
                     cubit.imageFile = imageTemp;
                     print("Image Path : ${cubit.imageFile}");
+
                     cubit.emitState();
                     // cubit.uploadImageToFirebase(context: context);
-                    // if(cubit.imageFile != null){
-                    //   cubit.uploadImageToFirebase(context: context);
-                    //   cubit.emitState();
-                    // }
+                    if(cubit.imageFile != null){
+                      cubit.uploadImageToFirebase(context: context);
+                      cubit.emitState();
+                    }
                   } catch (e) {
                     print('Failed to pick image: $e');
                   }
@@ -84,8 +83,6 @@ Future selectOption({required BuildContext context}){
               const Divider(),
               ListTile(
                 onTap: (() async {
-                  Navigator.pop(
-                      context);
                   try {
                     cubit.image = await ImagePicker().pickImage(source: ImageSource.gallery);
                     if (cubit.image == null) return;
@@ -93,10 +90,10 @@ Future selectOption({required BuildContext context}){
                     cubit.imageFile = imageTemp;
                     print("Image Path : ${cubit.imageFile}");
                     cubit.emitState();
-                    // if(cubit.imageFile != null){
-                    //  await cubit.uploadImageToFirebase(context: context);
-                    //   cubit.emitState();
-                    // }
+                    if(cubit.imageFile != null){
+                     await cubit.uploadImageToFirebase(context: context);
+                      cubit.emitState();
+                    }
                   } catch (e) {
                     print('Failed to pick image: $e');
                   }

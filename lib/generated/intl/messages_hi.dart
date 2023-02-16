@@ -188,6 +188,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noThanks": MessageLookupByLibrary.simpleMessage("जी नहीं, धन्यवाद"),
         "notValidNumber": MessageLookupByLibrary.simpleMessage(
             "यह संख्या मान्य संख्या नहीं है"),
+        "oopsErrorMsg": MessageLookupByLibrary.simpleMessage(
+            "उफ़ !! कुछ गलत हो गया कृपया बाद में पुन: प्रयास करें.."),
         "organization": MessageLookupByLibrary.simpleMessage("संगठन का नाम"),
         "otpVerification":
             MessageLookupByLibrary.simpleMessage("ओटीपी सत्यापन"),
@@ -211,6 +213,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कृपया हटाने का कारण चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
         "post": MessageLookupByLibrary.simpleMessage("पद"),
+        "preparing": MessageLookupByLibrary.simpleMessage("तैयार कर रहे हैं"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "primaryMemberId": MessageLookupByLibrary.simpleMessage(
             "प्राथमिक सदस्य आईडी १० अंकों की होनी चाहिए"),

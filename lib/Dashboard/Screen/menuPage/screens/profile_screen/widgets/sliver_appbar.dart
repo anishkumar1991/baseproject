@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -78,93 +79,100 @@ class MyAppBar extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.20,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: SizedBox(
-                  height: 110,
-                  child: Stack(
-                    children: [
-                      InkWell(
-                        onTap: (){
-                          cubit.selectImageForProfile(id: cubit.userDetails?.data?.id,context: context);
-                        },
-                        child: CircularPercentIndicator(
-                          radius: 50,
-                          progressColor: AppColor.progressGreenColor,
-                          percent: persantage,
-                          center: ClipRRect(
-                            borderRadius: BorderRadius.circular(350),
-                            child: cubit.imageFile == null ? img != '' ? Image.network(
-                              img,
-                              height: 84,
-                              width: 84,
-                              fit: BoxFit.cover,
-                              errorBuilder:
-                                  (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                return const Icon(Icons.person,size: 25);
-                              },
-                              loadingBuilder: (BuildContext context, Widget child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child;
-                                }
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                );
-                              },
-                            ): Container(
-                                color: AppColor.white,
+            BlocListener<ProfileCubit,ProfileState>(
+              listener: (context,state){
+                if(state is ImageSelectForProfileSuccess){
+                  // Navigator.pop(context);
+                }
+              },
+              child: Positioned(
+                top: MediaQuery.of(context).size.height * 0.20,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: SizedBox(
+                    height: 110,
+                    child: Stack(
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            await cubit.selectImageForProfile(id: cubit.userDetails?.data?.id,context: context);
+                          },
+                          child: CircularPercentIndicator(
+                            radius: 50,
+                            progressColor: AppColor.progressGreenColor,
+                            percent: persantage,
+                            center: ClipRRect(
+                              borderRadius: BorderRadius.circular(350),
+                              child: cubit.imageFile == null ? img != '' ? Image.network(
+                                img,
                                 height: 84,
                                 width: 84,
-                                child: Image.asset(AppIcons.sangathanLogo)) : Image.file(
-                              cubit.imageFile!,
-                              height: 84,
-                              width: 84,
-                              fit: BoxFit.cover,
-                              errorBuilder:
-                                  (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                return const Icon(Icons.person,size: 25);
-                              },
+                                fit: BoxFit.cover,
+                                errorBuilder:
+                                    (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                  return const Icon(Icons.person,size: 25);
+                                },
+                                loadingBuilder: (BuildContext context, Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child;
+                                  }
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value: loadingProgress.expectedTotalBytes != null
+                                          ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes!
+                                          : null,
+                                    ),
+                                  );
+                                },
+                              ): Container(
+                                  color: AppColor.white,
+                                  height: 84,
+                                  width: 84,
+                                  child: Image.asset(AppIcons.sangathanLogo)) : Image.file(
+                                cubit.imageFile!,
+                                height: 84,
+                                width: 84,
+                                fit: BoxFit.cover,
+                                errorBuilder:
+                                    (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                  return const Icon(Icons.person,size: 25);
+                                },
+                              ),
                             ),
+                            backgroundColor: AppColor.greyColor.withOpacity(0.3),
                           ),
-                          backgroundColor: AppColor.greyColor.withOpacity(0.3),
                         ),
-                      ),
-                      Positioned(
-                        bottom: 5,
-                        left: 28,
-                        right: 28,
-                        child: Container(
-                          padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColor.white),
+                        Positioned(
+                          bottom: 5,
+                          left: 28,
+                          right: 28,
                           child: Container(
-                            padding: const EdgeInsets.only(
-                                left: 5, right: 5, top: 2, bottom: 2),
+                            padding: const EdgeInsets.all(2),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                color: AppColor.progressGreenColor),
-                            child: Text(
-                              "${'${persantage * 100}'.split(".").first}%",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500),
+                                color: AppColor.white),
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  left: 5, right: 5, top: 2, bottom: 2),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: AppColor.progressGreenColor),
+                              child: Text(
+                                "${'${persantage * 100}'.split(".").first}%",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    color: AppColor.white,
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500),
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

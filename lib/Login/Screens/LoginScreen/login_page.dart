@@ -33,6 +33,7 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
+            reverse: true,
             child: BlocBuilder<InternetCubit, InternetState>(
               builder: (context, state) {
                 if (state == InternetState.connected) {

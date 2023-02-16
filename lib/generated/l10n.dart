@@ -1909,6 +1909,26 @@ class S {
       args: [],
     );
   }
+
+  /// `preparing`
+  String get preparing {
+    return Intl.message(
+      'preparing',
+      name: 'preparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `oops !! something went to wrong please try again later..`
+  String get oopsErrorMsg {
+    return Intl.message(
+      'oops !! something went to wrong please try again later..',
+      name: 'oopsErrorMsg',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

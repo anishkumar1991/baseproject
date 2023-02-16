@@ -47,9 +47,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
   Future<void> selectImageForProfile({int? id,BuildContext? context}) async {
     emit(ProfileInitial());
-    await selectOption(context: context!).then((value){
-      // uploadImageToFirebase(context: context);
-    });
+    await selectOption(context: context!);
     emit(ImageSelectForProfileSuccess());
   }
 
@@ -73,6 +71,9 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
     EasyLoading.dismiss();
     EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
+    Future.delayed(Duration.zero).then((value){
+      Navigator.pop(context);
+    });
   }
 
   Future getUserDetails() async {

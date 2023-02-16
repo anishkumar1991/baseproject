@@ -28,6 +28,7 @@ class SelectBooth extends StatelessWidget {
           return listTileShimmerEffect(context: context);
         } else if (state is FatchDataBoothEditShaktiKendraState) {
           cubit.boothData = state.data;
+          print("======================= boothData length ==> ${cubit.boothData.data?.length}");
         } else if (state is ErrorBoothEditShaktiKendraState) {
           EasyLoading.showToast(state.error);
         }

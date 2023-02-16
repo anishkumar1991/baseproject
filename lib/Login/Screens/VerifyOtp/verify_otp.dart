@@ -153,7 +153,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is UserLoginSuccessfullyState) {
-          Navigator.pushReplacementNamed(context, RoutePath.dashBoardScreen);
+          Navigator.pushNamedAndRemoveUntil(context,RoutePath.dashBoardScreen,(Route<dynamic> route) => false);
         } else if (state is LoginFaieldState) {
           errorText = state.error;
           isLoading = false;
