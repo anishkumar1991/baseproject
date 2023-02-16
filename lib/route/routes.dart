@@ -8,15 +8,15 @@ import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
 import 'package:sangathan/route/route_path.dart';
 
 import '../AddEntry/Screen/add_entry_preview_submit_screen.dart';
-import '../Dashboard/Screen/homePage/screens/create_function_page/create_function_page.dart';
-import '../Dashboard/Screen/homePage/screens/edit_date/edit_date_screen.dart';
-import '../Dashboard/Screen/homePage/screens/guest_list/guest_list_screen.dart';
-import '../Dashboard/Screen/homePage/screens/pravas_create/create_pravas_screen.dart';
-import '../Dashboard/Screen/homePage/screens/pravas_list/pravas_list_screen.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_module/create_function_page/create_function_page.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_module/edit_date/edit_date_screen.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_module/guest_list/guest_list_screen.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_module/pravas_create/create_pravas_screen.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_module/pravas_list/pravas_list_screen.dart';
+import '../Dashboard/Screen/homePage/screens/pravas_module/stay_and_program_list/stay_and_program_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/network/model/shakti_kendr_model.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/screen/edit_shakti_kendr.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/shakti_kendra_screen.dart';
-import '../Dashboard/Screen/homePage/screens/stay_and_program_list/stay_and_program_list_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/edit_address/edit_address_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/edit_business/edit_business_screen.dart';
 import '../Dashboard/Screen/menuPage/screens/edit_education/edit_education_screen.dart';
@@ -113,7 +113,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return PravasListScreen();
+            return const PravasListScreen();
           },
         );
       case RoutePath.createFunctionScreen:
