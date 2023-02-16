@@ -5,9 +5,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_module/create_function_page/widgets/header_widget_create_function.dart';
 import 'package:sangathan/Values/app_colors.dart';
-
-import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/Values/icons.dart';
+import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../../../../../../Values/space_height_widget.dart';
 import '../../../../../../common/common_button.dart';
@@ -30,9 +29,10 @@ class CreateFunctionScreen extends StatefulWidget {
 }
 
 class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
-
-  void initState(){
+  @override
+  void initState() {
     context.read<CreateFunctionCubit>().emitState();
+    super.initState();
   }
 
   @override
@@ -419,52 +419,49 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.07),
                             BlocListener<CreateFunctionCubit,
-                                CreateFunctionState>(listener: (context,state){
-                              if (state is CreateFunctionLoadingState) {
-                                EasyLoading.show();
-                              } else if (state is CreateFunctionFatchDataState) {
-                                cubit.createPravasAndFunctionModel = state.data!;
-                                EasyLoading.dismiss();
-                                EasyLoading.showSuccess(state.data?.message ?? '');
-                              } else if (state is CreateFunctionErrorState) {
-                                EasyLoading.dismiss();
-                                EasyLoading.showToast(state.error ?? '');
-                              }
-                            },
-                              child: widget.isEdit == true || widget.isView == true
+                                CreateFunctionState>(
+                              listener: (context, state) {
+                                if (state is CreateFunctionLoadingState) {
+                                  EasyLoading.show();
+                                } else if (state
+                                    is CreateFunctionFatchDataState) {
+                                  cubit.createPravasAndFunctionModel =
+                                      state.data!;
+                                  EasyLoading.dismiss();
+                                  EasyLoading.showSuccess(
+                                      state.data?.message ?? '');
+                                } else if (state is CreateFunctionErrorState) {
+                                  EasyLoading.dismiss();
+                                  EasyLoading.showToast(state.error ?? '');
+                                }
+                              },
+                              child: widget.isEdit == true ||
+                                      widget.isView == true
                                   ? const SizedBox.shrink()
                                   : CommonButton(
-                                onTap: () {
+                                      onTap: () {
+                                        /// for now,user token is static
 
-                                  /// for now,user token is static
-
-
-                                  cubit.FunctionCreate(data: {
-                                    "pravas_id": "3",
-                                    "name": "ckjdshvhcs",
-                                    "date": "02/02/2023",
-                                    "agenda": "myagends",
-                                    "is_add_attendees": true,
-                                    "chief_guest": "home minister",
-                                    "attendees": 20,
-                                    "address": "ascascac",
-                                    "remark": "ascasc",
-                                    "photo_1":
-                                    "https://firebasestorage.googleapis.com/v0/b/sangathan-b272e.appspot.com/o/sangathan%2F1666003951%2Fcontent%3A%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000031240?alt=media&token=3408acaf-a591-499a-9280-ccc9f10c7d86",
-                                    "photo_2":
-                                    "https://firebasestorage.googleapis.com/v0/b/sangathan-b272e.appspot.com/o/sangathan%2F1666003951%2Fcontent%3A%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F1000031240?alt=media&token=3408acaf-a591-499a-9280-ccc9f10c7d86"
-                                  });
-                                  // Navigator.pushReplacementNamed(context,
-                                  //     RoutePath.stayAndProgramListScreen);
-                                },
-                                title: S.of(context).save,
-                                height: 50,
-                                borderRadius: 7,
-                                style: const TextStyle(
-                                    fontSize: 20, color: AppColor.white),
-                              ),
+                                        cubit.functionCreate(
+                                            name: cubit.functionNameText.text,
+                                            date: "",
+                                            time: "",
+                                            location: cubit.lokSabhaText.text,
+                                            place: cubit.placeText.text,
+                                            subject: cubit.subjectText.text,
+                                            summary: cubit.commentText.text,
+                                            pravasId: 2,
+                                            levelId: 1);
+                                        // Navigator.pushReplacementNamed(context,
+                                        //     RoutePath.stayAndProgramListScreen);
+                                      },
+                                      title: S.of(context).save,
+                                      height: 50,
+                                      borderRadius: 7,
+                                      style: const TextStyle(
+                                          fontSize: 20, color: AppColor.white),
+                                    ),
                             ),
-
                             spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.02),
                           ],

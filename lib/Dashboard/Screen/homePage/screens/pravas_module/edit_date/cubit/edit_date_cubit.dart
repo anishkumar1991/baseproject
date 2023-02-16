@@ -14,6 +14,7 @@ class EditDateCubit extends Cubit<EditDateState> {
   static String ddMMMYYYYfromDateTime(DateTime date) {
     return DateFormat('dd-MMM-yyyy').format(date);
   }
+
   static String hhMMFormate(DateTime date) {
     return DateFormat('hh:mm').format(date);
   }
@@ -31,6 +32,7 @@ class EditDateCubit extends Cubit<EditDateState> {
       emit(StartDateOfTour(date));
     }
   }
+
   Future<void> editTime(BuildContext context) async {
     emit(AddEntryLoadingState());
 
@@ -46,22 +48,10 @@ class EditDateCubit extends Cubit<EditDateState> {
     );
     if (newTime != null && newTime != _time) {
       _time = newTime;
-      Future.delayed(Duration.zero).then((value){
+      Future.delayed(Duration.zero).then((value) {
         time = _time.format(context);
       });
-        emit(EditTime(time));
-      }
-
-
-    // final DateTime? picked = await showDatePicker(
-    //     context: context,
-    //     initialDate: dateTime1,
-    //     firstDate: DateTime(1900, 8),
-    //     lastDate: DateTime(2101));
-    // if (picked != null && picked != dateTime1) {
-    //   dateTime1 = picked;
-    //   time = ddMMMYYYYfromDateTime(dateTime1);
-    //   emit(EditTime(time));
-    // }
+      emit(EditTime(time));
+    }
   }
 }

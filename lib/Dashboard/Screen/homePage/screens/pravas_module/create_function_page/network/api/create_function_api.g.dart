@@ -21,29 +21,43 @@ class _CreateFunction implements CreateFunction {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> FunctionCreate(
-    apiKey,
+  Future<HttpResponse<dynamic>> functionCreate(
     token,
-    data,
+    name,
+    date,
+    time,
+    location,
+    place,
+    subject,
+    summary,
+    pravasId,
+    levelId,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'X-API-KEY': apiKey,
-      r'Authorization': token,
-    };
+    final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(data);
+    final _data = {
+      'name': name,
+      'date': date,
+      'time': time,
+      'location': location,
+      'place': place,
+      'subject': subject,
+      'summary': summary,
+      'pravas_id': pravasId,
+      'level_id': levelId,
+    };
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'application/x-www-form-urlencoded',
     )
             .compose(
               _dio.options,
-              '/backend/api/karyakram/list',
+              '/create_program',
               queryParameters: queryParameters,
               data: _data,
             )

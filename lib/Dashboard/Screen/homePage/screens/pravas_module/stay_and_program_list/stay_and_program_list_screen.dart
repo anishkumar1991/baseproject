@@ -31,30 +31,32 @@ class StayAndProgramListScreen extends StatelessWidget {
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
             Expanded(
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     buildCard(context: context),
-                    spaceHeightWidget(MediaQuery.of(context).size.height * 0.025),
+                    spaceHeightWidget(
+                        MediaQuery.of(context).size.height * 0.025),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                          '${S.of(context).totalProgram} - 12',
+                      child: Text('${S.of(context).totalProgram} - 12',
                           textAlign: TextAlign.left,
-                          style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w500)
-                      ),
+                          style: textStyleWithPoppin(
+                              fontSize: 14,
+                              color: AppColor.black,
+                              fontWeight: FontWeight.w500)),
                     ),
-                    spaceHeightWidget(MediaQuery.of(context).size.height * 0.015),
+                    spaceHeightWidget(
+                        MediaQuery.of(context).size.height * 0.015),
                     ListView.builder(
                         itemCount: 3,
                         padding: EdgeInsets.zero,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemBuilder: (context,index){
+                        itemBuilder: (context, index) {
                           return buildBottomContainer(context: context);
                         })
-
                   ],
                 ),
               ),
@@ -80,20 +82,19 @@ class StayAndProgramListScreen extends StatelessWidget {
     );
   }
 
-  buildCard({required BuildContext context}){
-    return  Card(
+  buildCard({required BuildContext context}) {
+    return Card(
       elevation: 2,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14.0,vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 14.0, vertical: 15),
         child: Column(
           children: [
-            buildTopRow(text: '20 - 23 Jan, 2023 ( 3 दिन ) ',isLeading: true),
+            buildTopRow(text: '20 - 23 Jan, 2023 ( 3 दिन ) ', isLeading: true),
             spaceHeightWidget(15),
             Align(
               alignment: Alignment.centerLeft,
               child: DotWidget(
-                dashColor:
-                AppColor.naturalBlackColor.withOpacity(0.1),
+                dashColor: AppColor.naturalBlackColor.withOpacity(0.1),
                 dashWidth: 5,
                 emptyWidth: 2,
                 totalWidth: MediaQuery.of(context).size.width * 0.55,
@@ -107,10 +108,7 @@ class StayAndProgramListScreen extends StatelessWidget {
                 child: const Text(
                   'मुख्यमंत्री शिवराज सिंह चौहान ग्वालियर एवं मुरैना प्रवास पर',
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                      color: AppColor.black,
-                      fontSize: 15
-                  ),
+                  style: TextStyle(color: AppColor.black, fontSize: 15),
                 ),
               ),
             ),
@@ -120,43 +118,49 @@ class StayAndProgramListScreen extends StatelessWidget {
     );
   }
 
-  buildTopRow({String? text,bool? isLeading}){
+  buildTopRow({String? text, bool? isLeading}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const Icon(Icons.calendar_month_outlined,color: AppColor.darkBlue,size: 22,),
-        spaceWidthWidget(6),
-         Text(
-          text ?? '',
-           style: textStyleWithPoppin(color: AppColor.black.withOpacity(0.7),fontSize: 15)
+        const Icon(
+          Icons.calendar_month_outlined,
+          color: AppColor.darkBlue,
+          size: 22,
         ),
+        spaceWidthWidget(6),
+        Text(text ?? '',
+            style: textStyleWithPoppin(
+                color: AppColor.black.withOpacity(0.7), fontSize: 15)),
         const Spacer(),
-        isLeading == true ? const Icon(Icons.edit_outlined,color: AppColor.naturalBlackColor,size: 22) : const SizedBox.shrink(),
+        isLeading == true
+            ? const Icon(Icons.edit_outlined,
+                color: AppColor.naturalBlackColor, size: 22)
+            : const SizedBox.shrink(),
       ],
     );
   }
 
-  buildBottomContainer({required BuildContext context}){
+  buildBottomContainer({required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: AppColor.greyColor.withOpacity(0.5)),
-            color: AppColor.pravasCradColor.withOpacity(0.3)
-        ),
+            color: AppColor.pravasCradColor.withOpacity(0.3)),
         child: Padding(
           // padding: EdgeInsets.symmetric(horizontal: 14.0,vertical: 15),
-          padding: EdgeInsets.only(left: 14.0,top: 15,bottom: 15,right: 14),
+          padding:
+              const EdgeInsets.only(left: 14.0, top: 15, bottom: 15, right: 14),
           child: Column(
             children: [
-              buildTopRow(isLeading: false,text: '20 Jan, 2023 ( 10:00 - 12:00 बजे )'),
+              buildTopRow(
+                  isLeading: false, text: '20 Jan, 2023 ( 10:00 - 12:00 बजे )'),
               spaceHeightWidget(15),
               Align(
                 alignment: Alignment.centerLeft,
                 child: DotWidget(
-                  dashColor:
-                  AppColor.naturalBlackColor.withOpacity(0.1),
+                  dashColor: AppColor.naturalBlackColor.withOpacity(0.1),
                   dashWidth: 5,
                   emptyWidth: 2,
                   totalWidth: MediaQuery.of(context).size.width * 0.75,
@@ -167,19 +171,19 @@ class StayAndProgramListScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.75,
-                  child:  Text(
+                  child: Text(
                       'संभाग स्तरीय मुख्यमंत्री जनसेवा अभियान कार्यक्रम.',
                       textAlign: TextAlign.left,
-                      style: textStyleWithPoppin(color: AppColor.black.withOpacity(0.7),fontSize: 14)
-                  ),
+                      style: textStyleWithPoppin(
+                          color: AppColor.black.withOpacity(0.7),
+                          fontSize: 14)),
                 ),
               ),
               spaceHeightWidget(12),
               Align(
                 alignment: Alignment.centerLeft,
                 child: DotWidget(
-                  dashColor:
-                  AppColor.naturalBlackColor.withOpacity(0.1),
+                  dashColor: AppColor.naturalBlackColor.withOpacity(0.1),
                   dashWidth: 5,
                   emptyWidth: 2,
                   totalWidth: MediaQuery.of(context).size.width * 0.75,
@@ -192,29 +196,33 @@ class StayAndProgramListScreen extends StatelessWidget {
                   SizedBox(
                       height: 20,
                       width: 20,
-                      child: Image.asset(AppIcons.marker,fit: BoxFit.cover,)),
+                      child: Image.asset(
+                        AppIcons.marker,
+                        fit: BoxFit.cover,
+                      )),
                   spaceWidthWidget(5),
                   Padding(
                     padding: const EdgeInsets.only(top: 3.0),
                     child: Text(
                       'ग्वालियर एवं मुरैना',
                       textAlign: TextAlign.left,
-                      style: textStyleWithPoppin(color: AppColor.black,fontSize: 14),
-
+                      style: textStyleWithPoppin(
+                          color: AppColor.black, fontSize: 14),
                     ),
                   ),
                   spaceWidthWidget(10),
                   Container(
-                    margin: EdgeInsets.only(top: 3),
-                    padding: EdgeInsets.symmetric(horizontal: 12,vertical: 2),
+                    margin: const EdgeInsets.only(top: 3),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(3),
-                        color: AppColor.white
-                    ),
+                        color: AppColor.white),
                     child: Text(
                       'प्रदेश स्तर',
                       textAlign: TextAlign.center,
-                      style: textStyleWithPoppin(color: AppColor.black,fontSize: 12),
+                      style: textStyleWithPoppin(
+                          color: AppColor.black, fontSize: 12),
                     ),
                   )
                 ],
@@ -223,8 +231,7 @@ class StayAndProgramListScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: DotWidget(
-                  dashColor:
-                  AppColor.naturalBlackColor.withOpacity(0.1),
+                  dashColor: AppColor.naturalBlackColor.withOpacity(0.1),
                   dashWidth: 5,
                   emptyWidth: 2,
                   totalWidth: MediaQuery.of(context).size.width * 0.75,
@@ -235,17 +242,17 @@ class StayAndProgramListScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                   "${ S.of(context).typeOfFunction} - ",
+                    "${S.of(context).typeOfFunction} - ",
                     textAlign: TextAlign.left,
-                    style: textStyleWithPoppin(color: AppColor.greyColor,fontSize: 14),
-
+                    style: textStyleWithPoppin(
+                        color: AppColor.greyColor, fontSize: 14),
                   ),
                   spaceWidthWidget(5),
                   Text(
                     'संगठनात्मक',
                     textAlign: TextAlign.left,
-                    style: textStyleWithPoppin(color: AppColor.black,fontSize: 14),
-
+                    style: textStyleWithPoppin(
+                        color: AppColor.black, fontSize: 14),
                   ),
                 ],
               ),
@@ -253,8 +260,7 @@ class StayAndProgramListScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: DotWidget(
-                  dashColor:
-                  AppColor.naturalBlackColor.withOpacity(0.1),
+                  dashColor: AppColor.naturalBlackColor.withOpacity(0.1),
                   dashWidth: 5,
                   emptyWidth: 2,
                   totalWidth: MediaQuery.of(context).size.width * 0.75,
@@ -270,18 +276,26 @@ class StayAndProgramListScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BuildButton(width: MediaQuery.of(context).size.width * 0.37,icon: Icons.mode_edit_outlined,text: S.of(context).edit,onTap: (){
-                    Navigator.pushNamed(context, RoutePath.createFunctionScreen,
-                    arguments: {
-                      'isEdit' : true
-                    });
-                  },),
-                  BuildButton(width: MediaQuery.of(context).size.width * 0.37,icon: Icons.visibility_outlined,text: S.of(context).view,onTap: (){
-                    Navigator.pushNamed(context, RoutePath.createFunctionScreen,
-                        arguments: {
-                          'isView' : true
-                        });
-                  },)
+                  BuildButton(
+                    width: MediaQuery.of(context).size.width * 0.37,
+                    icon: Icons.mode_edit_outlined,
+                    text: S.of(context).edit,
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, RoutePath.createFunctionScreen,
+                          arguments: {'isEdit': true});
+                    },
+                  ),
+                  BuildButton(
+                    width: MediaQuery.of(context).size.width * 0.37,
+                    icon: Icons.visibility_outlined,
+                    text: S.of(context).view,
+                    onTap: () {
+                      Navigator.pushNamed(
+                          context, RoutePath.createFunctionScreen,
+                          arguments: {'isView': true});
+                    },
+                  )
                 ],
               )
             ],

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sangathan/Values/string.dart';
 
 import '../../../../../../../Storage/user_storage_service.dart';
 import '../../../../../menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
@@ -32,12 +31,13 @@ class CreateFunctionCubit extends Cubit<CreateFunctionState> {
   UploadTask? task;
   String? urlDownload1;
   String? urlDownload2;
-  CreatePravasAndFunctionModel createPravasAndFunctionModel = CreatePravasAndFunctionModel();
+  CreatePravasAndFunctionModel createPravasAndFunctionModel =
+      CreatePravasAndFunctionModel();
 
   final api = CreateFunction(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
-  emitState(){
+  emitState() {
     emit(CreateFunctionInitial());
   }
 
@@ -52,30 +52,42 @@ class CreateFunctionCubit extends Cubit<CreateFunctionState> {
     functionLevelText.text = typeName;
     emit(FunctionLevelChangeSuccess());
   }
-  Future FunctionCreate({required Map<String, dynamic> data}) async {
+
+  Future functionCreate(
+      {required String name,
+      required String date,
+      required String time,
+      required String location,
+      required String place,
+      required String subject,
+      required String summary,
+      required int pravasId,
+      required int levelId}) async {
     emit(CreateFunctionLoadingState());
     try {
-      StorageService.getUserAuthToken();
-      final res = await api.FunctionCreate(AppStrings.apiKey,AppStrings.pravasUserToken,data);
+      String token = StorageService.getUserAuthToken() ?? "";
+      final res = await api.functionCreate(token, name, date, time, location,
+          place, subject, summary, pravasId.toString(), levelId.toString());
       print(
           "------------------------------------ Create Function data  ----------------------------");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
+      print("Pass Data:${res.response.extra}");
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        CreatePravasAndFunctionModel data = CreatePravasAndFunctionModel.fromJson(res.data);
+        CreatePravasAndFunctionModel data =
+            CreatePravasAndFunctionModel.fromJson(res.data);
         emit(CreateFunctionFatchDataState(data: data));
       } else {
         print('error=${res.data['message']}');
         emit(CreateFunctionErrorState(error: res.data['message']));
       }
-    }  catch (e) {
+    } catch (e) {
       print(e);
       emit(CreateFunctionErrorState(error: 'Something Went Wrong'));
     }
   }
-
 
   Future<void> selectImage1() async {
     emit(CreateFunctionInitial());
@@ -119,7 +131,8 @@ class CreateFunctionCubit extends Cubit<CreateFunctionState> {
     task = FirebaseApi.uploadFile(destination, imageFile1!);
     final snapshot = await task!.whenComplete(() {
       EasyLoading.dismiss();
-      EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
+      EasyLoading.showSuccess("Photo Uploaded",
+          duration: const Duration(milliseconds: 500));
     });
     urlDownload1 = await snapshot.ref.getDownloadURL();
     print('Image Download-Link 1: $urlDownload1');
