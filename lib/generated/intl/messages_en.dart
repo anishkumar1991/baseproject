@@ -126,6 +126,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterOTP": MessageLookupByLibrary.simpleMessage("Enter OTP"),
         "enterPhoneNumber": MessageLookupByLibrary.simpleMessage(
             "Phone Number should be 10 digit"),
+        "enterPin":
+            MessageLookupByLibrary.simpleMessage("Please enter pincode number"),
         "enterShaktiKendrName": MessageLookupByLibrary.simpleMessage(
             "Write the name of shakti kendr"),
         "enterShkatiKendrName": MessageLookupByLibrary.simpleMessage(
@@ -268,6 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("Upcoming Trip"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("Upload Photo Here"),
+        "uploading": MessageLookupByLibrary.simpleMessage("Uploading"),
         "userName": MessageLookupByLibrary.simpleMessage("Username"),
         "verified": MessageLookupByLibrary.simpleMessage("Verified.."),
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),

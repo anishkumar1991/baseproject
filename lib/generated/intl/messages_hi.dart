@@ -129,6 +129,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterOTP": MessageLookupByLibrary.simpleMessage("ओटीपी दर्ज करें"),
         "enterPhoneNumber": MessageLookupByLibrary.simpleMessage(
             "फोन नंबर १० अंकों का होना चाहिए"),
+        "enterPin": MessageLookupByLibrary.simpleMessage(
+            "कृपया पिनकोड संख्या दर्ज करें"),
         "enterShaktiKendrName":
             MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र का नाम लिखे"),
         "enterShkatiKendrName": MessageLookupByLibrary.simpleMessage(
@@ -270,6 +272,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("आगामी प्रवास -"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("फोटो यहाँ अपलोड करें"),
+        "uploading": MessageLookupByLibrary.simpleMessage("अपलोड हो रहा है"),
         "userName": MessageLookupByLibrary.simpleMessage("यूजरनेम"),
         "verified":
             MessageLookupByLibrary.simpleMessage("सत्यापित किया जा रहा है..."),

@@ -117,7 +117,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
           "------------------------------------ Get Entry Data ----------------------------");
       print("data  :$data");
       print("Status code : ${res.response.statusCode}");
-      log("Response :${res.data}");
+      print("Response :${res.data}");
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {

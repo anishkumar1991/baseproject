@@ -1889,6 +1889,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Uploading`
+  String get uploading {
+    return Intl.message(
+      'Uploading',
+      name: 'uploading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter pincode number`
+  String get enterPin {
+    return Intl.message(
+      'Please enter pincode number',
+      name: 'enterPin',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

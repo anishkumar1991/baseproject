@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../../../Values/space_height_widget.dart';
 import '../cubit/profile_cubit.dart';
 
-selectOption({required BuildContext context}){
+Future selectOption({required BuildContext context}){
   return showModalBottomSheet(
       context: context,
       builder: ((context){
@@ -62,10 +62,11 @@ selectOption({required BuildContext context}){
                     cubit.imageFile = imageTemp;
                     print("Image Path : ${cubit.imageFile}");
                     cubit.emitState();
-                    if(cubit.imageFile != null){
-                      cubit.uploadImageToFirebase(context: context);
-                      cubit.emitState();
-                    }
+                    // cubit.uploadImageToFirebase(context: context);
+                    // if(cubit.imageFile != null){
+                    //   cubit.uploadImageToFirebase(context: context);
+                    //   cubit.emitState();
+                    // }
                   } catch (e) {
                     print('Failed to pick image: $e');
                   }
@@ -91,10 +92,11 @@ selectOption({required BuildContext context}){
                     final imageTemp = File(cubit.image!.path);
                     cubit.imageFile = imageTemp;
                     print("Image Path : ${cubit.imageFile}");
-                    if(cubit.imageFile != null){
-                      cubit.uploadImageToFirebase(context: context);
-                      cubit.emitState();
-                    }
+                    cubit.emitState();
+                    // if(cubit.imageFile != null){
+                    //  await cubit.uploadImageToFirebase(context: context);
+                    //   cubit.emitState();
+                    // }
                   } catch (e) {
                     print('Failed to pick image: $e');
                   }

@@ -26,7 +26,7 @@ dataEntryDeleteDialog(
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(title!,
+                    child: Text(title ?? '',
                         textAlign: TextAlign.left,
                         style: textStyleWithPoppin(
                             fontSize: 16,
@@ -37,7 +37,7 @@ dataEntryDeleteDialog(
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        subTitle!,
+                        subTitle ?? '',
                         style: textStyleWithPoppin(
                             fontSize: 14, color: AppColor.greyColor),
                       )),

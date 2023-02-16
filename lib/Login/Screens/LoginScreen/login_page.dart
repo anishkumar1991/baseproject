@@ -74,8 +74,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                         Form(
                           key: formKey,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 12),
+                          child: SizedBox(
+                            height: 100,
                             child: TextFormFieldLogin(
                               controller: mobileNumController,
                             ),

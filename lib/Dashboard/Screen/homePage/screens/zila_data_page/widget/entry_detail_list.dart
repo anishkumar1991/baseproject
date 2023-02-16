@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,6 +105,8 @@ class EntryDetailsList extends StatelessWidget {
                                                       context: context,
                                                       builder: ((context) {
                                                         return SubmitDialog(
+                                                          subUnitId:
+                                                              cubit.subUnitId,
                                                           mobileNo:
                                                               data?.phone ?? '',
                                                           personId:
@@ -204,6 +208,7 @@ class EntryDetailsList extends StatelessWidget {
                                                   data?.pannaNumber ?? "0"),
                                           personData: data?.toJson(),
                                         ));
+                                  
                                   }),
                                   child: Row(
                                     children: [

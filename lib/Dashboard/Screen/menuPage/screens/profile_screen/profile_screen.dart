@@ -241,15 +241,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     Image.asset(AppIcons.language,
                                         height: 18,
                                         width: 18,
-                                        color: AppColor.naturalBlackColor
-                                            .withOpacity(0.5)),
+                                        color: AppColor.naturalBlackColor),
                                     spaceWidthWidget(8),
                                     Text(
                                       S.of(context).language,
                                       style: textStyleWithPoppin(
                                           fontSize: 14,
-                                          color: AppColor.naturalBlackColor
-                                              .withOpacity(0.5),
+                                          color: AppColor.naturalBlackColor,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
@@ -259,8 +257,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   checkLang(),
                                   style: textStyleWithPoppin(
                                       fontSize: 11,
-                                      color: AppColor.naturalBlackColor
-                                          .withOpacity(0.5),
+                                      color: AppColor.naturalBlackColor,
                                       fontWeight: FontWeight.w500),
                                 ),
                               ],
@@ -295,15 +292,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Image.asset(AppIcons.logOutIcon,
                                             height: 18,
                                             width: 18,
-                                            color: AppColor.naturalBlackColor
-                                                .withOpacity(0.5)),
+                                            color: AppColor.naturalBlackColor),
                                         spaceWidthWidget(8),
                                         Text(
                                           S.of(context).logOut,
                                           style: textStyleWithPoppin(
                                               fontSize: 14,
-                                              color: AppColor.naturalBlackColor
-                                                  .withOpacity(0.5),
+                                              color: AppColor.naturalBlackColor,
                                               fontWeight: FontWeight.w500),
                                         ),
                                       ],
@@ -314,8 +309,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     "Version 2.11",
                                     style: textStyleWithPoppin(
                                         fontSize: 11,
-                                        color: AppColor.naturalBlackColor
-                                            .withOpacity(0.5),
+                                        color: AppColor.naturalBlackColor,
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ],
@@ -354,9 +348,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           spaceWidthWidget(5),
           Text(
-            cubit.userDetails?.data?.phoneNumbers?.isNotEmpty ?? false
-                ? cubit.userDetails?.data?.phoneNumbers?.first ?? "-"
-                : "-",
+            cubit.userDetails?.data?.phoneNumber ?? "-",
             style: textStyleWithPoppin(
                 fontSize: 14,
                 color: AppColor.naturalBlackColor,

@@ -415,24 +415,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                     } else if (state is DeleteShaktiKendraFatchDataState) {
                       EasyLoading.dismiss();
                       if (state.data.data?.askConfirmation == true) {
-                        dataEntryDeleteDialog(
-                          context: context,
-                          onDelete: () {
-                            Navigator.pop(context);
-                            context.read<ShaktiKendraCubit>().deleteShaktiKendr(
-                                id: data.id!,
-                                context: context,
-                                isConfirmDelete: true);
-                          },
-                          title: state.data.data?.message?.trim().trimLeft(),
-                          subTitle: '',
-                        );
-                        context.read<ShaktiKendraCubit>().getShaktiKendra(
-                            id: context
-                                    .read<ShaktiKendraCubit>()
-                                    .zilaSelected
-                                    ?.id ??
-                                357);
+                        print("IsConfirm");
                       } else {
                         EasyLoading.showSuccess(state.data.message ?? '');
                         context.read<ShaktiKendraCubit>().getShaktiKendra(
@@ -449,9 +432,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                             subTitle:
                                 "${data.mandal?.name}\n${S.of(context).deleteShaktiKendr}",
                             context: context,
-                            onDelete: () {
+                            onDelete: () async {
                               Navigator.pop(context);
-                              context.read<ShaktiKendraCubit>().deleteShaktiKendr(
+                              await context.read<ShaktiKendraCubit>().deleteShaktiKendr(
                                       id: data.id!,
                                       context: context,
                                       isConfirmDelete: false);
@@ -612,8 +595,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                     cubit.zilaSelectedName = vidhanSabha
                                             .data?.locations?[index].name ??
                                         '';
-                                    cubit.getShaktiKendra(
-                                        id: cubit.zilaSelected?.id ?? 357);
+                                    cubit.getShaktiKendra(id: cubit.zilaSelected?.id ?? 357);
                                     Navigator.pop(context);
                                   },
                                   child: SizedBox(

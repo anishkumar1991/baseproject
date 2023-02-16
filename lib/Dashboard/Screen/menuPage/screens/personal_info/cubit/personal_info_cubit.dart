@@ -11,13 +11,13 @@ import 'package:sangathan/Dashboard/Screen/menuPage/screens/personal_info/widget
 
 import '../../../../../../AddEntry/network/model/cast_model.dart';
 import '../../../../../../Storage/user_storage_service.dart';
+import '../../../../../../generated/l10n.dart';
 import '../../profile_screen/network/model/user_detail_model.dart';
 import '../network/api/update_personal_details.dart';
 
 part 'personal_info_state.dart';
 
 enum Gender { male, female, transgender }
-
 
 class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   PersonalInfoCubit() : super(PersonalInfoInitial());
@@ -45,11 +45,10 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final TextEditingController statusCtr = TextEditingController();
   final TextEditingController castCtr = TextEditingController();
 
-
   final api = UpdatePersonalDetailsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
-  emitState(){
+  emitState() {
     emit(PersonalInfoInitial());
   }
 
@@ -68,21 +67,23 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     return age;
   }
 
-  String calculateYear({required String dob}){
-    return daysBetween(from: DateFormat("yyyy-MM-dd").parse(dob), to: DateTime.now()).toString();
+  String calculateYear({required String dob}) {
+    return daysBetween(
+            from: DateFormat("yyyy-MM-dd").parse(dob), to: DateTime.now())
+        .toString();
   }
+
   int daysBetween({required DateTime from, required DateTime to}) {
     from = DateTime(from.year, from.month, from.day);
     to = DateTime(to.year, to.month, to.day);
     return (to.difference(from).inDays / 365).round();
   }
 
-
   Future getCasteDropDownValue({required String id}) async {
     try {
       emit(PersonalInfoInitial());
       final res =
-      await api.getCast('Bearer ${StorageService.userAuthToken}', id);
+          await api.getCast('Bearer ${StorageService.userAuthToken}', id);
       print('cast res =${res.response}');
       if (res.response.statusCode == 200) {
         CastModel data = CastModel.fromJson(res.data);
@@ -101,13 +102,16 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     emit(LoadingState());
     try {
       StorageService.getUserAuthToken();
-      var res =
-      await api.updatePersonalDetails('Bearer ${StorageService.userAuthToken}',data);
+      var res = await api.updatePersonalDetails(
+          'Bearer ${StorageService.userAuthToken}', data);
+      print("------------------ update user ---------------");
       print('sangathan Data =${res.response.statusCode}');
-      print('sangathan Data =${StorageService.userAuthToken}');
+      print('sangathan data =${res.response.data}');
+      print("---------------------------------");
       if (res.response.statusCode == 200) {
         print(res.response.data);
-        UserDetailModel updateData = UserDetailModel.fromJson(res.response.data);
+        UserDetailModel updateData =
+            UserDetailModel.fromJson(res.response.data);
         emit(UpdateDataState(updateData));
       } else {
         print('error=${res.data['message']}');
@@ -119,15 +123,17 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     }
   }
 
-  getNetworkUrlAndUpdateProfile({int? id}) async {
-    EasyLoading.show();
+  getNetworkUrlAndUpdateProfile(
+      {int? id, required BuildContext context}) async {
+    EasyLoading.show(status: S.of(context).uploading);
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
     final destination = '$id/${id}_userProfile';
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
       EasyLoading.dismiss();
-      EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
+      EasyLoading.showSuccess("Photo Uploaded",
+          duration: const Duration(milliseconds: 500));
     });
     urlDownload = await snapshot.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
@@ -144,14 +150,15 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     });
   }
 
-
   Future<void> editBoi(BuildContext context) async {
     emit(PersonalInfoInitial());
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: dateTime,
+        initialDate: DateTime(
+            DateTime.now().year - 16, DateTime.now().month, DateTime.now().day),
         firstDate: DateTime(1900, 8),
-        lastDate: DateTime(2101));
+        lastDate: DateTime(DateTime.now().year - 16, DateTime.now().month,
+            DateTime.now().day));
     if (picked != null && picked != dateTime) {
       dateTime = picked;
       date = ddMMMYYYYfromDateTime(dateTime);
@@ -160,7 +167,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     }
   }
 
-  changeValue(Gender v){
+  changeValue(Gender v) {
     value = v;
     emit(PersonalInfoInitial());
   }
@@ -172,7 +179,8 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   Future<void> selectImage({BuildContext? context}) async {
     emit(PersonalInfoInitial());
     var imageFile = await selectOption(context: context!);
-    print("=-======================================================================= $imageFile");
+    print(
+        "=-======================================================================= $imageFile");
     emit(ImageSelectSuccess(imgFile: imageFile));
   }
 }

@@ -15,7 +15,7 @@ import '../../../generated/l10n.dart';
 import '../../../route/route_path.dart';
 
 class SubmitDialog extends StatefulWidget {
-  const SubmitDialog(
+   SubmitDialog(
       {Key? key,
       required this.mobileNo,
       required this.personId,
@@ -23,6 +23,7 @@ class SubmitDialog extends StatefulWidget {
       this.levelName,
       this.unitId,
       this.isEdit = false,
+     required this.subUnitId,
       required this.onTapSkip})
       : super(key: key);
   final String mobileNo;
@@ -32,7 +33,7 @@ class SubmitDialog extends StatefulWidget {
   final int? unitId;
   final int? levelName;
   final bool isEdit;
-
+   String subUnitId = "";
   @override
   State<SubmitDialog> createState() => _SubmitDialogState();
 }
@@ -91,6 +92,7 @@ class _SubmitDialogState extends State<SubmitDialog> {
                                     listen: false)
                                 .getEntryData(data: {
                               "level": widget.levelId,
+                              "sub_unit": widget.subUnitId,
                               "unit": widget.unitId,
                               "level_name": widget.levelName
                             });
@@ -101,6 +103,7 @@ class _SubmitDialogState extends State<SubmitDialog> {
                                 .getEntryData(data: {
                               "level": widget.levelId,
                               "unit": widget.unitId,
+                              "sub_unit": widget.subUnitId,
                               "level_name": widget.levelName
                             });
                             Navigator.popUntil(context,
@@ -129,6 +132,7 @@ class _SubmitDialogState extends State<SubmitDialog> {
                                             .getEntryData(data: {
                                           "level": widget.levelId,
                                           "unit": widget.unitId,
+                                          "sub_unit": widget.subUnitId,
                                           "level_name": widget.levelName
                                         });
                                         Navigator.popUntil(
@@ -275,7 +279,9 @@ class _SubmitDialogState extends State<SubmitDialog> {
                 //   Navigator.popUntil(
                 //       context, ModalRoute.withName(RoutePath.zilaDataPage));
                 // }),
-                title: widget.isEdit ? S.of(context).later :S.of(context).skipAddNewEntry,
+                title: widget.isEdit
+                    ? S.of(context).later
+                    : S.of(context).skipAddNewEntry,
                 style: GoogleFonts.quicksand(
                     color: AppColor.buttonOrangeBackGroundColor,
                     fontSize: 16,

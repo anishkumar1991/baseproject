@@ -244,46 +244,34 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         spaceHeightWidget(15),
                         BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
                           builder: (context, state) {
-                            return TextFieldWidget(
-                              controller: cubit.mobileNumberCtr,
-                              title: '',
-                              labelText: S.of(context).mobileNumber,
-                              onChanged: (value) {
-                              },
-                              textInputFormatter : <TextInputFormatter>[
-                                FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                                MaskTextInputFormatter(
-                                  mask: '*#########',
-                                  filter: {"*" : RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
-                                  type: MaskAutoCompletionType.lazy
-                                )
-                              ],
-                              validator: ((value) {
-                                if (value?.isEmpty ?? false) {
-                                  return 'Please Enter Mobile Number';
-                                } else if (value?.length  != 10) {
-                                  return 'Mobile number should be 10 digit';
-                                } else if (RegExp(r'0000000000').hasMatch(value!)) {
-                                  return 'This Number is Not Valid Number';
-                                }
-                                return null;
-                              }),
-
-                              keyboardType: TextInputType.number,
-                              suffixWidget: InkWell(
-                                onTap: () {
-                                  cubit.mobileNumberCtr.clear();
-                                  cubit.emitState();
+                            return IgnorePointer(
+                              child: TextFieldWidget(
+                                controller: cubit.mobileNumberCtr,
+                                title: '',
+                                labelText: S.of(context).mobileNumber,
+                                onChanged: (value) {
                                 },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
-                                  child: Image.asset(
-                                    AppIcons.clearIcon,
-                                    height: 2,
-                                    width: 5,
-                                  ),
-                                ),
+                                textInputFormatter : <TextInputFormatter>[
+                                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                                  MaskTextInputFormatter(
+                                    mask: '*#########',
+                                    filter: {"*" : RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
+                                    type: MaskAutoCompletionType.lazy
+                                  )
+                                ],
+                                validator: ((value) {
+                                  if (value?.isEmpty ?? false) {
+                                    return 'Please Enter Mobile Number';
+                                  } else if (value?.length  != 10) {
+                                    return 'Mobile number should be 10 digit';
+                                  } else if (RegExp(r'0000000000').hasMatch(value!)) {
+                                    return 'This Number is Not Valid Number';
+                                  }
+                                  return null;
+                                }),
+                                readOnly: true,
+
+                                keyboardType: TextInputType.number,
                               ),
                             );
                           },
@@ -298,6 +286,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     title: '',
                                     readOnly: true,
                                     labelText: S.of(context).boi,
+                                    onTap: (){
+                                      cubit.editBoi(context);
+                                    },
                                     onChanged: (value) {
                                       cubit.emitState();
                                     },
@@ -311,11 +302,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
 
                                       return null;
                                     }),
-                                    suffixWidget: InkWell(
-                                        onTap: () {
-                                          cubit.editBoi(context);
-                                        },
-                                        child: Image.asset(AppIcons.calenderIcon))),
+                                    suffixWidget: Image.asset(AppIcons.calenderIcon)),
                                 spaceHeightWidget(5),
                                 ( widget.userDetails.data?.dob != '' &&  widget.userDetails.data?.dob != null) ? Row(
                                   children: [
@@ -481,7 +468,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         if( cubit.formKey.currentState!.validate()){
                           if (cubit.image != null) {
                             cubit.getNetworkUrlAndUpdateProfile(
-                                id: widget.userDetails.data?.id);
+                                id: widget.userDetails.data?.id,context: context);
                           } else {
                             print(cubit.religionId);
                             print(cubit.castId);

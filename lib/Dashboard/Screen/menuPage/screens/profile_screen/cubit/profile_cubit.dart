@@ -12,6 +12,9 @@ import 'package:meta/meta.dart';
 
 import '../../../../../../AddEntry/network/model/category_model.dart';
 import '../../../../../../Storage/user_storage_service.dart';
+import '../../../../../../generated/l10n.dart';
+import '../../../../../../generated/l10n.dart';
+import '../../../../../../generated/l10n.dart';
 import '../../personal_info/cubit/personal_info_cubit.dart';
 import '../network/api/user_detail_api.dart';
 import '../network/model/user_detail_model.dart';
@@ -44,30 +47,32 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
   Future<void> selectImageForProfile({int? id,BuildContext? context}) async {
     emit(ProfileInitial());
-    await selectOption(context: context!);
+    await selectOption(context: context!).then((value){
+      // uploadImageToFirebase(context: context);
+    });
     emit(ImageSelectForProfileSuccess());
   }
 
-  uploadImageToFirebase({BuildContext? context}) async {
-    EasyLoading.show();
+  uploadImageToFirebase({required BuildContext context}) async {
+    EasyLoading.show(status:  S.of(context).uploading);
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
     final destination = '${userDetails?.data?.id}/${userDetails?.data?.id}_userProfile';
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
       EasyLoading.dismiss();
-      EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
     });
     urlDownload = await snapshot.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
     if(urlDownload != null){
       Future.delayed(Duration.zero).then((value){
-        context!.read<PersonalInfoCubit>().updatePersonalDetails(data: {
+        context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
           "avatar": urlDownload,
         });
       });
     }
     EasyLoading.dismiss();
+    EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
   }
 
   Future getUserDetails() async {

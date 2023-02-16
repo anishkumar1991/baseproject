@@ -184,5 +184,7 @@
   "notValidNumber":"This Number is Not Valid Number",
   "alreadyVerified":"Person already verified",
   "addAttendeesHeader" : "Present Guest / Participant / Worker",
-  "later" : "later"
+  "later" : "later",
+  "uploading": "Uploading",
+  "enterPin" : "Please enter pincode number"
 }
