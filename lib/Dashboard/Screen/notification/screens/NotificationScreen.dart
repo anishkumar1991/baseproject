@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/DatePicCubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/DatePicState.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationState.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../cubit/NotificationCubit.dart';
 import '../widgets/FileTypeIcons.dart';
 import 'package:intl/intl.dart';
@@ -66,12 +67,12 @@ class NotificationScreen extends StatelessWidget {
                     return Flexible(
                       child: BlocBuilder<DatePicCubit, DatePicState>(
                         builder: (context, state) {
-                          if(state is DatePickedStateState){
+                          if (state is DatePickedStateState) {
                             return ListView.builder(
                               physics: const ScrollPhysics(),
                               shrinkWrap: true,
                               itemCount:
-                              cubit.tempModel!.notificationsList?.length,
+                                  cubit.tempModel!.notificationsList?.length,
                               itemBuilder: (context, index) {
                                 var tempdate = cubit
                                     .tempModel!.notificationsList![index].date;
@@ -99,11 +100,12 @@ class NotificationScreen extends StatelessWidget {
                                     temptimeshow;
 
                                 if (cubit.tempModel!.notificationsList![index]
-                                    .sType ==
-                                    "notification" &&
+                                            .sType ==
+                                        "notification" &&
                                     printdate == comparedate) {
                                   return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       ListTile(
                                         leading: CustomFileIcon(
@@ -113,7 +115,7 @@ class NotificationScreen extends StatelessWidget {
                                                 .uploadFile),
                                         title: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               printdate +
@@ -124,7 +126,8 @@ class NotificationScreen extends StatelessWidget {
                                               style: GoogleFonts.quicksand(
                                                   fontWeight: FontWeight.w600,
                                                   fontSize: 12,
-                                                  color: const Color(0xFF262626)),
+                                                  color:
+                                                      const Color(0xFF262626)),
                                             ),
                                             Text(
                                               cubit
@@ -135,21 +138,51 @@ class NotificationScreen extends StatelessWidget {
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 13,
-                                                  color: const Color(0xFF262626)),
+                                                  color:
+                                                      const Color(0xFF262626)),
                                             ),
                                             const SizedBox(height: 4),
                                           ],
                                         ),
-                                        subtitle: Text(
-                                          cubit
-                                              .tempModel!
-                                              .notificationsList![index]
-                                              .description
-                                              .toString(),
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 10,
-                                              color: const Color(0xFF999999)),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              cubit
+                                                  .tempModel!
+                                                  .notificationsList![index]
+                                                  .description
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 10,
+                                                  color:
+                                                      const Color(0xFF999999)),
+                                            ),
+                                            InkWell(
+                                              onTap: () => _onOpen(
+                                                  cubit
+                                                      .tempModel!
+                                                      .notificationsList![index]
+                                                      .link
+                                                      .toString(),
+                                                  context),
+                                              child: Text(
+                                                cubit
+                                                    .tempModel!
+                                                    .notificationsList![index]
+                                                    .link
+                                                    .toString(),
+                                                style: GoogleFonts.poppins(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 10,
+                                                    color: Colors.blue),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                       const Divider(
@@ -236,16 +269,44 @@ class NotificationScreen extends StatelessWidget {
                                           const SizedBox(height: 4),
                                         ],
                                       ),
-                                      subtitle: Text(
-                                        cubit
-                                            .tempModel!
-                                            .notificationsList![index]
-                                            .description
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10,
-                                            color: const Color(0xFF999999)),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            cubit
+                                                .tempModel!
+                                                .notificationsList![index]
+                                                .description
+                                                .toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10,
+                                                color: const Color(0xFF999999)),
+                                          ),
+                                          InkWell(
+                                            onTap: () => _onOpen(
+                                                cubit
+                                                    .tempModel!
+                                                    .notificationsList![index]
+                                                    .link
+                                                    .toString(),
+                                                context),
+                                            child: Text(
+                                              cubit
+                                                  .tempModel!
+                                                  .notificationsList![index]
+                                                  .link
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 10,
+                                                  color: Colors.blue),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                     const Divider(
@@ -273,5 +334,16 @@ class NotificationScreen extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       },
     );
+  }
+
+  Future<void> _onOpen(String link, BuildContext context) async {
+    if (await canLaunchUrl(Uri.parse(link))) {
+      await launchUrl(Uri.parse(link));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Can't Open"),
+        duration: Duration(milliseconds: 70),
+      ));
+    }
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationState.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../cubit/DatePicCubit.dart';
 import '../cubit/DatePicState.dart';
 import '../cubit/NotificationCubit.dart';
@@ -144,16 +145,45 @@ class CircularScreen extends StatelessWidget {
                                             const SizedBox(height: 4),
                                           ],
                                         ),
-                                        subtitle: Text(
-                                          cubit
-                                              .tempModel!
-                                              .notificationsList![index]
-                                              .description
-                                              .toString(),
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 10,
-                                              color: const Color(0xFF999999)),
+                                        subtitle: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              cubit
+                                                  .tempModel!
+                                                  .notificationsList![index]
+                                                  .description
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 10,
+                                                  color:
+                                                      const Color(0xFF999999)),
+                                            ),
+                                            InkWell(
+                                              onTap: () => _onOpen(
+                                                  cubit
+                                                      .tempModel!
+                                                      .notificationsList![index]
+                                                      .link
+                                                      .toString(),
+                                                  context),
+                                              child: Text(
+                                                cubit
+                                                    .tempModel!
+                                                    .notificationsList![index]
+                                                    .link
+                                                    .toString(),
+                                                style: GoogleFonts.poppins(
+                                                    decoration: TextDecoration
+                                                        .underline,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 10,
+                                                    color: Colors.blue),
+                                              ),
+                                            )
+                                          ],
                                         ),
                                       ),
                                       const Divider(
@@ -238,16 +268,44 @@ class CircularScreen extends StatelessWidget {
                                           const SizedBox(height: 4),
                                         ],
                                       ),
-                                      subtitle: Text(
-                                        cubit
-                                            .tempModel!
-                                            .notificationsList![index]
-                                            .description
-                                            .toString(),
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10,
-                                            color: const Color(0xFF999999)),
+                                      subtitle: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            cubit
+                                                .tempModel!
+                                                .notificationsList![index]
+                                                .description
+                                                .toString(),
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 10,
+                                                color: const Color(0xFF999999)),
+                                          ),
+                                          InkWell(
+                                            onTap: () => _onOpen(
+                                                cubit
+                                                    .tempModel!
+                                                    .notificationsList![index]
+                                                    .link
+                                                    .toString(),
+                                                context),
+                                            child: Text(
+                                              cubit
+                                                  .tempModel!
+                                                  .notificationsList![index]
+                                                  .link
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 10,
+                                                  color: Colors.blue),
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
                                     const Divider(
@@ -275,5 +333,16 @@ class CircularScreen extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       },
     );
+  }
+
+  Future<void> _onOpen(String link, BuildContext context) async {
+    if (await canLaunchUrl(Uri.parse(link))) {
+      await launchUrl(Uri.parse(link));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Can't Open"),
+        duration: Duration(milliseconds: 70),
+      ));
+    }
   }
 }
