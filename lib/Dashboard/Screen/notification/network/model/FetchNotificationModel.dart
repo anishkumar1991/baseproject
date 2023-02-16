@@ -34,7 +34,7 @@ class NotificationsList {
   String? date;
   String? time;
   String? attachmentType;
-  Null? link;
+  String? link;
   String? fcm;
 
   NotificationsList(
