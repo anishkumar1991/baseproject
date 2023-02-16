@@ -211,6 +211,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Select Reason"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
+        "pravasEndDate":
+            MessageLookupByLibrary.simpleMessage("Please enter last date"),
+        "pravasName": MessageLookupByLibrary.simpleMessage(
+            "Please enter pravas name first"),
+        "pravasStartDate":
+            MessageLookupByLibrary.simpleMessage("please enter start date"),
+        "pravasSubject":
+            MessageLookupByLibrary.simpleMessage("Please enter pravas subject"),
         "preparing": MessageLookupByLibrary.simpleMessage("preparing"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
         "primaryMemberId": MessageLookupByLibrary.simpleMessage(

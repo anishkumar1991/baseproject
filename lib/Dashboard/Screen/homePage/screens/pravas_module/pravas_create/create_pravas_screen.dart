@@ -63,11 +63,14 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                           children: [
                             BlocBuilder<PravasCreateCubit, PravasCreateState>(
                               builder: (context, state) {
+                                if(state is StartDateOfTour){
+                                  cubit.startDate = state.date;
+                                }
                                 return Row(
                                   children: [
                                     Text(
                                       cubit.startDate != ""
-                                          ? "${cubit.startDate} - ${cubit.endDate}"
+                                          ? cubit.startDate
                                           : S.of(context).dateToFrom,
                                       style: const TextStyle(
                                         color: AppColor.greyColor,
@@ -77,7 +80,57 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
                                     GestureDetector(
                                         onTap: () async {
                                           print("hello");
-                                          cubit.startToEndDate(context);
+                                          cubit.pravasStartDate(context);
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            height: 20,
+                                            width: 20,
+                                            child: Image.asset(AppIcons.datePickerIcon),
+                                          ),
+                                        )
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                            spaceHeightWidget(4),
+                            Divider(
+                              height: 2,
+                              thickness: 1.5,
+                              color: AppColor.greyColor.withOpacity(0.5),
+                            )
+                          ],
+                        ),
+                        spaceHeightWidget(35),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BlocBuilder<PravasCreateCubit, PravasCreateState>(
+                              builder: (context, state) {
+                                if(state is EndDateOfTour){
+                                  cubit.endDate = state.date;
+                                }
+                                return Row(
+                                  children: [
+                                    Text(
+                                      cubit.startDate != ""
+                                          ? cubit.endDate
+                                          : S.of(context).dateTo,
+                                      style: const TextStyle(
+                                        color: AppColor.greyColor,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    GestureDetector(
+                                        onTap: () async {
+                                          print("hello");
+                                          if(cubit.startDate == ''){
+                                            EasyLoading.showToast(S.of(context).pravasStartDate,toastPosition: EasyLoadingToastPosition.top);
+                                          }else{
+                                            cubit.pravasEndDate(context);
+                                          }
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
@@ -113,13 +166,21 @@ class _PrvasCreateScreenState extends State<PrvasCreateScreen> {
 
                             /// for now,user token is static
 
-                            // showConfirmDialog();
-                            int time = DateTime.now().hour;
-                            await cubit.PravasCreate().whenComplete(() => {
-                              if(cubit.statusCode == 200){
-                                showConfirmDialog()
-                              }
-                            });
+                            if(cubit.prvasNameCtr.text.isEmpty){
+                              EasyLoading.showToast(S.of(context).pravasName,toastPosition: EasyLoadingToastPosition.top);
+                            }else if(cubit.startDate == ''){
+                              EasyLoading.showToast(S.of(context).pravasStartDate,toastPosition: EasyLoadingToastPosition.top);
+                            }else if(cubit.endDate == ''){
+                              EasyLoading.showToast(S.of(context).pravasEndDate,toastPosition: EasyLoadingToastPosition.top);
+                            }else if(cubit.pravasSubjectCtr.text.isEmpty){
+                              EasyLoading.showToast(S.of(context).pravasSubject,toastPosition: EasyLoadingToastPosition.top);
+                            }else{
+                              await cubit.PravasCreate().whenComplete(() => {
+                                if(cubit.statusCode == 200){
+                                  showConfirmDialog()
+                                }
+                              });
+                            }
                           },
                           title: S.of(context).takeATour,
                           borderRadius: 10,

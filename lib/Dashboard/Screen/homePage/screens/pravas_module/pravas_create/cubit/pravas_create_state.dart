@@ -8,10 +8,6 @@ class PravasCreateInitial extends PravasCreateState {}
 //   String date;
 //   DobSelectedState(this.date);
 // }
-class StartDateOfTour extends PravasCreateState {
- final String date;
-  StartDateOfTour(this.date);
-}
 class EndOfTour extends PravasCreateState {
  final String date;
   EndOfTour(this.date);
@@ -28,4 +24,19 @@ class CreatePravasFatchDataState extends PravasCreateState {
 class CreatePravasErrorState extends PravasCreateState {
  String? error;
  CreatePravasErrorState({this.error});
+}
+
+/// pick startPravas Date
+class StartDateLoadingState extends PravasCreateState {}
+class StartDateOfTour extends PravasCreateState {
+ final String date;
+ StartDateOfTour(this.date);
+}
+
+
+/// pick endPravas Date
+class EndDateLoadingState extends PravasCreateState {}
+class EndDateOfTour extends PravasCreateState {
+ final String date;
+ EndDateOfTour(this.date);
 }

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sangathan/Values/string.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -18,7 +19,9 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   String startDate = '';
+  DateTime dateTimeStart = DateTime.now();
   String endDate = '';
+  DateTime endTimeStart = DateTime.now();
   PickerDateRange? temp;
   int? statusCode;
   CreatePravasAndFunctionModel createPravasModel = CreatePravasAndFunctionModel();
@@ -32,9 +35,7 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
       final res = await api.pravasCreate(prvasNameCtr.text,startDate,endDate,pravasSubjectCtr.text);
       print(
           "------------------------------------ Create Pravas data  ----------------------------");
-      print("token  :${StorageService.userAuthToken}");
       print("Status code : ${res.response.statusCode}");
-      print("Header : ${res.response.headers.map}");
       print("Response :${res.data}");
       print(
           "------------------------------------ ------------------------ ----------------------------");
@@ -52,14 +53,54 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
     }
   }
 
-  Future<void> startToEndDate(BuildContext context) async {
-    emit(AddEntryLoadingState());
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return  const RangePickerDialog();
-      },
-    ).then((value) =>  emit(StartDateOfTour(startDate)));
+  Future<void> pravasStartDate(BuildContext context) async {
+    emit(StartDateLoadingState());
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(
+            DateTime.now().year - 1,DateTime.now().month,DateTime.now().day),
+        lastDate: DateTime(DateTime.now().year, DateTime.now().month,
+            DateTime.now().day));
+    if (picked != null && picked != dateTimeStart) {
+      dateTimeStart = picked;
+      startDate = ddMMMYYYYfromDateTime(dateTimeStart);
+      print(startDate);
+      emit(StartDateOfTour(startDate));
+    }
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (BuildContext context) {
+    //     return  const RangePickerDialog();
+    //   },
+    // ).then((value) =>  emit(StartDateOfTour(startDate)));
+  }
+  Future<void> pravasEndDate(BuildContext context) async {
+    emit(EndDateLoadingState());
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(
+            dateTimeStart.year, dateTimeStart.month, dateTimeStart.day),
+        lastDate: DateTime(2050,12,1));
+    if (picked != null && picked != endTimeStart) {
+      endTimeStart = picked;
+      endDate = ddMMMYYYYfromDateTime(endTimeStart);
+      print(endDate);
+      emit(EndDateOfTour(endDate));
+    }
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (BuildContext context) {
+    //     return  const RangePickerDialog();
+    //   },
+    // ).then((value) =>  emit(StartDateOfTour(startDate)));
+  }
+
+
+  static String ddMMMYYYYfromDateTime(DateTime date) {
+    return DateFormat('dd/MM/yyyy').format(date);
   }
 }

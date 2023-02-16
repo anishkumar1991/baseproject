@@ -1929,6 +1929,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Please enter pravas name first`
+  String get pravasName {
+    return Intl.message(
+      'Please enter pravas name first',
+      name: 'pravasName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter start date`
+  String get pravasStartDate {
+    return Intl.message(
+      'please enter start date',
+      name: 'pravasStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter last date`
+  String get pravasEndDate {
+    return Intl.message(
+      'Please enter last date',
+      name: 'pravasEndDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter pravas subject`
+  String get pravasSubject {
+    return Intl.message(
+      'Please enter pravas subject',
+      name: 'pravasSubject',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

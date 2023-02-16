@@ -90,9 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
             "डेटा यूनिट उपलब्ध नहीं है इसलिए आप ऐड एंट्री नहीं कर सकते"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("दिनांक और समय * "),
-        "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )"),
+        "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )*"),
         "dateToFrom":
-            MessageLookupByLibrary.simpleMessage("दिनांक  ( कब से - कब तक)*"),
+            MessageLookupByLibrary.simpleMessage("दिनांक  ( कब से )*"),
         "delete": MessageLookupByLibrary.simpleMessage("डिलीट"),
         "deleteShaktiKendr": MessageLookupByLibrary.simpleMessage(
             "की प्रविष्टियां हटा दी जाएंगी।"),
@@ -213,6 +213,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कृपया हटाने का कारण चुनें"),
         "position": MessageLookupByLibrary.simpleMessage("पद"),
         "post": MessageLookupByLibrary.simpleMessage("पद"),
+        "pravasEndDate":
+            MessageLookupByLibrary.simpleMessage("कृपया अंतिम तिथि दर्ज करें"),
+        "pravasName": MessageLookupByLibrary.simpleMessage(
+            "कृपया पहले प्रवासी नाम दर्ज करें"),
+        "pravasStartDate": MessageLookupByLibrary.simpleMessage(
+            "कृपया प्रारंभ तिथि दर्ज करें"),
+        "pravasSubject": MessageLookupByLibrary.simpleMessage(
+            "कृपया प्रवासी विषय दर्ज करें"),
         "preparing": MessageLookupByLibrary.simpleMessage("तैयार कर रहे हैं"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "primaryMemberId": MessageLookupByLibrary.simpleMessage(
