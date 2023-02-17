@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../network/model/user_profile_model.dart';
+import '../../Dashboard/Screen/menuPage/screens/profile_screen/network/model/user_detail_model.dart';
 
 abstract class UserProfileState extends Equatable {
   @override
@@ -12,7 +12,7 @@ class UserProfileInitialState extends UserProfileState {}
 class UserProfileLoadigState extends UserProfileState {}
 
 class UserProfileDataFetchedState extends UserProfileState {
-  final UserProfileModel userProfileModel;
+  final UserDetailModel userProfileModel;
   UserProfileDataFetchedState(this.userProfileModel);
 }
 

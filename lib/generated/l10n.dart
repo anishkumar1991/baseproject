@@ -360,10 +360,10 @@ class S {
     );
   }
 
-  /// `later`
+  /// `Later`
   String get later {
     return Intl.message(
-      'later',
+      'Later',
       name: 'later',
       desc: '',
       args: [],
@@ -1890,6 +1890,26 @@ class S {
     );
   }
 
+  /// `Day`
+  String get day {
+    return Intl.message(
+      'Day',
+      name: 'day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get time {
+    return Intl.message(
+      'Time',
+      name: 'time',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Uploading`
   String get uploading {
     return Intl.message(
@@ -1965,6 +1985,36 @@ class S {
     return Intl.message(
       'Please enter pravas subject',
       name: 'pravasSubject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Getting state data`
+  String get gettingStateData {
+    return Intl.message(
+      'Getting state data',
+      name: 'gettingStateData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Downloading..`
+  String get downloading {
+    return Intl.message(
+      'Downloading..',
+      name: 'downloading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download`
+  String get download {
+    return Intl.message(
+      'Download',
+      name: 'download',
       desc: '',
       args: [],
     );

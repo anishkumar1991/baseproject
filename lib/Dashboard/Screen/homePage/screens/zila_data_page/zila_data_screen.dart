@@ -23,7 +23,7 @@ import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
-int pannaCountryStateId = 28;
+int pannaCountryStateId = 14;
 
 class ZilaDataScreen extends StatefulWidget {
   ZilaDataScreen(
@@ -408,7 +408,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   builder: (context) {
                     return PannaPdfViewer(
                       pdfLink: cubit.selectedPannaNo?.pdfUrl,
-                      // pdfLink: 'https://storage.googleapis.com/dev-saral-bucket/uploads/panna/panna/file/152/14_165_5_3.pdf?GoogleAccessId=949025725562-compute%40developer.gserviceaccount.com&Expires=1676540902&Signature=ddhst%2BGJUOQTkIbqrtDPGTKGoJ7k488x4RJLQhYq6sELJ0SlOX7P%2B3kUPSUmQ9XqpQyXzs5Xuz9MKmQ83SE026GPzhVEjU%2F%2BZBtmAxHzKOb3ArvNm4AWdKSdSpDd0L%2B7xbXqdxU4QQuannQ3lgsllwT2OWdTmfaha2XossET0FXLVyT%2B231Vy%2FhUid7hv99FACuM584ZPpLX2dUsm%2BolFomUBZx0%2Fm1Rx%2BplRIDj2%2Bdtj0d4GLvda6TPWZiczvfjTuVKNy8rx79tBqSWUeyhtqSORnJOos8%2FN6YBwd5elnoocNz0f7FnOzXK6kMRcsQikcvODYssITWbQX9VqscMZw%3D%3D',
+                      // pdfLink:
+                      //     "https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf",
                       pannaNumber: cubit.selectedPannaNo?.number,
                     );
                   },

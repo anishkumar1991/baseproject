@@ -19,6 +19,10 @@ class GuestCubit extends Cubit<GuestState> {
   TextEditingController position = TextEditingController();
   CreatePravasAndFunctionModel createPravasAndFunctionModel = CreatePravasAndFunctionModel();
   GuestList guestList = GuestList();
+    final FocusNode nameFocusNode = FocusNode();
+  final FocusNode phoneFocusNode = FocusNode();
+  final FocusNode positionFocusNode = FocusNode();
+
   bool isEdit = false;
   int? attendeesIdForEdit;
 

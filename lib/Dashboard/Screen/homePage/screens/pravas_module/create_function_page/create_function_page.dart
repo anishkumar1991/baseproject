@@ -31,7 +31,9 @@ class CreateFunctionScreen extends StatefulWidget {
 class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
   @override
   void initState() {
-    context.read<CreateFunctionCubit>().emitState();
+    context.read<CreateFunctionCubit>().programType();
+    context.read<CreateFunctionCubit>().cleanAllVariableValue();
+
     super.initState();
   }
 
@@ -51,167 +53,230 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
               child: headerWidgetCreateFunction(context),
             ),
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.02),
-            Expanded(child: SingleChildScrollView(
-              child: BlocBuilder<CreateFunctionCubit, CreateFunctionState>(
-                builder: (context, state) {
+            Expanded(
+                child: BlocBuilder<CreateFunctionCubit, CreateFunctionState>(
+              builder: (context, state) {
+                if (state is GetProgramTypeSuccessState) {
+                  cubit.programTypeList = state.programTypeModel.data ?? [];
+                  context.read<CreateFunctionCubit>().getProgramLevel();
+                }
+                if (state is GetProgramLevelSuccessState) {
+                  cubit.programLevelList = state.programTypeModel.data ?? [];
+                }
+                if (state is GetProgramTypeErrorState ||
+                    State is GetProgramLevelTypeErrorState) {
                   return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                      Center(
+                          child: Text(
+                        S.of(context).oopsErrorMsg,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: AppColor.black),
+                      ))
+                    ],
+                  );
+                }
+                /*  if (s) {}*/
+                return cubit.programTypeList.isEmpty ||
+                        cubit.programLevelList.isEmpty
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      )
+                    : SingleChildScrollView(
                         child: Column(
                           children: [
-                            TextFieldWidget(
-                                controller: cubit.functionNameText,
-                                title: '',
-                                labelText: S.of(context).functionName,
-                                onChanged: (value) {
-                                  cubit.emitState();
-                                },
-                                keyboardType: TextInputType.emailAddress,
-                                suffixWidget:
-                                    cubit.functionNameText.text.isNotEmpty
-                                        ? InkWell(
-                                            onTap: () {
-                                              cubit.functionNameText.clear();
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 16.0,
-                                                  left: 15,
-                                                  right: 15),
-                                              child: Image.asset(
-                                                AppIcons.clearIcon,
-                                                height: 2,
-                                                width: 5,
-                                              ),
-                                            ),
-                                          )
-                                        : const SizedBox.shrink()),
-                            spaceHeightWidget(
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                children: [
+                                  TextFieldWidget(
+                                      controller: cubit.functionNameText,
+                                      title: '',
+                                      labelText: S.of(context).functionName,
+                                      keyboardType: TextInputType.emailAddress,
+                                      suffixWidget: InkWell(
+                                        onTap: () {
+                                          cubit.functionNameText.clear();
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 16.0, left: 15, right: 15),
+                                          child: Image.asset(
+                                            AppIcons.clearIcon,
+                                            height: 2,
+                                            width: 5,
+                                          ),
+                                        ),
+                                      )),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  TextFieldWidget(
+                                      controller: cubit.pickedDateText,
+                                      title: '',
+                                      readOnly: true,
+                                      onTap: () {
+                                        cubit.editDate(context);
+                                      },
+                                      labelText: S.of(context).day,
+                                      keyboardType: TextInputType.emailAddress,
+                                      suffixWidget: const Icon(
+                                        Icons.calendar_month_outlined,
+                                        color: AppColor.greyColor,
+                                      )),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  TextFieldWidget(
+                                      controller: cubit.pickedTimeText,
+                                      title: '',
+                                      readOnly: true,
+                                      onTap: () {
+                                        cubit.editTime(context);
+                                      },
+                                      labelText: S.of(context).time,
+                                      keyboardType: TextInputType.emailAddress,
+                                      suffixWidget: const Icon(
+                                        Icons.timer_outlined,
+                                        color: AppColor.greyColor,
+                                      )),
+                                  /*  spaceHeightWidget(
                                 MediaQuery.of(context).size.height * 0.02),
                             TextFieldWidget(
                               controller: cubit.functionDateTimeText,
-                              onChanged: (value) {
-                                cubit.emitState();
-                              },
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, RoutePath.pravasEditTimeScreen);
                               },
                               readOnly: true,
-                              suffixWidget:
-                                  cubit.functionDateTimeText.text.isNotEmpty
-                                      ? InkWell(
-                                          onTap: () {
-                                            cubit.functionDateTimeText.clear();
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 16.0, left: 15, right: 15),
-                                            child: Image.asset(
-                                              AppIcons.clearIcon,
-                                              height: 2,
-                                              width: 5,
-                                            ),
-                                          ),
-                                        )
-                                      : const SizedBox.shrink(),
+                              suffixWidget: InkWell(
+                                onTap: () {
+                                  cubit.functionDateTimeText.clear();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 16.0, left: 15, right: 15),
+                                  child: Image.asset(
+                                    AppIcons.clearIcon,
+                                    height: 2,
+                                    width: 5,
+                                  ),
+                                ),
+                              ),
                               title: '',
                               hintText: S.of(context).dateAndTime,
                               keyboardType: TextInputType.emailAddress,
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
-                            BlocBuilder<CreateFunctionCubit,
-                                CreateFunctionState>(
-                              builder: (context, state) {
-                                return TextFieldWidget(
-                                  controller: cubit.functionTypeText,
-                                  title: '',
-                                  hintText: S.of(context).functionType,
-                                  readOnly: true,
-                                  onTap: () {
-                                    _modalBottomSheetMenuForFunctionType(
-                                        context);
-                                  },
-                                  keyboardType: TextInputType.emailAddress,
-                                  suffixWidget: SizedBox(
-                                    width: 60,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        const Icon(
-                                          Icons.info_outline_rounded,
-                                          color: AppColor.blue,
-                                          size: 22,
+                            ),*/
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  BlocBuilder<CreateFunctionCubit,
+                                      CreateFunctionState>(
+                                    builder: (context, state) {
+                                      return TextFieldWidget(
+                                        controller: cubit.functionTypeText,
+                                        title: '',
+                                        hintText: S.of(context).functionType,
+                                        readOnly: true,
+                                        onTap: () {
+                                          _modalBottomSheetMenuForFunctionType(
+                                              context);
+                                        },
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        suffixWidget: SizedBox(
+                                          width: 60,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              const Icon(
+                                                Icons.info_outline_rounded,
+                                                color: AppColor.blue,
+                                                size: 22,
+                                              ),
+                                              spaceWidthWidget(8),
+                                              const Icon(Icons
+                                                  .keyboard_arrow_down_rounded)
+                                            ],
+                                          ),
                                         ),
-                                        spaceWidthWidget(8),
-                                        const Icon(
-                                            Icons.keyboard_arrow_down_rounded)
-                                      ],
-                                    ),
+                                      );
+                                    },
                                   ),
-                                );
-                              },
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
-                            TextFieldWidget(
-                              controller: cubit.functionLevelText,
-                              title: '',
-                              hintText: S.of(context).functionLayer,
-                              readOnly: true,
-                              onTap: () {
-                                _modalBottomSheetMenuForFunctionLevel(context);
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                              suffixWidget:
-                                  const Icon(Icons.keyboard_arrow_down_rounded),
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
-                            TextFieldWidget(
-                              controller: cubit.lokSabhaText,
-                              title: '',
-                              hintText: S.of(context).lokSabha,
-                              readOnly: true,
-                              keyboardType: TextInputType.emailAddress,
-                              suffixWidget:
-                                  const Icon(Icons.keyboard_arrow_down_rounded),
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
-                            BlocBuilder<CreateFunctionCubit,
-                                CreateFunctionState>(
-                              builder: (context, state) {
-                                return TextFieldWidget(
-                                  controller: cubit.placeText,
-                                  title: '',
-                                  readOnly: true,
-                                  onTap: () {
-                                    _modalBottomSheetMenuForPlace(context,
-                                        selectedValue: cubit.placeText.text);
-                                  },
-                                  hintText: S.of(context).functionAdd,
-                                  keyboardType: TextInputType.emailAddress,
-                                  suffixWidget: const Icon(
-                                      Icons.info_outline_rounded,
-                                      color: AppColor.blue),
-                                );
-                              },
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
-                            TextFieldWidget(
-                              controller: cubit.subjectText,
-                              title: '',
-                              labelText: S.of(context).subject,
-                              onChanged: (value) {
-                                cubit.emitState();
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                              suffixWidget: cubit.subjectText.text.isNotEmpty
-                                  ? InkWell(
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  TextFieldWidget(
+                                    controller: cubit.functionLevelText,
+                                    title: '',
+                                    hintText: S.of(context).functionLayer,
+                                    readOnly: true,
+                                    onTap: () {
+                                      _modalBottomSheetMenuForFunctionLevel(
+                                          context);
+                                    },
+                                    keyboardType: TextInputType.emailAddress,
+                                    suffixWidget: const Icon(
+                                        Icons.keyboard_arrow_down_rounded),
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  TextFieldWidget(
+                                    controller: cubit.lokSabhaText,
+                                    title: '',
+                                    hintText: S.of(context).lokSabha,
+                                    readOnly: true,
+                                    keyboardType: TextInputType.emailAddress,
+                                    suffixWidget: const Icon(
+                                        Icons.keyboard_arrow_down_rounded),
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  BlocBuilder<CreateFunctionCubit,
+                                      CreateFunctionState>(
+                                    builder: (context, state) {
+                                      return TextFieldWidget(
+                                        controller: cubit.placeText,
+                                        title: '',
+                                        readOnly: true,
+                                        onTap: () {
+                                          _modalBottomSheetMenuForPlace(context,
+                                              selectedValue:
+                                                  cubit.placeText.text);
+                                        },
+                                        hintText: S.of(context).functionAdd,
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                        suffixWidget: const Icon(
+                                            Icons.info_outline_rounded,
+                                            color: AppColor.blue),
+                                      );
+                                    },
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  TextFieldWidget(
+                                    controller: cubit.subjectText,
+                                    title: '',
+                                    labelText: S.of(context).subject,
+                                    keyboardType: TextInputType.emailAddress,
+                                    suffixWidget: InkWell(
                                       onTap: () {
                                         cubit.subjectText.clear();
                                       },
@@ -224,71 +289,69 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                           width: 5,
                                         ),
                                       ),
-                                    )
-                                  : const SizedBox.shrink(),
+                                    ),
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                ],
+                              ),
                             ),
                             spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
-                          ],
-                        ),
-                      ),
-                      spaceHeightWidget(
-                          MediaQuery.of(context).size.height * 0.04),
-                      Container(
-                        color: AppColor.lightGreenColor,
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            Text(
-                              S.of(context).addGuestDetail,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.naturalBlackColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            spaceHeightWidget(19),
-                            InkWell(
-                              onTap: () {
-                                context.read<GuestCubit>().isEdit = false;
-                                Navigator.pushNamed(
-                                    context, RoutePath.guestListScreen);
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
+                                MediaQuery.of(context).size.height * 0.04),
+                            Container(
+                              color: AppColor.lightGreenColor,
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
                                 children: [
                                   Text(
-                                    S.of(context).addOptional,
+                                    S.of(context).addGuestDetail,
                                     textAlign: TextAlign.center,
                                     style: GoogleFonts.poppins(
-                                        color: AppColor.blue, fontSize: 14),
+                                        color: AppColor.naturalBlackColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
                                   ),
-                                  spaceWidthWidget(5),
-                                  const Icon(
-                                    Icons.arrow_forward,
-                                    color: AppColor.blue,
+                                  spaceHeightWidget(19),
+                                  InkWell(
+                                    onTap: () {
+                                      context.read<GuestCubit>().isEdit = false;
+                                      Navigator.pushNamed(
+                                          context, RoutePath.guestListScreen);
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          S.of(context).addOptional,
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.poppins(
+                                              color: AppColor.blue,
+                                              fontSize: 14),
+                                        ),
+                                        spaceWidthWidget(5),
+                                        const Icon(
+                                          Icons.arrow_forward,
+                                          color: AppColor.blue,
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                      spaceHeightWidget(
-                          MediaQuery.of(context).size.height * 0.02),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextFieldWidget(
-                              controller: cubit.commentText,
-                              maxLines: 5,
-                              onChanged: (value) {
-                                cubit.emitState();
-                              },
-                              suffixWidget: cubit.commentText.text.isNotEmpty
-                                  ? InkWell(
+                            ),
+                            spaceHeightWidget(
+                                MediaQuery.of(context).size.height * 0.02),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextFieldWidget(
+                                    controller: cubit.commentText,
+                                    maxLines: 5,
+                                    suffixWidget: InkWell(
                                       onTap: () {
                                         cubit.commentText.clear();
                                       },
@@ -301,176 +364,209 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                           width: 5,
                                         ),
                                       ),
-                                    )
-                                  : const SizedBox.shrink(),
-                              title: '',
-                              labelText: S.of(context).comment,
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.05),
-                            Text(
-                              S.of(context).photoMax,
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.naturalBlackColor,
-                                  fontSize: 12),
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.01),
-                            BlocBuilder<CreateFunctionCubit,
-                                CreateFunctionState>(
-                              builder: (context, state) {
-                                return InkWell(
-                                    onTap: () {
-                                      cubit.selectImage1();
-                                    },
-                                    child: cubit.imageFile1 == null
-                                        ? DottedBorder(
-                                            color: AppColor.blue,
-                                            strokeWidth: 1,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(10),
-                                              child: Row(
-                                                children: [
-                                                  const Icon(Icons.image,
-                                                      color: AppColor.blue),
-                                                  spaceWidthWidget(
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.05),
-                                                  Text(
-                                                    S.of(context).uploadPhoto,
-                                                    textAlign: TextAlign.center,
-                                                    style: GoogleFonts.poppins(
-                                                        color: AppColor.blue,
-                                                        fontSize: 12),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        : InkWell(
-                                            onTap: () {},
-                                            child: SizedBox(
-                                              height: 100,
-                                              width: 130,
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: Image.file(
-                                                      cubit.imageFile1!,
-                                                      fit: BoxFit.cover)),
-                                            ),
-                                          ));
-                              },
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
-                            BlocBuilder<CreateFunctionCubit,
-                                CreateFunctionState>(
-                              builder: (context, state) {
-                                return InkWell(
-                                    onTap: () {
-                                      cubit.selectImage2();
-                                    },
-                                    child: cubit.imageFile2 == null
-                                        ? DottedBorder(
-                                            color: AppColor.blue,
-                                            strokeWidth: 1,
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(10),
-                                              child: Row(
-                                                children: [
-                                                  const Icon(Icons.image,
-                                                      color: AppColor.blue),
-                                                  spaceWidthWidget(
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.05),
-                                                  Text(
-                                                    S.of(context).uploadPhoto,
-                                                    textAlign: TextAlign.center,
-                                                    style: GoogleFonts.poppins(
-                                                        color: AppColor.blue,
-                                                        fontSize: 12),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          )
-                                        : InkWell(
-                                            onTap: () {},
-                                            child: SizedBox(
-                                              height: 100,
-                                              width: 130,
-                                              child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: Image.file(
-                                                      cubit.imageFile2!,
-                                                      fit: BoxFit.cover)),
-                                            ),
-                                          ));
-                              },
-                            ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.07),
-                            BlocListener<CreateFunctionCubit,
-                                CreateFunctionState>(
-                              listener: (context, state) {
-                                if (state is CreateFunctionLoadingState) {
-                                  EasyLoading.show();
-                                } else if (state
-                                    is CreateFunctionFatchDataState) {
-                                  cubit.createPravasAndFunctionModel =
-                                      state.data!;
-                                  EasyLoading.dismiss();
-                                  EasyLoading.showSuccess(
-                                      state.data?.message ?? '');
-                                } else if (state is CreateFunctionErrorState) {
-                                  EasyLoading.dismiss();
-                                  EasyLoading.showToast(state.error ?? '');
-                                }
-                              },
-                              child: widget.isEdit == true ||
-                                      widget.isView == true
-                                  ? const SizedBox.shrink()
-                                  : CommonButton(
-                                      onTap: () {
-                                        /// for now,user token is static
-
-                                        cubit.functionCreate(
-                                            name: cubit.functionNameText.text,
-                                            date: "",
-                                            time: "",
-                                            location: cubit.lokSabhaText.text,
-                                            place: cubit.placeText.text,
-                                            subject: cubit.subjectText.text,
-                                            summary: cubit.commentText.text,
-                                            pravasId: 2,
-                                            levelId: 1);
-                                        // Navigator.pushReplacementNamed(context,
-                                        //     RoutePath.stayAndProgramListScreen);
-                                      },
-                                      title: S.of(context).save,
-                                      height: 50,
-                                      borderRadius: 7,
-                                      style: const TextStyle(
-                                          fontSize: 20, color: AppColor.white),
                                     ),
+                                    title: '',
+                                    labelText: S.of(context).comment,
+                                    keyboardType: TextInputType.emailAddress,
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.05),
+                                  Text(
+                                    S.of(context).photoMax,
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.naturalBlackColor,
+                                        fontSize: 12),
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.01),
+                                  BlocBuilder<CreateFunctionCubit,
+                                      CreateFunctionState>(
+                                    builder: (context, state) {
+                                      return InkWell(
+                                          onTap: () {
+                                            cubit.selectImage1();
+                                          },
+                                          child: cubit.imageFile1 == null
+                                              ? DottedBorder(
+                                                  color: AppColor.blue,
+                                                  strokeWidth: 1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10),
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(Icons.image,
+                                                            color:
+                                                                AppColor.blue),
+                                                        spaceWidthWidget(
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.05),
+                                                        Text(
+                                                          S
+                                                              .of(context)
+                                                              .uploadPhoto,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  color:
+                                                                      AppColor
+                                                                          .blue,
+                                                                  fontSize: 12),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              : InkWell(
+                                                  onTap: () {},
+                                                  child: SizedBox(
+                                                    height: 100,
+                                                    width: 130,
+                                                    child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Image.file(
+                                                            cubit.imageFile1!,
+                                                            fit: BoxFit.cover)),
+                                                  ),
+                                                ));
+                                    },
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                  BlocBuilder<CreateFunctionCubit,
+                                      CreateFunctionState>(
+                                    builder: (context, state) {
+                                      return InkWell(
+                                          onTap: () {
+                                            cubit.selectImage2();
+                                          },
+                                          child: cubit.imageFile2 == null
+                                              ? DottedBorder(
+                                                  color: AppColor.blue,
+                                                  strokeWidth: 1,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10),
+                                                    child: Row(
+                                                      children: [
+                                                        const Icon(Icons.image,
+                                                            color:
+                                                                AppColor.blue),
+                                                        spaceWidthWidget(
+                                                            MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.05),
+                                                        Text(
+                                                          S
+                                                              .of(context)
+                                                              .uploadPhoto,
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  color:
+                                                                      AppColor
+                                                                          .blue,
+                                                                  fontSize: 12),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              : InkWell(
+                                                  onTap: () {},
+                                                  child: SizedBox(
+                                                    height: 100,
+                                                    width: 130,
+                                                    child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Image.file(
+                                                            cubit.imageFile2!,
+                                                            fit: BoxFit.cover)),
+                                                  ),
+                                                ));
+                                    },
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.07),
+                                  BlocListener<CreateFunctionCubit,
+                                      CreateFunctionState>(
+                                    listener: (context, state) {
+                                      if (state is CreateFunctionLoadingState) {
+                                        EasyLoading.show();
+                                      } else if (state
+                                          is CreateFunctionFatchDataState) {
+                                        cubit.createPravasAndFunctionModel =
+                                            state.data!;
+                                        EasyLoading.dismiss();
+                                        EasyLoading.showSuccess(
+                                            state.data?.message ?? '');
+                                      } else if (state
+                                          is CreateFunctionErrorState) {
+                                        EasyLoading.dismiss();
+                                        EasyLoading.showToast(
+                                            state.error ?? '');
+                                      }
+                                    },
+                                    child: widget.isEdit == true ||
+                                            widget.isView == true
+                                        ? const SizedBox.shrink()
+                                        : CommonButton(
+                                            onTap: () {
+                                              /// for now,user token is static
+
+                                              cubit.functionCreate(
+                                                  name: cubit
+                                                      .functionNameText.text,
+                                                  date: "",
+                                                  time: "",
+                                                  location:
+                                                      cubit.lokSabhaText.text,
+                                                  place: cubit.placeText.text,
+                                                  subject:
+                                                      cubit.subjectText.text,
+                                                  summary:
+                                                      cubit.commentText.text,
+                                                  pravasId: 2,
+                                                  levelId: 1);
+                                              // Navigator.pushReplacementNamed(context,
+                                              //     RoutePath.stayAndProgramListScreen);
+                                            },
+                                            title: S.of(context).save,
+                                            height: 50,
+                                            borderRadius: 7,
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: AppColor.white),
+                                          ),
+                                  ),
+                                  spaceHeightWidget(
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                ],
+                              ),
                             ),
-                            spaceHeightWidget(
-                                MediaQuery.of(context).size.height * 0.02),
                           ],
                         ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+                      );
+              },
             ))
           ],
         ),
@@ -520,7 +616,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                       spaceHeightWidget(50),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: functionTypeList.length,
+                          itemCount: cubit.programTypeList.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Column(
@@ -529,14 +625,17 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                 InkWell(
                                   onTap: () {
                                     cubit.setFunctionType(
-                                        typeName: functionTypeList[index]);
+                                        typeName: cubit.programTypeList[index]);
                                     Navigator.pop(context);
                                   },
-                                  child: Text(
-                                    functionTypeList[index],
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        color: AppColor.black, fontSize: 16),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Text(
+                                      cubit.programTypeList[index].name ?? "",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.black, fontSize: 16),
+                                    ),
                                   ),
                                 ),
                                 spaceHeightWidget(15),
@@ -598,7 +697,7 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                       spaceHeightWidget(50),
                       Expanded(
                         child: ListView.builder(
-                          itemCount: functionLevelList.length,
+                          itemCount: cubit.programLevelList.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return Column(
@@ -607,14 +706,18 @@ class _CreateFunctionScreenState extends State<CreateFunctionScreen> {
                                 InkWell(
                                   onTap: () {
                                     cubit.setFunctionLevel(
-                                        typeName: functionLevelList[index]);
+                                        typeName:
+                                            cubit.programLevelList[index]);
                                     Navigator.pop(context);
                                   },
-                                  child: Text(
-                                    functionLevelList[index],
-                                    textAlign: TextAlign.center,
-                                    style: GoogleFonts.poppins(
-                                        color: AppColor.black, fontSize: 16),
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Text(
+                                      cubit.programLevelList[index].name ?? "",
+                                      textAlign: TextAlign.left,
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.black, fontSize: 16),
+                                    ),
                                   ),
                                 ),
                                 spaceHeightWidget(15),

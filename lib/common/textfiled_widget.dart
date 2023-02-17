@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../Values/app_colors.dart';
+import 'keyboard_done_button.dart';
 
 class TextFieldWidget extends StatelessWidget {
   TextFieldWidget(
@@ -24,6 +28,9 @@ class TextFieldWidget extends StatelessWidget {
       this.validator,
       this.errorText,
       this.initialValue,
+      this.focus,
+      this.onTapDone,
+      this.isOtherField = false,
       this.isMandatoryField = false,
       this.textInputFormatter});
 
@@ -46,7 +53,10 @@ class TextFieldWidget extends StatelessWidget {
   final List<TextInputFormatter>? textInputFormatter;
   final int? maxLength;
   final bool isMandatoryField;
-
+  final focusNode = FocusNode();
+  FocusNode? focus;
+  bool isOtherField;
+  GestureTapCallback? onTapDone;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -65,28 +75,46 @@ class TextFieldWidget extends StatelessWidget {
                 : const SizedBox.shrink()
           ],
         ),
-        TextFormField(
-          initialValue: initialValue,
-          maxLines: maxLines,
-          maxLength: maxLength,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          inputFormatters: textInputFormatter,
-          controller: controller,
-          readOnly: readOnly ?? false,
-          keyboardType: keyboardType,
-          validator: validator,
-          onChanged: onChanged,
-          onTap: onTap,
-          decoration: InputDecoration(
-              counterText: '',
-              border: inpurborder,
-              hintText: hintText,
-              prefixIcon: preFix,
-              labelText: labelText,
-              errorText: errorText,
-              labelStyle: GoogleFonts.poppins(
-                  color: AppColor.naturalBlackColor, fontSize: 14),
-              suffixIcon: suffixWidget),
+        KeyboardActions(
+           enable: Platform.isIOS ? true : false,
+          autoScroll: false,
+          config: KeyboardActionsConfig(actions: [
+            KeyboardActionsItem(
+                focusNode: isOtherField ? focus! : focusNode,
+                displayArrows: false,
+                displayActionBar: false,
+                footerBuilder: ((context) => CustomKeyBoardDoneButton(
+                      onTapDone: isOtherField
+                          ? onTapDone
+                          : (() {
+                              focusNode.unfocus();
+                            }),
+                    )))
+          ]),
+          child: TextFormField(
+            initialValue: initialValue,
+            maxLines: maxLines,
+            focusNode: isOtherField ? focus : focusNode,
+            maxLength: maxLength,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            inputFormatters: textInputFormatter,
+            controller: controller,
+            readOnly: readOnly ?? false,
+            keyboardType: keyboardType,
+            validator: validator,
+            onChanged: onChanged,
+            onTap: onTap,
+            decoration: InputDecoration(
+                counterText: '',
+                border: inpurborder,
+                hintText: hintText,
+                prefixIcon: preFix,
+                labelText: labelText,
+                errorText: errorText,
+                labelStyle: GoogleFonts.poppins(
+                    color: AppColor.naturalBlackColor, fontSize: 14),
+                suffixIcon: suffixWidget),
+          ),
         ),
       ],
     );

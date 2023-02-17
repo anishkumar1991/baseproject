@@ -13,7 +13,7 @@ class _CreatePravas implements CreatePravas {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://34.100.233.103/api/mobile/v1/pravash';
+    baseUrl ??= 'http://staging-pravas-backend.ccdms.in/api/mobile/v1/pravash';
   }
 
   final Dio _dio;
@@ -26,10 +26,12 @@ class _CreatePravas implements CreatePravas {
     startDate,
     endDate,
     subject,
+    token,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
     final _data = {
       'name': name,
       'start_date': startDate,

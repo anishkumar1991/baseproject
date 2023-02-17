@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dateAndTime": MessageLookupByLibrary.simpleMessage("Date and Time *"),
         "dateTo": MessageLookupByLibrary.simpleMessage("Date (To)"),
         "dateToFrom": MessageLookupByLibrary.simpleMessage("Date (From To)"),
+        "day": MessageLookupByLibrary.simpleMessage("Day"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteShaktiKendr":
             MessageLookupByLibrary.simpleMessage("entries will be deleted."),
@@ -110,6 +111,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("6 digit code has been sent"),
         "dobError": MessageLookupByLibrary.simpleMessage(
             "DOB Should be 16 or above year"),
+        "download": MessageLookupByLibrary.simpleMessage("Download"),
+        "downloading": MessageLookupByLibrary.simpleMessage("Downloading.."),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "education": MessageLookupByLibrary.simpleMessage("Education"),
         "educationDeleted":
@@ -143,13 +146,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Program Level *"),
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
+        "gettingStateData":
+            MessageLookupByLibrary.simpleMessage("Getting state data"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
         "hindi": MessageLookupByLibrary.simpleMessage("Hindi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "Landline Number should be 8 digit"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
-        "later": MessageLookupByLibrary.simpleMessage("later"),
+        "later": MessageLookupByLibrary.simpleMessage("Later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
         "logOut": MessageLookupByLibrary.simpleMessage("Log Out"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
@@ -269,6 +274,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sureToDelete":
             MessageLookupByLibrary.simpleMessage("Are you sure to delete?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
+        "time": MessageLookupByLibrary.simpleMessage("Time"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalPanna": MessageLookupByLibrary.simpleMessage("Total Panna"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("Total Program"),

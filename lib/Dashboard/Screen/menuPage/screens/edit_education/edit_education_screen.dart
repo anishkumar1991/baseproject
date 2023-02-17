@@ -153,6 +153,11 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                   BlocBuilder<EditEducationCubit, EditEducationState>(
                     builder: (context, state) {
                       return TextFieldWidget(
+                          focus: cubit.clgFocusNode,
+                          isOtherField: true,
+                          onTapDone: (() {
+                            cubit.clgFocusNode.unfocus();
+                          }),
                           controller: cubit.collageCtr,
                           title: '',
                           labelText: S.of(context).clgName,
@@ -397,12 +402,14 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
       educationalDetails.startYear = cubit.startYearCtr.text;
       educationalDetails.endYear = cubit.endYearCtr.text;
       educationalDetails.institute = cubit.collageCtr.text;
+      educationalDetails.uuid = "";
       widget.educationalDetails?.add(educationalDetails);
     } else {
       educationalDetails.level = cubit.levelCtr.text;
       educationalDetails.startYear = cubit.startYearCtr.text;
       educationalDetails.endYear = cubit.endYearCtr.text;
       educationalDetails.institute = cubit.collageCtr.text;
+      educationalDetails.uuid = "";
       widget.educationalDetails?[widget.index!] = educationalDetails;
     }
   }

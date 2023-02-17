@@ -20,6 +20,12 @@ abstract class AuthApi {
     @Header('User-Agent') String agent,
   );
 
+  @POST('/zila/api/onboarding')
+  Future<HttpResponse> userOnboarding(
+    @Header('Authorization') String token,
+    @Body() Map<String, dynamic> data,
+  );
+
   @GET('/zila/api/logout')
   Future<HttpResponse> logOut(@Header('Authorization') String token);
 }

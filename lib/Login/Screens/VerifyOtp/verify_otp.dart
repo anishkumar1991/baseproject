@@ -22,6 +22,7 @@ import '../../../common/otp_field_widget.dart';
 import '../../../generated/l10n.dart';
 import '../../../route/route_path.dart';
 import '../../../splash_screen/cubit/user_profile_cubit.dart';
+import '../onboarding/onboarding_dialog_widget.dart';
 
 class VerifyOtpScreen extends StatefulWidget {
   const VerifyOtpScreen({Key? key, required this.number}) : super(key: key);
@@ -164,6 +165,17 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
               StorageService.getUserFcmToken(), widget.number);
           Navigator.pushReplacementNamed(context, RoutePath.dashBoardScreen);
           Navigator.pushNamedAndRemoveUntil(context,RoutePath.dashBoardScreen,(Route<dynamic> route) => false);
+          if (state.userDetails.user?.onboarding == "started") {
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: ((context) {
+                  return const OnboardingDialogWidget();
+                }));
+          } else {
+            Navigator.pushNamedAndRemoveUntil(context,
+                RoutePath.dashBoardScreen, (Route<dynamic> route) => false);
+          }
         } else if (state is LoginFaieldState) {
           errorText = state.error;
           isLoading = false;
