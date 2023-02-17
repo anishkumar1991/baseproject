@@ -69,7 +69,7 @@ class _ImageCardState extends State<ImageCard> {
                           enlargeFactor: 0.3,
                           scrollDirection: Axis.horizontal,
                         ),
-                      ),-
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: cubit.tempModel!.posts[widget.tempindex!]
