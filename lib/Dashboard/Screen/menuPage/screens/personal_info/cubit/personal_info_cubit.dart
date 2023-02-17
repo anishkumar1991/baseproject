@@ -98,7 +98,8 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     }
   }
 
-  updatePersonalDetails({required Map<String, dynamic> data}) async {
+  updatePersonalDetails(
+      {required Map<String, dynamic> data, bool? isProfile}) async {
     emit(LoadingState());
     try {
       StorageService.getUserAuthToken();
@@ -116,10 +117,16 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
         emit(UpdateDataState(updateData));
       } else {
         print('error=${res.data['message']}');
+        if (isProfile == true) {
+          EasyLoading.showToast(res.data['message']);
+        }
         emit(PersonalInfoErrorState(res.data['message']));
       }
     } catch (e) {
       print(e);
+      if (isProfile == true) {
+        EasyLoading.showToast('Something Went Wrong');
+      }
       emit(PersonalInfoErrorState('Something Went Wrong'));
     }
   }
@@ -138,16 +145,28 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     });
     urlDownload = await snapshot.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
-    updatePersonalDetails(data: {
-      "name": nameCtr.text,
-      "username": userNameCtr.text,
-      "dob": boiCtr.text,
-      "gender": value.name,
-      "avatar": urlDownload,
-      "religion_id": religionId,
-      "cast_id": castId,
-      "category_id": gradeId
-    });
+    if (value == Gender.notDefined) {
+      updatePersonalDetails(data: {
+        "name": nameCtr.text,
+        "username": userNameCtr.text,
+        "dob": boiCtr.text,
+        "avatar": urlDownload,
+        "religion_id": religionId,
+        "cast_id": castId,
+        "category_id": gradeId
+      });
+    } else {
+      updatePersonalDetails(data: {
+        "name": nameCtr.text,
+        "username": userNameCtr.text,
+        "dob": boiCtr.text,
+        "gender": value.name,
+        "avatar": urlDownload,
+        "religion_id": religionId,
+        "cast_id": castId,
+        "category_id": gradeId
+      });
+    }
   }
 
   Future<void> editBoi(BuildContext context) async {

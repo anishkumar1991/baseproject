@@ -501,15 +501,27 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                             print(cubit.religionId);
                             print(cubit.castId);
                             print(cubit.gradeId);
-                            cubit.updatePersonalDetails(data: {
-                              "name": cubit.nameCtr.text,
-                              "username": cubit.userNameCtr.text,
-                              "dob": cubit.boiCtr.text,
-                              "gender": cubit.value.name,
-                              "religion_id": cubit.religionId,
-                              "cast_id": cubit.castId,
-                              "category_id": cubit.gradeId
-                            });
+
+                            if (cubit.value == Gender.notDefined) {
+                              cubit.updatePersonalDetails(data: {
+                                "name": cubit.nameCtr.text,
+                                "username": cubit.userNameCtr.text,
+                                "dob": cubit.boiCtr.text,
+                                "religion_id": cubit.religionId,
+                                "cast_id": cubit.castId,
+                                "category_id": cubit.gradeId
+                              });
+                            } else {
+                              cubit.updatePersonalDetails(data: {
+                                "name": cubit.nameCtr.text,
+                                "username": cubit.userNameCtr.text,
+                                "dob": cubit.boiCtr.text,
+                                "gender": cubit.value.name,
+                                "religion_id": cubit.religionId,
+                                "cast_id": cubit.castId,
+                                "category_id": cubit.gradeId
+                              });
+                            }
                           }
                         }
                       },

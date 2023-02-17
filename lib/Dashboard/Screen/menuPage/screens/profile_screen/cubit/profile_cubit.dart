@@ -62,7 +62,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       Future.delayed(Duration.zero).then((value) {
         context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
           "avatar": urlDownload,
-        });
+        }, isProfile: true);
       });
     }
     EasyLoading.dismiss();
