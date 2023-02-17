@@ -45,6 +45,10 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final TextEditingController statusCtr = TextEditingController();
   final TextEditingController castCtr = TextEditingController();
 
+  final FocusNode nameFocusNode = FocusNode();
+    final FocusNode userNameFocusNode = FocusNode();
+  final FocusNode mobileFocusNode = FocusNode();
+
   final api = UpdatePersonalDetailsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 

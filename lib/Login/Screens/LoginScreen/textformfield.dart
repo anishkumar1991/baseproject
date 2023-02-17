@@ -5,26 +5,33 @@ import 'package:flutter/services.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../../Values/app_colors.dart';
+import '../../../common/keyboard_done_button.dart';
 import '../../../generated/l10n.dart';
 
 class TextFormFieldLogin extends StatelessWidget {
-  TextFormFieldLogin({Key? key, required this.controller})
+  TextFormFieldLogin(
+      {Key? key,
+      required this.controller,
+      required this.focusNode,
+      this.onTapDone})
       : super(
           key: key,
         );
   final TextEditingController controller;
-  final focusNode = FocusNode();
+  final FocusNode focusNode;
+  final GestureTapCallback? onTapDone;
   @override
   Widget build(BuildContext context) {
     return KeyboardActions(
-
+      autoScroll: false,
+       enable: Platform.isIOS ? true : false,
       config: KeyboardActionsConfig(actions: [
         KeyboardActionsItem(
             focusNode: focusNode,
             displayArrows: false,
             displayActionBar: false,
             footerBuilder: ((context) => CustomKeyBoardDoneButton(
-                  focusNode: focusNode,
+                  onTapDone: onTapDone,
                 )))
       ]),
       child: TextFormField(
@@ -42,15 +49,16 @@ class TextFormFieldLogin extends StatelessWidget {
         ],
         maxLength: 10,
         validator: ((value) {
-          if (value?.isEmpty ?? false) {
+          if (value!.isEmpty) {
             return S.of(context).enterMobileNumber;
-          } else if (value?.length != 10) {
+          } else if (value.length != 10) {
             return S.of(context).enterPhoneNumber;
-          } else if (RegExp(r'0000000000').hasMatch(value!)) {
+          } else if (RegExp(r'0000000000').hasMatch(value)) {
             return S.of(context).notValidNumber;
           }
+          return null;
         }),
-        //autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
             counterText: '',
             prefixIcon: Padding(
@@ -81,29 +89,4 @@ class TextFormFieldLogin extends StatelessWidget {
       ),
     );
   }
-}
-
-class CustomKeyBoardDoneButton extends StatelessWidget
-    implements PreferredSizeWidget {
-  const CustomKeyBoardDoneButton({Key? key, required this.focusNode})
-      : super(key: key);
-  final FocusNode focusNode;
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: (() {
-          focusNode.unfocus();
-        }),
-        child: const Text(
-          'Done',
-          style: TextStyle(color: AppColor.black, fontSize: 16),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Size get preferredSize => Size.fromHeight(50);
 }

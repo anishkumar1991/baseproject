@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
-
 part 'edit_education__state.dart';
 
 class EditEducationCubit extends Cubit<EditEducationState> {
@@ -14,21 +13,22 @@ class EditEducationCubit extends Cubit<EditEducationState> {
   TextEditingController startYearCtr = TextEditingController();
   TextEditingController endYearCtr = TextEditingController();
   TextEditingController collageCtr = TextEditingController();
+  final FocusNode clgFocusNode = FocusNode();
 
-
-  clearData(){
+  clearData() {
     levelCtr.clear();
     startYearCtr.clear();
     endYearCtr.clear();
     collageCtr.clear();
   }
+
   bool checkIfEmpty() {
     bool isEmpty = false;
     if (levelCtr.text.isEmpty) {
-      if(startYearCtr.text.isEmpty){
-        if(endYearCtr.text.isEmpty){
-          if(collageCtr.text.isEmpty){
-              isEmpty = true;
+      if (startYearCtr.text.isEmpty) {
+        if (endYearCtr.text.isEmpty) {
+          if (collageCtr.text.isEmpty) {
+            isEmpty = true;
           }
         }
       }
@@ -36,9 +36,7 @@ class EditEducationCubit extends Cubit<EditEducationState> {
     return isEmpty;
   }
 
-
-  emitState(){
+  emitState() {
     emit(EditEducationInitial());
   }
-
 }

@@ -194,6 +194,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
                           builder: (context, state) {
                             return TextFieldWidget(
+                              focus: cubit.nameFocusNode,
+                              isOtherField: true,
+                              onTapDone: (() {
+                                cubit.nameFocusNode.unfocus();
+                              }),
                               controller: cubit.nameCtr,
                               title: '',
                               labelText: S.of(context).fullName,
@@ -225,6 +230,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
                           builder: (context, state) {
                             return TextFieldWidget(
+                              focus: cubit.userNameFocusNode,
+                              isOtherField: true,
+                              onTapDone: (() {
+                                cubit.userNameFocusNode.unfocus();
+                              }),
                               controller: cubit.userNameCtr,
                               title: '',
                               labelText: S.of(context).userName,
@@ -258,6 +268,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                           builder: (context, state) {
                             return IgnorePointer(
                               child: TextFieldWidget(
+                                focus: cubit.mobileFocusNode,
+                                isOtherField: true,
+                                onTapDone: (() {
+                                  cubit.mobileFocusNode.unfocus();
+                                }),
                                 controller: cubit.mobileNumberCtr,
                                 title: '',
                                 labelText: S.of(context).mobileNumber,

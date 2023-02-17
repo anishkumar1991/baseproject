@@ -76,6 +76,11 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                       return TextFieldWidget(
                           controller: cubit.businessNameCtr,
                           title: '',
+                          focus: cubit.sangathanFocuseNode,
+                          isOtherField: true,
+                          onTapDone: (() {
+                            cubit.sangathanFocuseNode.unfocus();
+                          }),
                           labelText: S.of(context).organization,
                           onChanged: (value) {
                             cubit.emitState();
@@ -106,6 +111,11 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                       return TextFieldWidget(
                           controller: cubit.positionCtr,
                           title: '',
+                          focus: cubit.designationFocuseNode,
+                          isOtherField: true,
+                          onTapDone: (() {
+                            cubit.designationFocuseNode.unfocus();
+                          }),
                           labelText: S.of(context).position,
                           onChanged: (value) {
                             cubit.emitState();
@@ -260,6 +270,7 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
       professionalDetails.position = cubit.positionCtr.text;
       professionalDetails.uuid = "";
       widget.professionalDetails?.add(professionalDetails);
+      
     } else {
       professionalDetails.orgName = cubit.businessNameCtr.text;
       professionalDetails.startYear = cubit.startYearCtr.text;

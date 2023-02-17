@@ -20,6 +20,11 @@ class EditAddressCubit extends Cubit<EditAddressState> {
   final TextEditingController townCtr = TextEditingController();
   final TextEditingController stateCtr = TextEditingController();
 
+  final FocusNode areaFocuseNode = FocusNode();
+    final FocusNode flatFocuseNode = FocusNode();
+    final FocusNode pincodeFocuseNode = FocusNode();
+    final FocusNode townFocuseNode = FocusNode();
+
   String? addressFor;
   final formKey = GlobalKey<FormState>();
 

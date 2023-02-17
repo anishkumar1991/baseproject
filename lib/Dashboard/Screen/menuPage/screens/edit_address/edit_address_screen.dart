@@ -112,6 +112,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                           builder: (context, state) {
                             print(state);
                             return TextFieldWidget(
+                              focus: cubit.flatFocuseNode,
+                              isOtherField: true,
+                              onTapDone: (() {
+                                cubit.flatFocuseNode.unfocus();
+                              }),
                               controller: cubit.flatDesCtr,
                               title: '',
                               labelText: S.of(context).FlatDes,
@@ -138,6 +143,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         BlocBuilder<EditAddressCubit, EditAddressState>(
                           builder: (context, state) {
                             return TextFieldWidget(
+                              focus: cubit.areaFocuseNode,
+                              isOtherField: true,
+                              onTapDone: (() {
+                                cubit.areaFocuseNode.unfocus();
+                              }),
                               controller: cubit.areaDesCtr,
                               title: '',
                               labelText: S.of(context).AreaDes,
@@ -164,6 +174,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         BlocBuilder<EditAddressCubit, EditAddressState>(
                           builder: (context, state) {
                             return TextFieldWidget(
+                              focus: cubit.pincodeFocuseNode,
+                              isOtherField: true,
+                              onTapDone: (() {
+                                cubit.pincodeFocuseNode.unfocus();
+                              }),
                               controller: cubit.pinCodeCtr,
                               title: '',
                               labelText: S.of(context).PinCode,
@@ -204,6 +219,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         BlocBuilder<EditAddressCubit, EditAddressState>(
                           builder: (context, state) {
                             return TextFieldWidget(
+                              focus: cubit.townFocuseNode,
+                              isOtherField: true,
+                              onTapDone: (() {
+                                cubit.townFocuseNode.unfocus();
+                              }),
                               controller: cubit.townCtr,
                               title: '',
                               labelText: S.of(context).townCity,

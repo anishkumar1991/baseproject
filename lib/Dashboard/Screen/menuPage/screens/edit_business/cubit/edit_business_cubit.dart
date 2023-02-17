@@ -12,6 +12,9 @@ class EditBusinessCubit extends Cubit<EditBusinessState> {
   TextEditingController endYearCtr = TextEditingController();
   TextEditingController positionCtr = TextEditingController();
 
+    final FocusNode sangathanFocuseNode = FocusNode();
+    final FocusNode designationFocuseNode = FocusNode();
+
   clearData(){
     businessNameCtr.clear();
     startYearCtr.clear();

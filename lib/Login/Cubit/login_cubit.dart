@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
@@ -22,6 +23,7 @@ class LoginCubit extends Cubit<LoginState> {
   int count = 60;
 
   Timer? timer;
+  final  focusNode=FocusNode();
 
   Future<void> startTimer() async {
     emit(LoadingState());

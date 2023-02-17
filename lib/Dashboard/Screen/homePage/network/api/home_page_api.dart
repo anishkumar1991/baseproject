@@ -11,4 +11,5 @@ abstract class HomePageApi {
 
   @GET('/zila/api/data/client_app_lists')
   Future<HttpResponse> getClientAppLists(@Header('Authorization') String token);
+  
 }

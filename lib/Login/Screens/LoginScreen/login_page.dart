@@ -25,6 +25,7 @@ class LoginScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<LoginCubit>();
     return GestureDetector(
       onTap: (() {
         FocusScope.of(context).unfocus();
@@ -33,7 +34,7 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: SingleChildScrollView(
-            reverse: true,
+            //reverse: true,
             child: BlocBuilder<InternetCubit, InternetState>(
               builder: (context, state) {
                 if (state == InternetState.connected) {
@@ -75,11 +76,12 @@ class LoginScreen extends StatelessWidget {
                         ),
                         Form(
                           key: formKey,
-                          child: SizedBox(
-                            height: 100,
-                            child: TextFormFieldLogin(
-                              controller: mobileNumController,
-                            ),
+                          child: TextFormFieldLogin(
+                            onTapDone: (() {
+                              cubit.focusNode.unfocus();
+                            }),
+                            focusNode: cubit.focusNode,
+                            controller: mobileNumController,
                           ),
                         ),
                         const SizedBox(

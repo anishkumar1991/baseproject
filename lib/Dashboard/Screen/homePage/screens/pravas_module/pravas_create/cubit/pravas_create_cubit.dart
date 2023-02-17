@@ -26,6 +26,9 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
   TextEditingController prvasNameCtr = TextEditingController();
   TextEditingController pravasSubjectCtr = TextEditingController();
 
+  final FocusNode pravasNameFocusNode = FocusNode();
+  final FocusNode subjectFocusNode = FocusNode();
+
   Future PravasCreate() async {
     emit(CreatePravasLoadingState());
     try {

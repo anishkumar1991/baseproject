@@ -153,6 +153,11 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
                   BlocBuilder<EditEducationCubit, EditEducationState>(
                     builder: (context, state) {
                       return TextFieldWidget(
+                          focus: cubit.clgFocusNode,
+                          isOtherField: true,
+                          onTapDone: (() {
+                            cubit.clgFocusNode.unfocus();
+                          }),
                           controller: cubit.collageCtr,
                           title: '',
                           labelText: S.of(context).clgName,
