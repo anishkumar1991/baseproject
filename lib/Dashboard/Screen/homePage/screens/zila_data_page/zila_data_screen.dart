@@ -152,8 +152,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     builder: (context, state) {
                       if (state is EntryDataFetchedState) {
                         if (state.data.data != null) {
-                          print("------------------- Entry Data Lis Length ------------------");
-                          print("List length :${state.data.data?.data?.length}");
+                          print(
+                              "------------------- Entry Data Lis Length ------------------");
+                          print(
+                              "List length :${state.data.data?.data?.length}");
                           cubit.dataList = state.data.data!.data!;
                         }
                       }

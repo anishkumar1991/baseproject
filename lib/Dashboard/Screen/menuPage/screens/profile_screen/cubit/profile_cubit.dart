@@ -77,7 +77,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   Future getUserDetails() async {
-    try {
+    // try {
       emit(ProfileLoadingState());
       StorageService.getUserAuthToken();
       var res =
@@ -96,9 +96,9 @@ class ProfileCubit extends Cubit<ProfileState> {
         print('error=${res.data['message']}');
         emit(ErrorState(res.data['message']));
       }
-    } catch (e) {
-      emit(ErrorState('Something Went Wrong'));
-    }
+    // } catch (e) {
+    //   emit(ErrorState('Something Went Wrong'));
+    // }
   }
 
   Future getDropdownData() async {
