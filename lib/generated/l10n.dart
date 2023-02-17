@@ -360,10 +360,10 @@ class S {
     );
   }
 
-  /// `later`
+  /// `Later`
   String get later {
     return Intl.message(
-      'later',
+      'Later',
       name: 'later',
       desc: '',
       args: [],
@@ -1885,6 +1885,26 @@ class S {
     return Intl.message(
       'Present Guest / Participant / Worker',
       name: 'addAttendeesHeader',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Day`
+  String get day {
+    return Intl.message(
+      'Day',
+      name: 'day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get time {
+    return Intl.message(
+      'Time',
+      name: 'time',
       desc: '',
       args: [],
     );

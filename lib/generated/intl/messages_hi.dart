@@ -93,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "dateTo": MessageLookupByLibrary.simpleMessage("दिनांक  ( कब तक )*"),
         "dateToFrom":
             MessageLookupByLibrary.simpleMessage("दिनांक  ( कब से )*"),
+        "day": MessageLookupByLibrary.simpleMessage("दिनांक"),
         "delete": MessageLookupByLibrary.simpleMessage("डिलीट"),
         "deleteShaktiKendr": MessageLookupByLibrary.simpleMessage(
             "की प्रविष्टियां हटा दी जाएंगी।"),
@@ -156,7 +157,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "लैंडलाइन नंबर ८ अंकों का होना चाहिए"),
         "language": MessageLookupByLibrary.simpleMessage("भाषा"),
-        "later": MessageLookupByLibrary.simpleMessage("बाद में"),
+        "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
         "logOut": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
@@ -272,6 +273,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sureToDelete":
             MessageLookupByLibrary.simpleMessage("क्या वाकई हटाना है?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),
+        "time": MessageLookupByLibrary.simpleMessage("समय"),
         "total": MessageLookupByLibrary.simpleMessage("कुल"),
         "totalPanna": MessageLookupByLibrary.simpleMessage("कुल पन्ना"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("कुल कार्यक्रम"),
