@@ -792,7 +792,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${DropdownHandler.mainDropdownName(widget.type ?? "")}',
+            '${DropdownHandler.mainDropdownName(widget.type ?? "",context)}',
             style: GoogleFonts.roboto(
                 color: AppColor.greyColor,
                 fontWeight: FontWeight.w400,
@@ -840,7 +840,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   child: DropdownButton(
                       isDense: true,
                       hint: Text(
-                          'Select ${DropdownHandler.mainDropdownName(widget.type ?? "")}',
+                          'Select ${DropdownHandler.mainDropdownName(widget.type ?? "",context)}',
                           style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w400,
                               color: AppColor.greyColor,
@@ -904,7 +904,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
+            '${DropdownHandler.dependentDropdownName(widget.type ?? "",context)}',
             style: GoogleFonts.roboto(
                 color: AppColor.greyColor,
                 fontWeight: FontWeight.w400,
@@ -956,14 +956,14 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     isDense: true,
                     hint: cubit.dependentDropdownList.isNotEmpty
                         ? Text(
-                            'Select ${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
+                            'Select ${DropdownHandler.dependentDropdownName(widget.type ?? "",context)}',
                             maxLines: 2,
                             style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w400,
                                 color: AppColor.greyColor,
                                 fontSize: 16))
                         : Text(
-                            'No ${DropdownHandler.dependentDropdownName(widget.type ?? "")} available',
+                            'No ${DropdownHandler.dependentDropdownName(widget.type ?? "",context)} available',
                             maxLines: 2,
                             style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w400,

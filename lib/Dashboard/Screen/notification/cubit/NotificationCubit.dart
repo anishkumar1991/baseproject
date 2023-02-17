@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/notification/network/services/FetchNotificationApi.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
 
+import '../../../../generated/l10n.dart';
 import '../network/model/FetchNotificationModel.dart';
 import 'NotificationState.dart';
 
@@ -31,10 +32,10 @@ class NotificationCubit extends Cubit<NotificationState> {
         emit(NotificationFetchedState());
         tempModel = model;
       } else {
-        emit(NotificationErrorState("Something Went Wrong"));
+        emit(NotificationErrorState());
       }
     } on Exception catch (e) {
-      emit(NotificationErrorState("Something Went Wrong"));
+      emit(NotificationErrorState());
     }
   }
 }

@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "alreadyVerified":
             MessageLookupByLibrary.simpleMessage("Person already verified"),
         "boi": MessageLookupByLibrary.simpleMessage("Date of Birth"),
+        "booth": MessageLookupByLibrary.simpleMessage("Booth"),
         "boothDes": MessageLookupByLibrary.simpleMessage(
             "By submitting all the booths will be connected to this Shakti Kendra."),
         "boothSelect": MessageLookupByLibrary.simpleMessage("Select Booth"),
@@ -73,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "caste": MessageLookupByLibrary.simpleMessage("Caste"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
+        "circular": MessageLookupByLibrary.simpleMessage("Circular"),
         "clgName": MessageLookupByLibrary.simpleMessage(
             "Name of the Institute or College"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
@@ -188,6 +190,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
         "notValidNumber": MessageLookupByLibrary.simpleMessage(
             "This Number is Not Valid Number"),
+        "notification": MessageLookupByLibrary.simpleMessage("Notification"),
+        "notificationDate":
+            MessageLookupByLibrary.simpleMessage("Filter by date"),
+        "notificationsomethingWentWrong":
+            MessageLookupByLibrary.simpleMessage("Something Went Wrong"),
         "oopsErrorMsg": MessageLookupByLibrary.simpleMessage(
             "oops !! something went to wrong please try again later.."),
         "organization":
@@ -233,6 +240,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reasonforDeletion": MessageLookupByLibrary.simpleMessage(
             "Please select a reason for deletion"),
         "religion": MessageLookupByLibrary.simpleMessage("Religion"),
+        "report": MessageLookupByLibrary.simpleMessage("Report"),
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "resendOTP": MessageLookupByLibrary.simpleMessage("Resend OTP"),
         "resendOTPCodeTo":
@@ -262,6 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shaktikendr": MessageLookupByLibrary.simpleMessage("Shakti kendr"),
         "skipAddNewEntry":
             MessageLookupByLibrary.simpleMessage("Skip & Add new entry"),
+        "socialMedia": MessageLookupByLibrary.simpleMessage("Social Media"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
             "Please Enter (From) year First"),
         "state": MessageLookupByLibrary.simpleMessage("State"),
@@ -276,6 +285,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),
         "time": MessageLookupByLibrary.simpleMessage("Time"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
+        "totalGroups": MessageLookupByLibrary.simpleMessage("Total Groups –"),
         "totalPanna": MessageLookupByLibrary.simpleMessage("Total Panna"),
         "totalProgram": MessageLookupByLibrary.simpleMessage("Total Program"),
         "totalTravelSoFar":

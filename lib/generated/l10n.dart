@@ -2019,6 +2019,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Circular`
+  String get circular {
+    return Intl.message(
+      'Circular',
+      name: 'circular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Report`
+  String get report {
+    return Intl.message(
+      'Report',
+      name: 'report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification`
+  String get notification {
+    return Intl.message(
+      'Notification',
+      name: 'notification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter by date`
+  String get notificationDate {
+    return Intl.message(
+      'Filter by date',
+      name: 'notificationDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something Went Wrong`
+  String get notificationsomethingWentWrong {
+    return Intl.message(
+      'Something Went Wrong',
+      name: 'notificationsomethingWentWrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booth`
+  String get booth {
+    return Intl.message(
+      'Booth',
+      name: 'booth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Groups –`
+  String get totalGroups {
+    return Intl.message(
+      'Total Groups –',
+      name: 'totalGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Social Media`
+  String get socialMedia {
+    return Intl.message(
+      'Social Media',
+      name: 'socialMedia',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

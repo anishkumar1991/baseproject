@@ -1,14 +1,17 @@
 class AppStrings {
-  static const String baseUrl = "https://saralk.ccdms.in";
-  static const String baseUrlForPravas = "http://34.100.233.103/api/mobile/v1/pravash";
+  static const String baseUrl = "https://saral-staging.ccdms.in";
+  static const String baseUrlForPravas =
+      "http://staging-pravas-backend.ccdms.in/api/mobile/v1/pravash";
   static const String apiKey = "HBNA19QVVAPP";
+  static const String baseUrlFOrState = "https://pkgstore.datahub.io";
   static const String pravasUserToken =
       "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZmdBc01DcXdqeGJ2Qjd0ZVkzNEplWmY5In0.yFMJmxhpViVeu76hRsWhxM8oMXka0WZkWnyl4FGVUko";
+
   static const String notificationbaseUrl = "http://35.200.202.116";
-  static const String baseUrlFOrState = "https://pkgstore.datahub.io";
+
 
   static const String socialmediabaseUrl =
-      "https://saral-social.ccdms.in";
+      "https://saral-social-staging.ccdms.in";
   static const String buttontext = "Next";
   static const String appbartext = "ओटीपी सत्यापन";
   static const String resendotptimer = "00:43 Sec Left";

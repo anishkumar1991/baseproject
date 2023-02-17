@@ -143,6 +143,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
+
             supportedLocales: S.delegate.supportedLocales,
             locale: Locale.fromSubtags(languageCode: cubit.lang!),
             // locale: lang,
