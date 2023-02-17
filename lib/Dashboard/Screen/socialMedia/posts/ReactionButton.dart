@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_reaction_button/flutter_reaction_button.dart';
@@ -18,22 +20,16 @@ class CustomReactionButton extends StatelessWidget {
     final cubit1 = context.read<FetchPostsCubit>();
 
     return ReactionButton(
+
       boxPadding: const EdgeInsets.all(8),
       boxReactionSpacing: 5,
       boxElevation: 10,
       itemScale: 0.2,
       onReactionChanged: (reaction) async {
-        if (reaction == 1) {
-          await cubit.sendReaction(id, "like");
-        } else if (reaction == 2) {
-          await cubit.sendReaction(id, "love");
-        } else if (reaction == 3) {
-          await cubit.sendReaction(id, "wow");
-        } else if (reaction == 4) {
-          await cubit.sendReaction(id, "sad");
-        } else if (reaction == 5) {
-          await cubit.sendReaction(id, "angry");
-        }
+        Timer(const Duration(seconds: 1), () {
+          sendReaction(reaction!, cubit);
+          print("Yeah, this line is printed after 3 seconds");
+        });
       },
       initialReaction: Reaction(
         icon: const Icon(Icons.thumb_up_alt_sharp, size: 27),
@@ -73,5 +69,22 @@ class CustomReactionButton extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<void> sendReaction(int reaction, ReactionCubit cubit) async {
+    if (reaction == 1) {
+      await cubit.sendReaction(id, "like");
+    } else if (reaction == 2) {
+      await cubit.sendReaction(id, "love");
+    } else if (reaction == 3) {
+      await cubit.sendReaction(id, "wow");
+    } else if (reaction == 4) {
+      await cubit.sendReaction(id, "sad");
+    } else if (reaction == 5) {
+      await cubit.sendReaction(id, "angry");
+    }
+
+
+
   }
 }
