@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
@@ -8,7 +9,10 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../../../../generated/l10n.dart';
 
-Future<void> downloadAndShareFile({required String fileUrl,required BuildContext context,required int pannaNumber}) async {
+Future<void> downloadAndShareFile(
+    {required String fileUrl,
+    required BuildContext context,
+    required int pannaNumber}) async {
   EasyLoading.show(status: S.of(context).preparing);
   final response = await http.get(Uri.parse(fileUrl));
   final bytes = response.bodyBytes;
@@ -40,11 +44,15 @@ Future<void> shareFile(String filePath) async {
   }
 }
 
-Future<void> downloadFile({required String fileUrl,required BuildContext context,required int pannaNumber}) async {
-  EasyLoading.show(status: S.of(context).preparing);
+Future<void> downloadFile(
+    {required String fileUrl,
+    required BuildContext context,
+    required int pannaNumber}) async {
+  EasyLoading.show(status: S.of(context).downloading);
   final response = await http.get(Uri.parse(fileUrl));
   final bytes = response.bodyBytes;
-  EasyLoading.dismiss();
+  Future.delayed(Duration.zero)
+      .then((value) => EasyLoading.showSuccess(S.of(context).download));
   Map<Permission, PermissionStatus> statuses = await [
     Permission.storage,
   ].request();
@@ -58,7 +66,5 @@ Future<void> downloadFile({required String fileUrl,required BuildContext context
 
   // Write the bytes to the file
   await file.writeAsBytes(bytes);
-
-  // Share the file
-  await shareFile(file.path);
+  print(file.path);
 }

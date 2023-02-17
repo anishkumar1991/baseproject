@@ -111,6 +111,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("6 digit code has been sent"),
         "dobError": MessageLookupByLibrary.simpleMessage(
             "DOB Should be 16 or above year"),
+        "download": MessageLookupByLibrary.simpleMessage("Download"),
+        "downloading": MessageLookupByLibrary.simpleMessage("Downloading.."),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
         "education": MessageLookupByLibrary.simpleMessage("Education"),
         "educationDeleted":

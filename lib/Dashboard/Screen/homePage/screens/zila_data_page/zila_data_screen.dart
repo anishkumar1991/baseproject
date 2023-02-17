@@ -407,9 +407,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
                     return PannaPdfViewer(
-                      // pdfLink: cubit.selectedPannaNo?.pdfUrl,
-                      pdfLink:
-                          "https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf",
+                      pdfLink: cubit.selectedPannaNo?.pdfUrl,
+                      // pdfLink:
+                      //     "https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf",
                       pannaNumber: cubit.selectedPannaNo?.number,
                     );
                   },

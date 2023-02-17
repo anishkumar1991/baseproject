@@ -1999,6 +1999,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Downloading..`
+  String get downloading {
+    return Intl.message(
+      'Downloading..',
+      name: 'downloading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download`
+  String get download {
+    return Intl.message(
+      'Download',
+      name: 'download',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

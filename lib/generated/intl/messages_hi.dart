@@ -113,6 +113,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "एक 6 अंकों का कोड भेजा गया है"),
         "dobError": MessageLookupByLibrary.simpleMessage(
             "जन्म दिनांक १६ या उससे अधिक वर्ष होनी चाहिए"),
+        "download": MessageLookupByLibrary.simpleMessage("डाउनलोड"),
+        "downloading":
+            MessageLookupByLibrary.simpleMessage("डाउनलोड कर रहे हे.."),
         "edit": MessageLookupByLibrary.simpleMessage("एडिट"),
         "education": MessageLookupByLibrary.simpleMessage("शिक्षा"),
         "educationDeleted":

@@ -47,7 +47,7 @@ class _PannaPdfViewerState extends State<PannaPdfViewer> {
                   : IconButton(
                       splashRadius: 20,
                       onPressed: (() {
-                        downloadAndShareFile(
+                        downloadFile(
                             fileUrl: widget.pdfLink ?? '',
                             context: context,
                             pannaNumber: widget.pannaNumber ?? 0);
