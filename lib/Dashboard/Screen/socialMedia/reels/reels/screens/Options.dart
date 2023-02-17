@@ -7,6 +7,7 @@ import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelSh
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/ShareOnWhatsapp.dart';
 
+import '../share/ReelURLShare.dart';
 import '../share/sharingstorage.dart';
 
 class OptionsScreen extends StatefulWidget {
@@ -170,10 +171,25 @@ class _OptionsScreenState extends State<OptionsScreen> {
                       const SizedBox(height: 4),
                       IconButton(
                           onPressed: () {
-                            cubit.shareReelToAll(
-                                "https://fluttercampus.com/sample.pdf");
-                            ReelDownloadshare(
-                                context, widget.index, widget.src);
+                            {
+                              if (widget.src.contains('.m3u8') ||
+                                  widget.src.contains('.M3U8') ||
+                                  widget.src.contains('m3u8') ||
+                                  widget.src.contains('M3U8')) {
+                                cubit.shareReelToAll(
+                                    "https://fluttercampus.com/sample.pdf");
+                                ReelURLShare(context, widget.index, widget.src);
+                                print(
+                                    "------------- VIDEO FORMAT----->m3u8 not supported");
+                              } else {
+                                cubit.shareReelToAll(
+                                    "https://fluttercampus.com/sample.pdf");
+                                ReelDownloadshare(
+                                    context, widget.index, widget.src);
+                                print(
+                                    "------------- VIDEO FORMAT----->supported format");
+                              }
+                            }
                           },
                           icon: const Icon(
                             Icons.share,

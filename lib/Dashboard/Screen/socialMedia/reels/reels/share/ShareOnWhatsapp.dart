@@ -25,6 +25,5 @@ Future shareOnWhatsapp(
     SocialMedia.whatsapp: 'whatsapp://send?text=$text',
   };
   final url1 = urls[socialMedia]!;
-
   launchUrl(Uri.parse(url1));
 }
