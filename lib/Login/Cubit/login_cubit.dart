@@ -10,6 +10,7 @@ import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
 
 import '../../Storage/user_storage_service.dart';
+
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
 
@@ -18,11 +19,9 @@ class LoginCubit extends Cubit<LoginState> {
   final api = AuthApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
-
   int count = 60;
 
   Timer? timer;
-
 
   Future<void> startTimer() async {
     emit(LoadingState());
@@ -37,7 +36,7 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-    Future loginUser({required String mobileNumber}) async {
+  Future loginUser({required String mobileNumber}) async {
     try {
       emit(LoginLoadingState());
       final res = await api.loginUser({'phone_number': mobileNumber});
@@ -90,7 +89,8 @@ class LoginCubit extends Cubit<LoginState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         UserDetails userData = UserDetails.fromJson(res.data);
-        setSupportNumber(supportNumber: userData.helplines?.first.phoneNumber ?? '');
+        setSupportNumber(
+            supportNumber: userData.helplines?.first.phoneNumber ?? '');
         print('Auth token==${userData.authToken}');
         await StorageService.setUserData(userData);
         StorageService.getUserData();
@@ -107,18 +107,14 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-
   static setSupportNumber({required String supportNumber}) async {
     await storage.write('supportNumber', supportNumber);
   }
-
-
 
   Future logOut() async {
     try {
       emit(LogOutLoadingState());
       String token = StorageService.getUserAuthToken() ?? '';
-
       final respose = await api.logOut('Bearer $token');
       print('logOut=${respose.response.statusCode}');
       if (respose.response.statusCode == 200) {

@@ -133,7 +133,7 @@ class _MyAppState extends State<MyApp> {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            locale:  Locale.fromSubtags(languageCode: cubit.lang!),
+            locale: Locale.fromSubtags(languageCode: cubit.lang!),
             // locale: lang,
             onGenerateRoute: RouteGenerator.generatorRoute,
             // home: NotificationMainScreen(),

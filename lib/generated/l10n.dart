@@ -1969,6 +1969,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Getting state data`
+  String get gettingStateData {
+    return Intl.message(
+      'Getting state data',
+      name: 'gettingStateData',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

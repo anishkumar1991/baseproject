@@ -29,8 +29,8 @@ class Data {
   String? dob;
   List<Addresses>? addresses;
   String? gender;
-  dynamic? category;
-  Caste? caste;
+  Category? category;
+  Category? caste;
   List<EducationalDetails>? educationalDetails;
   List<ProfessionalDetails>? professionalDetails;
   String? username;
@@ -40,7 +40,7 @@ class Data {
   String? avatar;
   List<dynamic>? designation;
   int? percentage;
-  dynamic religion;
+  Category? religion;
 
   Data({this.id, this.name, this.phoneNumbers, this.dob, this.addresses, this.gender, this.category, this.caste, this.educationalDetails, this.professionalDetails, this.username, this.email, this.voterId, this.phoneNumber, this.avatar, this.designation, this.percentage, this.religion});
 
@@ -63,8 +63,8 @@ class Data {
       json['addresses'].forEach((v) { addresses!.add(Addresses.fromJson(v)); });
     }
     gender = json['gender'];
-    category = json['category'];
-    caste = json['caste'] != null ? Caste.fromJson(json['caste']) : null;
+    category = json['category'] != null ? Category.fromJson(json['category']) : null;
+    caste = json['caste'] != null ? Category.fromJson(json['caste']) : null;
     if (json['educational_details'] != null) {
       educationalDetails = <EducationalDetails>[];
       json['educational_details'].forEach((v) { educationalDetails!.add(EducationalDetails.fromJson(v)); });
@@ -85,7 +85,7 @@ class Data {
       });
     }
     percentage = json['percentage'];
-    religion = json['religion'];
+    religion = json['religion'] != null ?  Category.fromJson(json['religion']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -98,7 +98,9 @@ class Data {
       data['addresses'] = addresses!.map((v) => v.toJson()).toList();
     }
     data['gender'] = gender;
-    data['category'] = category;
+    if (category != null) {
+      data['category'] = category!.toJson();
+    }
     if (caste != null) {
       data['caste'] = caste!.toJson();
     }
@@ -117,7 +119,9 @@ class Data {
       data['designation'] = designation!.map((v) => v.toJson()).toList();
     }
     data['percentage'] = percentage;
-    data['religion'] = religion;
+    if (religion != null) {
+      data['religion'] = religion!.toJson();
+    }
     return data;
   }
 }
@@ -156,13 +160,13 @@ class Addresses {
   }
 }
 
-class Caste {
+class Category {
   int? id;
   String? name;
 
-  Caste({this.id, this.name});
+  Category({this.id, this.name});
 
-  Caste.fromJson(Map<String, dynamic> json) {
+  Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

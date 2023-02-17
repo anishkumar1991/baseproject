@@ -148,6 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का नाम *"),
         "functionType":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
+        "gettingStateData":
+            MessageLookupByLibrary.simpleMessage("राज्य डेटा प्राप्त करना"),
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "hindi": MessageLookupByLibrary.simpleMessage("हिंदी"),
         "home": MessageLookupByLibrary.simpleMessage("होम"),

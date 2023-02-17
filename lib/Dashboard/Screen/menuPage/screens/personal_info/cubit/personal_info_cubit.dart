@@ -17,7 +17,7 @@ import '../network/api/update_personal_details.dart';
 
 part 'personal_info_state.dart';
 
-enum Gender { male, female, transgender }
+enum Gender { male, female, transgender, notDefined }
 
 class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   PersonalInfoCubit() : super(PersonalInfoInitial());
@@ -107,6 +107,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
       print("------------------ update user ---------------");
       print('sangathan Data =${res.response.statusCode}');
       print('sangathan data =${res.response.data}');
+      print('tokrn =${StorageService.userAuthToken}');
       print("---------------------------------");
       if (res.response.statusCode == 200) {
         print(res.response.data);
@@ -140,7 +141,6 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     updatePersonalDetails(data: {
       "name": nameCtr.text,
       "username": userNameCtr.text,
-      "phone_numbers": mobileNumberCtr.text,
       "dob": boiCtr.text,
       "gender": value.name,
       "avatar": urlDownload,

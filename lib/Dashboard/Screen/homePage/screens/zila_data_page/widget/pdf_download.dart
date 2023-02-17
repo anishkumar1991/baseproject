@@ -39,3 +39,26 @@ Future<void> shareFile(String filePath) async {
     await Share.shareFiles([file.path]);
   }
 }
+
+Future<void> downloadFile({required String fileUrl,required BuildContext context,required int pannaNumber}) async {
+  EasyLoading.show(status: S.of(context).preparing);
+  final response = await http.get(Uri.parse(fileUrl));
+  final bytes = response.bodyBytes;
+  EasyLoading.dismiss();
+  Map<Permission, PermissionStatus> statuses = await [
+    Permission.storage,
+  ].request();
+  print(statuses);
+
+  // Get the directory for the app's documents directory
+  final directory = await getApplicationDocumentsDirectory();
+
+  // Create a new file in the directory
+  final file = File('${directory.path}/$pannaNumber.pdf');
+
+  // Write the bytes to the file
+  await file.writeAsBytes(bytes);
+
+  // Share the file
+  await shareFile(file.path);
+}

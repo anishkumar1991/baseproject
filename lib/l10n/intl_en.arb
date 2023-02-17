@@ -192,5 +192,6 @@
   "pravasName" : "Please enter pravas name first",
   "pravasStartDate" : "please enter start date",
   "pravasEndDate" : "Please enter last date",
-  "pravasSubject" : "Please enter pravas subject"
+  "pravasSubject" : "Please enter pravas subject",
+  "gettingStateData" : "Getting state data"
 }

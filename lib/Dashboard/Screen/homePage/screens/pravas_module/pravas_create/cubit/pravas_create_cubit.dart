@@ -2,19 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:sangathan/Values/string.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../../../../Storage/user_storage_service.dart';
 import '../network/api/create_pravas_api.dart';
 import '../network/model/create_pravas_and_function_model.dart';
-import '../widgets/range_picker_dialog.dart';
 
 part 'pravas_create_state.dart';
 
 class PravasCreateCubit extends Cubit<PravasCreateState> {
   PravasCreateCubit() : super(PravasCreateInitial());
-
   final api = CreatePravas(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
@@ -24,7 +21,8 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
   DateTime endTimeStart = DateTime.now();
   PickerDateRange? temp;
   int? statusCode;
-  CreatePravasAndFunctionModel createPravasModel = CreatePravasAndFunctionModel();
+  CreatePravasAndFunctionModel createPravasModel =
+      CreatePravasAndFunctionModel();
   TextEditingController prvasNameCtr = TextEditingController();
   TextEditingController pravasSubjectCtr = TextEditingController();
 
@@ -32,7 +30,8 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
     emit(CreatePravasLoadingState());
     try {
       StorageService.getUserAuthToken();
-      final res = await api.pravasCreate(prvasNameCtr.text,startDate,endDate,pravasSubjectCtr.text);
+      final res = await api.pravasCreate(prvasNameCtr.text, startDate, endDate,
+          pravasSubjectCtr.text, StorageService.userAuthToken ?? '');
       print(
           "------------------------------------ Create Pravas data  ----------------------------");
       print("Status code : ${res.response.statusCode}");
@@ -41,13 +40,14 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
           "------------------------------------ ------------------------ ----------------------------");
       statusCode = res.response.statusCode;
       if (res.response.statusCode == 200) {
-        CreatePravasAndFunctionModel data = CreatePravasAndFunctionModel.fromJson(res.data);
+        CreatePravasAndFunctionModel data =
+            CreatePravasAndFunctionModel.fromJson(res.data);
         emit(CreatePravasFatchDataState(data: data));
       } else {
         print('error=${res.data['message']}');
         emit(CreatePravasErrorState(error: res.data['message']));
       }
-    }  catch (e) {
+    } catch (e) {
       print(e);
       emit(CreatePravasErrorState(error: 'Something Went Wrong'));
     }
@@ -59,9 +59,9 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(
-            DateTime.now().year - 1,DateTime.now().month,DateTime.now().day),
-        lastDate: DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day));
+            DateTime.now().year - 1, DateTime.now().month, DateTime.now().day),
+        lastDate: DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day));
     if (picked != null && picked != dateTimeStart) {
       dateTimeStart = picked;
       startDate = ddMMMYYYYfromDateTime(dateTimeStart);
@@ -76,6 +76,7 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
     //   },
     // ).then((value) =>  emit(StartDateOfTour(startDate)));
   }
+
   Future<void> pravasEndDate(BuildContext context) async {
     emit(EndDateLoadingState());
     final DateTime? picked = await showDatePicker(
@@ -83,7 +84,7 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
         initialDate: DateTime.now(),
         firstDate: DateTime(
             dateTimeStart.year, dateTimeStart.month, dateTimeStart.day),
-        lastDate: DateTime(2050,12,1));
+        lastDate: DateTime(2050, 12, 1));
     if (picked != null && picked != endTimeStart) {
       endTimeStart = picked;
       endDate = ddMMMYYYYfromDateTime(endTimeStart);
@@ -98,7 +99,6 @@ class PravasCreateCubit extends Cubit<PravasCreateState> {
     //   },
     // ).then((value) =>  emit(StartDateOfTour(startDate)));
   }
-
 
   static String ddMMMYYYYfromDateTime(DateTime date) {
     return DateFormat('dd/MM/yyyy').format(date);

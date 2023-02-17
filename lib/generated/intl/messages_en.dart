@@ -143,6 +143,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Program Level *"),
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
+        "gettingStateData":
+            MessageLookupByLibrary.simpleMessage("Getting state data"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
         "hindi": MessageLookupByLibrary.simpleMessage("Hindi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
