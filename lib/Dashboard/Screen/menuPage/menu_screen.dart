@@ -6,6 +6,7 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/route/route_path.dart';
+import 'package:sangathan/splash_screen/cubit/user_profile_state.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/appstyle.dart';
@@ -33,68 +34,76 @@ class _MenuPageState extends State<MenuPage> {
         body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Column(children: [
-              ListTile(
-                minLeadingWidth: 5,
-                onTap: () {
-                  Navigator.pushNamed(context, RoutePath.profileScreen);
-                },
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  userProfileModel.data?.name != null
-                      ? "${S.of(context).welcome} ${userProfileModel.data?.name}"
-                      : S.of(context).welcome,
-                  overflow: TextOverflow.ellipsis,
-                  style: textStyleWithPoppin(
-                      fontSize: 15,
-                      color: AppColor.black,
-                      fontWeight: FontWeight.w700),
-                ),
-                subtitle: Text(
-                  userProfileModel.data?.username != null
-                      ? "@${userProfileModel.data?.username}"
-                      : "",
-                  style: textStyleWithPoppin(
-                      fontSize: 10,
-                      color: AppColor.greyColor.withOpacity(0.7),
-                      fontWeight: FontWeight.w500),
-                ),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios_outlined,
-                  size: 18,
-                  color: AppColor.naturalBlackColor,
-                ),
-                leading: Container(
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColor.dividerColor)),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(350),
-                    child: Image.network(
-                      userProfileModel.data?.avatar ?? '',
-                      fit: BoxFit.cover,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        return const Icon(Icons.person, size: 25);
-                      },
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child;
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        );
-                      },
+              BlocBuilder<UserProfileCubit, UserProfileState>(
+                builder: (context, state) {
+                  if (state is UserProfileDataFetchedState) {
+                    userProfileModel = state.userProfileModel;
+                  }
+                  return ListTile(
+                    minLeadingWidth: 5,
+                    onTap: () {
+                      Navigator.pushNamed(context, RoutePath.profileScreen);
+                    },
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      userProfileModel.data?.name != null
+                          ? "${S.of(context).welcome} ${userProfileModel.data?.name}"
+                          : S.of(context).welcome,
+                      overflow: TextOverflow.ellipsis,
+                      style: textStyleWithPoppin(
+                          fontSize: 15,
+                          color: AppColor.black,
+                          fontWeight: FontWeight.w700),
                     ),
-                  ),
-                ),
+                    subtitle: Text(
+                      userProfileModel.data?.username != null
+                          ? "@${userProfileModel.data?.username}"
+                          : "",
+                      style: textStyleWithPoppin(
+                          fontSize: 10,
+                          color: AppColor.greyColor.withOpacity(0.7),
+                          fontWeight: FontWeight.w500),
+                    ),
+                    trailing: const Icon(
+                      Icons.arrow_forward_ios_outlined,
+                      size: 18,
+                      color: AppColor.naturalBlackColor,
+                    ),
+                    leading: Container(
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColor.dividerColor)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(350),
+                        child: Image.network(
+                          userProfileModel.data?.avatar ?? '',
+                          fit: BoxFit.cover,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            return const Icon(Icons.person, size: 25);
+                          },
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
               spaceHeightWidget(15),
               GestureDetector(

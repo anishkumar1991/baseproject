@@ -19,6 +19,14 @@ class UserProfileCubit extends Cubit<UserProfileState> {
     final res = await api
         .getUserProfileDetails('Bearer ${StorageService.userAuthToken}');
     print('profile res =${res.response.statusCode}');
+    print(
+        "------------------------------------ user data  ----------------------------");
+    print("token  :${StorageService.userAuthToken}");
+    print("Status code : ${res.response.statusCode}");
+    print("Response :${res.data}");
+    print(
+        "------------------------------------ ------------------------ ----------------------------");
+
     print(res.data);
     if (res.response.statusCode == 200) {
       UserDetailModel data = UserDetailModel.fromJson(res.data);

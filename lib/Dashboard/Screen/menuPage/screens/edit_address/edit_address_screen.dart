@@ -340,7 +340,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             } else if (state is LoadingState) {
                               EasyLoading.show();
                             } else if (state is UpdateDataState) {
-                              context.read<ProfileCubit>().getUserDetails();
+                              context.read<ProfileCubit>().getUserDetails(
+                                  context: context, isAddress: true);
                               Navigator.pop(context);
                               EasyLoading.dismiss();
                               EasyLoading.showSuccess(

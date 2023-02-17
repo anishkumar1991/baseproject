@@ -23,7 +23,7 @@ import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
-int pannaCountryStateId = 28;
+int pannaCountryStateId = 14;
 
 class ZilaDataScreen extends StatefulWidget {
   ZilaDataScreen(

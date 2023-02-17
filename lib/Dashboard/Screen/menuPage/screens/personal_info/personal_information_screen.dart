@@ -16,6 +16,7 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../common/common_button.dart';
 import '../../../../../common/textfiled_widget.dart';
 import '../../../../../generated/l10n.dart';
+import '../../../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../profile_screen/cubit/profile_cubit.dart';
 import '../profile_screen/network/model/user_detail_model.dart';
 import 'cubit/personal_info_cubit.dart';
@@ -499,6 +500,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         EasyLoading.show();
                       } else if (state is UpdateDataState) {
                         context.read<ProfileCubit>().getUserDetails();
+                        context.read<UserProfileCubit>().getUserProfileData();
                         Navigator.pop(context);
                         EasyLoading.dismiss();
                         EasyLoading.showSuccess("Profile Updated",

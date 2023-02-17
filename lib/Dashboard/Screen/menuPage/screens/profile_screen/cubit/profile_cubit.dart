@@ -73,7 +73,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     });
   }
 
-  Future getUserDetails() async {
+  Future getUserDetails({bool? isAddress, BuildContext? context}) async {
     try {
       emit(ProfileLoadingState());
       StorageService.getUserAuthToken();
@@ -88,6 +88,11 @@ class ProfileCubit extends Cubit<ProfileState> {
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         UserDetailModel data = UserDetailModel.fromJson(res.response.data);
+        // if (isAddress == true) {
+        //   print(
+        //       "**********************************************************************************************************************");
+        //   context?.read<UserProfileCubit>().getUserProfileData();
+        // }
         emit(UserDetailFetchedState(data));
       } else {
         print('error=${res.data['message']}');
