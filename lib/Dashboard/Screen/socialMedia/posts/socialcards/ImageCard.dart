@@ -62,13 +62,14 @@ class _ImageCardState extends State<ImageCard> {
                               currpos = index;
                             });
                           },
+
                           height: 370,
-                          enableInfiniteScroll: true,
+                          enableInfiniteScroll: false,
                           enlargeCenterPage: true,
                           enlargeFactor: 0.3,
                           scrollDirection: Axis.horizontal,
                         ),
-                      ),
+                      ),-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: cubit.tempModel!.posts[widget.tempindex!]

@@ -23,6 +23,7 @@ class CustomCard extends StatelessWidget {
     return Material(
         elevation: 3,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             tempkey == 2 ? ImageCard(tempindex: index) : const Text(""),
             Padding(
