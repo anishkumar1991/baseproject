@@ -385,12 +385,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         Text(S.of(context).pannaNo,
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                              fontSize: 10,
                             )),
                         Text("${cubit.selectedPannaNo?.number ?? ""}",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
-                              fontSize: 13,
+                              fontSize: 12,
                             ))
                       ],
                     )),

@@ -226,19 +226,19 @@ class _HomePageState extends State<HomePage> {
                       const MannKiBaatCard(),*/
 
                       /// whatsapp card widget
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const WhatsappCardWidget(),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // const WhatsappCardWidget(),
 
                       /// pravas card widget
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const PravasCardWidget(),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
+                      // const PravasCardWidget(),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
                       // const SizedBox(
                       //   height: 14,
                       // ),

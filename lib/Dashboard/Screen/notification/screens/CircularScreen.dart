@@ -27,7 +27,7 @@ class CircularScreen extends StatelessWidget {
         if (state is NotificationErrorState) {
           return Center(
             child: Text(
-              "Something Went Wrong",
+              "कुछ गलत हुआ.",
               style: GoogleFonts.quicksand(
                   fontWeight: FontWeight.w600, fontSize: 20),
             ),

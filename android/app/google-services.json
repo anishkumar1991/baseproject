@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "1033082353842",
-    "project_id": "sangathan-70b74",
-    "storage_bucket": "sangathan-70b74.appspot.com"
+    "project_number": "410120124539",
+    "project_id": "sangathan-b272e",
+    "storage_bucket": "sangathan-b272e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1033082353842:android:0ccac22003c71e1145f1ab",
+        "mobilesdk_app_id": "1:410120124539:android:0ba917dff60dcf4f2c4ade",
         "android_client_info": {
-          "package_name": "com.app.sangathan"
+          "package_name": "com.jarvis.mpsangathan"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1033082353842-ht3v7i5sdvn40mo9av8d6lnroceilppp.apps.googleusercontent.com",
+          "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCMG2pFnDoQznvvY4-OHgCUeJFUL3yAl48"
+          "current_key": "AIzaSyA2VhFhNh7RTpYUKRKQOywQm0wDDdWg98c"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1033082353842-ht3v7i5sdvn40mo9av8d6lnroceilppp.apps.googleusercontent.com",
+              "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1033082353842-anmub2ojs4ou9rb7i0btcccitabgpebi.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.sangathan"
-              }
             }
           ]
         }
