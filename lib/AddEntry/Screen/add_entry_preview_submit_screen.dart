@@ -456,8 +456,10 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   gettingFilePath(String key, AddEntryCubit cubit) {
     Iterable<String> foundKey = DynamicUIHandler.filePickerUrl.where(
         (element) => element.split("_")[0] == key.split(RegExp(r"[A-Z]"))[0]);
+    print(foundKey);
     String newFoundKey =
-        foundKey.toString().replaceAll("(", "").replaceAll(")", "");
+        foundKey.last.toString().replaceAll("(", "").replaceAll(")", "");
+
     String imageFilePath = "";
     for (var item in cubit.finalAllDataList.entries) {
       if (item.key == newFoundKey) {

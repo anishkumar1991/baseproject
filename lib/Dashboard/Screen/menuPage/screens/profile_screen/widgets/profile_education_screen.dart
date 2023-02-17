@@ -220,7 +220,7 @@ class _ProfileEducationScreenState extends State<ProfileEducationScreen> {
                 );
               })
               : const SizedBox.shrink(),
-          widget.cubit.userDetails!.data!.educationalDetails!.length > 1
+          (widget.cubit.userDetails?.data!.educationalDetails!.length ?? 0) > 1
               ? GestureDetector(
             onTap: (){
               widget.cubit.showEducation = !widget.cubit.showEducation;

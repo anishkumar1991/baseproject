@@ -1909,6 +1909,66 @@ class S {
       args: [],
     );
   }
+
+  /// `preparing`
+  String get preparing {
+    return Intl.message(
+      'preparing',
+      name: 'preparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `oops !! something went to wrong please try again later..`
+  String get oopsErrorMsg {
+    return Intl.message(
+      'oops !! something went to wrong please try again later..',
+      name: 'oopsErrorMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter pravas name first`
+  String get pravasName {
+    return Intl.message(
+      'Please enter pravas name first',
+      name: 'pravasName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter start date`
+  String get pravasStartDate {
+    return Intl.message(
+      'please enter start date',
+      name: 'pravasStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter last date`
+  String get pravasEndDate {
+    return Intl.message(
+      'Please enter last date',
+      name: 'pravasEndDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter pravas subject`
+  String get pravasSubject {
+    return Intl.message(
+      'Please enter pravas subject',
+      name: 'pravasSubject',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -238,7 +238,7 @@ class _ProfileAddressTileState extends State<ProfileAddressTile> {
                     );
                   })
               : const SizedBox.shrink(),
-          widget.cubit.userDetails!.data!.addresses!.length > 1
+          (widget.cubit.userDetails?.data!.addresses!.length ?? 0) > 1
               ? GestureDetector(
                   onTap: () {
                     widget.cubit.showAddress = !widget.cubit.showAddress;

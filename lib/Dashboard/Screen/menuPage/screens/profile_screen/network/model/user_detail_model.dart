@@ -126,7 +126,7 @@ class Addresses {
   String? forWhich;
   String? area;
   String? city;
-  Null? uuid;
+  dynamic uuid;
   String? state;
   String? pinCode;
   String? houseNumber;

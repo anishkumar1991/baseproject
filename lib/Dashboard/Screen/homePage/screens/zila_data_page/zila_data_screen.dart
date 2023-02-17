@@ -23,6 +23,8 @@ import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
+int pannaCountryStateId = 28;
+
 class ZilaDataScreen extends StatefulWidget {
   ZilaDataScreen(
       {super.key, required this.type, this.countryStateId, this.dataLevelId});
@@ -52,7 +54,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
     /// TODO : here country id is static (just remove condition)
     if (widget.type == "Panna") {
-      widget.countryStateId = 28;
+      widget.countryStateId = pannaCountryStateId;
     }
     DropdownHandler.dynamicSangathanDropdown(
         context, widget.type ?? "", widget.countryStateId ?? 0);
@@ -152,8 +154,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     builder: (context, state) {
                       if (state is EntryDataFetchedState) {
                         if (state.data.data != null) {
-                          print("------------------- Entry Data Lis Length ------------------");
-                          print("List length :${state.data.data?.data?.length}");
+                          print(
+                              "------------------- Entry Data Lis Length ------------------");
+                          print(
+                              "List length :${state.data.data?.data?.length}");
                           cubit.dataList = state.data.data!.data!;
                         }
                       }
@@ -287,7 +291,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
                             /// TODO : here country id is static when type is panna we need make dynamic in future
                             countryStateId: widget.type == "Panna"
-                                ? 28
+                                ? pannaCountryStateId
                                 : widget.countryStateId,
                             pannaID: cubit.selectedPannaNo?.number,
                             personData: null,
@@ -309,7 +313,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
                               ///TODO : here country id is static when type is panna we need make dynamic in future
                               countryStateId: widget.type == "Panna"
-                                  ? 28
+                                  ? pannaCountryStateId
                                   : widget.countryStateId,
                               personData: null,
                             ));
@@ -404,6 +408,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   builder: (context) {
                     return PannaPdfViewer(
                       pdfLink: cubit.selectedPannaNo?.pdfUrl,
+                      // pdfLink: 'https://storage.googleapis.com/dev-saral-bucket/uploads/panna/panna/file/152/14_165_5_3.pdf?GoogleAccessId=949025725562-compute%40developer.gserviceaccount.com&Expires=1676540902&Signature=ddhst%2BGJUOQTkIbqrtDPGTKGoJ7k488x4RJLQhYq6sELJ0SlOX7P%2B3kUPSUmQ9XqpQyXzs5Xuz9MKmQ83SE026GPzhVEjU%2F%2BZBtmAxHzKOb3ArvNm4AWdKSdSpDd0L%2B7xbXqdxU4QQuannQ3lgsllwT2OWdTmfaha2XossET0FXLVyT%2B231Vy%2FhUid7hv99FACuM584ZPpLX2dUsm%2BolFomUBZx0%2Fm1Rx%2BplRIDj2%2Bdtj0d4GLvda6TPWZiczvfjTuVKNy8rx79tBqSWUeyhtqSORnJOos8%2FN6YBwd5elnoocNz0f7FnOzXK6kMRcsQikcvODYssITWbQX9VqscMZw%3D%3D',
+                      pannaNumber: cubit.selectedPannaNo?.number,
                     );
                   },
                 ));

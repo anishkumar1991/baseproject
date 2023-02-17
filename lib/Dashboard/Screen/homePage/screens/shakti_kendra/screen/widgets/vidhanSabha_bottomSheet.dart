@@ -61,8 +61,7 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                     Future.delayed(Duration.zero).then((value) {
                                       Navigator.pop(context);
                                     });
-                                    await cubit.getBoothValuew(
-                                    id: cubit.zilaId ?? 236);
+                                    // await cubit.getBoothValuew(id: cubit.zilaId ?? 236);
                                     await cubit.getDropDownValueOfmandal(
                                         id: cubit.zilaId ?? 236);
                                   },

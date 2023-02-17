@@ -286,6 +286,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// File picker method(aadhaar,voter and ration)
   Future<void> pickFile(String fieldType) async {
+    print(StdioType);
+    if (fieldType == "ration_url") {
+      fieldType = "ration_card_url";
+    }
     emit(AddEntryLoadingState());
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
@@ -306,6 +310,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   }
 
   Future<void> pickFileFromCamera(String fieldType) async {
+    if (fieldType == "ration_url") {
+      fieldType = "ration_card_url";
+    }
     emit(AddEntryLoadingState());
     PickedFile? pickedFile =
         await ImagePicker.platform.pickImage(source: ImageSource.camera);
@@ -795,12 +802,20 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         if (item.value.toString() != "" && item.value.toString() != null) {
           if (item.value.toString().contains("http") ||
               item.value.toString().contains("HTTP")) {
-            map.addEntries({item.key: "${item.value}"}.entries);
+            if (item.key == "ration_card_url") {
+              map.addEntries({"ration_url": "${item.value}"}.entries);
+            } else {
+              map.addEntries({item.key: "${item.value}"}.entries);
+            }
           } else {
             String url = await getNetworkUrl(item.value,
                 id: personID ?? DateTime.now().millisecondsSinceEpoch,
                 name: item.key.toString().split("_")[0]);
-            map.addEntries({item.key: url}.entries);
+            if (item.key == "ration_card_url") {
+              map.addEntries({"ration_url": "$url"}.entries);
+            } else {
+              map.addEntries({item.key: url}.entries);
+            }
           }
         }
       }

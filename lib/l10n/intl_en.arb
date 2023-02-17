@@ -186,5 +186,11 @@
   "addAttendeesHeader" : "Present Guest / Participant / Worker",
   "later" : "later",
   "uploading": "Uploading",
-  "enterPin" : "Please enter pincode number"
+  "enterPin" : "Please enter pincode number",
+  "preparing": "preparing",
+  "oopsErrorMsg" : "oops !! something went to wrong please try again later..",
+  "pravasName" : "Please enter pravas name first",
+  "pravasStartDate" : "please enter start date",
+  "pravasEndDate" : "Please enter last date",
+  "pravasSubject" : "Please enter pravas subject"
 }

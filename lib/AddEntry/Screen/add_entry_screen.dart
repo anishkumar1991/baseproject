@@ -85,6 +85,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
     cubit.levelName = widget.levelName;
     cubit.personID = widget.personID;
     print(widget.pannaID);
+    log(widget.personData.toString());
     cubit.entryField = [];
     super.initState();
   }

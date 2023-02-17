@@ -163,6 +163,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
           await fcmcubit.sendFcm(
               StorageService.getUserFcmToken(), widget.number);
           Navigator.pushReplacementNamed(context, RoutePath.dashBoardScreen);
+          Navigator.pushNamedAndRemoveUntil(context,RoutePath.dashBoardScreen,(Route<dynamic> route) => false);
         } else if (state is LoginFaieldState) {
           errorText = state.error;
           isLoading = false;

@@ -17,7 +17,7 @@ class TextFormFieldLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardActions(
-      //tapOutsideBehavior: TapOutsideBehavior.translucentDismiss,
+
       config: KeyboardActionsConfig(actions: [
         KeyboardActionsItem(
             focusNode: focusNode,
