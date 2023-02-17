@@ -11,6 +11,7 @@ import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
 
 import '../../Storage/user_storage_service.dart';
+import '../Network/model/onboarding_model.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
@@ -130,6 +131,33 @@ class LoginCubit extends Cubit<LoginState> {
       }
     } catch (e) {
       UserLogOutFaieldState('Something Went Wrong');
+    }
+  }
+
+  /// User onboarding
+
+  Future getProgramLevel(Map<String, dynamic> data) async {
+    emit(UserOnboardingLoadingState());
+    try {
+      String token = StorageService.getUserAuthToken() ?? "";
+      final res = await api.userOnboarding(token, data);
+      print(
+          "------------------------------------  User onboarding  ----------------------------");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print("Pass Data:${res.response.extra}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        OnboardingModel data = OnboardingModel.fromJson(res.data);
+        emit(UserOnboardingSuccessState(data));
+      } else {
+        print('error=${res.data}');
+        emit(UserOnboardingErrorState());
+      }
+    } catch (e) {
+      print(e);
+      emit(UserOnboardingErrorState());
     }
   }
 }

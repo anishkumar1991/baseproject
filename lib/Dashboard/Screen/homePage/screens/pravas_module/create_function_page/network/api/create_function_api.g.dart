@@ -13,7 +13,7 @@ class _CreateFunction implements CreateFunction {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://34.100.233.103/api/mobile/v1/pravash';
+    baseUrl ??= 'http://staging-pravas-backend.ccdms.in/api/mobile/v1/pravash';
   }
 
   final Dio _dio;
