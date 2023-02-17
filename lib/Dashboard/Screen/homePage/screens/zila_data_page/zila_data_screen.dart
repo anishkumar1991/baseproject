@@ -23,6 +23,8 @@ import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
+int pannaCountryStateId = 28;
+
 class ZilaDataScreen extends StatefulWidget {
   ZilaDataScreen(
       {super.key, required this.type, this.countryStateId, this.dataLevelId});
@@ -52,7 +54,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
     /// TODO : here country id is static (just remove condition)
     if (widget.type == "Panna") {
-      widget.countryStateId = 28;
+      widget.countryStateId = pannaCountryStateId;
     }
     DropdownHandler.dynamicSangathanDropdown(
         context, widget.type ?? "", widget.countryStateId ?? 0);
@@ -289,7 +291,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
                             /// TODO : here country id is static when type is panna we need make dynamic in future
                             countryStateId: widget.type == "Panna"
-                                ? 28
+                                ? pannaCountryStateId
                                 : widget.countryStateId,
                             pannaID: cubit.selectedPannaNo?.number,
                             personData: null,
@@ -311,7 +313,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
 
                               ///TODO : here country id is static when type is panna we need make dynamic in future
                               countryStateId: widget.type == "Panna"
-                                  ? 28
+                                  ? pannaCountryStateId
                                   : widget.countryStateId,
                               personData: null,
                             ));

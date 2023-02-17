@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +18,7 @@ import '../../../../../../common/common_button.dart';
 import '../../../../../../generated/l10n.dart';
 import '../../../../../../route/route_path.dart';
 import '../cubit/zila_data_state.dart';
+import '../zila_data_screen.dart';
 
 //27234
 class EntryDetailsList extends StatelessWidget {
@@ -146,7 +145,7 @@ class EntryDetailsList extends StatelessWidget {
                                                 unitId: cubit.unitId,
                                                 subUnitId: cubit.subUnitId,
                                                 countryStateId: type == "Panna"
-                                                    ? 28
+                                                    ? pannaCountryStateId
                                                     : countryStateId,
                                                 levelName: type == "Panna"
                                                     ? cubit.selectedPannaNo?.id
@@ -196,7 +195,7 @@ class EntryDetailsList extends StatelessWidget {
                                           unitId: cubit.unitId,
                                           subUnitId: cubit.subUnitId,
                                           countryStateId: type == "Panna"
-                                              ? 28
+                                              ? pannaCountryStateId
                                               : countryStateId,
                                           levelName: type == "Panna"
                                               ? cubit.selectedPannaNo?.id
@@ -208,7 +207,6 @@ class EntryDetailsList extends StatelessWidget {
                                                   data?.pannaNumber ?? "0"),
                                           personData: data?.toJson(),
                                         ));
-                                  
                                   }),
                                   child: Row(
                                     children: [

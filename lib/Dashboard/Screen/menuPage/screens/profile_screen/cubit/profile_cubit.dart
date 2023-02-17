@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,12 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:meta/meta.dart';
 
 import '../../../../../../AddEntry/network/model/category_model.dart';
 import '../../../../../../Storage/user_storage_service.dart';
-import '../../../../../../generated/l10n.dart';
-import '../../../../../../generated/l10n.dart';
 import '../../../../../../generated/l10n.dart';
 import '../../personal_info/cubit/personal_info_cubit.dart';
 import '../network/api/user_detail_api.dart';
@@ -21,11 +17,11 @@ import '../network/model/user_detail_model.dart';
 import '../widgets/photo_selction_bottom_sheet.dart';
 
 part 'profile_state.dart';
+
 DropdownValueModel? dropDownValue;
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileInitial());
-
 
   UserDetailModel? userDetails;
   File? imageFile;
@@ -37,47 +33,48 @@ class ProfileCubit extends Cubit<ProfileState> {
   bool showBusiness = false;
   GetStorage box = GetStorage();
 
-
-
   final api = UserDetailApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
     emit(ProfileInitial());
   }
-  Future<void> selectImageForProfile({int? id,BuildContext? context}) async {
+
+  Future<void> selectImageForProfile({int? id, BuildContext? context}) async {
     emit(ProfileInitial());
     await selectOption(context: context!);
     emit(ImageSelectForProfileSuccess());
   }
 
   uploadImageToFirebase({required BuildContext context}) async {
-    EasyLoading.show(status:  S.of(context).uploading);
+    EasyLoading.show(status: S.of(context).uploading);
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
-    final destination = '${userDetails?.data?.id}/${userDetails?.data?.id}_userProfile';
+    final destination =
+        '${userDetails?.data?.id}/${userDetails?.data?.id}_userProfile';
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
       EasyLoading.dismiss();
     });
     urlDownload = await snapshot.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
-    if(urlDownload != null){
-      Future.delayed(Duration.zero).then((value){
+    if (urlDownload != null) {
+      Future.delayed(Duration.zero).then((value) {
         context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
           "avatar": urlDownload,
         });
       });
     }
     EasyLoading.dismiss();
-    EasyLoading.showSuccess("Photo Uploaded",duration: const Duration(milliseconds: 500));
-    Future.delayed(Duration.zero).then((value){
+    EasyLoading.showSuccess("Photo Uploaded",
+        duration: const Duration(milliseconds: 500));
+    Future.delayed(Duration.zero).then((value) {
       Navigator.pop(context);
     });
   }
 
   Future getUserDetails() async {
-    // try {
+    try {
       emit(ProfileLoadingState());
       StorageService.getUserAuthToken();
       var res =
@@ -96,9 +93,9 @@ class ProfileCubit extends Cubit<ProfileState> {
         print('error=${res.data['message']}');
         emit(ErrorState(res.data['message']));
       }
-    // } catch (e) {
-    //   emit(ErrorState('Something Went Wrong'));
-    // }
+    } catch (e) {
+      emit(ErrorState('Something Went Wrong'));
+    }
   }
 
   Future getDropdownData() async {
@@ -120,6 +117,4 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(DropDownErrorState('Something Went Wrong'));
     }
   }
-
-
 }
