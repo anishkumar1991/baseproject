@@ -374,7 +374,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       address.area = cubit.areaDesCtr.text;
       address.pinCode = cubit.pinCodeCtr.text;
       address.city = cubit.townCtr.text;
-      address.forWhich = cubit.addressFor;
+      address.forWhich = cubit.addressFor ?? S.of(context).home;
       address.uuid = "";
       widget.addresses?.add(address);
     } else {
@@ -383,7 +383,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       address.area = cubit.areaDesCtr.text;
       address.pinCode = cubit.pinCodeCtr.text;
       address.city = cubit.townCtr.text;
-      address.forWhich = cubit.addressFor;
+      address.forWhich = cubit.addressFor ?? S.of(context).home;
       address.uuid = "";
       widget.addresses?[widget.index!] = address;
     }
