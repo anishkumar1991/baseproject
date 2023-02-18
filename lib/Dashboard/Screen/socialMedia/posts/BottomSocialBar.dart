@@ -9,6 +9,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/ReactionState.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/Share.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/ShareOnWhatsapp.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/VideoShare.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/VideoShareURL.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'ReactionButton.dart';
@@ -94,7 +96,45 @@ class BottomSocialBar extends StatelessWidget {
                       File(path).writeAsBytesSync(bytes);
                       XFile file = XFile(path);
                       await Share.shareXFiles(text: text, [file]);
+                    } else if (cubit1.tempModel!.posts[index].postType ==
+                        "Video") {
+                      print(
+                          "------------UNDER-Video-Type-----");
+                      if (cubit1.tempModel!.posts[index].postData.video
+                              .toString()
+                              .contains('.m3u8') ||
+                          cubit1.tempModel!.posts[index].postData.video
+                              .toString()
+                              .contains('.M3U8') ||
+                          cubit1.tempModel!.posts[index].postData.video
+                              .toString()
+                              .contains('m3u8') ||
+                          cubit1.tempModel!.posts[index].postData.video
+                              .toString()
+                              .contains('M3U8')) {
+                        print(
+                            "------------------VFORMAT---------------NO");
+                        cubit2
+                            .shareToAll(cubit1.tempModel!.posts[index].postData.video
+                            .toString());
+                        VideosShareURL(
+                            context,
+                            index,
+                            cubit1.tempModel!.posts[index].postData.video
+                                .toString());
+                      } else {
+                        print("------------------VFORMAT---------------SUPPORTED");
+                        cubit2
+                            .shareToAll(cubit1.tempModel!.posts[index].postData.video
+                            .toString());
+                        VideoDownloadShare(
+                            context,
+                            index,
+                            cubit1.tempModel!.posts[index].postData.video
+                                .toString());
+                      }
                     } else {
+                      print("----------------else ke andar FORMAT----->");
                       cubit2.shareToAll(id);
                       share(context, index);
                     }

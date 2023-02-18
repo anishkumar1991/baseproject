@@ -99,6 +99,7 @@ dependencies:
       url: https://github.com/MilindPanwar-Jarvis/mannkibaatpackage.git
       ref: master
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
