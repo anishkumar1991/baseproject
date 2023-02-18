@@ -52,7 +52,7 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
               width: 143,
               child: MainButton(
                 authenticationToken:
-                'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA',
+                'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA', text: 'hello',
               ),
             ),
           )

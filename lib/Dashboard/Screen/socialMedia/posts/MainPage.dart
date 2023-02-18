@@ -91,6 +91,12 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                         //         "twitter") {
                         //   return TwitterCard();
                         // }
+                        if (state.model.posts[index].postType == "Video") {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 18),
+                            child: CustomCard(tempkey: 2, index: index),
+                          );
+                        }
                         if (state.model.posts[index].postType == "Image") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
