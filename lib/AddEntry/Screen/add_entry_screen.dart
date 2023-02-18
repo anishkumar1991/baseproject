@@ -91,6 +91,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
   }
 
   formFieldWidget(AddEntryCubit cubit, int i) {
+    String currentLocale = Localizations.localeOf(context).toString();
+
     return Column(
       children: [
         /// Here getting specify dropdown list
@@ -125,8 +127,10 @@ class _AddEntryPageState extends State<AddEntryPage> {
               return CustomDropDown(
                 selectedValue: FieldHandler.getDropdownSelected(
                     cubit.entryField![i].fieldName ?? "", cubit),
-                title: cubit.entryField![i].displayNameForUI ?? "",
-                hintText: 'Select ${cubit.entryField![i].displayNameForUI}',
+                title: cubit.getLocaleName(
+                    cubit.entryField![i].displayNameForUI ?? "", currentLocale),
+                hintText:
+                    'Select ${cubit.entryField![i].displayNameForUI ?? ""}',
                 isMandatoryField: cubit.entryField![i].mandatoryField ?? false,
                 validator: (dynamic value) {
                   if (cubit.entryField![i].mandatoryField ?? false) {
@@ -190,12 +194,12 @@ class _AddEntryPageState extends State<AddEntryPage> {
                               FieldHandler.onUpdate(i, value,
                                   cubit.entryField![i].fieldName ?? "", cubit);
                             },
-                            title: cubit.entryField![i].displayNameForUI ?? "",
+                            title: cubit.getLocaleName(
+                                cubit.entryField![i].displayNameForUI ?? "",
+                                currentLocale),
                             keyboardType: cubit.getTextInputType(
-                                fieldType:
-                                    cubit.entryField![i].fieldName ?? ''),
-                            hintText:
-                                'Enter Your ${cubit.entryField![i].displayNameForUI}'),
+                                fieldType: cubit.entryField![i].fieldName ?? ''),
+                            hintText: 'Enter Your ${cubit.entryField![i].displayNameForUI}'),
                         spaceHeightWidget(8),
                         UploadCard(
                           uploadedFilePath: FieldHandler.getFileName(
@@ -266,7 +270,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         FieldHandler.onUpdate(i, value,
                             cubit.entryField![i].fieldName ?? "", cubit);
                       },
-                      title: cubit.entryField![i].displayNameForUI ?? "",
+                      title: cubit.getLocaleName(
+                          cubit.entryField![i].displayNameForUI ?? "",
+                          currentLocale),
                       keyboardType: cubit.getTextInputType(
                           fieldType: cubit.entryField![i].fieldName ?? ""),
                       hintText:
@@ -338,7 +344,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                           FieldHandler.onUpdate(i, value,
                               cubit.entryField![i].fieldName ?? "", cubit);
                         },
-                        title: cubit.entryField![i].displayNameForUI ?? "",
+                        title: cubit.getLocaleName(
+                            cubit.entryField![i].displayNameForUI ?? "",
+                            currentLocale),
                         keyboardType: cubit.getTextInputType(
                             fieldType: cubit.entryField![i].fieldName ?? ''),
                         hintText:
@@ -371,7 +379,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         FieldHandler.onUpdate(i, value,
                             cubit.entryField![i].fieldName ?? "", cubit);
                       },
-                      title: cubit.entryField![i].displayNameForUI ?? "",
+                      title: cubit.getLocaleName(
+                          cubit.entryField![i].displayNameForUI ?? "",
+                          currentLocale),
                       keyboardType: cubit.getTextInputType(
                           fieldType: cubit.entryField![i].fieldName ?? ''),
                       hintText:
@@ -396,7 +406,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         FieldHandler.onUpdate(i, value,
                             cubit.entryField![i].fieldName ?? "", cubit);
                       },
-                      title: cubit.entryField![i].displayNameForUI ?? "",
+                      title: cubit.getLocaleName(
+                          cubit.entryField![i].displayNameForUI ?? "",
+                          currentLocale),
                       keyboardType: cubit.getTextInputType(
                           fieldType: cubit.entryField![i].fieldName ?? ''),
                       hintText:
@@ -421,7 +433,9 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       FieldHandler.onUpdate(i, value,
                           cubit.entryField![i].fieldName ?? "", cubit);
                     },
-                    title: cubit.entryField![i].displayNameForUI ?? "",
+                    title: cubit.getLocaleName(
+                        cubit.entryField![i].displayNameForUI ?? "",
+                        currentLocale),
                     keyboardType: cubit.getTextInputType(
                         fieldType: cubit.entryField![i].fieldName ?? ''),
                     hintText:
@@ -478,7 +492,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
             }),
             readOnly: true,
             controller: cubit.dobController,
-            title: cubit.entryField![i].displayNameForUI ?? "",
+            title: cubit.getLocaleName(
+                cubit.entryField![i].displayNameForUI ?? "", currentLocale),
             validator: ((value) {
               if (value.isNotEmpty) {
                 if (cubit.calculateAge(DateFormat("dd-MMM-yyyy").parse(value)) <

@@ -54,7 +54,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   Widget build(BuildContext context) {
     final cubit = context.read<AddEntryCubit>();
     final zilaCubit = context.read<ZilaDataCubit>();
-
+    String currentLocale = Localizations.localeOf(context).toString();
     return WillPopScope(
       onWillPop: () async {
         EasyLoading.dismiss();
@@ -94,7 +94,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           context: context,
                           builder: ((context) {
                             return SubmitDialog(
-                              subUnitId: cubit.subUnitId??"",
+                              subUnitId: cubit.subUnitId ?? "",
                               mobileNo: state.mobileNo,
                               personId: cubit.personId ?? 0,
                               levelId: cubit.levelId,
@@ -117,7 +117,8 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                                           listen: false)
                                       .getEntryData(data: {
                                     "level": cubit.levelId,
-                                    "unit": cubit.unitId,"sub_unit": cubit.subUnitId,
+                                    "unit": cubit.unitId,
+                                    "sub_unit": cubit.subUnitId,
                                     "level_name": zilaCubit.levelNameId
                                   });
                                 }
@@ -289,6 +290,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   }
 
   nonEditableField(AddEntryCubit cubit, int i) {
+    String currentLocale = Localizations.localeOf(context).toString();
     return Column(
       children: [
         for (var item in cubit.finalAllDataList.entries) ...[
@@ -309,7 +311,9 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                         child: CommonTextField(
                           isMandatoryField:
                               cubit.entryField![i].mandatoryField ?? false,
-                          title: FieldHandler.getFieldName(item.key, cubit),
+                          title: cubit.getLocaleName(
+                              FieldHandler.getFieldName(item.key, cubit),
+                              currentLocale),
                           hintText: item.value,
                         ),
                       ),
@@ -323,7 +327,9 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                     child: CommonTextField(
                       isMandatoryField:
                           cubit.entryField![i].mandatoryField ?? false,
-                      title: FieldHandler.getFieldName(item.key, cubit),
+                      title: cubit.getLocaleName(
+                          FieldHandler.getFieldName(item.key, cubit),
+                          currentLocale),
                       hintText: dateDDMMMYYYY(item.value),
                     ),
                   )
@@ -334,7 +340,9 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                       child: CommonTextField(
                         isMandatoryField:
                             cubit.entryField![i].mandatoryField ?? false,
-                        title: FieldHandler.getFieldName(item.key, cubit),
+                        title: cubit.getLocaleName(
+                            FieldHandler.getFieldName(item.key, cubit),
+                            currentLocale),
                         hintText: FieldHandler.getDropdownSelectedValueName(
                             item.key, cubit),
                       ),
@@ -344,7 +352,9 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                       child: CommonTextField(
                         isMandatoryField:
                             cubit.entryField![i].mandatoryField ?? false,
-                        title: FieldHandler.getFieldName(item.key, cubit),
+                        title: cubit.getLocaleName(
+                            FieldHandler.getFieldName(item.key, cubit),
+                            currentLocale),
                         hintText: item.value,
                       ),
                     )

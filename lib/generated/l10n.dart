@@ -1940,6 +1940,106 @@ class S {
     );
   }
 
+  /// `Downloading..`
+  String get downloading {
+    return Intl.message(
+      'Downloading..',
+      name: 'downloading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download`
+  String get download {
+    return Intl.message(
+      'Download',
+      name: 'download',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vibhag`
+  String get vibhag {
+    return Intl.message(
+      'Vibhag',
+      name: 'vibhag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Zila`
+  String get zila {
+    return Intl.message(
+      'Zila',
+      name: 'zila',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vidhan Sabha`
+  String get vidhanSabhaLevel {
+    return Intl.message(
+      'Vidhan Sabha',
+      name: 'vidhanSabhaLevel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mandal`
+  String get mandalLevelText {
+    return Intl.message(
+      'Mandal',
+      name: 'mandalLevelText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shakti Kendra`
+  String get shaktiKendra {
+    return Intl.message(
+      'Shakti Kendra',
+      name: 'shaktiKendra',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booth`
+  String get booth {
+    return Intl.message(
+      'Booth',
+      name: 'booth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pradesh`
+  String get pradesh {
+    return Intl.message(
+      'pradesh',
+      name: 'pradesh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Getting state data`
+  String get gettingStateData {
+    return Intl.message(
+      'Getting state data',
+      name: 'gettingStateData',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `oops !! something went to wrong please try again later..`
   String get oopsErrorMsg {
     return Intl.message(
@@ -1985,36 +2085,6 @@ class S {
     return Intl.message(
       'Please enter pravas subject',
       name: 'pravasSubject',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Getting state data`
-  String get gettingStateData {
-    return Intl.message(
-      'Getting state data',
-      name: 'gettingStateData',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Downloading..`
-  String get downloading {
-    return Intl.message(
-      'Downloading..',
-      name: 'downloading',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Download`
-  String get download {
-    return Intl.message(
-      'Download',
-      name: 'download',
       desc: '',
       args: [],
     );
@@ -2070,16 +2140,6 @@ class S {
     );
   }
 
-  /// `Booth`
-  String get booth {
-    return Intl.message(
-      'Booth',
-      name: 'booth',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Total Groups –`
   String get totalGroups {
     return Intl.message(
@@ -2095,6 +2155,36 @@ class S {
     return Intl.message(
       'Social Media',
       name: 'socialMedia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Karyakarni`
+  String get karyakarniBoothText {
+    return Intl.message(
+      'Karyakarni',
+      name: 'karyakarniBoothText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Karyakarni`
+  String get karyakarniSkText {
+    return Intl.message(
+      'Karyakarni',
+      name: 'karyakarniSkText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Shakti Kendra`
+  String get editShaktiKendr {
+    return Intl.message(
+      'Edit Shakti Kendra',
+      name: 'editShaktiKendr',
       desc: '',
       args: [],
     );

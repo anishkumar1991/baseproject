@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/app_colors.dart';
+
 import '../../../../generated/l10n.dart';
 import '../cubit/DatePicCubit.dart';
 import '../cubit/DatePicState.dart';
 import 'CircularScreen.dart';
 import 'NotificationScreen.dart';
 import 'ReportScreen.dart';
-import 'package:intl/intl.dart';
 
 class NotificationMainScreen extends StatefulWidget {
   const NotificationMainScreen({Key? key}) : super(key: key);
@@ -37,6 +37,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
   Widget build(BuildContext context) {
     final cubit = context.read<DatePicCubit>();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -74,7 +75,8 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                       child: Container(
                           decoration: const BoxDecoration(
                               color: Color(0xFFD5EDFA),
-                              borderRadius: BorderRadius.all(Radius.circular(8))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
                           child: Row(
                             children: [
                               const SizedBox(width: 16),
@@ -193,7 +195,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
               Expanded(
                 child: TabBarView(
                   controller: tabController,
-                  children:  [
+                  children: [
                     CircularScreen(),
                     ReportScreen(),
                     NotificationScreen(),

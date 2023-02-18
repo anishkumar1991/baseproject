@@ -116,6 +116,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "download": MessageLookupByLibrary.simpleMessage("Download"),
         "downloading": MessageLookupByLibrary.simpleMessage("Downloading.."),
         "edit": MessageLookupByLibrary.simpleMessage("Edit"),
+        "editShaktiKendr":
+            MessageLookupByLibrary.simpleMessage("Edit Shakti Kendra"),
         "education": MessageLookupByLibrary.simpleMessage("Education"),
         "educationDeleted":
             MessageLookupByLibrary.simpleMessage("Education Deleted"),
@@ -153,6 +155,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
         "hindi": MessageLookupByLibrary.simpleMessage("Hindi"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "karyakarniBoothText":
+            MessageLookupByLibrary.simpleMessage("Karyakarni"),
+        "karyakarniSkText": MessageLookupByLibrary.simpleMessage("Karyakarni"),
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
             "Landline Number should be 8 digit"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
@@ -173,6 +178,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "makeTourSchedules":
             MessageLookupByLibrary.simpleMessage("Make tour schedule"),
         "mandal": MessageLookupByLibrary.simpleMessage("Board"),
+        "mandalLevelText": MessageLookupByLibrary.simpleMessage("Mandal"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("Mobile no."),
         "myEvent": MessageLookupByLibrary.simpleMessage("My events"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
@@ -223,6 +229,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Select Reason"),
         "position": MessageLookupByLibrary.simpleMessage("position"),
         "post": MessageLookupByLibrary.simpleMessage("Post"),
+        "pradesh": MessageLookupByLibrary.simpleMessage("pradesh"),
         "pravasEndDate":
             MessageLookupByLibrary.simpleMessage("Please enter last date"),
         "pravasName": MessageLookupByLibrary.simpleMessage(
@@ -265,6 +272,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
             "Please Select Vidhansabha first"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("Selected booth"),
+        "shaktiKendra": MessageLookupByLibrary.simpleMessage("Shakti Kendra"),
         "shaktiKendraCreation":
             MessageLookupByLibrary.simpleMessage("Shakti Kendra Creation"),
         "shaktikendr": MessageLookupByLibrary.simpleMessage("Shakti kendr"),
@@ -303,7 +311,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "verify": MessageLookupByLibrary.simpleMessage("Verify"),
         "verifyWithOtp":
             MessageLookupByLibrary.simpleMessage("Verify with OTP"),
+        "vibhag": MessageLookupByLibrary.simpleMessage("Vibhag"),
         "vidhanSabha": MessageLookupByLibrary.simpleMessage("Assembly"),
+        "vidhanSabhaLevel":
+            MessageLookupByLibrary.simpleMessage("Vidhan Sabha"),
         "view": MessageLookupByLibrary.simpleMessage("View"),
         "viewProgram": MessageLookupByLibrary.simpleMessage("View Program"),
         "viewToursEvents":
@@ -315,6 +326,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "yearFrom": MessageLookupByLibrary.simpleMessage("Years (From)"),
         "yearTo": MessageLookupByLibrary.simpleMessage("Years (To)"),
         "years": MessageLookupByLibrary.simpleMessage("Years"),
-        "yes": MessageLookupByLibrary.simpleMessage("Yes")
+        "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "zila": MessageLookupByLibrary.simpleMessage("Zila")
       };
 }
