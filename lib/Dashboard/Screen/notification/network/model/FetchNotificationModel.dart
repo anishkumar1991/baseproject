@@ -1,65 +1,79 @@
-// To parse this JSON data, do
-//
-//     final fetchNotificationModel = fetchNotificationModelFromJson(jsonString);
-
-import 'dart:convert';
-
-FetchNotificationModel fetchNotificationModelFromJson(String str) =>
-    FetchNotificationModel.fromJson(json.decode(str));
-
-String fetchNotificationModelToJson(FetchNotificationModel data) =>
-    json.encode(data.toJson());
-
 class FetchNotificationModel {
-  FetchNotificationModel({
-    required this.statusCode,
-    required this.notificationsList,
-  });
+  String? statusCode;
+  List<NotificationsList>? notificationsList;
 
-  String statusCode;
-  List<NotificationsList> notificationsList;
+  FetchNotificationModel({this.statusCode, this.notificationsList});
 
-  factory FetchNotificationModel.fromJson(Map<String, dynamic> json) =>
-      FetchNotificationModel(
-        statusCode: json["statusCode"],
-        notificationsList: List<NotificationsList>.from(
-            json["notifications_list"]
-                .map((x) => NotificationsList.fromJson(x))),
-      );
+  FetchNotificationModel.fromJson(Map<String, dynamic> json) {
+    statusCode = json['statusCode'];
+    if (json['notifications_list'] != null) {
+      notificationsList = <NotificationsList>[];
+      json['notifications_list'].forEach((v) {
+        notificationsList!.add(new NotificationsList.fromJson(v));
+      });
+    }
+  }
 
-  Map<String, dynamic> toJson() => {
-        "statusCode": statusCode,
-        "notifications_list":
-            List<dynamic>.from(notificationsList.map((x) => x.toJson())),
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['statusCode'] = this.statusCode;
+    if (this.notificationsList != null) {
+      data['notifications_list'] =
+          this.notificationsList!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class NotificationsList {
-  NotificationsList({
-    required this.notificationTitle,
-    required this.description,
-    required this.uploadFile,
-    required this.currentTime,
-  });
+  String? notificationTitle;
+  String? description;
+  String? sType;
+  String? share;
+  String? uploadFile;
+  String? date;
+  String? time;
+  String? attachmentType;
+  String? link;
+  String? fcm;
 
-  String notificationTitle;
-  String description;
-  String uploadFile;
-  DateTime currentTime;
+  NotificationsList(
+      {this.notificationTitle,
+      this.description,
+      this.sType,
+      this.share,
+      this.uploadFile,
+      this.date,
+      this.time,
+      this.attachmentType,
+      this.link,
+      this.fcm});
 
-  factory NotificationsList.fromJson(Map<String, dynamic> json) =>
-      NotificationsList(
-        notificationTitle: json["notification_title"],
-        description: json["description"],
-        uploadFile: json["upload_file"],
-        currentTime: DateTime.parse(json["current_time"]),
-      );
+  NotificationsList.fromJson(Map<String, dynamic> json) {
+    notificationTitle = json['notification_title'];
+    description = json['description'];
+    sType = json['_type'];
+    share = json['share'];
+    uploadFile = json['upload_file'];
+    date = json['date'];
+    time = json['time'];
+    attachmentType = json['attachment_type'];
+    link = json['link'];
+    fcm = json['fcm'];
+  }
 
-  Map<String, dynamic> toJson() => {
-        "notification_title": notificationTitle,
-        "description": description,
-        "upload_file": uploadFile,
-        "current_time":
-            "${currentTime.year.toString().padLeft(4, '0')}-${currentTime.month.toString().padLeft(2, '0')}-${currentTime.day.toString().padLeft(2, '0')}",
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['notification_title'] = this.notificationTitle;
+    data['description'] = this.description;
+    data['_type'] = this.sType;
+    data['share'] = this.share;
+    data['upload_file'] = this.uploadFile;
+    data['date'] = this.date;
+    data['time'] = this.time;
+    data['attachment_type'] = this.attachmentType;
+    data['link'] = this.link;
+    data['fcm'] = this.fcm;
+    return data;
+  }
 }

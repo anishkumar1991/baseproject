@@ -22,7 +22,7 @@ class _DropDown2State extends State<DropDown2> {
       decoration: InputDecoration(
         fillColor: Colors.white,
          prefixIcon: Image.asset(
-        'assets/images/image2.png',
+        'assets/images/mannkibaat/image2.png',
         height: 20,
         width: 14,
       ),

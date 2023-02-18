@@ -203,5 +203,13 @@
   "pravasSubject" : "कृपया प्रवासी विषय दर्ज करें",
   "gettingStateData" : "राज्य डेटा प्राप्त करना",
   "downloading" : "डाउनलोड कर रहे हे..",
-  "download" : "डाउनलोड"
+  "download" : "डाउनलोड",
+  "circular" : "सर्कुलर",
+  "report" : "रिपोर्ट",
+  "notification" : "नोटिफिकेशन",
+  "notificationDate" : "डेट से फ़िल्टर करे",
+  "notificationsomethingWentWrong" : "कुछ गलत हो गया",
+  "booth": "बूथ",
+  "totalGroups" :"कुल समूह -",
+  "socialMedia" : "सामाजिक मीडिया"
 }

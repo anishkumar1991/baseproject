@@ -1,21 +1,33 @@
+// To parse this JSON data, do
+//
+//     final loginModel = loginModelFromJson(jsonString);
+
+import 'dart:convert';
+
+LoginModel loginModelFromJson(String str) => LoginModel.fromJson(json.decode(str));
+
+String loginModelToJson(LoginModel data) => json.encode(data.toJson());
+
 class LoginModel {
-  bool? success;
-  String? message;
-  String? identificationToken;
+  LoginModel({
+    required this.success,
+    required this.message,
+    required this.identificationToken,
+  });
 
-  LoginModel({this.success, this.message, this.identificationToken});
+  bool success;
+  String message;
+  String identificationToken;
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    message = json['message'];
-    identificationToken = json['identification_token'];
-  }
+  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+    success: json["success"],
+    message: json["message"],
+    identificationToken: json["identification_token"],
+  );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  <String, dynamic>{};
-    data['success'] = success;
-    data['message'] = message;
-    data['identification_token'] = identificationToken;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+    "success": success,
+    "message": message,
+    "identification_token": identificationToken,
+  };
 }

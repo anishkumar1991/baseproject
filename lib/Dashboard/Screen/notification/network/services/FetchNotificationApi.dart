@@ -5,7 +5,7 @@ import '../../../../../Values/string.dart';
 
 part 'FetchNotificationApi.g.dart';
 
-@RestApi(baseUrl: "http://35.200.202.116")
+@RestApi(baseUrl: AppStrings.notificationbaseUrl)
 abstract class FetchNotificationApi {
   factory FetchNotificationApi(Dio dio) = _FetchNotificationApi;
 

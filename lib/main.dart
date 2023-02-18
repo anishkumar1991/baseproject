@@ -10,8 +10,10 @@ import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/notification/cubit/DatePicCubit.dart';
 import 'package:sangathan/Dashboard/Screen/notification/cubit/NotificationCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/cubit/HorizontalTileCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
@@ -20,7 +22,6 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/string.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
-
 import 'AddEntry/Cubit/add_entry_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_module/create_function_page/create_function_cubit/create_function_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_module/edit_date/cubit/edit_date_cubit.dart';
@@ -45,9 +46,7 @@ import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(
-  RemoteMessage message,
-) async {
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint(
       "Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
@@ -63,6 +62,11 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await GetStorage.init();
   runApp(const MyApp());
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -75,6 +79,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    FirebaseMessaging.instance
+        .subscribeToTopic("sangathan")
+        .then((value) => debugPrint("subscribed to sangathan"));
     LocalNotificationService.initialize(context);
     firebaseNotification(context);
     super.initState();
@@ -84,7 +91,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (create) => SendFcmTokenCubit()),
         BlocProvider(create: (create) => ReelShareCubit()),
+        BlocProvider(create: (create) => DatePicCubit()),
         BlocProvider(create: (create) => ReactionCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
@@ -132,6 +141,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
+
             supportedLocales: S.delegate.supportedLocales,
             locale: Locale.fromSubtags(languageCode: cubit.lang!),
             // locale: lang,

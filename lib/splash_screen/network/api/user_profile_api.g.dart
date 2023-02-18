@@ -13,7 +13,7 @@ class _UserProfileApi implements UserProfileApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saral-staging.ccdms.in';
+    baseUrl ??= 'https://saralk.ccdms.in';
   }
 
   final Dio _dio;

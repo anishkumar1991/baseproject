@@ -79,7 +79,6 @@ class BottomSocialBar extends StatelessWidget {
                     if (cubit1.tempModel!.posts[index].postType == "Poll") {
                       cubit2.shareToAll(id);
 
-
                       final text =
                           cubit1.tempModel!.posts[index].sharingContent;
 

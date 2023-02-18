@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/mannKiBaat/Utils/AppColor.dart';
 
-import '../../mannKiBaat/screens/FormPage.dart';
+import '../../mannKiBaat/Screen/FormPage.dart';
+
 
 class MannKiBaatCard extends StatefulWidget {
   const MannKiBaatCard({Key? key}) : super(key: key);

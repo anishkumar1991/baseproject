@@ -44,7 +44,7 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
                           itemCount: vidhanSabha.data?.locations?.length,
-                          physics: BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemBuilder: (context, index) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +83,7 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                   ),
                                 ),
                                 index + 1 == vidhanSabha.data?.locations?.length
-                                    ? SizedBox.shrink()
+                                    ? const SizedBox.shrink()
                                     : const Divider(
                                         color: AppColor.borderColor,
                                       ),

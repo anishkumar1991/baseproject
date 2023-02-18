@@ -10,96 +10,120 @@ class ShortIntro extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          height: 126,
           decoration: BoxDecoration(
             border: Border.all(
               width: 1,
-              color: Color(0xFFE6E6E6),
+              color: const Color(0xFFE6E6E6),
             ),
             borderRadius: BorderRadius.circular(12),
             color: Colors.white,
           ),
-          child: Stack(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: const Icon(
-                          Icons.circle_rounded,
-                          size: 6,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Container(
-                        width: 263,
-                        height: 30,
-                        child: Text(
-                          "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर ",
-                          style: GoogleFonts.poppins(
-                              fontSize: 13, fontWeight: FontWeight.w400),
-                        ),
-                      )
-                    ],
+                  const Icon(
+                    Icons.circle_rounded,
+                    size: 6,
+                  ),
+                  const SizedBox(
+                    width: 4,
                   ),
                   SizedBox(
-                    height: 10,
-                  ),
+                    width: 263,
+                    child: Text(
+                      "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर राज्य पर संविधान की धारा 356 लागू नहीं होती।",
+                      style: GoogleFonts.poppins(
+                          fontSize: 13, fontWeight: FontWeight.w400),
+                    ),
+                  )
                 ],
               ),
-              Positioned(bottom: 14, right: 14, child: Icon(Icons.copy)),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.circle_rounded,
+                    size: 6,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  SizedBox(
+                    width: 263,
+                    child: Text(
+                      "इसी विशेष दर्ज़े के कारण जम्मू-कश्मीर राज्य पर संविधान की धारा 356 लागू नहीं होती।",
+                      style: GoogleFonts.poppins(
+                          fontSize: 13, fontWeight: FontWeight.w400),
+                    ),
+                  )
+                ],
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.copy),
+                ),
+              ),
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 160,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1,
-                  color: Color(0xFFE6E6E6),
-                ),
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
-              ),
-              child: Expanded(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 80,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "पहले देश के लिए अधिकतर जो स्कीम बनती थी, जो कानून बनते थे, उनमें लिखा होता था- Except J and K. अब ये इतिहास की बात हो चुकी है।,",
-                        style: GoogleFonts.poppins(
-                            fontSize: 13, fontWeight: FontWeight.w500),
-                      ),
-                    ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1,
+              color: const Color(0xFFE6E6E6),
+            ),
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "पहले देश के लिए अधिकतर जो स्कीम बनती थी, जो कानून बनते थे, उनमें लिखा होता था- Except J and K. अब ये इतिहास की बात हो चुकी है।,"
+                    "शांति और विकास के जिस मार्ग पर जम्मू और कश्मीर बढ़ रहा है, उसने राज्य में नए उद्योगों के आने का मार्ग भी बनाया है। आज जम्मू-कश्मीर आत्मनिर्भर भारत अभियान में अपना योगदान दे रहा है|"
+                    "पहले देश के लिए अधिकतर जो स्कीम बनती थी, जो कानून बनते थे, उनमें लिखा होता था- Except J and K. अब ये इतिहास की बात हो चुकी है।,"
+                    "शांति और विकास के जिस मार्ग पर जम्मू और कश्मीर बढ़ रहा है, उसने राज्य में नए उद्योगों के आने का मार्ग भी बनाया है। आज जम्मू-कश्मीर आत्मनिर्भर भारत अभियान में अपना योगदान दे रहा है|",
+                    style: GoogleFonts.poppins(
+                        fontSize: 13, fontWeight: FontWeight.w500),
                   ),
                 ),
               ),
-            ),
-            Positioned(
-                bottom: 14,
-                right: 14,
+              Text(
+                "- प्रधानमंत्री नरेन्द्र मोदी",
+                style: GoogleFonts.poppins(
+                    fontSize: 13, fontWeight: FontWeight.w700),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
                 child: IconButton(
                   onPressed: () {},
-                  icon: Icon(Icons.copy),
-                )),
-          ],
-        )
+                  icon: const Icon(Icons.copy),
+                ),
+              )
+            ],
+          ),
+        ),
       ],
     );
   }

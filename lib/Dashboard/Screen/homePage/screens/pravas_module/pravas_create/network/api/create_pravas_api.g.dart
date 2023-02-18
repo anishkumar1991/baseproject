@@ -13,7 +13,7 @@ class _CreatePravas implements CreatePravas {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://staging-pravas-backend.ccdms.in/api/mobile/v1/pravash';
+    baseUrl ??= 'http://34.100.233.103/api/mobile/v1/pravash';
   }
 
   final Dio _dio;

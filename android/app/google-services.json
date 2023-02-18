@@ -7,43 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:410120124539:android:21f1e767b8b88f342c4ade",
-        "android_client_info": {
-          "package_name": "com.app.sangathan"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "410120124539-l3jqkkhscs49vrkqekg4tpdd107q4ieq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.app.sangathan",
-            "certificate_hash": "2370b37b2c98c41bbf4b2c534859f7255b6b4a23"
-          }
-        },
-        {
-          "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyA2VhFhNh7RTpYUKRKQOywQm0wDDdWg98c"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:410120124539:android:0ba917dff60dcf4f2c4ade",
         "android_client_info": {
           "package_name": "com.jarvis.mpsangathan"

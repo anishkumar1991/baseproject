@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
 import '../../../../Values/app_colors.dart';
 import '../../../../Values/icons.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../route/route_path.dart';
 import '../../../../splash_screen/cubit/user_profile_cubit.dart';
 
@@ -35,8 +36,8 @@ class TopBar extends StatelessWidget {
                     size: 20,
                   )),
             ),
-            Text(
-              'Social Media',
+             Text(
+              S.of(context).socialMedia,
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w400,

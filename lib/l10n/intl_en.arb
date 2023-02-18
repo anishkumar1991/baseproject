@@ -202,5 +202,16 @@
   "pravasSubject" : "Please enter pravas subject",
   "gettingStateData" : "Getting state data",
   "downloading" : "Downloading..",
-  "download" : "Download"
+  "download" : "Download",
+  "circular" : "Circular",
+  "report" : "Report",
+  "notification" : "Notification",
+  "notificationDate" : "Filter by date",
+  "notificationsomethingWentWrong" : "Something Went Wrong",
+  "booth": "Booth",
+  "totalGroups" :"Total Groups –",
+  "socialMedia" : "Social Media"
+
+
+
 }

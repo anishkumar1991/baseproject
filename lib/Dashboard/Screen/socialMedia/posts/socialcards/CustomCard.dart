@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
-
 import '../BottomSocialBar.dart';
 import '../cubit/FetchPostCubit.dart';
 import 'ImageCard.dart';
-import 'Polls.dart';
 
 class CustomCard extends StatelessWidget {
   final int tempkey;
@@ -25,6 +23,7 @@ class CustomCard extends StatelessWidget {
     return Material(
         elevation: 3,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             tempkey == 2 ? ImageCard(tempindex: index) : const Text(""),
             Padding(

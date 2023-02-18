@@ -131,15 +131,19 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                             title: RichText(
                               text: TextSpan(
                                 style: DefaultTextStyle.of(context).style,
-                                children:  <TextSpan>[
-                                  TextSpan(text: S.of(context).vidhanSabha, style: GoogleFonts.poppins(
-                                      color: AppColor.black700,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14)),
-                                  TextSpan(text: " *", style: GoogleFonts.poppins(
-                                      color: AppColor.red,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14)),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: S.of(context).vidhanSabha,
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.black700,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14)),
+                                  TextSpan(
+                                      text: " *",
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.red,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14)),
                                 ],
                               ),
                             ),
@@ -197,15 +201,19 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                           title: RichText(
                             text: TextSpan(
                               style: DefaultTextStyle.of(context).style,
-                              children:  <TextSpan>[
-                                TextSpan(text:  S.of(context).enterShaktiKendrName, style: GoogleFonts.poppins(
-                                    color: AppColor.black700,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14)),
-                                TextSpan(text: " *", style: GoogleFonts.poppins(
-                                    color: AppColor.red,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14)),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: S.of(context).enterShaktiKendrName,
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.black700,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14)),
+                                TextSpan(
+                                    text: " *",
+                                    style: GoogleFonts.poppins(
+                                        color: AppColor.red,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14)),
                               ],
                             ),
                           ),
@@ -278,15 +286,19 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                             title: RichText(
                               text: TextSpan(
                                 style: DefaultTextStyle.of(context).style,
-                                children:  <TextSpan>[
-                                  TextSpan(text:   S.of(context).mandal, style: GoogleFonts.poppins(
-                                      color: AppColor.black700,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14)),
-                                  TextSpan(text: " *", style: GoogleFonts.poppins(
-                                      color: AppColor.red,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14)),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: S.of(context).mandal,
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.black700,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14)),
+                                  TextSpan(
+                                      text: " *",
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.red,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14)),
                                 ],
                               ),
                             ),
@@ -382,15 +394,19 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                             title: RichText(
                               text: TextSpan(
                                 style: DefaultTextStyle.of(context).style,
-                                children:  <TextSpan>[
-                                  TextSpan(text:   S.of(context).buth, style: GoogleFonts.poppins(
-                                      color: AppColor.black700,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14)),
-                                  TextSpan(text: " *", style: GoogleFonts.poppins(
-                                      color: AppColor.red,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14)),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: S.of(context).buth,
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.black700,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14)),
+                                  TextSpan(
+                                      text: " *",
+                                      style: GoogleFonts.poppins(
+                                          color: AppColor.red,
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14)),
                                 ],
                               ),
                             ),
@@ -553,10 +569,10 @@ class _EditShaktiKendraScreenState extends State<EditShaktiKendraScreen> {
                         } else if (cubit.mandalSelected == "") {
                           EasyLoading.showToast(S.of(context).selectMandalFirst,
                               toastPosition: EasyLoadingToastPosition.top);
-                        } else if(cubit.chekedValue.isEmpty){
+                        } else if (cubit.chekedValue.isEmpty) {
                           EasyLoading.showToast(S.of(context).selectBoothFirst,
                               toastPosition: EasyLoadingToastPosition.top);
-                      } else{
+                        } else {
                           List<Map<String, dynamic>> tempBooth = [];
                           for (var element in cubit.selectedBooth) {
                             tempBooth.add({"id": element});
