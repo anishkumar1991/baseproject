@@ -38,54 +38,80 @@ class Data {
   String? voterId;
   String? phoneNumber;
   String? avatar;
-  List<dynamic>? designation;
+  List<Designation>? designation;
   int? percentage;
   Category? religion;
 
-  Data({this.id, this.name, this.phoneNumbers, this.dob, this.addresses, this.gender, this.category, this.caste, this.educationalDetails, this.professionalDetails, this.username, this.email, this.voterId, this.phoneNumber, this.avatar, this.designation, this.percentage, this.religion});
+  Data(
+      {this.id,
+      this.name,
+      this.phoneNumbers,
+      this.dob,
+      this.addresses,
+      this.gender,
+      this.category,
+      this.caste,
+      this.educationalDetails,
+      this.professionalDetails,
+      this.username,
+      this.email,
+      this.voterId,
+      this.phoneNumber,
+      this.avatar,
+      this.designation,
+      this.percentage,
+      this.religion});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    try{
+    try {
       if (json['phone_numbers'] != dynamic) {
         phoneNumbers = <dynamic>[];
         json['phone_numbers'].forEach((v) {
           phoneNumbers!.add(v);
         });
       }
-    }catch(e){
+    } catch (e) {
       phoneNumbers = json['phone_numbers'];
     }
     dob = json['dob'];
     if (json['addresses'] != null) {
       addresses = <Addresses>[];
-      json['addresses'].forEach((v) { addresses!.add(Addresses.fromJson(v)); });
+      json['addresses'].forEach((v) {
+        addresses!.add(Addresses.fromJson(v));
+      });
     }
     gender = json['gender'];
-    category = json['category'] != null ? Category.fromJson(json['category']) : null;
+    category =
+        json['category'] != null ? Category.fromJson(json['category']) : null;
     caste = json['caste'] != null ? Category.fromJson(json['caste']) : null;
     if (json['educational_details'] != null) {
       educationalDetails = <EducationalDetails>[];
-      json['educational_details'].forEach((v) { educationalDetails!.add(EducationalDetails.fromJson(v)); });
+      json['educational_details'].forEach((v) {
+        educationalDetails!.add(EducationalDetails.fromJson(v));
+      });
     }
     if (json['professional_details'] != null) {
       professionalDetails = <ProfessionalDetails>[];
-      json['professional_details'].forEach((v) { professionalDetails!.add(ProfessionalDetails.fromJson(v)); });
+      json['professional_details'].forEach((v) {
+        professionalDetails!.add(ProfessionalDetails.fromJson(v));
+      });
     }
     username = json['username'];
     email = json['email'];
     voterId = json['voter_id'];
     phoneNumber = json['phone_number'];
     avatar = json['avatar'];
-    if (json['designation'] != dynamic) {
-      designation = <dynamic>[];
+    if (json['designation'] != null) {
+      designation = <Designation>[];
       json['designation'].forEach((v) {
-        designation!.add(v);
+        designation!.add(Designation.fromJson(v));
       });
     }
     percentage = json['percentage'];
-    religion = json['religion'] != null ?  Category.fromJson(json['religion']) : null;
+    religion =
+        json['religion'] != null ? Category.fromJson(json['religion']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -105,10 +131,12 @@ class Data {
       data['caste'] = caste!.toJson();
     }
     if (educationalDetails != null) {
-      data['educational_details'] = educationalDetails!.map((v) => v.toJson()).toList();
+      data['educational_details'] =
+          educationalDetails!.map((v) => v.toJson()).toList();
     }
     if (professionalDetails != null) {
-      data['professional_details'] = professionalDetails!.map((v) => v.toJson()).toList();
+      data['professional_details'] =
+          professionalDetails!.map((v) => v.toJson()).toList();
     }
     data['username'] = username;
     data['email'] = email;
@@ -135,7 +163,14 @@ class Addresses {
   String? pinCode;
   String? houseNumber;
 
-  Addresses({this.forWhich, this.area, this.city, this.uuid, this.state, this.pinCode, this.houseNumber});
+  Addresses(
+      {this.forWhich,
+      this.area,
+      this.city,
+      this.uuid,
+      this.state,
+      this.pinCode,
+      this.houseNumber});
 
   Addresses.fromJson(Map<String, dynamic> json) {
     forWhich = json['for'];
@@ -186,7 +221,8 @@ class EducationalDetails {
   String? institute;
   String? startYear;
 
-  EducationalDetails({this.uuid, this.level, this.endYear, this.institute, this.startYear});
+  EducationalDetails(
+      {this.uuid, this.level, this.endYear, this.institute, this.startYear});
 
   EducationalDetails.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
@@ -214,7 +250,8 @@ class ProfessionalDetails {
   String? position;
   String? startYear;
 
-  ProfessionalDetails({this.uuid, this.endYear, this.orgName, this.position, this.startYear});
+  ProfessionalDetails(
+      {this.uuid, this.endYear, this.orgName, this.position, this.startYear});
 
   ProfessionalDetails.fromJson(Map<String, dynamic> json) {
     uuid = json['uuid'];
@@ -231,6 +268,51 @@ class ProfessionalDetails {
     data['org_name'] = orgName;
     data['position'] = position;
     data['start_year'] = startYear;
+    return data;
+  }
+}
+
+class Designation {
+  String? state;
+  String? type;
+  String? dataLevel;
+  String? levelName;
+  String? unit;
+  String? subUnit;
+  String? designation;
+  String? location;
+
+  Designation(
+      {this.state,
+      this.type,
+      this.dataLevel,
+      this.levelName,
+      this.unit,
+      this.subUnit,
+      this.designation,
+      this.location});
+
+  Designation.fromJson(Map<String, dynamic> json) {
+    state = json['state'];
+    type = json['type'];
+    dataLevel = json['data_level'];
+    levelName = json['level_name'];
+    unit = json['unit'];
+    subUnit = json['sub_unit'];
+    designation = json['designation'];
+    location = json['location'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['state'] = state;
+    data['type'] = type;
+    data['data_level'] = dataLevel;
+    data['level_name'] = levelName;
+    data['unit'] = unit;
+    data['sub_unit'] = subUnit;
+    data['designation'] = designation;
+    data['location'] = location;
     return data;
   }
 }
