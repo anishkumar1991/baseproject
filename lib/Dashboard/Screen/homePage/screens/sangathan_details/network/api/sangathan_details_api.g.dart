@@ -13,7 +13,7 @@ class _DataLevelApi implements DataLevelApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saralk.ccdms.in';
+    baseUrl ??= 'https://saral-staging.ccdms.in';
   }
 
   final Dio _dio;
@@ -69,6 +69,34 @@ class _DataLevelApi implements DataLevelApi {
             .compose(
               _dio.options,
               '/zila/api/data/allotted_locations',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<dynamic>> getClientAppPermission(
+    token,
+    clientId,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'client_id': clientId};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result =
+        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/zila/api/data/client_app_permissions',
               queryParameters: queryParameters,
               data: _data,
             )

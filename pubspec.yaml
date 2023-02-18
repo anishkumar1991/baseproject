@@ -94,7 +94,11 @@ dependencies:
   syncfusion_flutter_core: 20.4.44
   keyboard_actions: ^4.1.0
   device_info_plus: ^8.1.0
-  rename : any
+  mannkibaatpackage:
+    git:
+      url: https://github.com/MilindPanwar-Jarvis/mannkibaatpackage.git
+      ref: master
+
 
 dev_dependencies:
   flutter_test:

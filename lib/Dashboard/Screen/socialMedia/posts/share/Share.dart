@@ -11,7 +11,9 @@ Future<void> share(BuildContext context, int index) async {
   final cubit = context.read<FetchPostsCubit>();
   String urlimage =
       cubit.tempModel!.posts[index].postData.images!.first.toString();
-  final text = cubit.tempModel!.posts[index].sharingContent;
+  var text1 = cubit.tempModel!.posts[index].title;
+  var text2 = "https://mpsangathan.com/app";
+  final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);
   final response = await http.get(url);
   final bytes = response.bodyBytes;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mannkibaatpackage/mannkibaatpackage.dart';
 import 'package:sangathan/Dashboard/Screen/mannKiBaat/Utils/AppColor.dart';
 
-import '../../mannKiBaat/Screen/FormPage.dart';
-
+import '../../../../generated/l10n.dart';
 
 class MannKiBaatCard extends StatefulWidget {
   const MannKiBaatCard({Key? key}) : super(key: key);
@@ -46,34 +46,17 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
               right: 24,
               top: 15,
               child: Image.asset("assets/images/mannkibaaatmiclogo.png",height: 63,width: 100,)),
-          Positioned(
+           Positioned(
             right: 42,
             bottom: 10,
             child: SizedBox(
               height: 30,
               width: 143,
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    )),
-                    backgroundColor:
-                        MaterialStateProperty.all(AppColor().buttoncolor),
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const FormPage()));
-                  },
-                  child: Text(
-                    "क्लिक करे",
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10,
-                        color: Colors.white),
-                  )),
+              child: MainButton(
+                text: S.of(context).click,
+                authenticationToken:
+                'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiUHNxYkw0MW9ucDZvR0dOYmY0YXc0Vjl1In0.0jMGRjbpDMV6ahA-jcEhYkw5cVou32cYmpOWvMAc1gU',
+              ),
             ),
           )
         ],

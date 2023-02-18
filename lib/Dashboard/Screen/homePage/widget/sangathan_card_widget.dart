@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/sangathan_deatils_page.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 
@@ -8,7 +9,9 @@ import '../../../../generated/l10n.dart';
 import '../../../../route/route_path.dart';
 
 class SngathanCardWidget extends StatelessWidget {
-  const SngathanCardWidget({super.key});
+  final String clientId;
+
+  const SngathanCardWidget({super.key, required this.clientId});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,9 @@ class SngathanCardWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 5, top: 16),
               child: Text(
-                S.of(context).sangathan,
+                S
+                    .of(context)
+                    .sangathan,
                 style: GoogleFonts.poppins(
                     color: AppColor.textBlackColor,
                     fontSize: 20,
@@ -43,11 +48,14 @@ class SngathanCardWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(24)),
                       backgroundColor: AppColor.buttonBackGroundColor),
                   onPressed: (() {
-                    Navigator.pushNamed(
-                        context, RoutePath.sangathanDetailsScreen);
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) =>
+                          SangathanDetailsPage(cliendId: clientId),));
                   }),
                   child: Text(
-                    S.of(context).click,
+                    S
+                        .of(context)
+                        .click,
                     style: GoogleFonts.poppins(
                         color: AppColor.buttonTextColor,
                         fontSize: 14,

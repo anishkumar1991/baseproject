@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/widget/MannKiBaatCard.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/WhatsappCardWidget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/pravas_card_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
@@ -207,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                                                   RoutePath
                                                       .sangathanDetailsScreen);
                                             }),
-                                            child: const SngathanCardWidget());
+                                            child:  SngathanCardWidget(clientId: innerItem.clientId.toString()));
                                       }
                                     }
                                   }
@@ -222,8 +223,8 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
 
-                      /*    /// mann ki baat widget
-                      const MannKiBaatCard(),*/
+                      ///mann ki baat widget
+                      const MannKiBaatCard(),
 
                       /// whatsapp card widget
                       // const SizedBox(

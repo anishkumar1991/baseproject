@@ -5,9 +5,11 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/ne
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/sangathan_data_model.dart';
 
 import '../../../../../../Storage/user_storage_service.dart';
+import '../network/model/ClientAppPermissionModel.dart';
 import '../network/model/alloted_location_model.dart';
 
 class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
+
   SangathanDetailsCubit() : super(InitialStateState());
   final api = DataLevelApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
@@ -19,6 +21,33 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   int countryStateId = 14;
   int? dataLevelId;
   int? locationId;
+
+  Future getClientAppPermission(String clientId) async {
+    try {
+      emit(LoadingState());
+      var res = await api.getClientAppPermission(
+          'Bearer ${StorageService.userAuthToken}',clientId);
+      print(
+          "------------------------------------ Get CLient App Permission-------------------------");
+
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        ClientAppPermissionModel data = ClientAppPermissionModel.fromJson(res.data);
+
+        emit(ClientAppPermissionsFetchState(data));
+      } else {
+        print('error=${res.data['message']}');
+        emit(ErrorState(res.data['message']));
+      }
+    } catch (e) {
+      print(e.toString());
+      emit(ErrorState('Something Went Wrong'));
+    }
+  }
+
 
   Future getSangathanDataLevel() async {
     try {

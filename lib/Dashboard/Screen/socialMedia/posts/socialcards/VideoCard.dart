@@ -20,7 +20,7 @@ class VideoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ShowVideoCard(index: index),
+            ShowVideoCard(index: index!),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 20, top: 10),
               child: Text(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,12 +10,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../cubits/ReelsCubit.dart';
+import '../cubit/FetchPostCubit.dart';
 
-Future<void> ReelDownloadshare(
+Future<void> VideoDownloadShare(
     BuildContext context, int index, String sourceLink) async {
-  final cubit = context.read<ReelsCubit>();
-  String urlimage = cubit.model!.reels[index].postData.reel.toString();
+  final cubit = context.read<FetchPostsCubit>();
+  String urlimage = cubit.tempModel!.posts[index].postData.video.toString();
   String? savePath;
 
   Map<Permission, PermissionStatus> statuses = await [
@@ -86,8 +87,7 @@ Future<void> ReelDownloadshare(
     print("permisison not granted");
   }
 
-  final text1 = cubit.model!.reels[index].title;
-
+  var text1 = cubit.tempModel!.posts[index].title;
   var text2 = "https://mpsangathan.com/app";
   final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);
