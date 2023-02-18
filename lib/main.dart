@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mannkibaatpackage/reportedprogramspage/cubit/DashCubit.dart';
 import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
@@ -128,6 +129,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => SangathanDetailsCubit()),
         BlocProvider(create: (context) => ShareCubit()),
         BlocProvider(create: (context) => VerifyPersonCubit()),
+        BlocProvider(create: (context) => DashCubit("eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA")),
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, lang) {
