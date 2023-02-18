@@ -17,4 +17,10 @@ abstract class DataLevelApi {
 
   @GET('/zila/api/data/allotted_locations')
   Future<HttpResponse> allottedlocations(@Header('Authorization') String token);
+
+
+  @GET('/zila/api/data/client_app_permissions')
+  Future<HttpResponse> getClientAppPermission(
+      @Header('Authorization') String token,
+      @Query("client_id") String clientId);
 }

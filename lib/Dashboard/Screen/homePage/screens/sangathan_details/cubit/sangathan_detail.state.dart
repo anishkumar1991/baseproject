@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/sangathan_data_model.dart';
 
+import '../network/model/ClientAppPermissionModel.dart';
 import '../network/model/alloted_location_model.dart';
 
 abstract class SangathanDetailsState extends Equatable {
@@ -16,6 +17,13 @@ class DataLevelFetchedState extends SangathanDetailsState {
   final SangthanDataModel data;
   DataLevelFetchedState(this.data);
 }
+
+class ClientAppPermissionsFetchState extends SangathanDetailsState {
+  final ClientAppPermissionModel data;
+  ClientAppPermissionsFetchState(this.data);
+}
+
+
 
 class ErrorState extends SangathanDetailsState {
   final String error;

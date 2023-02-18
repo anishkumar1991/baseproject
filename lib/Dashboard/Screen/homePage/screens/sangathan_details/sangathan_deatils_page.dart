@@ -18,6 +18,7 @@ import '../../../../../Storage/user_storage_service.dart';
 
 class SangathanDetailsPage extends StatefulWidget {
   final String cliendId;
+
   const SangathanDetailsPage({super.key, required this.cliendId});
 
   @override
@@ -41,6 +42,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   void initState() {
     StorageService.getUserData();
     print(StorageService.userData?.user?.countryStateId);
+    context
+        .read<SangathanDetailsCubit>()
+        .getClientAppPermission(widget.cliendId);
+
     context.read<SangathanDetailsCubit>().getSangathanDataLevel();
     super.initState();
   }
@@ -53,6 +58,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   Widget build(BuildContext context) {
     print("client id ${widget.cliendId}");
     var cubit = context.read<SangathanDetailsCubit>();
+
     return Scaffold(
       body: SafeArea(
           child: SingleChildScrollView(
