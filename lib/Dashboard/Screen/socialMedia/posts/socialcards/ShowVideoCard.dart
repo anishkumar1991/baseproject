@@ -32,11 +32,10 @@ class _ShowVideoCardState extends State<ShowVideoCard> {
         cubit.tempModel!.posts[widget.index!].postData.video.toString());
     await Future.wait([_videoPlayerController.initialize()]);
     _chewieController = ChewieController(
-
       videoPlayerController: _videoPlayerController,
       showControls: true,
       hideControlsTimer: const Duration(seconds: 3),
-      allowPlaybackSpeedChanging: false,
+      allowPlaybackSpeedChanging: true,
       materialProgressColors: ChewieProgressColors(backgroundColor: Colors.orangeAccent,playedColor: Colors.white),
       autoInitialize: true,
     );

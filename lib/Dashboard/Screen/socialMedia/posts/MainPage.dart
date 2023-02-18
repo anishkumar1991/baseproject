@@ -86,17 +86,7 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                       physics: const ScrollPhysics(),
                       itemCount: state.model.posts.length,
                       itemBuilder: (context, index) {
-                        // if (state.model.posts[index].postType == "Link" &&
-                        //     state.model.posts[index].postData.link?.linkType ==
-                        //         "twitter") {
-                        //   return TwitterCard();
-                        // }
-                        if (state.model.posts[index].postType == "Video") {
-                          return Padding(
-                            padding: const EdgeInsets.only(top: 18),
-                            child: CustomCard(tempkey: 2, index: index),
-                          );
-                        }
+
                         if (state.model.posts[index].postType == "Image") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
