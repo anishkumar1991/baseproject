@@ -87,8 +87,9 @@ Future<void> VideoDownloadShare(
     print("permisison not granted");
   }
 
-  final text = cubit.tempModel!.posts[index!].sharingContent.toString();
-
+  var text1 = cubit.tempModel!.posts[index].title;
+  var text2 = "https://mpsangathan.com/app";
+  final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);
   final response = await http.get(url);
   final bytes = response.bodyBytes;

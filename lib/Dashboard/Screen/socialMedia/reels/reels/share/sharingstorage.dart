@@ -86,8 +86,10 @@ Future<void> ReelDownloadshare(
     print("permisison not granted");
   }
 
-  final text = cubit.model!.reels[index].sharingContent;
+  final text1 = cubit.model!.reels[index].title;
 
+  var text2 = "https://mpsangathan.com/app";
+  final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);
   final response = await http.get(url);
   final bytes = response.bodyBytes;

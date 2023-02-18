@@ -10,7 +10,10 @@ Future shareOnWhatsapp(
   final cubit = context.read<ReelsCubit>();
   // String urlimage = cubit.tempModel!.posts[index].postData.images!.first
   //     .toString();
-  final text = cubit.model!.reels[index].sharingContent;
+  final text1 = cubit.model!.reels[index].title;
+
+  var text2 = "https://mpsangathan.com/app";
+  final text = "$text1\n\n$text2";
   // final url = Uri.parse(urlimage);
   // final response = await http.get(url);
   // final bytes = response.bodyBytes;

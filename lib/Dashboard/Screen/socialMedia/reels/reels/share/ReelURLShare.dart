@@ -8,8 +8,12 @@ Future<void> ReelURLShare(
     BuildContext context, int index, String sourceLink) async {
   final cubit = context.read<ReelsCubit>();
   String urlimage = cubit.model!.reels[index].postData.reel.toString();
-  String sharecontent = cubit.model!.reels[index].sharingContent.toString();
-  String finalShare = urlimage+"\n\n"+sharecontent;
+  final text1 = cubit.model!.reels[index].title;
+
+  var text2 = "https://mpsangathan.com/app";
+  final sharecontent = "$text1\n\n$text2";
+
+  String finalShare = urlimage + "\n\n" + sharecontent;
   await Share.share(finalShare);
   //await Share.shareXFiles(text: text, [file]);
 }

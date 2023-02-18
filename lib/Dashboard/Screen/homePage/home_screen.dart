@@ -208,7 +208,7 @@ class _HomePageState extends State<HomePage> {
                                                   RoutePath
                                                       .sangathanDetailsScreen);
                                             }),
-                                            child: const SngathanCardWidget());
+                                            child:  SngathanCardWidget(clientId: innerItem.clientId.toString()));
                                       }
                                     }
                                   }
