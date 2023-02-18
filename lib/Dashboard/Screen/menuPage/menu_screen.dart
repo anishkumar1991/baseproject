@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sangathan/Dashboard/Screen/menuPage/screens/theme_and_insights/screens/mainInsights.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
@@ -106,7 +105,7 @@ class _MenuPageState extends State<MenuPage> {
                 },
               ),
               spaceHeightWidget(15),
-              GestureDetector(
+              /* GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
@@ -166,8 +165,8 @@ class _MenuPageState extends State<MenuPage> {
                     ],
                   ),
                 ),
-              ),
-              spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
+              ),*/
+              //spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
               customListTile(title: "Support", icon: AppIcons.supportIcon),
               spaceHeightWidget(10),
               const Divider(

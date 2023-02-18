@@ -3,14 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
-import '../../../Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
-import '../../../Dashboard/Screen/menuPage/screens/profile_screen/cubit/profile_cubit.dart';
 import '../../../Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenCubit.dart';
 import '../../../Storage/user_storage_service.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
@@ -163,8 +160,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
           await fcmcubit.sendFcm(
               StorageService.getUserFcmToken(), widget.number);
-          Navigator.pushReplacementNamed(context, RoutePath.dashBoardScreen);
-          Navigator.pushNamedAndRemoveUntil(context,RoutePath.dashBoardScreen,(Route<dynamic> route) => false);
+
           if (state.userDetails.user?.onboarding == "started") {
             showDialog(
                 barrierDismissible: false,
@@ -173,8 +169,11 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                   return const OnboardingDialogWidget();
                 }));
           } else {
-            Navigator.pushNamedAndRemoveUntil(context,
-                RoutePath.dashBoardScreen, (Route<dynamic> route) => false);
+            Future.delayed(Duration.zero).then((value) =>
+                Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    RoutePath.dashBoardScreen,
+                    (Route<dynamic> route) => false));
           }
         } else if (state is LoginFaieldState) {
           errorText = state.error;

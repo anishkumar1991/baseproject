@@ -55,7 +55,6 @@ class DynamicUIHandler {
   static List<String> filePickerUrl = [
     "aadhaar_url",
     "voter_url",
-
     "ration_card_url"
   ];
   static List<String> radioButton = ["gender"];
