@@ -23,4 +23,10 @@ abstract class CreateFunction {
     @Field('pravas_id') String pravasId,
     @Field('level_id') String levelId,
   );
+
+  @GET('/program_type')
+  Future<HttpResponse> programType(@Header('Authorization') String token);
+
+  @GET('/data_levels')
+  Future<HttpResponse> programLevel(@Header('Authorization') String token);
 }

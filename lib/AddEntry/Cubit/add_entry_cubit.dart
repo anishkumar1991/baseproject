@@ -20,6 +20,7 @@ import 'package:sangathan/AddEntry/network/model/designation_data_model.dart';
 import '../../Dashboard/Screen/menuPage/screens/personal_info/cubit/personal_info_cubit.dart';
 import '../../Storage/user_storage_service.dart';
 import '../dynamic_ui_handler/dynamic_ui_handler.dart';
+import '../dynamic_ui_handler/locale_file.dart';
 import '../network/api/add_entry_api.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 import 'add_entry_state.dart';
@@ -913,5 +914,20 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (fieldType == 'primary_member_id') {
       return TextInputType.number;
     }
+  }
+
+  getLocaleName(String fieldName, String currentLocale) {
+    for (var item in addFormHI.entries) {
+      if (item.key.toString() == fieldName) {
+        if (currentLocale == "hi") {
+          return item.value;
+        } else if (currentLocale == "en") {
+          return item.key;
+        } else {
+          return fieldName;
+        }
+      }
+    }
+    return fieldName;
   }
 }

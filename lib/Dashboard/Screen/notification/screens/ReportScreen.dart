@@ -27,7 +27,7 @@ class ReportScreen extends StatelessWidget {
         if (state is NotificationErrorState) {
           return Center(
             child: Text(
-              state.error,
+              "कुछ गलत हुआ.",
               style: GoogleFonts.quicksand(
                   fontWeight: FontWeight.w600, fontSize: 20),
             ),

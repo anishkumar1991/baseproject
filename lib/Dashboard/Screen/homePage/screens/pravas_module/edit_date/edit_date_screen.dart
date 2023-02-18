@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/pravas_module/edit_date/widgets/header_widget_pravas_create.dart';
+
 import '../../../../../../Values/app_colors.dart';
 import '../../../../../../Values/space_height_widget.dart';
 import '../../../../../../common/common_button.dart';
@@ -14,8 +15,6 @@ class EditDateScreen extends StatefulWidget {
 }
 
 class _EditDateScreenState extends State<EditDateScreen> {
-  TextEditingController prvasNameCtr = TextEditingController();
-  TextEditingController pravasSubjectCtr = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<EditDateCubit>(context);
@@ -39,7 +38,7 @@ class _EditDateScreenState extends State<EditDateScreen> {
                     return Row(
                       children: [
                         Text(
-                          cubit.date,
+                          cubit.date ?? "दिनांक",
                           style: const TextStyle(
                             color: AppColor.greyColor,
                           ),
@@ -50,7 +49,9 @@ class _EditDateScreenState extends State<EditDateScreen> {
                             cubit.editDate(context);
                           },
                           child: const Icon(
-                            Icons.calendar_month_outlined,color:  AppColor.greyColor,),
+                            Icons.calendar_month_outlined,
+                            color: AppColor.greyColor,
+                          ),
                         )
                       ],
                     );
@@ -73,7 +74,7 @@ class _EditDateScreenState extends State<EditDateScreen> {
                     return Row(
                       children: [
                         Text(
-                          cubit.time,
+                          cubit.time ?? "समय",
                           style: const TextStyle(
                             color: AppColor.greyColor,
                           ),
@@ -84,7 +85,9 @@ class _EditDateScreenState extends State<EditDateScreen> {
                             cubit.editTime(context);
                           },
                           child: const Icon(
-                            Icons.timer_outlined,color:  AppColor.greyColor,),
+                            Icons.timer_outlined,
+                            color: AppColor.greyColor,
+                          ),
                         )
                       ],
                     );
@@ -100,8 +103,8 @@ class _EditDateScreenState extends State<EditDateScreen> {
             ),
             spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
             CommonButton(
-              onTap: (){
-                Navigator.pop(context);
+              onTap: () {
+                Navigator.pop(context, "${cubit.date} ${cubit.time}");
               },
               title: 'आगे',
               borderRadius: 10,

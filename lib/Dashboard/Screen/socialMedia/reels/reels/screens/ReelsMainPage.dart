@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           color: Colors.black45,
           child: Stack(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 300,
               ),
               //We need swiper for every content
@@ -48,9 +48,8 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, state) {
                   if (state is ReelsInitialState ||
                       state is ReelsLoadingState) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   } else if (state is ReelsFetchedState) {
-                    print(state.reelsModel.reels.length);
                     return Swiper(
                       index: widget.index,
                       controller: SwiperController(),
@@ -63,13 +62,12 @@ class _HomePageState extends State<HomePage> {
                         );
                         // src: videos[index % videos.length]);
                       },
-                      // preloadPagesCount: 4,
-                      // itemCount: state.reelsModel.reels.length,
+
                       scrollDirection: Axis.vertical, itemCount: state.reelsModel.reels.length,
                     );
                   } else {
-                    return Center(
-                      child: Text('Error'),
+                    return const Center(
+                      child: Text('Something Went Wrong'),
                     );
                   }
                 },
@@ -95,7 +93,7 @@ class _HomePageState extends State<HomePage> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.arrow_back,
                                     size: 30,
                                     color: Colors.white,

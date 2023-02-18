@@ -67,9 +67,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     onPressed: (() {
                       Navigator.pop(context);
                     }),
-                    icon: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: const Icon(Icons.arrow_back),
+                    icon: const Padding(
+                      padding: EdgeInsets.all(5.0),
+                      child: Icon(Icons.arrow_back),
                     )),
                 Text(
                   S.of(context).sangathan,
@@ -97,7 +97,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      S.of(context).createShaktiKendra,
+                      S.of(context).editShaktiKendr,
                       style: GoogleFonts.quicksand(
                           fontSize: 18, fontWeight: FontWeight.w600),
                     ),
@@ -338,7 +338,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             spaceHeightWidget(4),
                             FittedBox(
                               child: Text(
-                                data.name!,
+                                getLocalizationNameOfLevel(context, data.name!),
                                 style: GoogleFonts.quicksand(
                                     fontSize: 10, fontWeight: FontWeight.w600),
                               ),
@@ -472,5 +472,29 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
         ],
       ),
     );
+  }
+}
+
+getLocalizationNameOfLevel(BuildContext context, String levelName) {
+  if (levelName == "Pradesh") {
+    return S.of(context).pradesh;
+  } else if (levelName == "Vibhag") {
+    return S.of(context).vibhag;
+  } else if (levelName == "Lok Sabha") {
+    return S.of(context).lokSabha;
+  } else if (levelName == "Zila") {
+    return S.of(context).zila;
+  } else if (levelName == "Vidhan Sabha") {
+    return S.of(context).vidhanSabhaLevel;
+  } else if (levelName == "Shakti Kendra") {
+    return S.of(context).shaktiKendra;
+  } else if (levelName == "Booth") {
+    return S.of(context).booth;
+  } else if (levelName == "Panna") {
+    return S.of(context).panna;
+  } else if (levelName == "Mandal") {
+    return S.of(context).mandalLevelText;
+  } else {
+    return levelName;
   }
 }

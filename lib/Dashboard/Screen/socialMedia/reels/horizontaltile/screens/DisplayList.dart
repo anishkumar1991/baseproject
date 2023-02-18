@@ -70,8 +70,8 @@ class _DisplayListState extends State<DisplayList> {
                           shrinkWrap: true,
                           itemCount: 6,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (BuildContext context, int index) {
-                            if (index == 5) {
+                          itemBuilder: (BuildContext context, int index1) {
+                            if (index1 == 5) {
                               return InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -99,7 +99,8 @@ class _DisplayListState extends State<DisplayList> {
                                             style: GoogleFonts.roboto(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500)),
-                                        const Icon(Icons.arrow_forward, size: 25)
+                                        const Icon(Icons.arrow_forward,
+                                            size: 25)
                                       ],
                                     )),
                                   ),
@@ -108,18 +109,19 @@ class _DisplayListState extends State<DisplayList> {
                             } else {
                               return InkWell(
                                 onTap: () {
+                                  print("index $index1");
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>  HomePage(
-                                                index: index,
+                                          builder: (context) => HomePage(
+                                                index: index1,
                                               )));
                                 },
                                 child: ContentCard(
-                                  views: state.htModel.reels[index].title,
-                                  title: state.htModel.reels[index].viewCount
+                                  views: state.htModel.reels[index1].title,
+                                  title: state.htModel.reels[index1].viewCount
                                       .toString(),
-                                  img: state.htModel.reels[index].postData
+                                  img: state.htModel.reels[index1].postData
                                       .thumbnailUrl,
                                 ),
                               );

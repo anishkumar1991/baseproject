@@ -17,7 +17,7 @@ import '../network/api/update_personal_details.dart';
 
 part 'personal_info_state.dart';
 
-enum Gender { male, female, transgender }
+enum Gender { male, female, transgender, notDefined }
 
 class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   PersonalInfoCubit() : super(PersonalInfoInitial());
@@ -44,6 +44,10 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final TextEditingController religionCtr = TextEditingController();
   final TextEditingController statusCtr = TextEditingController();
   final TextEditingController castCtr = TextEditingController();
+
+  final FocusNode nameFocusNode = FocusNode();
+    final FocusNode userNameFocusNode = FocusNode();
+  final FocusNode mobileFocusNode = FocusNode();
 
   final api = UpdatePersonalDetailsApi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
@@ -98,7 +102,8 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     }
   }
 
-  updatePersonalDetails({required Map<String, dynamic> data}) async {
+  updatePersonalDetails(
+      {required Map<String, dynamic> data, bool? isProfile}) async {
     emit(LoadingState());
     try {
       StorageService.getUserAuthToken();
@@ -107,6 +112,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
       print("------------------ update user ---------------");
       print('sangathan Data =${res.response.statusCode}');
       print('sangathan data =${res.response.data}');
+      print('tokrn =${StorageService.userAuthToken}');
       print("---------------------------------");
       if (res.response.statusCode == 200) {
         print(res.response.data);
@@ -115,10 +121,16 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
         emit(UpdateDataState(updateData));
       } else {
         print('error=${res.data['message']}');
+        if (isProfile == true) {
+          EasyLoading.showToast(res.data['message']);
+        }
         emit(PersonalInfoErrorState(res.data['message']));
       }
     } catch (e) {
       print(e);
+      if (isProfile == true) {
+        EasyLoading.showToast('Something Went Wrong');
+      }
       emit(PersonalInfoErrorState('Something Went Wrong'));
     }
   }
@@ -137,17 +149,28 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     });
     urlDownload = await snapshot.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
-    updatePersonalDetails(data: {
-      "name": nameCtr.text,
-      "username": userNameCtr.text,
-      "phone_numbers": mobileNumberCtr.text,
-      "dob": boiCtr.text,
-      "gender": value.name,
-      "avatar": urlDownload,
-      "religion_id": religionId,
-      "cast_id": castId,
-      "category_id": gradeId
-    });
+    if (value == Gender.notDefined) {
+      updatePersonalDetails(data: {
+        "name": nameCtr.text,
+        "username": userNameCtr.text,
+        "dob": boiCtr.text,
+        "avatar": urlDownload,
+        "religion_id": religionId,
+        "cast_id": castId,
+        "category_id": gradeId
+      });
+    } else {
+      updatePersonalDetails(data: {
+        "name": nameCtr.text,
+        "username": userNameCtr.text,
+        "dob": boiCtr.text,
+        "gender": value.name,
+        "avatar": urlDownload,
+        "religion_id": religionId,
+        "cast_id": castId,
+        "category_id": gradeId
+      });
+    }
   }
 
   Future<void> editBoi(BuildContext context) async {

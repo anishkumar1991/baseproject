@@ -41,18 +41,18 @@ class _ContentCardState extends State<ContentCard> {
                   children: [
                     Text(
                       widget.title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: 'Tw Cen Mt',
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.w400),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 4,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 3),
-                      child: Container(
+                      child: SizedBox(
                         width: 12,
                         height: 12,
                         child: Image.asset(
@@ -70,7 +70,7 @@ class _ContentCardState extends State<ContentCard> {
               child: Row(
                 children: [
                   Text(widget.views,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontFamily: 'Tw Cen Mt',
                           fontWeight: FontWeight.w400,
                           fontSize: 16,

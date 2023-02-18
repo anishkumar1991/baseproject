@@ -9,6 +9,8 @@ import '../network/model/state_model.dart';
 
 part 'edit_address_state.dart';
 
+List<CountryState> countryState = [];
+
 class EditAddressCubit extends Cubit<EditAddressState> {
   EditAddressCubit() : super(EditAddressInitial());
 
@@ -18,14 +20,18 @@ class EditAddressCubit extends Cubit<EditAddressState> {
   final TextEditingController townCtr = TextEditingController();
   final TextEditingController stateCtr = TextEditingController();
 
+  final FocusNode areaFocuseNode = FocusNode();
+    final FocusNode flatFocuseNode = FocusNode();
+    final FocusNode pincodeFocuseNode = FocusNode();
+    final FocusNode townFocuseNode = FocusNode();
+
   String? addressFor;
   final formKey = GlobalKey<FormState>();
-  List<CountryState> countryState = [];
 
   final api = GetStateAPi(Dio(BaseOptions(
       contentType: 'application/json', validateStatus: ((status) => true))));
 
-  clearData(){
+  clearData() {
     flatDesCtr.clear();
     areaDesCtr.clear();
     pinCodeCtr.clear();
@@ -33,13 +39,14 @@ class EditAddressCubit extends Cubit<EditAddressState> {
     stateCtr.clear();
     addressFor = null;
   }
+
   bool checkIfEmpty() {
     bool isEmpty = false;
     if (flatDesCtr.text.isEmpty) {
-      if(areaDesCtr.text.isEmpty){
-        if(pinCodeCtr.text.isEmpty){
-          if(townCtr.text.isEmpty){
-            if(stateCtr.text.isEmpty){
+      if (areaDesCtr.text.isEmpty) {
+        if (pinCodeCtr.text.isEmpty) {
+          if (townCtr.text.isEmpty) {
+            if (stateCtr.text.isEmpty) {
               isEmpty = true;
             }
           }
@@ -49,15 +56,14 @@ class EditAddressCubit extends Cubit<EditAddressState> {
     return isEmpty;
   }
 
-  emitState(){
+  emitState() {
     emit(EditAddressInitial());
   }
 
   Future getState() async {
     try {
       emit(GetStateLoadingState());
-      var res =
-      await api.getCountyState();
+      var res = await api.getCountyState();
       print(
           "------------------------------------ County State data  ----------------------------");
       print("Status code : ${res.response.statusCode}");
@@ -68,11 +74,11 @@ class EditAddressCubit extends Cubit<EditAddressState> {
         List data = jsonDecode(res.response.data);
         print("=============>> data    $data");
         var dataLocation =
-        data.map((data) => CountryState.fromJson(data)).toList();
+            data.map((data) => CountryState.fromJson(data)).toList();
         List<CountryState> sortedIndiaStateList = [];
-        if(dataLocation.isNotEmpty || dataLocation != null){
-          for(int i = 0; i < dataLocation.length ; i++){
-            if(dataLocation[i].country == 'India'){
+        if (dataLocation.isNotEmpty || dataLocation != null) {
+          for (int i = 0; i < dataLocation.length; i++) {
+            if (dataLocation[i].country == 'India') {
               sortedIndiaStateList.add(dataLocation[i]);
             }
           }
@@ -86,5 +92,4 @@ class EditAddressCubit extends Cubit<EditAddressState> {
       emit(GetStateErrorState('Something Went Wrong'));
     }
   }
-
 }

@@ -16,12 +16,12 @@ class StateBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<EditAddressCubit>();
     return BlocBuilder<EditAddressCubit, EditAddressState>(
-      builder: (context, state){
-        if(state is GetStateLoadingState){
+      builder: (context, state) {
+        if (state is GetStateLoadingState) {
           return shimmerWidget(context: context);
-        }else if(state is GetStateFatchDataState){
-          cubit.countryState = state.data;
-        }else if(state is GetStateErrorState){
+        } else if (state is GetStateFatchDataState) {
+          countryState = state.data;
+        } else if (state is GetStateErrorState) {
           EasyLoading.showToast(state.error ?? '');
         }
         return Container(
@@ -48,25 +48,21 @@ class StateBottomSheet extends StatelessWidget {
                     Expanded(
                       child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: cubit.countryState.length,
+                          itemCount: countryState.length,
                           itemBuilder: (context, index) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    // if (text == S.of(context).category) {
-                                    //   controller.text = list?[index].name ?? '';
-                                    //   Navigator.pop(context);
-                                    // } else {
-                                    //   controller.text = list?[index].name ?? '';
-                                    //   Navigator.pop(context);
-                                    // }
+                                    cubit.stateCtr.text =
+                                        countryState[index].subcountry ?? '';
+                                    Navigator.pop(context);
                                   },
                                   child: SizedBox(
                                     width: double.infinity,
                                     child: Text(
-                                      cubit.countryState[index].subcountry ?? '',
+                                      countryState[index].subcountry ?? '',
                                       textAlign: TextAlign.left,
                                       style: GoogleFonts.poppins(
                                           color: AppColor.black, fontSize: 16),
@@ -90,7 +86,7 @@ class StateBottomSheet extends StatelessWidget {
     );
   }
 
-  shimmerWidget({required BuildContext context}){
+  shimmerWidget({required BuildContext context}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -100,8 +96,8 @@ class StateBottomSheet extends StatelessWidget {
           Text(
             S.of(context).state,
             textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
-                color: AppColor.borderColor, fontSize: 16),
+            style:
+                GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
           ),
           spaceHeightWidget(30),
           Expanded(

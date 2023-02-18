@@ -9,7 +9,6 @@ import 'package:sangathan/Dashboard/Screen/menuPage/screens/profile_screen/widge
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/route/route_path.dart';
-import 'package:sangathan/splash_screen/network/model/user_profile_model.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../Login/Cubit/language_cubit/lan_cubit.dart';
@@ -19,10 +18,11 @@ import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../common/appstyle.dart';
 import '../../../../../generated/l10n.dart';
-import '../../../../../main.dart';
 import '../../../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../../../../Cubit/dashboard_cubit.dart';
+import '../personal_info/cubit/personal_info_cubit.dart';
 import 'cubit/profile_cubit.dart';
+import 'network/model/user_detail_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -34,6 +34,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   Future callApi() async {
     context.read<ProfileCubit>().getUserDetails();
+    // context.read<UserProfileCubit>().getUserProfileData();
   }
 
   @override
@@ -268,7 +269,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             listener: (context, state) {
                               if (state is UserLogOutSuccessState) {
                                 EasyLoading.showSuccess(state.msg);
-
+                                userProfileModel = UserDetailModel();
+                                Future.delayed(Duration.zero).then((value) {
+                                  context.read<PersonalInfoCubit>().imageFile =
+                                      null;
+                                });
+                                print(
+                                    "model data name : ${userProfileModel.data?.name}");
                                 Navigator.pushNamedAndRemoveUntil(context,
                                     RoutePath.loginScreen, (route) => false);
                                 context.read<DashBoardCubit>().onTapIcons(0);
@@ -328,9 +335,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
- String checkLang(){
+  String checkLang() {
     String currentLang = S.of(context).hindi;
-    if(Localizations.localeOf(context).languageCode == 'en'){
+    if (Localizations.localeOf(context).languageCode == 'en') {
       currentLang = S.of(context).english;
     }
     return currentLang;
@@ -457,7 +464,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             TextButton(
               onPressed: () async {
                 await context.read<LoginCubit>().logOut();
-                userProfileModel = UserProfileModel();
               },
               child: Text(S.of(context).logOut),
             ),
@@ -466,9 +472,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
-  bottom(
-      {required BuildContext context,
-        required String text}) {
+
+  bottom({required BuildContext context, required String text}) {
     return Container(
       color: Colors.transparent,
       child: Container(
@@ -490,48 +495,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: AppColor.borderColor, fontSize: 16),
                 ),
                 spaceHeightWidget(30),
-                languageRow(text: S.of(context).english,press: (){
-                  context
-                      .read<LanguageCubit>()
-                      .changeLang(context,"en");
-                  Navigator.pop(context);
-                  // cubit.emitState();
-                }),
+                languageRow(
+                    text: S.of(context).english,
+                    press: () {
+                      context.read<LanguageCubit>().changeLang(context, "en");
+                      Navigator.pop(context);
+                      // cubit.emitState();
+                    }),
                 const Divider(
                   color: AppColor.borderColor,
                 ),
-                languageRow(text: S.of(context).hindi,press: (){
-                  context
-                      .read<LanguageCubit>()
-                      .changeLang(context,"hi");
-                  Navigator.pop(context);
-                  // cubit.emitState();
-                })
+                languageRow(
+                    text: S.of(context).hindi,
+                    press: () {
+                      context.read<LanguageCubit>().changeLang(context, "hi");
+                      Navigator.pop(context);
+                      // cubit.emitState();
+                    })
               ],
             ),
           )),
     );
   }
 
-  languageRow({String? text,VoidCallback? press}){
+  languageRow({String? text, VoidCallback? press}) {
     return InkWell(
       onTap: press,
       child: SizedBox(
         width: double.infinity,
-        child:Padding(
+        child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 5.0),
           child: Text(
             text!,
             textAlign: TextAlign.left,
-            style: GoogleFonts.poppins(
-                color: AppColor.black,
-                fontSize: 16),
+            style: GoogleFonts.poppins(color: AppColor.black, fontSize: 16),
           ),
         ),
       ),
     );
   }
-
-
-
 }

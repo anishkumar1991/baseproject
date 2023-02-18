@@ -20,32 +20,38 @@ class EditBusinessScreen extends StatefulWidget {
   int? index;
   List<ProfessionalDetails>? professionalDetails;
   bool? isNew;
-  EditBusinessScreen({Key? key,this.index,this.professionalDetails,this.isNew = false}) : super(key: key);
+  EditBusinessScreen(
+      {Key? key, this.index, this.professionalDetails, this.isNew = false})
+      : super(key: key);
 
   @override
   State<EditBusinessScreen> createState() => _EditBusinessScreenState();
 }
 
 class _EditBusinessScreenState extends State<EditBusinessScreen> {
-
   ProfessionalDetails professionalDetails = ProfessionalDetails();
 
   @override
-  void initState(){
+  void initState() {
     fillData();
     super.initState();
   }
 
-  fillData({final cubit}){
-    if(widget.isNew != true){
-      context.read<EditBusinessCubit>().positionCtr.text = widget.professionalDetails?[widget.index!].position ?? '';
-      context.read<EditBusinessCubit>().startYearCtr.text = widget.professionalDetails?[widget.index!].startYear ?? '';
-      context.read<EditBusinessCubit>().endYearCtr.text = widget.professionalDetails?[widget.index!].endYear ?? '';
-      context.read<EditBusinessCubit>().businessNameCtr.text = widget.professionalDetails?[widget.index!].orgName ?? '';
-    }else{
+  fillData({final cubit}) {
+    if (widget.isNew != true) {
+      context.read<EditBusinessCubit>().positionCtr.text =
+          widget.professionalDetails?[widget.index!].position ?? '';
+      context.read<EditBusinessCubit>().startYearCtr.text =
+          widget.professionalDetails?[widget.index!].startYear ?? '';
+      context.read<EditBusinessCubit>().endYearCtr.text =
+          widget.professionalDetails?[widget.index!].endYear ?? '';
+      context.read<EditBusinessCubit>().businessNameCtr.text =
+          widget.professionalDetails?[widget.index!].orgName ?? '';
+    } else {
       context.read<EditBusinessCubit>().clearData();
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<EditBusinessCubit>();
@@ -60,7 +66,8 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
             spaceHeightWidget(10),
             headerWidgetEditBusiness(context),
             spaceHeightWidget(5),
-            Expanded(child: SingleChildScrollView(
+            Expanded(
+                child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
                 children: [
@@ -69,6 +76,11 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                       return TextFieldWidget(
                           controller: cubit.businessNameCtr,
                           title: '',
+                          focus: cubit.sangathanFocuseNode,
+                          isOtherField: true,
+                          onTapDone: (() {
+                            cubit.sangathanFocuseNode.unfocus();
+                          }),
                           labelText: S.of(context).organization,
                           onChanged: (value) {
                             cubit.emitState();
@@ -76,20 +88,20 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                           keyboardType: TextInputType.emailAddress,
                           suffixWidget: cubit.businessNameCtr.text.isNotEmpty
                               ? InkWell(
-                            onTap: () {
-                              cubit.businessNameCtr.clear();
-                              cubit.emitState();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 16.0, left: 15, right: 15),
-                              child: Image.asset(
-                                AppIcons.clearIcon,
-                                height: 2,
-                                width: 5,
-                              ),
-                            ),
-                          )
+                                  onTap: () {
+                                    cubit.businessNameCtr.clear();
+                                    cubit.emitState();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 16.0, left: 15, right: 15),
+                                    child: Image.asset(
+                                      AppIcons.clearIcon,
+                                      height: 2,
+                                      width: 5,
+                                    ),
+                                  ),
+                                )
                               : const SizedBox.shrink());
                     },
                   ),
@@ -99,6 +111,11 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                       return TextFieldWidget(
                           controller: cubit.positionCtr,
                           title: '',
+                          focus: cubit.designationFocuseNode,
+                          isOtherField: true,
+                          onTapDone: (() {
+                            cubit.designationFocuseNode.unfocus();
+                          }),
                           labelText: S.of(context).position,
                           onChanged: (value) {
                             cubit.emitState();
@@ -106,20 +123,20 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                           keyboardType: TextInputType.emailAddress,
                           suffixWidget: cubit.businessNameCtr.text.isNotEmpty
                               ? InkWell(
-                            onTap: () {
-                              cubit.businessNameCtr.clear();
-                              cubit.emitState();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 16.0, left: 15, right: 15),
-                              child: Image.asset(
-                                AppIcons.clearIcon,
-                                height: 2,
-                                width: 5,
-                              ),
-                            ),
-                          )
+                                  onTap: () {
+                                    cubit.businessNameCtr.clear();
+                                    cubit.emitState();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 16.0, left: 15, right: 15),
+                                    child: Image.asset(
+                                      AppIcons.clearIcon,
+                                      height: 2,
+                                      width: 5,
+                                    ),
+                                  ),
+                                )
                               : const SizedBox.shrink());
                     },
                   ),
@@ -135,8 +152,9 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.number,
-                          onTap: (){
-                            CustomYearPicker.startYearPicker(context: context, cubit: cubit);
+                          onTap: () {
+                            CustomYearPicker.startYearPicker(
+                                context: context, cubit: cubit);
                           },
                           suffixWidget: const Icon(
                             Icons.keyboard_arrow_down_rounded,
@@ -156,11 +174,14 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                             cubit.emitState();
                           },
                           keyboardType: TextInputType.number,
-                          onTap: (){
-                            if(cubit.startYearCtr.text.isEmpty){
-                              EasyLoading.showError(S.of(context).somethingWentWrong,duration: const Duration(seconds: 1));
-                            }else{
-                              CustomYearPicker.endYearPicker(context: context, cubit: cubit);
+                          onTap: () {
+                            if (cubit.startYearCtr.text.isEmpty) {
+                              EasyLoading.showError(
+                                  S.of(context).somethingWentWrong,
+                                  duration: const Duration(seconds: 1));
+                            } else {
+                              CustomYearPicker.endYearPicker(
+                                  context: context, cubit: cubit);
                             }
                           },
                           suffixWidget: const Icon(
@@ -170,20 +191,22 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                     },
                   ),
                   spaceHeightWidget(MediaQuery.of(context).size.height * 0.12),
-                  widget.isNew != true ? CommonButton(
-                    onTap: () {
-                      showConfirmDialog();
-                    },
-                    title: S.of(context).delete,
-                    width: 150,
-                    height: 20,
-                    borderRadius: 25,
-                    backGroundcolor: Colors.transparent,
-                    bordercolor: Colors.transparent,
-                    style: textStyleWithPoppin(
-                        color: AppColor.greyColor.withOpacity(0.3),
-                        fontSize: 14),
-                  ) : SizedBox.shrink(),
+                  widget.isNew != true
+                      ? CommonButton(
+                          onTap: () {
+                            showConfirmDialog();
+                          },
+                          title: S.of(context).delete,
+                          width: 150,
+                          height: 20,
+                          borderRadius: 25,
+                          backGroundcolor: Colors.transparent,
+                          bordercolor: Colors.transparent,
+                          style: textStyleWithPoppin(
+                              color: AppColor.greyColor.withOpacity(0.3),
+                              fontSize: 14),
+                        )
+                      : SizedBox.shrink(),
                   spaceHeightWidget(5),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -203,19 +226,21 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                         context.read<ProfileCubit>().getUserDetails();
                         Navigator.pop(context);
                         EasyLoading.dismiss();
-                        EasyLoading.showSuccess(S.of(context).businessUpdated,duration: const Duration(milliseconds: 500));
+                        EasyLoading.showSuccess(S.of(context).businessUpdated,
+                            duration: const Duration(milliseconds: 500));
                       }
                     },
-                    child:  CommonButton(
+                    child: CommonButton(
                       onTap: () {
-
                         if (cubit.checkIfEmpty()) {
                           EasyLoading.showError(S.of(context).pleaseEnterData,
                               duration: const Duration(milliseconds: 500));
                         } else {
                           filledList(cubit: cubit);
-                          context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
-                            "professional_details" : widget.professionalDetails
+                          context
+                              .read<PersonalInfoCubit>()
+                              .updatePersonalDetails(data: {
+                            "professional_details": widget.professionalDetails
                           });
                         }
                       },
@@ -227,7 +252,6 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                           color: AppColor.white, fontSize: 16),
                     ),
                   ),
-
                   spaceHeightWidget(15),
                 ],
               ),
@@ -238,24 +262,26 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
     );
   }
 
-  filledList({required EditBusinessCubit cubit}){
-
-    if(widget.isNew == true){
+  filledList({required EditBusinessCubit cubit}) {
+    if (widget.isNew == true) {
       professionalDetails.orgName = cubit.businessNameCtr.text;
       professionalDetails.startYear = cubit.startYearCtr.text;
       professionalDetails.endYear = cubit.endYearCtr.text;
       professionalDetails.position = cubit.positionCtr.text;
-      widget.professionalDetails?.add(professionalDetails);;
-    }else{
+      professionalDetails.uuid = "";
+      widget.professionalDetails?.add(professionalDetails);
+      
+    } else {
       professionalDetails.orgName = cubit.businessNameCtr.text;
       professionalDetails.startYear = cubit.startYearCtr.text;
       professionalDetails.endYear = cubit.endYearCtr.text;
       professionalDetails.position = cubit.positionCtr.text;
+      professionalDetails.uuid = "";
       widget.professionalDetails?[widget.index!] = professionalDetails;
     }
   }
 
-  removeList(){
+  removeList() {
     widget.professionalDetails?.removeAt(widget.index!);
   }
 
@@ -266,14 +292,24 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
         return AlertDialog(
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(23),
-              borderSide: BorderSide.none
+              borderSide: BorderSide.none),
+          title: Text(S.of(context).dialogTitle,
+              style: textStyleWithPoppin(
+                  fontSize: 20,
+                  color: AppColor.black,
+                  fontWeight: FontWeight.w400)),
+          content: Text(
+            S.of(context).dialogSubtitle,
+            style: textStyleWithPoppin(
+                fontSize: 14,
+                color: AppColor.black,
+                fontWeight: FontWeight.w400),
           ),
-          title:  Text(S.of(context).dialogTitle,style: textStyleWithPoppin(fontSize: 20,color: AppColor.black,fontWeight: FontWeight.w400)),
-          content:  Text(S.of(context).dialogSubtitle,style: textStyleWithPoppin(fontSize: 14,color: AppColor.black,fontWeight: FontWeight.w400),),
           actions: <Widget>[
             TextButton(
                 onPressed: () => Navigator.pop(context),
-                child:  Text((S.of(context).noThanks),
+                child: Text(
+                  (S.of(context).noThanks),
                 )),
             BlocListener<PersonalInfoCubit, PersonalInfoState>(
               listener: (context, state) {
@@ -286,24 +322,24 @@ class _EditBusinessScreenState extends State<EditBusinessScreen> {
                   context.read<ProfileCubit>().getUserDetails();
                   Navigator.pop(context);
                   EasyLoading.dismiss();
-                  EasyLoading.showSuccess(S.of(context).businessDeleted,duration: const Duration(milliseconds: 500));
+                  EasyLoading.showSuccess(S.of(context).businessDeleted,
+                      duration: const Duration(milliseconds: 500));
                 }
               },
               child: TextButton(
-                onPressed: (){
+                onPressed: () {
                   removeList();
-                  context.read<PersonalInfoCubit>().updatePersonalDetails(data: {
-                    "professional_details" : widget.professionalDetails
-                  });
+                  context.read<PersonalInfoCubit>().updatePersonalDetails(
+                      data: {
+                        "professional_details": widget.professionalDetails
+                      });
                 },
-                child:  Text(S.of(context).delete),
+                child: Text(S.of(context).delete),
               ),
             ),
-
           ],
         );
       },
     );
   }
-
 }

@@ -360,10 +360,10 @@ class S {
     );
   }
 
-  /// `later`
+  /// `Later`
   String get later {
     return Intl.message(
-      'later',
+      'Later',
       name: 'later',
       desc: '',
       args: [],
@@ -1890,6 +1890,26 @@ class S {
     );
   }
 
+  /// `Day`
+  String get day {
+    return Intl.message(
+      'Day',
+      name: 'day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get time {
+    return Intl.message(
+      'Time',
+      name: 'time',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Uploading`
   String get uploading {
     return Intl.message(
@@ -1915,6 +1935,106 @@ class S {
     return Intl.message(
       'preparing',
       name: 'preparing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Downloading..`
+  String get downloading {
+    return Intl.message(
+      'Downloading..',
+      name: 'downloading',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download`
+  String get download {
+    return Intl.message(
+      'Download',
+      name: 'download',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vibhag`
+  String get vibhag {
+    return Intl.message(
+      'Vibhag',
+      name: 'vibhag',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Zila`
+  String get zila {
+    return Intl.message(
+      'Zila',
+      name: 'zila',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Vidhan Sabha`
+  String get vidhanSabhaLevel {
+    return Intl.message(
+      'Vidhan Sabha',
+      name: 'vidhanSabhaLevel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mandal`
+  String get mandalLevelText {
+    return Intl.message(
+      'Mandal',
+      name: 'mandalLevelText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Shakti Kendra`
+  String get shaktiKendra {
+    return Intl.message(
+      'Shakti Kendra',
+      name: 'shaktiKendra',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Booth`
+  String get booth {
+    return Intl.message(
+      'Booth',
+      name: 'booth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pradesh`
+  String get pradesh {
+    return Intl.message(
+      'pradesh',
+      name: 'pradesh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Getting state data`
+  String get gettingStateData {
+    return Intl.message(
+      'Getting state data',
+      name: 'gettingStateData',
       desc: '',
       args: [],
     );
@@ -1965,6 +2085,106 @@ class S {
     return Intl.message(
       'Please enter pravas subject',
       name: 'pravasSubject',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Circular`
+  String get circular {
+    return Intl.message(
+      'Circular',
+      name: 'circular',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Report`
+  String get report {
+    return Intl.message(
+      'Report',
+      name: 'report',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification`
+  String get notification {
+    return Intl.message(
+      'Notification',
+      name: 'notification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Filter by date`
+  String get notificationDate {
+    return Intl.message(
+      'Filter by date',
+      name: 'notificationDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something Went Wrong`
+  String get notificationsomethingWentWrong {
+    return Intl.message(
+      'Something Went Wrong',
+      name: 'notificationsomethingWentWrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Groups –`
+  String get totalGroups {
+    return Intl.message(
+      'Total Groups –',
+      name: 'totalGroups',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Social Media`
+  String get socialMedia {
+    return Intl.message(
+      'Social Media',
+      name: 'socialMedia',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Karyakarni`
+  String get karyakarniBoothText {
+    return Intl.message(
+      'Karyakarni',
+      name: 'karyakarniBoothText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Karyakarni`
+  String get karyakarniSkText {
+    return Intl.message(
+      'Karyakarni',
+      name: 'karyakarniSkText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Shakti Kendra`
+  String get editShaktiKendr {
+    return Intl.message(
+      'Edit Shakti Kendra',
+      name: 'editShaktiKendr',
       desc: '',
       args: [],
     );

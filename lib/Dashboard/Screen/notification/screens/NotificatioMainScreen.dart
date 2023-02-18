@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/app_colors.dart';
+
+import '../../../../generated/l10n.dart';
 import '../cubit/DatePicCubit.dart';
 import '../cubit/DatePicState.dart';
 import 'CircularScreen.dart';
 import 'NotificationScreen.dart';
 import 'ReportScreen.dart';
-import 'package:intl/intl.dart';
 
 class NotificationMainScreen extends StatefulWidget {
   const NotificationMainScreen({Key? key}) : super(key: key);
@@ -36,6 +37,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
   Widget build(BuildContext context) {
     final cubit = context.read<DatePicCubit>();
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -50,7 +52,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                 height: 16.74,
                 width: 20,
               )),
-          title: Text("Notification",
+          title: Text(S.of(context).notification,
               style: GoogleFonts.quicksand(
                   fontWeight: FontWeight.w600,
                   fontSize: 18,
@@ -59,22 +61,22 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 8, right: 10),
               child: BlocBuilder<DatePicCubit, DatePicState>(
-                builder: (context, state) {
+                builder: (context1, state) {
                   if (state is DatePickedStateState) {
                     return InkWell(
                       onTap: () async {
                         DateTime? datePicked = await showDatePicker(
-                            context: context,
+                            context: context1,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2021),
                             lastDate: DateTime.now());
-
                         cubit.datePicked(datePicked);
                       },
                       child: Container(
                           decoration: const BoxDecoration(
                               color: Color(0xFFD5EDFA),
-                              borderRadius: BorderRadius.all(Radius.circular(8))),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
                           child: Row(
                             children: [
                               const SizedBox(width: 16),
@@ -85,7 +87,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                               ),
                               const SizedBox(width: 9),
                               Text(
-                                "Filter by Date",
+                                S.of(context).notificationDate,
                                 style: GoogleFonts.poppins(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w500,
@@ -106,7 +108,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                   return InkWell(
                     onTap: () async {
                       DateTime? datePicked = await showDatePicker(
-                          context: context,
+                          context: context1,
                           initialDate: DateTime.now(),
                           firstDate: DateTime(2021),
                           lastDate: DateTime.now());
@@ -127,7 +129,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                             ),
                             const SizedBox(width: 9),
                             Text(
-                              "Filter by Date",
+                              S.of(context).notificationDate,
                               style: GoogleFonts.poppins(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
@@ -165,21 +167,21 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                         tabs: [
                           Tab(
                             child: Text(
-                              "Circular",
+                              S.of(context).circular,
                               style: GoogleFonts.poppins(
                                   fontSize: 14, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Tab(
                             child: Text(
-                              "Report",
+                              S.of(context).report,
                               style: GoogleFonts.poppins(
                                   fontSize: 14, fontWeight: FontWeight.w600),
                             ),
                           ),
                           Tab(
                             child: Text(
-                              "Notification",
+                              S.of(context).notification,
                               style: GoogleFonts.poppins(
                                   fontSize: 14, fontWeight: FontWeight.w600),
                             ),
@@ -193,7 +195,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
               Expanded(
                 child: TabBarView(
                   controller: tabController,
-                  children: const [
+                  children: [
                     CircularScreen(),
                     ReportScreen(),
                     NotificationScreen(),

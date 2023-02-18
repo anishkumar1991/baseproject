@@ -16,6 +16,7 @@ import '../../../../../AddEntry/Cubit/add_entry_cubit.dart';
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import '../../../../../Storage/user_storage_service.dart';
 import '../../../../../Values/icons.dart';
+import '../sangathan_details/sangathan_deatils_page.dart';
 import 'cubit/zila_data_state.dart';
 import 'dropdown_handler/dropdown_handler.dart';
 import 'panna_pdf_viewer.dart';
@@ -23,7 +24,7 @@ import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
-int pannaCountryStateId = 28;
+int pannaCountryStateId = 14;
 
 class ZilaDataScreen extends StatefulWidget {
   ZilaDataScreen(
@@ -85,7 +86,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 }),
                 icon: const Icon(Icons.arrow_back)),
             Text(
-              '${widget.type} ${S.of(context).dataEntry}',
+              '${getLocalizationNameOfLevel(context, widget.type ?? "")} ${S.of(context).dataEntry}',
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
@@ -385,12 +386,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         Text(S.of(context).pannaNo,
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
-                              fontSize: 12,
+                              fontSize: 10,
                             )),
                         Text("${cubit.selectedPannaNo?.number ?? ""}",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
-                              fontSize: 13,
+                              fontSize: 12,
                             ))
                       ],
                     )),
@@ -408,7 +409,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   builder: (context) {
                     return PannaPdfViewer(
                       pdfLink: cubit.selectedPannaNo?.pdfUrl,
-                      // pdfLink: 'https://storage.googleapis.com/dev-saral-bucket/uploads/panna/panna/file/152/14_165_5_3.pdf?GoogleAccessId=949025725562-compute%40developer.gserviceaccount.com&Expires=1676540902&Signature=ddhst%2BGJUOQTkIbqrtDPGTKGoJ7k488x4RJLQhYq6sELJ0SlOX7P%2B3kUPSUmQ9XqpQyXzs5Xuz9MKmQ83SE026GPzhVEjU%2F%2BZBtmAxHzKOb3ArvNm4AWdKSdSpDd0L%2B7xbXqdxU4QQuannQ3lgsllwT2OWdTmfaha2XossET0FXLVyT%2B231Vy%2FhUid7hv99FACuM584ZPpLX2dUsm%2BolFomUBZx0%2Fm1Rx%2BplRIDj2%2Bdtj0d4GLvda6TPWZiczvfjTuVKNy8rx79tBqSWUeyhtqSORnJOos8%2FN6YBwd5elnoocNz0f7FnOzXK6kMRcsQikcvODYssITWbQX9VqscMZw%3D%3D',
+                      // pdfLink:
+                      //     "https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf",
                       pannaNumber: cubit.selectedPannaNo?.number,
                     );
                   },
@@ -589,7 +591,11 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                                   ),
                                                   child: Center(
                                                       child: Text(
-                                                          data.name ?? '',
+                                                          getUnitDataLocalization(
+                                                              context,
+                                                              data.name ?? "",
+                                                              widget.type ??
+                                                                  ""),
                                                           style: GoogleFonts.poppins(
                                                               fontWeight:
                                                                   FontWeight
@@ -791,7 +797,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${DropdownHandler.mainDropdownName(widget.type ?? "")}',
+            '${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.type ?? "", context))}',
             style: GoogleFonts.roboto(
                 color: AppColor.greyColor,
                 fontWeight: FontWeight.w400,
@@ -839,7 +845,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   child: DropdownButton(
                       isDense: true,
                       hint: Text(
-                          'Select ${DropdownHandler.mainDropdownName(widget.type ?? "")}',
+                          'Select ${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.type ?? "", context))}',
                           style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w400,
                               color: AppColor.greyColor,
@@ -903,7 +909,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
+            '${getLocalizationNameOfLevel(context, DropdownHandler.dependentDropdownName(widget.type ?? "", context))}',
             style: GoogleFonts.roboto(
                 color: AppColor.greyColor,
                 fontWeight: FontWeight.w400,
@@ -955,14 +961,14 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                     isDense: true,
                     hint: cubit.dependentDropdownList.isNotEmpty
                         ? Text(
-                            'Select ${DropdownHandler.dependentDropdownName(widget.type ?? "")}',
+                            'Select ${getLocalizationNameOfLevel(context, DropdownHandler.dependentDropdownName(widget.type ?? "", context))}',
                             maxLines: 2,
                             style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w400,
                                 color: AppColor.greyColor,
                                 fontSize: 16))
                         : Text(
-                            'No ${DropdownHandler.dependentDropdownName(widget.type ?? "")} available',
+                            'No ${getLocalizationNameOfLevel(context, DropdownHandler.dependentDropdownName(widget.type ?? "", context))} available',
                             maxLines: 2,
                             style: GoogleFonts.roboto(
                                 fontWeight: FontWeight.w400,
@@ -1011,5 +1017,19 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
         ],
       ),
     );
+  }
+}
+
+getUnitDataLocalization(BuildContext context, String unit, String levelName) {
+  if (levelName == "Booth") {
+    if (unit == "Karyakarni") {
+      return S.of(context).karyakarniBoothText;
+    }
+  } else if (levelName == "Shakti Kendra") {
+    if (unit == "Karyakarni") {
+      return S.of(context).karyakarniSkText;
+    }
+  } else {
+    return unit;
   }
 }

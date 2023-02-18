@@ -12,6 +12,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../Values/app_colors.dart';
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
+import 'socialcards/VideoCard.dart';
 
 class SocialMediaPage extends StatefulWidget {
   SocialMediaPage({Key? key}) : super(key: key);
@@ -100,6 +101,13 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: Polls(tempindex: index),
+                          );
+                        }
+
+                        if (state.model.posts[index].postType == "Video") {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 18),
+                            child: VideoCard(index: index),
                           );
                         }
 

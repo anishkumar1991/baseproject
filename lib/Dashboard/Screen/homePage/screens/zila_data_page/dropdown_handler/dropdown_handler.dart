@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../generated/l10n.dart';
 import '../cubit/zila_data_cubit.dart';
 
 class DropdownHandler {
@@ -55,7 +56,7 @@ class DropdownHandler {
     }
   }
 
-  static mainDropdownName(String type) {
+  static mainDropdownName(String type, BuildContext context) {
     if (type == "Pradesh") {
       return "Pradesh";
     } else if (type == "Zila" || type == "Mandal") {
@@ -68,15 +69,15 @@ class DropdownHandler {
         type == "Panna" ||
         type == "Shakti Kendra" ||
         type == "Booth") {
-      return "Vidhan Sabha";
+      return S.of(context).vidhanSabha;
     }
   }
 
-  static dependentDropdownName(String type) {
+  static dependentDropdownName(String type, BuildContext context) {
     if (type == "Mandal") {
       return "Mandal";
     } else if (type == "Booth" || type == "Panna") {
-      return "Booth";
+      return S.of(context).booth;
     } else if (type == "Shakti Kendra") {
       return "Shakti Kendra";
     }
