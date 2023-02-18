@@ -79,6 +79,8 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
             child: SizedBox(
               height: 30,
               width: 143,
+
+
               child: ElevatedButton(
                   style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
