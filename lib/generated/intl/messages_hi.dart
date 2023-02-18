@@ -161,8 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
         "hindi": MessageLookupByLibrary.simpleMessage("हिंदी"),
         "home": MessageLookupByLibrary.simpleMessage("होम"),
-        "karyakarniBoothText":
-            MessageLookupByLibrary.simpleMessage("कार्यकारिणी"),
+        "karyakarniBoothText": MessageLookupByLibrary.simpleMessage("समिति"),
         "karyakarniSkText":
             MessageLookupByLibrary.simpleMessage("शक्ति केंद्र टोली"),
         "landlineNumber": MessageLookupByLibrary.simpleMessage(
