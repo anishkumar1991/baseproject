@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/cubit/edit_shakti_kendr_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/delete_confirmation_dialog.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/network/model/shakti_kendr_model.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/widgets/header_widget_shakti_kendra.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/widgets/shimmer_widget.dart';
 import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/route/route_path.dart';
+
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../Values/space_width_widget.dart';
-import '../../../../../common/common_button.dart';
 import '../../../../../generated/l10n.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/network/model/shakti_kendr_model.dart';
 import 'cubit/shakti_kendra_cubit.dart';
 
 class ShaktiKendraScreen extends StatefulWidget {
@@ -32,7 +29,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
 
   apiCall() async {
     context.read<ShaktiKendraCubit>().shaktiKendr.data = null;
-    context.read<ShaktiKendraCubit>().getDropDownValueOfVidhanSabha(id: 3);
+    context.read<ShaktiKendraCubit>().getDropDownValueOfVidhanSabha(id: 14);
   }
 
   @override
@@ -187,7 +184,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                 ),
               ),
               spaceHeightWidget(15),
-              BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
+              /*  BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
                 builder: (context, state) {
                   return vidhanSabha.data?.locations?.isNotEmpty ?? false
                       ? CommonButton(
@@ -230,7 +227,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                       : const SizedBox.shrink();
                 },
               ),
-              spaceHeightWidget(15),
+              spaceHeightWidget(15),*/
             ],
           ),
         ),
@@ -285,7 +282,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                       style: GoogleFonts.poppins(
                           color: AppColor.naturalBlackColor, fontSize: 12),
                     ),
-              trailing: InkWell(
+              /*trailing: InkWell(
                 onTap: () {
                   context.read<EditShaktiKendrCubit>().shaktiKendrCtr.clear();
                   context.read<EditShaktiKendrCubit>().zilaSelected = "";
@@ -327,7 +324,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                   child: const Icon(Icons.mode_edit_outlined,
                       color: AppColor.black),
                 ),
-              ),
+              ),*/
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -408,7 +405,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                   ),
                 ),
                 const Spacer(),
-                BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
+                /* BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
                   builder: (context, state) {
                     if (state is DeleteDataShaktiKendraLoadingState) {
                       EasyLoading.show();
@@ -419,7 +416,11 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                       } else {
                         EasyLoading.showSuccess(state.data.message ?? '');
                         context.read<ShaktiKendraCubit>().getShaktiKendra(
-                            id: context.read<ShaktiKendraCubit>().zilaSelected?.id ?? 357);
+                            id: context
+                                    .read<ShaktiKendraCubit>()
+                                    .zilaSelected
+                                    ?.id ??
+                                357);
                       }
                     } else if (state is DeleteShaktiKendraErrorState) {
                       EasyLoading.dismiss();
@@ -434,7 +435,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                             context: context,
                             onDelete: () async {
                               Navigator.pop(context);
-                              await context.read<ShaktiKendraCubit>().deleteShaktiKendr(
+                              await context
+                                  .read<ShaktiKendraCubit>()
+                                  .deleteShaktiKendr(
                                       id: data.id!,
                                       context: context,
                                       isConfirmDelete: false);
@@ -452,7 +455,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                       ),
                     );
                   },
-                ),
+                ),*/
               ],
             )
           ],
@@ -595,7 +598,8 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                     cubit.zilaSelectedName = vidhanSabha
                                             .data?.locations?[index].name ??
                                         '';
-                                    cubit.getShaktiKendra(id: cubit.zilaSelected?.id ?? 357);
+                                    cubit.getShaktiKendra(
+                                        id: cubit.zilaSelected?.id ?? 357);
                                     Navigator.pop(context);
                                   },
                                   child: SizedBox(

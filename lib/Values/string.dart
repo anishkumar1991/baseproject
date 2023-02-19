@@ -1,5 +1,5 @@
 class AppStrings {
-  static const String baseUrl = "https://saral-staging.ccdms.in";
+  static const String baseUrl = "https://saralk.ccdms.in";
   static const String baseUrlForPravas =
       "http://34.100.233.103/api/mobile/v1/pravash";
   static const String apiKey = "HBNA19QVVAPP";

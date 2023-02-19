@@ -128,7 +128,7 @@ class EntryDetailsList extends StatelessWidget {
                                         icon: Icons.verified_user,
                                         label: S.of(context).verify,
                                       ),
-                                      SlidableAction(
+                                      /*  SlidableAction(
                                         padding: EdgeInsets.zero,
                                         onPressed: ((context) {
                                           context
@@ -179,7 +179,7 @@ class EntryDetailsList extends StatelessWidget {
                                         foregroundColor: AppColor.redShade600,
                                         icon: Icons.delete_outline,
                                         label: S.of(context).delete,
-                                      ),
+                                      ),*/
                                     ]),
                                 child: InkWell(
                                   onTap: (() {

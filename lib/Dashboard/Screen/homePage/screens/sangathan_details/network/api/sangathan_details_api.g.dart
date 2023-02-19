@@ -13,7 +13,7 @@ class _DataLevelApi implements DataLevelApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saral-staging.ccdms.in';
+    baseUrl ??= 'https://saralk.ccdms.in';
   }
 
   final Dio _dio;
@@ -54,9 +54,16 @@ class _DataLevelApi implements DataLevelApi {
   }
 
   @override
-  Future<HttpResponse<dynamic>> allottedlocations(token) async {
+  Future<HttpResponse<dynamic>> allottedlocations(
+    token,
+    clientId,
+    permissionId,
+  ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'client_id': clientId,
+      r'app_permission_id': permissionId,
+    };
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -68,7 +75,7 @@ class _DataLevelApi implements DataLevelApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/data/allotted_locations',
+              '/zila/api/data/allotted_locations?client_id={clientId}&app_permission_id={permissionId}',
               queryParameters: queryParameters,
               data: _data,
             )

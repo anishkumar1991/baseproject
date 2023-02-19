@@ -9,11 +9,8 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/generated/l10n.dart';
-import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../../AddEntry/Cubit/add_entry_cubit.dart';
-import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import '../../../../../Storage/user_storage_service.dart';
 import '../../../../../Values/icons.dart';
 import '../sangathan_details/sangathan_deatils_page.dart';
@@ -272,7 +269,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
       ])),
       floatingActionButton: BlocBuilder<ZilaDataCubit, ZilaDataState>(
         builder: (context, state) {
-          return widget.type == 'Panna' && cubit.pannaKramaankListData.isEmpty
+          return SizedBox
+              .shrink(); /*widget.type == 'Panna' && cubit.pannaKramaankListData.isEmpty
               ? const SizedBox.shrink()
               : FloatingActionButton.extended(
                   shape: RoundedRectangleBorder(
@@ -328,7 +326,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
                         color: AppColor.white),
-                  ));
+                  ));*/
         },
       ),
     );

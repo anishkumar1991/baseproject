@@ -52,12 +52,13 @@ class RouteGenerator {
           },
         );
       case RoutePath.sangathanDetailsScreen:
-
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-
-            return  SangathanDetailsPage(cliendId: " ",);
+            SangathanDetailsPage data = args as SangathanDetailsPage;
+            return SangathanDetailsPage(
+              cliendId: data.cliendId,
+            );
           },
         );
       case RoutePath.addEntryScreen:

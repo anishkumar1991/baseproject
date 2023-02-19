@@ -16,7 +16,7 @@ Widget headerWidgetShaktiKendra(BuildContext context) {
           )),
       spaceWidthWidget(10),
       Text(
-        S.of(context).shaktiKendraCreation,
+        S.of(context).editShaktiKendr,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
       )
     ],
