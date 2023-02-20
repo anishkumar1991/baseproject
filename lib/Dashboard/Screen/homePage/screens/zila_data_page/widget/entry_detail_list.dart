@@ -128,85 +128,99 @@ class EntryDetailsList extends StatelessWidget {
                                         icon: Icons.verified_user,
                                         label: S.of(context).verify,
                                       ),
-                                      /*  SlidableAction(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: ((context) {
-                                          context
-                                              .read<AddEntryCubit>()
-                                              .cleanAllVariableData();
+                                      cubit.isEditPermission
+                                          ? SlidableAction(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: ((context) {
+                                                context
+                                                    .read<AddEntryCubit>()
+                                                    .cleanAllVariableData();
 
-                                          ///TODO : here country id is static when type is panna we need make dynamic in future
-                                          Navigator.pushNamed(
-                                              context, RoutePath.addEntryScreen,
-                                              arguments: AddEntryPage(
-                                                type: type!,
-                                                isEditEntry: true,
-                                                leaveId: dataLevelId ?? 0,
-                                                unitId: cubit.unitId,
-                                                subUnitId: cubit.subUnitId,
-                                                countryStateId: type == "Panna"
-                                                    ? pannaCountryStateId
-                                                    : countryStateId,
-                                                levelName: type == "Panna"
-                                                    ? cubit.selectedPannaNo?.id
-                                                    : cubit.levelNameId,
-                                                personID: data?.id,
-                                                pannaID:
-                                                    data?.pannaNumber == null
-                                                        ? null
-                                                        : int.tryParse(
-                                                            data?.pannaNumber ??
-                                                                "0"),
-                                                personData: data?.toJson(),
-                                              ));
-                                        }),
-                                        backgroundColor: AppColor.white,
-                                        icon: Icons.edit,
-                                        label: S.of(context).edit,
-                                      ),
-                                      SlidableAction(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: ((context) async {
-                                          print(
-                                              'data?.otpStatus=${data?.otpStatus}');
-                                          cubit.getDeleteId(data?.id);
+                                                ///TODO : here country id is static when type is panna we need make dynamic in future
+                                                Navigator.pushNamed(context,
+                                                    RoutePath.addEntryScreen,
+                                                    arguments: AddEntryPage(
+                                                      type: type!,
+                                                      isEditEntry: true,
+                                                      leaveId: dataLevelId ?? 0,
+                                                      unitId: cubit.unitId,
+                                                      subUnitId:
+                                                          cubit.subUnitId,
+                                                      countryStateId: type ==
+                                                              "Panna"
+                                                          ? pannaCountryStateId
+                                                          : countryStateId,
+                                                      levelName: type == "Panna"
+                                                          ? cubit
+                                                              .selectedPannaNo
+                                                              ?.id
+                                                          : cubit.levelNameId,
+                                                      personID: data?.id,
+                                                      pannaID: data
+                                                                  ?.pannaNumber ==
+                                                              null
+                                                          ? null
+                                                          : int.tryParse(
+                                                              data?.pannaNumber ??
+                                                                  "0"),
+                                                      personData:
+                                                          data?.toJson(),
+                                                    ));
+                                              }),
+                                              backgroundColor: AppColor.white,
+                                              icon: Icons.edit,
+                                              label: S.of(context).edit,
+                                            )
+                                          : const SizedBox(),
+                                      cubit.isDeletePermission
+                                          ? SlidableAction(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: ((context) async {
+                                                print(
+                                                    'data?.otpStatus=${data?.otpStatus}');
+                                                cubit.getDeleteId(data?.id);
 
-                                          /// Data Entry Delete Dialog
-                                          await dataEntryDeleteDialog(
-                                              context, cubit, index);
-                                        }),
-                                        backgroundColor: AppColor.redShade100,
-                                        foregroundColor: AppColor.redShade600,
-                                        icon: Icons.delete_outline,
-                                        label: S.of(context).delete,
-                                      ),*/
+                                                /// Data Entry Delete Dialog
+                                                await dataEntryDeleteDialog(
+                                                    context, cubit, index);
+                                              }),
+                                              backgroundColor:
+                                                  AppColor.redShade100,
+                                              foregroundColor:
+                                                  AppColor.redShade600,
+                                              icon: Icons.delete_outline,
+                                              label: S.of(context).delete,
+                                            )
+                                          : SizedBox(),
                                     ]),
                                 child: InkWell(
                                   onTap: (() {
-                                    context
-                                        .read<AddEntryCubit>()
-                                        .cleanAllVariableData();
-                                    Navigator.pushNamed(
-                                        context, RoutePath.addEntryScreen,
-                                        arguments: AddEntryPage(
-                                          type: type!,
-                                          isEditEntry: true,
-                                          leaveId: dataLevelId ?? 0,
-                                          unitId: cubit.unitId,
-                                          subUnitId: cubit.subUnitId,
-                                          countryStateId: type == "Panna"
-                                              ? pannaCountryStateId
-                                              : countryStateId,
-                                          levelName: type == "Panna"
-                                              ? cubit.selectedPannaNo?.id
-                                              : cubit.levelNameId,
-                                          personID: data?.id,
-                                          pannaID: data?.pannaNumber == null
-                                              ? null
-                                              : int.tryParse(
-                                                  data?.pannaNumber ?? "0"),
-                                          personData: data?.toJson(),
-                                        ));
+                                    if (cubit.isEditPermission) {
+                                      context
+                                          .read<AddEntryCubit>()
+                                          .cleanAllVariableData();
+                                      Navigator.pushNamed(
+                                          context, RoutePath.addEntryScreen,
+                                          arguments: AddEntryPage(
+                                            type: type!,
+                                            isEditEntry: true,
+                                            leaveId: dataLevelId ?? 0,
+                                            unitId: cubit.unitId,
+                                            subUnitId: cubit.subUnitId,
+                                            countryStateId: type == "Panna"
+                                                ? pannaCountryStateId
+                                                : countryStateId,
+                                            levelName: type == "Panna"
+                                                ? cubit.selectedPannaNo?.id
+                                                : cubit.levelNameId,
+                                            personID: data?.id,
+                                            pannaID: data?.pannaNumber == null
+                                                ? null
+                                                : int.tryParse(
+                                                    data?.pannaNumber ?? "0"),
+                                            personData: data?.toJson(),
+                                          ));
+                                    }
                                   }),
                                   child: Row(
                                     children: [

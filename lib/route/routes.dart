@@ -97,6 +97,7 @@ class RouteGenerator {
               type: data.type,
               countryStateId: data.countryStateId,
               dataLevelId: data.dataLevelId,
+              appPermissions: data.appPermissions,
             );
           },
         );

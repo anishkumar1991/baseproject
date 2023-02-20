@@ -9,6 +9,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/netwo
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../Storage/user_storage_service.dart';
+import '../../sangathan_details/network/model/ClientAppPermissionModel.dart';
 import '../network/api/data_entry_api.dart';
 import '../network/model/booth_pannas_status_model.dart';
 import '../network/model/data_entry_model.dart';
@@ -44,6 +45,10 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   int? acId;
   int selectedFilterIndex = 1;
   Locations? selectedPannaNo;
+  bool isEditPermission = false;
+  bool isDeletePermission = false;
+  bool isReadPermission = false;
+  bool isCreatePermission = false;
 
   //bool isMorchaSelected = false;
 
@@ -386,5 +391,23 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   onDataFound() {
     emit(LoadingState());
     emit(NoDataFoundState());
+  }
+
+  getUserOperationPermission(List<AppPermissions> appPermissions) {
+    isEditPermission = false;
+    isDeletePermission = false;
+    isReadPermission = false;
+    isCreatePermission = false;
+    for (int i = 0; i < appPermissions.length; i++) {
+      if (appPermissions[i].action == "Edit") {
+        isEditPermission = true;
+      } else if (appPermissions[i].action == "Create") {
+        isCreatePermission = true;
+      } else if (appPermissions[i].action == "Read") {
+        isReadPermission = true;
+      } else if (appPermissions[i].action == "Delete") {
+        isDeletePermission = true;
+      }
+    }
   }
 }

@@ -397,12 +397,31 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         cubit.getDataLevelId(data?.id);
                         // Navigator.pushNamed(context, RoutePath.addEntryScreen,
                         //     arguments: data[index]['text']);
+                        List<AppPermissions> appPermissions = [];
+                        for (int i = 0; i < cubit.appPermissions.length; i++) {
+                          if (cubit.appPermissions[i].permissionName ==
+                              "ShaktiKendraData") {
+                            if (cubit.appPermissions[i].permissionName
+                                    ?.split(RegExp(r"(?=[A-Z])"))[0]
+                                    .trim() ==
+                                data?.name
+                                    ?.split(RegExp(r"(?=[A-Z])"))[0]
+                                    .trim()) {
+                              appPermissions.add(cubit.appPermissions[i]);
+                            }
+                          } else if (cubit.appPermissions[i].permissionName
+                                  ?.split(RegExp(r"(?=[A-Z])"))[0] ==
+                              data?.name?.split(RegExp(r"(?=[A-Z])"))[0]) {
+                            appPermissions.add(cubit.appPermissions[i]);
+                          }
+                        }
 
                         Navigator.pushNamed(context, RoutePath.zilaDataPage,
                             arguments: ZilaDataScreen(
                               type: data?.name,
                               countryStateId: cubit.countryStateId,
                               dataLevelId: data?.id,
+                              appPermissions: appPermissions,
                             ));
                       }),
                       child: Container(
