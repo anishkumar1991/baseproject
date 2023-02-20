@@ -10,20 +10,19 @@ class ClientAppPermissionModel {
     if (json['app_permissions'] != null) {
       appPermissions = <AppPermissions>[];
       json['app_permissions'].forEach((v) {
-        appPermissions!.add(new AppPermissions.fromJson(v));
+        appPermissions!.add(AppPermissions.fromJson(v));
       });
     }
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.appPermissions != null) {
-      data['app_permissions'] =
-          this.appPermissions!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    if (appPermissions != null) {
+      data['app_permissions'] = appPermissions!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
@@ -42,10 +41,10 @@ class AppPermissions {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['permission_name'] = this.permissionName;
-    data['action'] = this.action;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['permission_name'] = permissionName;
+    data['action'] = action;
     return data;
   }
 }

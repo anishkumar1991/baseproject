@@ -24,7 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
   int count = 60;
 
   Timer? timer;
-  final  focusNode=FocusNode();
+  final focusNode = FocusNode();
 
   Future<void> startTimer() async {
     emit(LoadingState());
@@ -45,6 +45,14 @@ class LoginCubit extends Cubit<LoginState> {
       final res = await api.loginUser({'phone_number': mobileNumber});
       if (res.response.statusCode == 200) {
         print(res.data['identification_token']);
+        print(
+            "------------------------------------ Login  ----------------------------");
+
+        print("Status code : ${res.response.statusCode}");
+        print("url : ${res.response.realUri}");
+        log("Response :${res.data}");
+        print(
+            "------------------------------------ ------------------------ ----------------------------");
         LoginModel model = LoginModel.fromJson(res.data);
         await StorageService.setUserIdentificationToken(
             model.identificationToken ?? '');
@@ -63,6 +71,15 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoadingState());
       String token = StorageService.getUserIdentificationToken() ?? '';
       final res = await api.resendOtp({'identification_token': token});
+
+      print(
+          "------------------------------------ Login  ----------------------------");
+
+      print("Status code : ${res.response.statusCode}");
+      print("url : ${res.response.realUri}");
+      log("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         LoginModel model = LoginModel.fromJson(res.data);
         emit(OtpResendSuccessfullyState(model));
@@ -87,6 +104,7 @@ class LoginCubit extends Cubit<LoginState> {
           "------------------------------------ Submit otp get user data  ----------------------------");
       print("otp  :$otp");
       print("Status code : ${res.response.statusCode}");
+      print("url : ${res.response.realUri}");
       log("Response :${res.data}");
       print(
           "------------------------------------ ------------------------ ----------------------------");
@@ -145,6 +163,7 @@ class LoginCubit extends Cubit<LoginState> {
           "------------------------------------  User onboarding  ----------------------------");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
+      print("url : ${res.response.realUri}");
       print("Pass Data:${res.response.extra}");
       print(
           "------------------------------------ ------------------------ ----------------------------");

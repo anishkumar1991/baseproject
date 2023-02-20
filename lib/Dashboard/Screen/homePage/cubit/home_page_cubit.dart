@@ -33,6 +33,7 @@ class HomePageCubit extends Cubit<HomePageState> {
           print("Token : ${StorageService.userAuthToken}");
           print("Status code : ${res.response.statusCode}");
           print("Response :${res.data}");
+          print("Response :${res.response.realUri}");
           print(
               "------------------------------------ ------------------------ ----------------------------");
         } else {

@@ -7,12 +7,9 @@ class StorageService {
   static String userDataKey = "user_data";
   static String fcmToken = "fcmToken";
 
-
   static String? userAuthToken;
   static GetStorage storage = GetStorage();
   static UserDetails? userData;
-
-
 
   static setUserFcmToken(String token) async {
     await storage.write(fcmToken, token);
@@ -21,7 +18,6 @@ class StorageService {
   static String? getUserFcmToken() {
     return storage.read(fcmToken);
   }
-
 
   static setUserIdentificationToken(String token) async {
     await storage.write(userInfoKey, token);
@@ -37,7 +33,9 @@ class StorageService {
   }
 
   static String? getUserAuthToken() {
-    userAuthToken = storage.read(userAuthTokenKey);
+    // userAuthToken = storage.read(userAuthTokenKey);
+    userAuthToken =
+        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOTFuYkVmSDlVVFV3NGZEaTNVOEFucVhTIn0.JJJvYGE02350Yey4v1W1GbnP9Y1KB64T5CruVCTKA5U";
     return userAuthToken;
   }
 
@@ -56,6 +54,7 @@ class StorageService {
     await storage.write(userDataKey, data);
     Map<String, dynamic> value = storage.read(userDataKey) ?? {};
     userData = UserDetails.fromJson(value);
+
     /// TODO static countryStateId
     userData?.user?.countryStateId = 14;
     print('rEAD ${userData?.user?.countryStateId}');

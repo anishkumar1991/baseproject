@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/sangathan_deatils_page.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/MannKiBaatCard.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/widget/WhatsappCardWidget.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/widget/pravas_card_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/size_config.dart';
 import 'package:sangathan/route/route_path.dart';
 
+import '../../../Values/string.dart';
+import '../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../notification/screens/NotificatioMainScreen.dart';
-import '../whatsapp/screens/WhatsappScreen.dart';
 import 'cubit/home_page_cubit.dart';
 import 'cubit/home_page_state.dart';
-import '../../../splash_screen/cubit/user_profile_cubit.dart';
-import 'widget/custom_drawer_widget.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 final homePageScaffoldGlobalKey = GlobalKey<ScaffoldState>();
 
@@ -34,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     SizeConfig().getCurrentOrientation(context);
     context.read<HomePageCubit>().getClientAppLists();
+    print(AppStrings.baseUrl);
     return Scaffold(
       key: homePageScaffoldGlobalKey,
       // drawer: const CustomDrawerWidget(),
@@ -206,7 +204,12 @@ class _HomePageState extends State<HomePage> {
                                               Navigator.pushNamed(
                                                   context,
                                                   RoutePath
-                                                      .sangathanDetailsScreen);
+                                                      .sangathanDetailsScreen,
+                                                  arguments:
+                                                      SangathanDetailsPage(
+                                                    cliendId: innerItem.clientId
+                                                        .toString(),
+                                                  ));
                                             }),
                                             child: SngathanCardWidget(
                                                 clientId: innerItem.clientId

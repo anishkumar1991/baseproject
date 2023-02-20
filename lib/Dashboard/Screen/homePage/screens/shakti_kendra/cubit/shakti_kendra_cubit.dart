@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/model/delete_model.dart';
 
 import '../../../../../../Storage/user_storage_service.dart';
@@ -22,6 +21,9 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
   String zilaSelectedName = '';
   int isSelectedIndex = 0;
   bool isExpanded = false;
+  bool isEditPermission = false;
+  bool isCreatePermission = false;
+  bool isDeletePermission = false;
   List<String> filterList = ["नवीन एंट्री", "मंडल", "A - Z"];
   ShaktiKendr shaktiKendr = ShaktiKendr();
 
@@ -29,7 +31,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
-   emit((LoadingShaktiKendraState()));
+    emit((LoadingShaktiKendraState()));
   }
 
   Future getDropDownValueOfVidhanSabha({required int id}) async {
@@ -41,6 +43,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
       print(
           "------------------------------------ VidhanSabha DropDown Value  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
+      print("url: ${res.response.realUri} ");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
       print(
@@ -53,7 +56,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
         print('error=${res.data['message']}');
       }
     } catch (e) {
-      emit( ErrorVidhanSabhaState(error: e.toString()));
+      emit(ErrorVidhanSabhaState(error: e.toString()));
       print('error=$e');
     }
   }
@@ -92,7 +95,8 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
     try {
       emit(DeleteDataShaktiKendraLoadingState());
       StorageService.getUserAuthToken();
-      var res = await api.deleteShaktiKendr('Bearer ${StorageService.userAuthToken}', id,isConfirmDelete!);
+      var res = await api.deleteShaktiKendr(
+          'Bearer ${StorageService.userAuthToken}', id, isConfirmDelete!);
       print(
           "------------------------------------ Delete Shakti Kendra Value  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
@@ -109,9 +113,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
             onDelete: () {
               Navigator.pop(context);
               deleteShaktiKendr(
-                  id: id,
-                  context: context,
-                  isConfirmDelete: true);
+                  id: id, context: context, isConfirmDelete: true);
             },
             title: data.data?.message?.trim().trimLeft(),
             subTitle: '',
@@ -146,23 +148,25 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
   getBoothId(List<Booths>? booths) {}
 
   changeFilter() {
-    if(isSelectedIndex == 0){
+    if (isSelectedIndex == 0) {
       shaktiKendr.data?.sort(
-            (a, b) {
-          DateTime aDate =
-          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(a.createdAt ?? "");
-          DateTime bDate =
-          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(b.createdAt ?? "");
+        (a, b) {
+          DateTime aDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+              .parse(a.createdAt ?? "");
+          DateTime bDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+              .parse(b.createdAt ?? "");
           return bDate.compareTo(aDate);
         },
       );
-    }else if(isSelectedIndex == 1){
-      shaktiKendr.data?.sort((a, b){
-        return (a.mandal?.name?.toLowerCase() ?? 'z').compareTo((b.mandal?.name?.toLowerCase()) ?? 'z');
+    } else if (isSelectedIndex == 1) {
+      shaktiKendr.data?.sort((a, b) {
+        return (a.mandal?.name?.toLowerCase() ?? 'z')
+            .compareTo((b.mandal?.name?.toLowerCase()) ?? 'z');
       });
-    }else if(isSelectedIndex == 2){
-      shaktiKendr.data?.sort((a, b){
-        return (a.name?.toLowerCase() ?? 'z').compareTo((b.name?.toLowerCase()) ?? 'z');
+    } else if (isSelectedIndex == 2) {
+      shaktiKendr.data?.sort((a, b) {
+        return (a.name?.toLowerCase() ?? 'z')
+            .compareTo((b.name?.toLowerCase()) ?? 'z');
       });
     }
     emit(LoadingShaktiKendraState());

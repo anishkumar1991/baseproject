@@ -2189,6 +2189,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Please select photo`
+  String get pleaseSelectPhoto {
+    return Intl.message(
+      'Please select photo',
+      name: 'pleaseSelectPhoto',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

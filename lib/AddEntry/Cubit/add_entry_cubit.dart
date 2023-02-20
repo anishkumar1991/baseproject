@@ -31,6 +31,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   DateTime dateTime = DateTime.now();
   String date = 'Select DOB of Birth';
   String? selectRadio;
+  bool isPhotoMandatory = false;
   File? file;
   File? rationFilePicked;
   File? adharFilePicked;
@@ -929,5 +930,23 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       }
     }
     return fieldName;
+  }
+
+  getHintText({required String hintText, required String currentLocale}) {
+    if (currentLocale == "hi") {
+      return "$hintText दर्ज करें";
+    } else if (currentLocale == "en") {
+      return "Enter Your $hintText";
+    }
+    return hintText;
+  }
+
+  getDropDownLocal({required String text, required String currentLocale}) {
+    if (currentLocale == "hi") {
+      return "$text चुनें";
+    } else if (currentLocale == "en") {
+      return "Select $text";
+    }
+    return text;
   }
 }

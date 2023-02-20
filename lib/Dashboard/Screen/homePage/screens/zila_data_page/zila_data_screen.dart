@@ -4,23 +4,24 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/a_to_z_filter_widget.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/designation_filter_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/new_entry_filter_widget.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/generated/l10n.dart';
-import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../AddEntry/Cubit/add_entry_cubit.dart';
 import '../../../../../AddEntry/Screen/add_entry_screen.dart';
 import '../../../../../Storage/user_storage_service.dart';
 import '../../../../../Values/icons.dart';
+import '../../../../../route/route_path.dart';
+import '../sangathan_details/network/model/ClientAppPermissionModel.dart';
 import '../sangathan_details/sangathan_deatils_page.dart';
 import 'cubit/zila_data_state.dart';
 import 'dropdown_handler/dropdown_handler.dart';
 import 'panna_pdf_viewer.dart';
-import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
@@ -28,11 +29,16 @@ int pannaCountryStateId = 14;
 
 class ZilaDataScreen extends StatefulWidget {
   ZilaDataScreen(
-      {super.key, required this.type, this.countryStateId, this.dataLevelId});
+      {super.key,
+      required this.type,
+      this.countryStateId,
+      this.dataLevelId,
+      required this.appPermissions});
 
   final String? type;
   int? countryStateId;
   final int? dataLevelId;
+  final List<AppPermissions> appPermissions;
 
   @override
   State<ZilaDataScreen> createState() => _ZilaDataScreenState();
@@ -52,6 +58,9 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     context.read<ZilaDataCubit>().dependentDropdownList = [];
     context.read<ZilaDataCubit>().dependentDropdownSelected = null;
     context.read<ZilaDataCubit>().zilaSelected = null;
+    context
+        .read<ZilaDataCubit>()
+        .getUserOperationPermission(widget.appPermissions);
 
     /// TODO : here country id is static (just remove condition)
     if (widget.type == "Panna") {
@@ -160,6 +169,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           print(
                               "List length :${state.data.data?.data?.length}");
                           cubit.dataList = state.data.data!.data!;
+                          cubit.dataListWithoutSort = state.data.data!.data!;
                         }
                       }
 
@@ -179,6 +189,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           }
                         } else {
                           cubit.dataList = [];
+                          cubit.dataListWithoutSort = [];
                         }
                       }
                       return Column(
@@ -272,63 +283,69 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
       ])),
       floatingActionButton: BlocBuilder<ZilaDataCubit, ZilaDataState>(
         builder: (context, state) {
-          return widget.type == 'Panna' && cubit.pannaKramaankListData.isEmpty
-              ? const SizedBox.shrink()
-              : FloatingActionButton.extended(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  backgroundColor: AppColor.buttonOrangeBackGroundColor,
-                  onPressed: (() {
-                    if (widget.type == "Panna") {
-                      context.read<AddEntryCubit>().cleanAllVariableData();
-                      Navigator.pushNamed(context, RoutePath.addEntryScreen,
-                          arguments: AddEntryPage(
-                            type: widget.type ?? '',
-                            leaveId: widget.dataLevelId ?? 0,
-                            unitId: cubit.unitId ?? "",
-                            subUnitId: cubit.subUnitId,
-                            isEditEntry: false,
-                            levelName: cubit.selectedPannaNo?.id ?? 0,
+          return cubit.isCreatePermission
+              ? widget.type == 'Panna' && cubit.pannaKramaankListData.isEmpty
+                  ? const SizedBox.shrink()
+                  : FloatingActionButton.extended(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                      backgroundColor: AppColor.buttonOrangeBackGroundColor,
+                      onPressed: (() {
+                        if (widget.type == "Panna") {
+                          context.read<AddEntryCubit>().cleanAllVariableData();
+                          Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                              arguments: AddEntryPage(
+                                type: widget.type ?? '',
+                                leaveId: widget.dataLevelId ?? 0,
+                                unitId: cubit.unitId ?? "",
+                                subUnitId: cubit.subUnitId,
+                                isEditEntry: false,
+                                levelName: cubit.selectedPannaNo?.id ?? 0,
 
-                            /// TODO : here country id is static when type is panna we need make dynamic in future
-                            countryStateId: widget.type == "Panna"
-                                ? pannaCountryStateId
-                                : widget.countryStateId,
-                            pannaID: cubit.selectedPannaNo?.number,
-                            personData: null,
-                          ));
-                    } else {
-                      if (cubit.coreSangathanList?.isEmpty ??
-                          true && cubit.morchaList.isEmpty) {
-                        EasyLoading.showError(S.of(context).dataUnitEmptyError);
-                      } else {
-                        context.read<AddEntryCubit>().cleanAllVariableData();
-                        Navigator.pushNamed(context, RoutePath.addEntryScreen,
-                            arguments: AddEntryPage(
-                              type: widget.type ?? '',
-                              leaveId: widget.dataLevelId ?? 0,
-                              unitId: cubit.unitId,
-                              subUnitId: cubit.subUnitId,
-                              isEditEntry: false,
-                              levelName: cubit.levelNameId,
+                                /// TODO : here country id is static when type is panna we need make dynamic in future
+                                countryStateId: widget.type == "Panna"
+                                    ? pannaCountryStateId
+                                    : widget.countryStateId,
+                                pannaID: cubit.selectedPannaNo?.number,
+                                personData: null,
+                              ));
+                        } else {
+                          if (cubit.coreSangathanList?.isEmpty ??
+                              true && cubit.morchaList.isEmpty) {
+                            EasyLoading.showError(
+                                S.of(context).dataUnitEmptyError);
+                          } else {
+                            context
+                                .read<AddEntryCubit>()
+                                .cleanAllVariableData();
+                            Navigator.pushNamed(
+                                context, RoutePath.addEntryScreen,
+                                arguments: AddEntryPage(
+                                  type: widget.type ?? '',
+                                  leaveId: widget.dataLevelId ?? 0,
+                                  unitId: cubit.unitId,
+                                  subUnitId: cubit.subUnitId,
+                                  isEditEntry: false,
+                                  levelName: cubit.levelNameId,
 
-                              ///TODO : here country id is static when type is panna we need make dynamic in future
-                              countryStateId: widget.type == "Panna"
-                                  ? pannaCountryStateId
-                                  : widget.countryStateId,
-                              personData: null,
-                            ));
-                      }
-                    }
-                  }),
-                  icon: const Icon(Icons.add),
-                  label: Text(
-                    S.of(context).addEntry,
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: AppColor.white),
-                  ));
+                                  ///TODO : here country id is static when type is panna we need make dynamic in future
+                                  countryStateId: widget.type == "Panna"
+                                      ? pannaCountryStateId
+                                      : widget.countryStateId,
+                                  personData: null,
+                                ));
+                          }
+                        }
+                      }),
+                      icon: const Icon(Icons.add),
+                      label: Text(
+                        S.of(context).addEntry,
+                        style: GoogleFonts.roboto(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14,
+                            color: AppColor.white),
+                      ))
+              : const SizedBox();
         },
       ),
     );
@@ -947,6 +964,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   cubit.levelNameId = cubit.dependentLevelNameId;
                 } else {
                   cubit.dataList = [];
+                  cubit.dataListWithoutSort = [];
                   cubit.selectedPannaNo = null;
                   cubit.boothPannasStatus = null;
                   cubit.pannaKramaankListData = [];

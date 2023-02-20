@@ -15,6 +15,7 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
+import 'network/model/ClientAppPermissionModel.dart';
 
 class SangathanDetailsPage extends StatefulWidget {
   final String cliendId;
@@ -29,11 +30,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   Future callApi() async {
     if (StorageService.userData?.user?.countryStateId == 0 ||
         StorageService.userData?.user?.countryStateId == null) {
-      await context.read<SangathanDetailsCubit>().getAllotedLocations();
       Future.delayed(Duration.zero).then((value) {
-        if (context.read<SangathanDetailsCubit>().locationList.isNotEmpty) {
+        /*  if (context.read<SangathanDetailsCubit>().locationList.isNotEmpty) {
           showLocationBottomSheet();
-        }
+        }*/
       });
     }
   }
@@ -41,12 +41,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   @override
   void initState() {
     StorageService.getUserData();
-    print(StorageService.userData?.user?.countryStateId);
     context
         .read<SangathanDetailsCubit>()
         .getClientAppPermission(widget.cliendId);
-
-    context.read<SangathanDetailsCubit>().getSangathanDataLevel();
+    context.read<SangathanDetailsCubit>().appPermissions = null;
     super.initState();
   }
 
@@ -60,82 +58,214 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
     var cubit = context.read<SangathanDetailsCubit>();
 
     return Scaffold(
-      body: SafeArea(
-          child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            /*spaceHeightWidget(10),*/
-            /* appbar(),*/
-            spaceHeightWidget(20),
-            Row(
-              children: [
-                IconButton(
-                    splashRadius: 20,
-                    onPressed: (() {
-                      Navigator.pop(context);
-                    }),
-                    icon: const Padding(
-                      padding: EdgeInsets.all(5.0),
-                      child: Icon(Icons.arrow_back),
-                    )),
-                Text(
-                  S.of(context).sangathan,
-                  style: GoogleFonts.quicksand(
-                      fontSize: 18, fontWeight: FontWeight.w600),
-                )
-              ],
-            ),
-            spaceHeightWidget(10),
+      body: SafeArea(child: SingleChildScrollView(
+        child: BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
+          builder: (context, state) {
+            if (state is ClientAppPermissionsFetchState) {
+              cubit.appPermissions = state.data.appPermissions ?? [];
+              if ((cubit.appPermissions?.isNotEmpty) ?? false) {
+                for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
+                  if (cubit.appPermissions?[i].permissionName ==
+                      "ShaktiKendra") {
+                    print("ShaktiKendra");
+                    cubit.isShowShaktiKendra = true;
+                  } else {
+                    cubit.isShowShaktiKendra = false;
+                  }
+                }
+                context.read<SangathanDetailsCubit>().getAllotedLocations(
+                    clientId: widget.cliendId,
+                    permissionId: "${cubit.appPermissions?.first.id ?? ""}");
+              }
+            }
+            if (state is LocationFetchedState) {
+              if (state.locationData.data != null) {
+                cubit.locationList = state.locationData.data!.locations!;
+                if (cubit.locationList.isNotEmpty) {
+                  for (int i = 0; i < cubit.locationList.length; i++) {
+                    if (cubit.locationList[i].countryStateId == 14) {
+                      context
+                          .read<SangathanDetailsCubit>()
+                          .getSangathanDataLevel();
+                      break;
+                    }
+                  }
+                }
+              }
+            }
+            return cubit.appPermissions == null
+                ? Column(
+                    children: [
+                      spaceHeightWidget(20),
+                      Row(
+                        children: [
+                          IconButton(
+                              splashRadius: 20,
+                              onPressed: (() {
+                                Navigator.pop(context);
+                              }),
+                              icon: const Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: Icon(Icons.arrow_back),
+                              )),
+                          Text(
+                            S.of(context).sangathan,
+                            style: GoogleFonts.quicksand(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          )
+                        ],
+                      ),
+                      spaceHeightWidget(10),
+                      Shimmer.fromColors(
+                        baseColor: AppColor.greyColor.withOpacity(0.3),
+                        highlightColor: Colors.grey.withOpacity(0.1),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: 9,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 33,
+                                      mainAxisSpacing: 16),
+                              itemBuilder: ((context, index) {
+                                return Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.2,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  decoration: BoxDecoration(
+                                      color: AppColor.white,
+                                      borderRadius: BorderRadius.circular(20)),
+                                );
+                              })),
+                        ),
+                      ),
+                    ],
+                  )
+                : cubit.appPermissions?.isEmpty ?? true
+                    ? Center(
+                        child: Text(
+                        S.of(context).oopsErrorMsg,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: AppColor.black),
+                      ))
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /*spaceHeightWidget(10),*/
+                          /* appbar(),*/
+                          spaceHeightWidget(20),
+                          Row(
+                            children: [
+                              IconButton(
+                                  splashRadius: 20,
+                                  onPressed: (() {
+                                    Navigator.pop(context);
+                                  }),
+                                  icon: const Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: Icon(Icons.arrow_back),
+                                  )),
+                              Text(
+                                S.of(context).sangathan,
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              )
+                            ],
+                          ),
+                          spaceHeightWidget(10),
 
-            /// sangathan grid view
-            sangathanGridView(cubit),
-            spaceHeightWidget(24),
+                          /// sangathan grid view
+                          sangathanGridView(cubit),
+                          spaceHeightWidget(24),
 
-            /// shakti kendr card
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, RoutePath.shaktiKendraScreen);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                width: MediaQuery.of(context).size.width,
-                color: AppColor.purple50.withOpacity(0.6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      S.of(context).editShaktiKendr,
-                      style: GoogleFonts.quicksand(
-                          fontSize: 18, fontWeight: FontWeight.w600),
-                    ),
-                    Container(
-                        padding: const EdgeInsets.all(2),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  AppColor.purple50,
-                                  AppColor.orange200,
-                                ])),
-                        child: Image.asset(
-                          AppIcons.shaktikendraImage,
-                          height: 35,
-                        ))
-                  ],
-                ),
-              ),
-            ),
-            spaceHeightWidget(20),
+                          /// shakti kendr card
+                          BlocBuilder<SangathanDetailsCubit,
+                              SangathanDetailsState>(
+                            builder: (context, state) {
+                              return cubit.isShowShaktiKendra
+                                  ? InkWell(
+                                      onTap: () {
+                                        List<AppPermissions> permissionData =
+                                            [];
+                                        for (int i = 0;
+                                            i <
+                                                (cubit.appPermissions?.length ??
+                                                    0);
+                                            i++) {
+                                          if (cubit.appPermissions?[i]
+                                                  .permissionName
+                                                  ?.toLowerCase() ==
+                                              'ShaktiKendra'.toLowerCase()) {
+                                            permissionData
+                                                .add(cubit.appPermissions![i]);
+                                          }
+                                        }
+                                        Navigator.pushNamed(context,
+                                            RoutePath.shaktiKendraScreen,
+                                            arguments: {
+                                              "permissionData": permissionData
+                                            });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        color:
+                                            AppColor.purple50.withOpacity(0.6),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              S.of(context).editShaktiKendr,
+                                              style: GoogleFonts.quicksand(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Container(
+                                                padding: const EdgeInsets.all(
+                                                    2),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                    gradient:
+                                                        const LinearGradient(
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight,
+                                                            colors: [
+                                                          AppColor.purple50,
+                                                          AppColor.orange200,
+                                                        ])),
+                                                child: Image.asset(
+                                                  AppIcons.shaktikendraImage,
+                                                  height: 35,
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox();
+                            },
+                          ),
+                          spaceHeightWidget(20),
 
-            /// close shakti kendr card
-            //
-            // /// report widget
-            // sangathanReportCard(),
-            // spaceHeightWidget(60)
-          ],
+                          /// close shakti kendr card
+                          //
+                          // /// report widget
+                          // sangathanReportCard(),
+                          // spaceHeightWidget(60)
+                        ],
+                      );
+          },
         ),
       )),
     );
@@ -263,7 +393,33 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
         builder: (context, state) {
           if (state is DataLevelFetchedState) {
             if (state.data.data != null) {
-              cubit.sangathanDataList = state.data.data!;
+              cubit.sangathanDataList = [];
+              for (int j = 0; j < (state.data.data?.length ?? 0); j++) {
+                bool isFound = false;
+                for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
+                  if (isFound == false) {
+                    if (cubit.appPermissions?[i].permissionName ==
+                        "ShaktiKendraData") {
+                      if (cubit.appPermissions?[i].permissionName
+                              ?.split(RegExp(r"(?=[A-Z])"))[0]
+                              .trim() ==
+                          state.data.data?[j].name
+                              ?.split(RegExp(r"(?=[A-Z])"))[0]
+                              .trim()) {
+                        cubit.sangathanDataList.add(state.data.data?[j]);
+                        isFound = true;
+                      }
+                    } else if (cubit.appPermissions?[i].permissionName
+                            ?.split(RegExp(r"(?=[A-Z])"))[0] ==
+                        state.data.data?[j].name
+                            ?.split(RegExp(r"(?=[A-Z])"))[0]) {
+                      cubit.sangathanDataList.add(state.data.data?[j]);
+                      isFound = true;
+                    }
+                  }
+                }
+              }
+
               callApi();
             }
           } else if (state is LoadingState) {
@@ -301,15 +457,36 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     final data = cubit.sangathanDataList[index];
                     return InkWell(
                       onTap: (() {
-                        cubit.getDataLevelId(data.id);
+                        cubit.getDataLevelId(data?.id);
                         // Navigator.pushNamed(context, RoutePath.addEntryScreen,
                         //     arguments: data[index]['text']);
+                        List<AppPermissions> appPermissions = [];
+                        for (int i = 0;
+                            i < (cubit.appPermissions?.length ?? 0);
+                            i++) {
+                          if (cubit.appPermissions?[i].permissionName ==
+                              "ShaktiKendraData") {
+                            if (cubit.appPermissions?[i].permissionName
+                                    ?.split(RegExp(r"(?=[A-Z])"))[0]
+                                    .trim() ==
+                                data?.name
+                                    ?.split(RegExp(r"(?=[A-Z])"))[0]
+                                    .trim()) {
+                              appPermissions.add(cubit.appPermissions![i]);
+                            }
+                          } else if (cubit.appPermissions?[i].permissionName
+                                  ?.split(RegExp(r"(?=[A-Z])"))[0] ==
+                              data?.name?.split(RegExp(r"(?=[A-Z])"))[0]) {
+                            appPermissions.add(cubit.appPermissions![i]);
+                          }
+                        }
 
                         Navigator.pushNamed(context, RoutePath.zilaDataPage,
                             arguments: ZilaDataScreen(
-                              type: data.name,
+                              type: data?.name,
                               countryStateId: cubit.countryStateId,
-                              dataLevelId: data.id,
+                              dataLevelId: data?.id,
+                              appPermissions: appPermissions,
                             ));
                       }),
                       child: Container(
@@ -328,7 +505,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CachedNetworkImage(
-                              imageUrl: data.iconUrl!,
+                              imageUrl: data?.iconUrl ?? "",
                               height: 32,
                               errorWidget: ((context, url, error) =>
                                   const SizedBox()),
@@ -346,7 +523,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             spaceHeightWidget(4),
                             FittedBox(
                               child: Text(
-                                getLocalizationNameOfLevel(context, data.name!),
+                                getLocalizationNameOfLevel(
+                                    context, data?.name ?? ""),
                                 style: GoogleFonts.quicksand(
                                     fontSize: 10, fontWeight: FontWeight.w600),
                               ),
