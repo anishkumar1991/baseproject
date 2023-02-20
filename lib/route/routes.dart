@@ -14,6 +14,7 @@ import '../Dashboard/Screen/homePage/screens/pravas_module/guest_list/guest_list
 import '../Dashboard/Screen/homePage/screens/pravas_module/pravas_create/create_pravas_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_module/pravas_list/pravas_list_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_module/stay_and_program_list/stay_and_program_list_screen.dart';
+import '../Dashboard/Screen/homePage/screens/sangathan_details/network/model/ClientAppPermissionModel.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/network/model/shakti_kendr_model.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/screen/edit_shakti_kendr.dart';
 import '../Dashboard/Screen/homePage/screens/shakti_kendra/shakti_kendra_screen.dart';
@@ -201,7 +202,13 @@ class RouteGenerator {
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return const ShaktiKendraScreen();
+            Map<String, dynamic>? map = {};
+            List<AppPermissions>? permissionData;
+            if (settings.arguments != null) {
+              map = settings.arguments as Map<String, dynamic>;
+              permissionData = map['permissionData'];
+            }
+            return ShaktiKendraScreen(permissionData: permissionData ?? []);
           },
         );
       case RoutePath.editShaktiKendraScreen:

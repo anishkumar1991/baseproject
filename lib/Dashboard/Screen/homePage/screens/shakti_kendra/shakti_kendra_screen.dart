@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/network/model/shakti_kendr_model.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/cubit/edit_shakti_kendr_cubit.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/widgets/delete_confirmation_dialog.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/widgets/header_widget_shakti_kendra.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/widgets/shimmer_widget.dart';
 import 'package:sangathan/Values/icons.dart';
@@ -10,11 +12,15 @@ import 'package:sangathan/Values/icons.dart';
 import '../../../../../Values/app_colors.dart';
 import '../../../../../Values/space_height_widget.dart';
 import '../../../../../Values/space_width_widget.dart';
+import '../../../../../common/common_button.dart';
 import '../../../../../generated/l10n.dart';
+import '../../../../../route/route_path.dart';
+import '../sangathan_details/network/model/ClientAppPermissionModel.dart';
 import 'cubit/shakti_kendra_cubit.dart';
 
 class ShaktiKendraScreen extends StatefulWidget {
-  const ShaktiKendraScreen({Key? key}) : super(key: key);
+  List<AppPermissions>? permissionData;
+  ShaktiKendraScreen({Key? key, this.permissionData}) : super(key: key);
 
   @override
   State<ShaktiKendraScreen> createState() => _ShaktiKendraScreenState();
@@ -28,6 +34,18 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
   }
 
   apiCall() async {
+    for (int i = 0; i < (widget.permissionData?.length ?? 0); i++) {
+      if (widget.permissionData?[i].action?.toLowerCase() ==
+          'Edit'.toLowerCase()) {
+        context.read<ShaktiKendraCubit>().isEditPermission = true;
+      } else if (widget.permissionData?[i].action?.toLowerCase() ==
+          'Create'.toLowerCase()) {
+        context.read<ShaktiKendraCubit>().isCreatePermission = true;
+      } else if (widget.permissionData?[i].action?.toLowerCase() ==
+          'Delete'.toLowerCase()) {
+        context.read<ShaktiKendraCubit>().isDeletePermission = true;
+      }
+    }
     context.read<ShaktiKendraCubit>().shaktiKendr.data = null;
     context.read<ShaktiKendraCubit>().getDropDownValueOfVidhanSabha(id: 14);
   }
@@ -151,7 +169,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                       }
                     }
                     return cubit.shaktiKendr.data == null
-                        ? ShimmerWidget()
+                        ? const ShimmerWidget()
                         : (cubit.shaktiKendr.data?.isNotEmpty ?? false)
                             ? Column(
                                 children: [
@@ -166,9 +184,9 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                         physics: const BouncingScrollPhysics(),
                                         itemBuilder: (context, index) {
                                           return buildBottomContainer(
-                                            data:
-                                                cubit.shaktiKendr.data![index],
-                                          );
+                                              data: cubit
+                                                  .shaktiKendr.data![index],
+                                              cubit: cubit);
                                         }),
                                   ),
                                 ],
@@ -184,50 +202,54 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                 ),
               ),
               spaceHeightWidget(15),
-              /*  BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
-                builder: (context, state) {
-                  return vidhanSabha.data?.locations?.isNotEmpty ?? false
-                      ? CommonButton(
-                          borderRadius: 10,
-                          title: S.of(context).makeShaktikendr,
-                          onTap: () {
-                            if (vidhanSabha.data?.locations?.isNotEmpty ??
-                                false) {
-                              context
-                                  .read<EditShaktiKendrCubit>()
-                                  .shaktiKendrCtr
-                                  .clear();
-                              context
-                                  .read<EditShaktiKendrCubit>()
-                                  .zilaSelected = "";
-                              context
-                                  .read<EditShaktiKendrCubit>()
-                                  .mandalSelected = "";
-                              context.read<EditShaktiKendrCubit>().chekedValue =
-                                  [];
-                              context
-                                  .read<EditShaktiKendrCubit>()
-                                  .selectedBooth = [];
-                              context
-                                  .read<EditShaktiKendrCubit>()
-                                  .alreadyExitBooth = [];
-                              Navigator.pushNamed(
-                                  context, RoutePath.editShaktiKendraScreen,
-                                  arguments: {
-                                    'isEdit': false,
-                                    "shaktiKendr": context
-                                        .read<ShaktiKendraCubit>()
-                                        .shaktiKendr,
-                                  });
-                            }
-                          },
-                          style: GoogleFonts.poppins(
-                              color: AppColor.white, fontSize: 14),
-                          padding: const EdgeInsets.symmetric(vertical: 10))
-                      : const SizedBox.shrink();
-                },
-              ),
-              spaceHeightWidget(15),*/
+              cubit.isCreatePermission
+                  ? BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
+                      builder: (context, state) {
+                        return vidhanSabha.data?.locations?.isNotEmpty ?? false
+                            ? CommonButton(
+                                borderRadius: 10,
+                                title: S.of(context).makeShaktikendr,
+                                onTap: () {
+                                  if (vidhanSabha.data?.locations?.isNotEmpty ??
+                                      false) {
+                                    context
+                                        .read<EditShaktiKendrCubit>()
+                                        .shaktiKendrCtr
+                                        .clear();
+                                    context
+                                        .read<EditShaktiKendrCubit>()
+                                        .zilaSelected = "";
+                                    context
+                                        .read<EditShaktiKendrCubit>()
+                                        .mandalSelected = "";
+                                    context
+                                        .read<EditShaktiKendrCubit>()
+                                        .chekedValue = [];
+                                    context
+                                        .read<EditShaktiKendrCubit>()
+                                        .selectedBooth = [];
+                                    context
+                                        .read<EditShaktiKendrCubit>()
+                                        .alreadyExitBooth = [];
+                                    Navigator.pushNamed(context,
+                                        RoutePath.editShaktiKendraScreen,
+                                        arguments: {
+                                          'isEdit': false,
+                                          "shaktiKendr": context
+                                              .read<ShaktiKendraCubit>()
+                                              .shaktiKendr,
+                                        });
+                                  }
+                                },
+                                style: GoogleFonts.poppins(
+                                    color: AppColor.white, fontSize: 14),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10))
+                            : const SizedBox.shrink();
+                      },
+                    )
+                  : const SizedBox.shrink(),
+              spaceHeightWidget(cubit.isCreatePermission ? 15 : 0),
             ],
           ),
         ),
@@ -235,7 +257,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
     );
   }
 
-  buildBottomContainer({required Data data}) {
+  buildBottomContainer({required Data data, required ShaktiKendraCubit cubit}) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
@@ -282,49 +304,61 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                       style: GoogleFonts.poppins(
                           color: AppColor.naturalBlackColor, fontSize: 12),
                     ),
-              /*trailing: InkWell(
-                onTap: () {
-                  context.read<EditShaktiKendrCubit>().shaktiKendrCtr.clear();
-                  context.read<EditShaktiKendrCubit>().zilaSelected = "";
-                  context.read<EditShaktiKendrCubit>().mandalSelected = "";
-                  context.read<EditShaktiKendrCubit>().chekedValue = [];
-                  context.read<EditShaktiKendrCubit>().selectedBooth = [];
-                  context.read<EditShaktiKendrCubit>().alreadyExitBooth = [];
-                  List<int> boothId = [];
-                  List<int> boothNumber = [];
-                  if (data.booths?.isNotEmpty ?? false) {
-                    for (int i = 0; i < (data.booths?.length ?? 0); i++) {
-                      boothId.add(data.booths?[i].id ?? 0);
-                      boothNumber.add(int.parse(data.booths?[i].number ?? ''));
-                    }
-                  }
-                  Navigator.pushNamed(context, RoutePath.editShaktiKendraScreen,
-                      arguments: {
-                        'isEdit': true,
-                        'vidhanSabhaName':
-                            context.read<ShaktiKendraCubit>().zilaSelectedName,
-                        "vidhanSabhaId":
-                            context.read<ShaktiKendraCubit>().zilaSelected?.id,
-                        "mandalName": data.mandal?.name,
-                        "shaktiKendrName": data.name,
-                        "boothId": boothId,
-                        "shaktiKendrId": data.id,
-                        "boothNumber": boothNumber,
-                        "shaktiKendr":
-                            context.read<ShaktiKendraCubit>().shaktiKendr
-                      });
-                },
-                child: Container(
-                  height: 38,
-                  width: 38,
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(3.16),
-                      color: AppColor.dividerColor.withOpacity(0.5)),
-                  child: const Icon(Icons.mode_edit_outlined,
-                      color: AppColor.black),
-                ),
-              ),*/
+              trailing: cubit.isEditPermission
+                  ? InkWell(
+                      onTap: () {
+                        context
+                            .read<EditShaktiKendrCubit>()
+                            .shaktiKendrCtr
+                            .clear();
+                        context.read<EditShaktiKendrCubit>().zilaSelected = "";
+                        context.read<EditShaktiKendrCubit>().mandalSelected =
+                            "";
+                        context.read<EditShaktiKendrCubit>().chekedValue = [];
+                        context.read<EditShaktiKendrCubit>().selectedBooth = [];
+                        context.read<EditShaktiKendrCubit>().alreadyExitBooth =
+                            [];
+                        List<int> boothId = [];
+                        List<int> boothNumber = [];
+                        if (data.booths?.isNotEmpty ?? false) {
+                          for (int i = 0; i < (data.booths?.length ?? 0); i++) {
+                            boothId.add(data.booths?[i].id ?? 0);
+                            boothNumber
+                                .add(int.parse(data.booths?[i].number ?? ''));
+                          }
+                        }
+                        Navigator.pushNamed(
+                            context, RoutePath.editShaktiKendraScreen,
+                            arguments: {
+                              'isEdit': true,
+                              'vidhanSabhaName': context
+                                  .read<ShaktiKendraCubit>()
+                                  .zilaSelectedName,
+                              "vidhanSabhaId": context
+                                  .read<ShaktiKendraCubit>()
+                                  .zilaSelected
+                                  ?.id,
+                              "mandalName": data.mandal?.name,
+                              "shaktiKendrName": data.name,
+                              "boothId": boothId,
+                              "shaktiKendrId": data.id,
+                              "boothNumber": boothNumber,
+                              "shaktiKendr":
+                                  context.read<ShaktiKendraCubit>().shaktiKendr
+                            });
+                      },
+                      child: Container(
+                        height: 38,
+                        width: 38,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(3.16),
+                            color: AppColor.dividerColor.withOpacity(0.5)),
+                        child: const Icon(Icons.mode_edit_outlined,
+                            color: AppColor.black),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -405,57 +439,62 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                   ),
                 ),
                 const Spacer(),
-                /* BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
-                  builder: (context, state) {
-                    if (state is DeleteDataShaktiKendraLoadingState) {
-                      EasyLoading.show();
-                    } else if (state is DeleteShaktiKendraFatchDataState) {
-                      EasyLoading.dismiss();
-                      if (state.data.data?.askConfirmation == true) {
-                        print("IsConfirm");
-                      } else {
-                        EasyLoading.showSuccess(state.data.message ?? '');
-                        context.read<ShaktiKendraCubit>().getShaktiKendra(
-                            id: context
-                                    .read<ShaktiKendraCubit>()
-                                    .zilaSelected
-                                    ?.id ??
-                                357);
-                      }
-                    } else if (state is DeleteShaktiKendraErrorState) {
-                      EasyLoading.dismiss();
-                      EasyLoading.showToast(state.error);
-                    }
-                    return InkWell(
-                      onTap: () {
-                        dataEntryDeleteDialog(
-                            title: "${S.of(context).deletrShaktiKendrTitle}?",
-                            subTitle:
-                                "${data.mandal?.name}\n${S.of(context).deleteShaktiKendr}",
-                            context: context,
-                            onDelete: () async {
-                              Navigator.pop(context);
-                              await context
-                                  .read<ShaktiKendraCubit>()
-                                  .deleteShaktiKendr(
-                                      id: data.id!,
-                                      context: context,
-                                      isConfirmDelete: false);
-                            });
-                      },
-                      child: Container(
-                        height: 38,
-                        width: 38,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3.16),
-                            color: AppColor.dividerColor.withOpacity(0.5)),
-                        child: const Icon(Icons.delete_outline,
-                            color: AppColor.black),
-                      ),
-                    );
-                  },
-                ),*/
+                cubit.isDeletePermission
+                    ? BlocBuilder<ShaktiKendraCubit, ShaktiKendraState>(
+                        builder: (context, state) {
+                          if (state is DeleteDataShaktiKendraLoadingState) {
+                            EasyLoading.show();
+                          } else if (state
+                              is DeleteShaktiKendraFatchDataState) {
+                            EasyLoading.dismiss();
+                            if (state.data.data?.askConfirmation == true) {
+                              print("IsConfirm");
+                            } else {
+                              EasyLoading.showSuccess(state.data.message ?? '');
+                              context.read<ShaktiKendraCubit>().getShaktiKendra(
+                                  id: context
+                                          .read<ShaktiKendraCubit>()
+                                          .zilaSelected
+                                          ?.id ??
+                                      357);
+                            }
+                          } else if (state is DeleteShaktiKendraErrorState) {
+                            EasyLoading.dismiss();
+                            EasyLoading.showToast(state.error);
+                          }
+                          return InkWell(
+                            onTap: () {
+                              dataEntryDeleteDialog(
+                                  title:
+                                      "${S.of(context).deletrShaktiKendrTitle}?",
+                                  subTitle:
+                                      "${data.mandal?.name}\n${S.of(context).deleteShaktiKendr}",
+                                  context: context,
+                                  onDelete: () async {
+                                    Navigator.pop(context);
+                                    await context
+                                        .read<ShaktiKendraCubit>()
+                                        .deleteShaktiKendr(
+                                            id: data.id!,
+                                            context: context,
+                                            isConfirmDelete: false);
+                                  });
+                            },
+                            child: Container(
+                              height: 38,
+                              width: 38,
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(3.16),
+                                  color:
+                                      AppColor.dividerColor.withOpacity(0.5)),
+                              child: const Icon(Icons.delete_outline,
+                                  color: AppColor.black),
+                            ),
+                          );
+                        },
+                      )
+                    : const SizedBox.shrink(),
               ],
             )
           ],

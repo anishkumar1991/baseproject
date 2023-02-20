@@ -21,6 +21,9 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
   String zilaSelectedName = '';
   int isSelectedIndex = 0;
   bool isExpanded = false;
+  bool isEditPermission = false;
+  bool isCreatePermission = false;
+  bool isDeletePermission = false;
   List<String> filterList = ["नवीन एंट्री", "मंडल", "A - Z"];
   ShaktiKendr shaktiKendr = ShaktiKendr();
 

@@ -15,6 +15,7 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
+import 'network/model/ClientAppPermissionModel.dart';
 
 class SangathanDetailsPage extends StatefulWidget {
   final String cliendId;
@@ -138,8 +139,22 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                           return cubit.isShowShaktiKendra
                               ? InkWell(
                                   onTap: () {
+                                    List<AppPermissions> permissionData = [];
+                                    for (int i = 0;
+                                        i < cubit.appPermissions.length;
+                                        i++) {
+                                      if (cubit.appPermissions[i].permissionName
+                                              ?.toLowerCase() ==
+                                          'ShaktiKendra'.toLowerCase()) {
+                                        permissionData
+                                            .add(cubit.appPermissions[i]);
+                                      }
+                                    }
                                     Navigator.pushNamed(
-                                        context, RoutePath.shaktiKendraScreen);
+                                        context, RoutePath.shaktiKendraScreen,
+                                        arguments: {
+                                          "permissionData": permissionData
+                                        });
                                   },
                                   child: Container(
                                     padding: const EdgeInsets.all(12),
