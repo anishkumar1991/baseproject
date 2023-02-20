@@ -461,21 +461,23 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         // Navigator.pushNamed(context, RoutePath.addEntryScreen,
                         //     arguments: data[index]['text']);
                         List<AppPermissions> appPermissions = [];
-                        for (int i = 0; i < cubit.appPermissions.length; i++) {
-                          if (cubit.appPermissions[i].permissionName ==
+                        for (int i = 0;
+                            i < (cubit.appPermissions?.length ?? 0);
+                            i++) {
+                          if (cubit.appPermissions?[i].permissionName ==
                               "ShaktiKendraData") {
-                            if (cubit.appPermissions[i].permissionName
+                            if (cubit.appPermissions?[i].permissionName
                                     ?.split(RegExp(r"(?=[A-Z])"))[0]
                                     .trim() ==
                                 data?.name
                                     ?.split(RegExp(r"(?=[A-Z])"))[0]
                                     .trim()) {
-                              appPermissions.add(cubit.appPermissions[i]);
+                              appPermissions.add(cubit.appPermissions![i]);
                             }
-                          } else if (cubit.appPermissions[i].permissionName
+                          } else if (cubit.appPermissions?[i].permissionName
                                   ?.split(RegExp(r"(?=[A-Z])"))[0] ==
                               data?.name?.split(RegExp(r"(?=[A-Z])"))[0]) {
-                            appPermissions.add(cubit.appPermissions[i]);
+                            appPermissions.add(cubit.appPermissions![i]);
                           }
                         }
 

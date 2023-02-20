@@ -53,10 +53,19 @@ Future<void> downloadFile(
   final bytes = response.bodyBytes;
   Future.delayed(Duration.zero)
       .then((value) => EasyLoading.showSuccess(S.of(context).download));
-  Map<Permission, PermissionStatus> statuses = await [
-    Permission.storage,
-  ].request();
-  print(statuses);
+
+  // Map<Permission, PermissionStatus> statuses = await [
+  //   Permission.storage,
+  // ].request();
+
+  if (await Permission.storage.isGranted) {
+    print(Permission.storage.isGranted);
+  } else {
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.storage,
+    ].request();
+    print(statuses);
+  }
 
   // Get the directory for the app's documents directory
   final directory = await getApplicationDocumentsDirectory();
@@ -67,4 +76,17 @@ Future<void> downloadFile(
   // Write the bytes to the file
   await file.writeAsBytes(bytes);
   print(file.path);
+
+  final directory1 = Directory("storage/emulated/0/Download/sangathan");
+  if (await directory1.exists()) {
+    File newPath = await file
+        .copy("storage/emulated/0/Download/sangathan/$pannaNumber.pdf");
+    print(newPath.path);
+  } else {
+    final Directory createSangathanFolder =
+        await directory1.create(recursive: true);
+    File newPath = await file
+        .copy("storage/emulated/0/Download/sangathan/$pannaNumber.pdf");
+    print(newPath.path);
+  }
 }

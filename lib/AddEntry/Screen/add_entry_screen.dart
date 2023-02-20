@@ -129,8 +129,13 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     cubit.entryField![i].fieldName ?? "", cubit),
                 title: cubit.getLocaleName(
                     cubit.entryField![i].displayNameForUI ?? "", currentLocale),
-                hintText:
-                    'Select ${cubit.entryField![i].displayNameForUI ?? ""}',
+                // hintText:
+                //     'Select ${cubit.entryField![i].displayNameForUI ?? ""}',
+                hintText: cubit.getDropDownLocal(
+                    text: cubit.getLocaleName(
+                        cubit.entryField![i].displayNameForUI ?? "",
+                        currentLocale),
+                    currentLocale: currentLocale),
                 isMandatoryField: cubit.entryField![i].mandatoryField ?? false,
                 validator: (dynamic value) {
                   if (cubit.entryField![i].mandatoryField ?? false) {
@@ -172,22 +177,18 @@ class _AddEntryPageState extends State<AddEntryPage> {
                       children: [
                         TextFieldWidget(
                             initialValue: item.value.toString(),
-                            textInputFormatter:
-                                DynamicValidator.addTextInputFormatters(
-                                    fieldType:
-                                        cubit.entryField![i].fieldName ?? ''),
-                            validator: (value) =>
-                                DynamicValidator.getTextFieldValidation(
-                                    context: context,
-                                    fieldName:
-                                        cubit.entryField![i].fieldName ?? '',
-                                    value: value,
-                                    mandatoryField:
-                                        cubit.entryField![i].mandatoryField ??
-                                            false,
-                                    displayNameForUI:
-                                        cubit.entryField![i].displayNameForUI ??
-                                            ""),
+                            textInputFormatter: DynamicValidator.addTextInputFormatters(
+                                fieldType:
+                                    cubit.entryField![i].fieldName ?? ''),
+                            validator: (value) => DynamicValidator.getTextFieldValidation(
+                                context: context,
+                                fieldName: cubit.entryField![i].fieldName ?? '',
+                                value: value,
+                                mandatoryField: cubit.entryField![i].mandatoryField ??
+                                    false,
+                                displayNameForUI:
+                                    cubit.entryField![i].displayNameForUI ??
+                                        ""),
                             isMandatoryField:
                                 cubit.entryField![i].mandatoryField ?? false,
                             onChanged: (value) {
@@ -198,8 +199,11 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                 cubit.entryField![i].displayNameForUI ?? "",
                                 currentLocale),
                             keyboardType: cubit.getTextInputType(
-                                fieldType: cubit.entryField![i].fieldName ?? ''),
-                            hintText: 'Enter Your ${cubit.entryField![i].displayNameForUI}'),
+                                fieldType:
+                                    cubit.entryField![i].fieldName ?? ''),
+                            hintText: cubit.getHintText(
+                                hintText: '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                                currentLocale: currentLocale)),
                         spaceHeightWidget(8),
                         UploadCard(
                           uploadedFilePath: FieldHandler.getFileName(
@@ -252,9 +256,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextFieldWidget(
-                      textInputFormatter:
-                          DynamicValidator.addTextInputFormatters(
-                              fieldType: cubit.entryField![i].fieldName ?? ''),
+                      textInputFormatter: DynamicValidator.addTextInputFormatters(
+                          fieldType: cubit.entryField![i].fieldName ?? ''),
                       validator: (value) =>
                           DynamicValidator.getTextFieldValidation(
                               context: context,
@@ -275,8 +278,10 @@ class _AddEntryPageState extends State<AddEntryPage> {
                           currentLocale),
                       keyboardType: cubit.getTextInputType(
                           fieldType: cubit.entryField![i].fieldName ?? ""),
-                      hintText:
-                          'Enter Your ${cubit.entryField![i].displayNameForUI}'),
+                      hintText: cubit.getHintText(
+                          hintText:
+                              '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                          currentLocale: currentLocale)),
                   spaceHeightWidget(8),
                   UploadCard(
                     uploadedFilePath: FieldHandler.getFileName(
@@ -322,100 +327,73 @@ class _AddEntryPageState extends State<AddEntryPage> {
                 if (cubit.entryField![i].fieldName == item.key)
                   if (item.value != null || item.value != "") ...[
                     TextFieldWidget(
-                        initialValue: item.value.toString(),
-                        textInputFormatter:
-                            DynamicValidator.addTextInputFormatters(
-                                fieldType:
-                                    cubit.entryField![i].fieldName ?? ''),
-                        validator: (value) =>
-                            DynamicValidator.getTextFieldValidation(
-                                context: context,
-                                fieldName: cubit.entryField![i].fieldName ?? '',
-                                value: value,
-                                mandatoryField:
-                                    cubit.entryField![i].mandatoryField ??
-                                        false,
-                                displayNameForUI:
-                                    cubit.entryField![i].displayNameForUI ??
-                                        ""),
-                        isMandatoryField:
-                            cubit.entryField![i].mandatoryField ?? false,
-                        onChanged: (value) {
-                          FieldHandler.onUpdate(i, value,
-                              cubit.entryField![i].fieldName ?? "", cubit);
-                        },
-                        title: cubit.getLocaleName(
-                            cubit.entryField![i].displayNameForUI ?? "",
-                            currentLocale),
-                        keyboardType: cubit.getTextInputType(
-                            fieldType: cubit.entryField![i].fieldName ?? ''),
-                        hintText:
-                            'Enter Your ${cubit.entryField![i].displayNameForUI}')
+                      initialValue: item.value.toString(),
+                      textInputFormatter:
+                          DynamicValidator.addTextInputFormatters(
+                              fieldType: cubit.entryField![i].fieldName ?? ''),
+                      validator: (value) =>
+                          DynamicValidator.getTextFieldValidation(
+                              context: context,
+                              fieldName: cubit.entryField![i].fieldName ?? '',
+                              value: value,
+                              mandatoryField:
+                                  cubit.entryField![i].mandatoryField ?? false,
+                              displayNameForUI:
+                                  cubit.entryField![i].displayNameForUI ?? ""),
+                      isMandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
+                      onChanged: (value) {
+                        FieldHandler.onUpdate(i, value,
+                            cubit.entryField![i].fieldName ?? "", cubit);
+                      },
+                      title: cubit.getLocaleName(
+                          cubit.entryField![i].displayNameForUI ?? "",
+                          currentLocale),
+                      keyboardType: cubit.getTextInputType(
+                          fieldType: cubit.entryField![i].fieldName ?? ''),
+                      hintText: cubit.getHintText(
+                          hintText:
+                              '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                          currentLocale: currentLocale),
+                    )
                   ]
               ]
             ] else ...[
               if (cubit.entryField![i].fieldName == "pannaNumber") ...[
                 if (widget.pannaID != null && widget.pannaID != "") ...[
                   TextFieldWidget(
-                      initialValue: widget.pannaID == null
-                          ? ""
-                          : widget.pannaID.toString(),
-                      readOnly: true,
-                      textInputFormatter:
-                          DynamicValidator.addTextInputFormatters(
-                              fieldType: cubit.entryField![i].fieldName ?? ''),
-                      validator: (value) =>
-                          DynamicValidator.getTextFieldValidation(
-                              context: context,
-                              fieldName: cubit.entryField![i].fieldName ?? '',
-                              value: value,
-                              mandatoryField:
-                                  cubit.entryField![i].mandatoryField ?? false,
-                              displayNameForUI:
-                                  cubit.entryField![i].displayNameForUI ?? ""),
-                      isMandatoryField:
-                          cubit.entryField![i].mandatoryField ?? false,
-                      onChanged: (value) {
-                        FieldHandler.onUpdate(i, value,
-                            cubit.entryField![i].fieldName ?? "", cubit);
-                      },
-                      title: cubit.getLocaleName(
-                          cubit.entryField![i].displayNameForUI ?? "",
-                          currentLocale),
-                      keyboardType: cubit.getTextInputType(
-                          fieldType: cubit.entryField![i].fieldName ?? ''),
-                      hintText:
-                          'Enter Your ${cubit.entryField![i].displayNameForUI}'),
+                    initialValue:
+                        widget.pannaID == null ? "" : widget.pannaID.toString(),
+                    readOnly: true,
+                    textInputFormatter: DynamicValidator.addTextInputFormatters(
+                        fieldType: cubit.entryField![i].fieldName ?? ''),
+                    validator: (value) =>
+                        DynamicValidator.getTextFieldValidation(
+                            context: context,
+                            fieldName: cubit.entryField![i].fieldName ?? '',
+                            value: value,
+                            mandatoryField:
+                                cubit.entryField![i].mandatoryField ?? false,
+                            displayNameForUI:
+                                cubit.entryField![i].displayNameForUI ?? ""),
+                    isMandatoryField:
+                        cubit.entryField![i].mandatoryField ?? false,
+                    onChanged: (value) {
+                      FieldHandler.onUpdate(i, value,
+                          cubit.entryField![i].fieldName ?? "", cubit);
+                    },
+                    title: cubit.getLocaleName(
+                        cubit.entryField![i].displayNameForUI ?? "",
+                        currentLocale),
+                    keyboardType: cubit.getTextInputType(
+                        fieldType: cubit.entryField![i].fieldName ?? ''),
+                    hintText: cubit.getHintText(
+                        hintText:
+                            '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                        currentLocale: currentLocale),
+                  ),
                 ] else ...[
                   TextFieldWidget(
-                      validator: (value) =>
-                          DynamicValidator.getTextFieldValidation(
-                              context: context,
-                              fieldName: cubit.entryField![i].fieldName ?? '',
-                              value: value,
-                              mandatoryField:
-                                  cubit.entryField![i].mandatoryField ?? false,
-                              displayNameForUI:
-                                  cubit.entryField![i].displayNameForUI ?? ""),
-                      isMandatoryField:
-                          cubit.entryField![i].mandatoryField ?? false,
-                      textInputFormatter:
-                          DynamicValidator.addTextInputFormatters(
-                              fieldType: cubit.entryField![i].fieldName ?? ''),
-                      onChanged: (value) {
-                        FieldHandler.onUpdate(i, value,
-                            cubit.entryField![i].fieldName ?? "", cubit);
-                      },
-                      title: cubit.getLocaleName(
-                          cubit.entryField![i].displayNameForUI ?? "",
-                          currentLocale),
-                      keyboardType: cubit.getTextInputType(
-                          fieldType: cubit.entryField![i].fieldName ?? ''),
-                      hintText:
-                          'Enter Your ${cubit.entryField![i].displayNameForUI}')
-                ]
-              ] else ...[
-                TextFieldWidget(
                     validator: (value) =>
                         DynamicValidator.getTextFieldValidation(
                             context: context,
@@ -438,8 +416,40 @@ class _AddEntryPageState extends State<AddEntryPage> {
                         currentLocale),
                     keyboardType: cubit.getTextInputType(
                         fieldType: cubit.entryField![i].fieldName ?? ''),
-                    hintText:
-                        'Enter Your ${cubit.entryField![i].displayNameForUI}')
+                    hintText: cubit.getHintText(
+                        hintText:
+                            '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                        currentLocale: currentLocale),
+                  )
+                ]
+              ] else ...[
+                TextFieldWidget(
+                  validator: (value) => DynamicValidator.getTextFieldValidation(
+                      context: context,
+                      fieldName: cubit.entryField![i].fieldName ?? '',
+                      value: value,
+                      mandatoryField:
+                          cubit.entryField![i].mandatoryField ?? false,
+                      displayNameForUI:
+                          cubit.entryField![i].displayNameForUI ?? ""),
+                  isMandatoryField:
+                      cubit.entryField![i].mandatoryField ?? false,
+                  textInputFormatter: DynamicValidator.addTextInputFormatters(
+                      fieldType: cubit.entryField![i].fieldName ?? ''),
+                  onChanged: (value) {
+                    FieldHandler.onUpdate(
+                        i, value, cubit.entryField![i].fieldName ?? "", cubit);
+                  },
+                  title: cubit.getLocaleName(
+                      cubit.entryField![i].displayNameForUI ?? "",
+                      currentLocale),
+                  keyboardType: cubit.getTextInputType(
+                      fieldType: cubit.entryField![i].fieldName ?? ''),
+                  hintText: cubit.getHintText(
+                      hintText:
+                          '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                      currentLocale: currentLocale),
+                )
               ]
             ]
           ]
@@ -492,6 +502,12 @@ class _AddEntryPageState extends State<AddEntryPage> {
             }),
             readOnly: true,
             controller: cubit.dobController,
+            hintText: cubit.date == 'Select DOB of Birth'
+                ? cubit.getDropDownLocal(
+                    text:
+                        '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                    currentLocale: currentLocale)
+                : cubit.date,
             title: cubit.getLocaleName(
                 cubit.entryField![i].displayNameForUI ?? "", currentLocale),
             validator: ((value) {
@@ -508,7 +524,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
               Icons.calendar_month_outlined,
               color: AppColor.black,
             ),
-            hintText: cubit.date,
+            // hintText: cubit.date,
           ),
           // Column(
           //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -799,22 +815,69 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         FocusScope.of(context).unfocus();
                                         final FormState form =
                                             _formKey.currentState!;
-                                        if (form.validate()) {
-                                          cubit.previewAndSubmitList(
-                                              widget.pannaID);
-                                          Navigator.pushNamed(
-                                            context,
-                                            RoutePath.addEntryPreviewSubmit,
-                                            arguments: AddEntryPreviewSubmit(
-                                                isEdit: widget.isEditEntry,
-                                                pannaIDLevelName:
-                                                    widget.levelName),
-                                          );
+
+                                        for (int i = 0;
+                                            i < (cubit.entryField?.length ?? 0);
+                                            i++) {
+                                          if (cubit.entryField?[i].name
+                                                  ?.toLowerCase() ==
+                                              'Photo'.toLowerCase()) {
+                                            if (cubit.entryField?[i]
+                                                    .mandatoryField ==
+                                                true) {
+                                              cubit.isPhotoMandatory = true;
+                                            }
+                                          }
+                                        }
+
+                                        if (cubit.isPhotoMandatory) {
+                                          if (cubit.file != null) {
+                                            if (form.validate()) {
+                                              cubit.previewAndSubmitList(
+                                                  widget.pannaID);
+                                              Navigator.pushNamed(
+                                                context,
+                                                RoutePath.addEntryPreviewSubmit,
+                                                arguments:
+                                                    AddEntryPreviewSubmit(
+                                                        isEdit:
+                                                            widget.isEditEntry,
+                                                        pannaIDLevelName:
+                                                            widget.levelName),
+                                              );
+                                            } else {
+                                              EasyLoading.showToast(
+                                                  "Please fill all required field",
+                                                  toastPosition:
+                                                      EasyLoadingToastPosition
+                                                          .top);
+                                            }
+                                          } else {
+                                            EasyLoading.showToast(
+                                                S.of(context).pleaseSelectPhoto,
+                                                toastPosition:
+                                                    EasyLoadingToastPosition
+                                                        .top);
+                                          }
                                         } else {
-                                          EasyLoading.showToast(
-                                              "Please fill all required field",
-                                              toastPosition:
-                                                  EasyLoadingToastPosition.top);
+                                          if (form.validate()) {
+                                            cubit.previewAndSubmitList(
+                                                widget.pannaID);
+                                            Navigator.pushNamed(
+                                              context,
+                                              RoutePath.addEntryPreviewSubmit,
+                                              arguments: AddEntryPreviewSubmit(
+                                                  isEdit: widget.isEditEntry,
+                                                  pannaIDLevelName:
+                                                      widget.levelName),
+                                            );
+                                          } else {
+                                            EasyLoading.showToast(
+                                                "Please fill all required field",
+                                                toastPosition:
+                                                    EasyLoadingToastPosition
+                                                        .top);
+                                          }
                                         }
                                       },
                                       padding: const EdgeInsets.all(12),
