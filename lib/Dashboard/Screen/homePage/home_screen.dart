@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      /// Sangathan card widget
+                      /// Sangathan  card widget
                       BlocBuilder<HomePageCubit, HomePageState>(
                         builder: (context, state) {
                           if (state is ClientAppListsSuccessState) {
@@ -208,7 +208,9 @@ class _HomePageState extends State<HomePage> {
                                                   RoutePath
                                                       .sangathanDetailsScreen);
                                             }),
-                                            child:  SngathanCardWidget(clientId: innerItem.clientId.toString()));
+                                            child: SngathanCardWidget(
+                                                clientId: innerItem.clientId
+                                                    .toString()));
                                       }
                                     }
                                   }
@@ -224,7 +226,32 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       ///mann ki baat widget
-                      const MannKiBaatCard(),
+
+                      BlocBuilder<HomePageCubit, HomePageState>(
+                        builder: (context, state) {
+                          if (state is ClientAppListsSuccessState) {
+                            if (state.clientAppListsModel.sections != null) {
+                              for (var item
+                                  in state.clientAppListsModel.sections!) {
+                                if (item.type == "carousel") {
+                                  if (item.data != null) {
+                                    for (var innerItem in item.data!) {
+                                      if (innerItem.actionUrl!
+                                              .contains("mannkibaat") ==
+                                          true) {
+                                        return MannKiBaatCard(
+                                            mannkibaatAuthToken:
+                                                innerItem.actionUrl);
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          return const SizedBox();
+                        },
+                      ),
 
                       /// whatsapp card widget
                       // const SizedBox(

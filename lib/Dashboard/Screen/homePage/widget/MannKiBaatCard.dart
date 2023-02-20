@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mannkibaatpackage/mannkibaatpackage.dart';
 import 'package:sangathan/Dashboard/Screen/mannKiBaat/Utils/AppColor.dart';
 
 import '../../../../generated/l10n.dart';
+import '../../../../mannkibaat/lib/mannkibaatpackage.dart';
+// import '../../../../mannkibaat/lib/mannkibaatpackage.dart';
 
 class MannKiBaatCard extends StatefulWidget {
-  const MannKiBaatCard({Key? key}) : super(key: key);
+  final String? mannkibaatAuthToken;
+
+  const MannKiBaatCard({Key? key, required this.mannkibaatAuthToken})
+      : super(key: key);
 
   @override
   State<MannKiBaatCard> createState() => _MannKiBaatCardState();
@@ -15,6 +19,8 @@ class MannKiBaatCard extends StatefulWidget {
 class _MannKiBaatCardState extends State<MannKiBaatCard> {
   @override
   Widget build(BuildContext context) {
+    var temp = widget.mannkibaatAuthToken!.split("=");
+
     return Container(
       height: 150,
       decoration: const BoxDecoration(
@@ -45,18 +51,19 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
           Positioned(
               right: 24,
               top: 15,
-              child: Image.asset("assets/images/mannkibaaatmiclogo.png",height: 63,width: 100,)),
-           Positioned(
+              child: Image.asset(
+                "assets/images/mannkibaaatmiclogo.png",
+                height: 63,
+                width: 100,
+              )),
+          Positioned(
             right: 42,
             bottom: 10,
             child: SizedBox(
               height: 30,
               width: 143,
               child: MainButton(
-                text: S.of(context).click,
-                authenticationToken:
-                'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiUHNxYkw0MW9ucDZvR0dOYmY0YXc0Vjl1In0.0jMGRjbpDMV6ahA-jcEhYkw5cVou32cYmpOWvMAc1gU',
-              ),
+                  text: S.of(context).click, authenticationToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA"),
             ),
           )
         ],

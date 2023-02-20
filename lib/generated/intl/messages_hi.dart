@@ -280,7 +280,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shaktikendr": MessageLookupByLibrary.simpleMessage("शक्ति केंद्र "),
         "skipAddNewEntry":
             MessageLookupByLibrary.simpleMessage("छोड़ें और नई ऐड एंट्री करें"),
-        "socialMedia": MessageLookupByLibrary.simpleMessage("सामाजिक मीडिया"),
+        "socialMedia": MessageLookupByLibrary.simpleMessage("सोशल मीडिया"),
         "somethingWentWrong": MessageLookupByLibrary.simpleMessage(
             "कृपया (कब से) वर्ष पहले दर्ज करें"),
         "state": MessageLookupByLibrary.simpleMessage("स्टेट"),
