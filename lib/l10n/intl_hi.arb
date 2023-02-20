@@ -213,5 +213,8 @@
   "karyakarniBoothText": "समिति",
   "karyakarniSkText": "शक्ति केंद्र टोली",
   "editShaktiKendr": "शक्ति केंद्र एडिट",
-  "pleaseSelectPhoto" : "कृपया फोटो सेलेक्ट करें"
+
+  "pleaseSelectPhoto" : "कृपया फोटो सेलेक्ट करें",
+
+  "choose": "चुनें"
 }

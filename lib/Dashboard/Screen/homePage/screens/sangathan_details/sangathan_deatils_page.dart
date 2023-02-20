@@ -15,7 +15,9 @@ import 'package:sangathan/route/route_path.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
+import '../../../../../common/common_logo_widget.dart';
 import 'network/model/ClientAppPermissionModel.dart';
+import 'widget/select_allotted_location_sheet_widget.dart';
 
 class SangathanDetailsPage extends StatefulWidget {
   final String cliendId;
@@ -29,13 +31,7 @@ class SangathanDetailsPage extends StatefulWidget {
 class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   Future callApi() async {
     if (StorageService.userData?.user?.countryStateId == 0 ||
-        StorageService.userData?.user?.countryStateId == null) {
-      Future.delayed(Duration.zero).then((value) {
-        /*  if (context.read<SangathanDetailsCubit>().locationList.isNotEmpty) {
-          showLocationBottomSheet();
-        }*/
-      });
-    }
+        StorageService.userData?.user?.countryStateId == null) {}
   }
 
   @override
@@ -45,6 +41,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
         .read<SangathanDetailsCubit>()
         .getClientAppPermission(widget.cliendId);
     context.read<SangathanDetailsCubit>().appPermissions = null;
+    context.read<SangathanDetailsCubit>().selectedAllottedLocation = null;
+    context.read<SangathanDetailsCubit>().allotedLocationModel = null;
     super.initState();
   }
 
@@ -58,214 +56,259 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
     var cubit = context.read<SangathanDetailsCubit>();
 
     return Scaffold(
-      body: SafeArea(child: SingleChildScrollView(
-        child: BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
-          builder: (context, state) {
-            if (state is ClientAppPermissionsFetchState) {
-              cubit.appPermissions = state.data.appPermissions ?? [];
-              if ((cubit.appPermissions?.isNotEmpty) ?? false) {
-                for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
-                  if (cubit.appPermissions?[i].permissionName ==
-                      "ShaktiKendra") {
-                    print("ShaktiKendra");
-                    cubit.isShowShaktiKendra = true;
-                  } else {
-                    cubit.isShowShaktiKendra = false;
-                  }
-                }
-                context.read<SangathanDetailsCubit>().getAllotedLocations(
-                    clientId: widget.cliendId,
-                    permissionId: "${cubit.appPermissions?.first.id ?? ""}");
-              }
-            }
+      body: SafeArea(
+          child: SingleChildScrollView(
+        child: BlocListener<SangathanDetailsCubit, SangathanDetailsState>(
+          listener: (context, state) {
             if (state is LocationFetchedState) {
-              if (state.locationData.data != null) {
-                cubit.locationList = state.locationData.data!.locations!;
-                if (cubit.locationList.isNotEmpty) {
-                  for (int i = 0; i < cubit.locationList.length; i++) {
-                    if (cubit.locationList[i].countryStateId == 14) {
-                      context
-                          .read<SangathanDetailsCubit>()
-                          .getSangathanDataLevel();
-                      break;
+              showLocationBottomSheet();
+            }
+          },
+          child: BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
+            builder: (context, state) {
+              if (state is ClientAppPermissionsFetchState) {
+                cubit.appPermissions = state.data.appPermissions ?? [];
+                if ((cubit.appPermissions?.isNotEmpty) ?? false) {
+                  for (int i = 0;
+                      i < (cubit.appPermissions?.length ?? 0);
+                      i++) {
+                    if (cubit.appPermissions?[i].permissionName ==
+                        "ShaktiKendra") {
+                      cubit.isShowShaktiKendra = true;
+                    } else {
+                      cubit.isShowShaktiKendra = false;
+                    }
+                  }
+                  context.read<SangathanDetailsCubit>().getAllotedLocations(
+                      clientId: widget.cliendId,
+                      permissionId: "${cubit.appPermissions?.first.id ?? ""}");
+                }
+              }
+              if (state is LocationFetchedState) {
+                if (state.locationData.data != null) {
+                  cubit.allotedLocationModel = state.locationData;
+                  if (cubit.allotedLocationModel?.data?.locations != null) {
+                    if (cubit.allotedLocationModel?.data?.locations
+                            ?.isNotEmpty ??
+                        false) {
+                      for (int i = 0;
+                          i <
+                              (cubit.allotedLocationModel?.data?.locations
+                                      ?.length ??
+                                  0);
+                          i++) {
+                        if (cubit.allotedLocationModel?.data?.locations?[i]
+                                .countryStateId ==
+                            14) {
+                          context
+                              .read<SangathanDetailsCubit>()
+                              .getSangathanDataLevel();
+                          break;
+                        }
+                      }
                     }
                   }
                 }
               }
-            }
-            return cubit.appPermissions == null
-                ? Column(
-                    children: [
-                      spaceHeightWidget(20),
-                      Row(
-                        children: [
-                          IconButton(
-                              splashRadius: 20,
-                              onPressed: (() {
-                                Navigator.pop(context);
-                              }),
-                              icon: const Padding(
-                                padding: EdgeInsets.all(5.0),
-                                child: Icon(Icons.arrow_back),
-                              )),
-                          Text(
-                            S.of(context).sangathan,
-                            style: GoogleFonts.quicksand(
-                                fontSize: 18, fontWeight: FontWeight.w600),
-                          )
-                        ],
-                      ),
-                      spaceHeightWidget(10),
-                      Shimmer.fromColors(
-                        baseColor: AppColor.greyColor.withOpacity(0.3),
-                        highlightColor: Colors.grey.withOpacity(0.1),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GridView.builder(
-                              shrinkWrap: true,
-                              itemCount: 9,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
-                                      crossAxisSpacing: 33,
-                                      mainAxisSpacing: 16),
-                              itemBuilder: ((context, index) {
-                                return Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.2,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.2,
-                                  decoration: BoxDecoration(
-                                      color: AppColor.white,
-                                      borderRadius: BorderRadius.circular(20)),
-                                );
-                              })),
+              return cubit.appPermissions == null
+                  ? Column(
+                      children: [
+                        Row(
+                          children: [
+                            IconButton(
+                                splashRadius: 20,
+                                onPressed: (() {
+                                  Navigator.pop(context);
+                                }),
+                                icon: const Padding(
+                                  padding: EdgeInsets.all(5.0),
+                                  child: Icon(Icons.arrow_back),
+                                )),
+                            Text(
+                              S.of(context).sangathan,
+                              style: GoogleFonts.quicksand(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
+                            const Spacer(),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CommonLogoWidget(
+                                  name: cubit.selectedAllottedLocation?.name ??
+                                      "",
+                                  isSelected: true),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  )
-                : cubit.appPermissions?.isEmpty ?? true
-                    ? Center(
-                        child: Text(
-                        S.of(context).oopsErrorMsg,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppColor.black),
-                      ))
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          /*spaceHeightWidget(10),*/
-                          /* appbar(),*/
-                          spaceHeightWidget(20),
-                          Row(
-                            children: [
-                              IconButton(
-                                  splashRadius: 20,
-                                  onPressed: (() {
-                                    Navigator.pop(context);
-                                  }),
-                                  icon: const Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: Icon(Icons.arrow_back),
-                                  )),
-                              Text(
-                                S.of(context).sangathan,
-                                style: GoogleFonts.quicksand(
-                                    fontSize: 18, fontWeight: FontWeight.w600),
-                              )
-                            ],
+                        spaceHeightWidget(10),
+                        Shimmer.fromColors(
+                          baseColor: AppColor.greyColor.withOpacity(0.3),
+                          highlightColor: Colors.grey.withOpacity(0.1),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: 9,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3,
+                                        crossAxisSpacing: 33,
+                                        mainAxisSpacing: 16),
+                                itemBuilder: ((context, index) {
+                                  return Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.2,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.2,
+                                    decoration: BoxDecoration(
+                                        color: AppColor.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                  );
+                                })),
                           ),
-                          spaceHeightWidget(10),
+                        ),
+                      ],
+                    )
+                  : cubit.appPermissions?.isEmpty ?? true
+                      ? Center(
+                          child: Text(
+                          S.of(context).oopsErrorMsg,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: AppColor.black),
+                        ))
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            /*spaceHeightWidget(10),*/
+                            /* appbar(),*/
 
-                          /// sangathan grid view
-                          sangathanGridView(cubit),
-                          spaceHeightWidget(24),
+                            Row(
+                              children: [
+                                IconButton(
+                                    splashRadius: 20,
+                                    onPressed: (() {
+                                      Navigator.pop(context);
+                                    }),
+                                    icon: const Padding(
+                                      padding: EdgeInsets.all(5.0),
+                                      child: Icon(Icons.arrow_back),
+                                    )),
+                                Text(
+                                  S.of(context).sangathan,
+                                  style: GoogleFonts.quicksand(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () {
+                                      showLocationBottomSheet();
+                                    },
+                                    child: CommonLogoWidget(
+                                        name: cubit.selectedAllottedLocation
+                                                ?.name ??
+                                            "",
+                                        isSelected: true),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            spaceHeightWidget(10),
 
-                          /// shakti kendr card
-                          BlocBuilder<SangathanDetailsCubit,
-                              SangathanDetailsState>(
-                            builder: (context, state) {
-                              return cubit.isShowShaktiKendra
-                                  ? InkWell(
-                                      onTap: () {
-                                        List<AppPermissions> permissionData =
-                                            [];
-                                        for (int i = 0;
-                                            i <
-                                                (cubit.appPermissions?.length ??
-                                                    0);
-                                            i++) {
-                                          if (cubit.appPermissions?[i]
-                                                  .permissionName
-                                                  ?.toLowerCase() ==
-                                              'ShaktiKendra'.toLowerCase()) {
-                                            permissionData
-                                                .add(cubit.appPermissions![i]);
+                            /// sangathan grid view
+                            sangathanGridView(cubit),
+                            spaceHeightWidget(24),
+
+                            /// shakti kendr card
+                            BlocBuilder<SangathanDetailsCubit,
+                                SangathanDetailsState>(
+                              builder: (context, state) {
+                                return cubit.isShowShaktiKendra
+                                    ? InkWell(
+                                        onTap: () {
+                                          List<AppPermissions> permissionData =
+                                              [];
+                                          for (int i = 0;
+                                              i <
+                                                  (cubit.appPermissions
+                                                          ?.length ??
+                                                      0);
+                                              i++) {
+                                            if (cubit.appPermissions?[i]
+                                                    .permissionName
+                                                    ?.toLowerCase() ==
+                                                'ShaktiKendra'.toLowerCase()) {
+                                              permissionData.add(
+                                                  cubit.appPermissions![i]);
+                                            }
                                           }
-                                        }
-                                        Navigator.pushNamed(context,
-                                            RoutePath.shaktiKendraScreen,
-                                            arguments: {
-                                              "permissionData": permissionData
-                                            });
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.all(12),
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        color:
-                                            AppColor.purple50.withOpacity(0.6),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              S.of(context).editShaktiKendr,
-                                              style: GoogleFonts.quicksand(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                            Container(
-                                                padding: const EdgeInsets.all(
-                                                    2),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                    gradient:
-                                                        const LinearGradient(
-                                                            begin: Alignment
-                                                                .topLeft,
-                                                            end: Alignment
-                                                                .bottomRight,
-                                                            colors: [
-                                                          AppColor.purple50,
-                                                          AppColor.orange200,
-                                                        ])),
-                                                child: Image.asset(
-                                                  AppIcons.shaktikendraImage,
-                                                  height: 35,
-                                                ))
-                                          ],
+                                          Navigator.pushNamed(context,
+                                              RoutePath.shaktiKendraScreen,
+                                              arguments: {
+                                                "permissionData": permissionData
+                                              });
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          color: AppColor.purple50
+                                              .withOpacity(0.6),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                S.of(context).editShaktiKendr,
+                                                style: GoogleFonts.quicksand(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.all(2),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      gradient:
+                                                          const LinearGradient(
+                                                              begin: Alignment
+                                                                  .topLeft,
+                                                              end: Alignment
+                                                                  .bottomRight,
+                                                              colors: [
+                                                            AppColor.purple50,
+                                                            AppColor.orange200,
+                                                          ])),
+                                                  child: Image.asset(
+                                                    AppIcons.shaktikendraImage,
+                                                    height: 35,
+                                                  ))
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    )
-                                  : const SizedBox();
-                            },
-                          ),
-                          spaceHeightWidget(20),
+                                      )
+                                    : const SizedBox();
+                              },
+                            ),
+                            spaceHeightWidget(20),
 
-                          /// close shakti kendr card
-                          //
-                          // /// report widget
-                          // sangathanReportCard(),
-                          // spaceHeightWidget(60)
-                        ],
-                      );
-          },
+                            /// close shakti kendr card
+                            //
+                            // /// report widget
+                            // sangathanReportCard(),
+                            // spaceHeightWidget(60)
+                          ],
+                        );
+            },
+          ),
         ),
       )),
     );
@@ -292,88 +335,16 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                 var cubit = context.read<SangathanDetailsCubit>();
                 if (state is LocationFetchedState) {
                   if (state.locationData.data != null) {
-                    cubit.locationList = state.locationData.data!.locations!;
+                    cubit.allotedLocationModel = state.locationData;
+                    cubit.typeLevelName =
+                        cubit.allotedLocationModel?.data?.locationType ?? "";
                   }
                 }
-                return WillPopScope(
-                  onWillPop: isExist,
-                  child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.75,
-                      width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            spaceHeightWidget(15),
-                            Row(
-                              children: [
-                                IconButton(
-                                    onPressed: (() {
-                                      if (cubit.locationList.isEmpty) {
-                                        Navigator.pop(context);
-                                      } else if (cubit.countryStateId == null) {
-                                        EasyLoading.showError(
-                                            S.of(context).pleaseChoosePlace);
-                                      } else {
-                                        Navigator.pop(context);
-                                      }
-                                    }),
-                                    icon: const Icon(Icons.arrow_back)),
-                                spaceWidthWidget(10),
-                                Text(
-                                  S.of(context).pleaseChoosePlace,
-                                  style: GoogleFonts.quicksand(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            spaceHeightWidget(10),
-                            cubit.locationList.isNotEmpty
-                                ? Wrap(
-                                    spacing: 10,
-                                    runSpacing: 5,
-                                    children: cubit.locationList
-                                        .map((e) => ChoiceChip(
-                                              backgroundColor:
-                                                  AppColor.orange300Color,
-                                              selectedColor: cubit.locationId ==
-                                                      e.id
-                                                  ? AppColor
-                                                      .buttonOrangeBackGroundColor
-                                                  : null,
-                                              selected:
-                                                  cubit.locationId == e.id,
-                                              label: Text(
-                                                e.name ?? '',
-                                                style: TextStyle(
-                                                    color: cubit.locationId ==
-                                                            e.id
-                                                        ? AppColor.white
-                                                        : AppColor
-                                                            .textBlackColor),
-                                              ),
-                                              onSelected: ((value) {
-                                                cubit.onSelectLocation(
-                                                    e.countryStateId, e.id);
-                                              }),
-                                            ))
-                                        .toList())
-                                : Expanded(
-                                    child: Center(
-                                      child: Text(
-                                        S.of(context).noDataAvailable,
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.poppins(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                  ),
-                          ],
-                        ),
-                      )),
+                return SelectAllottedLocationSheetWidget(
+                  locationList:
+                      cubit.allotedLocationModel?.data?.locations ?? [],
+                  typeLevel:
+                      cubit.allotedLocationModel?.data?.locationType ?? "",
                 );
               },
             );
@@ -461,6 +432,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         // Navigator.pushNamed(context, RoutePath.addEntryScreen,
                         //     arguments: data[index]['text']);
                         List<AppPermissions> appPermissions = [];
+
                         for (int i = 0;
                             i < (cubit.appPermissions?.length ?? 0);
                             i++) {

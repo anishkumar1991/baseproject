@@ -14,14 +14,15 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
       contentType: 'application/json', validateStatus: ((status) => true))));
 
   List<SangathanData?> sangathanDataList = [];
-  List<Locations> locationList = [];
+  AllotedLocationModel? allotedLocationModel;
   List<AppPermissions>? appPermissions;
   bool isShowShaktiKendra = false;
+  String? typeLevelName;
+  Locations? selectedAllottedLocation;
 
   /// TODO: Here change country id
   int countryStateId = 14;
   int? dataLevelId;
-  int? locationId;
 
   Future getClientAppPermission(String clientId) async {
     try {
@@ -30,7 +31,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
           'Bearer ${StorageService.userAuthToken}', clientId);
       print(
           "------------------------------------ Get CLient App Permission-------------------------");
-
+      print("url :${res.response.realUri}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
       print(
@@ -102,12 +103,9 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
     }
   }
 
-  void onSelectLocation(int? countryId, int? id) {
+  void onSelectAllottedLocation(Locations selectedLocation) {
     emit(LoadingState());
-    countryStateId = countryId ?? 03;
-    locationId = id;
-    //print(countryStateId);
-    print(locationId);
+    selectedAllottedLocation = selectedLocation;
     emit(LocationChoosedState());
   }
 

@@ -75,7 +75,7 @@ class _DataLevelApi implements DataLevelApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/data/allotted_locations?client_id={clientId}&app_permission_id={permissionId}',
+              '/zila/api/data/allotted_locations',
               queryParameters: queryParameters,
               data: _data,
             )
