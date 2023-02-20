@@ -44,7 +44,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
     context
         .read<SangathanDetailsCubit>()
         .getClientAppPermission(widget.cliendId);
-    context.read<SangathanDetailsCubit>().appPermissions = [];
+    context.read<SangathanDetailsCubit>().appPermissions = null;
     super.initState();
   }
 
@@ -63,9 +63,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           builder: (context, state) {
             if (state is ClientAppPermissionsFetchState) {
               cubit.appPermissions = state.data.appPermissions ?? [];
-              if (cubit.appPermissions.isNotEmpty) {
-                for (int i = 0; i < cubit.appPermissions.length; i++) {
-                  if (cubit.appPermissions[i].permissionName ==
+              if ((cubit.appPermissions?.isNotEmpty) ?? false) {
+                for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
+                  if (cubit.appPermissions?[i].permissionName ==
                       "ShaktiKendra") {
                     print("ShaktiKendra");
                     cubit.isShowShaktiKendra = true;
@@ -75,7 +75,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                 }
                 context.read<SangathanDetailsCubit>().getAllotedLocations(
                     clientId: widget.cliendId,
-                    permissionId: "${cubit.appPermissions.first.id ?? ""}");
+                    permissionId: "${cubit.appPermissions?.first.id ?? ""}");
               }
             }
             if (state is LocationFetchedState) {
@@ -93,21 +93,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                 }
               }
             }
-            return cubit.appPermissions.isEmpty
-                ? Center(
-                    child: Text(
-                    S.of(context).oopsErrorMsg,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: AppColor.black),
-                  ))
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            return cubit.appPermissions == null
+                ? Column(
                     children: [
-                      /*spaceHeightWidget(10),*/
-                      /* appbar(),*/
                       spaceHeightWidget(20),
                       Row(
                         children: [
@@ -128,80 +116,155 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         ],
                       ),
                       spaceHeightWidget(10),
-
-                      /// sangathan grid view
-                      sangathanGridView(cubit),
-                      spaceHeightWidget(24),
-
-                      /// shakti kendr card
-                      BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
-                        builder: (context, state) {
-                          return cubit.isShowShaktiKendra
-                              ? InkWell(
-                                  onTap: () {
-                                    List<AppPermissions> permissionData = [];
-                                    for (int i = 0;
-                                        i < cubit.appPermissions.length;
-                                        i++) {
-                                      if (cubit.appPermissions[i].permissionName
-                                              ?.toLowerCase() ==
-                                          'ShaktiKendra'.toLowerCase()) {
-                                        permissionData
-                                            .add(cubit.appPermissions[i]);
-                                      }
-                                    }
-                                    Navigator.pushNamed(
-                                        context, RoutePath.shaktiKendraScreen,
-                                        arguments: {
-                                          "permissionData": permissionData
-                                        });
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    width: MediaQuery.of(context).size.width,
-                                    color: AppColor.purple50.withOpacity(0.6),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          S.of(context).editShaktiKendr,
-                                          style: GoogleFonts.quicksand(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Container(
-                                            padding: const EdgeInsets.all(2),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                gradient: const LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      AppColor.purple50,
-                                                      AppColor.orange200,
-                                                    ])),
-                                            child: Image.asset(
-                                              AppIcons.shaktikendraImage,
-                                              height: 35,
-                                            ))
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : const SizedBox();
-                        },
+                      Shimmer.fromColors(
+                        baseColor: AppColor.greyColor.withOpacity(0.3),
+                        highlightColor: Colors.grey.withOpacity(0.1),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: 9,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      crossAxisSpacing: 33,
+                                      mainAxisSpacing: 16),
+                              itemBuilder: ((context, index) {
+                                return Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.2,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  decoration: BoxDecoration(
+                                      color: AppColor.white,
+                                      borderRadius: BorderRadius.circular(20)),
+                                );
+                              })),
+                        ),
                       ),
-                      spaceHeightWidget(20),
-
-                      /// close shakti kendr card
-                      //
-                      // /// report widget
-                      // sangathanReportCard(),
-                      // spaceHeightWidget(60)
                     ],
-                  );
+                  )
+                : cubit.appPermissions?.isEmpty ?? true
+                    ? Center(
+                        child: Text(
+                        S.of(context).oopsErrorMsg,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16,
+                            color: AppColor.black),
+                      ))
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          /*spaceHeightWidget(10),*/
+                          /* appbar(),*/
+                          spaceHeightWidget(20),
+                          Row(
+                            children: [
+                              IconButton(
+                                  splashRadius: 20,
+                                  onPressed: (() {
+                                    Navigator.pop(context);
+                                  }),
+                                  icon: const Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: Icon(Icons.arrow_back),
+                                  )),
+                              Text(
+                                S.of(context).sangathan,
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                              )
+                            ],
+                          ),
+                          spaceHeightWidget(10),
+
+                          /// sangathan grid view
+                          sangathanGridView(cubit),
+                          spaceHeightWidget(24),
+
+                          /// shakti kendr card
+                          BlocBuilder<SangathanDetailsCubit,
+                              SangathanDetailsState>(
+                            builder: (context, state) {
+                              return cubit.isShowShaktiKendra
+                                  ? InkWell(
+                                      onTap: () {
+                                        List<AppPermissions> permissionData =
+                                            [];
+                                        for (int i = 0;
+                                            i <
+                                                (cubit.appPermissions?.length ??
+                                                    0);
+                                            i++) {
+                                          if (cubit.appPermissions?[i]
+                                                  .permissionName
+                                                  ?.toLowerCase() ==
+                                              'ShaktiKendra'.toLowerCase()) {
+                                            permissionData
+                                                .add(cubit.appPermissions![i]);
+                                          }
+                                        }
+                                        Navigator.pushNamed(context,
+                                            RoutePath.shaktiKendraScreen,
+                                            arguments: {
+                                              "permissionData": permissionData
+                                            });
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        color:
+                                            AppColor.purple50.withOpacity(0.6),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              S.of(context).editShaktiKendr,
+                                              style: GoogleFonts.quicksand(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Container(
+                                                padding: const EdgeInsets.all(
+                                                    2),
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            4),
+                                                    gradient:
+                                                        const LinearGradient(
+                                                            begin: Alignment
+                                                                .topLeft,
+                                                            end: Alignment
+                                                                .bottomRight,
+                                                            colors: [
+                                                          AppColor.purple50,
+                                                          AppColor.orange200,
+                                                        ])),
+                                                child: Image.asset(
+                                                  AppIcons.shaktikendraImage,
+                                                  height: 35,
+                                                ))
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox();
+                            },
+                          ),
+                          spaceHeightWidget(20),
+
+                          /// close shakti kendr card
+                          //
+                          // /// report widget
+                          // sangathanReportCard(),
+                          // spaceHeightWidget(60)
+                        ],
+                      );
           },
         ),
       )),
@@ -333,11 +396,11 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
               cubit.sangathanDataList = [];
               for (int j = 0; j < (state.data.data?.length ?? 0); j++) {
                 bool isFound = false;
-                for (int i = 0; i < cubit.appPermissions.length; i++) {
+                for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
                   if (isFound == false) {
-                    if (cubit.appPermissions[i].permissionName ==
+                    if (cubit.appPermissions?[i].permissionName ==
                         "ShaktiKendraData") {
-                      if (cubit.appPermissions[i].permissionName
+                      if (cubit.appPermissions?[i].permissionName
                               ?.split(RegExp(r"(?=[A-Z])"))[0]
                               .trim() ==
                           state.data.data?[j].name
@@ -346,7 +409,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         cubit.sangathanDataList.add(state.data.data?[j]);
                         isFound = true;
                       }
-                    } else if (cubit.appPermissions[i].permissionName
+                    } else if (cubit.appPermissions?[i].permissionName
                             ?.split(RegExp(r"(?=[A-Z])"))[0] ==
                         state.data.data?[j].name
                             ?.split(RegExp(r"(?=[A-Z])"))[0]) {

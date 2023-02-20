@@ -15,7 +15,7 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
 
   List<SangathanData?> sangathanDataList = [];
   List<Locations> locationList = [];
-  List<AppPermissions> appPermissions = [];
+  List<AppPermissions>? appPermissions;
   bool isShowShaktiKendra = false;
 
   /// TODO: Here change country id
