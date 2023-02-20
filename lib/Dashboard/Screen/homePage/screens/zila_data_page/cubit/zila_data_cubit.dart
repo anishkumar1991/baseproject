@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +18,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   ZilaDataCubit() : super(ZilaDataInitialStateState());
 
   List<KaryakartaData>? dataList;
+  List<KaryakartaData>? dataListWithoutSort;
   List<Locations> partyzilaList = [];
   List<Locations> dependentDropdownList = [];
   List<Locations> pannaKramaankListData = [];
@@ -79,8 +78,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
         },
       );
     } else if (selectedFilterIndex == 1) {
-      dataList!.sort((a, b) =>
-          a.designationName.toString().compareTo(b.designationName.toString()));
+      dataList = [...dataListWithoutSort!];
     } else if (selectedFilterIndex == 2) {
       dataList!.sort((a, b) => a.name.toString().compareTo(b.name.toString()));
     }

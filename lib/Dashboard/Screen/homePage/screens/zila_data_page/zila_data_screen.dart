@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/cubit/zila_data_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/a_to_z_filter_widget.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/designation_filter_widget.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/widget/new_entry_filter_widget.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
@@ -17,7 +18,6 @@ import '../sangathan_details/sangathan_deatils_page.dart';
 import 'cubit/zila_data_state.dart';
 import 'dropdown_handler/dropdown_handler.dart';
 import 'panna_pdf_viewer.dart';
-import 'widget/designation_filter_widget.dart';
 import 'widget/filter_options_widget.dart';
 import 'widget/panna_no_list_bottom_sheet_widget.dart';
 
@@ -157,6 +157,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           print(
                               "List length :${state.data.data?.data?.length}");
                           cubit.dataList = state.data.data!.data!;
+                          cubit.dataListWithoutSort = state.data.data!.data!;
                         }
                       }
 
@@ -176,6 +177,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                           }
                         } else {
                           cubit.dataList = [];
+                          cubit.dataListWithoutSort = [];
                         }
                       }
                       return Column(
@@ -945,6 +947,7 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                   cubit.levelNameId = cubit.dependentLevelNameId;
                 } else {
                   cubit.dataList = [];
+                  cubit.dataListWithoutSort = [];
                   cubit.selectedPannaNo = null;
                   cubit.boothPannasStatus = null;
                   cubit.pannaKramaankListData = [];
