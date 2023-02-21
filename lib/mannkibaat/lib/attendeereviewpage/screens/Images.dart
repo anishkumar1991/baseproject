@@ -30,7 +30,7 @@ class ReviewImages extends StatelessWidget {
                     height: 200,
                     //extensions like .jpg, .png etc
                     errorBuilder: (context, error, stackTrace) => Image.asset(
-                          "packages/mannkibaatpackage/lib/assets/review1.png",
+                          "assets/images/mannkibaat/image.png",
                           width: 120,
                           height: 200,
                         ))),
@@ -41,7 +41,7 @@ class ReviewImages extends StatelessWidget {
                     height: 200,
                     //extensions like .jpg, .png etc
                     errorBuilder: (context, error, stackTrace) => Image.asset(
-                          "packages/mannkibaatpackage/lib/assets/review2.png",
+                          "assets/images/mannkibaat/image.png",
                           width:  100,
                           height: 200,
                         ))),

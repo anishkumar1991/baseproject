@@ -89,22 +89,30 @@ class AiredDetail {
     required this.date,
     required this.time,
     required this.endDate,
+    required this.startDateTime,
+    required this.endDateTime,
   });
 
   String date;
   String time;
   String endDate;
+  DateTime startDateTime;
+  DateTime endDateTime;
 
   factory AiredDetail.fromJson(Map<String, dynamic> json) => AiredDetail(
     date: json["date"],
     time: json["time"],
     endDate: json["end_date"],
+    startDateTime: DateTime.parse(json["start_date_time"]),
+    endDateTime: DateTime.parse(json["end_date_time"]),
   );
 
   Map<String, dynamic> toJson() => {
     "date": date,
     "time": time,
     "end_date": endDate,
+    "start_date_time": startDateTime.toIso8601String(),
+    "end_date_time": endDateTime.toIso8601String(),
   };
 }
 
@@ -133,8 +141,8 @@ class EventDetail {
   String? photo2;
   List<Ac>? location;
   List<Ac>? ac;
-  int? skId;
-  String? skName;
+  dynamic skId;
+  dynamic skName;
   List<Ac>? countryStateRef;
   List<Ac>? countryState;
   int? filledBy;

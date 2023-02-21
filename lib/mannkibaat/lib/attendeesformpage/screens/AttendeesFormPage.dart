@@ -31,8 +31,6 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -171,8 +169,6 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => AttendeeReviewPage(
-
-
                                         totalAttendees:
                                             totalAttendeesController.text,
                                         address: addressController.text,

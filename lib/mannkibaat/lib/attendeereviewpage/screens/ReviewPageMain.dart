@@ -82,22 +82,22 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
                                       fontSize: 20,
                                       color: AppColor().textColor)),
                             )),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(Icons.edit),
-                            color: AppColor().reviewFormTextColor),
+                        // IconButton(
+                        //     onPressed: () {
+                        //       Navigator.pop(context);
+                        //     },
+                        //     icon: const Icon(Icons.edit),
+                        //     color: AppColor().reviewFormTextColor),
                       ],
                     ),
                     ReviewVidhanAndStates(
-                      vidhanSabha: cubit.vidhansabhaname,
-                      state: "Assam",
+                      vidhanSabha: widget.vidhanSabha,
+                      state:widget.state,
                     ),
                     const SizedBox(height: 24),
                     ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
                     const SizedBox(height: 24),
-                    ReviewBoothName(booth: cubit.boothname),
+                    ReviewBoothName(booth: widget.booth),
                     const SizedBox(height: 24),
                     ReviewBoothAddress(boothAddress: widget.address),
                     const SizedBox(height: 24),
@@ -105,16 +105,16 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
                     const SizedBox(height: 24),
                     ReviewImages(img1: widget.img1, img2: widget.img2),
                     const SizedBox(height: 43),
-                    SizedBox(
-                      width: Constants.buttonSizeBoxWidth,
-                      height: Constants.buttonSizeBoxHeight,
-                      child: SubmitButton(onPress: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FormSuccess()));
-                      }),
-                    ),
+                    // SizedBox(
+                    //   width: Constants.buttonSizeBoxWidth,
+                    //   height: Constants.buttonSizeBoxHeight,
+                    //   child: SubmitButton(onPress: () {
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => FormSuccess()));
+                    //   }),
+                    // ),
                     const SizedBox(height: 30),
                   ],
                 ),

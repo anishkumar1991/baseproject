@@ -98,10 +98,10 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
 
-        BlocProvider(create: (create) => SendFcmTokenCubit()),
-        BlocProvider(create: (create) => ReelShareCubit()),
-        BlocProvider(create: (create) => DatePicCubit()),
-        BlocProvider(create: (create) => ReactionCubit()),
+        BlocProvider(create: (context) => SendFcmTokenCubit()),
+        BlocProvider(create: (context) => ReelShareCubit()),
+        BlocProvider(create: (context) => DatePicCubit()),
+        BlocProvider(create: (context) => ReactionCubit()),
         BlocProvider(create: (context) => NotificationCubit()),
         BlocProvider(create: (context) => LanguageCubit()),
         BlocProvider(create: (context) => HorizontalTileCubit()),

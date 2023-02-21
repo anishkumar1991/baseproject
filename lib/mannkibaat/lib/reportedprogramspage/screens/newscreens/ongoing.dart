@@ -12,6 +12,7 @@ class OnGoing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime currentDate = DateTime.now();
     var time = null;
     var temptimeshow;
     final cubit = context.read<DashCubit>();
@@ -46,22 +47,15 @@ class OnGoing extends StatelessWidget {
                       physics: const ScrollPhysics(),
                       itemCount: state.dashModal.data.length,
                       itemBuilder: (BuildContext context, int index) {
-                        // var s = state.dashModal.data[index].airedDetail.endDate;
-                        // var temp = s.split("th");
-                        //
-                        // var s1 = state.dashModal.data[index].airedDetail.date;
-                        // var temp1 = s1.split("th");
-                        //
-                        // ((temp[0] + temp[1].toString() >=
-                        //         DateFormat("d MMM y")
-                        //             .format(DateTime.now())
-                        //             .toString()) ||
-                        //     (temp1[0] + temp1[1].toString() >=
-                        //         DateFormat("d MMM y")
-                        //             .format(DateTime.now())
-                        //             .toString()));
+                        DateTime startdate = state
+                            .dashModal.data[index].airedDetail.startDateTime;
+                        DateTime enddate =
+                            state.dashModal.data[index].airedDetail.endDateTime;
 
-                        if (state.dashModal.data[index].canCreate == true) {
+                        if (enddate.isAfter(currentDate) ||
+                            enddate.isAtSameMomentAs(currentDate) ||
+                            startdate.isAfter(currentDate) ||
+                            startdate.isAtSameMomentAs(currentDate)) {
                           return InkWell(
                             onTap: () {
                               if (state.dashModal.data[index].eventHasDetail ==
