@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/mannKiBaat/Utils/AppColor.dart';
+import 'package:sangathan/mannkibaat/lib/LatLongTest.dart';
 
 import '../../../../generated/l10n.dart';
 import '../../../../mannkibaat/lib/mannkibaatpackage.dart';
@@ -62,8 +63,9 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
             child: SizedBox(
               height: 30,
               width: 143,
-              child: MainButton(
-                  text: S.of(context).click, authenticationToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA"),
+              child: LatLongTest(),
+              // child: MainButton(
+              //     text: S.of(context).click, authenticationToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA"),
             ),
           )
         ],
