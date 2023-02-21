@@ -28,52 +28,52 @@ class FetchNotificationModel {
 class NotificationsList {
   String? notificationTitle;
   String? description;
-  String? sType;
   String? share;
-  String? uploadFile;
+  String? imgUrl;
+  String? pdfUrl;
+  String? linkUrl;
+  String? type;
+  String? sType;
   String? date;
   String? time;
-  String? attachmentType;
-  String? link;
-  String? fcm;
 
   NotificationsList(
       {this.notificationTitle,
-      this.description,
-      this.sType,
-      this.share,
-      this.uploadFile,
-      this.date,
-      this.time,
-      this.attachmentType,
-      this.link,
-      this.fcm});
+        this.description,
+        this.share,
+        this.imgUrl,
+        this.pdfUrl,
+        this.linkUrl,
+        this.type,
+        this.sType,
+        this.date,
+        this.time});
 
   NotificationsList.fromJson(Map<String, dynamic> json) {
     notificationTitle = json['notification_title'];
     description = json['description'];
-    sType = json['_type'];
     share = json['share'];
-    uploadFile = json['upload_file'];
+    imgUrl = json['img_url'];
+    pdfUrl = json['pdf_url'];
+    linkUrl = json['link_url'];
+    type = json['type'];
+    sType = json['_type'];
     date = json['date'];
     time = json['time'];
-    attachmentType = json['attachment_type'];
-    link = json['link'];
-    fcm = json['fcm'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['notification_title'] = this.notificationTitle;
     data['description'] = this.description;
-    data['_type'] = this.sType;
     data['share'] = this.share;
-    data['upload_file'] = this.uploadFile;
+    data['img_url'] = this.imgUrl;
+    data['pdf_url'] = this.pdfUrl;
+    data['link_url'] = this.linkUrl;
+    data['type'] = this.type;
+    data['_type'] = this.sType;
     data['date'] = this.date;
     data['time'] = this.time;
-    data['attachment_type'] = this.attachmentType;
-    data['link'] = this.link;
-    data['fcm'] = this.fcm;
     return data;
   }
 }

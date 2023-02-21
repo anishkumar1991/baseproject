@@ -112,7 +112,7 @@ class NotificationScreen extends StatelessWidget {
                                             FileType: cubit
                                                 .tempModel!
                                                 .notificationsList![index]
-                                                .uploadFile),
+                                                .type),
                                         title: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -160,30 +160,70 @@ class NotificationScreen extends StatelessWidget {
                                                   color:
                                                       const Color(0xFF999999)),
                                             ),
-                                            InkWell(
-                                              onTap: () => _onOpen(
-                                                  cubit
-                                                      .tempModel!
-                                                      .notificationsList![index]
-                                                      .link
-                                                      .toString(),
-                                                  context),
-                                              child: Text(
-                                                cubit
-                                                    .tempModel!
-                                                    .notificationsList![index]
-                                                    .link
-                                                    .toString(),
-                                                style: GoogleFonts.poppins(
-                                                    decoration: TextDecoration
-                                                        .underline,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 10,
-                                                    color: Colors.blue),
-                                              ),
-                                            )
+                                            cubit
+                                                        .tempModel!
+                                                        .notificationsList![
+                                                            index]
+                                                        .linkUrl !=
+                                                    ""
+                                                ? InkWell(
+                                                    onTap: () => _onOpen(
+                                                        cubit
+                                                            .tempModel!
+                                                            .notificationsList![
+                                                                index]
+                                                            .linkUrl
+                                                            .toString(),
+                                                        context),
+                                                    child: Text(
+                                                      "Link",
+                                                      style: GoogleFonts.poppins(
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          fontSize: 10,
+                                                          color: Colors.blue),
+                                                    ),
+                                                  )
+                                                : const SizedBox()
                                           ],
                                         ),
+                                        trailing: cubit
+                                            .tempModel!
+                                            .notificationsList![index]
+                                            .type !=
+                                            ""
+                                            ? InkWell(
+                                          onTap: () {
+                                            cubit
+                                                .tempModel!
+                                                .notificationsList![
+                                            index]
+                                                .imgUrl !=
+                                                ""
+                                                ? _onOpen(
+                                                cubit
+                                                    .tempModel!
+                                                    .notificationsList![
+                                                index]
+                                                    .imgUrl
+                                                    .toString(),
+                                                context)
+                                                : _onOpen(
+                                                cubit
+                                                    .tempModel!
+                                                    .notificationsList![
+                                                index]
+                                                    .pdfUrl
+                                                    .toString(),
+                                                context);
+                                          },
+                                          child: Icon(
+                                              Icons.file_download_outlined),
+                                        )
+                                            : SizedBox(),
                                       ),
                                       const Divider(
                                         endIndent: 20,
@@ -193,7 +233,7 @@ class NotificationScreen extends StatelessWidget {
                                     ],
                                   );
                                 } else {
-                                  return SizedBox();
+                                  return const SizedBox();
                                 }
                               },
                             );
@@ -236,10 +276,8 @@ class NotificationScreen extends StatelessWidget {
                                   children: [
                                     ListTile(
                                       leading: CustomFileIcon(
-                                          FileType: cubit
-                                              .tempModel!
-                                              .notificationsList![index]
-                                              .uploadFile),
+                                          FileType: cubit.tempModel!
+                                              .notificationsList![index].type),
                                       title: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -284,30 +322,69 @@ class NotificationScreen extends StatelessWidget {
                                                 fontSize: 10,
                                                 color: const Color(0xFF999999)),
                                           ),
-                                          InkWell(
-                                            onTap: () => _onOpen(
-                                                cubit
-                                                    .tempModel!
-                                                    .notificationsList![index]
-                                                    .link
-                                                    .toString(),
-                                                context),
-                                            child: Text(
-                                              cubit
-                                                  .tempModel!
-                                                  .notificationsList![index]
-                                                  .link
-                                                  .toString(),
-                                              style: GoogleFonts.poppins(
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10,
-                                                  color: Colors.blue),
-                                            ),
-                                          )
+                                          cubit
+                                                      .tempModel!
+                                                      .notificationsList![index]
+                                                      .linkUrl !=
+                                                  ""
+                                              ? InkWell(
+                                                  onTap: () => _onOpen(
+                                                      cubit
+                                                          .tempModel!
+                                                          .notificationsList![
+                                                              index]
+                                                          .linkUrl
+                                                          .toString(),
+                                                      context),
+                                                  child: Text(
+                                                    "Link",
+                                                    style: GoogleFonts.poppins(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .underline,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: 10,
+                                                        color: Colors.blue),
+                                                  ),
+                                                )
+                                              : const SizedBox()
                                         ],
                                       ),
+                                      trailing: cubit
+                                                  .tempModel!
+                                                  .notificationsList![index]
+                                                  .type !=
+                                              ""
+                                          ? InkWell(
+                                              onTap: () {
+                                                cubit
+                                                            .tempModel!
+                                                            .notificationsList![
+                                                                index]
+                                                            .imgUrl !=
+                                                        ""
+                                                    ? _onOpen(
+                                                        cubit
+                                                            .tempModel!
+                                                            .notificationsList![
+                                                                index]
+                                                            .imgUrl
+                                                            .toString(),
+                                                        context)
+                                                    : _onOpen(
+                                                        cubit
+                                                            .tempModel!
+                                                            .notificationsList![
+                                                                index]
+                                                            .pdfUrl
+                                                            .toString(),
+                                                        context);
+                                              },
+                                              child: Icon(
+                                                  Icons.file_download_outlined),
+                                            )
+                                          : SizedBox(),
                                     ),
                                     const Divider(
                                       endIndent: 20,
@@ -317,7 +394,7 @@ class NotificationScreen extends StatelessWidget {
                                   ],
                                 );
                               } else {
-                                return SizedBox();
+                                return const SizedBox();
                               }
                             },
                           );
@@ -338,7 +415,7 @@ class NotificationScreen extends StatelessWidget {
 
   Future<void> _onOpen(String link, BuildContext context) async {
     if (await canLaunchUrl(Uri.parse(link))) {
-      await launchUrl(Uri.parse(link));
+      await launchUrl(Uri.parse(link), mode: LaunchMode.externalApplication);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Can't Open"),

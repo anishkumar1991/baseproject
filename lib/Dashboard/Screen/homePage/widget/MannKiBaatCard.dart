@@ -63,7 +63,8 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
               height: 30,
               width: 143,
               child: MainButton(
-                  text: S.of(context).click, authenticationToken: temptoken[1].toString()),
+                  text: S.of(context).click,
+                  authenticationToken: temptoken[1].toString()),
             ),
           )
         ],
