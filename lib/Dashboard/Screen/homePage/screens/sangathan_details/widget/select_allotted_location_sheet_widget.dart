@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../../../Values/app_colors.dart';
 import '../../../../../../common/common_logo_widget.dart';
 import '../../../../../../generated/l10n.dart';
+import '../../zila_data_page/dropdown_handler/dropdown_handler.dart';
 import '../cubit/sangathan_detail_cubit.dart';
 import '../network/model/alloted_location_model.dart';
 import '../sangathan_deatils_page.dart';
@@ -33,7 +34,6 @@ class _SelectAllottedLocationSheetWidgetState
   Widget build(BuildContext context) {
     String currentLocale = Localizations.localeOf(context).toString();
     var cubit = context.read<SangathanDetailsCubit>();
-
     return WillPopScope(
       onWillPop: isExist,
       child: Column(
@@ -46,8 +46,8 @@ class _SelectAllottedLocationSheetWidgetState
               children: [
                 Text(
                   currentLocale == "hi"
-                      ? "${getLocalizationNameOfLevel(context, widget.typeLevel)} ${S.of(context).choose}"
-                      : "${S.of(context).choose} ${getLocalizationNameOfLevel(context, widget.typeLevel)}",
+                      ? "${getLocalizationNameOfLevel(context, DropdownHandler.gettingReverseLocationTypeForCondition(widget.typeLevel))} ${S.of(context).choose}"
+                      : "${S.of(context).choose} ${getLocalizationNameOfLevel(context, DropdownHandler.gettingReverseLocationTypeForCondition(widget.typeLevel))}",
                   textAlign: TextAlign.left,
                   style: GoogleFonts.quicksand(
                       fontSize: 18, fontWeight: FontWeight.w600),

@@ -7,13 +7,11 @@ import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Screens/LoginScreen/textformfield.dart';
-
 import 'package:sangathan/Utils/ConnectivityCheck/not_connected.dart';
-import 'package:sangathan/route/route_path.dart';
-
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/common/common_button.dart';
+import 'package:sangathan/route/route_path.dart';
 
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../generated/l10n.dart';
@@ -23,6 +21,7 @@ class LoginScreen extends StatelessWidget {
 
   TextEditingController mobileNumController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<LoginCubit>();
@@ -105,6 +104,23 @@ class LoginScreen extends StatelessWidget {
                                 color: AppColor.buttonOrangeBackGroundColor,
                                 size: 30,
                               );
+                            } else if (state is LoginFaieldState) {
+                              return CommonButton(
+                                onTap: (() async {
+                                  if (formKey.currentState!.validate()) {
+                                    await context.read<LoginCubit>().loginUser(
+                                          mobileNumber:
+                                              mobileNumController.text,
+                                        );
+                                  }
+                                }),
+                                padding: const EdgeInsets.all(12),
+                                title: S.of(context).loginButtonText,
+                                style: GoogleFonts.poppins(
+                                    color: AppColor.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
+                              );
                             } else {
                               return CommonButton(
                                 onTap: (() async {
@@ -114,13 +130,7 @@ class LoginScreen extends StatelessWidget {
                                               mobileNumController.text,
                                         );
                                   }
-                                }
-
-                                    //context.read<LoginCubit>().deactivatedState();
-                                    // Navigator.pushNamed(
-                                    //     context, RoutePath.verifyOtpScreen,
-                                    //     arguments: mobileNumController.text);
-                                    ),
+                                }),
                                 padding: const EdgeInsets.all(12),
                                 title: S.of(context).loginButtonText,
                                 style: GoogleFonts.poppins(
