@@ -13,7 +13,7 @@ class _HomePageApi implements HomePageApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saralk.ccdms.in';
+    baseUrl ??= 'https://saral-staging.ccdms.in';
   }
 
   final Dio _dio;
