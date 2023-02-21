@@ -43,9 +43,9 @@ class Expired extends StatelessWidget {
               DateTime enddate =
                   state.dashModal.data[index].airedDetail.endDateTime;
               if (enddate.isBefore(currentDate)) {
-                return InkWell(
-                  onTap: () {
-                    if (state.dashModal.data[index].eventHasDetail == true) {
+                if (state.dashModal.data[index].eventHasDetail == true) {
+                  return InkWell(
+                    onTap: () {
                       print(
                           'inside REVIEW statement-->${state.dashModal.data[index].eventDetail.totalAttendees}');
                       print(
@@ -72,16 +72,16 @@ class Expired extends StatelessWidget {
                                     img2:
                                         '${state.dashModal.data[index].eventDetail.photo1}',
                                   )));
-                    }
-                  },
-                  child: ProgramCard(
-                      id: '${state.dashModal.data[index].id}',
-                      date: state.dashModal.data[index].airedDetail.date,
-                      time: state.dashModal.data[index].airedDetail.time,
+                    },
+                    child: ProgramCard(
+                        id: '${state.dashModal.data[index].id}',
+                        date: state.dashModal.data[index].airedDetail.date,
+                        time: state.dashModal.data[index].airedDetail.time,
 
-                      //right now I am not fetching images because API is having faulty images.
-                      img: state.dashModal.data[index].eventPhoto),
-                );
+                        //right now I am not fetching images because API is having faulty images.
+                        img: state.dashModal.data[index].eventPhoto),
+                  );
+                }
               }
               return const SizedBox();
             },

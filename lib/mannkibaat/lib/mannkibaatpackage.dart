@@ -22,17 +22,18 @@ class MainButton extends StatelessWidget {
       create: (context) => FetchCubit(),
       child: ElevatedButton(
           style: ButtonStyle(
-            shadowColor: MaterialStateProperty.all(
-                AppColor().buttonShadowColor),
+            shadowColor:
+                MaterialStateProperty.all(AppColor().buttonShadowColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                )),
+              borderRadius: BorderRadius.circular(10),
+            )),
             backgroundColor: MaterialStateProperty.all(AppColor().buttonColor),
           ),
           onPressed: () {
             DashCubit(authenticationToken);
-            Navigator.push(context,
+            Navigator.push(
+                context,
                 MaterialPageRoute(
                     builder: (counter) => const DashboardMainScreen()));
           },
