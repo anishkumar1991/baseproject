@@ -43,6 +43,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
     context.read<SangathanDetailsCubit>().appPermissions = null;
     context.read<SangathanDetailsCubit>().selectedAllottedLocation = null;
     context.read<SangathanDetailsCubit>().allotedLocationModel = null;
+    context.read<SangathanDetailsCubit>().isShowShaktiKendra = false;
     super.initState();
   }
 
@@ -61,11 +62,17 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
         child: BlocListener<SangathanDetailsCubit, SangathanDetailsState>(
           listener: (context, state) {
             if (state is LocationFetchedState) {
+              cubit.typeLevelName =
+                  cubit.allotedLocationModel?.data?.locationType ?? "";
               showLocationBottomSheet();
             }
           },
           child: BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
             builder: (context, state) {
+              if (state is LocationFetchedState) {
+                cubit.typeLevelName =
+                    state.locationData.data?.locationType ?? "";
+              }
               if (state is ClientAppPermissionsFetchState) {
                 cubit.appPermissions = state.data.appPermissions ?? [];
                 if ((cubit.appPermissions?.isNotEmpty) ?? false) {
@@ -75,10 +82,11 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     if (cubit.appPermissions?[i].permissionName ==
                         "ShaktiKendra") {
                       cubit.isShowShaktiKendra = true;
-                    } else {
-                      cubit.isShowShaktiKendra = false;
                     }
                   }
+                  cubit.clientId = widget.cliendId;
+                  cubit.permissionId = cubit.appPermissions?.first.id ?? 0;
+
                   context.read<SangathanDetailsCubit>().getAllotedLocations(
                       clientId: widget.cliendId,
                       permissionId: "${cubit.appPermissions?.first.id ?? ""}");
@@ -240,9 +248,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                                       0);
                                               i++) {
                                             if (cubit.appPermissions?[i]
-                                                    .permissionName
-                                                    ?.toLowerCase() ==
-                                                'ShaktiKendra'.toLowerCase()) {
+                                                    .permissionName ==
+                                                'ShaktiKendra') {
                                               permissionData.add(
                                                   cubit.appPermissions![i]);
                                             }
@@ -336,8 +343,6 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                 if (state is LocationFetchedState) {
                   if (state.locationData.data != null) {
                     cubit.allotedLocationModel = state.locationData;
-                    cubit.typeLevelName =
-                        cubit.allotedLocationModel?.data?.locationType ?? "";
                   }
                 }
                 return SelectAllottedLocationSheetWidget(
@@ -383,7 +388,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     } else if (cubit.appPermissions?[i].permissionName
                             ?.split(RegExp(r"(?=[A-Z])"))[0] ==
                         state.data.data?[j].name
-                            ?.split(RegExp(r"(?=[A-Z])"))[0]) {
+                            ?.split(RegExp(r"(?=[A-Z])"))[0]
+                            .trim()) {
+                      /* print(
+                          "${cubit.appPermissions?[i].permissionName} :  ${state.data.data?[j].name}");*/
                       cubit.sangathanDataList.add(state.data.data?[j]);
                       isFound = true;
                     }
@@ -482,16 +490,6 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                               errorWidget: ((context, url, error) =>
                                   const SizedBox()),
                             ),
-                            // data.iconUrl != null
-                            //     ? Image.network(
-                            //         data.iconUrl!,
-                            //         height: 32,
-                            //         errorBuilder:
-                            //             ((context, error, stackTrace) =>
-                            //                 const SizedBox()),
-
-                            //       )
-                            //     : const SizedBox.shrink(),
                             spaceHeightWidget(4),
                             FittedBox(
                               child: Text(

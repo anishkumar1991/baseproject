@@ -43,23 +43,23 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       emit(LoginLoadingState());
       final res = await api.loginUser({'phone_number': mobileNumber});
-      if (res.response.statusCode == 200) {
-        print(res.data['identification_token']);
-        print(
-            "------------------------------------ Login  ----------------------------");
+      print(res.data['identification_token']);
+      print(
+          "------------------------------------ Login  ----------------------------");
 
-        print("Status code : ${res.response.statusCode}");
-        print("url : ${res.response.realUri}");
-        log("Response :${res.data}");
-        print(
-            "------------------------------------ ------------------------ ----------------------------");
+      print("Status code : ${res.response.statusCode}");
+      print("url : ${res.response.realUri}");
+      log("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
         LoginModel model = LoginModel.fromJson(res.data);
         await StorageService.setUserIdentificationToken(
             model.identificationToken ?? '');
         emit(UserLoggedState(model));
       } else {
-        LoginModel? model = LoginModel.fromJson(res.data);
-        emit(LoginFaieldState(model.message ?? ''));
+        //   LoginModel? model = LoginModel.fromJson(res.data);
+        emit(LoginFaieldState(res.data["message"] ?? ''));
       }
     } on Exception catch (e) {
       LoginFaieldState(e.toString());

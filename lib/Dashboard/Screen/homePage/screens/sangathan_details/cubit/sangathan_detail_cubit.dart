@@ -19,6 +19,8 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   bool isShowShaktiKendra = false;
   String? typeLevelName;
   Locations? selectedAllottedLocation;
+  String? clientId;
+  int? permissionId;
 
   /// TODO: Here change country id
   int countryStateId = 14;
@@ -61,8 +63,9 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
           1);
       print(
           "------------------------------------ Get Data Level ----------------------------");
-
+      print("url :${res.response.realUri}");
       print("Status code : ${res.response.statusCode}");
+      print(StorageService.userAuthToken);
       print("Response :${res.data}");
       print(
           "------------------------------------ ------------------------ ----------------------------");

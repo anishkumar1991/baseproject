@@ -151,16 +151,9 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       print(
           "------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        if (type == "Zila" || type == "Mandal") {
-          List data = res.data["data"];
-          var dataLocation =
-              data.map((data) => Locations.fromJson(data)).toList();
-          emit(PartyZilaSelectedState(dataLocation));
-        } else {
-          IndependentDropdownModel data =
-              IndependentDropdownModel.fromJson(res.data);
-          emit(PartyZilaSelectedState(data.data?.locations ?? []));
-        }
+        IndependentDropdownModel data =
+            IndependentDropdownModel.fromJson(res.data);
+        emit(PartyZilaSelectedState(data.data?.locations ?? []));
       } else {
         Map<String, dynamic>? msg = res.data;
         emit(GetPartZilaErrorState(msg?['errors'] ?? ''));
