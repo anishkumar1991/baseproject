@@ -138,37 +138,37 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
 
   Future getPartyZila(
       {required String remainingURL, required String type}) async {
-    /*   try {*/
-    emit(DataFetchingLoadingState());
-    final res = await api.dynamicDropdown(
-        'Bearer ${StorageService.userAuthToken}', remainingURL);
+    try {
+      emit(DataFetchingLoadingState());
+      final res = await api.dynamicDropdown(
+          'Bearer ${StorageService.userAuthToken}', remainingURL);
 
-    print(
-        "------------------------------------ Get Party Zila ----------------------------");
-    print("remainingURL:$remainingURL");
-    print("Status code : ${res.response.statusCode}");
-    print("Response :${res.data}");
-    print(
-        "------------------------------------ ------------------------ ----------------------------");
-    if (res.response.statusCode == 200) {
-      if (type == "Zila" || type == "Mandal") {
-        List data = res.data["data"];
-        var dataLocation =
-            data.map((data) => Locations.fromJson(data)).toList();
-        emit(PartyZilaSelectedState(dataLocation));
+      print(
+          "------------------------------------ Get Party Zila ----------------------------");
+      print("remainingURL:$remainingURL");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(
+          "------------------------------------ ------------------------ ----------------------------");
+      if (res.response.statusCode == 200) {
+        if (type == "Zila" || type == "Mandal") {
+          List data = res.data["data"];
+          var dataLocation =
+              data.map((data) => Locations.fromJson(data)).toList();
+          emit(PartyZilaSelectedState(dataLocation));
+        } else {
+          IndependentDropdownModel data =
+              IndependentDropdownModel.fromJson(res.data);
+          emit(PartyZilaSelectedState(data.data?.locations ?? []));
+        }
       } else {
-        IndependentDropdownModel data =
-            IndependentDropdownModel.fromJson(res.data);
-        emit(PartyZilaSelectedState(data.data?.locations ?? []));
+        Map<String, dynamic>? msg = res.data;
+        emit(GetPartZilaErrorState(msg?['errors'] ?? ''));
       }
-    } else {
-      Map<String, dynamic>? msg = res.data;
-      emit(GetPartZilaErrorState(msg?['errors'] ?? ''));
-    }
-    /*} catch (e) {
+    } catch (e) {
       print(e);
       emit(GetPartZilaErrorState('Something Went Wrong'));
-    }*/
+    }
   }
 
   Future getDependentDropdownData(

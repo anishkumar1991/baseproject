@@ -74,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("रद्द करें"),
         "caste": MessageLookupByLibrary.simpleMessage("जाती"),
         "category": MessageLookupByLibrary.simpleMessage("श्रेणी"),
+        "choose": MessageLookupByLibrary.simpleMessage("चुनें"),
         "circular": MessageLookupByLibrary.simpleMessage("सर्कुलर"),
         "clgName":
             MessageLookupByLibrary.simpleMessage("संस्थान या कॉलेज का नाम"),

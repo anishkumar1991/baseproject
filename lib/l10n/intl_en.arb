@@ -213,6 +213,7 @@
   "socialMedia": "Social Media",
   "karyakarniBoothText": "Karyakarni",
   "karyakarniSkText": "Karyakarni",
-  "editShaktiKendr" : "Edit Shakti Kendra",
-  "pleaseSelectPhoto" : "Please select photo"
+  "editShaktiKendr": "Edit Shakti Kendra",
+  "pleaseSelectPhoto": "Please select photo",
+  "choose": "Choose"
 }

@@ -15,8 +15,7 @@ abstract class DataLevelApi {
       @Path('status') bool status,
       @Path('id') int id);
 
-  @GET(
-      '/zila/api/data/allotted_locations?client_id={clientId}&app_permission_id={permissionId}')
+  @GET('/zila/api/data/allotted_locations')
   Future<HttpResponse> allottedlocations(
     @Header('Authorization') String token,
     @Query('client_id') String clientId,
