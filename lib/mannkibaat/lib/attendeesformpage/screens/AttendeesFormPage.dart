@@ -171,8 +171,8 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => AttendeeReviewPage(
-                                        vidhanSabha: " ",
-                                        state: " ",
+
+
                                         totalAttendees:
                                             totalAttendeesController.text,
                                         address: addressController.text,
