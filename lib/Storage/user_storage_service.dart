@@ -33,9 +33,9 @@ class StorageService {
   }
 
   static String? getUserAuthToken() {
-    // userAuthToken = storage.read(userAuthTokenKey);
-    userAuthToken =
-        "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOTFuYkVmSDlVVFV3NGZEaTNVOEFucVhTIn0.JJJvYGE02350Yey4v1W1GbnP9Y1KB64T5CruVCTKA5U";
+    userAuthToken = storage.read(userAuthTokenKey);
+    // userAuthToken =
+    //     "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOTFuYkVmSDlVVFV3NGZEaTNVOEFucVhTIn0.JJJvYGE02350Yey4v1W1GbnP9Y1KB64T5CruVCTKA5U";
     return userAuthToken;
   }
 
