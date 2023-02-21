@@ -19,7 +19,7 @@ class MannKiBaatCard extends StatefulWidget {
 class _MannKiBaatCardState extends State<MannKiBaatCard> {
   @override
   Widget build(BuildContext context) {
-    var temp = widget.mannkibaatAuthToken!.split("=");
+    var temptoken = widget.mannkibaatAuthToken!.split("=");
 
     return Container(
       height: 150,
@@ -63,7 +63,7 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
               height: 30,
               width: 143,
               child: MainButton(
-                  text: S.of(context).click, authenticationToken: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA"),
+                  text: S.of(context).click, authenticationToken: temptoken[1].toString()),
             ),
           )
         ],
