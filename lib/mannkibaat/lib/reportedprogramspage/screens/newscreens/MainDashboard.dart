@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Storage/mannkibaat.dart';
 
+import '../../../../../Storage/user_storage_service.dart';
+import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../../utils/appbar/AppBar.dart';
 import 'expired.dart';
 import 'ongoing.dart';
 
-
 class DashboardMainScreen extends StatefulWidget {
-   String? authkey;
-   DashboardMainScreen({Key? key, this.authkey}) : super(key: key);
+  const DashboardMainScreen({super.key});
 
   @override
   State<DashboardMainScreen> createState() => _DashboardMainScreenState();
@@ -18,6 +20,11 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+  void send(){
+
+
+  }
 
   @override
   void initState() {
@@ -56,20 +63,19 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
                         borderRadius: BorderRadius.circular(25),
                       ),
                       controller: tabController,
-                        tabs: [
-                          Tab(
-                            child: Text(
-                              "OnGoing",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
-                            ),
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            "OnGoing",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14, fontWeight: FontWeight.w600),
                           ),
-
-                          Tab(
-                            child: Text(
-                              "Expired",
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
+                        ),
+                        Tab(
+                          child: Text(
+                            "Expired",
+                            style: GoogleFonts.poppins(
+                                fontSize: 14, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ],
@@ -81,9 +87,9 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-                children: [
-                  OnGoing(authkey:  widget.authkey.toString()),
-                  Expired(authkey: widget.authkey.toString()),
+                children: const [
+                  OnGoing(),
+                  Expired(),
                 ],
               ),
             )

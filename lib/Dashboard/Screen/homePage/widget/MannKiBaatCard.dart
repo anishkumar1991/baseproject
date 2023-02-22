@@ -18,9 +18,6 @@ class MannKiBaatCard extends StatefulWidget {
 class _MannKiBaatCardState extends State<MannKiBaatCard> {
   @override
   Widget build(BuildContext context) {
-    var temptoken = widget.mannkibaatAuthToken!.split("=");
-    print("i am the token ${temptoken[1]}");
-
     return Container(
       height: 150,
       decoration: const BoxDecoration(
@@ -62,10 +59,7 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
             child: SizedBox(
               height: 30,
               width: 143,
-              child: MainButton(
-                  text: S.of(context).click,
-                  authenticationToken: temptoken[1].toString()),
-
+              child: MainButton(text: S.of(context).click),
             ),
           )
         ],

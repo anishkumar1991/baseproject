@@ -209,7 +209,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
               Expanded(
                 child: TabBarView(
                   controller: tabController,
-                  children:  const [
+                  children: const [
                     CircularScreen(),
                     ReportScreen(),
                     NotificationScreen(),

@@ -1,23 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Storage/mannkibaat.dart';
+import '../../../../../Storage/user_storage_service.dart';
 import '../../../attendeereviewpage/screens/ReviewPageMain.dart';
 import '../../../attendeesformpage/screens/AttendeesFormPage.dart';
+import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../cubit/DashCubit.dart';
 import '../../cubit/DashState.dart';
 import '../ProgramCard.dart';
 
-class Expired extends StatelessWidget {
-  final String authkey;
+class Expired extends StatefulWidget {
+  const Expired({Key? key}) : super(key: key);
 
-  const Expired({Key? key, required this.authkey}) : super(key: key);
+  @override
+  State<Expired> createState() => _ExpiredState();
+}
+
+class _ExpiredState extends State<Expired> {
+  @override
+  void initState() {
+    final cubit = context.read<GenerateMannKiBaatAuthCubit>();
+    var number = StorageService.getUserData();
+    cubit.sendOtp(mobileNumber: number!.user!.phone.toString());
+    cubit.submitOTP();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
 
     final cubit = context.read<DashCubit>();
-    cubit.getDashData(authkey);
+    cubit.getDashData(MKBStorageService.getUserAuthToken().toString());
 
     return BlocBuilder<DashCubit, DashStates>(
       builder: (context, state) {

@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Storage/mannkibaat.dart';
+import '../../../../../Storage/user_storage_service.dart';
 import '../../../attendeereviewpage/screens/ReviewPageMain.dart';
 import '../../../attendeesformpage/screens/AttendeesFormPage.dart';
+import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../cubit/DashCubit.dart';
 import '../../cubit/DashState.dart';
 import '../ProgramCard.dart';
 
-class OnGoing extends StatelessWidget {
-  final String authkey;
-  const OnGoing({Key? key, required this.authkey}) : super(key: key);
+class OnGoing extends StatefulWidget {
+  const OnGoing({Key? key}) : super(key: key);
+
+  @override
+  State<OnGoing> createState() => _OnGoingState();
+}
+
+class _OnGoingState extends State<OnGoing> {
+  @override
+  void initState() {
+    final cubit = context.read<GenerateMannKiBaatAuthCubit>();
+    var number = StorageService.getUserData();
+    cubit.sendOtp(mobileNumber: number!.user!.phone.toString());
+    cubit.submitOTP();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +33,7 @@ class OnGoing extends StatelessWidget {
     var time = null;
     var temptimeshow;
     final cubit = context.read<DashCubit>();
-    cubit.getDashData(authkey);
+    cubit.getDashData(MKBStorageService.getUserAuthToken().toString());
 
     return BlocBuilder<DashCubit, DashStates>(
       builder: (context, state) {
@@ -69,8 +85,10 @@ class OnGoing extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            AttendeesFormPage(eventId: state.dashModal.data[index].id,)));
+                                        builder: (context) => AttendeesFormPage(
+                                              eventId: state
+                                                  .dashModal.data[index].id,
+                                            )));
                               }
                             },
                             child: ProgramCard(

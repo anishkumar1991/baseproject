@@ -63,6 +63,7 @@ class StorageService {
   static UserDetails? getUserData() {
     Map<String, dynamic> data = storage.read(userDataKey) ?? {};
     userData = UserDetails.fromJson(data);
+
     return userData;
   }
 
