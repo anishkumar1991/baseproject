@@ -8,14 +8,16 @@ import '../../cubit/DashState.dart';
 import '../ProgramCard.dart';
 
 class Expired extends StatelessWidget {
-  const Expired({Key? key}) : super(key: key);
+  final String authkey;
+
+  const Expired({Key? key, required this.authkey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
 
     final cubit = context.read<DashCubit>();
-    cubit.getDashData();
+    cubit.getDashData(authkey);
 
     return BlocBuilder<DashCubit, DashStates>(
       builder: (context, state) {

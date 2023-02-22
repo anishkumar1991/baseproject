@@ -13,6 +13,7 @@ import '../../../utils/drawer/UserProfileDrawer.dart';
 import '../../../values/AppColors.dart';
 
 import '../../cubit/FetchCubit.dart';
+import '../cubit/SendEventCubit.dart';
 import 'BoothAddress.dart';
 import 'BoothName.dart';
 import 'DescriptionSection.dart';
@@ -21,10 +22,8 @@ import 'TotalAttendee.dart';
 import 'VidharSabhaStates.dart';
 
 class FormReviewPage extends StatefulWidget {
-  final String? vidhanSabha;
-  final String? state;
   final String? totalAttendees;
-  final String? booth;
+  final int eventid;
   final String? address;
   final String? description;
   final String? img1;
@@ -32,14 +31,12 @@ class FormReviewPage extends StatefulWidget {
 
   const FormReviewPage(
       {Key? key,
-      this.vidhanSabha,
-      this.state,
       this.totalAttendees,
-      this.booth,
       this.address,
       this.description,
       this.img1,
-      this.img2})
+      this.img2,
+      required this.eventid})
       : super(key: key);
 
   @override
@@ -60,6 +57,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<FetchCubit>();
+    final cubit2 = context.read<SendEventCubit>();
 
     return Scaffold(
       appBar: AppBarWidget.getAppBar(_key, context),
@@ -94,13 +92,13 @@ class _FormReviewPageState extends State<FormReviewPage> {
                     ],
                   ),
                   ReviewVidhanAndStates(
-                    vidhanSabha: widget.vidhanSabha,
-                    state: widget.state,
+                    vidhanSabha: cubit.vidhansabhaname,
+                    state: "Assam",
                   ),
                   const SizedBox(height: 24),
                   ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
                   const SizedBox(height: 24),
-                  ReviewBoothName(booth: widget.booth),
+                  ReviewBoothName(booth: cubit.boothname),
                   const SizedBox(height: 24),
                   ReviewBoothAddress(boothAddress: widget.address),
                   const SizedBox(height: 24),
@@ -117,7 +115,15 @@ class _FormReviewPageState extends State<FormReviewPage> {
 
                       newPosition = await getCurrentPosition();
 
-
+                      cubit2.sendEvent(
+                          cubit.boothid,
+                          cubit.boothname,
+                          int.parse(widget.totalAttendees.toString()),
+                          widget.address,
+                          widget.description,
+                          widget.eventid,
+                          newPosition!.latitude.toString(),
+                          newPosition!.longitude.toString());
 
                       Navigator.push(
                           context,

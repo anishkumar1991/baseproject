@@ -7,7 +7,8 @@ import 'ongoing.dart';
 
 
 class DashboardMainScreen extends StatefulWidget {
-  const DashboardMainScreen({Key? key}) : super(key: key);
+   String? authkey;
+   DashboardMainScreen({Key? key, this.authkey}) : super(key: key);
 
   @override
   State<DashboardMainScreen> createState() => _DashboardMainScreenState();
@@ -81,8 +82,8 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  OnGoing(),
-                  Expired(),
+                  OnGoing(authkey:  widget.authkey.toString()),
+                  Expired(authkey: widget.authkey.toString()),
                 ],
               ),
             )

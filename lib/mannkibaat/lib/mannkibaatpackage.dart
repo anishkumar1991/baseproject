@@ -31,11 +31,11 @@ class MainButton extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all(AppColor().buttonColor),
           ),
           onPressed: () {
-            DashCubit(authenticationToken);
+            DashCubit();
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (counter) => const DashboardMainScreen()));
+                    builder: (counter) =>  DashboardMainScreen(authkey: authenticationToken)));
           },
           child: Text(
             text,

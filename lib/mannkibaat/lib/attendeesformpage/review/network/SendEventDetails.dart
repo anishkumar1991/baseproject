@@ -11,8 +11,5 @@ abstract class SendEventDetailsApi {
 
   @POST('api/event_tracker/get_country_state')
   @Headers({"Content-Type": "application/json", "Accept": 'application/json'})
-  Future<HttpResponse> fetchStates(
-      @Header('Authorization') Map<String, dynamic> token);
-
-
+  Future<HttpResponse> sendEvent(@Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

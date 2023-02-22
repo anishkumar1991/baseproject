@@ -19,6 +19,7 @@ class FetchCubit extends Cubit<FetchStates> {
   static String boothName = "boothName";
   String vidhansabhaname = " ";
   String boothname = " ";
+  int? boothid ;
   List<ApiDataList> acList = [];
   List<Datum> boothList = [];
   Datum? boothSelected;
@@ -37,6 +38,7 @@ class FetchCubit extends Cubit<FetchStates> {
     emit(FetchingState());
     boothSelected = boothName;
     boothname = boothSelected!.name;
+    boothid = boothSelected!.id;
     emit(DropDownSelected());
   }
 

@@ -47,6 +47,7 @@ import 'generated/l10n.dart';
 // import 'mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
 // import 'mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
 import 'mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
+import 'mannkibaat/lib/attendeesformpage/review/cubit/SendEventCubit.dart';
 import 'mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
 import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
@@ -133,9 +134,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => SangathanDetailsCubit()),
         BlocProvider(create: (context) => ShareCubit()),
         BlocProvider(create: (context) => VerifyPersonCubit()),
-
+        BlocProvider(create: (context) => SendEventCubit()),
+        BlocProvider(create: (context) => DashCubit()),
         BlocProvider(create: (context) => FetchCubit()),
-        BlocProvider(create: (context) => DashCubit("eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA")),
 
 
 

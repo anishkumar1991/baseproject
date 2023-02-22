@@ -21,7 +21,10 @@ class _SendEventDetailsApi implements SendEventDetailsApi {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<dynamic>> fetchStates(token) async {
+  Future<HttpResponse<dynamic>> sendEvent(
+    token,
+    data,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
@@ -31,6 +34,7 @@ class _SendEventDetailsApi implements SendEventDetailsApi {
     };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
+    _data.addAll(data);
     final _result =
         await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
       method: 'POST',

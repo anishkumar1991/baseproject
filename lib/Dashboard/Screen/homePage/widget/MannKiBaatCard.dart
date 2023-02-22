@@ -19,6 +19,7 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
   @override
   Widget build(BuildContext context) {
     var temptoken = widget.mannkibaatAuthToken!.split("=");
+    print("i am the token ${temptoken[1]}");
 
     return Container(
       height: 150,

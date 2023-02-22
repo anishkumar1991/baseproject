@@ -8,7 +8,8 @@ import '../../cubit/DashState.dart';
 import '../ProgramCard.dart';
 
 class OnGoing extends StatelessWidget {
-  const OnGoing({Key? key}) : super(key: key);
+  final String authkey;
+  const OnGoing({Key? key, required this.authkey}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class OnGoing extends StatelessWidget {
     var time = null;
     var temptimeshow;
     final cubit = context.read<DashCubit>();
-    cubit.getDashData();
+    cubit.getDashData(authkey);
 
     return BlocBuilder<DashCubit, DashStates>(
       builder: (context, state) {
@@ -69,7 +70,7 @@ class OnGoing extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            AttendeesFormPage()));
+                                            AttendeesFormPage(eventId: state.dashModal.data[index].id,)));
                               }
                             },
                             child: ProgramCard(
