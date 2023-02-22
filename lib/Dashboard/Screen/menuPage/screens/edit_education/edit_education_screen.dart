@@ -45,9 +45,9 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
       context.read<EditEducationCubit>().levelCtr.text =
           widget.educationalDetails?[widget.index!].level ?? '';
       context.read<EditEducationCubit>().startYearCtr.text =
-          widget.educationalDetails?[widget.index!].startYear ?? '';
+          widget.educationalDetails?[widget.index!].startYear.toString() ?? '';
       context.read<EditEducationCubit>().endYearCtr.text =
-          widget.educationalDetails?[widget.index!].endYear ?? '';
+          widget.educationalDetails?[widget.index!].endYear.toString() ?? '';
       context.read<EditEducationCubit>().collageCtr.text =
           widget.educationalDetails?[widget.index!].institute ?? '';
     } else {
@@ -399,15 +399,15 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
   filledList({required EditEducationCubit cubit}) {
     if (widget.isNew == true) {
       educationalDetails.level = cubit.levelCtr.text;
-      educationalDetails.startYear = cubit.startYearCtr.text;
-      educationalDetails.endYear = cubit.endYearCtr.text;
+      educationalDetails.startYear = cubit.startYearCtr.text as int?;
+      educationalDetails.endYear = cubit.endYearCtr.text as int?;
       educationalDetails.institute = cubit.collageCtr.text;
       educationalDetails.uuid = "";
       widget.educationalDetails?.add(educationalDetails);
     } else {
       educationalDetails.level = cubit.levelCtr.text;
-      educationalDetails.startYear = cubit.startYearCtr.text;
-      educationalDetails.endYear = cubit.endYearCtr.text;
+      educationalDetails.startYear = cubit.startYearCtr.text as int?;
+      educationalDetails.endYear = cubit.endYearCtr.text as int?;
       educationalDetails.institute = cubit.collageCtr.text;
       educationalDetails.uuid = "";
       widget.educationalDetails?[widget.index!] = educationalDetails;

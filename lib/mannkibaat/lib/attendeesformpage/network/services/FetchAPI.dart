@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
+import 'package:sangathan/Values/string.dart';
 
 part 'FetchAPI.g.dart';
 
-@RestApi(baseUrl: "https://staging.mannkibaatprogram.in/")
+@RestApi(baseUrl:AppStrings.baseUrlMannKiBaat)
 abstract class FetchAPI {
   factory FetchAPI(Dio dio) = _FetchAPI;
 

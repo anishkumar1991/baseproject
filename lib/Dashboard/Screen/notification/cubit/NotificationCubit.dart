@@ -23,7 +23,7 @@ class NotificationCubit extends Cubit<NotificationState> {
 
     try {
       final res =
-          await api.getNotification('Bearer ${StorageService.userAuthToken}');
+          await api.getNotification('${StorageService.userAuthToken}');
       if (res.response.statusCode == 200) {
         print("fetching notification api working");
         FetchNotificationModel model =

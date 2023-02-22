@@ -217,9 +217,9 @@ class Category {
 class EducationalDetails {
   String? uuid;
   String? level;
-  String? endYear;
+  int? endYear;
   String? institute;
-  String? startYear;
+  int? startYear;
 
   EducationalDetails(
       {this.uuid, this.level, this.endYear, this.institute, this.startYear});
