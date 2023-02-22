@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/sangathan_deatils_page.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/MannKiBaatCard.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/widget/sangathan_card_widget.dart';
+import 'package:sangathan/Dashboard/Screen/homePage/widget/social_card.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/size_config.dart';
@@ -245,6 +246,35 @@ class _HomePageState extends State<HomePage> {
                                         return MannKiBaatCard(
                                             mannkibaatAuthToken:
                                                 innerItem.actionUrl);
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                          return const SizedBox();
+                        },
+                      ),
+                      SizedBox(height: 20),
+
+                      /// social media card
+                      //SocialCard(img: "2",),
+                      BlocBuilder<HomePageCubit, HomePageState>(
+                        builder: (context, state) {
+                          if (state is ClientAppListsSuccessState) {
+                            if (state.clientAppListsModel.sections != null) {
+                              for (var item
+                                  in state.clientAppListsModel.sections!) {
+                                if (item.type == "app_cards") {
+                                  if (item.data != null) {
+                                    for (var innerItem in item.data!) {
+                                      if (innerItem.appType == "social_media") {
+                                        //  innerItem.image
+                                        // card banega social media ka
+                                        return SocialCard(
+                                          img: innerItem.image.toString(),
+                                        );
                                       }
                                     }
                                   }
