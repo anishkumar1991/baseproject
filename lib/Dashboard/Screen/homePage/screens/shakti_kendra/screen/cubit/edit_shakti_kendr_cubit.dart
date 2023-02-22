@@ -2,11 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/network/api/mandal_api.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/network/model/mandal_model.dart'
-    as mandalModel;
 
 import '../../../../../../../Storage/user_storage_service.dart';
 import '../../network/model/shakti_kendr_model.dart' as shaktiKendr;
+import '../../network/model/shakti_kendr_model.dart';
 import '../model/booth_selection_model.dart' as booth;
 import '../model/booth_selection_model.dart';
 
@@ -22,7 +21,7 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
   String zilaSelectedName = "";
   String mandalSelected = "";
   String boothSelected = "";
-  mandalModel.Mandal mandal = mandalModel.Mandal();
+  List<Mandal>? mandalDropDownList;
   Booth boothData = Booth();
   TextEditingController shaktiKendrCtr = TextEditingController();
   List<booth.Data> selectedBoothDetails = [];
@@ -31,13 +30,9 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
   List<int> selectedBooth = [];
   List<shaktiKendr.Booths> alreadyExitBooth = [];
 
-  final api = GetDropDownValue(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
+  final api = GetDropDownValue(Dio(BaseOptions(contentType: 'application/json', validateStatus: ((status) => true))));
 
-  alreadyExitBoothInOtherSk(
-      {required int boothId,
-      required bool isAdd,
-      required List<shaktiKendr.Data> shaktiKendrDataList}) {
+  alreadyExitBoothInOtherSk({required int boothId, required bool isAdd, required List<ShaktiKendrData> shaktiKendrDataList}) {
     for (int i = 0; i < shaktiKendrDataList.length; i++) {
       for (int j = 0; j < (shaktiKendrDataList[i].booths?.length ?? 0); j++) {
         if (shaktiKendrDataList[i].booths?[j].id == boothId) {
@@ -55,8 +50,7 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
 
   removeSelectedBooth({required booth.Data showSelectedBooth}) {
     chekedValue.removeWhere((element) => element.id == showSelectedBooth.id);
-    alreadyExitBooth
-        .removeWhere((element) => element.id == showSelectedBooth.id);
+    alreadyExitBooth.removeWhere((element) => element.id == showSelectedBooth.id);
     selectedBooth.removeWhere(((element) => element == showSelectedBooth.id));
     emit(AlreadyExistBoothFatchDataState());
   }
@@ -72,25 +66,27 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
     try {
       emit(LoadingMandalEditShaktiKendraState());
       StorageService.getUserAuthToken();
-      var res = await api.getMandalValue(
-          'Bearer ${StorageService.userAuthToken}', id);
-      print(
-          "------------------------------------ Mandal DropDownValue  ----------------------------");
+      var res = await api.getMandalValue('Bearer ${StorageService.userAuthToken}', id);
+      print("------------------------------------ Mandal DropDownValue  ----------------------------");
+      print(res.response.realUri);
       print("token  :${StorageService.userAuthToken}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        mandalModel.Mandal data =
-            mandalModel.Mandal.fromJson(res.response.data);
-        // if (isEdit == true) {
-          getBoothValuew(id: id);
-        // }
-        emit(FatchDataMandalEditShaktiKendraState(data: data));
+        if (res.data["data"] != null) {
+          List data = res.data["data"];
+          var dataMandal = data.map((data) => Mandal.fromJson(data)).toList();
+
+          emit(FatchDataMandalEditShaktiKendraState(data: dataMandal));
+          if (isEdit == true) {
+            getBoothValuew(id: id);
+          }
+        } else {
+          emit(ErrorMandalEditShaktiKendraState(error: "Something went wrong"));
+        }
       } else {
-        emit(ErrorMandalEditShaktiKendraState(
-            error: "Something went wrong mandal"));
+        emit(ErrorMandalEditShaktiKendraState(error: "Something went wrong"));
         print('error=${res.data['message']}');
       }
     } catch (e) {
@@ -103,22 +99,19 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
     try {
       emit(LoadingBoothEditShaktiKendraState());
       StorageService.getUserAuthToken();
-      var res =
-          await api.getBooth('Bearer ${StorageService.userAuthToken}', id);
-      print(
-          "------------------------------------ booth DropDownValue  ----------------------------");
+      var res = await api.getBooth('Bearer ${StorageService.userAuthToken}', id);
+      print("------------------------------------ booth DropDownValue  ----------------------------");
+      print(res.response.realUri);
       print("token  :${StorageService.userAuthToken}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         Booth data = Booth.fromJson(res.response.data);
         // boothData = data;
         emit(FatchDataBoothEditShaktiKendraState(data: data));
       } else {
-        emit(ErrorBoothEditShaktiKendraState(
-            error: "Something went wrong booth"));
+        emit(ErrorBoothEditShaktiKendraState(error: "Something went wrong booth"));
         print('error=${res.data['message']}');
       }
     } catch (e) {
@@ -127,35 +120,21 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
     }
   }
 
-  createAndEditShaktiKendr(
-      {int? vidhanSabhaId,
-      int? mandalId,
-      String? skName,
-      List? booth,
-      bool? isEdit,
-      required BuildContext context}) async {
+  createAndEditShaktiKendr({int? vidhanSabhaId, int? mandalId, String? skName, List? booth, bool? isEdit, required BuildContext context}) async {
     try {
       emit(LoadingEditAndCreateEditShaktiKendraState());
       StorageService.getUserAuthToken();
-      var res = await apiCalling(
-          isEdit: isEdit,
-          booth: booth,
-          mandalId: mandalId,
-          vidhanSabhaId: vidhanSabhaId,
-          skName: skName);
-      print(
-          "------------------------------------ createShaktiKendr DropDownValue  ----------------------------");
+      var res = await apiCalling(isEdit: isEdit, booth: booth, mandalId: mandalId, vidhanSabhaId: vidhanSabhaId, skName: skName);
+      print("------------------------------------ createShaktiKendr DropDownValue  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         Booth data = Booth.fromJson(res.response.data);
         emit(FatchDataEditAndCreateEditShaktiKendraState(data: data));
       } else {
-        emit(ErrorEditAndCreateEditShaktiKendraState(
-            error: "Somethinfg went wrong create"));
+        emit(ErrorEditAndCreateEditShaktiKendraState(error: "Somethinfg went wrong create"));
         print('error=${res.data['message']}');
       }
     } catch (e) {
@@ -164,31 +143,12 @@ class EditShaktiKendrCubit extends Cubit<EditShaktiKendrState> {
     }
   }
 
-  apiCalling(
-      {int? vidhanSabhaId,
-      int? mandalId,
-      String? skName,
-      List? booth,
-      bool? isEdit}) async {
+  apiCalling({int? vidhanSabhaId, int? mandalId, String? skName, List? booth, bool? isEdit}) async {
     if (isEdit == true) {
-      print(
-          "=================================================== $shaktiKendrId");
-      return await api
-          .createAndEditShaktiKendr('Bearer ${StorageService.userAuthToken}', {
-        "ac": vidhanSabhaId,
-        "mandal": mandalId,
-        "sk_name": skName,
-        "booths": booth,
-        "sk": shaktiKendrId
-      });
+      print("=================================================== $shaktiKendrId");
+      return await api.createAndEditShaktiKendr('Bearer ${StorageService.userAuthToken}', {"ac": vidhanSabhaId, "mandal": mandalId, "sk_name": skName, "booths": booth, "sk": shaktiKendrId});
     } else {
-      return await api.createAndEditShaktiKendr(
-          'Bearer ${StorageService.userAuthToken}', {
-        "ac": vidhanSabhaId,
-        "mandal": mandalId,
-        "sk_name": skName,
-        "booths": booth
-      });
+      return await api.createAndEditShaktiKendr('Bearer ${StorageService.userAuthToken}', {"ac": vidhanSabhaId, "mandal": mandalId, "sk_name": skName, "booths": booth});
     }
   }
 

@@ -10,11 +10,10 @@ import '../../../../../../../generated/l10n.dart';
 import '../cubit/edit_shakti_kendr_cubit.dart';
 
 class MandalBottomSheet extends StatelessWidget {
-  BuildContext? context;
   EditShaktiKendrCubit cubit;
   String? text;
 
-  MandalBottomSheet({Key? key, this.context, this.text, required this.cubit})
+  MandalBottomSheet({Key? key, this.text, required this.cubit})
       : super(key: key);
 
   @override
@@ -24,7 +23,7 @@ class MandalBottomSheet extends StatelessWidget {
         if (state is LoadingMandalEditShaktiKendraState) {
           return listTileShimmerEffect(context: context);
         } else if (state is FatchDataMandalEditShaktiKendraState) {
-          context.read<EditShaktiKendrCubit>().mandal = state.data;
+          context.read<EditShaktiKendrCubit>().mandalDropDownList = state.data;
         } else if (state is ErrorMandalEditShaktiKendraState) {
           EasyLoading.showToast(state.error);
         }
@@ -50,23 +49,24 @@ class MandalBottomSheet extends StatelessWidget {
                     ),
                     spaceHeightWidget(30),
                     Expanded(
-                      child: cubit.mandal.data?.isNotEmpty ?? false
+                      child: cubit.mandalDropDownList?.isNotEmpty ?? false
                           ? ListView.builder(
                               padding: EdgeInsets.zero,
                               shrinkWrap: true,
-                              itemCount: cubit.mandal.data?.length,
-                              physics: BouncingScrollPhysics(),
+                              itemCount: cubit.mandalDropDownList?.length,
+                              physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        cubit.mandalSelected =
-                                            cubit.mandal.data?[index].name ??
-                                                '';
+                                        cubit.mandalSelected = cubit
+                                                .mandalDropDownList?[index]
+                                                .name ??
+                                            '';
                                         cubit.mandalId =
-                                            cubit.mandal.data?[index].id;
+                                            cubit.mandalDropDownList?[index].id;
                                         cubit.emitState();
                                         Navigator.pop(context);
                                       },
@@ -76,7 +76,8 @@ class MandalBottomSheet extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 8.0),
                                           child: Text(
-                                            cubit.mandal.data?[index].name ??
+                                            cubit.mandalDropDownList?[index]
+                                                    .name ??
                                                 '',
                                             textAlign: TextAlign.left,
                                             style: GoogleFonts.poppins(
@@ -86,8 +87,9 @@ class MandalBottomSheet extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    index + 1 == cubit.mandal.data?.length
-                                        ? SizedBox.shrink()
+                                    index + 1 ==
+                                            cubit.mandalDropDownList?.length
+                                        ? const SizedBox.shrink()
                                         : const Divider(
                                             color: AppColor.borderColor,
                                           ),
@@ -130,8 +132,8 @@ class MandalBottomSheet extends StatelessWidget {
                 child: ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    itemCount: cubit.mandal.data?.length,
-                    physics: BouncingScrollPhysics(),
+                    itemCount: cubit.mandalDropDownList?.length,
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,8 +150,8 @@ class MandalBottomSheet extends StatelessWidget {
                               ),
                             ),
                           ),
-                          index + 1 == cubit.mandal.data?.length
-                              ? SizedBox.shrink()
+                          index + 1 == cubit.mandalDropDownList?.length
+                              ? const SizedBox.shrink()
                               : const Divider(
                                   color: AppColor.borderColor,
                                 ),

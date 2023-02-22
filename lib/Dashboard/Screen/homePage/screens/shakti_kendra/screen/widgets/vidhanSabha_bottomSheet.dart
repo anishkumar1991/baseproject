@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import '../../../../../../../Values/app_colors.dart';
 import '../../../../../../../Values/space_height_widget.dart';
+import '../../../../../../../common/common_logo_widget.dart';
 import '../../../../../../../generated/l10n.dart';
 import '../../cubit/shakti_kendra_cubit.dart';
 import '../cubit/edit_shakti_kendr_cubit.dart';
@@ -11,20 +13,14 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
   EditShaktiKendrCubit cubit;
   String? text;
 
-  VidhanSabhaBottomSheet(
-      {Key? key, this.context, this.text, required this.cubit})
-      : super(key: key);
+  VidhanSabhaBottomSheet({Key? key, this.context, this.text, required this.cubit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.transparent,
       child: Container(
-          decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(28.0),
-                  topRight: Radius.circular(28.0))),
+          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0))),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -34,8 +30,7 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                 Text(
                   text ?? '',
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      color: AppColor.borderColor, fontSize: 16),
+                  style: GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
                 ),
                 spaceHeightWidget(30),
                 Expanded(
@@ -53,31 +48,30 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                   onTap: () async {
                                     cubit.chekedValue = [];
                                     cubit.mandalSelected = '';
-                                    cubit.zilaSelected = vidhanSabha
-                                            .data?.locations?[index].name ??
-                                        '';
-                                    cubit.zilaId =
-                                        vidhanSabha.data?.locations?[index].id;
+                                    cubit.zilaSelected = "${vidhanSabha.data?.locations?[index].number ?? ''} - ${vidhanSabha.data?.locations?[index].name ?? ''}";
+                                    cubit.zilaId = vidhanSabha.data?.locations?[index].id;
                                     Future.delayed(Duration.zero).then((value) {
                                       Navigator.pop(context);
                                     });
                                     // await cubit.getBoothValuew(id: cubit.zilaId ?? 236);
-                                    await cubit.getDropDownValueOfmandal(
-                                        id: cubit.zilaId ?? 236);
+                                    await cubit.getDropDownValueOfmandal(id: cubit.zilaId ?? 236, isEdit: true);
                                   },
                                   child: SizedBox(
                                     width: double.infinity,
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8.0),
-                                      child: Text(
-                                        vidhanSabha
-                                                .data?.locations?[index].name ??
-                                            '',
-                                        textAlign: TextAlign.left,
-                                        style: GoogleFonts.poppins(
-                                            color: AppColor.black,
-                                            fontSize: 16),
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                      child: Row(
+                                        children: [
+                                          CommonLogoWidget(
+                                            name: vidhanSabha.data?.locations?[index].name ?? '',
+                                            isSelected: cubit.zilaId == vidhanSabha.data?.locations?[index].id,
+                                          ),
+                                          Text(
+                                            "${vidhanSabha.data?.locations?[index].number ?? ''} - ${vidhanSabha.data?.locations?[index].name ?? ''}",
+                                            textAlign: TextAlign.left,
+                                            style: GoogleFonts.poppins(color: AppColor.black, fontSize: 16),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -93,8 +87,7 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                       : Text(
                           S.of(context).noDataAvailable,
                           textAlign: TextAlign.left,
-                          style: GoogleFonts.poppins(
-                              color: AppColor.black, fontSize: 16),
+                          style: GoogleFonts.poppins(color: AppColor.black, fontSize: 16),
                         ),
                 )
               ],

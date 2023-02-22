@@ -1,6 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/shakti_kendra/screen/model/delete_model.dart';
 
@@ -19,35 +19,34 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
 
   Locations? zilaSelected;
   String zilaSelectedName = '';
-  int isSelectedIndex = 0;
+  int isSelectedIndex = -1;
   bool isExpanded = false;
   bool isEditPermission = false;
   bool isCreatePermission = false;
   bool isDeletePermission = false;
   List<String> filterList = ["नवीन एंट्री", "मंडल", "A - Z"];
   ShaktiKendr shaktiKendr = ShaktiKendr();
+  ShaktiKendr sortedShaktiKendr = ShaktiKendr();
+  List<Mandal> mandalFilterData = [];
+  String selectedMandal = "All";
 
-  final api = GetDropDownValue(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
+  final api = GetDropDownValue(Dio(BaseOptions(contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
     emit((LoadingShaktiKendraState()));
   }
 
-  Future getDropDownValueOfVidhanSabha({required int id}) async {
+  Future getDropDownValueOfVidhanSabha({required int id, required String locationType}) async {
     try {
       emit(LoadingShaktiKendraState());
       StorageService.getUserAuthToken();
-      var res = await api.getVidhanSabhaValue(
-          'Bearer ${StorageService.userAuthToken}', id);
-      print(
-          "------------------------------------ VidhanSabha DropDown Value  ----------------------------");
+      var res = await api.getVidhanSabhaValue('Bearer ${StorageService.userAuthToken}', id, locationType);
+      print("------------------------------------ SK VidhanSabha DropDown Value  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
       print("url: ${res.response.realUri} ");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         VidhanSabha data = VidhanSabha.fromJson(res.response.data);
         emit(FatchDataVidhanSabhaState(data));
@@ -65,16 +64,14 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
     try {
       emit(LoadingShaktiKendraDetailState());
       StorageService.getUserAuthToken();
-      var res =
-          await api.getShaktiKenr('Bearer ${StorageService.userAuthToken}', id);
-      print(
-          "------------------------------------ Shakti Kendra Value  ----------------------------");
+      var res = await api.getShaktiKenr('Bearer ${StorageService.userAuthToken}', id);
+      print("------------------------------------ Shakti Kendra Value  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
       print("id  :$id");
+      print(res.response.realUri);
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         ShaktiKendr data = ShaktiKendr.fromJson(res.response.data);
         emit(ShaktiKendraFatchData(data));
@@ -88,23 +85,17 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
     }
   }
 
-  deleteShaktiKendr(
-      {required int id,
-      required BuildContext context,
-      bool? isConfirmDelete}) async {
+  deleteShaktiKendr({required int id, required BuildContext context, bool? isConfirmDelete}) async {
     try {
       emit(DeleteDataShaktiKendraLoadingState());
       StorageService.getUserAuthToken();
-      var res = await api.deleteShaktiKendr(
-          'Bearer ${StorageService.userAuthToken}', id, isConfirmDelete!);
-      print(
-          "------------------------------------ Delete Shakti Kendra Value  ----------------------------");
+      var res = await api.deleteShaktiKendr('Bearer ${StorageService.userAuthToken}', id, isConfirmDelete!);
+      print("------------------------------------ Delete Shakti Kendra Value  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
       print("id  :$id");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DeleteModel data = DeleteModel.fromJson(res.response.data);
         if (data.data?.askConfirmation == true) {
@@ -112,8 +103,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
             context: context,
             onDelete: () {
               Navigator.pop(context);
-              deleteShaktiKendr(
-                  id: id, context: context, isConfirmDelete: true);
+              deleteShaktiKendr(id: id, context: context, isConfirmDelete: true);
             },
             title: data.data?.message?.trim().trimLeft(),
             subTitle: '',
@@ -148,28 +138,41 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
   getBoothId(List<Booths>? booths) {}
 
   changeFilter() {
+    sortedShaktiKendr.data = [...shaktiKendr.data ?? []];
     if (isSelectedIndex == 0) {
-      shaktiKendr.data?.sort(
+      sortedShaktiKendr.data?.sort(
         (a, b) {
-          DateTime aDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-              .parse(a.createdAt ?? "");
-          DateTime bDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-              .parse(b.createdAt ?? "");
+          DateTime aDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(a.createdAt ?? "");
+          DateTime bDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(b.createdAt ?? "");
           return bDate.compareTo(aDate);
         },
       );
     } else if (isSelectedIndex == 1) {
-      shaktiKendr.data?.sort((a, b) {
-        return (a.mandal?.name?.toLowerCase() ?? 'z')
-            .compareTo((b.mandal?.name?.toLowerCase()) ?? 'z');
+      sortedShaktiKendr.data?.sort((a, b) {
+        return (a.mandal?.name?.toLowerCase() ?? 'z').compareTo((b.mandal?.name?.toLowerCase()) ?? 'z');
       });
     } else if (isSelectedIndex == 2) {
-      shaktiKendr.data?.sort((a, b) {
-        return (a.name?.toLowerCase() ?? 'z')
-            .compareTo((b.name?.toLowerCase()) ?? 'z');
+      sortedShaktiKendr.data?.sort((a, b) {
+        return (a.name?.toLowerCase() ?? 'z').compareTo((b.name?.toLowerCase()) ?? 'z');
       });
     }
     emit(LoadingShaktiKendraState());
     // emit(FilterChangeState());
+  }
+
+  filterBasedOnMandal() {
+    List<ShaktiKendrData> demoData = [];
+    emit(ApplyFilterLoading());
+    if (selectedMandal == "All") {
+      sortedShaktiKendr.data = [...shaktiKendr.data ?? []];
+    } else {
+      for (int i = 0; i < (shaktiKendr.data?.length ?? 0); i++) {
+        if (shaktiKendr.data?[i].mandal?.name == selectedMandal) {
+          demoData.add(shaktiKendr.data![i]);
+        }
+      }
+      sortedShaktiKendr.data = demoData;
+    }
+    emit(ApplyFilterSuccess());
   }
 }
