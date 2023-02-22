@@ -21,13 +21,16 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
   late TabController tabController;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-  void send(){
-
-
+  Future<void> send() async {
+    final cubit = context.read<GenerateMannKiBaatAuthCubit>();
+    var number = StorageService.getUserData();
+    await cubit.sendOtp(mobileNumber: number!.user!.phone.toString());
+    await cubit.submitOTP();
   }
 
   @override
   void initState() {
+    send();
     tabController = TabController(length: 2, vsync: this);
     super.initState();
   }

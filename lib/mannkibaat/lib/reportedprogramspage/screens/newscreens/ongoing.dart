@@ -18,14 +18,7 @@ class OnGoing extends StatefulWidget {
 }
 
 class _OnGoingState extends State<OnGoing> {
-  @override
-  void initState() {
-    final cubit = context.read<GenerateMannKiBaatAuthCubit>();
-    var number = StorageService.getUserData();
-    cubit.sendOtp(mobileNumber: number!.user!.phone.toString());
-    cubit.submitOTP();
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
