@@ -12,6 +12,7 @@ import '../../values/AppColors.dart';
 import '../../values/Constants.dart';
 import '../cubit/AttendeeFormCubit.dart';
 import '../cubit/FetchCubit.dart';
+import '../review/screens/ReviewPageMain.dart';
 import 'DropDownScreen.dart';
 import 'ImageUploadBox.dart';
 
@@ -168,7 +169,7 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AttendeeReviewPage(
+                                  builder: (context) => FormReviewPage(
                                         totalAttendees:
                                             totalAttendeesController.text,
                                         address: addressController.text,

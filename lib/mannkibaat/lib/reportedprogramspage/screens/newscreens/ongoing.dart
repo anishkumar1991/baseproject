@@ -59,35 +59,12 @@ class OnGoing extends StatelessWidget {
                           return InkWell(
                             onTap: () {
                               if (state.dashModal.data[index].eventHasDetail ==
-                                  true) {
+                                  false) {
                                 print(
                                     'inside REVIEW statement-->${state.dashModal.data[index].eventDetail.totalAttendees}');
                                 print(
                                     'Event Detail-->${state.dashModal.data[index].eventDetail}');
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AttendeeReviewPage(
-                                              vidhanSabha:
-                                                  '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                              state:
-                                                  '${state.dashModal.data[index].eventDetail.countryStateRef?.first.name}',
-                                              totalAttendees:
-                                                  '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                              booth:
-                                                  '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                              address:
-                                                  '${state.dashModal.data[index].eventDetail.address}',
-                                              description:
-                                                  '${state.dashModal.data[index].eventDetail.description}',
-                                              img1:
-                                                  '${state.dashModal.data[index].eventDetail.photo1}',
-                                              img2:
-                                                  '${state.dashModal.data[index].eventDetail.photo1}',
-                                            )));
-                              } else {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(

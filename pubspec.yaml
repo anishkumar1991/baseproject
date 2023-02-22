@@ -96,6 +96,7 @@ dependencies:
   device_info_plus: ^8.1.0
   flutter_svg: ^2.0.1
   geolocator: ^9.0.2
+  geocoding: any
 #  mannkibaatpackage:
 #    git:
 #      url: https://github.com/MilindPanwar-Jarvis/mannkibaatpackage.git
