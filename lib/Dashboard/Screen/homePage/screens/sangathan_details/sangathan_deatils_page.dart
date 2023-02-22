@@ -30,16 +30,13 @@ class SangathanDetailsPage extends StatefulWidget {
 
 class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   Future callApi() async {
-    if (StorageService.userData?.user?.countryStateId == 0 ||
-        StorageService.userData?.user?.countryStateId == null) {}
+    if (StorageService.userData?.user?.countryStateId == 0 || StorageService.userData?.user?.countryStateId == null) {}
   }
 
   @override
   void initState() {
     StorageService.getUserData();
-    context
-        .read<SangathanDetailsCubit>()
-        .getClientAppPermission(widget.cliendId);
+    context.read<SangathanDetailsCubit>().getClientAppPermission(widget.cliendId);
     context.read<SangathanDetailsCubit>().appPermissions = null;
     context.read<SangathanDetailsCubit>().selectedAllottedLocation = null;
     context.read<SangathanDetailsCubit>().allotedLocationModel = null;
@@ -62,55 +59,37 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
         child: BlocListener<SangathanDetailsCubit, SangathanDetailsState>(
           listener: (context, state) {
             if (state is LocationFetchedState) {
-              cubit.typeLevelName =
-                  cubit.allotedLocationModel?.data?.locationType ?? "";
+              cubit.typeLevelName = cubit.allotedLocationModel?.data?.locationType ?? "";
               showLocationBottomSheet();
             }
           },
           child: BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
             builder: (context, state) {
               if (state is LocationFetchedState) {
-                cubit.typeLevelName =
-                    state.locationData.data?.locationType ?? "";
+                cubit.typeLevelName = state.locationData.data?.locationType ?? "";
               }
               if (state is ClientAppPermissionsFetchState) {
                 cubit.appPermissions = state.data.appPermissions ?? [];
                 if ((cubit.appPermissions?.isNotEmpty) ?? false) {
-                  for (int i = 0;
-                      i < (cubit.appPermissions?.length ?? 0);
-                      i++) {
-                    if (cubit.appPermissions?[i].permissionName ==
-                        "ShaktiKendra") {
+                  for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
+                    if (cubit.appPermissions?[i].permissionName == "ShaktiKendra") {
                       cubit.isShowShaktiKendra = true;
                     }
                   }
                   cubit.clientId = widget.cliendId;
                   cubit.permissionId = cubit.appPermissions?.first.id ?? 0;
 
-                  context.read<SangathanDetailsCubit>().getAllotedLocations(
-                      clientId: widget.cliendId,
-                      permissionId: "${cubit.appPermissions?.first.id ?? ""}");
+                  context.read<SangathanDetailsCubit>().getAllotedLocations(clientId: widget.cliendId, permissionId: "${cubit.appPermissions?.first.id ?? ""}");
                 }
               }
               if (state is LocationFetchedState) {
                 if (state.locationData.data != null) {
                   cubit.allotedLocationModel = state.locationData;
                   if (cubit.allotedLocationModel?.data?.locations != null) {
-                    if (cubit.allotedLocationModel?.data?.locations
-                            ?.isNotEmpty ??
-                        false) {
-                      for (int i = 0;
-                          i <
-                              (cubit.allotedLocationModel?.data?.locations
-                                      ?.length ??
-                                  0);
-                          i++) {
-                        if (cubit.allotedLocationModel?.data?.locations?[i]
-                                .countryStateId ==
-                            14) {
-                          context
-                              .read<SangathanDetailsCubit>()
-                              .getSangathanDataLevel();
+                    if (cubit.allotedLocationModel?.data?.locations?.isNotEmpty ?? false) {
+                      for (int i = 0; i < (cubit.allotedLocationModel?.data?.locations?.length ?? 0); i++) {
+                        if (cubit.allotedLocationModel?.data?.locations?[i].countryStateId == 14) {
+                          context.read<SangathanDetailsCubit>().getSangathanDataLevel();
                           break;
                         }
                       }
@@ -134,16 +113,12 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                 )),
                             Text(
                               S.of(context).sangathan,
-                              style: GoogleFonts.quicksand(
-                                  fontSize: 18, fontWeight: FontWeight.w600),
+                              style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),
                             ),
                             const Spacer(),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: CommonLogoWidget(
-                                  name: cubit.selectedAllottedLocation?.name ??
-                                      "",
-                                  isSelected: true),
+                              child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", isSelected: true),
                             ),
                           ],
                         ),
@@ -156,21 +131,12 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             child: GridView.builder(
                                 shrinkWrap: true,
                                 itemCount: 9,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 33,
-                                        mainAxisSpacing: 16),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
                                 itemBuilder: ((context, index) {
                                   return Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.2,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    decoration: BoxDecoration(
-                                        color: AppColor.white,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
+                                    height: MediaQuery.of(context).size.height * 0.2,
+                                    width: MediaQuery.of(context).size.width * 0.2,
+                                    decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(20)),
                                   );
                                 })),
                           ),
@@ -182,10 +148,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                           child: Text(
                           S.of(context).oopsErrorMsg,
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: AppColor.black),
+                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 16, color: AppColor.black),
                         ))
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,9 +169,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                     )),
                                 Text(
                                   S.of(context).sangathan,
-                                  style: GoogleFonts.quicksand(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
+                                  style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),
                                 ),
                                 const Spacer(),
                                 Padding(
@@ -217,11 +178,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                     onTap: () {
                                       showLocationBottomSheet();
                                     },
-                                    child: CommonLogoWidget(
-                                        name: cubit.selectedAllottedLocation
-                                                ?.name ??
-                                            "",
-                                        isSelected: true),
+                                    child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", isSelected: true),
                                   ),
                                 ),
                               ],
@@ -233,67 +190,38 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             spaceHeightWidget(24),
 
                             /// shakti kendr card
-                            BlocBuilder<SangathanDetailsCubit,
-                                SangathanDetailsState>(
+                            BlocBuilder<SangathanDetailsCubit, SangathanDetailsState>(
                               builder: (context, state) {
                                 return cubit.isShowShaktiKendra
                                     ? InkWell(
                                         onTap: () {
-                                          List<AppPermissions> permissionData =
-                                              [];
-                                          for (int i = 0;
-                                              i <
-                                                  (cubit.appPermissions
-                                                          ?.length ??
-                                                      0);
-                                              i++) {
-                                            if (cubit.appPermissions?[i]
-                                                    .permissionName ==
-                                                'ShaktiKendra') {
-                                              permissionData.add(
-                                                  cubit.appPermissions![i]);
+                                          List<AppPermissions> permissionData = [];
+                                          for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
+                                            if (cubit.appPermissions?[i].permissionName == 'ShaktiKendra') {
+                                              permissionData.add(cubit.appPermissions![i]);
                                             }
                                           }
-                                          Navigator.pushNamed(context,
-                                              RoutePath.shaktiKendraScreen,
-                                              arguments: {
-                                                "permissionData": permissionData
-                                              });
+                                          Navigator.pushNamed(context, RoutePath.shaktiKendraScreen, arguments: {"permissionData": permissionData});
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(12),
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          color: AppColor.purple50
-                                              .withOpacity(0.6),
+                                          width: MediaQuery.of(context).size.width,
+                                          color: AppColor.purple50.withOpacity(0.6),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 S.of(context).editShaktiKendr,
-                                                style: GoogleFonts.quicksand(
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                                style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),
                                               ),
                                               Container(
-                                                  padding:
-                                                      const EdgeInsets.all(2),
+                                                  padding: const EdgeInsets.all(2),
                                                   decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4),
-                                                      gradient:
-                                                          const LinearGradient(
-                                                              begin: Alignment
-                                                                  .topLeft,
-                                                              end: Alignment
-                                                                  .bottomRight,
-                                                              colors: [
-                                                            AppColor.purple50,
-                                                            AppColor.orange200,
-                                                          ])),
+                                                      borderRadius: BorderRadius.circular(4),
+                                                      gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
+                                                        AppColor.purple50,
+                                                        AppColor.orange200,
+                                                      ])),
                                                   child: Image.asset(
                                                     AppIcons.shaktikendraImage,
                                                     height: 35,
@@ -327,10 +255,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           enableDrag: false,
           isDismissible: false,
           context: context,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30.0),
-                  topRight: Radius.circular(30.0))),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
           builder: (builder) {
             return BlocConsumer<SangathanDetailsCubit, SangathanDetailsState>(
               listener: ((context, state) {
@@ -346,10 +271,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                   }
                 }
                 return SelectAllottedLocationSheetWidget(
-                  locationList:
-                      cubit.allotedLocationModel?.data?.locations ?? [],
-                  typeLevel:
-                      cubit.allotedLocationModel?.data?.locationType ?? "",
+                  locationList: cubit.allotedLocationModel?.data?.locations ?? [],
+                  typeLevel: cubit.allotedLocationModel?.data?.locationType ?? "",
                 );
               },
             );
@@ -374,22 +297,12 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                 bool isFound = false;
                 for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
                   if (isFound == false) {
-                    if (cubit.appPermissions?[i].permissionName ==
-                        "ShaktiKendraData") {
-                      if (cubit.appPermissions?[i].permissionName
-                              ?.split(RegExp(r"(?=[A-Z])"))[0]
-                              .trim() ==
-                          state.data.data?[j].name
-                              ?.split(RegExp(r"(?=[A-Z])"))[0]
-                              .trim()) {
+                    if (cubit.appPermissions?[i].permissionName == "ShaktiKendraData") {
+                      if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() == state.data.data?[j].name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
                         cubit.sangathanDataList.add(state.data.data?[j]);
                         isFound = true;
                       }
-                    } else if (cubit.appPermissions?[i].permissionName
-                            ?.split(RegExp(r"(?=[A-Z])"))[0] ==
-                        state.data.data?[j].name
-                            ?.split(RegExp(r"(?=[A-Z])"))[0]
-                            .trim()) {
+                    } else if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0] == state.data.data?[j].name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
                       /* print(
                           "${cubit.appPermissions?[i].permissionName} :  ${state.data.data?[j].name}");*/
                       cubit.sangathanDataList.add(state.data.data?[j]);
@@ -408,17 +321,12 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
               child: GridView.builder(
                   shrinkWrap: true,
                   itemCount: 9,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 33,
-                      mainAxisSpacing: 16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
                   itemBuilder: ((context, index) {
                     return Container(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: MediaQuery.of(context).size.width * 0.2,
-                      decoration: BoxDecoration(
-                          color: AppColor.white,
-                          borderRadius: BorderRadius.circular(20)),
+                      decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(20)),
                     );
                   })),
             );
@@ -428,10 +336,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: cubit.sangathanDataList.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 33,
-                      mainAxisSpacing: 16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
                   itemBuilder: ((context, index) {
                     final data = cubit.sangathanDataList[index];
                     return InkWell(
@@ -441,22 +346,12 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         //     arguments: data[index]['text']);
                         List<AppPermissions> appPermissions = [];
 
-                        for (int i = 0;
-                            i < (cubit.appPermissions?.length ?? 0);
-                            i++) {
-                          if (cubit.appPermissions?[i].permissionName ==
-                              "ShaktiKendraData") {
-                            if (cubit.appPermissions?[i].permissionName
-                                    ?.split(RegExp(r"(?=[A-Z])"))[0]
-                                    .trim() ==
-                                data?.name
-                                    ?.split(RegExp(r"(?=[A-Z])"))[0]
-                                    .trim()) {
+                        for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
+                          if (cubit.appPermissions?[i].permissionName == "ShaktiKendraData") {
+                            if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() == data?.name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
                               appPermissions.add(cubit.appPermissions![i]);
                             }
-                          } else if (cubit.appPermissions?[i].permissionName
-                                  ?.split(RegExp(r"(?=[A-Z])"))[0] ==
-                              data?.name?.split(RegExp(r"(?=[A-Z])"))[0]) {
+                          } else if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0] == data?.name?.split(RegExp(r"(?=[A-Z])"))[0]) {
                             appPermissions.add(cubit.appPermissions![i]);
                           }
                         }
@@ -473,13 +368,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            gradient: const LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  AppColor.purple50,
-                                  AppColor.orange200
-                                ])),
+                            gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [AppColor.purple50, AppColor.orange200])),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -487,16 +376,13 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             CachedNetworkImage(
                               imageUrl: data?.iconUrl ?? "",
                               height: 32,
-                              errorWidget: ((context, url, error) =>
-                                  const SizedBox()),
+                              errorWidget: ((context, url, error) => const SizedBox()),
                             ),
                             spaceHeightWidget(4),
                             FittedBox(
                               child: Text(
-                                getLocalizationNameOfLevel(
-                                    context, data?.name ?? ""),
-                                style: GoogleFonts.quicksand(
-                                    fontSize: 10, fontWeight: FontWeight.w600),
+                                getLocalizationNameOfLevel(context, data?.name ?? ""),
+                                style: GoogleFonts.quicksand(fontSize: 10, fontWeight: FontWeight.w600),
                               ),
                             )
                           ],
@@ -504,10 +390,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                       ),
                     );
                   }))
-              : Center(
-                  child: Text(S.of(context).noOrganizationsAvailable,
-                      style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.w400)));
+              : Center(child: Text(S.of(context).noOrganizationsAvailable, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w400)));
         },
       ),
     );
@@ -527,10 +410,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           children: [
             Text(
               S.of(context).sangathanReports,
-              style: GoogleFonts.quicksand(
-                  color: AppColor.purpleColor,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600),
+              style: GoogleFonts.quicksand(color: AppColor.purpleColor, fontSize: 20, fontWeight: FontWeight.w600),
             ),
             spaceHeightWidget(20),
             Row(
@@ -563,18 +443,12 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: GoogleFonts.quicksand(
-              color: AppColor.textBlackColor,
-              fontSize: 16,
-              fontWeight: FontWeight.w700),
+          style: GoogleFonts.quicksand(color: AppColor.textBlackColor, fontSize: 16, fontWeight: FontWeight.w700),
         ),
         spaceHeightWidget(4),
         Text(
           subtitle,
-          style: GoogleFonts.quicksand(
-              color: AppColor.greyColor,
-              fontSize: 12,
-              fontWeight: FontWeight.w600),
+          style: GoogleFonts.quicksand(color: AppColor.greyColor, fontSize: 12, fontWeight: FontWeight.w600),
         )
       ],
     );
@@ -591,19 +465,13 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                 backgroundColor: AppColor.buttonOrangeBackGroundColor,
                 child: Text(
                   'A',
-                  style: GoogleFonts.quicksand(
-                      color: AppColor.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700),
+                  style: GoogleFonts.quicksand(color: AppColor.white, fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
               spaceWidthWidget(16),
               Text(
                 'Namaskar Anirudh ji',
-                style: GoogleFonts.quicksand(
-                    color: AppColor.textBlackColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600),
+                style: GoogleFonts.quicksand(color: AppColor.textBlackColor, fontSize: 18, fontWeight: FontWeight.w600),
               ),
               const Spacer(),
               Image.asset(
@@ -617,8 +485,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
             top: 10,
             child: Container(
               padding: const EdgeInsets.all(6),
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: AppColor.white),
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.white),
               child: Image.asset(
                 AppIcons.drawerIcon,
                 height: 7,

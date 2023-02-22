@@ -148,9 +148,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
         },
       );
     } else if (isSelectedIndex == 1) {
-      sortedShaktiKendr.data?.sort((a, b) {
-        return (a.mandal?.name?.toLowerCase() ?? 'z').compareTo((b.mandal?.name?.toLowerCase()) ?? 'z');
-      });
+      filterBasedOnMandal();
     } else if (isSelectedIndex == 2) {
       sortedShaktiKendr.data?.sort((a, b) {
         return (a.name?.toLowerCase() ?? 'z').compareTo((b.name?.toLowerCase()) ?? 'z');
