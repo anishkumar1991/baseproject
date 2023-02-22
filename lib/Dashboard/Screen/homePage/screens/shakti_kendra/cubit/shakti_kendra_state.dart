@@ -30,8 +30,8 @@ class ShaktiKendraErrorState extends ShaktiKendraInitial {
 
   ShaktiKendraErrorState(this.error);
 }
-class DeleteDataShaktiKendraLoadingState extends ShaktiKendraInitial {}
 
+class DeleteDataShaktiKendraLoadingState extends ShaktiKendraInitial {}
 
 class DeleteShaktiKendraErrorState extends ShaktiKendraInitial {
   final String error;
@@ -45,10 +45,12 @@ class DeleteShaktiKendraFatchDataState extends ShaktiKendraInitial {
   DeleteShaktiKendraFatchDataState(this.data);
 }
 
-
-
 class ShaktiKendraFatchData extends ShaktiKendraInitial {
   final ShaktiKendr data;
 
   ShaktiKendraFatchData(this.data);
 }
+
+class ApplyFilterLoading extends ShaktiKendraInitial {}
+
+class ApplyFilterSuccess extends ShaktiKendraInitial {}

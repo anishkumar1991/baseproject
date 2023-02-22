@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -12,19 +10,20 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../../../../Values/app_colors.dart';
 import '../../../../../../../Values/space_height_widget.dart';
 import '../../../../../../../generated/l10n.dart';
-import '../../network/model/shakti_kendr_model.dart' as shaktiKendr;
+import '../../cubit/shakti_kendra_cubit.dart';
+import '../../network/model/shakti_kendr_model.dart';
 
 class SelectBooth extends StatelessWidget {
   EditShaktiKendrCubit cubit;
-  List<shaktiKendr.Data> shaktiKendrDataList;
+  List<ShaktiKendrData> shaktiKendrDataList;
 
-  SelectBooth({Key? key, required this.cubit,required this.shaktiKendrDataList}) : super(key: key);
+  SelectBooth({Key? key, required this.cubit, required this.shaktiKendrDataList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
-      builder: (context,state){
-        if(state is LoadingBoothEditShaktiKendraState){
+      builder: (context, state) {
+        if (state is LoadingBoothEditShaktiKendraState) {
           return listTileShimmerEffect(context: context);
         } else if (state is FatchDataBoothEditShaktiKendraState) {
           cubit.boothData = state.data;
@@ -33,15 +32,9 @@ class SelectBooth extends StatelessWidget {
           EasyLoading.showToast(state.error);
         }
         return Container(
-            decoration: const BoxDecoration(
-                color: AppColor.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20.0),
-                    topRight: Radius.circular(20.0))),
+            decoration: const BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))),
             child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(28.0),
-                  topRight: Radius.circular(28.0)),
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -51,24 +44,20 @@ class SelectBooth extends StatelessWidget {
                     child: Text(
                       S.of(context).boothSelect,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                          color: AppColor.borderColor, fontSize: 16),
+                      style: GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
                     ),
                   ),
                   spaceHeightWidget(20),
                   Expanded(
-                    child:
-                    BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(
-                        builder: (context, state) {
-                          return cubit.boothData.data?.isNotEmpty ?? false
-                              ? ListView.builder(
+                    child: BlocBuilder<EditShaktiKendrCubit, EditShaktiKendrState>(builder: (context, state) {
+                      return cubit.boothData.data?.isNotEmpty ?? false
+                          ? ListView.builder(
                               shrinkWrap: true,
                               itemCount: cubit.boothData.data?.length,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return Padding(
-                                  padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
@@ -77,12 +66,12 @@ class SelectBooth extends StatelessWidget {
                                           if (cubit.chekedValue.contains(cubit.boothData.data![index])) {
                                             cubit.chekedValue.remove(cubit.boothData.data![index]);
                                             cubit.selectedBooth.remove(cubit.boothData.data?[index].id);
-                                            await cubit.alreadyExitBoothInOtherSk(isAdd: false,boothId: cubit.boothData.data?[index].id ?? 0,shaktiKendrDataList: shaktiKendrDataList);
+                                            await cubit.alreadyExitBoothInOtherSk(isAdd: false, boothId: cubit.boothData.data?[index].id ?? 0, shaktiKendrDataList: shaktiKendrDataList);
                                           } else {
                                             cubit.chekedValue.add(cubit.boothData.data![index]);
                                             cubit.selectedBooth.add(cubit.boothData.data?[index].id ?? 0);
                                             print(cubit.boothData.data?[index].id);
-                                            await cubit.alreadyExitBoothInOtherSk(isAdd: true,boothId: cubit.boothData.data?[index].id ?? 0,shaktiKendrDataList: shaktiKendrDataList);
+                                            await cubit.alreadyExitBoothInOtherSk(isAdd: true, boothId: cubit.boothData.data?[index].id ?? 0, shaktiKendrDataList: shaktiKendrDataList);
                                           }
                                           cubit.emitState();
                                         },
@@ -92,88 +81,85 @@ class SelectBooth extends StatelessWidget {
                                               child: Checkbox(
                                                   checkColor: Colors.green,
                                                   activeColor: AppColor.white,
-                                                  side: MaterialStateBorderSide
-                                                      .resolveWith(
-                                                        (states) => const BorderSide(
-                                                        width: 1.0,
-                                                        color: AppColor
-                                                            .naturalBlackColor),
+                                                  side: MaterialStateBorderSide.resolveWith(
+                                                    (states) => const BorderSide(width: 1.0, color: AppColor.naturalBlackColor),
                                                   ),
                                                   value: cubit.chekedValue.contains(cubit.boothData.data![index]),
-                                                  onChanged: (value) {
-                                                  }),
+                                                  onChanged: (value) {}),
                                             ),
                                             Container(
                                               width: 35,
                                               decoration: BoxDecoration(
-                                                  borderRadius:
-                                                  BorderRadius.circular(11),
-                                                  color: AppColor
-                                                      .boothContainerColour),
+                                                  borderRadius: BorderRadius.circular(11),
+                                                  color: skMappingWithBooth(context, cubit.boothData.data?[index].parentid ?? 0) ? AppColor.primaryColor : AppColor.boothContainerColour),
                                               child: Text(
-                                                cubit.boothData.data?[index]
-                                                    .number ??
-                                                    '',
+                                                cubit.boothData.data?[index].number ?? '',
                                                 textAlign: TextAlign.center,
-                                                style: GoogleFonts.poppins(
-                                                    color: AppColor.white,
-                                                    fontSize: 12),
+                                                style: GoogleFonts.poppins(color: AppColor.white, fontSize: 12),
                                               ),
                                             ),
                                             spaceWidthWidget(10),
                                             Expanded(
                                               child: Text(
-                                                cubit.boothData.data?[index].name ??
-                                                    '',
+                                                cubit.boothData.data?[index].name ?? '',
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 3,
                                                 textAlign: TextAlign.left,
-                                                style: GoogleFonts.poppins(
-                                                    color: AppColor.black
-                                                        .withOpacity(0.8),
-                                                    fontSize: 13),
+                                                style: GoogleFonts.poppins(color: AppColor.black.withOpacity(0.8), fontSize: 13),
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
                                       index + 1 == cubit.boothData.data?.length
-                                          ? SizedBox.shrink()
+                                          ? const SizedBox.shrink()
                                           : const Divider(
-                                        color: AppColor.borderColor,
-                                      ),
+                                              color: AppColor.borderColor,
+                                            ),
                                     ],
                                   ),
                                 );
                               })
-                              : Center(
-                            child: Text(
-                              S.of(context).noDataAvailable,
-                              style: GoogleFonts.poppins(
-                                  color: AppColor.black, fontSize: 14),
-                            ),
-                          );
-                        }),
+                          : Center(
+                              child: Text(
+                                S.of(context).noDataAvailable,
+                                style: GoogleFonts.poppins(color: AppColor.black, fontSize: 14),
+                              ),
+                            );
+                    }),
                   ),
                   cubit.boothData.data?.isNotEmpty ?? false
                       ? CommonButton(
-                      borderRadius: 0,
-                      title: S.of(context).addBooth,
-                      onTap: () {
-                        Navigator.pop(context);
-                        print(
-                            "========================  ${cubit.chekedValue}");
-                      },
-                      width: MediaQuery.of(context).size.width,
-                      style: GoogleFonts.poppins(
-                          color: AppColor.white, fontSize: 14),
-                      padding: const EdgeInsets.symmetric(vertical: 14))
-                      : SizedBox.shrink(),
+                          borderRadius: 0,
+                          title: S.of(context).addBooth,
+                          onTap: () {
+                            Navigator.pop(context);
+                            print("========================  ${cubit.chekedValue}");
+                          },
+                          width: MediaQuery.of(context).size.width,
+                          style: GoogleFonts.poppins(color: AppColor.white, fontSize: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 14))
+                      : const SizedBox.shrink(),
                 ],
               ),
             ));
       },
     );
+  }
+
+  skMappingWithBooth(BuildContext context, int mappingId) {
+    final cubit = BlocProvider.of<ShaktiKendraCubit>(context);
+    bool isFound = false;
+    for (int i = 0; i < (cubit.shaktiKendr.data?.length ?? 0); i++) {
+      if (isFound == false) {
+        if (cubit.shaktiKendr.data?[i].id == mappingId) {
+          isFound = true;
+        } else {
+          isFound = false;
+        }
+      }
+    }
+    return isFound;
   }
 
   Widget listTileShimmerEffect({required BuildContext context}) {
@@ -189,16 +175,15 @@ class SelectBooth extends StatelessWidget {
             Text(
               S.of(context).boothSelect,
               textAlign: TextAlign.center,
-              style: GoogleFonts.poppins(
-                  color: AppColor.borderColor, fontSize: 16),
+              style: GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
             ),
             spaceHeightWidget(30),
             Expanded(
                 child: ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    itemCount: cubit.mandal.data?.length,
-                    physics: BouncingScrollPhysics(),
+                    itemCount: cubit.mandalDropDownList?.length,
+                    physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,8 +191,7 @@ class SelectBooth extends StatelessWidget {
                           SizedBox(
                             width: double.infinity,
                             child: Padding(
-                              padding:
-                              const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: Container(
                                 height: 30,
                                 width: MediaQuery.of(context).size.width * 0.9,
@@ -215,11 +199,11 @@ class SelectBooth extends StatelessWidget {
                               ),
                             ),
                           ),
-                          index + 1 == cubit.mandal.data?.length
-                              ? SizedBox.shrink()
+                          index + 1 == cubit.mandalDropDownList?.length
+                              ? const SizedBox.shrink()
                               : const Divider(
-                            color: AppColor.borderColor,
-                          ),
+                                  color: AppColor.borderColor,
+                                ),
                         ],
                       );
                     }))

@@ -24,6 +24,7 @@ class _GetDropDownValue implements GetDropDownValue {
   Future<HttpResponse<dynamic>> getVidhanSabhaValue(
     token,
     id,
+    locationType,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -38,7 +39,7 @@ class _GetDropDownValue implements GetDropDownValue {
     )
             .compose(
               _dio.options,
-              '/zila/api/data/required_locations?location_type=CountryState&location_id=${id}&required_location_type=AssemblyConstituency',
+              '/zila/api/data/required_locations?location_type=${locationType}&location_id=${id}&required_location_type=AssemblyConstituency',
               queryParameters: queryParameters,
               data: _data,
             )

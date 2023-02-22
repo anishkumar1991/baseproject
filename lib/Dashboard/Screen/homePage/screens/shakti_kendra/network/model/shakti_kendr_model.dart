@@ -1,6 +1,6 @@
 class ShaktiKendr {
   bool? success;
-  List<Data>? data;
+  List<ShaktiKendrData>? data;
   String? message;
 
   ShaktiKendr({this.success, this.data, this.message});
@@ -8,26 +8,26 @@ class ShaktiKendr {
   ShaktiKendr.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <ShaktiKendrData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(ShaktiKendrData.fromJson(v));
       });
     }
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
 
-class Data {
+class ShaktiKendrData {
   int? id;
   String? name;
   String? createdAt;
@@ -35,33 +35,33 @@ class Data {
   int? assemblyConstituencyId;
   int? mandalId;
   String? number;
-  Null? documentId;
-  Null? deletedAt;
-  Null? mahaSystemId;
+  dynamic documentId;
+  dynamic deletedAt;
+  dynamic mahaSystemId;
   int? createdById;
   int? skPeople;
   List<Booths>? booths;
   Mandal? mandal;
   Mandal? createdBy;
 
-  Data(
+  ShaktiKendrData(
       {this.id,
-        this.name,
-        this.createdAt,
-        this.updatedAt,
-        this.assemblyConstituencyId,
-        this.mandalId,
-        this.number,
-        this.documentId,
-        this.deletedAt,
-        this.mahaSystemId,
-        this.createdById,
-        this.skPeople,
-        this.booths,
-        this.mandal,
-        this.createdBy});
+      this.name,
+      this.createdAt,
+      this.updatedAt,
+      this.assemblyConstituencyId,
+      this.mandalId,
+      this.number,
+      this.documentId,
+      this.deletedAt,
+      this.mahaSystemId,
+      this.createdById,
+      this.skPeople,
+      this.booths,
+      this.mandal,
+      this.createdBy});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ShaktiKendrData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     createdAt = json['created_at'];
@@ -77,38 +77,35 @@ class Data {
     if (json['booths'] != null) {
       booths = <Booths>[];
       json['booths'].forEach((v) {
-        booths!.add(new Booths.fromJson(v));
+        booths!.add(Booths.fromJson(v));
       });
     }
-    mandal =
-    json['mandal'] != null ? new Mandal.fromJson(json['mandal']) : null;
-    createdBy = json['created_by'] != null
-        ? new Mandal.fromJson(json['created_by'])
-        : null;
+    mandal = json['mandal'] != null ? Mandal.fromJson(json['mandal']) : null;
+    createdBy = json['created_by'] != null ? Mandal.fromJson(json['created_by']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['assembly_constituency_id'] = this.assemblyConstituencyId;
-    data['mandal_id'] = this.mandalId;
-    data['number'] = this.number;
-    data['document_id'] = this.documentId;
-    data['deleted_at'] = this.deletedAt;
-    data['maha_system_id'] = this.mahaSystemId;
-    data['created_by_id'] = this.createdById;
-    data['sk_people'] = this.skPeople;
-    if (this.booths != null) {
-      data['booths'] = this.booths!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['assembly_constituency_id'] = assemblyConstituencyId;
+    data['mandal_id'] = mandalId;
+    data['number'] = number;
+    data['document_id'] = documentId;
+    data['deleted_at'] = deletedAt;
+    data['maha_system_id'] = mahaSystemId;
+    data['created_by_id'] = createdById;
+    data['sk_people'] = skPeople;
+    if (booths != null) {
+      data['booths'] = booths!.map((v) => v.toJson()).toList();
     }
-    if (this.mandal != null) {
-      data['mandal'] = this.mandal!.toJson();
+    if (mandal != null) {
+      data['mandal'] = mandal!.toJson();
     }
-    if (this.createdBy != null) {
-      data['created_by'] = this.createdBy!.toJson();
+    if (createdBy != null) {
+      data['created_by'] = createdBy!.toJson();
     }
     return data;
   }
@@ -130,11 +127,11 @@ class Booths {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['number'] = this.number;
-    data['country_state_id'] = this.countryStateId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['number'] = number;
+    data['country_state_id'] = countryStateId;
     return data;
   }
 }
@@ -151,9 +148,9 @@ class Mandal {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }
