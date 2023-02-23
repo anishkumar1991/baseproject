@@ -131,9 +131,9 @@ class Ac {
     required this.number,
   });
 
-  String name;
-  int id;
-  String number;
+  String? name;
+  int? id;
+  String? number;
 
   factory Ac.fromJson(Map<String, dynamic> json) => Ac(
     name: json["name"],

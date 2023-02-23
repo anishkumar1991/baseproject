@@ -13,7 +13,7 @@ class _FetchNotificationApi implements FetchNotificationApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://35.200.202.116';
+    baseUrl ??= 'http://production-notification.ccdms.in';
   }
 
   final Dio _dio;

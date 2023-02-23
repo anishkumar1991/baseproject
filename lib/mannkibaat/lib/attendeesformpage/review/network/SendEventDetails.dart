@@ -9,7 +9,8 @@ part 'SendEventDetails.g.dart';
 abstract class SendEventDetailsApi {
   factory SendEventDetailsApi(Dio dio) = _SendEventDetailsApi;
 
-  @POST('api/event_tracker/get_country_state')
+  @POST('api/event_tracker/create_event_details')
   @Headers({"Content-Type": "application/json", "Accept": 'application/json'})
-  Future<HttpResponse> sendEvent(@Header('Authorization') String token, @Body() Map<String, dynamic> data);
+  Future<HttpResponse> sendEvent(
+      @Header('Authorization') String token, @Body() Map<String, dynamic> data);
 }

@@ -18,8 +18,6 @@ class OnGoing extends StatefulWidget {
 }
 
 class _OnGoingState extends State<OnGoing> {
-
-
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
@@ -83,6 +81,29 @@ class _OnGoingState extends State<OnGoing> {
                                                   .dashModal.data[index].id,
                                             )));
                               }
+                              else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AttendeeReviewPage(
+                                          vidhanSabha:
+                                          '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                          state:
+                                          '${state.dashModal.data[index].eventDetail.countryStateRef?.first.name}',
+                                          totalAttendees:
+                                          '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                          booth:
+                                          '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                          address:
+                                          '${state.dashModal.data[index].eventDetail.address}',
+                                          description:
+                                          '${state.dashModal.data[index].eventDetail.description}',
+                                          img1:
+                                          '${state.dashModal.data[index].eventDetail.photo1}',
+                                          img2:
+                                          '${state.dashModal.data[index].eventDetail.photo1}',
+                                        )));
+                              }
                             },
                             child: ProgramCard(
                                 id: '${state.dashModal.data[index].id}',
@@ -95,6 +116,7 @@ class _OnGoingState extends State<OnGoing> {
                                 img: state.dashModal.data[index].eventPhoto),
                           );
                         }
+
                       },
                     );
                   }

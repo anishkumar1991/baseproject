@@ -44,7 +44,7 @@ class _SendEventDetailsApi implements SendEventDetailsApi {
     )
             .compose(
               _dio.options,
-              'api/event_tracker/get_country_state',
+              'api/event_tracker/create_event_details',
               queryParameters: queryParameters,
               data: _data,
             )

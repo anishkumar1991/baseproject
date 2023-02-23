@@ -72,10 +72,10 @@ class ReportScreen extends StatelessWidget {
                               physics: const ScrollPhysics(),
                               shrinkWrap: true,
                               itemCount:
-                                  cubit.tempModel!.notificationsList?.length,
+                                  cubit.tempModel?.notificationsList?.length,
                               itemBuilder: (context, index) {
                                 var tempdate = cubit
-                                    .tempModel!.notificationsList![index].date;
+                                    .tempModel?.notificationsList?[index].date;
                                 var tempdate2 =
                                     tempdate! + " " + "12:23:42.528083";
 
@@ -84,7 +84,7 @@ class ReportScreen extends StatelessWidget {
                                 var comparedate = DateFormat("d MMMM")
                                     .format(state.datePicked);
                                 time = cubit
-                                    .tempModel!.notificationsList![index].time;
+                                    .tempModel?.notificationsList?[index].time;
                                 var temptime = time.split(":");
 
                                 if (int.parse(temptime[0]) >= 12) {
@@ -99,7 +99,7 @@ class ReportScreen extends StatelessWidget {
                                     " " +
                                     temptimeshow;
 
-                                if (cubit.tempModel!.notificationsList![index]
+                                if (cubit.tempModel?.notificationsList?[index]
                                             .sType ==
                                         "report" &&
                                     printdate == comparedate) {

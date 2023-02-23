@@ -18,7 +18,8 @@ import 'ImageUploadBox.dart';
 
 class AttendeesFormPage extends StatefulWidget {
   final int eventId;
-  AttendeesFormPage({Key? key, required this.eventId}) : super(key: key);
+
+  const AttendeesFormPage({Key? key, required this.eventId}) : super(key: key);
 
   @override
   State<AttendeesFormPage> createState() => _AttendeesFormPageState();
@@ -55,146 +56,152 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                   right: Constants.paddingRight),
               child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'विवरण दर्ज करें',
-                        style: GoogleFonts.publicSans(
-                            fontSize: 20,
-                            color: AppColor().textColor,
-                            fontWeight: FontWeight.w600),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'विवरण दर्ज करें',
+                    style: GoogleFonts.publicSans(
+                        fontSize: 20,
+                        color: AppColor().textColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(height: 25),
+                  const DropDown(),
+                  const SizedBox(height: 20),
+                  Text(
+                    'कुल उपस्थित *',
+                    style: GoogleFonts.publicSans(
+                        fontSize: 16,
+                        color: AppColor().textColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                      controller: totalAttendeesController,
+                      style: TextStyle(color: AppColor().textColor),
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: AppColor().textFieldColor,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                  width: 1, color: AppColor().textFieldColor))),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        signed: false,
                       ),
-                      const SizedBox(height: 25),
-                      const DropDown(),
-                      const SizedBox(height: 20),
-                      Text(
-                        'कुल उपस्थित *',
-                        style: GoogleFonts.publicSans(
-                            fontSize: 16,
-                            color: AppColor().textColor,
-                            fontWeight: FontWeight.w400),
+                      onChanged: (value) {
+                        AttendeeStorageService.settotalAttendees(
+                            value.toString());
+                        print(AttendeeStorageService.gettotalAttendees());
+                      }),
+                  const SizedBox(height: 20),
+                  Text(
+                    'पता',
+                    style: GoogleFonts.publicSans(
+                        fontSize: 16,
+                        color: AppColor().textColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                      controller: addressController,
+                      style: TextStyle(color: AppColor().textColor),
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: AppColor().textFieldColor,
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: BorderSide(
+                                  width: 1, color: AppColor().textFieldColor))),
+                      keyboardType: TextInputType.name,
+                      onChanged: (value) {
+                        AttendeeStorageService.setaddress(value.toString());
+                        print(AttendeeStorageService.getaddress());
+                      }),
+                  const SizedBox(height: 15),
+                  Text(
+                    'विवरण',
+                    style: GoogleFonts.publicSans(
+                        fontSize: 16,
+                        color: AppColor().textColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 90,
+                    child: TextFormField(
+                        controller: descriptionController,
+                        expands: true,
+                        maxLines: null,
+                        minLines: null,
+                        style: TextStyle(color: AppColor().textColor),
+                        decoration: InputDecoration(
+                            filled: true,
+                            fillColor: AppColor().textFieldColor,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    width: 1,
+                                    color: AppColor().textFieldColor))),
+                        keyboardType: TextInputType.name,
+                        onChanged: (value) {
+                          AttendeeStorageService.setdescription(
+                              value.toString());
+                          print(AttendeeStorageService.getdescription());
+                        }),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'तश्वीरें अपलोड करें *',
+                    style: GoogleFonts.publicSans(
+                        fontSize: 16,
+                        color: AppColor().textColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 10),
+                  ImageBox(),
+                  const SizedBox(height: 25),
+                  Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      height: Constants.buttonSizeBoxHeight,
+                      width: Constants.buttonSizeBoxWidth,
+                      child: SubmitButton(
+                        onPress: () {
+                          print(
+                              AttendeeStorageService.getimage1url());
+                          if (AttendeeStorageService.getimage1url() == null &&
+                              AttendeeStorageService.getimage2url() == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content:
+                                        Text("Please Select Atleast 1 Image")));
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FormReviewPage(
+                                          totalAttendees:
+                                              totalAttendeesController.text,
+                                          address: addressController.text,
+                                          description:
+                                              descriptionController.text,
+                                          img1: AttendeeStorageService
+                                                  .getimage1url()
+                                              .toString(),
+                                          img2: AttendeeStorageService
+                                                  .getimage2url()
+                                              .toString(),
+                                          eventid: widget.eventId,
+                                        )));
+                          }
+                        },
                       ),
-                      const SizedBox(height: 10),
-                      TextFormField(
-                          controller: totalAttendeesController,
-                          style: TextStyle(color: AppColor().textColor),
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor().textFieldColor,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                      width: 1,
-                                      color: AppColor().textFieldColor))),
-                          keyboardType: const TextInputType.numberWithOptions(
-                            signed: false,
-                          ),
-                          onChanged: (value) {
-                            AttendeeStorageService.settotalAttendees(
-                                value.toString());
-                            print(AttendeeStorageService.gettotalAttendees());
-                          }),
-                      const SizedBox(height: 20),
-                      Text(
-                        'पता',
-                        style: GoogleFonts.publicSans(
-                            fontSize: 16,
-                            color: AppColor().textColor,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(height: 12),
-                      TextFormField(
-                          controller: addressController,
-                          style: TextStyle(color: AppColor().textColor),
-                          decoration: InputDecoration(
-                              filled: true,
-                              fillColor: AppColor().textFieldColor,
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(
-                                      width: 1,
-                                      color: AppColor().textFieldColor))),
-                          keyboardType: TextInputType.name,
-                          onChanged: (value) {
-                            AttendeeStorageService.setaddress(value.toString());
-                            print(AttendeeStorageService.getaddress());
-                          }),
-                      const SizedBox(height: 15),
-                      Text(
-                        'विवरण',
-                        style: GoogleFonts.publicSans(
-                            fontSize: 16,
-                            color: AppColor().textColor,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        height: 90,
-                        child: TextFormField(
-                            controller: descriptionController,
-                            expands: true,
-                            maxLines: null,
-                            minLines: null,
-                            style: TextStyle(color: AppColor().textColor),
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: AppColor().textFieldColor,
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    borderSide: BorderSide(
-                                        width: 1,
-                                        color: AppColor().textFieldColor))),
-                            keyboardType: TextInputType.name,
-                            onChanged: (value) {
-                              AttendeeStorageService.setdescription(
-                                  value.toString());
-                              print(AttendeeStorageService.getdescription());
-                            }),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'तश्वीरें अपलोड करें',
-                        style: GoogleFonts.publicSans(
-                            fontSize: 16,
-                            color: AppColor().textColor,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      const SizedBox(height: 10),
-                      ImageBox(),
-                      const SizedBox(height: 25),
-                      Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          height: Constants.buttonSizeBoxHeight,
-                          width: Constants.buttonSizeBoxWidth,
-                          child: SubmitButton(
-                            onPress: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          FormReviewPage(
-
-                                            totalAttendees:
-                                            totalAttendeesController.text,
-                                            address: addressController.text,
-                                            description: descriptionController
-                                                .text,
-                                            img1: AttendeeStorageService
-                                                .getimage1url()
-                                                .toString(),
-                                            img2: AttendeeStorageService
-                                                .getimage2url()
-                                                .toString(),
-                                            eventid: widget.eventId,
-                                          )));
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 30)
-                    ],
-                  )),
+                    ),
+                  ),
+                  const SizedBox(height: 30)
+                ],
+              )),
             ),
           ),
         ),
