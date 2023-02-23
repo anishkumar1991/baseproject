@@ -64,7 +64,7 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                         children: [
                                           CommonLogoWidget(
                                             name: vidhanSabha.data?.locations?[index].name ?? '',
-                                            isSelected: cubit.zilaId == vidhanSabha.data?.locations?[index].id,
+                                            backgroundColor: cubit.zilaId == vidhanSabha.data?.locations?[index].id ? AppColor.orange : AppColor.naturalBlackColor,
                                           ),
                                           Text(
                                             "${vidhanSabha.data?.locations?[index].number ?? ''} - ${vidhanSabha.data?.locations?[index].name ?? ''}",

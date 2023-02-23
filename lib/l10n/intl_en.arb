@@ -215,5 +215,7 @@
   "karyakarniSkText": "Karyakarni",
   "editShaktiKendr": "Edit Shakti Kendra",
   "pleaseSelectPhoto": "Please select photo",
-  "choose": "Choose"
+  "choose": "Choose",
+  "dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal": "Data entry is not allowed on shakti kendra of other mandal",
+  "dataEntryIsNotAllowedOnBoothOfOtherMandal": "Data entry is not allowed on Booth of other mandal"
 }

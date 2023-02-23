@@ -118,7 +118,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             const Spacer(),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", isSelected: true),
+                              child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", backgroundColor: AppColor.orange),
                             ),
                           ],
                         ),
@@ -178,7 +178,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                     onTap: () {
                                       showLocationBottomSheet();
                                     },
-                                    child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", isSelected: true),
+                                    child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", backgroundColor: AppColor.orange),
                                   ),
                                 ),
                               ],

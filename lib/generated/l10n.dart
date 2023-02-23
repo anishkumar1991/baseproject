@@ -2209,6 +2209,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Data entry is not allowed on shakti kendra of other mandal`
+  String get dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal {
+    return Intl.message(
+      'Data entry is not allowed on shakti kendra of other mandal',
+      name: 'dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data entry is not allowed on Booth of other mandal`
+  String get dataEntryIsNotAllowedOnBoothOfOtherMandal {
+    return Intl.message(
+      'Data entry is not allowed on Booth of other mandal',
+      name: 'dataEntryIsNotAllowedOnBoothOfOtherMandal',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

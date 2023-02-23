@@ -214,8 +214,8 @@
   "karyakarniBoothText": "समिति",
   "karyakarniSkText": "शक्ति केंद्र टोली",
   "editShaktiKendr": "शक्ति केंद्र एडिट",
-
-  "pleaseSelectPhoto" : "कृपया फोटो सेलेक्ट करें",
-
-  "choose": "चुनें"
+  "pleaseSelectPhoto": "कृपया फोटो सेलेक्ट करें",
+  "choose": "चुनें",
+  "dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal": "अन्य मंडल के शक्ति केन्द्रों पर डाटा एंट्री की अनुमति नहीं है",
+  "dataEntryIsNotAllowedOnBoothOfOtherMandal": "अन्य मंडल के बूथ पर डाटा एंट्री की अनुमति नहीं है"
 }

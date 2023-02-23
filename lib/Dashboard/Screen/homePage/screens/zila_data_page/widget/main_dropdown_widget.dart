@@ -36,9 +36,8 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
           context.read<ZilaDataCubit>().getDeleteReason();
           cubit.zilaSelected = null;
           cubit.partyzilaList = state.data;
-          /* cubit.partyzilaList.sort((a, b) {
-            return (a.name?.toLowerCase() ?? 'z').compareTo((b.name?.toLowerCase()) ?? 'z');
-          });*/
+          locationListSortBasedOnType();
+
           if (cubit.partyzilaList.isNotEmpty) {
             cubit.levelNameId = cubit.partyzilaList.first.id;
             cubit.zilaSelected = cubit.partyzilaList.first;
@@ -92,7 +91,7 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                               style: GoogleFonts.roboto(color: AppColor.greyColor, fontWeight: FontWeight.w400, fontSize: 14),
                             ),
                             Text(
-                              cubit.zilaSelected?.name ?? "",
+                              showDropdownValueBasedOnType(cubit.zilaSelected),
                               style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 16),
                             ),
                           ],
@@ -182,12 +181,12 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                       color: AppColor.transparent,
                       child: Row(
                         children: [
-                          CommonLogoWidget(name: locationList[index].name ?? "", isSelected: cubit.zilaSelected?.id == locationList[index].id),
+                          CommonLogoWidget(name: locationList[index].name ?? "", backgroundColor: cubit.zilaSelected?.id == locationList[index].id ? AppColor.orange : AppColor.naturalBlackColor),
                           const SizedBox(
                             width: 10,
                           ),
                           Text(
-                            locationList[index].name ?? "",
+                            showDropdownValueBasedOnType(locationList[index]),
                             textAlign: TextAlign.left,
                             style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
                           )
@@ -206,5 +205,24 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
         ))
       ],
     );
+  }
+
+  showDropdownValueBasedOnType(Locations? zilaSelected) {
+    String type = DropdownHandler.mainDropdownName(widget.typeName, context);
+    if (type == S.of(context).vidhanSabha || type == "Lok Sabha") {
+      return "${zilaSelected?.number ?? ""} - ${zilaSelected?.name ?? ""}";
+    } else {
+      return zilaSelected?.name ?? "";
+    }
+  }
+
+  locationListSortBasedOnType() {
+    final cubit = BlocProvider.of<ZilaDataCubit>(context);
+    String typeOfLevel = DropdownHandler.mainDropdownName(widget.typeName, context);
+    if (typeOfLevel == "Panna" || typeOfLevel == S.of(context).booth || typeOfLevel == "Lok Sabha" || typeOfLevel == S.of(context).vidhanSabha) {
+      cubit.partyzilaList.sort((a, b) => int.parse(a.number.toString()).compareTo(int.parse(b.number.toString())));
+    } else {
+      cubit.partyzilaList.sort((a, b) => (a.name ?? "").compareTo(b.name ?? ""));
+    }
   }
 }

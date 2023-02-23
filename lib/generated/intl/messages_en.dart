@@ -89,6 +89,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentSk":
             MessageLookupByLibrary.simpleMessage("Current Shakti Kendra"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("Data Entry"),
+        "dataEntryIsNotAllowedOnBoothOfOtherMandal":
+            MessageLookupByLibrary.simpleMessage(
+                "Data entry is not allowed on Booth of other mandal"),
+        "dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal":
+            MessageLookupByLibrary.simpleMessage(
+                "Data entry is not allowed on shakti kendra of other mandal"),
         "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
             "Data Unit is empty So you can\'t add entry"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("Date and Time *"),

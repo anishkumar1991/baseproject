@@ -90,6 +90,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentSk":
             MessageLookupByLibrary.simpleMessage("वर्तमान शक्ति केंद्र"),
         "dataEntry": MessageLookupByLibrary.simpleMessage("डाटा एंट्री"),
+        "dataEntryIsNotAllowedOnBoothOfOtherMandal":
+            MessageLookupByLibrary.simpleMessage(
+                "अन्य मंडल के बूथ पर डाटा एंट्री की अनुमति नहीं है"),
+        "dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal":
+            MessageLookupByLibrary.simpleMessage(
+                "अन्य मंडल के शक्ति केन्द्रों पर डाटा एंट्री की अनुमति नहीं है"),
         "dataUnitEmptyError": MessageLookupByLibrary.simpleMessage(
             "डेटा यूनिट उपलब्ध नहीं है इसलिए आप ऐड एंट्री नहीं कर सकते"),
         "dateAndTime": MessageLookupByLibrary.simpleMessage("दिनांक और समय * "),

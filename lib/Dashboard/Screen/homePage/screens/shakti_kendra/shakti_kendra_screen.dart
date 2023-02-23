@@ -485,7 +485,7 @@ class _ShaktiKendraScreenState extends State<ShaktiKendraScreen> {
                                       children: [
                                         CommonLogoWidget(
                                           name: vidhanSabha.data?.locations?[index].name ?? '',
-                                          isSelected: cubit.zilaSelected == vidhanSabha.data?.locations?[index],
+                                          backgroundColor: cubit.zilaSelected == vidhanSabha.data?.locations?[index] ? AppColor.orange : AppColor.naturalBlackColor,
                                         ),
                                         Text(
                                           "${vidhanSabha.data?.locations?[index].number ?? ''} - ${vidhanSabha.data?.locations?[index].name ?? ''}",

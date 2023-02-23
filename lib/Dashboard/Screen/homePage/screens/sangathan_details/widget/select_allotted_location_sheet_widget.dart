@@ -14,17 +14,13 @@ class SelectAllottedLocationSheetWidget extends StatefulWidget {
   final String typeLevel;
   final List<Locations> locationList;
 
-  const SelectAllottedLocationSheetWidget(
-      {Key? key, required this.typeLevel, required this.locationList})
-      : super(key: key);
+  const SelectAllottedLocationSheetWidget({Key? key, required this.typeLevel, required this.locationList}) : super(key: key);
 
   @override
-  State<SelectAllottedLocationSheetWidget> createState() =>
-      _SelectAllottedLocationSheetWidgetState();
+  State<SelectAllottedLocationSheetWidget> createState() => _SelectAllottedLocationSheetWidgetState();
 }
 
-class _SelectAllottedLocationSheetWidgetState
-    extends State<SelectAllottedLocationSheetWidget> {
+class _SelectAllottedLocationSheetWidgetState extends State<SelectAllottedLocationSheetWidget> {
   Future<bool> isExist() async {
     var cubit = context.read<SangathanDetailsCubit>();
     return cubit.selectedAllottedLocation != null ? true : false;
@@ -49,8 +45,7 @@ class _SelectAllottedLocationSheetWidgetState
                       ? "${getLocalizationNameOfLevel(context, DropdownHandler.gettingReverseLocationTypeForCondition(widget.typeLevel))} ${S.of(context).choose}"
                       : "${S.of(context).choose} ${getLocalizationNameOfLevel(context, DropdownHandler.gettingReverseLocationTypeForCondition(widget.typeLevel))}",
                   textAlign: TextAlign.left,
-                  style: GoogleFonts.quicksand(
-                      fontSize: 18, fontWeight: FontWeight.w600),
+                  style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),
                 ),
                 cubit.selectedAllottedLocation == null
                     ? const SizedBox()
@@ -76,8 +71,7 @@ class _SelectAllottedLocationSheetWidgetState
                     GestureDetector(
                       onTap: () {
                         setState(() {
-                          cubit.onSelectAllottedLocation(
-                              widget.locationList[index]);
+                          cubit.onSelectAllottedLocation(widget.locationList[index]);
                         });
                         Navigator.pop(context);
                       },
@@ -88,17 +82,14 @@ class _SelectAllottedLocationSheetWidgetState
                           children: [
                             CommonLogoWidget(
                                 name: widget.locationList[index].name ?? "",
-                                isSelected:
-                                    cubit.selectedAllottedLocation?.name ==
-                                        widget.locationList[index].name),
+                                backgroundColor: cubit.selectedAllottedLocation?.name == widget.locationList[index].name ? AppColor.orange : AppColor.naturalBlackColor),
                             const SizedBox(
                               width: 10,
                             ),
                             Text(
                               widget.locationList[index].name ?? "",
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.quicksand(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
+                              style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
                             )
                           ],
                         ),

@@ -5,11 +5,9 @@ import 'package:sangathan/Values/string_utils.dart';
 
 class CommonLogoWidget extends StatefulWidget {
   final String name;
-  final bool isSelected;
+  final Color backgroundColor;
 
-  const CommonLogoWidget(
-      {Key? key, required this.name, required this.isSelected})
-      : super(key: key);
+  const CommonLogoWidget({Key? key, required this.name, required this.backgroundColor}) : super(key: key);
 
   @override
   State<CommonLogoWidget> createState() => _CommonLogoWidgetState();
@@ -26,18 +24,13 @@ class _CommonLogoWidgetState extends State<CommonLogoWidget> {
             alignment: Alignment.centerRight,
             child: CircleAvatar(
               radius: 22,
-              backgroundColor: widget.isSelected
-                  ? AppColor.orange
-                  : AppColor.naturalBlackColor,
+              backgroundColor: widget.backgroundColor,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Center(
                   child: Text(
                     StringUtils.logoTitleCase(widget.name),
-                    style: GoogleFonts.quicksand(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: AppColor.white),
+                    style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600, color: AppColor.white),
                   ),
                 ),
               ),
