@@ -7,7 +7,6 @@ import '../../../../../Storage/user_storage_service.dart';
 import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../../generateauthtoken/cubit/SendState.dart';
 import '../../../utils/appbar/AppBar.dart';
-import 'NewUserScreen.dart';
 import 'expired.dart';
 import 'ongoing.dart';
 
