@@ -15,7 +15,7 @@ class ReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var time = null;
-    var temptimeshow;
+    var temptimeshow = " ";
     final cubit = context.read<NotificationCubit>();
     cubit.fetchNotification();
 
@@ -262,11 +262,7 @@ class ReportScreen extends StatelessWidget {
                               } else {
                                 temptimeshow = "AM";
                               }
-                              var showtime = temptime[0] +
-                                  ":" +
-                                  temptime[1] +
-                                  " " +
-                                  temptimeshow;
+                              var showtime = temptime[0] +":" + temptime[1] + " " + temptimeshow;
 
                               if (cubit.tempModel!.notificationsList![index]
                                       .sType ==

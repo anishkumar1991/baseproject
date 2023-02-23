@@ -5,6 +5,7 @@ import 'package:sangathan/mannkibaat/lib/generateauthtoken/network/model/UserDet
 abstract class GenerateMannKiBaatAuthState extends Equatable {
   List<Object> get props => [];
 }
+class NewUserState extends GenerateMannKiBaatAuthState{}
 
 class LoginInitialState extends GenerateMannKiBaatAuthState {}
 

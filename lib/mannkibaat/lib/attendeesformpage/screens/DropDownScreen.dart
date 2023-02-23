@@ -1,12 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/FetchCubit.dart';
 import '../cubit/FetchStates.dart';
 import 'CustomDD.dart';
-
-
 
 class DropDown extends StatefulWidget {
   const DropDown({Key? key}) : super(key: key);
@@ -21,7 +18,7 @@ class _DropDownState extends State<DropDown> {
     final cubit = context.read<FetchCubit>();
     cubit.fetchAcId();
 
-    return  Container(
+    return Container(
       color: Colors.white,
       child: BlocConsumer<FetchCubit, FetchStates>(
         listener: (context, state) {
@@ -44,8 +41,8 @@ class _DropDownState extends State<DropDown> {
                   selectedValue: cubit.vidhanSabhaSelected,
                   hintText: 'विधान सभा का चयन करें',
                   dropDownList: cubit.acList
-                      .map((e) => DropdownMenuItem(
-                      value: e, child: Text(e.name ?? '')))
+                      .map((e) =>
+                          DropdownMenuItem(value: e, child: Text(e.name ?? '')))
                       .toList(),
                   onChange: ((value) {
                     cubit.onChangeVidhanSabha(value!);
@@ -61,8 +58,8 @@ class _DropDownState extends State<DropDown> {
                   selectedValue: cubit.boothSelected,
                   hintText: 'बूथ चुनें',
                   dropDownList: cubit.boothList
-                      .map((e) => DropdownMenuItem(
-                      value: e, child: Text(e.name ?? '')))
+                      .map((e) =>
+                          DropdownMenuItem(value: e, child: Text(e.name ?? '')))
                       .toList(),
                   onChange: ((value) {
                     cubit.onChangeBooth(value!);
@@ -76,11 +73,3 @@ class _DropDownState extends State<DropDown> {
     );
   }
 }
-
-
-
-
-
-
-
-

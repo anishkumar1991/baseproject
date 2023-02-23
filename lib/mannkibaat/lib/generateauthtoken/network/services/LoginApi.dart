@@ -16,4 +16,9 @@ abstract class MannKibaatAuthApi {
   @POST('api/auth/sessions/submit_otp')
   @Headers({"Content-Type": "application/json", "Accept": 'application/json'})
   Future<HttpResponse> submitOtp(@Body() Map<String, dynamic> data);
+
+  @POST('/api/event_tracker/update_user_details')
+  @Headers({"Content-Type": "application/json", "Accept": 'application/json'})
+  Future<HttpResponse> addUser(@Header("Authorization") String auth, @Body() Map<String, dynamic> data);
 }
+

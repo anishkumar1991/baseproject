@@ -26,20 +26,22 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
   void initState() {
     final cubit = context.read<NotificationCubit>();
     cubit.fetchNotification();
-
-    if (cubit.tempModel!.isCircularShow == false &&
-        cubit.tempModel!.isReportShow == true) {
-      tabController = TabController(length: 2, vsync: this);
-    } else if (cubit.tempModel!.isCircularShow == true &&
-        cubit.tempModel!.isReportShow == false) {
-      tabController = TabController(length: 2, vsync: this);
-    } else if (cubit.tempModel!.isCircularShow == false &&
-        cubit.tempModel!.isReportShow == false) {
-    } else {
-      tabController = TabController(length: 3, vsync: this);
-    }
-    super.initState();
+    tabController = TabController(length: 3, vsync: this);
   }
+
+  //   if (cubit.tempModel!.isCircularShow == false &&
+  //       cubit.tempModel!.isReportShow == true) {
+  //     tabController = TabController(length: 2, vsync: this);
+  //   } else if (cubit.tempModel!.isCircularShow == true &&
+  //       cubit.tempModel!.isReportShow == false) {
+  //     tabController = TabController(length: 2, vsync: this);
+  //   } else if (cubit.tempModel!.isCircularShow == false &&
+  //       cubit.tempModel!.isReportShow == false) {
+  //   } else {
+  //     tabController = TabController(length: 3, vsync: this);
+  //   }
+  //   super.initState();
+  // }
 
   @override
   void dispose() {
@@ -209,7 +211,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
               Expanded(
                 child: TabBarView(
                   controller: tabController,
-                  children: const [
+                  children:  const [
                     CircularScreen(),
                     ReportScreen(),
                     NotificationScreen(),

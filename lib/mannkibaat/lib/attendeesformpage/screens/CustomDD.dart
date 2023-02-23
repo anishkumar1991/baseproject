@@ -4,16 +4,18 @@ import 'package:flutter/material.dart';
 class CustomDropDown extends StatelessWidget {
   CustomDropDown(
       {super.key,
-        required this.title,
-        this.dropDownList,
-        this.hintText,
-        this.onChange,
-        this.selectedValue});
+      required this.title,
+      this.dropDownList,
+      this.hintText,
+      this.onChange,
+      this.selectedValue});
+
   String title;
   String? hintText;
   Function(dynamic)? onChange;
   dynamic selectedValue;
   List<DropdownMenuItem>? dropDownList = [];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,7 +46,7 @@ class CustomDropDown extends StatelessWidget {
         const Divider(
           height: 2,
           thickness: 1.5,
-          color:Colors.black,
+          color: Colors.black,
         )
       ],
     );

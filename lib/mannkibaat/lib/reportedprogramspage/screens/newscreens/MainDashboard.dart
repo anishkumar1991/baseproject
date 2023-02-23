@@ -5,7 +5,9 @@ import 'package:sangathan/Storage/mannkibaat.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
 import '../../../generateauthtoken/cubit/SendCubit.dart';
+import '../../../generateauthtoken/cubit/SendState.dart';
 import '../../../utils/appbar/AppBar.dart';
+import 'NewUserScreen.dart';
 import 'expired.dart';
 import 'ongoing.dart';
 
@@ -28,6 +30,12 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
     await cubit.submitOTP();
   }
 
+  Future<void> adduser() async {
+    final cubit = context.read<GenerateMannKiBaatAuthCubit>();
+    var number = StorageService.getUserData();
+    await cubit.addUser(number!.user!.name.toString());
+  }
+
   @override
   void initState() {
     send();
@@ -46,58 +54,79 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget.getAppBar(_key, context),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 20, right: 12, left: 12),
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black12, width: 1.5),
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30)),
+      body:
+          BlocBuilder<GenerateMannKiBaatAuthCubit, GenerateMannKiBaatAuthState>(
+        builder: (context, state) {
+          if (state is UserLoginSuccessfullyState) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 20, right: 12, left: 12),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(3),
-                    child: TabBar(
-                      unselectedLabelColor: const Color(0xFF666666),
-                      indicator: BoxDecoration(
-                        color: const Color(0xFF447EFF),
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      controller: tabController,
-                      tabs: [
-                        Tab(
-                          child: Text(
-                            "OnGoing",
-                            style: GoogleFonts.poppins(
-                                fontSize: 14, fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Tab(
-                          child: Text(
-                            "Expired",
-                            style: GoogleFonts.poppins(
-                                fontSize: 14, fontWeight: FontWeight.w600),
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black12, width: 1.5),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: TabBar(
+                            unselectedLabelColor: const Color(0xFF666666),
+                            indicator: BoxDecoration(
+                              color: const Color(0xFF447EFF),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            controller: tabController,
+                            tabs: [
+                              Tab(
+                                child: Text(
+                                  "OnGoing",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Tab(
+                                child: Text(
+                                  "Expired",
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: tabController,
+                      children: const [
+                        OnGoing(),
+                        Expired(),
+                      ],
+                    ),
+                  )
                 ],
               ),
-            ),
-            Expanded(
-              child: TabBarView(
-                controller: tabController,
-                children: const [
-                  OnGoing(),
-                  Expired(),
-                ],
-              ),
-            )
-          ],
-        ),
+            );
+          } else if (state is NewUserState) {
+            adduser();
+          }
+          return Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: const [
+              CircularProgressIndicator(),
+              SizedBox(height: 10),
+              Text("कृपया प्रतीक्षा करें"),
+            ],
+          ));
+        },
       ),
     );
   }

@@ -15,7 +15,7 @@ class CircularScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var time = null;
-    var temptimeshow;
+    var temptimeshow = " ";
     final cubit = context.read<NotificationCubit>();
     cubit.fetchNotification();
 
