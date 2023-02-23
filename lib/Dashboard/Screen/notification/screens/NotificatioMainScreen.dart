@@ -6,6 +6,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import '../../../../generated/l10n.dart';
 import '../cubit/DatePicCubit.dart';
 import '../cubit/DatePicState.dart';
+import '../cubit/NotificationCubit.dart';
 import 'CircularScreen.dart';
 import 'NotificationScreen.dart';
 import 'ReportScreen.dart';
@@ -23,9 +24,24 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
 
   @override
   void initState() {
+    final cubit = context.read<NotificationCubit>();
+    cubit.fetchNotification();
     tabController = TabController(length: 3, vsync: this);
-    super.initState();
   }
+
+  //   if (cubit.tempModel!.isCircularShow == false &&
+  //       cubit.tempModel!.isReportShow == true) {
+  //     tabController = TabController(length: 2, vsync: this);
+  //   } else if (cubit.tempModel!.isCircularShow == true &&
+  //       cubit.tempModel!.isReportShow == false) {
+  //     tabController = TabController(length: 2, vsync: this);
+  //   } else if (cubit.tempModel!.isCircularShow == false &&
+  //       cubit.tempModel!.isReportShow == false) {
+  //   } else {
+  //     tabController = TabController(length: 3, vsync: this);
+  //   }
+  //   super.initState();
+  // }
 
   @override
   void dispose() {
@@ -195,7 +211,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
               Expanded(
                 child: TabBarView(
                   controller: tabController,
-                  children: [
+                  children:  const [
                     CircularScreen(),
                     ReportScreen(),
                     NotificationScreen(),

@@ -1,11 +1,19 @@
 class FetchNotificationModel {
   String? statusCode;
+  bool? isCircularShow;
+  bool? isReportShow;
   List<NotificationsList>? notificationsList;
 
-  FetchNotificationModel({this.statusCode, this.notificationsList});
+  FetchNotificationModel(
+      {this.statusCode,
+      this.isCircularShow,
+      this.isReportShow,
+      this.notificationsList});
 
   FetchNotificationModel.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
+    isCircularShow = json['is_circular_show'];
+    isReportShow = json['is_report_show'];
     if (json['notifications_list'] != null) {
       notificationsList = <NotificationsList>[];
       json['notifications_list'].forEach((v) {
@@ -17,6 +25,8 @@ class FetchNotificationModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['statusCode'] = this.statusCode;
+    data['is_circular_show'] = this.isCircularShow;
+    data['is_report_show'] = this.isReportShow;
     if (this.notificationsList != null) {
       data['notifications_list'] =
           this.notificationsList!.map((v) => v.toJson()).toList();
@@ -28,52 +38,52 @@ class FetchNotificationModel {
 class NotificationsList {
   String? notificationTitle;
   String? description;
-  String? sType;
   String? share;
-  String? uploadFile;
+  String? type;
+  String? imgUrl;
+  String? pdfUrl;
+  String? linkUrl;
+  String? sType;
   String? date;
   String? time;
-  String? attachmentType;
-  String? link;
-  String? fcm;
 
   NotificationsList(
       {this.notificationTitle,
       this.description,
-      this.sType,
       this.share,
-      this.uploadFile,
+      this.type,
+      this.imgUrl,
+      this.pdfUrl,
+      this.linkUrl,
+      this.sType,
       this.date,
-      this.time,
-      this.attachmentType,
-      this.link,
-      this.fcm});
+      this.time});
 
   NotificationsList.fromJson(Map<String, dynamic> json) {
     notificationTitle = json['notification_title'];
     description = json['description'];
-    sType = json['_type'];
     share = json['share'];
-    uploadFile = json['upload_file'];
+    type = json['type'];
+    imgUrl = json['img_url'];
+    pdfUrl = json['pdf_url'];
+    linkUrl = json['link_url'];
+    sType = json['_type'];
     date = json['date'];
     time = json['time'];
-    attachmentType = json['attachment_type'];
-    link = json['link'];
-    fcm = json['fcm'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['notification_title'] = this.notificationTitle;
     data['description'] = this.description;
-    data['_type'] = this.sType;
     data['share'] = this.share;
-    data['upload_file'] = this.uploadFile;
+    data['type'] = this.type;
+    data['img_url'] = this.imgUrl;
+    data['pdf_url'] = this.pdfUrl;
+    data['link_url'] = this.linkUrl;
+    data['_type'] = this.sType;
     data['date'] = this.date;
     data['time'] = this.time;
-    data['attachment_type'] = this.attachmentType;
-    data['link'] = this.link;
-    data['fcm'] = this.fcm;
     return data;
   }
 }

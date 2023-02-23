@@ -31,7 +31,7 @@ class CustomFileIcon extends StatelessWidget {
           child: Image.asset("assets/images/notificationImageIcon.png"),
         ),
       );
-    } else if (FileType == "Link" || FileType == "link") {
+    } else if (FileType == "" || FileType == "") {
       return Container(
         width: 34,
         height: 34,

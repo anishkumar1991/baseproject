@@ -15,9 +15,9 @@ class LoginModel {
     required this.identificationToken,
   });
 
-  bool success;
-  String message;
-  String identificationToken;
+  bool? success;
+  String? message;
+  String? identificationToken;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
     success: json["success"],
