@@ -20,7 +20,7 @@ class StateBottomSheet extends StatelessWidget {
         if (state is GetStateLoadingState) {
           return shimmerWidget(context: context);
         } else if (state is GetStateFatchDataState) {
-          countryState = state.data;
+          context.read<EditAddressCubit>().countryState = state.data;
         } else if (state is GetStateErrorState) {
           EasyLoading.showToast(state.error ?? '');
         }
@@ -29,9 +29,7 @@ class StateBottomSheet extends StatelessWidget {
           child: Container(
               decoration: const BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(28.0),
-                      topRight: Radius.circular(28.0))),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0))),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
@@ -41,31 +39,28 @@ class StateBottomSheet extends StatelessWidget {
                     Text(
                       S.of(context).state,
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.poppins(
-                          color: AppColor.borderColor, fontSize: 16),
+                      style: GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
                     ),
                     spaceHeightWidget(30),
                     Expanded(
                       child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: countryState.length,
+                          itemCount: cubit.countryState.length,
                           itemBuilder: (context, index) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    cubit.stateCtr.text =
-                                        countryState[index].subcountry ?? '';
+                                    cubit.stateCtr.text = cubit.countryState[index].subcountry ?? '';
                                     Navigator.pop(context);
                                   },
                                   child: SizedBox(
                                     width: double.infinity,
                                     child: Text(
-                                      countryState[index].subcountry ?? '',
+                                      cubit.countryState[index].subcountry ?? '',
                                       textAlign: TextAlign.left,
-                                      style: GoogleFonts.poppins(
-                                          color: AppColor.black, fontSize: 16),
+                                      style: GoogleFonts.poppins(color: AppColor.black, fontSize: 16),
                                     ),
                                   ),
                                 ),
@@ -96,8 +91,7 @@ class StateBottomSheet extends StatelessWidget {
           Text(
             S.of(context).state,
             textAlign: TextAlign.center,
-            style:
-                GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
+            style: GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
           ),
           spaceHeightWidget(30),
           Expanded(

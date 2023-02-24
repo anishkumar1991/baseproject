@@ -11,37 +11,41 @@ class LoadingMandalEditShaktiKendraState extends EditShaktiKendrInitial {}
 
 class FatchDataMandalEditShaktiKendraState extends EditShaktiKendrInitial {
   final List<Mandal> data;
+
   FatchDataMandalEditShaktiKendraState({required this.data});
 }
 
 class ErrorMandalEditShaktiKendraState extends EditShaktiKendrInitial {
   final String error;
+
   ErrorMandalEditShaktiKendraState({required this.error});
 }
 
 class LoadingBoothEditShaktiKendraState extends EditShaktiKendrInitial {}
 
 class FatchDataBoothEditShaktiKendraState extends EditShaktiKendrInitial {
-  final Booth data;
+  final BoothListData data;
+
   FatchDataBoothEditShaktiKendraState({required this.data});
 }
 
 class ErrorBoothEditShaktiKendraState extends EditShaktiKendrInitial {
   final String error;
+
   ErrorBoothEditShaktiKendraState({required this.error});
 }
 
-class LoadingEditAndCreateEditShaktiKendraState
-    extends EditShaktiKendrInitial {}
+class LoadingEditAndCreateEditShaktiKendraState extends EditShaktiKendrInitial {}
 
-class FatchDataEditAndCreateEditShaktiKendraState
-    extends EditShaktiKendrInitial {
-  final Booth data;
+class FatchDataEditAndCreateEditShaktiKendraState extends EditShaktiKendrInitial {
+  final BoothListData data;
+
   FatchDataEditAndCreateEditShaktiKendraState({required this.data});
 }
 
 class ErrorEditAndCreateEditShaktiKendraState extends EditShaktiKendrInitial {
   final String error;
+
   ErrorEditAndCreateEditShaktiKendraState({required this.error});
 }
 

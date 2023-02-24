@@ -1,3 +1,5 @@
+import '../../screen/model/booth_selection_model.dart';
+
 class ShaktiKendr {
   bool? success;
   List<ShaktiKendrData>? data;
@@ -40,7 +42,7 @@ class ShaktiKendrData {
   dynamic mahaSystemId;
   int? createdById;
   int? skPeople;
-  List<Booths>? booths;
+  List<Booth>? booths;
   Mandal? mandal;
   Mandal? createdBy;
 
@@ -75,9 +77,9 @@ class ShaktiKendrData {
     createdById = json['created_by_id'];
     skPeople = json['sk_people'];
     if (json['booths'] != null) {
-      booths = <Booths>[];
+      booths = <Booth>[];
       json['booths'].forEach((v) {
-        booths!.add(Booths.fromJson(v));
+        booths!.add(Booth.fromJson(v));
       });
     }
     mandal = json['mandal'] != null ? Mandal.fromJson(json['mandal']) : null;
@@ -107,31 +109,6 @@ class ShaktiKendrData {
     if (createdBy != null) {
       data['created_by'] = createdBy!.toJson();
     }
-    return data;
-  }
-}
-
-class Booths {
-  int? id;
-  String? name;
-  String? number;
-  int? countryStateId;
-
-  Booths({this.id, this.name, this.number, this.countryStateId});
-
-  Booths.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    number = json['number'];
-    countryStateId = json['country_state_id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['number'] = number;
-    data['country_state_id'] = countryStateId;
     return data;
   }
 }

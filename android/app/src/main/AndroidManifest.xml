@@ -25,8 +25,9 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-
-        android:label="sangathan">
+        android:label="sangathan"
+        android:requestLegacyExternalStorage="true"
+        android:usesCleartextTraffic="true">
         <service
             android:name="com.google.firebase.messaging.FirebaseMessagingService"
             android:exported="false">
@@ -64,13 +65,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <!-- <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_launcher" />-->
+        <!-- <meta-data
+             android:name="com.google.firebase.messaging.default_notification_icon"
+             android:resource="@drawable/ic_launcher" />-->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="sangathan" />
-
 
 
     </application>

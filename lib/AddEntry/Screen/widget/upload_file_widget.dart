@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Values/icons.dart';
-import 'package:sangathan/common/common_button.dart';
 import 'package:sangathan/Values/app_colors.dart';
+import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
+import 'package:sangathan/common/common_button.dart';
+
+import '../../../generated/l10n.dart';
 
 class UploadCard extends StatelessWidget {
-  const UploadCard(
-      {super.key,
-      required this.onTap,
-      this.uploadedFilePath,
-      this.onTapImagePrivew});
+  const UploadCard({super.key, required this.onTap, this.uploadedFilePath, this.onTapImagePrivew});
 
   final GestureTapCallback? onTap;
   final GestureTapCallback? onTapImagePrivew;
@@ -45,8 +43,7 @@ class UploadCard extends StatelessWidget {
                       spaceWidthWidget(5),
                       Text(
                         'File uploaded',
-                        style: TextStyle(
-                            color: AppColor.greenshade900, fontSize: 12),
+                        style: TextStyle(color: AppColor.greenshade900, fontSize: 12),
                       )
                     ],
                   ),
@@ -70,11 +67,8 @@ class UploadCard extends StatelessWidget {
               ),
               spaceWidthWidget(4),
               Text(
-                'Upload File',
-                style: GoogleFonts.quicksand(
-                    fontSize: 12,
-                    color: AppColor.white,
-                    fontWeight: FontWeight.w600),
+                S.of(context).uploadFile,
+                style: GoogleFonts.quicksand(fontSize: 12, color: AppColor.white, fontWeight: FontWeight.w600),
               )
             ],
           ),

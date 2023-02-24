@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_storage/get_storage.dart';
-
-
 import 'package:sangathan/AddEntry/VerifyPerson/cubit/verify_person_cubit.dart';
 import 'package:sangathan/Dashboard/Cubit/dashboard_cubit.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/cubit/home_page_cubit.dart';
@@ -24,6 +22,7 @@ import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/string.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
+
 import 'AddEntry/Cubit/add_entry_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_module/create_function_page/create_function_cubit/create_function_cubit.dart';
 import 'Dashboard/Screen/homePage/screens/pravas_module/edit_date/cubit/edit_date_cubit.dart';
@@ -55,8 +54,7 @@ import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  debugPrint(
-      "Handling a background message:---------------- ${message.messageId}");
+  debugPrint("Handling a background message:---------------- ${message.messageId}");
   debugPrint("Handling a background message:-------------- ${message.data}");
   LocalNotificationService.createAndDisplayNotification(
     message: message,
@@ -87,9 +85,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    FirebaseMessaging.instance
-        .subscribeToTopic("sangathan")
-        .then((value) => debugPrint("subscribed to sangathan"));
+    FirebaseMessaging.instance.subscribeToTopic("sangathan").then((value) => debugPrint("subscribed to sangathan"));
     LocalNotificationService.initialize(context);
     firebaseNotification(context);
     super.initState();
@@ -99,7 +95,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-
         BlocProvider(create: (context) => SendFcmTokenCubit()),
         BlocProvider(create: (context) => ReelShareCubit()),
         BlocProvider(create: (context) => DatePicCubit()),
@@ -139,10 +134,6 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => DashCubit()),
         BlocProvider(create: (context) => FetchCubit()),
         BlocProvider(create: (context) => GenerateMannKiBaatAuthCubit()),
-
-
-
-
       ],
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, lang) {

@@ -4,17 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 
 import '../../../../../../../Values/app_colors.dart';
+import '../../../../../../../generated/l10n.dart';
 import '../cubit/edit_shakti_kendr_cubit.dart';
 
 class WarningBooth extends StatelessWidget {
-  final String? shaktiKendrName;
   EditShaktiKendrCubit cubit;
 
-  WarningBooth(
-      {Key? key,
-      this.shaktiKendrName,
-      required this.cubit})
-      : super(key: key);
+  WarningBooth({Key? key, required this.cubit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +18,9 @@ class WarningBooth extends StatelessWidget {
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: cubit.alreadyExitBooth.length,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
+          print(cubit.alreadyExitBooth[index].toJson());
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2),
             child: DottedBorder(
@@ -40,29 +37,21 @@ class WarningBooth extends StatelessWidget {
                   children: [
                     ListTile(
                       horizontalTitleGap: 10,
-                      shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none),
+                      shape: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
                       dense: true,
                       contentPadding: const EdgeInsets.only(left: 10, right: 10),
                       leading: Container(
                         width: 35,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(11),
-                            color: AppColor.orange),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(11), color: AppColor.orange),
                         child: Text(
                           cubit.alreadyExitBooth[index].number ?? '',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                              color: AppColor.white, fontSize: 12),
+                          style: GoogleFonts.poppins(color: AppColor.white, fontSize: 12),
                         ),
                       ),
                       title: Text(
                         cubit.alreadyExitBooth[index].name ?? '',
-                        style: GoogleFonts.poppins(
-                            color: AppColor.black700,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 12),
+                        style: GoogleFonts.poppins(color: AppColor.black700, fontWeight: FontWeight.w400, fontSize: 12),
                       ),
                       trailing: SizedBox(
                         height: double.infinity,
@@ -71,8 +60,7 @@ class WarningBooth extends StatelessWidget {
                             cubit.removeExistBooth(booth: cubit.alreadyExitBooth[index]);
                           },
                           child: Container(
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: AppColor.red),
+                            decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.red),
                             child: const Padding(
                               padding: EdgeInsets.all(5.0),
                               child: Icon(
@@ -91,11 +79,8 @@ class WarningBooth extends StatelessWidget {
                       endIndent: 15,
                     ),
                     Text(
-                      shaktiKendrName ?? '',
-                      style: GoogleFonts.poppins(
-                          color: AppColor.black700,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10),
+                      "${S.of(context).currentSk} - ${cubit.alreadyExitBooth[index].parentname ?? ""}",
+                      style: GoogleFonts.poppins(color: AppColor.black700, fontWeight: FontWeight.w400, fontSize: 10),
                     ),
                     spaceHeightWidget(10)
                   ],

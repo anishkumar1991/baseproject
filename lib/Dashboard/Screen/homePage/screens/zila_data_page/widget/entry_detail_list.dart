@@ -56,8 +56,7 @@ class EntryDetailsList extends StatelessWidget {
           if (state is EntryDataFetchedState) {
             if (state.data.data != null) {
               cubit.dataList = state.data.data!.data!;
-              if (cubit.dataList?.isNotEmpty ??
-                  false || cubit.dataList != null) {
+              if (cubit.dataList?.isNotEmpty ?? false || cubit.dataList != null) {
                 cubit.filterData();
               }
             }
@@ -78,146 +77,109 @@ class EntryDetailsList extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: cubit.dataList?.length ?? 0,
-                        separatorBuilder: ((context, index) =>
-                            spaceHeightWidget(18)),
+                        separatorBuilder: ((context, index) => spaceHeightWidget(18)),
                         itemBuilder: ((context, index) {
                           final data = cubit.dataList?[index];
                           return Column(
                             children: [
                               Slidable(
                                 key: UniqueKey(),
-                                endActionPane: ActionPane(
-                                    motion: const ScrollMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        padding: EdgeInsets.zero,
-                                        onPressed: ((context) {
-                                          print(
-                                              'status=${data?.otpStatus ?? ""}');
-                                          data?.otpStatus != null
-                                              ? data?.otpStatus == 'verified'
-                                                  ? EasyLoading.showToast(S
-                                                      .of(context)
-                                                      .alreadyVerified)
-                                                  : showDialog(
-                                                      barrierDismissible: false,
-                                                      context: context,
-                                                      builder: ((context) {
-                                                        return SubmitDialog(
-                                                          subUnitId:
-                                                              cubit.subUnitId,
-                                                          mobileNo:
-                                                              data?.phone ?? '',
-                                                          personId:
-                                                              data?.id ?? 0,
-                                                          levelId: dataLevelId,
-                                                          levelName:
-                                                              cubit.levelNameId,
-                                                          unitId: cubit.unitId,
-                                                          isEdit: true,
-                                                          onTapSkip: (() {
-                                                            Navigator.pop(
-                                                                context);
-                                                          }),
-                                                        );
-                                                      }))
-                                              : null;
-                                        }),
-                                        backgroundColor: AppColor.greenshade100,
-                                        foregroundColor: AppColor.greenshade900,
-                                        icon: Icons.verified_user,
-                                        label: S.of(context).verify,
-                                      ),
-                                      cubit.isEditPermission
-                                          ? SlidableAction(
-                                              padding: EdgeInsets.zero,
-                                              onPressed: ((context) {
-                                                context
-                                                    .read<AddEntryCubit>()
-                                                    .cleanAllVariableData();
-
-                                                ///TODO : here country id is static when type is panna we need make dynamic in future
-                                                Navigator.pushNamed(context,
-                                                    RoutePath.addEntryScreen,
-                                                    arguments: AddEntryPage(
-                                                      type: type!,
-                                                      isEditEntry: true,
-                                                      leaveId: dataLevelId ?? 0,
+                                endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+                                  SlidableAction(
+                                    padding: EdgeInsets.zero,
+                                    onPressed: ((context) {
+                                      print('status=${data?.otpStatus ?? ""}');
+                                      data?.otpStatus != null
+                                          ? data?.otpStatus == 'verified'
+                                              ? EasyLoading.showToast(S.of(context).alreadyVerified)
+                                              : showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context,
+                                                  builder: ((context) {
+                                                    return SubmitDialog(
+                                                      subUnitId: cubit.subUnitId,
+                                                      mobileNo: data?.phone ?? '',
+                                                      personId: data?.id ?? 0,
+                                                      levelId: dataLevelId,
+                                                      levelName: cubit.levelNameId,
                                                       unitId: cubit.unitId,
-                                                      subUnitId:
-                                                          cubit.subUnitId,
-                                                      countryStateId: type ==
-                                                              "Panna"
-                                                          ? pannaCountryStateId
-                                                          : countryStateId,
-                                                      levelName: type == "Panna"
-                                                          ? cubit
-                                                              .selectedPannaNo
-                                                              ?.id
-                                                          : cubit.levelNameId,
-                                                      personID: data?.id,
-                                                      pannaID: data
-                                                                  ?.pannaNumber ==
-                                                              null
-                                                          ? null
-                                                          : int.tryParse(
-                                                              data?.pannaNumber ??
-                                                                  "0"),
-                                                      personData:
-                                                          data?.toJson(),
-                                                    ));
-                                              }),
-                                              backgroundColor: AppColor.white,
-                                              icon: Icons.edit,
-                                              label: S.of(context).edit,
-                                            )
-                                          : const SizedBox(),
-                                      cubit.isDeletePermission
-                                          ? SlidableAction(
-                                              padding: EdgeInsets.zero,
-                                              onPressed: ((context) async {
-                                                print(
-                                                    'data?.otpStatus=${data?.otpStatus}');
-                                                cubit.getDeleteId(data?.id);
+                                                      isEdit: true,
+                                                      onTapSkip: (() {
+                                                        Navigator.pop(context);
+                                                      }),
+                                                    );
+                                                  }))
+                                          : null;
+                                    }),
+                                    backgroundColor: AppColor.greenshade100,
+                                    foregroundColor: AppColor.greenshade900,
+                                    icon: Icons.verified_user,
+                                    label: S.of(context).verify,
+                                  ),
+                                  cubit.isEditPermission
+                                      ? SlidableAction(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: ((context) {
+                                            context.read<AddEntryCubit>().cleanAllVariableData();
 
-                                                /// Data Entry Delete Dialog
-                                                await dataEntryDeleteDialog(
-                                                    context, cubit, index);
-                                              }),
-                                              backgroundColor:
-                                                  AppColor.redShade100,
-                                              foregroundColor:
-                                                  AppColor.redShade600,
-                                              icon: Icons.delete_outline,
-                                              label: S.of(context).delete,
-                                            )
-                                          : SizedBox(),
-                                    ]),
+                                            ///TODO : here country id is static when type is panna we need make dynamic in future
+                                            Navigator.pushNamed(context, RoutePath.addEntryScreen,
+                                                arguments: AddEntryPage(
+                                                  type: type!,
+                                                  isEditEntry: true,
+                                                  leaveId: dataLevelId ?? 0,
+                                                  unitId: cubit.unitId,
+                                                  subUnitId: cubit.subUnitId,
+                                                  countryStateId:
+                                                      type == "Panna" ? pannaCountryStateId : countryStateId,
+                                                  levelName:
+                                                      type == "Panna" ? cubit.selectedPannaNo?.id : cubit.levelNameId,
+                                                  personID: data?.id,
+                                                  pannaID: data?.pannaNumber == null
+                                                      ? null
+                                                      : int.tryParse(data?.pannaNumber ?? "0"),
+                                                  personData: data?.toJson(),
+                                                ));
+                                          }),
+                                          backgroundColor: AppColor.white,
+                                          icon: Icons.edit,
+                                          label: S.of(context).edit,
+                                        )
+                                      : const SizedBox(),
+                                  cubit.isDeletePermission
+                                      ? SlidableAction(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: ((context) async {
+                                            print('data?.otpStatus=${data?.otpStatus}');
+                                            cubit.getDeleteId(data?.id);
+
+                                            /// Data Entry Delete Dialog
+                                            await dataEntryDeleteDialog(context, cubit, index);
+                                          }),
+                                          backgroundColor: AppColor.redShade100,
+                                          foregroundColor: AppColor.redShade600,
+                                          icon: Icons.delete_outline,
+                                          label: S.of(context).delete,
+                                        )
+                                      : SizedBox(),
+                                ]),
                                 child: InkWell(
                                   onTap: (() {
                                     if (cubit.isEditPermission) {
-                                      context
-                                          .read<AddEntryCubit>()
-                                          .cleanAllVariableData();
-                                      Navigator.pushNamed(
-                                          context, RoutePath.addEntryScreen,
+                                      context.read<AddEntryCubit>().cleanAllVariableData();
+                                      Navigator.pushNamed(context, RoutePath.addEntryScreen,
                                           arguments: AddEntryPage(
                                             type: type!,
                                             isEditEntry: true,
                                             leaveId: dataLevelId ?? 0,
                                             unitId: cubit.unitId,
                                             subUnitId: cubit.subUnitId,
-                                            countryStateId: type == "Panna"
-                                                ? pannaCountryStateId
-                                                : countryStateId,
-                                            levelName: type == "Panna"
-                                                ? cubit.selectedPannaNo?.id
-                                                : cubit.levelNameId,
+                                            countryStateId: type == "Panna" ? pannaCountryStateId : countryStateId,
+                                            levelName: type == "Panna" ? cubit.selectedPannaNo?.id : cubit.levelNameId,
                                             personID: data?.id,
                                             pannaID: data?.pannaNumber == null
                                                 ? null
-                                                : int.tryParse(
-                                                    data?.pannaNumber ?? "0"),
+                                                : int.tryParse(data?.pannaNumber ?? "0"),
                                             personData: data?.toJson(),
                                           ));
                                     }
@@ -225,31 +187,27 @@ class EntryDetailsList extends StatelessWidget {
                                   child: Row(
                                     children: [
                                       ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
+                                          borderRadius: BorderRadius.circular(30),
                                           child: Image.network(
                                             data?.photo ?? '',
                                             height: 56,
                                             width: 56,
                                             fit: BoxFit.cover,
-                                            errorBuilder:
-                                                ((context, error, stackTrace) =>
-                                                    Container(
-                                                      height: 56,
-                                                      width: 56,
-                                                      color: AppColor.navyBlue,
-                                                      child: const Icon(
-                                                        Icons.person,
-                                                        color: AppColor.white,
-                                                        size: 28,
-                                                      ),
-                                                    )),
+                                            errorBuilder: ((context, error, stackTrace) => Container(
+                                                  height: 56,
+                                                  width: 56,
+                                                  color: AppColor.navyBlue,
+                                                  child: const Icon(
+                                                    Icons.person,
+                                                    color: AppColor.white,
+                                                    size: 28,
+                                                  ),
+                                                )),
                                           )),
                                       spaceWidthWidget(16),
                                       Expanded(
                                         child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               mainAxisSize: MainAxisSize.max,
@@ -263,44 +221,33 @@ class EntryDetailsList extends StatelessWidget {
                                                         ? data?.hindiName ?? ''
                                                         : */
                                                     data?.englishName ?? '',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
+                                                    overflow: TextOverflow.ellipsis,
                                                     maxLines: 2,
                                                     style: GoogleFonts.poppins(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        color: AppColor
-                                                            .textBlackColor),
+                                                        fontWeight: FontWeight.w600, color: AppColor.textBlackColor),
                                                   ),
                                                 ),
                                                 spaceWidthWidget(5),
                                                 data?.otpStatus != null
-                                                    ? data?.otpStatus ==
-                                                            'verified'
+                                                    ? data?.otpStatus == 'verified'
                                                         ? const Icon(
                                                             Icons.verified,
-                                                            color:
-                                                                AppColor.blue,
+                                                            color: AppColor.blue,
                                                             size: 12,
                                                           )
-                                                        : const SizedBox
-                                                            .shrink()
+                                                        : const SizedBox.shrink()
                                                     : const SizedBox.shrink()
                                               ],
                                             ),
                                             Text(
                                               data?.designationName ?? '',
                                               style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w500,
-                                                  fontSize: 10,
-                                                  color: AppColor.greyColor),
+                                                  fontWeight: FontWeight.w500, fontSize: 10, color: AppColor.greyColor),
                                             ),
                                             Text(
-                                              "+91- ${data?.phone ?? ''}",
+                                              "+91-${data?.phone ?? ''}",
                                               style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 12,
-                                                  color: AppColor.greyColor),
+                                                  fontWeight: FontWeight.w600, fontSize: 12, color: AppColor.greyColor),
                                             ),
                                           ],
                                         ),
@@ -308,16 +255,11 @@ class EntryDetailsList extends StatelessWidget {
                                       InkWell(
                                         onTap: (() {
                                           if (data?.phone != null) {
-                                            cubit.makePhoneCall(
-                                                phoneNumber: data?.phone ?? '');
+                                            cubit.makePhoneCall(phoneNumber: data?.phone ?? '');
                                           }
                                         }),
                                         child: Container(
-                                          margin: const EdgeInsets.only(
-                                              left: 10,
-                                              top: 10,
-                                              bottom: 10,
-                                              right: 4),
+                                          margin: const EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 4),
                                           child: Image.asset(
                                             AppIcons.callIcon,
                                             height: 20,
@@ -330,8 +272,7 @@ class EntryDetailsList extends StatelessWidget {
                                 ),
                               ),
                               index + 1 == cubit.dataList?.length
-                                  ? spaceHeightWidget(
-                                      MediaQuery.of(context).size.height * 0.1)
+                                  ? spaceHeightWidget(MediaQuery.of(context).size.height * 0.1)
                                   : const SizedBox.shrink()
                             ],
                           );
@@ -343,14 +284,12 @@ class EntryDetailsList extends StatelessWidget {
     );
   }
 
-  dataEntryDeleteDialog(
-      BuildContext context, ZilaDataCubit cubit, int index) async {
+  dataEntryDeleteDialog(BuildContext context, ZilaDataCubit cubit, int index) async {
     showDialog(
         context: context,
         builder: ((context) {
           return Dialog(child: StatefulBuilder(
-            builder: (BuildContext context,
-                void Function(void Function()) privateSetState) {
+            builder: (BuildContext context, void Function(void Function()) privateSetState) {
               return Container(
                 padding: const EdgeInsets.all(15),
                 child: Column(
@@ -359,9 +298,7 @@ class EntryDetailsList extends StatelessWidget {
                     Text(
                       S.of(context).reasonforDeletion,
                       style: GoogleFonts.poppins(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: AppColor.textBlackColor),
+                          fontSize: 15, fontWeight: FontWeight.w600, color: AppColor.textBlackColor),
                     ),
                     spaceHeightWidget(14),
                     ListView.separated(
@@ -369,20 +306,13 @@ class EntryDetailsList extends StatelessWidget {
                         separatorBuilder: ((context, index) => const Divider(
                               color: AppColor.greyColor,
                             )),
-                        itemCount: cubit.deleteReasonData?.data?.deletionReasons
-                                ?.karyakarta?.length ??
-                            0,
+                        itemCount: cubit.deleteReasonData?.data?.deletionReasons?.karyakarta?.length ?? 0,
                         itemBuilder: ((context, index) {
-                          final data = cubit.deleteReasonData?.data
-                              ?.deletionReasons?.karyakarta?[index];
+                          final data = cubit.deleteReasonData?.data?.deletionReasons?.karyakarta?[index];
                           return InkWell(
                             onTap: (() {
-                              context
-                                  .read<ZilaDataCubit>()
-                                  .selectedDeleteResonIndex = index;
-                              context
-                                  .read<ZilaDataCubit>()
-                                  .selectedDeleteReson = data;
+                              context.read<ZilaDataCubit>().selectedDeleteResonIndex = index;
+                              context.read<ZilaDataCubit>().selectedDeleteReson = data;
                               privateSetState(() {});
                             }),
                             child: Row(
@@ -393,24 +323,18 @@ class EntryDetailsList extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     border: Border.all(
                                         width: 2,
-                                        color: cubit.selectedDeleteResonIndex ==
-                                                index
-                                            ? AppColor
-                                                .buttonOrangeBackGroundColor
-                                            : AppColor.greyColor
-                                                .withOpacity(0.7)),
+                                        color: cubit.selectedDeleteResonIndex == index
+                                            ? AppColor.buttonOrangeBackGroundColor
+                                            : AppColor.greyColor.withOpacity(0.7)),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Container(
                                     margin: const EdgeInsets.all(2),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: cubit.selectedDeleteResonIndex ==
-                                                index
-                                            ? AppColor
-                                                .buttonOrangeBackGroundColor
-                                            : AppColor.greyColor
-                                                .withOpacity(0.7)),
+                                        color: cubit.selectedDeleteResonIndex == index
+                                            ? AppColor.buttonOrangeBackGroundColor
+                                            : AppColor.greyColor.withOpacity(0.7)),
                                   ),
                                 ),
                                 spaceWidthWidget(6),
@@ -444,16 +368,13 @@ class EntryDetailsList extends StatelessWidget {
                               height: 30,
                               margin: const EdgeInsets.only(left: 20),
                               style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                  color: AppColor.orange)),
+                                  fontWeight: FontWeight.w600, fontSize: 14, color: AppColor.orange)),
                         ),
                         Expanded(
                           child: CommonButton(
                               onTap: (() {
                                 if (cubit.selectedDeleteReson == null) {
-                                  EasyLoading.showError(
-                                      S.of(context).pleaseSelectReason);
+                                  EasyLoading.showError(S.of(context).pleaseSelectReason);
                                 } else {
                                   Navigator.pop(context);
 
@@ -463,29 +384,23 @@ class EntryDetailsList extends StatelessWidget {
                                             content: Text(
                                               S.of(context).sureToDelete,
                                               style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.w600,
-                                                  color:
-                                                      AppColor.textBlackColor),
+                                                  fontWeight: FontWeight.w600, color: AppColor.textBlackColor),
                                             ),
                                             actions: [
                                               ElevatedButton(
                                                   onPressed: (() {
                                                     Navigator.pop(context);
                                                   }),
-                                                  child:
-                                                      Text(S.of(context).no)),
+                                                  child: Text(S.of(context).no)),
                                               ElevatedButton(
                                                   onPressed: (() async {
                                                     Navigator.pop(context);
                                                     await cubit.deletePerson(
-                                                        deleteDataEntryId:
-                                                            cubit.deleteId ?? 0,
-                                                        reason: cubit
-                                                            .selectedDeleteReson!,
+                                                        deleteDataEntryId: cubit.deleteId ?? 0,
+                                                        reason: cubit.selectedDeleteReson!,
                                                         index: index);
                                                   }),
-                                                  child:
-                                                      Text(S.of(context).yes)),
+                                                  child: Text(S.of(context).yes)),
                                             ],
                                           )));
                                 }
@@ -497,9 +412,7 @@ class EntryDetailsList extends StatelessWidget {
                               backGroundcolor: AppColor.redLight,
                               title: S.of(context).delete,
                               style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14,
-                                  color: AppColor.white)),
+                                  fontWeight: FontWeight.w600, fontSize: 14, color: AppColor.white)),
                         ),
                       ],
                     )
@@ -552,43 +465,39 @@ class EntryDetailsList extends StatelessWidget {
                   Container(
                     height: 60,
                     width: 60,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: AppColor.white),
+                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.white),
                   ),
                   spaceWidthWidget(20),
                   Expanded(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: double.infinity,
-                            height: 8.0,
-                            color: AppColor.white,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2.0),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 8.0,
-                            color: AppColor.white,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2.0),
-                          ),
-                          Container(
-                            width: 50.0,
-                            height: 8.0,
-                            color: AppColor.white,
-                          ),
-                        ]),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        height: 8.0,
+                        color: AppColor.white,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2.0),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 8.0,
+                        color: AppColor.white,
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2.0),
+                      ),
+                      Container(
+                        width: 50.0,
+                        height: 8.0,
+                        color: AppColor.white,
+                      ),
+                    ]),
                   ),
                   const Spacer(),
                   Container(
                     height: 20,
                     width: 20,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: AppColor.white),
+                    decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColor.white),
                   ),
                 ],
               );
