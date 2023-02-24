@@ -23,6 +23,7 @@ class _OnGoingState extends State<OnGoing> {
     DateTime currentDate = DateTime.now();
     var time = null;
     var temptimeshow;
+    int status = 0;
     final cubit = context.read<DashCubit>();
     cubit.getDashData(MKBStorageService.getUserAuthToken().toString());
 
@@ -64,6 +65,7 @@ class _OnGoingState extends State<OnGoing> {
                             enddate.isAtSameMomentAs(currentDate) ||
                             startdate.isAfter(currentDate) ||
                             startdate.isAtSameMomentAs(currentDate)) {
+                          status = 1;
                           return InkWell(
                             onTap: () {
                               if (state.dashModal.data[index].eventHasDetail ==
@@ -80,29 +82,29 @@ class _OnGoingState extends State<OnGoing> {
                                               eventId: state
                                                   .dashModal.data[index].id,
                                             )));
-                              }
-                              else {
+                              } else {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => AttendeeReviewPage(
-                                          vidhanSabha:
-                                          '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                          state:
-                                          '${state.dashModal.data[index].eventDetail.countryStateRef?.first.name}',
-                                          totalAttendees:
-                                          '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                          booth:
-                                          '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                          address:
-                                          '${state.dashModal.data[index].eventDetail.address}',
-                                          description:
-                                          '${state.dashModal.data[index].eventDetail.description}',
-                                          img1:
-                                          '${state.dashModal.data[index].eventDetail.photo1}',
-                                          img2:
-                                          '${state.dashModal.data[index].eventDetail.photo1}',
-                                        )));
+                                        builder: (context) =>
+                                            AttendeeReviewPage(
+                                              vidhanSabha:
+                                                  '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                              state:
+                                                  '${state.dashModal.data[index].eventDetail.countryStateRef?.first.name}',
+                                              totalAttendees:
+                                                  '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                              booth:
+                                                  '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                              address:
+                                                  '${state.dashModal.data[index].eventDetail.address}',
+                                              description:
+                                                  '${state.dashModal.data[index].eventDetail.description}',
+                                              img1:
+                                                  '${state.dashModal.data[index].eventDetail.photo1}',
+                                              img2:
+                                                  '${state.dashModal.data[index].eventDetail.photo1}',
+                                            )));
                               }
                             },
                             child: ProgramCard(
@@ -116,13 +118,22 @@ class _OnGoingState extends State<OnGoing> {
                                 img: state.dashModal.data[index].eventPhoto),
                           );
                         }
-
                       },
                     );
                   }
                   return const Text("fetching");
                 },
               ),
+              status == 0
+                  ? Center(
+                      child: Text(
+                      "कोई रिकॉर्ड उपलब्ध नहीं है",
+                      style: GoogleFonts.quicksand(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                    ))
+                  : const SizedBox(),
             ],
           );
         }
