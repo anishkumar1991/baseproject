@@ -93,7 +93,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
                   ),
                   ReviewVidhanAndStates(
                     vidhanSabha: cubit.vidhansabhaname,
-                    state: "Assam",
+                    state: "Madhya Pradesh",
                   ),
                   const SizedBox(height: 24),
                   ReviewTotalAttendee(totalAttendees: widget.totalAttendees),

@@ -23,10 +23,11 @@ class _FetchPostsApi implements FetchPostsApi {
   @override
   Future<HttpResponse<dynamic>> getPosts(
     token,
-    size,
+    queries,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'size': size};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(queries);
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};

@@ -9,6 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../Values/app_colors.dart';
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
+import 'network/model/FetchPosts.dart';
 import 'socialcards/VideoCard.dart';
 
 class SocialMediaPage extends StatefulWidget {
@@ -19,21 +20,24 @@ class SocialMediaPage extends StatefulWidget {
 }
 
 class _SocialMediaPageState extends State<SocialMediaPage> {
+  final scrollController = ScrollController();
+
   @override
   void initState() {
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          BlocProvider.of<FetchPostsCubit>(context).loadPosts();
+        }
+      }
+    });
     super.initState();
-  }
-
-  // fucntion to send fcm token to api
-  Future<void> sendfcmtoken() async {
-    // final fcmcubit = context.read<SendFcmTokenCubit>();
-    // await fcmcubit.sendFcm(StorageService.getUserFcmToken());
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<FetchPostsCubit>();
-    cubit.fetchPosts();
+    BlocProvider.of<FetchPostsCubit>(context).loadPosts();
+
     print("user fcm token previous ${StorageService.getUserFcmToken()}");
 
     return Scaffold(
@@ -46,11 +50,12 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
           const SizedBox(height: 20),
           Expanded(
             child: ListView(
+              controller: scrollController,
               children: [
                 const DisplayList(),
                 BlocBuilder<FetchPostsCubit, FetchPostsState>(
                     builder: (context, state) {
-                  if (state is FetchingPostsState) {
+                  if (state is PostsInitial) {
                     return Center(
                       child: Shimmer.fromColors(
                         baseColor: AppColor.greyColor.withOpacity(0.3),
@@ -76,28 +81,38 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                       ),
                     );
                   }
-                  if (state is PostsFetchedState) {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: state.model.posts.length,
-                      itemBuilder: (context, index) {
 
-                        if (state.model.posts[index].postType == "Image") {
+                  List<Post> posts = [];
+                  bool isLoading = false;
+
+                  if (state is PostsLoading) {
+                    posts = state.oldPosts;
+                    isLoading = true;
+                  } else if (state is PostsLoaded) {
+                    posts = state.posts;
+                  }
+
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: const ScrollPhysics(),
+                    itemCount: posts.length + (isLoading ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      if (index < posts.length) {
+                        if (posts[index].postType == "Image") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: CustomCard(tempkey: 2, index: index),
                           );
                         }
-                        if (state.model.posts[index].postType == "Poll") {
+                        if (posts[index].postType == "Poll") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: Polls(tempindex: index),
                           );
                         }
 
-                        if (state.model.posts[index].postType == "Video") {
+                        if (posts[index].postType == "Video") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
                             child: VideoCard(index: index),
@@ -105,11 +120,8 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                         }
 
                         return const SizedBox();
-                      },
-                    );
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                      }
+                    },
                   );
                 }),
               ],

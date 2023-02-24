@@ -191,38 +191,38 @@ class NotificationScreen extends StatelessWidget {
                                           ],
                                         ),
                                         trailing: cubit
-                                            .tempModel!
-                                            .notificationsList![index]
-                                            .type !=
-                                            ""
-                                            ? InkWell(
-                                          onTap: () {
-                                            cubit
-                                                .tempModel!
-                                                .notificationsList![
-                                            index]
-                                                .imgUrl !=
+                                                    .tempModel!
+                                                    .notificationsList![index]
+                                                    .type !=
                                                 ""
-                                                ? _onOpen(
-                                                cubit
-                                                    .tempModel!
-                                                    .notificationsList![
-                                                index]
-                                                    .imgUrl
-                                                    .toString(),
-                                                context)
-                                                : _onOpen(
-                                                cubit
-                                                    .tempModel!
-                                                    .notificationsList![
-                                                index]
-                                                    .pdfUrl
-                                                    .toString(),
-                                                context);
-                                          },
-                                          child: Icon(
-                                              Icons.file_download_outlined),
-                                        )
+                                            ? InkWell(
+                                                onTap: () {
+                                                  cubit
+                                                              .tempModel!
+                                                              .notificationsList![
+                                                                  index]
+                                                              .imgUrl !=
+                                                          ""
+                                                      ? _onOpen(
+                                                          cubit
+                                                              .tempModel!
+                                                              .notificationsList![
+                                                                  index]
+                                                              .imgUrl
+                                                              .toString(),
+                                                          context)
+                                                      : _onOpen(
+                                                          cubit
+                                                              .tempModel!
+                                                              .notificationsList![
+                                                                  index]
+                                                              .pdfUrl
+                                                              .toString(),
+                                                          context);
+                                                },
+                                                child: Icon(Icons
+                                                    .file_download_outlined),
+                                              )
                                             : SizedBox(),
                                       ),
                                       const Divider(

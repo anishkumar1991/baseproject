@@ -36,6 +36,7 @@ class TopBar extends StatelessWidget {
                     size: 20,
                   )),
             ),
+
              Text(
               S.of(context).socialMedia,
               style: TextStyle(

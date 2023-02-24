@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
                           size: 20,
                         )),
                   ),
+
                   Image.asset(
                     AppIcons.sangathanLogo,
                     height: 55,

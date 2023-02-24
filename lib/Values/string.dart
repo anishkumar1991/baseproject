@@ -7,18 +7,23 @@ class AppStrings {
 
   // static const String notificationbaseUrl = "http://35.200.202.116";
   static const String notificationbaseUrl =
-      "http://production-notification.ccdms.in";
+      "http://notification.ccdms.in";
 
   static const String apiKey = "HBNA19QVVAPP";
   static const String pravasUserToken =
       "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZmdBc01DcXdqeGJ2Qjd0ZVkzNEplWmY5In0.yFMJmxhpViVeu76hRsWhxM8oMXka0WZkWnyl4FGVUko";
   static const String baseUrlFOrState = "https://pkgstore.datahub.io";
-  static const String baseUrlMannKiBaat =
-      "https://staging.mannkibaatprogram.in/";
+
+  // static const String baseUrlMannKiBaat =
+  //     "https://staging.mannkibaatprogram.in/";
+  static const String baseUrlMannKiBaat = "https://mannkibaatprogram.in/";
+
+  static const String countrystateid = "14";
+  static const String acid = "885054";
+  static const String mannkibaatotp = "170950";
 
   static const String socialmediabaseUrl = "https://saral-social.ccdms.in";
 
-  //
   // static const String socialmediabaseUrl =
   //     "https://saral-social-staging.ccdms.in";
   static const String buttontext = "Next";
