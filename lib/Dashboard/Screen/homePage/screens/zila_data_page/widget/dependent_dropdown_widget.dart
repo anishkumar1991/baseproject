@@ -31,6 +31,7 @@ class DependentDropdownWidget extends StatefulWidget {
 class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
   @override
   Widget build(BuildContext context) {
+    // sortBasedOnMandalSelected();
     return BlocBuilder<ZilaDataCubit, ZilaDataState>(
       builder: (context, state) {
         final cubit = BlocProvider.of<ZilaDataCubit>(context);
@@ -185,15 +186,6 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                   child: GestureDetector(
                     onTap: () {
                       if (mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName ?? "")) {
-                        if (widget.type == "Shakti Kendra") {
-                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal,
-                              toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
-                        }
-                        if (widget.type == "Booth") {
-                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnBoothOfOtherMandal,
-                              toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
-                        }
-                      } else {
                         cubit.onDependentDropdown(locationList[index]);
                         cubit.selectedPannaNo = null;
                         if (widget.type == "Panna") {
@@ -207,6 +199,15 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                           });
                         }
                         Future.delayed(Duration.zero).then((value) => Navigator.pop(context));
+                      } else {
+                        if (widget.type == "Shakti Kendra") {
+                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal,
+                              toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
+                        }
+                        if (widget.type == "Booth") {
+                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnBoothOfOtherMandal,
+                              toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
+                        }
                       }
                     },
                     child: Container(
@@ -261,7 +262,8 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                             ),
                           ),
                           mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName ?? "")
-                              ? IconButton(
+                              ? const SizedBox()
+                              : IconButton(
                                   onPressed: () {
                                     if (widget.type == "Shakti Kendra") {
                                       EasyLoading.showToast(
@@ -278,8 +280,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                                   icon: const Icon(
                                     Icons.info,
                                     color: AppColor.borderColor,
-                                  ))
-                              : const SizedBox(),
+                                  )),
                         ],
                       ),
                     ),
@@ -314,7 +315,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
       if (widget.type == "Shakti Kendra" || widget.type == "Booth") {
         for (int i = 0; i < (cubit.allotedLocationModel?.data?.locations?.length ?? 0); i++) {
           if (isFound == false) {
-            if (cubit.allotedLocationModel?.data?.locations?[i].name != mandalName) {
+            if (cubit.allotedLocationModel?.data?.locations?[i].name?.trim() == mandalName.trim()) {
               isFound = true;
             } else {
               isFound = false;
@@ -323,6 +324,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
         }
       }
     }
+
     return isFound;
   }
 
@@ -335,8 +337,8 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
           return AppColor.orange;
         } else {
           return mappedMandalWithSKWhenUserIsMandal(mandal)
-              ? AppColor.naturalBlackColor
-              : AppColor.boothContainerColour;
+              ? AppColor.boothContainerColour
+              : AppColor.naturalBlackColor;
         }
       }
     } else {
@@ -345,6 +347,39 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
       } else {
         return cubit.dependentDropdownSelected?.id == locationId ? AppColor.orange : AppColor.naturalBlackColor;
       }
+    }
+  }
+
+  sortBasedOnMandalSelected() {
+    final cubit = BlocProvider.of<ZilaDataCubit>(context);
+    final sangathanDetailsCubit = BlocProvider.of<SangathanDetailsCubit>(context);
+    var data = [...cubit.dependentDropdownList];
+    for (var item in data) {
+      print(item.toJson());
+    }
+    print("----------------------------------------------------------");
+    data.sort((a, b) {
+      if ((a.mandalName == sangathanDetailsCubit.selectedAllottedLocation?.name) &&
+          b.mandalName != sangathanDetailsCubit.selectedAllottedLocation?.name) {
+        return -1;
+      } else if ((a.mandalName != sangathanDetailsCubit.selectedAllottedLocation?.name) &&
+          b.mandalName == sangathanDetailsCubit.selectedAllottedLocation?.name) {
+        return 1;
+      } else {
+        int nameComparison = sangathanDetailsCubit.allotedLocationModel!.data!.locations!
+            .indexOf(Locations(mandalName: a.mandalName ?? ""))
+            .compareTo(sangathanDetailsCubit.allotedLocationModel!.data!.locations!
+                .indexOf(Locations(mandalName: b.mandalName ?? "")));
+        if (nameComparison != 0) {
+          return nameComparison;
+        } else {
+          return a.number.compareTo(b.number);
+        }
+      }
+    });
+
+    for (var item in data) {
+      print(item.toJson());
     }
   }
 }

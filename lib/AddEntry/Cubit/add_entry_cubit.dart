@@ -202,7 +202,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       categorySelected = value;
       getAllDropDownData(value, dropdownType);
 
-      getCastData(id: categorySelected!.id.toString());
+      getCastData(id: categorySelected!.id.toString(), level: levelId.toString(), levelName: levelName.toString());
     } else if (dropdownType == "caste") {
       castSelected = value;
       getAllDropDownData(value, dropdownType);
@@ -355,10 +355,10 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   }
 
   /// caste api call when select category
-  Future getCastData({required String id}) async {
+  Future getCastData({required String id, required String level, required String levelName}) async {
     try {
       emit(AddEntryLoadingState());
-      final res = await api.getCast('Bearer ${StorageService.userAuthToken}', id);
+      final res = await api.getCast('Bearer ${StorageService.userAuthToken}', id, level, levelName);
       print("------------------------------------ Add entry form structure ----------------------------");
 
       print("body = ${res.response.realUri.queryParameters}");
@@ -527,7 +527,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             if (index >= 0) {
               categorySelected = categoryData[index];
               getAllDropDownData(categoryData[index], item.key);
-              await getCastData(id: categorySelected!.id.toString());
+              await getCastData(
+                  id: categorySelected!.id.toString(), level: levelId.toString(), levelName: levelName.toString());
             }
           }
         } else if (item.key == "caste") {
@@ -723,13 +724,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     map.addEntries({"level": "$levelId"}.entries);
     map.addEntries({"from": "$from"}.entries);
     if (personID != null && personID != "") {
-      map.addEntries({
-        ""
-            ""
-            ""
-            ""
-            "": "$personID"
-      }.entries);
+      map.addEntries({"personId": "$personID"}.entries);
     }
     for (int i = 0; i < (entryField?.length ?? 0); i++) {
       for (var item in finalAllDataList.entries) {

@@ -34,7 +34,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   String subUnitId = "";
   List<SubUnits>? coreSangathanList = [];
   List<UnitData> morchaList = [];
-  UnitData morchaData = UnitData(name: 'Morcha');
+  UnitData morchaData = UnitData();
   DeleteReasonModel? deleteReasonData;
   int? selectedDeleteResonIndex;
   String? selectedDeleteReson;
@@ -74,10 +74,8 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     if (selectedFilterIndex == 0) {
       dataList!.sort(
         (a, b) {
-          DateTime aDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-              .parse(a.createdAt ?? "");
-          DateTime bDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-              .parse(b.createdAt ?? "");
+          DateTime aDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(a.createdAt ?? "");
+          DateTime bDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(b.createdAt ?? "");
 
           return bDate.compareTo(aDate);
         },
@@ -90,8 +88,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(FilterChangedState());
   }
 
-  final api =
-      DataEntryApi(Dio(BaseOptions(validateStatus: ((status) => true))));
+  final api = DataEntryApi(Dio(BaseOptions(validateStatus: ((status) => true))));
 
   void onChnageZila(Locations? value) {
     emit(LoadingState());
@@ -114,15 +111,12 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       emit(DataFetchingLoadingState());
       Map<String, dynamic> offsetData = {"limit": 1000, "offset": 0};
       data.addEntries(offsetData.entries);
-      final res = await api.getPersonList(
-          'Bearer ${StorageService.userAuthToken}', data);
-      print(
-          "------------------------------------ Get Entry Data ----------------------------");
+      final res = await api.getPersonList('Bearer ${StorageService.userAuthToken}', data);
+      print("------------------------------------ Get Entry Data ----------------------------");
       print("data  :$data");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DataEntryModel data = DataEntryModel.fromJson(res.data);
         emit(EntryDataFetchedState(data));
@@ -136,23 +130,18 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  Future getPartyZila(
-      {required String remainingURL, required String type}) async {
+  Future getPartyZila({required String remainingURL, required String type}) async {
     try {
       emit(DataFetchingLoadingState());
-      final res = await api.dynamicDropdown(
-          'Bearer ${StorageService.userAuthToken}', remainingURL);
+      final res = await api.dynamicDropdown('Bearer ${StorageService.userAuthToken}', remainingURL);
 
-      print(
-          "------------------------------------ Get Party Zila ----------------------------");
+      print("------------------------------------ Get Party Zila ----------------------------");
       print("remainingURL:$remainingURL");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        IndependentDropdownModel data =
-            IndependentDropdownModel.fromJson(res.data);
+        IndependentDropdownModel data = IndependentDropdownModel.fromJson(res.data);
         emit(PartyZilaSelectedState(data.data?.locations ?? []));
       } else {
         Map<String, dynamic>? msg = res.data;
@@ -164,29 +153,23 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  Future getDependentDropdownData(
-      {required String remainingURL, required String type}) async {
+  Future getDependentDropdownData({required String remainingURL, required String type}) async {
     try {
       emit(DependentDropdownLoadingState());
-      final res = await api.dynamicDropdown(
-          'Bearer ${StorageService.userAuthToken}', remainingURL);
+      final res = await api.dynamicDropdown('Bearer ${StorageService.userAuthToken}', remainingURL);
 
-      print(
-          "------------------------------------ dependent Dropdown Data $type ----------------------------");
+      print("------------------------------------ dependent Dropdown Data $type ----------------------------");
       print("remainingURL:$remainingURL");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         if (type == "Zila") {
           List data = res.data["data"];
-          var dataLocation =
-              data.map((data) => Locations.fromJson(data)).toList();
+          var dataLocation = data.map((data) => Locations.fromJson(data)).toList();
           emit(DependentDropdownSuccessState(dataLocation));
         } else {
-          IndependentDropdownModel data =
-              IndependentDropdownModel.fromJson(res.data);
+          IndependentDropdownModel data = IndependentDropdownModel.fromJson(res.data);
           emit(DependentDropdownSuccessState(data.data?.locations ?? []));
         }
       } else {
@@ -202,15 +185,12 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getUnitData({required Map<String, dynamic> data}) async {
     try {
       emit(LoadingState());
-      final res = await api.getDataUnits(
-          'Bearer ${StorageService.userAuthToken}', data);
-      print(
-          "------------------------------------ Get Unit Data ----------------------------");
+      final res = await api.getDataUnits('Bearer ${StorageService.userAuthToken}', data);
+      print("------------------------------------ Get Unit Data ----------------------------");
       print("Data  :$data");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DataUnitModel data = DataUnitModel.fromJson(res.data);
         emit(UnitDataFetchedState(data));
@@ -224,11 +204,11 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     }
   }
 
-  void onTapFilterData({required String id, required int? unitsId}) {
+  void onTapFilterData({required String? subUnit, required int? unit}) {
     emit(LoadingState());
-    morchaData = UnitData(name: 'Morcha');
-    unitId = unitsId;
-    subUnitId = id;
+    morchaData = UnitData();
+    unitId = unit;
+    subUnitId = subUnit ?? "";
     print('unitId=$unitId');
 
     print('subUnitId=$subUnitId');
@@ -238,15 +218,12 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getDeleteReason() async {
     try {
       emit(LoadingState());
-      final res =
-          await api.getDeleteReason('Bearer ${StorageService.userAuthToken}');
-      print(
-          "------------------------------------ Get Delete Reason ----------------------------");
+      final res = await api.getDeleteReason('Bearer ${StorageService.userAuthToken}');
+      print("------------------------------------ Get Delete Reason ----------------------------");
 
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DeleteReasonModel data = DeleteReasonModel.fromJson(res.data);
         emit(DeleteReasonFetchedState(data));
@@ -263,15 +240,12 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getBoothPannasStatus(int boothID) async {
     try {
       emit(BoothPannasStatusLoadingState());
-      final res = await api.getBoothPannasStatus(
-          'Bearer ${StorageService.userAuthToken}', boothID);
-      print(
-          "------------------------------------ get Booth Panna Status ----------------------------");
+      final res = await api.getBoothPannasStatus('Bearer ${StorageService.userAuthToken}', boothID);
+      print("------------------------------------ get Booth Panna Status ----------------------------");
 
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         BoothPannasStatus data = BoothPannasStatus.fromJson(res.data);
         emit(BoothPannasStatusSuccessState(data));
@@ -288,18 +262,14 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getPannaKramaankList(int boothID, int acId) async {
     try {
       emit(PannaKramaankLoadingState());
-      final res = await api.getPannaKramaank(
-          'Bearer ${StorageService.userAuthToken}', acId, boothID);
-      print(
-          "------------------------------------ Panna Kramaank ----------------------------");
+      final res = await api.getPannaKramaank('Bearer ${StorageService.userAuthToken}', acId, boothID);
+      print("------------------------------------ Panna Kramaank ----------------------------");
       print("Url :${res.response.realUri}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        IndependentDropdownModel data =
-            IndependentDropdownModel.fromJson(res.data);
+        IndependentDropdownModel data = IndependentDropdownModel.fromJson(res.data);
         emit(PannaKramaankSuccessState(data));
       } else {
         emit(PannaKramaankErrorState());
@@ -317,10 +287,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
     emit(DeleteReasonSeletcedState());
   }
 
-  Future deletePerson(
-      {required int deleteDataEntryId,
-      required String reason,
-      required int index}) async {
+  Future deletePerson({required int deleteDataEntryId, required String reason, required int index}) async {
     try {
       emit(LoadingState());
       EasyLoading.show();
@@ -329,15 +296,13 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
         deleteDataEntryId,
         reason,
       );
-      print(
-          "------------------------------------ Delete Person----------------------------");
+      print("------------------------------------ Delete Person----------------------------");
       print("deleteDataEntryId: $deleteDataEntryId");
       print("reason  :$reason");
 
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------  ------------------------ ----------------------------");
+      print("------------------------------------  ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         Map<String, dynamic>? msg = res.data;
         dataList?.removeAt(index);

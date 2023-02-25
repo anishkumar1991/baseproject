@@ -5,13 +5,13 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/ne
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/network/model/sangathan_data_model.dart';
 
 import '../../../../../../Storage/user_storage_service.dart';
+import '../../zila_data_page/network/model/independent_drodown_model.dart';
 import '../network/model/ClientAppPermissionModel.dart';
 import '../network/model/alloted_location_model.dart';
 
 class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   SangathanDetailsCubit() : super(InitialStateState());
-  final api = DataLevelApi(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
+  final api = DataLevelApi(Dio(BaseOptions(contentType: 'application/json', validateStatus: ((status) => true))));
 
   List<SangathanData?> sangathanDataList = [];
   AllotedLocationModel? allotedLocationModel;
@@ -29,18 +29,14 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   Future getClientAppPermission(String clientId) async {
     try {
       emit(LoadingState());
-      var res = await api.getClientAppPermission(
-          'Bearer ${StorageService.userAuthToken}', clientId);
-      print(
-          "------------------------------------ Get CLient App Permission-------------------------");
+      var res = await api.getClientAppPermission('Bearer ${StorageService.userAuthToken}', clientId);
+      print("------------------------------------ Get CLient App Permission-------------------------");
       print("url :${res.response.realUri}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        ClientAppPermissionModel data =
-            ClientAppPermissionModel.fromJson(res.data);
+        ClientAppPermissionModel data = ClientAppPermissionModel.fromJson(res.data);
 
         emit(ClientAppPermissionsFetchState(data));
       } else {
@@ -56,19 +52,14 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
   Future getSangathanDataLevel() async {
     try {
       emit(LoadingState());
-      var res = await api.getDataLevel(
-          'Bearer ${StorageService.userAuthToken}',
-          'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D)',
-          true,
-          1);
-      print(
-          "------------------------------------ Get Data Level ----------------------------");
+      var res = await api.getDataLevel('Bearer ${StorageService.userAuthToken}',
+          'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D)', true, 1);
+      print("------------------------------------ Get Data Level ----------------------------");
       print("url :${res.response.realUri}");
       print("Status code : ${res.response.statusCode}");
       print(StorageService.userAuthToken);
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         SangthanDataModel data = SangthanDataModel.fromJson(res.data);
         emit(DataLevelFetchedState(data));
@@ -81,20 +72,16 @@ class SangathanDetailsCubit extends Cubit<SangathanDetailsState> {
     }
   }
 
-  Future getAllotedLocations(
-      {required String clientId, required String permissionId}) async {
+  Future getAllotedLocations({required String clientId, required String permissionId}) async {
     try {
       emit(LoadingState());
-      final respose = await api.allottedlocations(
-          'Bearer ${StorageService.userAuthToken}', clientId, permissionId);
-      print(
-          "------------------------------------ Get Allotted location ----------------------------");
+      final respose = await api.allottedlocations('Bearer ${StorageService.userAuthToken}', clientId, permissionId);
+      print("------------------------------------ Get Allotted location ----------------------------");
 
       print("Status code : ${respose.response.statusCode}");
       print("Response :${respose.data}");
       print("url :${respose.response.realUri}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (respose.response.statusCode == 200) {
         AllotedLocationModel data = AllotedLocationModel.fromJson(respose.data);
         emit(LocationFetchedState(data));

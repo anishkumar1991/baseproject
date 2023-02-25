@@ -695,7 +695,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                                         }
 
                                         if (cubit.isPhotoMandatory) {
-                                          if (cubit.file != null) {
+                                          if (cubit.file != null || cubit.initialUserprofileURL != null) {
                                             if (form.validate()) {
                                               cubit.previewAndSubmitList(widget.pannaID);
                                               Navigator.pushNamed(

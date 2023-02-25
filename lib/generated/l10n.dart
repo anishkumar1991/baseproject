@@ -2279,6 +2279,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Select sub unit`
+  String get selectSubUnit {
+    return Intl.message(
+      'Select sub unit',
+      name: 'selectSubUnit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

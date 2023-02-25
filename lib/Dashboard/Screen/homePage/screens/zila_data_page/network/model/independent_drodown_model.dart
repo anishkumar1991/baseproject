@@ -52,14 +52,8 @@ class Locations {
   int? mandalId;
   String? mandalName;
   String? pdfUrl;
-
-  Locations(
-      {this.id,
-      this.name,
-      this.number,
-      this.mandalId,
-      this.mandalName,
-      this.pdfUrl});
+  int? countryStateId;
+  Locations({this.id, this.name, this.number, this.mandalId, this.mandalName, this.pdfUrl, this.countryStateId});
 
   Locations.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -68,6 +62,7 @@ class Locations {
     mandalId = json['mandal_id'];
     mandalName = json['mandal_name'];
     pdfUrl = json['pdf_url'];
+    countryStateId = json['country_state_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,7 +72,8 @@ class Locations {
     data['number'] = number;
     data['mandal_id'] = mandalId;
     data['mandal_name'] = mandalName;
-    data['pdf_url'] = this.pdfUrl;
+    data['pdf_url'] = pdfUrl;
+    data['country_state_id'] = countryStateId;
     return data;
   }
 }

@@ -166,7 +166,7 @@ class EntryDetailsList extends StatelessWidget {
                                 child: InkWell(
                                   onTap: (() {
                                     if (cubit.isEditPermission) {
-                                      context.read<AddEntryCubit>().cleanAllVariableData();
+                                      /*   context.read<AddEntryCubit>().cleanAllVariableData();
                                       Navigator.pushNamed(context, RoutePath.addEntryScreen,
                                           arguments: AddEntryPage(
                                             type: type!,
@@ -181,7 +181,7 @@ class EntryDetailsList extends StatelessWidget {
                                                 ? null
                                                 : int.tryParse(data?.pannaNumber ?? "0"),
                                             personData: data?.toJson(),
-                                          ));
+                                          ));*/
                                     }
                                   }),
                                   child: Row(

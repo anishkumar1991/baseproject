@@ -285,6 +285,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Select Mandal first"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "selectSubUnit":
+            MessageLookupByLibrary.simpleMessage("Select sub unit"),
         "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
             "Please Select Vidhansabha first"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("Selected booth"),

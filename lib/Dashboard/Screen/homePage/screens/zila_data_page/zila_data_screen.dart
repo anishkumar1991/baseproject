@@ -65,7 +65,10 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
     }
 
     DropdownHandler.dynamicSangathanDropdown(
-        context, widget.type ?? "", context.read<SangathanDetailsCubit>().selectedAllottedLocation?.id ?? 0, context.read<SangathanDetailsCubit>().typeLevelName ?? "");
+        context,
+        widget.type ?? "",
+        context.read<SangathanDetailsCubit>().selectedAllottedLocation?.id ?? 0,
+        context.read<SangathanDetailsCubit>().typeLevelName ?? "");
     /* context.read<ZilaDataCubit>().getPartyZila(
         id: widget.countryStateId ??
             StorageService.userData!.user!.countryStateId!);*/
@@ -128,8 +131,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 spaceHeightWidget(13),
 
                 /// -----------------------------------------  dependent dropdown    ---------------------------------------------------------
-                if (widget.type == "Mandal" || widget.type == "Booth" || widget.type == "Panna" || widget.type == "Shakti Kendra") ...[
-                  if (context.read<SangathanDetailsCubit>().typeLevelName == DropdownHandler.gettingLocationTypeForCondition(widget.type ?? ""))
+                if (widget.type == "Mandal" ||
+                    widget.type == "Booth" ||
+                    widget.type == "Panna" ||
+                    widget.type == "Shakti Kendra") ...[
+                  if (context.read<SangathanDetailsCubit>().typeLevelName ==
+                      DropdownHandler.gettingLocationTypeForCondition(widget.type ?? ""))
                     const SizedBox()
                   else ...[
                     Row(
@@ -180,9 +187,12 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                         if (cubit.pannaKramaankListData.isNotEmpty) {
                           cubit.selectedPannaNo = cubit.pannaKramaankListData.first;
                           if (cubit.levelNameId != null) {
-                            context
-                                .read<ZilaDataCubit>()
-                                .getEntryData(data: {"level": widget.dataLevelId, "unit": cubit.unitId ?? "", "sub_unit": cubit.subUnitId, "level_name": cubit.pannaKramaankListData.first.id});
+                            context.read<ZilaDataCubit>().getEntryData(data: {
+                              "level": widget.dataLevelId,
+                              "unit": cubit.unitId ?? "",
+                              "sub_unit": cubit.subUnitId,
+                              "level_name": cubit.pannaKramaankListData.first.id
+                            });
                           }
                         } else {
                           cubit.dataList = [];
@@ -205,13 +215,18 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                             fontWeight: FontWeight.w500,
                                             fontSize: 18,
                                           )),
-                                      Text("${S.of(context).total}:${cubit.dataList?.length ?? 0}", style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 12, color: AppColor.greyColor))
+                                      Text("${S.of(context).total}:${cubit.dataList?.length ?? 0}",
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w500, fontSize: 12, color: AppColor.greyColor))
                                     ],
                                   ),
                           spaceHeightWidget(5),
 
                           /// filter options
-                          if (widget.type == "Panna") pannaNumberSelectionWidget() else cubit.dataList?.isEmpty ?? true ? const SizedBox() : const FilterOptions(),
+                          if (widget.type == "Panna")
+                            pannaNumberSelectionWidget()
+                          else
+                            cubit.dataList?.isEmpty ?? true ? const SizedBox() : const FilterOptions(),
 
                           Expanded(
                             child: SingleChildScrollView(
@@ -220,7 +235,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                                       heightFactor: MediaQuery.of(context).size.height * 0.02,
                                       child: Text(
                                         S.of(context).noDataAvailable,
-                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 16, color: AppColor.black),
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w500, fontSize: 16, color: AppColor.black),
                                       ))
                                   : Column(
                                       children: [
@@ -326,7 +342,8 @@ class _ZilaDataScreenState extends State<ZilaDataScreen> {
                 onTap: () {
                   showModalBottomSheet(
                       context: context,
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
                       builder: (builder) {
                         return PannaNoListBottomSheetWidget(
                           dataLevelId: widget.dataLevelId ?? 0,

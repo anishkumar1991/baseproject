@@ -222,5 +222,6 @@
   "notMappedWithAnyMandal": "Not mapped with any Mandal",
   "previewSubmitDetails": "Preview & Submit Details",
   "fillSecondaryInformation": "Fill Secondary Information",
-  "uploadFile": "Upload File"
+  "uploadFile": "Upload File",
+  "selectSubUnit": "Select sub unit"
 }

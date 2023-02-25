@@ -49,6 +49,8 @@ class _AddEntryApi implements AddEntryApi {
   Future<HttpResponse<dynamic>> getCast(
     token,
     id,
+    level,
+    level_name,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -63,7 +65,7 @@ class _AddEntryApi implements AddEntryApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/data/caste?category_id=${id}',
+              '/zila/api/data/caste?category_id=${id}&level=${level}&level_name=${level_name}',
               queryParameters: queryParameters,
               data: _data,
             )

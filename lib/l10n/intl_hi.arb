@@ -221,5 +221,6 @@
   "notMappedWithAnyMandal": "किसी भी मंडल के साथ मैप नहीं",
   "previewSubmitDetails": "जानकारी देखें व जमा करें",
   "fillSecondaryInformation": "अतिरिक्त जानकारी भरें",
-  "uploadFile": "अपलोड फाइल"
+  "uploadFile": "अपलोड फाइल",
+  "selectSubUnit": "सब-यूनिट का चयन करें"
 }

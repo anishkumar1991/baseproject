@@ -287,6 +287,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कृपया पहले मंडल का चयन करें"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "selectSubUnit":
+            MessageLookupByLibrary.simpleMessage("सब-यूनिट का चयन करें"),
         "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
             "कृपया पहले विधानसभा का चयन करें"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("चयनित बूथ"),
