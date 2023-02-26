@@ -11,16 +11,13 @@ import '../cubit/zila_data_state.dart';
 class PannaNoListBottomSheetWidget extends StatefulWidget {
   final int dataLevelId;
 
-  const PannaNoListBottomSheetWidget({Key? key, required this.dataLevelId})
-      : super(key: key);
+  const PannaNoListBottomSheetWidget({Key? key, required this.dataLevelId}) : super(key: key);
 
   @override
-  State<PannaNoListBottomSheetWidget> createState() =>
-      _PannaNoListBottomSheetWidgetState();
+  State<PannaNoListBottomSheetWidget> createState() => _PannaNoListBottomSheetWidgetState();
 }
 
-class _PannaNoListBottomSheetWidgetState
-    extends State<PannaNoListBottomSheetWidget> {
+class _PannaNoListBottomSheetWidgetState extends State<PannaNoListBottomSheetWidget> {
   @override
   Widget build(BuildContext context) {
     var cubit = context.read<ZilaDataCubit>();
@@ -49,10 +46,7 @@ class _PannaNoListBottomSheetWidgetState
                       heightFactor: MediaQuery.of(context).size.height * 0.02,
                       child: Text(
                         "Oops, something went wrong. Please try again later",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                            color: AppColor.black),
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 16, color: AppColor.black),
                       ));
                 }
                 if (state is PannaKramaankLoadingState) {
@@ -70,44 +64,33 @@ class _PannaNoListBottomSheetWidgetState
                         heightFactor: MediaQuery.of(context).size.height * 0.02,
                         child: Text(
                           S.of(context).noDataAvailable,
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: AppColor.black),
+                          style: GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 16, color: AppColor.black),
                         ))
                     : cubit.pannaKramaankListData.isEmpty
                         ? Center(
-                            heightFactor:
-                                MediaQuery.of(context).size.height * 0.02,
+                            heightFactor: MediaQuery.of(context).size.height * 0.02,
                             child: Text(
                               S.of(context).noDataAvailable,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16,
-                                  color: AppColor.black),
+                              style:
+                                  GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 16, color: AppColor.black),
                             ))
                         : GridView.count(
                             crossAxisCount: 3,
                             crossAxisSpacing: 8.0,
                             mainAxisSpacing: 8.0,
-                            children: List.generate(
-                                cubit.pannaKramaankListData.length, (index) {
+                            children: List.generate(cubit.pannaKramaankListData.length, (index) {
                               var data = cubit.pannaKramaankListData[index];
                               return listTilePanna(
                                 index: data.number ?? 0,
                                 name: data.name ?? "",
                                 onTap: () {
-                                  cubit.selectedPannaNo =
-                                      cubit.pannaKramaankListData[index];
+                                  cubit.selectedPannaNo = cubit.pannaKramaankListData[index];
 
-                                  context
-                                      .read<ZilaDataCubit>()
-                                      .getEntryData(data: {
+                                  context.read<ZilaDataCubit>().getEntryData(data: {
                                     "level": widget.dataLevelId,
                                     "unit": cubit.unitId ?? "",
                                     "sub_unit": cubit.subUnitId,
-                                    "level_name":
-                                        cubit.pannaKramaankListData[index].id
+                                    "level_name": cubit.pannaKramaankListData[index].id
                                   });
                                   cubit.onDataFound();
                                   Navigator.pop(context);
@@ -122,10 +105,8 @@ class _PannaNoListBottomSheetWidgetState
     );
   }
 
-  Widget listTilePanna(
-      {required int index,
-      required String name,
-      final GestureTapCallback? onTap}) {
+  Widget listTilePanna({required int index, required String name, final GestureTapCallback? onTap}) {
+    var cubit = context.read<ZilaDataCubit>();
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -133,11 +114,11 @@ class _PannaNoListBottomSheetWidgetState
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(7),
-          color: AppColor.dividerColor,
+          color: cubit.selectedPannaNo?.number == index ? AppColor.orange : AppColor.dividerColor,
         ),
         child: Text("$index",
             style: GoogleFonts.poppins(
-              color: AppColor.black,
+              color: cubit.selectedPannaNo?.number == index ? AppColor.white : AppColor.black,
               fontWeight: FontWeight.w600,
               fontSize: 18,
             )),

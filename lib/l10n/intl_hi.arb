@@ -208,7 +208,6 @@
   "booth": "बूथ",
   "totalGroups": "कुल समूह -",
   "socialMedia": "सोशल मीडिया",
-  
   "downloading": "डाउनलोड कर रहे हे..",
   "download": "डाउनलोड",
   "karyakarniBoothText": "समिति",
@@ -217,5 +216,11 @@
   "pleaseSelectPhoto": "कृपया फोटो सेलेक्ट करें",
   "choose": "चुनें",
   "dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal": "अन्य मंडल के शक्ति केन्द्रों पर डाटा एंट्री की अनुमति नहीं है",
-  "dataEntryIsNotAllowedOnBoothOfOtherMandal": "अन्य मंडल के बूथ पर डाटा एंट्री की अनुमति नहीं है"
+  "dataEntryIsNotAllowedOnBoothOfOtherMandal": "अन्य मंडल के बूथ पर डाटा एंट्री की अनुमति नहीं है",
+  "mappedMandal": "मैप्ड मंडल",
+  "notMappedWithAnyMandal": "किसी भी मंडल के साथ मैप नहीं",
+  "previewSubmitDetails": "जानकारी देखें व जमा करें",
+  "fillSecondaryInformation": "अतिरिक्त जानकारी भरें",
+  "uploadFile": "अपलोड फाइल",
+  "selectSubUnit": "सब-यूनिट का चयन करें"
 }

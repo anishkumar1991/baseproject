@@ -6,15 +6,16 @@ import '../../../../../../Values/app_colors.dart';
 import '../../../../../../common/common_logo_widget.dart';
 import '../../../../../../generated/l10n.dart';
 import '../../zila_data_page/dropdown_handler/dropdown_handler.dart';
+import '../../zila_data_page/network/model/independent_drodown_model.dart';
 import '../cubit/sangathan_detail_cubit.dart';
-import '../network/model/alloted_location_model.dart';
 import '../sangathan_deatils_page.dart';
 
 class SelectAllottedLocationSheetWidget extends StatefulWidget {
   final String typeLevel;
   final List<Locations> locationList;
 
-  const SelectAllottedLocationSheetWidget({Key? key, required this.typeLevel, required this.locationList}) : super(key: key);
+  const SelectAllottedLocationSheetWidget({Key? key, required this.typeLevel, required this.locationList})
+      : super(key: key);
 
   @override
   State<SelectAllottedLocationSheetWidget> createState() => _SelectAllottedLocationSheetWidgetState();
@@ -82,7 +83,9 @@ class _SelectAllottedLocationSheetWidgetState extends State<SelectAllottedLocati
                           children: [
                             CommonLogoWidget(
                                 name: widget.locationList[index].name ?? "",
-                                backgroundColor: cubit.selectedAllottedLocation?.name == widget.locationList[index].name ? AppColor.orange : AppColor.naturalBlackColor),
+                                backgroundColor: cubit.selectedAllottedLocation?.name == widget.locationList[index].name
+                                    ? AppColor.orange
+                                    : AppColor.naturalBlackColor),
                             const SizedBox(
                               width: 10,
                             ),

@@ -8,6 +8,7 @@ import '../../../../../../Storage/user_storage_service.dart';
 import '../network/api/vidhanSabha_api.dart';
 import '../network/model/shakti_kendr_model.dart';
 import '../network/model/vidhanSabha_model.dart';
+import '../screen/model/booth_selection_model.dart';
 import '../screen/widgets/delete_confirmation_dialog.dart';
 
 part 'shakti_kendra_state.dart';
@@ -135,7 +136,7 @@ class ShaktiKendraCubit extends Cubit<ShaktiKendraState> {
     }
   }
 
-  getBoothId(List<Booths>? booths) {}
+  getBoothId(List<Booth>? booths) {}
 
   changeFilter() {
     sortedShaktiKendr.data = [...shaktiKendr.data ?? []];

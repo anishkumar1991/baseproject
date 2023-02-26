@@ -27,12 +27,13 @@ class SelectBooth extends StatelessWidget {
           return listTileShimmerEffect(context: context);
         } else if (state is FatchDataBoothEditShaktiKendraState) {
           cubit.boothData = state.data;
-          print("======================= boothData length ==> ${cubit.boothData.data?.length}");
         } else if (state is ErrorBoothEditShaktiKendraState) {
           EasyLoading.showToast(state.error);
         }
         return Container(
-            decoration: const BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))),
+            decoration: const BoxDecoration(
+                color: AppColor.white,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0))),
             child: ClipRRect(
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0)),
               child: Column(
@@ -66,12 +67,18 @@ class SelectBooth extends StatelessWidget {
                                           if (cubit.chekedValue.contains(cubit.boothData.data![index])) {
                                             cubit.chekedValue.remove(cubit.boothData.data![index]);
                                             cubit.selectedBooth.remove(cubit.boothData.data?[index].id);
-                                            await cubit.alreadyExitBoothInOtherSk(isAdd: false, boothId: cubit.boothData.data?[index].id ?? 0, shaktiKendrDataList: shaktiKendrDataList);
+                                            await cubit.alreadyExitBoothInOtherSk(
+                                                isAdd: false,
+                                                booth: cubit.boothData.data?[index],
+                                                shaktiKendrDataList: shaktiKendrDataList);
                                           } else {
                                             cubit.chekedValue.add(cubit.boothData.data![index]);
                                             cubit.selectedBooth.add(cubit.boothData.data?[index].id ?? 0);
-                                            print(cubit.boothData.data?[index].id);
-                                            await cubit.alreadyExitBoothInOtherSk(isAdd: true, boothId: cubit.boothData.data?[index].id ?? 0, shaktiKendrDataList: shaktiKendrDataList);
+
+                                            await cubit.alreadyExitBoothInOtherSk(
+                                                isAdd: true,
+                                                booth: cubit.boothData.data?[index],
+                                                shaktiKendrDataList: shaktiKendrDataList);
                                           }
                                           cubit.emitState();
                                         },
@@ -82,7 +89,8 @@ class SelectBooth extends StatelessWidget {
                                                   checkColor: Colors.green,
                                                   activeColor: AppColor.white,
                                                   side: MaterialStateBorderSide.resolveWith(
-                                                    (states) => const BorderSide(width: 1.0, color: AppColor.naturalBlackColor),
+                                                    (states) =>
+                                                        const BorderSide(width: 1.0, color: AppColor.naturalBlackColor),
                                                   ),
                                                   value: cubit.chekedValue.contains(cubit.boothData.data![index]),
                                                   onChanged: (value) {}),
@@ -91,7 +99,10 @@ class SelectBooth extends StatelessWidget {
                                               width: 35,
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(11),
-                                                  color: skMappingWithBooth(context, cubit.boothData.data?[index].parentid ?? 0) ? AppColor.primaryColor : AppColor.boothContainerColour),
+                                                  color: skMappingWithBooth(
+                                                          context, cubit.boothData.data?[index].parentid ?? 0)
+                                                      ? AppColor.primaryColor
+                                                      : AppColor.boothContainerColour),
                                               child: Text(
                                                 cubit.boothData.data?[index].number ?? '',
                                                 textAlign: TextAlign.center,
@@ -105,7 +116,8 @@ class SelectBooth extends StatelessWidget {
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 3,
                                                 textAlign: TextAlign.left,
-                                                style: GoogleFonts.poppins(color: AppColor.black.withOpacity(0.8), fontSize: 13),
+                                                style: GoogleFonts.poppins(
+                                                    color: AppColor.black.withOpacity(0.8), fontSize: 13),
                                               ),
                                             ),
                                           ],
@@ -134,7 +146,6 @@ class SelectBooth extends StatelessWidget {
                           title: S.of(context).addBooth,
                           onTap: () {
                             Navigator.pop(context);
-                            print("========================  ${cubit.chekedValue}");
                           },
                           width: MediaQuery.of(context).size.width,
                           style: GoogleFonts.poppins(color: AppColor.white, fontSize: 14),

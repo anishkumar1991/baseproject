@@ -149,6 +149,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
+        "fillSecondaryInformation":
+            MessageLookupByLibrary.simpleMessage("Fill Secondary Information"),
         "filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
         "functionAdd": MessageLookupByLibrary.simpleMessage(
@@ -186,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Make tour schedule"),
         "mandal": MessageLookupByLibrary.simpleMessage("Board"),
         "mandalLevelText": MessageLookupByLibrary.simpleMessage("Mandal"),
+        "mappedMandal": MessageLookupByLibrary.simpleMessage("Mapped Mandal"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("Mobile no."),
         "myEvent": MessageLookupByLibrary.simpleMessage("My events"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
@@ -201,6 +204,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("No organizations available"),
         "noThanks": MessageLookupByLibrary.simpleMessage("No thanks"),
+        "notMappedWithAnyMandal":
+            MessageLookupByLibrary.simpleMessage("Not mapped with any Mandal"),
         "notValidNumber": MessageLookupByLibrary.simpleMessage(
             "This Number is Not Valid Number"),
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),
@@ -249,6 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please enter pravas subject"),
         "preparing": MessageLookupByLibrary.simpleMessage("preparing"),
         "present": MessageLookupByLibrary.simpleMessage("Present"),
+        "previewSubmitDetails":
+            MessageLookupByLibrary.simpleMessage("Preview & Submit Details"),
         "primaryMemberId": MessageLookupByLibrary.simpleMessage(
             "Primary Member id should be 10 digit"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
@@ -278,6 +285,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please Select Mandal first"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("Select Tour Level"),
+        "selectSubUnit":
+            MessageLookupByLibrary.simpleMessage("Select sub unit"),
         "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
             "Please Select Vidhansabha first"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("Selected booth"),
@@ -312,6 +321,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "typeOfFunction": MessageLookupByLibrary.simpleMessage("Program Type"),
         "upcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("Upcoming Trip"),
+        "uploadFile": MessageLookupByLibrary.simpleMessage("Upload File"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("Upload Photo Here"),
         "uploading": MessageLookupByLibrary.simpleMessage("Uploading"),

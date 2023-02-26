@@ -1,3 +1,5 @@
+import '../../../zila_data_page/network/model/independent_drodown_model.dart';
+
 class AllotedLocationModel {
   Data? data;
   String? message;
@@ -41,28 +43,6 @@ class Data {
     if (locations != null) {
       data['locations'] = locations!.map((v) => v.toJson()).toList();
     }
-    return data;
-  }
-}
-
-class Locations {
-  int? id;
-  String? name;
-  int? countryStateId;
-
-  Locations({this.id, this.name, this.countryStateId});
-
-  Locations.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    countryStateId = json['country_state_id'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['country_state_id'] = countryStateId;
     return data;
   }
 }

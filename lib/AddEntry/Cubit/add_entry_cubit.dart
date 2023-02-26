@@ -83,8 +83,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   int? personID;
   String? from;
   Map<String, dynamic> finalAllDataList = {};
-  final api = AddEntryApi(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
+  final api = AddEntryApi(Dio(BaseOptions(contentType: 'application/json', validateStatus: ((status) => true))));
 
   /// gender radio button on tap method
   void onTapRadioButton(String value) {
@@ -164,8 +163,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   getAllMultiCheckData(String type, dynamic value) {
     emit(AddEntryLoadingState());
-    int index =
-        allMultiFieldData.indexWhere((element) => element["fieldName"] == type);
+    int index = allMultiFieldData.indexWhere((element) => element["fieldName"] == type);
     if (index >= 0) {
       allMultiFieldData.removeAt(index);
     } else {
@@ -180,8 +178,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// getting all dropdown value
   getAllDropDownData(dynamic value, String dropdownType) {
-    int index = allDropdownValueList
-        .indexWhere((element) => element["fieldName"] == dropdownType);
+    int index = allDropdownValueList.indexWhere((element) => element["fieldName"] == dropdownType);
     if (index >= 0) {
       allDropdownValueList[index]["value"] = value.id;
     } else {
@@ -205,7 +202,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       categorySelected = value;
       getAllDropDownData(value, dropdownType);
 
-      getCastData(id: categorySelected!.id.toString());
+      getCastData(id: categorySelected!.id.toString(), level: levelId.toString(), levelName: levelName.toString());
     } else if (dropdownType == "caste") {
       castSelected = value;
       getAllDropDownData(value, dropdownType);
@@ -238,11 +235,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     final DateTime? picked = await showDatePicker(
         // locale: const Locale.fromSubtags(languageCode: 'en'),
         context: context,
-        initialDate: DateTime(
-            DateTime.now().year - 16, DateTime.now().month, DateTime.now().day),
+        initialDate: DateTime(DateTime.now().year - 16, DateTime.now().month, DateTime.now().day),
         firstDate: DateTime(1900, 8),
-        lastDate: DateTime(DateTime.now().year - 16, DateTime.now().month,
-            DateTime.now().day));
+        lastDate: DateTime(DateTime.now().year - 16, DateTime.now().month, DateTime.now().day));
     if (picked != null && picked != dateTime) {
       dateTime = picked;
       date = picked.toString();
@@ -254,8 +249,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   /// This method for user photo picker
   Future<void> pickImage(ImageSource source) async {
     emit(AddEntryLoadingState());
-    PickedFile? pickedFile =
-        await ImagePicker.platform.pickImage(source: source);
+    PickedFile? pickedFile = await ImagePicker.platform.pickImage(source: source);
     if (pickedFile != null) {
       initialUserprofileURL = null;
       file = File(pickedFile.path);
@@ -274,13 +268,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     }
   }
 
-  Future<void> storeImage(
-      {required String folderName,
-      required String path,
-      String? recievedUrl}) async {
+  Future<void> storeImage({required String folderName, required String path, String? recievedUrl}) async {
     int time = DateTime.now().millisecondsSinceEpoch;
-    Reference ref =
-        FirebaseStorage.instance.ref(folderName).child(time.toString());
+    Reference ref = FirebaseStorage.instance.ref(folderName).child(time.toString());
     await ref.putFile(File(path));
     recievedUrl = await ref.getDownloadURL();
     //print('ImageUrl==$profileImageUrl');
@@ -295,8 +285,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(AddEntryLoadingState());
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
-      int index = allImagePickerList
-          .indexWhere((element) => element["fieldName"] == fieldType);
+      int index = allImagePickerList.indexWhere((element) => element["fieldName"] == fieldType);
       if (index >= 0) {
         allImagePickerList[index]["value"] = result.files.single.path!;
       } else {
@@ -316,11 +305,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       fieldType = "ration_card_url";
     }
     emit(AddEntryLoadingState());
-    PickedFile? pickedFile =
-        await ImagePicker.platform.pickImage(source: ImageSource.camera);
+    PickedFile? pickedFile = await ImagePicker.platform.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
-      int index = allImagePickerList
-          .indexWhere((element) => element["fieldName"] == fieldType);
+      int index = allImagePickerList.indexWhere((element) => element["fieldName"] == fieldType);
       if (index >= 0) {
         allImagePickerList[index]["value"] = pickedFile.path;
       } else {
@@ -368,12 +355,18 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   }
 
   /// caste api call when select category
-  Future getCastData({required String id}) async {
+  Future getCastData({required String id, required String level, required String levelName}) async {
     try {
       emit(AddEntryLoadingState());
-      final res =
-          await api.getCast('Bearer ${StorageService.userAuthToken}', id);
-      print('cast res =${res.response}');
+      final res = await api.getCast('Bearer ${StorageService.userAuthToken}', id, level, levelName);
+      print("------------------------------------ Add entry form structure ----------------------------");
+
+      print("body = ${res.response.realUri.queryParameters}");
+      print("Status code : ${res.response.statusCode}");
+      print("Response :${res.data}");
+      print(res.response.realUri);
+      print("token : ${StorageService.userAuthToken}");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         CastModel data = CastModel.fromJson(res.data);
         emit(CastFetchedState(data));
@@ -388,30 +381,23 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// Add entry form structure API method
 
-  Future getAddEntryFormStructure(
-      {required String levelID, int? countryId}) async {
+  Future getAddEntryFormStructure({required String levelID, int? countryId}) async {
     emit(GetAddEntryFormStructureLoadingState());
     if (state is GetAddEntryFormStructureLoadingState) {
       try {
-        final res = await api.getAddEntryFormStructure(
-            '${StorageService.userAuthToken}',
-            'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D',
-            levelID,
-            countryId);
+        final res = await api.getAddEntryFormStructure('${StorageService.userAuthToken}',
+            'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D', levelID, countryId);
         if (res.response.statusCode == 200) {
-          AddEntryFormStructure addEntryFormStructure =
-              AddEntryFormStructure.fromJson(res.data);
+          AddEntryFormStructure addEntryFormStructure = AddEntryFormStructure.fromJson(res.data);
           emit(GetAddEntryFormStructureSuccessState(addEntryFormStructure));
-          print(
-              "------------------------------------ Add entry form structure ----------------------------");
+          print("------------------------------------ Add entry form structure ----------------------------");
           print("level id :$levelID");
           print("countryStateId = $countryId");
           print("body = ${res.response.realUri.queryParameters}");
           print("Status code : ${res.response.statusCode}");
           print("Response :${res.data}");
           print("token : ${StorageService.userAuthToken}");
-          print(
-              "------------------------------------ ------------------------ ----------------------------");
+          print("------------------------------------ ------------------------ ----------------------------");
         } else {
           Map<String, dynamic>? msg = res.data;
           emit(GetAddEntryFormStructureFailedState(msg?['errors'] ?? ''));
@@ -427,19 +413,15 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   Future getDistrictDropdown(String countryId) async {
     try {
       emit(DistrictDropdownLoadingState());
-      final res = await api.getDistrictDropdownData(
-          'Bearer ${StorageService.userAuthToken}', countryId.toString());
-      print(
-          "------------------------------------ District ----------------------------");
+      final res = await api.getDistrictDropdownData('Bearer ${StorageService.userAuthToken}', countryId.toString());
+      print("------------------------------------ District ----------------------------");
       print("Country id static 3  :$countryId");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         List data = res.data["data"];
-        var dataDistrict =
-            data.map((data) => DropdownData.fromJson(data)).toList();
+        var dataDistrict = data.map((data) => DropdownData.fromJson(data)).toList();
         emit(DistrictDropdownSuccessState(dataDistrict));
       } else {
         Map<String, dynamic>? msg = res.data;
@@ -454,15 +436,12 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   Future getDesignationDropdown({required Map<String, dynamic> data}) async {
     try {
       emit(DesignationDropDownLoadingState());
-      final res = await api.getDesignation(
-          'Bearer ${StorageService.userAuthToken}', data);
-      print(
-          "------------------------------------ Designation ----------------------------");
+      final res = await api.getDesignation('Bearer ${StorageService.userAuthToken}', data);
+      print("------------------------------------ Designation ----------------------------");
       print("data  :$data");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         DesignationDataModel data = DesignationDataModel.fromJson(res.data);
         emit(DesignationDropDownSuccessState(data));
@@ -536,8 +515,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       for (var item in personData.entries) {
         if (item.key == "designation") {
           if (item.value != null || item.value != "") {
-            int index = designationData
-                .indexWhere((element) => element.id == item.value);
+            int index = designationData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               designationSelected = designationData[index];
               getAllDropDownData(designationData[index], item.key);
@@ -545,18 +523,17 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           }
         } else if (item.key == "categoryId") {
           if (item.value != null || item.value != "") {
-            int index =
-                categoryData.indexWhere((element) => element.id == item.value);
+            int index = categoryData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               categorySelected = categoryData[index];
               getAllDropDownData(categoryData[index], item.key);
-              await getCastData(id: categorySelected!.id.toString());
+              await getCastData(
+                  id: categorySelected!.id.toString(), level: levelId.toString(), levelName: levelName.toString());
             }
           }
         } else if (item.key == "caste") {
           if (item.value != null || item.value != "") {
-            int index =
-                castData.indexWhere((element) => element.id == item.value);
+            int index = castData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               castSelected = castData[index];
               getAllDropDownData(castData[index], item.key);
@@ -564,8 +541,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           }
         } else if (item.key == "educationId") {
           if (item.value != null || item.value != "") {
-            int index = qualificationData
-                .indexWhere((element) => element.id == item.value);
+            int index = qualificationData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               qualificationSelected = qualificationData[index];
               getAllDropDownData(qualificationData[index], item.key);
@@ -573,8 +549,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           }
         } else if (item.key == "religionId") {
           if (item.value != null || item.value != "") {
-            int index =
-                religionData.indexWhere((element) => element.id == item.value);
+            int index = religionData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               religionSelected = religionData[index];
               getAllDropDownData(religionData[index], item.key);
@@ -582,8 +557,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           }
         } else if (item.key == "professionId") {
           if (item.value != null || item.value != "") {
-            int index = professionData
-                .indexWhere((element) => element.id == item.value);
+            int index = professionData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               professionSelected = professionData[index];
               getAllDropDownData(professionData[index], item.key);
@@ -591,18 +565,15 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           }
         } else if (item.key == "blood_group") {
           if (item.value != null || item.value != "") {
-            int index = DynamicUIHandler.bloodGroupList
-                .indexWhere((element) => element.name == item.value);
+            int index = DynamicUIHandler.bloodGroupList.indexWhere((element) => element.name == item.value);
             if (index >= 0) {
               bloodGroupSelected = DynamicUIHandler.bloodGroupList[index];
-              getAllDropDownData(
-                  DynamicUIHandler.bloodGroupList[index], item.key);
+              getAllDropDownData(DynamicUIHandler.bloodGroupList[index], item.key);
             }
           }
         } else if (item.key == "district") {
           if (item.value != null || item.value != "") {
-            int index = districtDropdownData
-                .indexWhere((element) => element.name == item.value);
+            int index = districtDropdownData.indexWhere((element) => element.name == item.value);
             if (index >= 0) {
               districtSelected = districtDropdownData[index];
               getAllDropDownData(districtDropdownData[index], item.key);
@@ -616,15 +587,12 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// Get initial caste Data
   getInitialCasteData(Map<String, dynamic>? personData) {
-    print(castData);
     if (personData != null) {
       for (var item in personData.entries) {
-        print(item.key);
         if (item.key == "caste") {
           if (castData.isNotEmpty && castData != null) {
             if (item.value != null || item.value != "") {
-              int index =
-                  castData.indexWhere((element) => element.id == item.value);
+              int index = castData.indexWhere((element) => element.id == item.value);
               if (index >= 0) {
                 castSelected = castData[index];
                 getAllDropDownData(castData[index], item.key);
@@ -634,8 +602,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           }
         }
       }
+      emit(DropDownSelectedState());
     }
-    emit(DropDownSelectedState());
   }
 
   /// Get initial Textfield Data
@@ -644,8 +612,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (personData != null && entryField != null) {
       for (var item in personData.entries) {
         if (DynamicUIHandler.textfield.contains(item.key)) {
-          int index = textFieldControllerData
-              .indexWhere((element) => element["fieldName"] == item.key);
+          int index = textFieldControllerData.indexWhere((element) => element["fieldName"] == item.key);
           if (index >= 0) {
             if (item.value != null && item.value != "") {
               textFieldControllerData[index]["value"] = item.value;
@@ -683,8 +650,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     if (personData != null && entryField != null) {
       for (var item in personData.entries) {
         if (DynamicUIHandler.multiSelectionField.contains(item.key)) {
-          int index = allMultiFieldData
-              .indexWhere((element) => element["fieldName"] == item.key);
+          int index = allMultiFieldData.indexWhere((element) => element["fieldName"] == item.key);
           if (index >= 0) {
             if (item.value != null && item.value != "") {
               allMultiFieldData[index]["value"] = item.value;
@@ -764,37 +730,27 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       for (var item in finalAllDataList.entries) {
         if (entryField?[i].fieldName == item.key) {
           if (item.key == "photo") {
-            if (item.value.toString().contains("http") ||
-                item.value.toString().contains("HTTP")) {
-              map.addEntries({
-                "${entryField?[i].formControlName}": "${item.value}"
-              }.entries);
+            if (item.value.toString().contains("http") || item.value.toString().contains("HTTP")) {
+              map.addEntries({"${entryField?[i].formControlName}": "${item.value}"}.entries);
             } else {
               String url = await getNetworkUrl(item.value,
-                  id: personID ?? DateTime.now().millisecondsSinceEpoch,
-                  name: 'userprofile');
-              map.addEntries(
-                  {"${entryField?[i].formControlName}": url}.entries);
+                  id: personID ?? DateTime.now().millisecondsSinceEpoch, name: 'userprofile');
+              map.addEntries({"${entryField?[i].formControlName}": url}.entries);
             }
           } else if (item.key == "blood_group") {
             for (int i = 0; i < (DynamicUIHandler.bloodGroupList.length); i++) {
-              if (DynamicUIHandler.bloodGroupList[i].id.toString() ==
-                  item.value) {
-                map.addEntries({
-                  "blood_group": "${DynamicUIHandler.bloodGroupList[i].name}"
-                }.entries);
+              if (DynamicUIHandler.bloodGroupList[i].id.toString() == item.value) {
+                map.addEntries({"blood_group": "${DynamicUIHandler.bloodGroupList[i].name}"}.entries);
               }
             }
           } else if (item.key == "district") {
             for (int i = 0; i < (districtDropdownData.length); i++) {
               if (districtDropdownData[i].id.toString() == item.value) {
-                map.addEntries(
-                    {"district": "${districtDropdownData[i].name}"}.entries);
+                map.addEntries({"district": "${districtDropdownData[i].name}"}.entries);
               }
             }
           } else {
-            map.addEntries(
-                {"${entryField?[i].formControlName}": "${item.value}"}.entries);
+            map.addEntries({"${entryField?[i].formControlName}": "${item.value}"}.entries);
           }
         }
       }
@@ -802,8 +758,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     for (var item in finalAllDataList.entries) {
       if (DynamicUIHandler.filePickerUrl.contains(item.key)) {
         if (item.value.toString() != "" && item.value.toString() != null) {
-          if (item.value.toString().contains("http") ||
-              item.value.toString().contains("HTTP")) {
+          if (item.value.toString().contains("http") || item.value.toString().contains("HTTP")) {
             if (item.key == "ration_card_url") {
               map.addEntries({"ration_url": "${item.value}"}.entries);
             } else {
@@ -811,8 +766,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             }
           } else {
             String url = await getNetworkUrl(item.value,
-                id: personID ?? DateTime.now().millisecondsSinceEpoch,
-                name: item.key.toString().split("_")[0]);
+                id: personID ?? DateTime.now().millisecondsSinceEpoch, name: item.key.toString().split("_")[0]);
             if (item.key == "ration_card_url") {
               map.addEntries({"ration_url": "$url"}.entries);
             } else {
@@ -833,27 +787,30 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     try {
       emit(SubmitAddEntryLoadingState());
 
-      final res = await api.submitAddEntry(
-          'Bearer ${StorageService.userAuthToken}', data);
-      print(
-          "------------------------------------ ADD DATA ENTRY API  ----------------------------");
+      final res = await api.submitAddEntry('Bearer ${StorageService.userAuthToken}', data);
+      print("------------------------------------ ADD DATA ENTRY API  ----------------------------");
       print("data  :$data");
       print("Status code : ${res.response.statusCode}");
       log("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         if (res.data["success"] == true && res.data["duplication"] == false) {
           personId = res.data["data"][0]["id"];
-          emit(SubmitAddEntrySuccessState(
-              res.data["message"], res.data["data"][0]["phone"]));
+          emit(SubmitAddEntrySuccessState(res.data["message"], res.data["data"][0]["phone"]));
         } else {
           Map<String, dynamic>? msg = res.data;
-          emit(SubmitAddEntryErrorState(msg?['message'] ?? ''));
+          if (msg != null) {
+            if (msg.containsKey("message1")) {
+              emit(SubmitAddEntryErrorState(msg['message1'] ?? ''));
+            } else {
+              emit(SubmitAddEntryErrorState(msg['message'] ?? ''));
+            }
+          } else {
+            emit(SubmitAddEntryErrorState('Something Went Wrong'));
+          }
         }
       } else {
-        Map<String, dynamic>? msg = res.data;
-        emit(SubmitAddEntryErrorState(msg?['message'] ?? ''));
+        emit(SubmitAddEntryErrorState('Something Went Wrong'));
       }
     } catch (e) {
       emit(SubmitAddEntryErrorState('Something Went Wrong'));
@@ -921,6 +878,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     for (var item in addFormHI.entries) {
       if (item.key.toString() == fieldName) {
         if (currentLocale == "hi") {
+          print(item.key);
           return item.value;
         } else if (currentLocale == "en") {
           return item.key;
@@ -933,20 +891,20 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   }
 
   getHintText({required String hintText, required String currentLocale}) {
-    if (currentLocale == "hi") {
-      return "$hintText दर्ज करें";
-    } else if (currentLocale == "en") {
+    /*if (currentLocale == "hi") {*/
+    return "$hintText दर्ज करें";
+    /*} else if (currentLocale == "en") {
       return "Enter Your $hintText";
     }
-    return hintText;
+    return hintText;*/
   }
 
   getDropDownLocal({required String text, required String currentLocale}) {
-    if (currentLocale == "hi") {
-      return "$text चुनें";
-    } else if (currentLocale == "en") {
-      return "Select $text";
-    }
-    return text;
+    //  if (currentLocale == "hi") {
+    return "$text चुनें";
+    // } else if (currentLocale == "en") {
+    //   return "Select $text";
+    // }
+    // return text;
   }
 }

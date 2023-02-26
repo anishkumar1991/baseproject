@@ -1,42 +1,42 @@
-class Booth {
+class BoothListData {
   bool? success;
-  List<Data>? data;
+  List<Booth>? data;
   String? message;
 
-  Booth({this.success, this.data, this.message});
+  BoothListData({this.success, this.data, this.message});
 
-  Booth.fromJson(Map<String, dynamic> json) {
+  BoothListData.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Booth>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Booth.fromJson(v));
       });
     }
     message = json['message'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
+    data['message'] = message;
     return data;
   }
 }
 
-class Data {
+class Booth {
   int? id;
   String? name;
   String? number;
   String? parentname;
   int? parentid;
 
-  Data({this.id, this.name, this.number, this.parentname, this.parentid});
+  Booth({this.id, this.name, this.number, this.parentname, this.parentid});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Booth.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     number = json['number'];
@@ -45,12 +45,12 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['number'] = this.number;
-    data['parentname'] = this.parentname;
-    data['parentid'] = this.parentid;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['number'] = number;
+    data['parentname'] = parentname;
+    data['parentid'] = parentid;
     return data;
   }
 }

@@ -10,9 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../../../generated/l10n.dart';
 
 Future<void> downloadAndShareFile(
-    {required String fileUrl,
-    required BuildContext context,
-    required int pannaNumber}) async {
+    {required String fileUrl, required BuildContext context, required int pannaNumber}) async {
   EasyLoading.show(status: S.of(context).preparing);
   final response = await http.get(Uri.parse(fileUrl));
   final bytes = response.bodyBytes;
@@ -44,15 +42,11 @@ Future<void> shareFile(String filePath) async {
   }
 }
 
-Future<void> downloadFile(
-    {required String fileUrl,
-    required BuildContext context,
-    required int pannaNumber}) async {
+Future<void> downloadFile({required String fileUrl, required BuildContext context, required int pannaNumber}) async {
   EasyLoading.show(status: S.of(context).downloading);
   final response = await http.get(Uri.parse(fileUrl));
   final bytes = response.bodyBytes;
-  Future.delayed(Duration.zero)
-      .then((value) => EasyLoading.showSuccess(S.of(context).download));
+  Future.delayed(Duration.zero).then((value) => EasyLoading.showSuccess(S.of(context).download));
 
   // Map<Permission, PermissionStatus> statuses = await [
   //   Permission.storage,
@@ -79,14 +73,11 @@ Future<void> downloadFile(
 
   final directory1 = Directory("storage/emulated/0/Download/sangathan");
   if (await directory1.exists()) {
-    File newPath = await file
-        .copy("storage/emulated/0/Download/sangathan/$pannaNumber.pdf");
+    File newPath = await file.copy("storage/emulated/0/Download/sangathan/$pannaNumber.pdf");
     print(newPath.path);
   } else {
-    final Directory createSangathanFolder =
-        await directory1.create(recursive: true);
-    File newPath = await file
-        .copy("storage/emulated/0/Download/sangathan/$pannaNumber.pdf");
+    final Directory createSangathanFolder = await directory1.create(recursive: true);
+    File newPath = await file.copy("storage/emulated/0/Download/sangathan/$pannaNumber.pdf");
     print(newPath.path);
   }
 }

@@ -20,7 +20,9 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
     return Container(
       color: Colors.transparent,
       child: Container(
-          decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0))),
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0))),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -48,7 +50,8 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                   onTap: () async {
                                     cubit.chekedValue = [];
                                     cubit.mandalSelected = '';
-                                    cubit.zilaSelected = "${vidhanSabha.data?.locations?[index].number ?? ''} - ${vidhanSabha.data?.locations?[index].name ?? ''}";
+                                    cubit.zilaSelected =
+                                        "${vidhanSabha.data?.locations?[index].number ?? ''} - ${vidhanSabha.data?.locations?[index].name ?? ''}";
                                     cubit.zilaId = vidhanSabha.data?.locations?[index].id;
                                     Future.delayed(Duration.zero).then((value) {
                                       Navigator.pop(context);
@@ -64,7 +67,9 @@ class VidhanSabhaBottomSheet extends StatelessWidget {
                                         children: [
                                           CommonLogoWidget(
                                             name: vidhanSabha.data?.locations?[index].name ?? '',
-                                            backgroundColor: cubit.zilaId == vidhanSabha.data?.locations?[index].id ? AppColor.orange : AppColor.naturalBlackColor,
+                                            backgroundColor: cubit.zilaId == vidhanSabha.data?.locations?[index].id
+                                                ? AppColor.orange
+                                                : AppColor.naturalBlackColor,
                                           ),
                                           Text(
                                             "${vidhanSabha.data?.locations?[index].number ?? ''} - ${vidhanSabha.data?.locations?[index].name ?? ''}",

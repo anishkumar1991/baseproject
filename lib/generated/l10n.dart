@@ -2229,6 +2229,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Mapped Mandal`
+  String get mappedMandal {
+    return Intl.message(
+      'Mapped Mandal',
+      name: 'mappedMandal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not mapped with any Mandal`
+  String get notMappedWithAnyMandal {
+    return Intl.message(
+      'Not mapped with any Mandal',
+      name: 'notMappedWithAnyMandal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preview & Submit Details`
+  String get previewSubmitDetails {
+    return Intl.message(
+      'Preview & Submit Details',
+      name: 'previewSubmitDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fill Secondary Information`
+  String get fillSecondaryInformation {
+    return Intl.message(
+      'Fill Secondary Information',
+      name: 'fillSecondaryInformation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upload File`
+  String get uploadFile {
+    return Intl.message(
+      'Upload File',
+      name: 'uploadFile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select sub unit`
+  String get selectSubUnit {
+    return Intl.message(
+      'Select sub unit',
+      name: 'selectSubUnit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

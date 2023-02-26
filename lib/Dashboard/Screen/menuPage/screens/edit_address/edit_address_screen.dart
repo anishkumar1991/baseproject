@@ -23,8 +23,7 @@ class EditAddressScreen extends StatefulWidget {
   List<Addresses>? addresses;
   bool? isNew;
 
-  EditAddressScreen({Key? key, this.addresses, this.isNew = false, this.index})
-      : super(key: key);
+  EditAddressScreen({Key? key, this.addresses, this.isNew = false, this.index}) : super(key: key);
 
   @override
   State<EditAddressScreen> createState() => _EditAddressScreenState();
@@ -40,22 +39,16 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   }
 
   fillData() {
-    if (countryState.isEmpty) {
+    if (context.read<EditAddressCubit>().countryState.isEmpty) {
       context.read<EditAddressCubit>().getState();
     }
     if (widget.isNew != true) {
-      context.read<EditAddressCubit>().flatDesCtr.text =
-          widget.addresses?[widget.index!].houseNumber ?? '';
-      context.read<EditAddressCubit>().areaDesCtr.text =
-          widget.addresses?[widget.index!].area ?? '';
-      context.read<EditAddressCubit>().pinCodeCtr.text =
-          widget.addresses?[widget.index!].pinCode ?? '';
-      context.read<EditAddressCubit>().townCtr.text =
-          widget.addresses?[widget.index!].city ?? '';
-      context.read<EditAddressCubit>().stateCtr.text =
-          widget.addresses?[widget.index!].state ?? '';
-      context.read<EditAddressCubit>().addressFor =
-          widget.addresses?[widget.index!].forWhich ?? S.of(context).home;
+      context.read<EditAddressCubit>().flatDesCtr.text = widget.addresses?[widget.index!].houseNumber ?? '';
+      context.read<EditAddressCubit>().areaDesCtr.text = widget.addresses?[widget.index!].area ?? '';
+      context.read<EditAddressCubit>().pinCodeCtr.text = widget.addresses?[widget.index!].pinCode ?? '';
+      context.read<EditAddressCubit>().townCtr.text = widget.addresses?[widget.index!].city ?? '';
+      context.read<EditAddressCubit>().stateCtr.text = widget.addresses?[widget.index!].state ?? '';
+      context.read<EditAddressCubit>().addressFor = widget.addresses?[widget.index!].forWhich ?? S.of(context).home;
     } else {
       context.read<EditAddressCubit>().clearData();
     }
@@ -72,6 +65,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: BlocBuilder<EditAddressCubit, EditAddressState>(
           builder: (context, state) {
+            if (state is GetStateFatchDataState) {
+              context.read<EditAddressCubit>().countryState = state.data;
+            }
             if (state is GetStateLoadingState) {
               return Column(
                 children: [
@@ -86,10 +82,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       spaceHeightWidget(10),
                       Text(
                         S.of(context).gettingStateData,
-                        style: textStyleWithPoppin(
-                            fontSize: 14,
-                            color: AppColor.orange,
-                            fontWeight: FontWeight.w500),
+                        style: textStyleWithPoppin(fontSize: 14, color: AppColor.orange, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ))
@@ -127,8 +120,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                   cubit.emitState();
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
+                                  padding: const EdgeInsets.only(top: 16.0, left: 15, right: 15),
                                   child: Image.asset(
                                     AppIcons.clearIcon,
                                     height: 2,
@@ -158,8 +150,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                   cubit.emitState();
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
+                                  padding: const EdgeInsets.only(top: 16.0, left: 15, right: 15),
                                   child: Image.asset(
                                     AppIcons.clearIcon,
                                     height: 2,
@@ -193,8 +184,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 }
                               }),
                               textInputFormatter: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp("[0-9]")),
+                                FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                               ],
                               keyboardType: TextInputType.number,
                               suffixWidget: InkWell(
@@ -203,8 +193,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                   cubit.emitState();
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
+                                  padding: const EdgeInsets.only(top: 16.0, left: 15, right: 15),
                                   child: Image.asset(
                                     AppIcons.clearIcon,
                                     height: 2,
@@ -234,8 +223,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                   cubit.emitState();
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 16.0, left: 15, right: 15),
+                                  padding: const EdgeInsets.only(top: 16.0, left: 15, right: 15),
                                   child: Image.asset(
                                     AppIcons.clearIcon,
                                     height: 2,
@@ -258,8 +246,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                   await showModalBottomSheet(
                                       context: context,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(28.0),
+                                        borderRadius: BorderRadius.circular(28.0),
                                       ),
                                       builder: (builder) {
                                         return StateBottomSheet();
@@ -319,9 +306,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 borderRadius: 25,
                                 backGroundcolor: Colors.transparent,
                                 bordercolor: Colors.transparent,
-                                style: textStyleWithPoppin(
-                                    color: AppColor.greyColor.withOpacity(0.3),
-                                    fontSize: 14),
+                                style: textStyleWithPoppin(color: AppColor.greyColor.withOpacity(0.3), fontSize: 14),
                               )
                             : SizedBox.shrink(),
                         spaceHeightWidget(5),
@@ -340,12 +325,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             } else if (state is LoadingState) {
                               EasyLoading.show();
                             } else if (state is UpdateDataState) {
-                              context.read<ProfileCubit>().getUserDetails(
-                                  context: context, isAddress: true);
+                              context.read<ProfileCubit>().getUserDetails(context: context, isAddress: true);
                               Navigator.pop(context);
                               EasyLoading.dismiss();
-                              EasyLoading.showSuccess(
-                                  S.of(context).addressUpdated,
+                              EasyLoading.showSuccess(S.of(context).addressUpdated,
                                   duration: const Duration(milliseconds: 500));
                             }
                           },
@@ -353,17 +336,13 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             onTap: () {
                               if (cubit.formKey.currentState!.validate()) {
                                 if (cubit.checkIfEmpty()) {
-                                  EasyLoading.showError(
-                                      S.of(context).pleaseEnterData,
-                                      duration:
-                                          const Duration(milliseconds: 500));
+                                  EasyLoading.showError(S.of(context).pleaseEnterData,
+                                      duration: const Duration(milliseconds: 500));
                                 } else {
                                   filledList(cubit: cubit);
                                   context
                                       .read<PersonalInfoCubit>()
-                                      .updatePersonalDetails(data: {
-                                    "addresses": widget.addresses
-                                  });
+                                      .updatePersonalDetails(data: {"addresses": widget.addresses});
                                 }
                               }
                             },
@@ -371,8 +350,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             width: 150,
                             height: 38,
                             borderRadius: 25,
-                            style: textStyleWithPoppin(
-                                color: AppColor.white, fontSize: 16),
+                            style: textStyleWithPoppin(color: AppColor.white, fontSize: 16),
                           ),
                         ),
                         spaceHeightWidget(15),
@@ -415,12 +393,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   }
 
   buildBottomContainer(
-      {IconData? icon,
-      String? title,
-      bool? isImage,
-      String? image,
-      VoidCallback? press,
-      EditAddressCubit? cubit}) {
+      {IconData? icon, String? title, bool? isImage, String? image, VoidCallback? press, EditAddressCubit? cubit}) {
     return InkWell(
       onTap: press,
       child: Container(
@@ -428,9 +401,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         width: MediaQuery.of(context).size.width * 0.28,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
-            color: cubit?.addressFor == title
-                ? AppColor.greyColor.withOpacity(0.2)
-                : AppColor.white,
+            color: cubit?.addressFor == title ? AppColor.greyColor.withOpacity(0.2) : AppColor.white,
             border: Border.all(color: AppColor.black)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -461,20 +432,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(23),
-              borderSide: BorderSide.none),
+          shape: OutlineInputBorder(borderRadius: BorderRadius.circular(23), borderSide: BorderSide.none),
           title: Text(S.of(context).dialogTitle,
-              style: textStyleWithPoppin(
-                  fontSize: 20,
-                  color: AppColor.black,
-                  fontWeight: FontWeight.w400)),
+              style: textStyleWithPoppin(fontSize: 20, color: AppColor.black, fontWeight: FontWeight.w400)),
           content: Text(
             S.of(context).dialogSubtitle2,
-            style: textStyleWithPoppin(
-                fontSize: 14,
-                color: AppColor.black,
-                fontWeight: FontWeight.w400),
+            style: textStyleWithPoppin(fontSize: 14, color: AppColor.black, fontWeight: FontWeight.w400),
           ),
           actions: <Widget>[
             TextButton(
@@ -493,15 +456,13 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   context.read<ProfileCubit>().getUserDetails();
                   Navigator.pop(context);
                   EasyLoading.dismiss();
-                  EasyLoading.showSuccess(S.of(context).addressDeleted,
-                      duration: const Duration(milliseconds: 500));
+                  EasyLoading.showSuccess(S.of(context).addressDeleted, duration: const Duration(milliseconds: 500));
                 }
               },
               child: TextButton(
                 onPressed: () {
                   removeList();
-                  context.read<PersonalInfoCubit>().updatePersonalDetails(
-                      data: {"addresses": widget.addresses});
+                  context.read<PersonalInfoCubit>().updatePersonalDetails(data: {"addresses": widget.addresses});
                 },
                 child: Text(S.of(context).delete),
               ),

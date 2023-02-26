@@ -20,7 +20,9 @@ class DependentDropdownWidget extends StatefulWidget {
   final int? countryStateId;
   final int? dataLevelId;
 
-  const DependentDropdownWidget({Key? key, required this.type, required this.typeLevel, this.countryStateId, this.dataLevelId}) : super(key: key);
+  const DependentDropdownWidget(
+      {Key? key, required this.type, required this.typeLevel, this.countryStateId, this.dataLevelId})
+      : super(key: key);
 
   @override
   State<DependentDropdownWidget> createState() => _DependentDropdownWidgetState();
@@ -29,6 +31,7 @@ class DependentDropdownWidget extends StatefulWidget {
 class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
   @override
   Widget build(BuildContext context) {
+    // sortBasedOnMandalSelected();
     return BlocBuilder<ZilaDataCubit, ZilaDataState>(
       builder: (context, state) {
         final cubit = BlocProvider.of<ZilaDataCubit>(context);
@@ -41,9 +44,11 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
               context.read<ZilaDataCubit>().getBoothPannasStatus(cubit.dependentDropdownList.first.id ?? 0);
             }
           } else {
-            context
-                .read<ZilaDataCubit>()
-                .getUnitData(data: {"type": "Unit", "data_level": widget.dataLevelId, "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId});
+            context.read<ZilaDataCubit>().getUnitData(data: {
+              "type": "Unit",
+              "data_level": widget.dataLevelId,
+              "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId
+            });
           }
           bool isFoundKey = false;
           if (cubit.dependentDropdownList.isNotEmpty) {
@@ -53,7 +58,8 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                 for (int i = 0; i < cubit.dependentDropdownList.length; i++) {
                   for (int j = 0; j < (sangathanDetailsCubit.allotedLocationModel?.data?.locations?.length ?? 0); j++) {
                     if (isFoundKey == false) {
-                      if (cubit.dependentDropdownList[i].mandalName == sangathanDetailsCubit.allotedLocationModel?.data?.locations?[j].name) {
+                      if (cubit.dependentDropdownList[i].mandalName ==
+                          sangathanDetailsCubit.allotedLocationModel?.data?.locations?[j].name) {
                         cubit.dependentDropdownSelected = cubit.dependentDropdownList[i];
                         cubit.dependentLevelNameId = cubit.dependentDropdownList[i].id;
                         cubit.levelNameId = cubit.dependentLevelNameId;
@@ -84,7 +90,8 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                   enableDrag: false,
                   isDismissible: false,
                   context: context,
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
                   builder: (builder) {
                     return bottomSheetWidget(cubit.dependentDropdownList);
                   });
@@ -103,10 +110,11 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                           children: [
                             Text(
                               "${getLocalizationNameOfLevel(context, DropdownHandler.dependentDropdownName(widget.type, context))}",
-                              style: GoogleFonts.roboto(color: AppColor.greyColor, fontWeight: FontWeight.w400, fontSize: 14),
+                              style: GoogleFonts.roboto(
+                                  color: AppColor.greyColor, fontWeight: FontWeight.w400, fontSize: 14),
                             ),
                             Text(
-                              cubit.dependentDropdownSelected?.name ?? "",
+                              getSelectedValue(),
                               style: GoogleFonts.roboto(fontWeight: FontWeight.w400, fontSize: 16),
                             ),
                           ],
@@ -124,6 +132,15 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
     );
   }
 
+  getSelectedValue() {
+    final cubit = BlocProvider.of<ZilaDataCubit>(context);
+    if (DropdownHandler.dependentDropdownName(widget.type, context) == S.of(context).booth) {
+      return "${cubit.dependentDropdownSelected?.number ?? ""} - ${cubit.dependentDropdownSelected?.name ?? ""}";
+    } else {
+      return cubit.dependentDropdownSelected?.name ?? "";
+    }
+  }
+
   Widget bottomSheetWidget(List<Locations> locationList) {
     String currentLocale = Localizations.localeOf(context).toString();
     final cubit = BlocProvider.of<ZilaDataCubit>(context);
@@ -137,7 +154,9 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                currentLocale == "hi" ? "${getLocalizationNameOfLevel(context, typeOfLevel)} ${S.of(context).choose}" : "${S.of(context).choose} ${getLocalizationNameOfLevel(context, typeOfLevel)}",
+                currentLocale == "hi"
+                    ? "${getLocalizationNameOfLevel(context, typeOfLevel)} ${S.of(context).choose}"
+                    : "${S.of(context).choose} ${getLocalizationNameOfLevel(context, typeOfLevel)}",
                 textAlign: TextAlign.left,
                 style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),
               ),
@@ -161,82 +180,109 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(8),
-                  color: cubit.dependentDropdownSelected?.id == locationList[index].id ? AppColor.pannaStatusColor : AppColor.transparent,
+                  color: cubit.dependentDropdownSelected?.id == locationList[index].id
+                      ? AppColor.pannaStatusColor
+                      : AppColor.transparent,
                   child: GestureDetector(
                     onTap: () {
                       if (mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName ?? "")) {
-                        if (widget.type == "Shakti Kendra") {
-                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal, toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
-                        }
-                        if (widget.type == "Booth") {
-                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnBoothOfOtherMandal, toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
-                        }
-                      } else {
                         cubit.onDependentDropdown(locationList[index]);
                         cubit.selectedPannaNo = null;
                         if (widget.type == "Panna") {
                           context.read<ZilaDataCubit>().getBoothPannasStatus(locationList[index].id ?? 0);
                         } else {
-                          context.read<ZilaDataCubit>().getEntryData(data: {"level": widget.dataLevelId, "unit": cubit.unitId ?? "", "sub_unit": cubit.subUnitId, "level_name": cubit.levelNameId});
+                          context.read<ZilaDataCubit>().getEntryData(data: {
+                            "level": widget.dataLevelId,
+                            "unit": cubit.unitId ?? "",
+                            "sub_unit": cubit.subUnitId,
+                            "level_name": cubit.levelNameId
+                          });
                         }
                         Future.delayed(Duration.zero).then((value) => Navigator.pop(context));
+                      } else {
+                        if (widget.type == "Shakti Kendra") {
+                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal,
+                              toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
+                        }
+                        if (widget.type == "Booth") {
+                          EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnBoothOfOtherMandal,
+                              toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
+                        }
                       }
                     },
-                    child: Row(
-                      children: [
-                        typeOfLevel == S.of(context).booth
-                            ? Container(
-                                width: 35,
-                                margin: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(11), color: gettingBackgroundColor(locationList[index].mandalName ?? "", locationList[index].id ?? 0)),
-                                child: Text(
-                                  locationList[index].number ?? '',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.poppins(color: AppColor.white, fontSize: 12),
-                                ),
-                              )
-                            : CommonLogoWidget(name: locationList[index].name ?? "", backgroundColor: gettingBackgroundColor(locationList[index].mandalName ?? "", locationList[index].id ?? 0)),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                locationList[index].name ?? "",
-                                maxLines: 2,
-                                textAlign: TextAlign.left,
-                                style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
-                              ),
-                              if (typeOfLevel == "Shakti Kendra" || typeOfLevel == S.of(context).booth)
-                                Text(
-                                  "Mapped mandal :${locationList[index].mandalName ?? ""}",
-                                  textAlign: TextAlign.left,
-                                  style: GoogleFonts.quicksand(fontSize: 14, fontWeight: FontWeight.w500, color: AppColor.borderColor),
-                                ),
-                            ],
+                    child: Container(
+                      color: AppColor.transparent,
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          typeOfLevel == S.of(context).booth
+                              ? Container(
+                                  width: 35,
+                                  margin: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(11),
+                                      color: locationList[index].mandalName == null
+                                          ? AppColor.naturalBlackColor
+                                          : gettingBackgroundColor(
+                                              locationList[index].mandalName ?? "", locationList[index].id ?? 0)),
+                                  child: Text(
+                                    locationList[index].number ?? '',
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.poppins(color: AppColor.white, fontSize: 12),
+                                  ),
+                                )
+                              : CommonLogoWidget(
+                                  name: locationList[index].name ?? "",
+                                  backgroundColor: gettingBackgroundColor(
+                                      locationList[index].mandalName ?? "", locationList[index].id ?? 0)),
+                          const SizedBox(
+                            width: 10,
                           ),
-                        ),
-                        mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName ?? "")
-                            ? IconButton(
-                                onPressed: () {
-                                  if (widget.type == "Shakti Kendra") {
-                                    EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal,
-                                        toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
-                                  }
-                                  if (widget.type == "Booth") {
-                                    EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnBoothOfOtherMandal,
-                                        toastPosition: EasyLoadingToastPosition.bottom, duration: const Duration(seconds: 3));
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.info,
-                                  color: AppColor.borderColor,
-                                ))
-                            : const SizedBox(),
-                      ],
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  locationList[index].name ?? "",
+                                  maxLines: 2,
+                                  textAlign: TextAlign.left,
+                                  style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
+                                ),
+                                if (typeOfLevel == "Shakti Kendra" || typeOfLevel == S.of(context).booth)
+                                  Text(
+                                    locationList[index].mandalName == null
+                                        ? S.of(context).notMappedWithAnyMandal
+                                        : "${S.of(context).mappedMandal} :${locationList[index].mandalName ?? ""}",
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.quicksand(
+                                        fontSize: 14, fontWeight: FontWeight.w500, color: AppColor.borderColor),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName ?? "")
+                              ? const SizedBox()
+                              : IconButton(
+                                  onPressed: () {
+                                    if (widget.type == "Shakti Kendra") {
+                                      EasyLoading.showToast(
+                                          S.of(context).dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal,
+                                          toastPosition: EasyLoadingToastPosition.bottom,
+                                          duration: const Duration(seconds: 3));
+                                    }
+                                    if (widget.type == "Booth") {
+                                      EasyLoading.showToast(S.of(context).dataEntryIsNotAllowedOnBoothOfOtherMandal,
+                                          toastPosition: EasyLoadingToastPosition.bottom,
+                                          duration: const Duration(seconds: 3));
+                                    }
+                                  },
+                                  icon: const Icon(
+                                    Icons.info,
+                                    color: AppColor.borderColor,
+                                  )),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -269,7 +315,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
       if (widget.type == "Shakti Kendra" || widget.type == "Booth") {
         for (int i = 0; i < (cubit.allotedLocationModel?.data?.locations?.length ?? 0); i++) {
           if (isFound == false) {
-            if (cubit.allotedLocationModel?.data?.locations?[i].name != mandalName) {
+            if (cubit.allotedLocationModel?.data?.locations?[i].name?.trim() == mandalName.trim()) {
               isFound = true;
             } else {
               isFound = false;
@@ -278,6 +324,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
         }
       }
     }
+
     return isFound;
   }
 
@@ -289,15 +336,50 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
         if (cubit.dependentDropdownSelected?.id == locationId) {
           return AppColor.orange;
         } else {
-          return mappedMandalWithSKWhenUserIsMandal(mandal) ? AppColor.naturalBlackColor : AppColor.boothContainerColour;
+          return mappedMandalWithSKWhenUserIsMandal(mandal)
+              ? AppColor.boothContainerColour
+              : AppColor.naturalBlackColor;
         }
       }
     } else {
-      if (widget.type == "Booth") {
+      if (widget.type == "Booth" || widget.type == "Panna") {
         return cubit.dependentDropdownSelected?.id == locationId ? AppColor.orange : AppColor.boothContainerColour;
       } else {
         return cubit.dependentDropdownSelected?.id == locationId ? AppColor.orange : AppColor.naturalBlackColor;
       }
+    }
+  }
+
+  sortBasedOnMandalSelected() {
+    final cubit = BlocProvider.of<ZilaDataCubit>(context);
+    final sangathanDetailsCubit = BlocProvider.of<SangathanDetailsCubit>(context);
+    var data = [...cubit.dependentDropdownList];
+    for (var item in data) {
+      print(item.toJson());
+    }
+    print("----------------------------------------------------------");
+    data.sort((a, b) {
+      if ((a.mandalName == sangathanDetailsCubit.selectedAllottedLocation?.name) &&
+          b.mandalName != sangathanDetailsCubit.selectedAllottedLocation?.name) {
+        return -1;
+      } else if ((a.mandalName != sangathanDetailsCubit.selectedAllottedLocation?.name) &&
+          b.mandalName == sangathanDetailsCubit.selectedAllottedLocation?.name) {
+        return 1;
+      } else {
+        int nameComparison = sangathanDetailsCubit.allotedLocationModel!.data!.locations!
+            .indexOf(Locations(mandalName: a.mandalName ?? ""))
+            .compareTo(sangathanDetailsCubit.allotedLocationModel!.data!.locations!
+                .indexOf(Locations(mandalName: b.mandalName ?? "")));
+        if (nameComparison != 0) {
+          return nameComparison;
+        } else {
+          return a.number.compareTo(b.number);
+        }
+      }
+    });
+
+    for (var item in data) {
+      print(item.toJson());
     }
   }
 }

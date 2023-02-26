@@ -6,19 +6,19 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:open_file_plus/open_file_plus.dart';
+
+import 'firebase_notification_handler.dart';
 
 class LocalNotificationService {
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static void initialize(context) {
     /// initializationSettings for iOS
-    DarwinInitializationSettings initializationSettingsDarwin =
-        const DarwinInitializationSettings();
+    DarwinInitializationSettings initializationSettingsDarwin = const DarwinInitializationSettings();
 
     /// initializationSettings for Android
-    const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
     InitializationSettings initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
@@ -34,8 +34,7 @@ class LocalNotificationService {
   }
 
   static Future _getByteArrayFromUrl(String url) async {
-    var response = await Dio()
-        .get(url, options: Options(responseType: ResponseType.bytes));
+    var response = await Dio().get(url, options: Options(responseType: ResponseType.bytes));
     return response.data;
   }
 
@@ -48,21 +47,16 @@ class LocalNotificationService {
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       final int myId = int.parse(id.toString());
       if (message?.data["image"] != null) {
-        final ByteArrayAndroidBitmap bigPicture = ByteArrayAndroidBitmap(
-            await _getByteArrayFromUrl(message?.data["image"]));
-        final BigPictureStyleInformation bigPictureStyleInformation =
-            BigPictureStyleInformation(bigPicture,
-                contentTitle: message?.data["title"],
-                htmlFormatContentTitle: true,
-                summaryText: message?.data["body"],
-                htmlFormatSummaryText: true);
-        final android = AndroidNotificationDetails(
-            "sangathnapp", "sangathnappchannel",
-            importance: Importance.max,
-            priority: Priority.high,
-            styleInformation: bigPictureStyleInformation);
-        const DarwinNotificationDetails darwinNotificationDetails =
-            DarwinNotificationDetails();
+        final ByteArrayAndroidBitmap bigPicture =
+            ByteArrayAndroidBitmap(await _getByteArrayFromUrl(message?.data["image"]));
+        final BigPictureStyleInformation bigPictureStyleInformation = BigPictureStyleInformation(bigPicture,
+            contentTitle: message?.data["title"],
+            htmlFormatContentTitle: true,
+            summaryText: message?.data["body"],
+            htmlFormatSummaryText: true);
+        final android = AndroidNotificationDetails("sangathnapp", "sangathnappchannel",
+            importance: Importance.max, priority: Priority.high, styleInformation: bigPictureStyleInformation);
+        const DarwinNotificationDetails darwinNotificationDetails = DarwinNotificationDetails();
         final platform = NotificationDetails(
           android: android,
           iOS: darwinNotificationDetails,
@@ -92,8 +86,7 @@ class LocalNotificationService {
           importance: Importance.max,
           priority: Priority.high,
         );
-        const DarwinNotificationDetails darwinNotificationDetails =
-            DarwinNotificationDetails();
+        const DarwinNotificationDetails darwinNotificationDetails = DarwinNotificationDetails();
         const platform = NotificationDetails(
           android: android,
           iOS: darwinNotificationDetails,
@@ -125,6 +118,39 @@ class LocalNotificationService {
       debugPrint("Here get exception for notification :${exc.toString()}");
     }
   }
+
+  static createAndDisplayNotificationDownload(String fileName, String payload, String body) async {
+    final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+    final int myId = int.parse(id.toString());
+    const android = AndroidNotificationDetails(
+      "sangathnapp",
+      "sangathnappchannel",
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+    const DarwinNotificationDetails darwinNotificationDetails = DarwinNotificationDetails();
+    const platform = NotificationDetails(
+      android: android,
+      iOS: darwinNotificationDetails,
+    );
+    if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin.show(
+        myId,
+        body,
+        fileName,
+        platform,
+        payload: payload,
+      );
+    } else if (Platform.isIOS) {
+      await flutterLocalNotificationsPlugin.show(
+        myId,
+        body,
+        fileName,
+        platform,
+        payload: payload,
+      );
+    }
+  }
 }
 
 @pragma('vm:entry-point')
@@ -135,15 +161,20 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
       ' payload: ${notificationResponse.payload}');
   if (notificationResponse.input?.isNotEmpty ?? false) {
     // ignore: avoid_print
-    print(
-        'notification action tapped with input: ${notificationResponse.input}');
+    print('notification action tapped with input: ${notificationResponse.input}');
   }
 }
 
-void onDidReceiveNotificationResponse(
-    NotificationResponse notificationResponse) async {
+void onDidReceiveNotificationResponse(NotificationResponse notificationResponse) async {
   final String? payload = notificationResponse.payload;
   if (notificationResponse.payload != null) {
     print('notification on tap payload: $payload');
+    if (payload!.contains(".pdf")) {
+      try {
+        await OpenFile.open(payload);
+      } catch (e) {
+        print(e);
+      }
+    }
   }
 }

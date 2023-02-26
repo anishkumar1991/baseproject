@@ -153,6 +153,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
+        "fillSecondaryInformation":
+            MessageLookupByLibrary.simpleMessage("अतिरिक्त जानकारी भरें"),
         "filter": MessageLookupByLibrary.simpleMessage("फ़िल्टर"),
         "fullName": MessageLookupByLibrary.simpleMessage("पूरा नाम"),
         "functionAdd": MessageLookupByLibrary.simpleMessage(
@@ -192,6 +194,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "प्रवास के अंतरगर्त कार्यक्रम बनाये"),
         "mandal": MessageLookupByLibrary.simpleMessage("मंडल"),
         "mandalLevelText": MessageLookupByLibrary.simpleMessage("मण्डल"),
+        "mappedMandal": MessageLookupByLibrary.simpleMessage("मैप्ड मंडल"),
         "mobileNumber": MessageLookupByLibrary.simpleMessage("मोबाइल न."),
         "myEvent": MessageLookupByLibrary.simpleMessage("मेरे कार्यक्रम"),
         "name": MessageLookupByLibrary.simpleMessage("नाम"),
@@ -207,6 +210,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noOrganizationsAvailable":
             MessageLookupByLibrary.simpleMessage("कोई संगठन उपलब्ध नहीं है"),
         "noThanks": MessageLookupByLibrary.simpleMessage("जी नहीं, धन्यवाद"),
+        "notMappedWithAnyMandal": MessageLookupByLibrary.simpleMessage(
+            "किसी भी मंडल के साथ मैप नहीं"),
         "notValidNumber": MessageLookupByLibrary.simpleMessage(
             "यह संख्या मान्य संख्या नहीं है"),
         "notification": MessageLookupByLibrary.simpleMessage("नोटिफिकेशन"),
@@ -252,6 +257,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "कृपया प्रवासी विषय दर्ज करें"),
         "preparing": MessageLookupByLibrary.simpleMessage("तैयार कर रहे हैं"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
+        "previewSubmitDetails":
+            MessageLookupByLibrary.simpleMessage("जानकारी देखें व जमा करें"),
         "primaryMemberId": MessageLookupByLibrary.simpleMessage(
             "प्राथमिक सदस्य आईडी १० अंकों की होनी चाहिए"),
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),
@@ -280,6 +287,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कृपया पहले मंडल का चयन करें"),
         "selectPravasLevel":
             MessageLookupByLibrary.simpleMessage("प्रवास लेवल चुने"),
+        "selectSubUnit":
+            MessageLookupByLibrary.simpleMessage("सब-यूनिट का चयन करें"),
         "selectVidhansabhaFirst": MessageLookupByLibrary.simpleMessage(
             "कृपया पहले विधानसभा का चयन करें"),
         "selectedBooth": MessageLookupByLibrary.simpleMessage("चयनित बूथ"),
@@ -315,6 +324,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार"),
         "upcoming": MessageLookupByLibrary.simpleMessage("आगामी"),
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("आगामी प्रवास -"),
+        "uploadFile": MessageLookupByLibrary.simpleMessage("अपलोड फाइल"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("फोटो यहाँ अपलोड करें"),
         "uploading": MessageLookupByLibrary.simpleMessage("अपलोड हो रहा है"),

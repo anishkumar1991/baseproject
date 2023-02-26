@@ -217,5 +217,11 @@
   "pleaseSelectPhoto": "Please select photo",
   "choose": "Choose",
   "dataEntryIsNotAllowedOnShaktiKendraOfOtherMandal": "Data entry is not allowed on shakti kendra of other mandal",
-  "dataEntryIsNotAllowedOnBoothOfOtherMandal": "Data entry is not allowed on Booth of other mandal"
+  "dataEntryIsNotAllowedOnBoothOfOtherMandal": "Data entry is not allowed on Booth of other mandal",
+  "mappedMandal": "Mapped Mandal",
+  "notMappedWithAnyMandal": "Not mapped with any Mandal",
+  "previewSubmitDetails": "Preview & Submit Details",
+  "fillSecondaryInformation": "Fill Secondary Information",
+  "uploadFile": "Upload File",
+  "selectSubUnit": "Select sub unit"
 }
