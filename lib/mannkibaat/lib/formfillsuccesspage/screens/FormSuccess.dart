@@ -30,7 +30,7 @@ class FormSuccess extends StatelessWidget {
                 child: Image(
                   image: Image
                       .asset(
-                      "packages/mannkibaatpackage/lib/assets/formsuccess.png")
+                      "assets/images/mannkibaat/formsuccess.png")
                       .image,
                   //width: 300,
                   height: 200,

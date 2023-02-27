@@ -93,7 +93,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
                   ),
                   ReviewVidhanAndStates(
                     vidhanSabha: cubit.vidhansabhaname,
-                    state: "Assam",
+                    state: "Madhya Pradesh",
                   ),
                   const SizedBox(height: 24),
                   ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
@@ -115,7 +115,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
 
                       newPosition = await getCurrentPosition();
 
-                      cubit2.sendEvent(
+                      await cubit2.sendEvent(
                           cubit.boothid,
                           cubit.boothname,
                           int.parse(widget.totalAttendees.toString()),
@@ -123,12 +123,11 @@ class _FormReviewPageState extends State<FormReviewPage> {
                           widget.description,
                           widget.eventid,
                           newPosition!.latitude.toString(),
-                          newPosition!.longitude.toString());
+                          newPosition!.longitude.toString(),
+                          widget.img1,
+                          widget.img2);
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FormSuccess()));
+                      Navigator.push(context,MaterialPageRoute(builder: (context) => FormSuccess()));
                     }),
                   ),
                   const SizedBox(height: 30),

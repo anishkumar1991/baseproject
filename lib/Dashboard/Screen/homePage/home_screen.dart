@@ -48,30 +48,31 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: (() {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const NotificationMainScreen();
-                        },
-                      ));
-                    }),
-                    child: Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColor.greyColor.withOpacity(0.1)),
-                        // child: Image.asset(
-                        //   AppIcons.notification,
-                        //   height: 10,
-                        //   color: AppColor.greyColor,
-                        // ),
-                        child: const Icon(
-                          Icons.notifications,
-                          color: AppColor.greyColor,
-                          size: 20,
-                        )),
-                  ),
+                  // InkWell(
+                  //   onTap: (() {
+                  //     Navigator.push(context, MaterialPageRoute(
+                  //       builder: (context) {
+                  //         return const NotificationMainScreen();
+                  //       },
+                  //     ));
+                  //   }),
+                  //   child: Container(
+                  //       padding: const EdgeInsets.all(8),
+                  //       decoration: BoxDecoration(
+                  //           shape: BoxShape.circle,
+                  //           color: AppColor.greyColor.withOpacity(0.1)),
+                  //       // child: Image.asset(
+                  //       //   AppIcons.notification,
+                  //       //   height: 10,
+                  //       //   color: AppColor.greyColor,
+                  //       // ),
+                  //       child: const Icon(
+                  //         Icons.notifications,
+                  //         color: AppColor.greyColor,
+                  //         size: 20,
+                  //       )),
+                  // ),
+SizedBox(),
                   Image.asset(
                     AppIcons.sangathanLogo,
                     height: 55,

@@ -399,15 +399,15 @@ class _EditEducationScreenState extends State<EditEducationScreen> {
   filledList({required EditEducationCubit cubit}) {
     if (widget.isNew == true) {
       educationalDetails.level = cubit.levelCtr.text;
-      educationalDetails.startYear = cubit.startYearCtr.text as int?;
-      educationalDetails.endYear = cubit.endYearCtr.text as int?;
+      educationalDetails.startYear = cubit.startYearCtr.text ;
+      educationalDetails.endYear = cubit.endYearCtr.text;
       educationalDetails.institute = cubit.collageCtr.text;
       educationalDetails.uuid = "";
       widget.educationalDetails?.add(educationalDetails);
     } else {
       educationalDetails.level = cubit.levelCtr.text;
-      educationalDetails.startYear = cubit.startYearCtr.text as int?;
-      educationalDetails.endYear = cubit.endYearCtr.text as int?;
+      educationalDetails.startYear = cubit.startYearCtr.text ;
+      educationalDetails.endYear = cubit.endYearCtr.text ;
       educationalDetails.institute = cubit.collageCtr.text;
       educationalDetails.uuid = "";
       widget.educationalDetails?[widget.index!] = educationalDetails;

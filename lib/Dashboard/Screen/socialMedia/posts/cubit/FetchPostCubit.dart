@@ -20,7 +20,7 @@ class FetchPostsCubit extends Cubit<FetchPostsState> {
     emit(FetchingPostsState());
     try {
       final res =
-          await api.getPosts('Bearer ${StorageService.userAuthToken}', "30");
+      await api.getPosts('Bearer ${StorageService.userAuthToken}', {"size": "30"});
       if (res.response.statusCode == 200) {
         print("api working");
 

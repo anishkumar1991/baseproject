@@ -18,4 +18,3 @@ class PostsFetchedState extends FetchPostsState{
 class ReactionSendState extends FetchPostsState{}
 
 
-

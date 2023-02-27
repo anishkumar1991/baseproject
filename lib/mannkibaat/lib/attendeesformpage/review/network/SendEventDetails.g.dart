@@ -13,7 +13,7 @@ class _SendEventDetailsApi implements SendEventDetailsApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://staging.mannkibaatprogram.in/';
+    baseUrl ??= 'https://mannkibaatprogram.in/';
   }
 
   final Dio _dio;
@@ -44,7 +44,7 @@ class _SendEventDetailsApi implements SendEventDetailsApi {
     )
             .compose(
               _dio.options,
-              'api/event_tracker/get_country_state',
+              'api/event_tracker/create_event_details',
               queryParameters: queryParameters,
               data: _data,
             )

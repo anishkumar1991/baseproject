@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Values/string.dart';
 import 'package:sangathan/mannkibaat/lib/generateauthtoken/network/model/LoginModel.dart';
 import 'package:sangathan/mannkibaat/lib/generateauthtoken/network/model/UserDetailsModel.dart';
 
@@ -44,7 +45,7 @@ class GenerateMannKiBaatAuthCubit extends Cubit<GenerateMannKiBaatAuthState> {
       emit(SubmitOtpLoadingState());
       var token = MKBStorageService.getUserIdentificationToken().toString();
       final res =
-          await api.submitOtp({'identification_token': token, 'otp': "123456"});
+          await api.submitOtp({'identification_token': token, 'otp': AppStrings.mannkibaatotp});
       print(res.response.requestOptions.uri);
 
       print('res==+${res.response.data}');
@@ -81,10 +82,12 @@ class GenerateMannKiBaatAuthCubit extends Cubit<GenerateMannKiBaatAuthState> {
 
   Future addUser(String username) async {
     try {
-
       var token = MKBStorageService.getUserAuthToken().toString();
-      final res = await api.addUser(token,
-          {'user_name': username, 'country_state_id': "3", "ac_id": "357"});
+      final res = await api.addUser(token, {
+        'user_name': username,
+        'country_state_id': AppStrings.countrystateid,
+        "ac_id": AppStrings.acid
+      });
       print(res.response.requestOptions.uri);
 
       print('res==+${res.response.data}');

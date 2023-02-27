@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:sangathan/Storage/mannkibaat.dart';
+import '../../../../Values/string.dart';
 import '../network/model/Booth.dart';
 import '../network/model/VidhanSabhaModel.dart';
 import '../network/services/FetchAPI.dart';
@@ -45,9 +47,9 @@ class FetchCubit extends Cubit<FetchStates> {
   Future fetchAcId() async {
     try {
       String? _auth =
-          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA";
+          MKBStorageService.getUserAuthToken();
       print(_auth);
-      final res = await api.fetchAc(_auth, "3");
+      final res = await api.fetchAc(_auth, AppStrings.countrystateid);
       if (res.response.statusCode == 200) {
         print("FetchAcId working");
         States model = States.fromJson(res.data);
@@ -72,7 +74,7 @@ class FetchCubit extends Cubit<FetchStates> {
   Future fetchBooth(String boothAcId) async {
     try {
       String? _auth =
-          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA";
+          MKBStorageService.userAuthToken;
       print(_auth);
       final res = await api.fetchBooth(_auth, boothAcId);
       if (res.response.statusCode == 200) {

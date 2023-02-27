@@ -10,7 +10,7 @@ abstract class FetchPostsApi {
 
   @GET('/api/mobile/v1/posts')
   Future<HttpResponse> getPosts(
-      @Header('Authorization') String token, @Query("size") String size);
+      @Header('Authorization') String token, @Queries() Map<String, dynamic> queries);
 
   @POST("/api/mobile/v1/posts/react")
   Future<HttpResponse> sendReaction(

@@ -13,7 +13,7 @@ class _ReelsAPI implements ReelsAPI {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saral-social-staging.ccdms.in';
+    baseUrl ??= 'https://saral-social.ccdms.in';
   }
 
   final Dio _dio;

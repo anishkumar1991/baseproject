@@ -17,26 +17,27 @@ class TopBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            InkWell(
-              onTap: (() {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return const NotificationMainScreen();
-                  },
-                ));
-              }),
-              child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColor.greyColor.withOpacity(0.1)),
-                  child: const Icon(
-                    Icons.notifications,
-                    color: AppColor.greyColor,
-                    size: 20,
-                  )),
-            ),
-             Text(
+            // InkWell(
+            //   onTap: (() {
+            //     Navigator.push(context, MaterialPageRoute(
+            //       builder: (context) {
+            //         return const NotificationMainScreen();
+            //       },
+            //     ));
+            //   }),
+            //   child: Container(
+            //       padding: const EdgeInsets.all(8),
+            //       decoration: BoxDecoration(
+            //           shape: BoxShape.circle,
+            //           color: AppColor.greyColor.withOpacity(0.1)),
+            //       child: const Icon(
+            //         Icons.notifications,
+            //         color: AppColor.greyColor,
+            //         size: 20,
+            //       )),
+            // ),
+            SizedBox(),
+            Text(
               S.of(context).socialMedia,
               style: TextStyle(
                   fontSize: 18,
