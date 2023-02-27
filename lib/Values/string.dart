@@ -17,10 +17,14 @@ class AppStrings {
   // static const String baseUrlMannKiBaat =
   //     "https://staging.mannkibaatprogram.in/";
   static const String baseUrlMannKiBaat = "https://mannkibaatprogram.in/";
-
+  //
   static const String countrystateid = "14";
   static const String acid = "885054";
   static const String mannkibaatotp = "170950";
+
+  // static const String countrystateid = "3";
+  // static const String acid = "357";
+  // static const String mannkibaatotp = "123456";
 
   static const String socialmediabaseUrl = "https://saral-social.ccdms.in";
 

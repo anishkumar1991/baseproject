@@ -1,23 +1,20 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import '../network/model/FetchPosts.dart';
 
-@immutable
-abstract class FetchPostsState {}
-
-class PostsInitial extends FetchPostsState {}
-
-class PostsLoaded extends FetchPostsState {
-  final List<Post> posts;
-
-  PostsLoaded(this.posts);
+abstract class FetchPostsState extends Equatable{
+  @override
+  List<Object> get props => [];
 }
 
-class PostsLoading extends FetchPostsState {
-  final List<Post> oldPosts;
-  final bool isFirstFetch;
+class InitialFetchPostState extends FetchPostsState{}
 
-  PostsLoading(this.oldPosts, {this.isFirstFetch = false});
+class FetchingPostsState extends FetchPostsState{}
+
+class PostsFetchedState extends FetchPostsState{
+  final FetchPosts model;
+  PostsFetchedState(this.model);
 }
 
-class ReactionSendState extends FetchPostsState {}
+class ReactionSendState extends FetchPostsState{}
+
+

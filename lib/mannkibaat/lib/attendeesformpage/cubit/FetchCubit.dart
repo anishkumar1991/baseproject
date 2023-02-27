@@ -47,7 +47,7 @@ class FetchCubit extends Cubit<FetchStates> {
   Future fetchAcId() async {
     try {
       String? _auth =
-          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA";
+          MKBStorageService.getUserAuthToken();
       print(_auth);
       final res = await api.fetchAc(_auth, AppStrings.countrystateid);
       if (res.response.statusCode == 200) {

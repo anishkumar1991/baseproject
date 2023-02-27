@@ -6,89 +6,33 @@ import '../network/model/FetchPosts.dart';
 import '../network/services/fetchposts/FetchPostsApi.dart';
 import 'FetchPostsState.dart';
 
-//
-// class FetchPostsCubit extends Cubit<FetchPostsState> {
-//   String? twitterId;
-//   FetchPosts? tempModel;
-//   String? tweeturl;
-//   String? tweettext;
-//
-//   FetchPostsCubit() : super(InitialFetchPostState());
-//   final api = FetchPostsApi(Dio(BaseOptions(
-//       contentType: 'application/json', validateStatus: ((status) => true))));
-//
-//   int? page =1;
-//
-//
-//   Future<void> fetchPosts() async {
-//     emit(FetchingPostsState());
-//     try {
-//       final res = await api.getPosts(
-//           'Bearer ${StorageService.userAuthToken}', {"size" : "10", "page" : page.toString()});
-//       if (res.response.statusCode == 200) {
-//         print("fetching post api working");
-//
-//         FetchPosts model = FetchPosts.fromJson(res.data);
-//         tempModel = model;
-//         emit(PostsFetchedState(model));
-//
-//         tempModel = model;
-//
-// // toString of Response's body is assigned to jsonDataString
-//       } else {
-//         print("fethcing post api not working ");
-//         // State? model = States.fromJson(res.data);
-//         // emit(LoginFaieldState(model.message ?? ''));
-//       }
-//     } on Exception catch (e) {
-//       print(e.toString());
-//       // LoginFaieldState(e.toString());
-//     }
-//   }
-// }
-
 class FetchPostsCubit extends Cubit<FetchPostsState> {
-  FetchPostsCubit() : super(PostsInitial());
-  final api = FetchPostsApi(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
-  int page = 1;
   String? twitterId;
   FetchPosts? tempModel;
   String? tweeturl;
   String? tweettext;
 
-  Future<void> loadPosts() async {
-    if (state is PostsLoading) return;
+  FetchPostsCubit() : super(InitialFetchPostState());
+  final api = FetchPostsApi(Dio(BaseOptions(
+      contentType: 'application/json', validateStatus: ((status) => true))));
 
-    final currentState = state;
-
-    var oldPosts = <Post>[];
-    if (currentState is PostsLoaded) {
-      oldPosts = currentState.posts;
-    }
-
-    emit(PostsLoading(oldPosts, isFirstFetch: page == 1));
-
+  Future<void> fetchPosts() async {
+    emit(FetchingPostsState());
     try {
-      final res = await api.getPosts('Bearer ${StorageService.userAuthToken}',
-          {"size": "10", "page": page.toString()});
+      final res =
+      await api.getPosts('Bearer ${StorageService.userAuthToken}', {"size": "30"});
       if (res.response.statusCode == 200) {
-        print("fetching post api working");
+        print("api working");
 
         FetchPosts model = FetchPosts.fromJson(res.data);
         tempModel = model;
-        List<Post> a = tempModel!.posts;
-
-        page++;
-
-        final posts = (state as PostsLoading).oldPosts;
-        posts.addAll(a);
-
-        emit(PostsLoaded(posts));
+        emit(PostsFetchedState(model));
 
         tempModel = model;
+
+// toString of Response's body is assigned to jsonDataString
       } else {
-        print("fethcing post api not working ");
+        print("not api");
         // State? model = States.fromJson(res.data);
         // emit(LoginFaieldState(model.message ?? ''));
       }

@@ -115,7 +115,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
 
                       newPosition = await getCurrentPosition();
 
-                      cubit2.sendEvent(
+                      await cubit2.sendEvent(
                           cubit.boothid,
                           cubit.boothname,
                           int.parse(widget.totalAttendees.toString()),

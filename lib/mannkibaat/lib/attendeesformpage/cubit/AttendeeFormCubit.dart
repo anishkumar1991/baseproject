@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Storage/mannkibaat.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../Storage/AttendeesFormStorage.dart';
@@ -54,7 +55,7 @@ class AttendeeFormCubit extends Cubit<AttendeeFormState> {
   Future fetchAcId() async {
     try {
       String? _auth =
-          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA";
+      MKBStorageService.getUserAuthToken();
       print(_auth);
       final res =
           await api.fetchAc(_auth, AttendeeStorageService.getacId().toString());
@@ -81,7 +82,7 @@ class AttendeeFormCubit extends Cubit<AttendeeFormState> {
   Future fetchBooth() async {
     try {
       String? _auth =
-          "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.1aBzmXruUAVV7ancpI1gu6GhOSso9xUqONf2DZ9ICmA";
+          MKBStorageService.getUserAuthToken();
       print(_auth);
       final res = await api.fetchBooth(
           _auth, AttendeeStorageService.getskId().toString());

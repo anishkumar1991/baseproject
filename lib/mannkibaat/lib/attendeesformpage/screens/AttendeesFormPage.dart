@@ -168,8 +168,7 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                       width: Constants.buttonSizeBoxWidth,
                       child: SubmitButton(
                         onPress: () {
-                          print(
-                              AttendeeStorageService.getimage1url());
+
                           if (AttendeeStorageService.getimage1url() == null &&
                               AttendeeStorageService.getimage2url() == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
