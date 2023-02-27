@@ -223,5 +223,6 @@
   "previewSubmitDetails": "Preview & Submit Details",
   "fillSecondaryInformation": "Fill Secondary Information",
   "uploadFile": "Upload File",
-  "selectSubUnit": "Select sub unit"
+  "selectSubUnit": "Select sub unit",
+  "selectCategory": "First select category"
 }

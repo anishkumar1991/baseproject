@@ -74,6 +74,17 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   List<Map<String, dynamic>> allMultiFieldData = [];
   List<Map<String, dynamic>> allDatePicker = [];
 
+  /// Dropdown text controller
+  TextEditingController designationTextCon = TextEditingController();
+  TextEditingController categoryTextCon = TextEditingController();
+  TextEditingController castTextCon = TextEditingController();
+  TextEditingController qualificationTextCon = TextEditingController();
+  TextEditingController nativeStateTextCon = TextEditingController();
+  TextEditingController religionTextCon = TextEditingController();
+  TextEditingController professionTextCon = TextEditingController();
+  TextEditingController bloodGroupTextCon = TextEditingController();
+  TextEditingController districtTextCon = TextEditingController();
+
   ///   API required parameter
   int? type;
   int? levelId;
@@ -191,43 +202,47 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   }
 
   /// here change dropdown value based on selection
-  changeDropdownValue(dynamic value, String dropdownType) {
-    log(dropdownType);
-    /* emit(AddEntryLoadingState());*/
+  changeDropdownValue(dynamic value, String dropdownType) async {
+    //  emit(AddEntryLoadingState());
     if (dropdownType == "designation") {
       designationSelected = value;
-
+      designationTextCon.text = designationSelected?.name ?? "";
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "categoryId") {
       categorySelected = value;
+      categoryTextCon.text = categorySelected?.name ?? "";
+      castTextCon.clear();
+      castSelected = null;
       getAllDropDownData(value, dropdownType);
 
-      getCastData(id: categorySelected!.id.toString(), level: levelId.toString(), levelName: levelName.toString());
+      await getCastData(
+          id: categorySelected!.id.toString(), level: levelId.toString(), levelName: levelName.toString());
     } else if (dropdownType == "caste") {
       castSelected = value;
+      castTextCon.text = castSelected?.name ?? "";
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "educationId") {
       qualificationSelected = value;
-
+      qualificationTextCon.text = qualificationSelected?.name ?? '';
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "religionId") {
       religionSelected = value;
-
+      religionTextCon.text = religionSelected?.name ?? "";
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "professionId") {
       professionSelected = value;
-
+      professionTextCon.text = professionSelected?.name ?? "";
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "blood_group") {
       bloodGroupSelected = value;
-
+      bloodGroupTextCon.text = bloodGroupSelected?.name ?? "";
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "district") {
       districtSelected = value;
-
+      districtTextCon.text = districtSelected?.name ?? "";
       getAllDropDownData(value, dropdownType);
     } else {}
-    /*  emit(DropDownSelectedState());*/
+    // emit(DropDownSelectedState());
   }
 
   Future<void> selectedDoaDate(BuildContext context) async {
@@ -496,7 +511,17 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     allMultiFieldData = [];
     allDatePicker = [];
 
-    ///
+    /// clean all dropdown text controller
+
+    designationTextCon.clear();
+    categoryTextCon.clear();
+    castTextCon.clear();
+    qualificationTextCon.clear();
+    nativeStateTextCon.clear();
+    religionTextCon.clear();
+    professionTextCon.clear();
+    bloodGroupTextCon.clear();
+    districtTextCon.clear();
 
     type = null;
     levelId = null;
@@ -518,6 +543,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = designationData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               designationSelected = designationData[index];
+              designationTextCon.text = designationSelected?.name ?? "";
               getAllDropDownData(designationData[index], item.key);
             }
           }
@@ -526,6 +552,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = categoryData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               categorySelected = categoryData[index];
+              categoryTextCon.text = categorySelected?.name ?? "";
               getAllDropDownData(categoryData[index], item.key);
               await getCastData(
                   id: categorySelected!.id.toString(), level: levelId.toString(), levelName: levelName.toString());
@@ -536,6 +563,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = castData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               castSelected = castData[index];
+              castTextCon.text = castSelected?.name ?? "";
               getAllDropDownData(castData[index], item.key);
             }
           }
@@ -544,6 +572,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = qualificationData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               qualificationSelected = qualificationData[index];
+              qualificationTextCon.text = qualificationSelected?.name ?? '';
               getAllDropDownData(qualificationData[index], item.key);
             }
           }
@@ -552,6 +581,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = religionData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               religionSelected = religionData[index];
+              religionTextCon.text = religionSelected?.name ?? "";
               getAllDropDownData(religionData[index], item.key);
             }
           }
@@ -560,6 +590,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = professionData.indexWhere((element) => element.id == item.value);
             if (index >= 0) {
               professionSelected = professionData[index];
+              professionTextCon.text = professionSelected?.name ?? "";
               getAllDropDownData(professionData[index], item.key);
             }
           }
@@ -568,6 +599,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = DynamicUIHandler.bloodGroupList.indexWhere((element) => element.name == item.value);
             if (index >= 0) {
               bloodGroupSelected = DynamicUIHandler.bloodGroupList[index];
+              bloodGroupTextCon.text = bloodGroupSelected?.name ?? "";
               getAllDropDownData(DynamicUIHandler.bloodGroupList[index], item.key);
             }
           }
@@ -576,6 +608,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             int index = districtDropdownData.indexWhere((element) => element.name == item.value);
             if (index >= 0) {
               districtSelected = districtDropdownData[index];
+              districtTextCon.text = districtSelected?.name ?? "";
               getAllDropDownData(districtDropdownData[index], item.key);
             }
           }
@@ -595,6 +628,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
               int index = castData.indexWhere((element) => element.id == item.value);
               if (index >= 0) {
                 castSelected = castData[index];
+                castTextCon.text = castSelected?.name ?? "";
                 getAllDropDownData(castData[index], item.key);
                 print(castSelected?.toJson());
               }
@@ -878,7 +912,6 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     for (var item in addFormHI.entries) {
       if (item.key.toString() == fieldName) {
         if (currentLocale == "hi") {
-          print(item.key);
           return item.value;
         } else if (currentLocale == "en") {
           return item.key;

@@ -277,6 +277,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeMore": MessageLookupByLibrary.simpleMessage("See more"),
         "selectBoothFirst":
             MessageLookupByLibrary.simpleMessage("Please Select Booth first"),
+        "selectCategory":
+            MessageLookupByLibrary.simpleMessage("First select category"),
         "selectDesignation":
             MessageLookupByLibrary.simpleMessage("Please Select Designation"),
         "selectLoksabha":

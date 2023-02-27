@@ -2289,6 +2289,16 @@ class S {
       args: [],
     );
   }
+
+  /// `First select category`
+  String get selectCategory {
+    return Intl.message(
+      'First select category',
+      name: 'selectCategory',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

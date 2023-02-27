@@ -6,7 +6,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:sangathan/AddEntry/Screen/widget/drop_down_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_not_uploaded_widget.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_picker_bottomsheet.dart';
 import 'package:sangathan/AddEntry/Screen/widget/image_preview_dialog.dart';
@@ -25,6 +24,7 @@ import '../Cubit/add_entry_cubit.dart';
 import '../Cubit/add_entry_state.dart';
 import '../dynamic_ui_handler/field_handler.dart';
 import 'add_entry_preview_submit_screen.dart';
+import 'widget/add_entry_common_dropdown_sheet.dart';
 import 'widget/custom_radio_button.dart';
 import 'widget/select_boxs.dart';
 
@@ -121,7 +121,62 @@ class _AddEntryPageState extends State<AddEntryPage> {
                 }
               }
 
-              return CustomDropDown(
+              return TextFieldWidget(
+                onTap: () {
+                  if (cubit.entryField?[i].fieldName == "caste") {
+                    if (cubit.categorySelected != null) {
+                      showModalBottomSheet(
+                          enableDrag: false,
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
+                          builder: (builder) {
+                            return AddEntryCommonDropdownSheet(
+                              dropdownDataList: getDropdownList(cubit.entryField![i].fieldName ?? "", cubit),
+                              fieldName: cubit.entryField![i].fieldName ?? "",
+                              displayNameForUI: cubit.entryField![i].displayNameForUI ?? "",
+                            );
+                          });
+                    } else {
+                      EasyLoading.showToast(S.of(context).selectCategory,
+                          toastPosition: EasyLoadingToastPosition.bottom);
+                    }
+                  } else {
+                    showModalBottomSheet(
+                        enableDrag: false,
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
+                        builder: (builder) {
+                          return AddEntryCommonDropdownSheet(
+                            dropdownDataList: getDropdownList(cubit.entryField![i].fieldName ?? "", cubit),
+                            fieldName: cubit.entryField![i].fieldName ?? "",
+                            displayNameForUI: cubit.entryField![i].displayNameForUI ?? "",
+                          );
+                        });
+                  }
+                },
+                controller: FieldHandler.getDropdownSelectedTextController(cubit.entryField![i].fieldName ?? "", cubit),
+                validator: (value) => DynamicValidator.dropdownValidation(
+                    context: context,
+                    value: value,
+                    mandatoryField: cubit.entryField![i].mandatoryField ?? false,
+                    displayNameForUI: cubit.entryField![i].displayNameForUI ?? ""),
+                readOnly: true,
+                suffixWidget: const Icon(Icons.keyboard_arrow_down),
+                isMandatoryField: cubit.entryField![i].mandatoryField ?? false,
+                textInputFormatter:
+                    DynamicValidator.addTextInputFormatters(fieldType: cubit.entryField![i].fieldName ?? ''),
+                title: cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale),
+                keyboardType: cubit.getTextInputType(fieldType: cubit.entryField![i].fieldName ?? ''),
+                hintText: cubit.getHintText(
+                    hintText: '${cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale)}',
+                    currentLocale: currentLocale),
+              );
+
+              /*CustomDropDown(
                 selectedValue: FieldHandler.getDropdownSelected(cubit.entryField![i].fieldName ?? "", cubit),
                 title: cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale),
                 // hintText:
@@ -145,7 +200,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   cubit.changeDropdownValue(value, cubit.entryField![i].fieldName ?? "");
                   //  cubit.onChangeDesignationDropDown(value);
                 }),
-              );
+              );*/
             },
           )
         ]
@@ -411,7 +466,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
         /// Here calender view
         else if (DynamicUIHandler.calenderView.contains(cubit.entryField![i].fieldName)) ...[
           spaceHeightWidget(20),
-
           TextFieldWidget(
             onTap: (() async {
               cubit.selectedDoaDate(context);
@@ -439,41 +493,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
             ),
             // hintText: cubit.date,
           ),
-          // Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: [
-          //     spaceHeightWidget(20),
-          //     Text(cubit.entryField![i].displayNameForUI ?? ""),
-          //     spaceHeightWidget(8),
-          //     BlocBuilder<AddEntryCubit, AddEntryState>(
-          //       builder: (context, state) {
-          //         return Row(
-          //           children: [
-          //             Text(
-          //               cubit.date,
-          //               style: const TextStyle(
-          //                 color: AppColor.greyColor,
-          //               ),
-          //             ),
-          //             const Spacer(),
-          //             GestureDetector(
-          //               onTap: () async {
-          //                 cubit.selectedDoaDate(context);
-          //               },
-          //               child: const Icon(Icons.calendar_month_outlined),
-          //             )
-          //           ],
-          //         );
-          //       },
-          //     ),
-          //     spaceHeightWidget(4),
-          //     const Divider(
-          //       height: 2,
-          //       thickness: 1.5,
-          //       color: AppColor.textBlackColor,
-          //     )
-          //   ],
-          // )
         ]
       ],
     );
@@ -535,7 +554,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
                 } else if (state is CastFetchedState) {
                   cubit.castSelected = null;
                   cubit.castData = state.cast.data!;
-                  print(state.cast.data?.length);
                   if (widget.personData != null) {
                     cubit.getInitialCasteData(widget.personData);
                   }

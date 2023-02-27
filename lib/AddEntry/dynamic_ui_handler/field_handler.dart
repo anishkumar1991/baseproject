@@ -25,31 +25,30 @@ class FieldHandler extends AddEntryCubit {
   }
 
   /// Here getting specify dropdown selected value
-  static getDropdownSelected(String dropdownType, AddEntryCubit cubit) {
+  static getDropdownSelectedTextController(String dropdownType, AddEntryCubit cubit) {
     if (dropdownType == "designation") {
-      return cubit.designationSelected;
+      return cubit.designationTextCon;
     } else if (dropdownType == "categoryId") {
-      return cubit.categorySelected;
+      return cubit.categoryTextCon;
     } else if (dropdownType == "caste") {
-      return cubit.castSelected;
+      return cubit.castTextCon;
     } else if (dropdownType == "educationId") {
-      return cubit.qualificationSelected;
+      return cubit.qualificationTextCon;
     } else if (dropdownType == "religionId") {
-      return cubit.religionSelected;
+      return cubit.religionTextCon;
     } else if (dropdownType == "professionId") {
-      return cubit.professionSelected;
+      return cubit.professionTextCon;
     } else if (dropdownType == "blood_group") {
-      return cubit.bloodGroupSelected;
+      return cubit.bloodGroupTextCon;
     } else if (dropdownType == "district") {
-      return cubit.districtSelected;
+      return cubit.districtTextCon;
     } else {
       return null;
     }
   }
 
   /// This function call in textfield onChange()
-  static onUpdate(
-      int index, String val, String fieldName, AddEntryCubit cubit) async {
+  static onUpdate(int index, String val, String fieldName, AddEntryCubit cubit) async {
     int foundKey = -1;
     for (var map in cubit.textFieldControllerData) {
       if (map.containsKey("id")) {
@@ -101,8 +100,7 @@ class FieldHandler extends AddEntryCubit {
   }
 
   /// Here getting specify dropdown selected value name
-  static getDropdownSelectedValueName(
-      String dropdownType, AddEntryCubit cubit) {
+  static getDropdownSelectedValueName(String dropdownType, AddEntryCubit cubit) {
     if (dropdownType == "designation") {
       return cubit.designationSelected?.name;
     } else if (dropdownType == "categoryId") {

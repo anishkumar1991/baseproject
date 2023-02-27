@@ -113,59 +113,49 @@ class DynamicValidator {
     } else if (fieldType == 'age') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '##',
-            filter: {"#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
+        MaskTextInputFormatter(mask: '##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
       ];
     } else if (fieldType == 'std_code') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '#####',
-            filter: {"#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
+        MaskTextInputFormatter(mask: '#####', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
       ];
     } else if (fieldType == 'landline') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '########',
-            filter: {"#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
+        MaskTextInputFormatter(mask: '########', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
       ];
     } else if (fieldType == 'pinCode') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '######',
-            filter: {"#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
+        MaskTextInputFormatter(mask: '######', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
       ];
     } else if (fieldType == 'primary_member_id') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '##########',
-            filter: {"#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
+        MaskTextInputFormatter(mask: '##########', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
       ];
     } else if (fieldType == "aadhaarNumber") {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(
-            mask: '############',
-            filter: {"#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
+        MaskTextInputFormatter(mask: '############', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
       ];
     } else if (fieldType == "pannaNumber") {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(
-            mask: '*##',
-            filter: {"*": RegExp(r'^[1-9]$'), "#": RegExp(r'[0-9]')},
-            type: MaskAutoCompletionType.lazy)
+            mask: '*##', filter: {"*": RegExp(r'^[1-9]$'), "#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
       ];
     }
+  }
+
+  static String? dropdownValidation(
+      {required BuildContext context, required String displayNameForUI, required bool mandatoryField, String? value}) {
+    if (mandatoryField) {
+      if (value == null || value.isEmpty) {
+        return '${S.of(context).please} $displayNameForUI ${S.of(context).enter}';
+      }
+    }
+    return null;
   }
 }

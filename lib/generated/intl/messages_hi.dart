@@ -280,6 +280,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeMore": MessageLookupByLibrary.simpleMessage("जयादा देखे"),
         "selectBoothFirst":
             MessageLookupByLibrary.simpleMessage("कृपया पहले बूथ का चयन करें"),
+        "selectCategory":
+            MessageLookupByLibrary.simpleMessage("पहले श्रेणी का चयन करें"),
         "selectDesignation":
             MessageLookupByLibrary.simpleMessage("कृपया पद चुनें"),
         "selectLoksabha": MessageLookupByLibrary.simpleMessage("लोकसभा चुने"),
