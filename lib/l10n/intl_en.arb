@@ -224,5 +224,8 @@
   "fillSecondaryInformation": "Fill Secondary Information",
   "uploadFile": "Upload File",
   "selectSubUnit": "Select sub unit",
-  "selectCategory": "First select category"
+  "selectCategory": "First select category",
+  "continueText": "Continue",
+  "gallery": "Gallery",
+  "camera": "Camera"
 }

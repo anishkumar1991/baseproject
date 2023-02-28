@@ -223,5 +223,8 @@
   "fillSecondaryInformation": "अतिरिक्त जानकारी भरें",
   "uploadFile": "अपलोड फाइल",
   "selectSubUnit": "सब-यूनिट का चयन करें",
-  "selectCategory": "पहले श्रेणी का चयन करें"
+  "selectCategory": "पहले श्रेणी का चयन करें",
+  "continueText": "जारी रखें",
+  "gallery": "गैलरी",
+  "camera": "कैमरा"
 }

@@ -71,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessUpdated":
             MessageLookupByLibrary.simpleMessage("व्यवसाय अपडेटेड"),
         "buth": MessageLookupByLibrary.simpleMessage("बूथ"),
+        "camera": MessageLookupByLibrary.simpleMessage("कैमरा"),
         "cancel": MessageLookupByLibrary.simpleMessage("रद्द करें"),
         "caste": MessageLookupByLibrary.simpleMessage("जाती"),
         "category": MessageLookupByLibrary.simpleMessage("श्रेणी"),
@@ -80,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("संस्थान या कॉलेज का नाम"),
         "click": MessageLookupByLibrary.simpleMessage("क्लिक करें"),
         "comment": MessageLookupByLibrary.simpleMessage("टिपण्णी"),
+        "continueText": MessageLookupByLibrary.simpleMessage("जारी रखें"),
         "createATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाएँ"),
         "createAndUpdateProgram":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम बनायें"),
@@ -165,6 +167,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का नाम *"),
         "functionType":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
+        "gallery": MessageLookupByLibrary.simpleMessage("गैलरी"),
         "gettingStateData":
             MessageLookupByLibrary.simpleMessage("राज्य डेटा प्राप्त करना"),
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),

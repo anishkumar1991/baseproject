@@ -22,6 +22,7 @@ import '../../Storage/user_storage_service.dart';
 import '../dynamic_ui_handler/dynamic_ui_handler.dart';
 import '../dynamic_ui_handler/locale_file.dart';
 import '../network/api/add_entry_api.dart';
+import '../network/model/add_entry_data_model.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 import 'add_entry_state.dart';
 
@@ -748,7 +749,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// Final submit button process
 
-  pressAddEntrySubmitButton() async {
+  pressAddEntrySubmitButton({bool? isComeFromForceUpdate}) async {
     EasyLoading.show();
     Map<String, dynamic> map = {};
     map.addEntries({"level_name": "$levelName"}.entries);
@@ -757,6 +758,9 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     map.addEntries({"type": "$type"}.entries);
     map.addEntries({"level": "$levelId"}.entries);
     map.addEntries({"from": "$from"}.entries);
+    if (isComeFromForceUpdate != null) {
+      map.addEntries({"force_submit": isComeFromForceUpdate}.entries);
+    }
     if (personID != null && personID != "") {
       map.addEntries({"personId": "$personID"}.entries);
     }
@@ -828,9 +832,14 @@ class AddEntryCubit extends Cubit<AddEntryState> {
       log("Response :${res.data}");
       print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
-        if (res.data["success"] == true && res.data["duplication"] == false) {
+        AddDataEntryModel addDataEntryModel = AddDataEntryModel.fromJson(res.data);
+        if (addDataEntryModel.success == true && addDataEntryModel.duplication == false) {
           personId = res.data["data"][0]["id"];
-          emit(SubmitAddEntrySuccessState(res.data["message"], res.data["data"][0]["phone"]));
+          emit(SubmitAddEntrySuccessState(addDataEntryModel.message ?? "", res.data["data"][0]["phone"]));
+        } else if (addDataEntryModel.duplication == true && addDataEntryModel.showForceSubmit == true) {
+          emit(AddEntryForceSubmit(addDataEntryModel));
+        } else if (addDataEntryModel.duplication == true && addDataEntryModel.showForceSubmit == false) {
+          emit(AddEntryDuplicateUser(addDataEntryModel));
         } else {
           Map<String, dynamic>? msg = res.data;
           if (msg != null) {
@@ -847,6 +856,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         emit(SubmitAddEntryErrorState('Something Went Wrong'));
       }
     } catch (e) {
+      print(e);
       emit(SubmitAddEntryErrorState('Something Went Wrong'));
     } finally {
       EasyLoading.dismiss();

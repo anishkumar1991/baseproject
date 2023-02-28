@@ -51,6 +51,7 @@ class AppColor {
   static Color redLight = const Color(0xFFC45358);
 
   static Color black700 = const Color(0xFF49454F);
+  static Color addEntryTileColor = const Color(0xFFf2f6ff);
 
   /// gradient colors
   static const Color purple50 = Color(0xFFE6E5FD);
