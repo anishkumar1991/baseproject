@@ -16,7 +16,7 @@ class HorizontalTileCubit extends Cubit<HorizontalTileState> {
     emit(HorizontalTileLoading());
     try {
       final res =
-          await api.getReels('Bearer ${StorageService.userAuthToken}', "10");
+          await api.getReels('Bearer ${StorageService.userAuthToken}', "7");
       print(res.response.requestOptions.uri);
       print('RESPONSE OF NEW CALL=${res.response.statusCode}');
       print(res.data);

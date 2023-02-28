@@ -5,10 +5,10 @@ import 'package:share_plus/share_plus.dart';
 import '../cubits/ReelsCubit.dart';
 
 Future<void> ReelURLShare(
-    BuildContext context, int index, String sourceLink) async {
+    BuildContext context, int index, String sourceLink,String urlimage,String text1) async {
   final cubit = context.read<ReelsCubit>();
-  String urlimage = cubit.model!.reels[index].postData.reel.toString();
-  final text1 = cubit.model!.reels[index].title;
+   cubit.model!.reels[index].postData.reel.toString();
+   cubit.model!.reels[index].title;
 
   var text2 = "https://mpsangathan.com/app";
   final sharecontent = "$text1\n\n$text2";

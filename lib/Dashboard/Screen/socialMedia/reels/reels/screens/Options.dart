@@ -17,6 +17,7 @@ class OptionsScreen extends StatefulWidget {
   final String views;
   final String src;
 
+
   const OptionsScreen(
       {Key? key,
       required this.title,
@@ -36,7 +37,6 @@ class _OptionsScreenState extends State<OptionsScreen> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ReelShareCubit>();
-    final cubit1 = context.read<ReelsCubit>();
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -124,9 +124,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                               ),
                               likeBuilder: (bool isLiked) {
                                 isLiked
-                                    ? cubit.sendReelLike(cubit1
-                                        .model!.reels[widget.index].id
-                                        .toString())
+                                    ? cubit.sendReelLike(widget.id)
                                     : null;
                                 return Icon(
                                   Icons.thumb_up_alt,
@@ -150,9 +148,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                       const SizedBox(height: 3),
                       IconButton(
                           onPressed: () {
-                            cubit.shareReelToWhatsapp(cubit1
-                                .model!.reels[widget.index].id
-                                .toString());
+                            cubit.shareReelToWhatsapp(widget.id);
                             shareOnWhatsapp(
                                 context, SocialMedia.whatsapp, widget.index);
                           },
