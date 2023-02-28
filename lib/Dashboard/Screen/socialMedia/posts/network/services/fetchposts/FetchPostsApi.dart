@@ -4,13 +4,13 @@ import 'package:sangathan/Values/string.dart';
 
 part 'FetchPostsApi.g.dart';
 
-@RestApi(baseUrl:AppStrings.socialmediabaseUrl)
+@RestApi(baseUrl: AppStrings.socialmediabaseUrl)
 abstract class FetchPostsApi {
   factory FetchPostsApi(Dio dio) = _FetchPostsApi;
 
   @GET('/api/mobile/v1/posts')
-  Future<HttpResponse> getPosts(
-      @Header('Authorization') String token, @Queries() Map<String, dynamic> queries);
+  Future<HttpResponse> getPosts(@Header('Authorization') String token,
+      @Query("size") int param1, @Query("page") int param2);
 
   @POST("/api/mobile/v1/posts/react")
   Future<HttpResponse> sendReaction(
@@ -23,6 +23,4 @@ abstract class FetchPostsApi {
   @POST("/api/mobile/v1/polls/submit")
   Future<HttpResponse> submitPoll(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
-
-
 }

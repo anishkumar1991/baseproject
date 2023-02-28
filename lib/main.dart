@@ -105,7 +105,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (context) => PollCubit()),
         BlocProvider(create: (context) => ShareCubit()),
         BlocProvider(create: (context) => ReelsCubit()),
-        BlocProvider(create: (context) => FetchPostsCubit()),
+        BlocProvider(create: (context) => PostsCubit()),
         BlocProvider(create: (context) => InternetCubit()),
         BlocProvider(create: (context) => DashBoardCubit()),
         BlocProvider(create: (context) => HomePageCubit()),

@@ -7,11 +7,10 @@ import 'package:path_provider/path_provider.dart';
 
 import '../cubit/FetchPostCubit.dart';
 
-Future<void> share(BuildContext context, int index) async {
-  final cubit = context.read<FetchPostsCubit>();
-  String urlimage =
-      cubit.tempModel!.posts[index].postData.images!.first.toString();
-  var text1 = cubit.tempModel!.posts[index].title;
+Future<void> share(
+    BuildContext context, int index, String urlimage, var text1) async {
+  final cubit = context.read<PostsCubit>();
+
   var text2 = "https://mpsangathan.com/app";
   final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);

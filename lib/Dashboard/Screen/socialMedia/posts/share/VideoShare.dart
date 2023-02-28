@@ -13,9 +13,9 @@ import 'package:share_plus/share_plus.dart';
 import '../cubit/FetchPostCubit.dart';
 
 Future<void> VideoDownloadShare(
-    BuildContext context, int index, String sourceLink) async {
-  final cubit = context.read<FetchPostsCubit>();
-  String urlimage = cubit.tempModel!.posts[index].postData.video.toString();
+    BuildContext context, int index, String sourceLink,String urlimage, var text1 ) async {
+  final cubit = context.read<PostsCubit>();
+
   String? savePath;
 
   Map<Permission, PermissionStatus> statuses = await [
@@ -87,7 +87,7 @@ Future<void> VideoDownloadShare(
     print("permisison not granted");
   }
 
-  var text1 = cubit.tempModel!.posts[index].title;
+
   var text2 = "https://mpsangathan.com/app";
   final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);

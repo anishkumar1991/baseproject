@@ -13,7 +13,7 @@ class _FetchPostsApi implements FetchPostsApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saral-social-staging.ccdms.in';
+    baseUrl ??= 'https://saral-social.ccdms.in';
   }
 
   final Dio _dio;
@@ -23,11 +23,14 @@ class _FetchPostsApi implements FetchPostsApi {
   @override
   Future<HttpResponse<dynamic>> getPosts(
     token,
-    queries,
+    param1,
+    param2,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.addAll(queries);
+    final queryParameters = <String, dynamic>{
+      r'size': param1,
+      r'page': param2,
+    };
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};

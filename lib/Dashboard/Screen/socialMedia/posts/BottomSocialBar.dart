@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/ReactionState.dart';
+import 'package:sangathan/Dashboard/Screen/socialMedia/posts/network/model/FetchPosts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/Share.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/ShareOnWhatsapp.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/VideoShare.dart';
@@ -22,19 +23,20 @@ import 'cubit/ShareState.dart';
 class BottomSocialBar extends StatelessWidget {
   final int index;
   ScreenshotController? screenshotController = ScreenshotController();
+  final List<Post> item;
 
-  BottomSocialBar({Key? key, required this.index, this.screenshotController})
+  BottomSocialBar({Key? key, required this.index, this.screenshotController, required this.item})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final cubit1 = context.read<FetchPostsCubit>();
+    final cubit1 = context.read<PostsCubit>();
     final cubit2 = context.read<ShareCubit>();
 
-    var id = cubit1.tempModel!.posts[index].id.toString();
-    var shareToAllCount = cubit1.tempModel!.posts[index].shares.other;
-    var shareToWhatsapp = cubit1.tempModel!.posts[index].shares.whatsapp;
-    var reactCount = cubit1.tempModel!.posts[index].reactions[0].count;
+    var id = item[index].id.toString();
+    var shareToAllCount = item[index].shares.other;
+    var shareToWhatsapp = item[index].shares.whatsapp;
+    var reactCount = item[index].reactions[0].count;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,6 +48,7 @@ class BottomSocialBar extends StatelessWidget {
               CustomReactionButton(
                 index: index,
                 id: id,
+                item: item,
               ),
               const SizedBox(width: 10),
               BlocBuilder<ReactionCubit, ReactionState>(
@@ -78,11 +81,11 @@ class BottomSocialBar extends StatelessWidget {
             children: [
               IconButton(
                   onPressed: () async {
-                    if (cubit1.tempModel!.posts[index].postType == "Poll") {
+                    if (item[index].postType == "Poll") {
                       cubit2.shareToAll(id);
 
                       final text =
-                          cubit1.tempModel!.posts[index].sharingContent;
+                          item[index].sharingContent;
 
                       double pixelRatio =
                           MediaQuery.of(context).devicePixelRatio;
@@ -96,47 +99,47 @@ class BottomSocialBar extends StatelessWidget {
                       File(path).writeAsBytesSync(bytes);
                       XFile file = XFile(path);
                       await Share.shareXFiles(text: text, [file]);
-                    } else if (cubit1.tempModel!.posts[index].postType ==
+                    } else if (item[index].postType ==
                         "Video") {
                       print(
                           "------------UNDER-Video-Type-----");
-                      if (cubit1.tempModel!.posts[index].postData.video
+                      if (item[index].postData.video
                               .toString()
                               .contains('.m3u8') ||
-                          cubit1.tempModel!.posts[index].postData.video
+                          item[index].postData.video
                               .toString()
                               .contains('.M3U8') ||
-                          cubit1.tempModel!.posts[index].postData.video
+                          item[index].postData.video
                               .toString()
                               .contains('m3u8') ||
-                          cubit1.tempModel!.posts[index].postData.video
+                          item[index].postData.video
                               .toString()
                               .contains('M3U8')) {
                         print(
                             "------------------VFORMAT---------------NO");
                         cubit2
-                            .shareToAll(cubit1.tempModel!.posts[index].postData.video
+                            .shareToAll(item[index].postData.video
                             .toString());
                         VideosShareURL(
                             context,
                             index,
-                            cubit1.tempModel!.posts[index].postData.video
-                                .toString());
+                            item[index].postData.video
+                                .toString(),item[index].postData.video.toString(),item[index].title);
                       } else {
                         print("------------------VFORMAT---------------SUPPORTED");
                         cubit2
-                            .shareToAll(cubit1.tempModel!.posts[index].postData.video
+                            .shareToAll(item[index].postData.video
                             .toString());
                         VideoDownloadShare(
                             context,
                             index,
-                            cubit1.tempModel!.posts[index].postData.video
-                                .toString());
+                            item[index].postData.video
+                                .toString(),item[index].postData.video.toString(),item[index].title);
                       }
                     } else {
                       print("----------------else ke andar FORMAT----->");
                       cubit2.shareToAll(id);
-                      share(context, index);
+                      share(context, index,item[index].postData.images!.first.toString(), item[index].title);
                     }
                   },
                   icon: const Icon(Icons.share_outlined)),
@@ -169,7 +172,7 @@ class BottomSocialBar extends StatelessWidget {
             IconButton(
               onPressed: () {
                 cubit2.shareToWhatsapp(id);
-                shareOnWhatsapp(context, SocialMedia.whatsapp, index);
+                shareOnWhatsapp(context, SocialMedia.whatsapp, index,item[index].title);
               },
               icon: const Icon(FontAwesomeIcons.whatsapp,
                   color: Color(0xFF1FAF38)),

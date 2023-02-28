@@ -7,8 +7,9 @@ import '../cubit/FetchPostCubit.dart';
 
 class ShowVideoCard extends StatefulWidget {
   final int? index;
+  final String showString;
 
-  const ShowVideoCard({super.key, required this.index});
+  const ShowVideoCard({super.key, required this.index, required this.showString});
 
   @override
   _ShowVideoCardState createState() => _ShowVideoCardState();
@@ -25,10 +26,10 @@ class _ShowVideoCardState extends State<ShowVideoCard> {
   }
 
   Future initializePlayer() async {
-    final cubit = context.read<FetchPostsCubit>();
+    final cubit = context.read<PostsCubit>();
 
     _videoPlayerController = VideoPlayerController.network(
-        cubit.tempModel!.posts[widget.index!].postData.video.toString());
+        widget.showString);
     await Future.wait([_videoPlayerController.initialize()]);
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
