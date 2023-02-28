@@ -31,7 +31,6 @@ class DependentDropdownWidget extends StatefulWidget {
 class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
   @override
   Widget build(BuildContext context) {
-    //sortBasedOnMandalSelected();
     return BlocBuilder<ZilaDataCubit, ZilaDataState>(
       builder: (context, state) {
         final cubit = BlocProvider.of<ZilaDataCubit>(context);
@@ -73,6 +72,12 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
               cubit.dependentDropdownSelected = cubit.dependentDropdownList.first;
               cubit.dependentLevelNameId = cubit.dependentDropdownList.first.id;
               cubit.levelNameId = cubit.dependentLevelNameId;
+            }
+
+            if (widget.typeLevel == "Mandal") {
+              if (widget.type == "Booth") {
+                sortBasedOnMandalSelected();
+              }
             }
           } else {
             cubit.dataList = [];
@@ -360,18 +365,6 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
     for (int i = 0; i < (sangathanDetailsCubit.allotedLocationModel!.data!.locations?.length ?? 0); i++) {
       allottedLocationData.add(sangathanDetailsCubit.allotedLocationModel!.data!.locations?[i].name ?? "");
     }
-    print(allottedLocationData);
-    for (int i = 0; i < data.length; i++) {
-      print(data[i].number.runtimeType);
-      if (data[i].number == "25") {
-        print(data[i].name);
-        data[i].mandalName = "Babaliya";
-      }
-    }
-    /* for (var item in data) {
-      print(item.toJson());
-    }
-    print("----------------------------------------------------------");*/
     data.sort((a, b) {
       if ((a.mandalName == sangathanDetailsCubit.selectedAllottedLocation?.name) &&
           b.mandalName != sangathanDetailsCubit.selectedAllottedLocation?.name) {
@@ -383,29 +376,32 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
         int aIndex = allottedLocationData.indexOf(a.mandalName ?? "");
         int bIndex = allottedLocationData.indexOf(b.mandalName ?? "");
 
-        /*  final int aIndex = sangathanDetailsCubit.allotedLocationModel!.data!.locations!.indexWhere((obj) => obj.mandalName == a.mandalName);
-        final int bIndex = sangathanDetailsCubit.allotedLocationModel!.data!.locations!.indexWhere((obj) => obj.mandalName == a.mandalName);*/
         if (aIndex == -1 && bIndex == -1) {
-          return 0; // Neither a nor b in userIds list, keep them in their relative positions
+          return 0;
         } else if (aIndex == -1) {
-          return 1; // a is not in userIds list, so it comes after b
+          return 1;
         } else if (bIndex == -1) {
-          return -1; // b is not in userIds list, so it comes after a
+          return -1;
         } else {
-          return aIndex.compareTo(bIndex);
+          int nameComparison = allottedLocationData
+              .indexOf(a.mandalName ?? "")
+              .compareTo(allottedLocationData.indexOf(b.mandalName ?? ""));
+          if (nameComparison != 0) {
+            return nameComparison;
+          } else {
+            return a.number.compareTo(b.number);
+          }
         }
       }
     });
-    List<Locations> remainingUsers = data
-        .where((user) => !sangathanDetailsCubit.allotedLocationModel!.data!.locations!
-            .contains(Locations(mandalName: user.mandalName)))
-        .toList();
-    data.removeWhere((user) =>
-        !sangathanDetailsCubit.allotedLocationModel!.data!.locations!.contains(Locations(mandalName: user.mandalName)));
-    data.addAll(remainingUsers);
+    List<Locations> remainingData = data.where((item) {
+      bool isMatchingMandal = item.mandalName == sangathanDetailsCubit.selectedAllottedLocation?.name;
+      bool isInAllottedLocations = allottedLocationData.contains(item.mandalName);
+      return !isMatchingMandal && !isInAllottedLocations;
+    }).toList();
+    data.removeWhere((item) => remainingData.contains(item));
+    remainingData.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
+    data.addAll(remainingData);
     cubit.dependentDropdownList = [...data];
-    /* for (var item in data) {
-      print(item.toJson());
-    }*/
   }
 }

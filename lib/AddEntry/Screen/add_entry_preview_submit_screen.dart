@@ -21,6 +21,7 @@ import '../Cubit/add_entry_cubit.dart';
 import '../Cubit/add_entry_state.dart';
 import '../dynamic_ui_handler/dynamic_ui_handler.dart';
 import '../dynamic_ui_handler/field_handler.dart';
+import 'widget/add_data_entry_dialog.dart';
 import 'widget/select_boxs.dart';
 
 class AddEntryPreviewSubmit extends StatefulWidget {
@@ -60,6 +61,26 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
         body: SafeArea(
           child: BlocListener<AddEntryCubit, AddEntryState>(
               listener: (context, state) {
+                if (state is AddEntryForceSubmit) {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddDataEntryDialog(
+                          addDataEntryModel: state.addDataEntryModel,
+                        );
+                      });
+                }
+                if (state is AddEntryDuplicateUser) {
+                  showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AddDataEntryDialog(
+                          addDataEntryModel: state.addDataEntryModel,
+                        );
+                      });
+                }
                 if (state is SubmitAddEntrySuccessState) {
                   EasyLoading.showSuccess(state.message);
                   if (widget.isEdit) {
@@ -115,7 +136,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                           }));
                 }
                 if (state is SubmitAddEntryErrorState) {
-                  EasyLoading.showError(state.errorString, duration: Duration(seconds: 3));
+                  EasyLoading.showError(state.errorString, duration: const Duration(seconds: 3));
                 }
               },
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -340,12 +361,11 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   }
 
   Widget uploadImage(String fileName, AddEntryCubit cubit, int i) {
-    return fileName != null && fileName != ""
+    return fileName != ""
         ? FittedBox(
             fit: BoxFit.scaleDown,
             child: InkWell(
               onTap: (() {
-                print('dddd');
                 int index = cubit.allImagePickerList.indexWhere((element) =>
                     element["fieldName"].toString().split("_")[0] ==
                     (cubit.entryField![i].fieldName ?? "").split(RegExp(r"[A-Z]"))[0]);
@@ -353,17 +373,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                     context: context,
                     builder: ((context) => ImagePreViewDialog(path: cubit.allImagePickerList[index]["value"])));
               }),
-              child:
-                  //  Container(
-                  //   width: 200,
-                  //   margin: const EdgeInsets.only(right: 6, bottom: 12),
-                  //   padding: const EdgeInsets.all(6),
-                  //   decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(6),
-                  //       border:
-                  //           Border.all(color: AppColor.greyColor.withOpacity(0.3))),
-                  // child:
-                  Container(
+              child: Container(
                 padding: const EdgeInsets.all(4),
                 margin: const EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
@@ -386,36 +396,14 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                   ],
                 ),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Image.asset(
-              //       AppIcons.galleryColorImage,
-              //       height: 16,
-              //     ),
-              //     spaceWidthWidget(4),
-              //     Expanded(
-              //       child: Text(
-              //         fileName.split("/").last,
-              //         maxLines: 2,
-              //         style: GoogleFonts.quicksand(
-              //             color: AppColor.greyColor,
-              //             fontSize: 10,
-              //             fontWeight: FontWeight.w400),
-              //       ),
-              //     )
-              //   ],
-              // ),
             ),
           )
-        // )
         : const SizedBox();
   }
 
   gettingFilePath(String key, AddEntryCubit cubit) {
     Iterable<String> foundKey =
         DynamicUIHandler.filePickerUrl.where((element) => element.split("_")[0] == key.split(RegExp(r"[A-Z]"))[0]);
-    print(foundKey);
     String newFoundKey = foundKey.last.toString().replaceAll("(", "").replaceAll(")", "");
 
     String imageFilePath = "";

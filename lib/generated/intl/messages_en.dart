@@ -71,6 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "businessUpdated":
             MessageLookupByLibrary.simpleMessage("Business Updated"),
         "buth": MessageLookupByLibrary.simpleMessage("Booths"),
+        "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "caste": MessageLookupByLibrary.simpleMessage("Caste"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
@@ -80,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Name of the Institute or College"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
+        "continueText": MessageLookupByLibrary.simpleMessage("Continue"),
         "createATour": MessageLookupByLibrary.simpleMessage("Create a tour"),
         "createAndUpdateProgram":
             MessageLookupByLibrary.simpleMessage("Create and"),
@@ -159,6 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Program Level *"),
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
+        "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "gettingStateData":
             MessageLookupByLibrary.simpleMessage("Getting state data"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),

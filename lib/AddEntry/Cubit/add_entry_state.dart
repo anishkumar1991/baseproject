@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:sangathan/AddEntry/network/model/category_model.dart';
 
+import '../network/model/add_entry_data_model.dart';
 import '../network/model/add_entry_form_structure_model.dart';
 import '../network/model/cast_model.dart';
 import '../network/model/designation_data_model.dart';
@@ -113,7 +114,20 @@ class SubmitAddEntryLoadingState extends AddEntryState {}
 class SubmitAddEntrySuccessState extends AddEntryState {
   final String message;
   final String mobileNo;
+
   SubmitAddEntrySuccessState(this.message, this.mobileNo);
+}
+
+class AddEntryDuplicateUser extends AddEntryState {
+  final AddDataEntryModel addDataEntryModel;
+
+  AddEntryDuplicateUser(this.addDataEntryModel);
+}
+
+class AddEntryForceSubmit extends AddEntryState {
+  final AddDataEntryModel addDataEntryModel;
+
+  AddEntryForceSubmit(this.addDataEntryModel);
 }
 
 class SubmitAddEntryErrorState extends AddEntryState {
