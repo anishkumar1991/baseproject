@@ -10,7 +10,9 @@ abstract class SendEventDetailsApi {
   factory SendEventDetailsApi(Dio dio) = _SendEventDetailsApi;
 
   @POST('api/event_tracker/create_event_details')
-  @Headers({"Content-Type": "application/json", "Accept": 'application/json'})
+  @Headers({"Content-Type": "application/json", "Accept": '*/*'})
   Future<HttpResponse> sendEvent(
       @Header('Authorization') String token, @Body() Map<String, dynamic> data);
+
+
 }

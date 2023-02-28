@@ -98,7 +98,7 @@ class _OnGoingState extends State<OnGoing> {
                                         img1:
                                             '${state.dashModal.data[index].eventDetail.photo1}',
                                         img2:
-                                            '${state.dashModal.data[index].eventDetail.photo1}',
+                                            '${state.dashModal.data[index].eventDetail.photo2}',
                                       )));
                         }
                       },

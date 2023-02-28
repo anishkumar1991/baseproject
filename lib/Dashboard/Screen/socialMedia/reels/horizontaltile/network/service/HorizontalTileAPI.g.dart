@@ -13,7 +13,7 @@ class _HorizontalTileAPI implements HorizontalTileAPI {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saral-social.ccdms.in';
+    baseUrl ??= 'https://saral-social-staging.ccdms.in';
   }
 
   final Dio _dio;
