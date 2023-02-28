@@ -1,6 +1,6 @@
 class AppStrings {
-  // static const String baseUrl = "https://saral-staging.ccdms.in";
-  static const String baseUrl = "https://saralk.ccdms.in";
+  static const String baseUrl = "https://saral-staging.ccdms.in";
+  // static const String baseUrl = "https://saralk.ccdms.in";
 
   static const String baseUrlForPravas =
       "http://34.100.233.103/api/mobile/v1/pravash";
@@ -26,10 +26,10 @@ class AppStrings {
   static const String acid = "357";
   static const String mannkibaatotp = "123456";
 
-  static const String socialmediabaseUrl = "https://saral-social.ccdms.in";
-  //
-  // static const String socialmediabaseUrl =
-  //     "https://saral-social-staging.ccdms.in";
+  // static const String socialmediabaseUrl = "https://saral-social.ccdms.in";
+
+  static const String socialmediabaseUrl =
+      "https://saral-social-staging.ccdms.in";
 
 
   static const String buttontext = "Next";
