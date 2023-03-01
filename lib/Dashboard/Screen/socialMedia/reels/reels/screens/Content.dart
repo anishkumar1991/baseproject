@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import '../network/model/ReelsModel.dart';
 import 'LikeIcon.dart';
 import 'Options.dart';
 
@@ -11,6 +12,7 @@ class ContentScreen extends StatefulWidget {
   final String views;
   final int index;
   final String id;
+  final List<Reel> item;
 
   const ContentScreen(
       {super.key,
@@ -19,7 +21,7 @@ class ContentScreen extends StatefulWidget {
       required this.views,
       required this.src,
       required this.index,
-      required this.id});
+      required this.id, required this.item});
 
   @override
   _ContentScreenState createState() => _ContentScreenState();
@@ -86,6 +88,7 @@ class _ContentScreenState extends State<ContentScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 10),
           child: OptionsScreen(
+            item: widget.item,
             id: widget.id,
             title: widget.title,
             views: widget.views,

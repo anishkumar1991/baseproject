@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../posts/cubit/FetchPostCubit.dart';
 import '../cubits/ReelsCubit.dart';
 import '../cubits/ReelsState.dart';
+import '../network/model/ReelsModel.dart';
 import 'Content.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,18 +23,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final swipecontroller = SwiperController();
+
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final cubit = context.read<ReelsCubit>().getReelsData();
+    BlocProvider.of<ReelsCubit>(context).loadReel();
+
+    swipecontroller.addListener(() {
+      BlocProvider.of<ReelsCubit>(context).loadReel();
     });
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<PostsCubit>();
-    // cubit.fetchPosts();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -46,30 +49,38 @@ class _HomePageState extends State<HomePage> {
               //We need swiper for every content
               BlocBuilder<ReelsCubit, ReelsState>(
                 builder: (context, state) {
-                  if (state is ReelsInitialState ||
-                      state is ReelsLoadingState) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is ReelsFetchedState) {
-                    return Swiper(
-                      index: widget.index,
-                      controller: SwiperController(),
-                      itemBuilder: (BuildContext context, int index) {
-                        return ContentScreen(
-                          src: state.reelsModel.reels[index].postData.reel,
-                          title: state.reelsModel.reels[index].title,
-                          views: state.reelsModel.reels[index].viewCount
-                              .toString(), index: index, id: state.reelsModel.reels[index].id.toString(),
-                        );
-                        // src: videos[index % videos.length]);
-                      },
-
-                      scrollDirection: Axis.vertical, itemCount: state.reelsModel.reels.length,
-                    );
-                  } else {
-                    return const Center(
-                      child: Text('Something Went Wrong'),
-                    );
+                  if (state is PostsLoading && state.isFirstFetch) {
+                    return _loadingIndicator();
                   }
+                  List<Reel> posts = [];
+                  bool isLoading = false;
+                  if (state is PostsLoading) {
+                    posts = state.oldPosts;
+                    isLoading = true;
+                  } else if (state is PostsLoaded) {
+                    posts = state.posts;
+                  }
+
+                  return Swiper(
+                    itemCount: posts.length + (isLoading ? 1 : 0),
+                    index: widget.index,
+                    controller: swipecontroller,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index < posts.length) {
+                        return ContentScreen(
+                          item: posts,
+                          src: posts[index].postData.reel,
+                          title: posts[index].title,
+                          views: posts[index].viewCount.toString(),
+                          index: index,
+                          id: posts[index].id.toString(),
+                        );
+                      } else {
+                        return const Text("End of Data");
+                      }
+                    },
+                    scrollDirection: Axis.vertical,
+                  );
                 },
               ),
               Padding(
@@ -151,6 +162,13 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _loadingIndicator() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(child: CircularProgressIndicator()),
     );
   }
 }

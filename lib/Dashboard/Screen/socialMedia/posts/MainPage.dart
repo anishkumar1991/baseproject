@@ -100,28 +100,28 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                     itemCount: posts.length + (isLoading ? 1 : 0),
                     itemBuilder: (context, index) {
                       if (index < posts.length) {
-
                         if (posts[index].postType == "Image") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: CustomCard(tempkey: 2, index: index,item: posts),
+                            child: CustomCard(
+                                tempkey: 2, index: index, item: posts),
                           );
                         } else if (posts[index].postType == "Poll") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: Polls(tempindex: index,item:  posts),
+                            child: Polls(tempindex: index, item: posts),
                           );
                         } else if (posts[index].postType == "Video") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: VideoCard(index: index,item: posts),
+                            child: VideoCard(index: index, item: posts),
                           );
                         } else {
                           return const SizedBox();
                         }
                       }
 
-                      return _loadingIndicator();
+                      return const Text("Ent Of Data");
                     },
                   );
                 }),

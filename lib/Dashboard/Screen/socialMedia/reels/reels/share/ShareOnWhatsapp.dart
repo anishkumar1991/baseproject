@@ -6,24 +6,10 @@ import 'package:url_launcher/url_launcher.dart';
 enum SocialMedia { whatsapp }
 
 Future shareOnWhatsapp(
-    BuildContext context, SocialMedia socialMedia, int index) async {
-  final cubit = context.read<ReelsCubit>();
-  // String urlimage = cubit.tempModel!.posts[index].postData.images!.first
-  //     .toString();
-  final text1 = cubit.model!.reels[index].title;
+    BuildContext context, SocialMedia socialMedia, int index, String text1) async {
 
   var text2 = "https://mpsangathan.com/app";
   final text = "$text1\n\n$text2";
-  // final url = Uri.parse(urlimage);
-  // final response = await http.get(url);
-  // final bytes = response.bodyBytes;
-  // final temp = await getTemporaryDirectory();
-  // final path = '${temp.path}/image.jpg';
-  // File(path).writeAsBytesSync(bytes);
-  // XFile file = XFile(path);
-  //
-  // await Share.shareXFiles([file], text: text);
-
   final urls = {
     SocialMedia.whatsapp: 'whatsapp://send?text=$text',
   };
