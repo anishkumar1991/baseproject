@@ -4,9 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
-import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/cubits/ReelsCubit.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/reels/share/ShareOnWhatsapp.dart';
 
+import '../network/model/ReelsModel.dart';
 import '../share/ReelURLShare.dart';
 import '../share/sharingstorage.dart';
 
@@ -16,7 +16,7 @@ class OptionsScreen extends StatefulWidget {
   final String title;
   final String views;
   final String src;
-
+  final List<Reel> item;
 
   const OptionsScreen(
       {Key? key,
@@ -24,7 +24,8 @@ class OptionsScreen extends StatefulWidget {
       required this.views,
       required this.index,
       required this.src,
-      required this.id})
+      required this.id,
+      required this.item})
       : super(key: key);
 
   @override
@@ -123,9 +124,7 @@ class _OptionsScreenState extends State<OptionsScreen> {
                                 dotSecondaryColor: Color(0xff0099cc),
                               ),
                               likeBuilder: (bool isLiked) {
-                                isLiked
-                                    ? cubit.sendReelLike(widget.id)
-                                    : null;
+                                isLiked ? cubit.sendReelLike(widget.id) : null;
                                 return Icon(
                                   Icons.thumb_up_alt,
                                   color: isLiked ? Colors.blue : Colors.white,
@@ -149,8 +148,8 @@ class _OptionsScreenState extends State<OptionsScreen> {
                       IconButton(
                           onPressed: () {
                             cubit.shareReelToWhatsapp(widget.id);
-                            shareOnWhatsapp(
-                                context, SocialMedia.whatsapp, widget.index);
+                            shareOnWhatsapp(context, SocialMedia.whatsapp,
+                                widget.index, widget.item[widget.index].title);
                           },
                           icon: const Icon(
                             FontAwesomeIcons.whatsapp,
@@ -174,14 +173,23 @@ class _OptionsScreenState extends State<OptionsScreen> {
                                   widget.src.contains('M3U8')) {
                                 cubit.shareReelToAll(
                                     "https://fluttercampus.com/sample.pdf");
-                                ReelURLShare(context, widget.index, widget.src);
+                                ReelURLShare(
+                                    context,
+                                    widget.index,
+                                    widget.src,
+                                    widget.item[widget.index].postData.reel,
+                                    widget.item[widget.index].title);
                                 print(
                                     "------------- VIDEO FORMAT----->m3u8 not supported");
                               } else {
                                 cubit.shareReelToAll(
                                     "https://fluttercampus.com/sample.pdf");
                                 ReelDownloadshare(
-                                    context, widget.index, widget.src);
+                                    context,
+                                    widget.index,
+                                    widget.src,
+                                    widget.item[widget.index].postData.reel,
+                                    widget.item[widget.index].title);
                                 print(
                                     "------------- VIDEO FORMAT----->supported format");
                               }

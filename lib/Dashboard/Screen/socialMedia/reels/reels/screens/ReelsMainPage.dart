@@ -68,6 +68,7 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (BuildContext context, int index) {
                       if (index < posts.length) {
                         return ContentScreen(
+                          item: posts,
                           src: posts[index].postData.reel,
                           title: posts[index].title,
                           views: posts[index].viewCount.toString(),

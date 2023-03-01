@@ -27,7 +27,7 @@ class ReelsCubit extends Cubit<ReelsState> {
 
     try {
       final res =
-          await api.getReels('Bearer ${StorageService.userAuthToken}', "30");
+          await api.getReels('Bearer ${StorageService.userAuthToken}', 7,page);
       if (res.response.statusCode == 200) {
         page++;
         print("api working");
