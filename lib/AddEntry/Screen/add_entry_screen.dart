@@ -552,7 +552,6 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     "sub_unit_id": widget.subUnitId
                   });
                 } else if (state is CastFetchedState) {
-                  cubit.castSelected = null;
                   cubit.castData = state.cast.data!;
                   if (widget.personData != null) {
                     cubit.getInitialCasteData(widget.personData);

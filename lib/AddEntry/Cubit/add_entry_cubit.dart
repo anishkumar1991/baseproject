@@ -125,6 +125,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         /* }
         }*/
       }
+      print(allDropdownValueList);
     }
     if (pannaID != null && pannaID != 0) {
       data.addEntries({"pannaNumber": "$pannaID"}.entries);
@@ -223,6 +224,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     } else if (dropdownType == "caste") {
       castSelected = value;
       castTextCon.text = castSelected?.name ?? "";
+
+      print("caste : ${castTextCon.text}");
       getAllDropDownData(value, dropdownType);
     } else if (dropdownType == "educationId") {
       qualificationSelected = value;
@@ -808,7 +811,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
             String url = await getNetworkUrl(item.value,
                 id: personID ?? DateTime.now().millisecondsSinceEpoch, name: item.key.toString().split("_")[0]);
             if (item.key == "ration_card_url") {
-              map.addEntries({"ration_url": "$url"}.entries);
+              map.addEntries({"ration_url": url}.entries);
             } else {
               map.addEntries({item.key: url}.entries);
             }

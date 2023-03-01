@@ -31,6 +31,7 @@ class DependentDropdownWidget extends StatefulWidget {
 class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
   @override
   Widget build(BuildContext context) {
+    /*  sortBasedOnMandalSelected();*/
     return BlocBuilder<ZilaDataCubit, ZilaDataState>(
       builder: (context, state) {
         final cubit = BlocProvider.of<ZilaDataCubit>(context);
@@ -52,7 +53,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
           bool isFoundKey = false;
           if (cubit.dependentDropdownList.isNotEmpty) {
             if (widget.typeLevel == "Mandal") {
-              if (widget.type == "Shakti Kendra" || widget.type == "Booth") {
+              if (widget.type == "Shakti Kendra" || widget.type == "Booth" || widget.type == "Panna") {
                 final sangathanDetailsCubit = BlocProvider.of<SangathanDetailsCubit>(context);
                 for (int i = 0; i < cubit.dependentDropdownList.length; i++) {
                   for (int j = 0; j < (sangathanDetailsCubit.allotedLocationModel?.data?.locations?.length ?? 0); j++) {
@@ -75,11 +76,20 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
             }
 
             if (widget.typeLevel == "Mandal") {
-              if (widget.type == "Booth") {
+              if (widget.type == "Booth" || widget.type == "Panna" || widget.type == "Shakti Kendra") {
                 sortBasedOnMandalSelected();
               }
             }
           } else {
+            cubit.dataList = [];
+            cubit.dataListWithoutSort = [];
+            cubit.selectedPannaNo = null;
+            cubit.boothPannasStatus = null;
+            cubit.pannaKramaankListData = [];
+            cubit.onDataFound();
+          }
+
+          if (cubit.dependentDropdownSelected == null) {
             cubit.dataList = [];
             cubit.dataListWithoutSort = [];
             cubit.selectedPannaNo = null;
@@ -190,7 +200,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                       : AppColor.transparent,
                   child: GestureDetector(
                     onTap: () {
-                      if (mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName ?? "")) {
+                      if (mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName)) {
                         cubit.onDependentDropdown(locationList[index]);
                         cubit.selectedPannaNo = null;
                         if (widget.type == "Panna") {
@@ -226,10 +236,8 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                                   margin: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(11),
-                                      color: locationList[index].mandalName == null
-                                          ? AppColor.naturalBlackColor
-                                          : gettingBackgroundColor(
-                                              locationList[index].mandalName ?? "", locationList[index].id ?? 0)),
+                                      color: gettingBackgroundColor(
+                                          locationList[index].mandalName, locationList[index].id ?? 0)),
                                   child: Text(
                                     locationList[index].number ?? '',
                                     textAlign: TextAlign.center,
@@ -239,7 +247,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                               : CommonLogoWidget(
                                   name: locationList[index].name ?? "",
                                   backgroundColor: gettingBackgroundColor(
-                                      locationList[index].mandalName ?? "", locationList[index].id ?? 0)),
+                                      locationList[index].mandalName, locationList[index].id ?? 0)),
                           const SizedBox(
                             width: 10,
                           ),
@@ -266,7 +274,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
                               ],
                             ),
                           ),
-                          mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName ?? "")
+                          mappedMandalWithSKWhenUserIsMandal(locationList[index].mandalName)
                               ? const SizedBox()
                               : IconButton(
                                   onPressed: () {
@@ -313,20 +321,24 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
     }
   }
 
-  mappedMandalWithSKWhenUserIsMandal(String mandalName) {
+  mappedMandalWithSKWhenUserIsMandal(String? mandalName) {
     final cubit = BlocProvider.of<SangathanDetailsCubit>(context);
     bool isFound = false;
-    if (cubit.allotedLocationModel?.data?.locationType == "Mandal") {
-      if (widget.type == "Shakti Kendra" || widget.type == "Booth") {
-        for (int i = 0; i < (cubit.allotedLocationModel?.data?.locations?.length ?? 0); i++) {
-          if (isFound == false) {
-            if (cubit.allotedLocationModel?.data?.locations?[i].name?.trim() == mandalName.trim()) {
-              isFound = true;
-            } else {
-              isFound = false;
+    if (mandalName != null) {
+      if (cubit.allotedLocationModel?.data?.locationType == "Mandal") {
+        if (widget.type == "Shakti Kendra" || widget.type == "Booth" || widget.type == "Panna") {
+          for (int i = 0; i < (cubit.allotedLocationModel?.data?.locations?.length ?? 0); i++) {
+            if (isFound == false) {
+              if (cubit.allotedLocationModel?.data?.locations?[i].name?.trim() == mandalName.trim()) {
+                isFound = true;
+              } else {
+                isFound = false;
+              }
             }
           }
         }
+      } else {
+        isFound = true;
       }
     } else {
       isFound = true;
@@ -334,11 +346,11 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
     return isFound;
   }
 
-  gettingBackgroundColor(String mandal, int locationId) {
+  gettingBackgroundColor(String? mandal, int locationId) {
     final cubit = BlocProvider.of<ZilaDataCubit>(context);
 
     if (widget.typeLevel == "Mandal") {
-      if (widget.type == "Shakti Kendra" || widget.type == "Booth") {
+      if (widget.type == "Shakti Kendra" || widget.type == "Booth" || widget.type == "Panna") {
         if (cubit.dependentDropdownSelected?.id == locationId) {
           return AppColor.orange;
         } else {
@@ -348,8 +360,12 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
         }
       }
     } else {
-      if (widget.type == "Booth" || widget.type == "Panna") {
-        return cubit.dependentDropdownSelected?.id == locationId ? AppColor.orange : AppColor.boothContainerColour;
+      if (mandal != null) {
+        if (widget.type == "Booth" || widget.type == "Panna") {
+          return cubit.dependentDropdownSelected?.id == locationId ? AppColor.orange : AppColor.boothContainerColour;
+        } else {
+          return cubit.dependentDropdownSelected?.id == locationId ? AppColor.orange : AppColor.boothContainerColour;
+        }
       } else {
         return cubit.dependentDropdownSelected?.id == locationId ? AppColor.orange : AppColor.naturalBlackColor;
       }
@@ -389,18 +405,40 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
           if (nameComparison != 0) {
             return nameComparison;
           } else {
-            return a.number.compareTo(b.number);
+            if (widget.type == "Shakti Kendra") {
+              return (a.name ?? "").compareTo(b.name ?? "");
+            } else {
+              return a.number.compareTo(b.number);
+            }
           }
         }
       }
     });
+    List<Locations> notMappedMandalList = data.where((item) {
+      bool isMatchingMandal = item.mandalName == null;
+      return isMatchingMandal;
+    }).toList();
+    data.removeWhere((item) => notMappedMandalList.contains(item));
+    if (widget.type == "Shakti Kendra") {
+      notMappedMandalList.sort((a, b) => (a.name ?? "").compareTo((b.name ?? "")));
+    } else {
+      notMappedMandalList.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
+    }
+
+    data.addAll(notMappedMandalList);
     List<Locations> remainingData = data.where((item) {
       bool isMatchingMandal = item.mandalName == sangathanDetailsCubit.selectedAllottedLocation?.name;
       bool isInAllottedLocations = allottedLocationData.contains(item.mandalName);
-      return !isMatchingMandal && !isInAllottedLocations;
+      bool isGettingNull = item.mandalName == null;
+      return !isMatchingMandal && !isInAllottedLocations && !isGettingNull;
     }).toList();
     data.removeWhere((item) => remainingData.contains(item));
-    remainingData.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
+    if (widget.type == "Shakti Kendra") {
+      remainingData.sort((a, b) => (a.name ?? "").compareTo((b.name ?? "")));
+    } else {
+      remainingData.sort((a, b) => int.parse(a.number).compareTo(int.parse(b.number)));
+    }
+
     data.addAll(remainingData);
     cubit.dependentDropdownList = [...data];
   }

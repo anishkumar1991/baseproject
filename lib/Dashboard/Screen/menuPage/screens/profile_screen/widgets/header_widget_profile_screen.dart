@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
 import '../../../../../../Values/space_width_widget.dart';
@@ -10,6 +11,7 @@ Widget headerWidgetProfileScreen(BuildContext context) {
     children: [
       InkWell(
           onTap: () {
+            EasyLoading.dismiss();
             Navigator.pop(context);
           },
           child: const Padding(
@@ -23,8 +25,7 @@ Widget headerWidgetProfileScreen(BuildContext context) {
       spaceWidthWidget(10),
       Text(
         S.of(context).profile,
-        style: textStyleWithPoppin(
-            fontSize: 16, color: AppColor.white, fontWeight: FontWeight.w400),
+        style: textStyleWithPoppin(fontSize: 16, color: AppColor.white, fontWeight: FontWeight.w400),
       )
     ],
   );
