@@ -33,8 +33,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   bool showBusiness = false;
   GetStorage box = GetStorage();
 
-  final api = UserDetailApi(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
+  final api = UserDetailApi(Dio(BaseOptions(contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
     emit(ProfileInitial());
@@ -50,8 +49,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     EasyLoading.show(status: S.of(context).uploading);
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
-    final destination =
-        '${userDetails?.data?.id}/${userDetails?.data?.id}_userProfile';
+    final destination = '${userDetails?.data?.id}/${userDetails?.data?.id}_userProfile';
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
       EasyLoading.dismiss();
@@ -66,8 +64,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       });
     }
     EasyLoading.dismiss();
-    EasyLoading.showSuccess("Photo Uploaded",
-        duration: const Duration(milliseconds: 500));
+    /*EasyLoading.showSuccess("Photo Uploaded",
+        duration: const Duration(milliseconds: 500));*/
     Future.delayed(Duration.zero).then((value) {
       Navigator.pop(context);
     });
@@ -77,15 +75,12 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       emit(ProfileLoadingState());
       StorageService.getUserAuthToken();
-      var res =
-          await api.getDataLevel('Bearer ${StorageService.userAuthToken}');
-      print(
-          "------------------------------------ User profile data  ----------------------------");
+      var res = await api.getDataLevel('Bearer ${StorageService.userAuthToken}');
+      print("------------------------------------ User profile data  ----------------------------");
       print("token  :${StorageService.userAuthToken}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
-      print(
-          "------------------------------------ ------------------------ ----------------------------");
+      print("------------------------------------ ------------------------ ----------------------------");
       if (res.response.statusCode == 200) {
         UserDetailModel data = UserDetailModel.fromJson(res.response.data);
         // if (isAddress == true) {

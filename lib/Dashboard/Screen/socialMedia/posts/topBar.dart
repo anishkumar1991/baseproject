@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
+
 import '../../../../Values/app_colors.dart';
 import '../../../../Values/icons.dart';
 import '../../../../generated/l10n.dart';
@@ -36,13 +36,10 @@ class TopBar extends StatelessWidget {
             //         size: 20,
             //       )),
             // ),
-            SizedBox(),
+            const SizedBox(),
             Text(
               S.of(context).socialMedia,
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black),
             ),
             InkWell(
               onTap: () {
@@ -51,39 +48,30 @@ class TopBar extends StatelessWidget {
               child: Container(
                 height: 42,
                 width: 42,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: AppColor.dividerColor)),
+                decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColor.dividerColor)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(350),
-                  child: userProfileModel.data?.avatar != null &&
-                          userProfileModel.data?.avatar != ''
+                  child: userProfileModel.data?.avatar != null && userProfileModel.data?.avatar != ''
                       ? Image.network(
                           userProfileModel.data?.avatar ?? '',
                           fit: BoxFit.cover,
-                          errorBuilder: (BuildContext context, Object exception,
-                              StackTrace? stackTrace) {
+                          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
                             return const Icon(Icons.person, size: 25);
                           },
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
+                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                             if (loadingProgress == null) {
                               return child;
                             }
                             return Center(
                               child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
                             );
                           },
                         )
-                      : Container(
-                          color: AppColor.white,
-                          child: Image.asset(AppIcons.sangathanLogo)),
+                      : Container(color: AppColor.white, child: Image.asset(AppIcons.sangathanLogo)),
                 ),
               ),
             )

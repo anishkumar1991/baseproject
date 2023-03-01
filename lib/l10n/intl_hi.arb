@@ -219,7 +219,7 @@
   "dataEntryIsNotAllowedOnBoothOfOtherMandal": "अन्य मंडल के बूथ पर डाटा एंट्री की अनुमति नहीं है",
   "mappedMandal": "मैप्ड मंडल",
   "notMappedWithAnyMandal": "किसी भी मंडल के साथ मैप नहीं",
-  "previewSubmitDetails": "जानकारी देखें व जमा करें",
+  "previewSubmitDetails": "जानकरी देखे व सबमिट करें",
   "fillSecondaryInformation": "अतिरिक्त जानकारी भरें",
   "uploadFile": "अपलोड फाइल",
   "selectSubUnit": "सब-यूनिट का चयन करें",

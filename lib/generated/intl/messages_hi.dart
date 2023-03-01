@@ -265,7 +265,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preparing": MessageLookupByLibrary.simpleMessage("तैयार कर रहे हैं"),
         "present": MessageLookupByLibrary.simpleMessage("वर्तमान"),
         "previewSubmitDetails":
-            MessageLookupByLibrary.simpleMessage("जानकारी देखें व जमा करें"),
+            MessageLookupByLibrary.simpleMessage("जानकरी देखे व सबमिट करें"),
         "primaryMemberId": MessageLookupByLibrary.simpleMessage(
             "प्राथमिक सदस्य आईडी १० अंकों की होनी चाहिए"),
         "profile": MessageLookupByLibrary.simpleMessage("प्रोफाइल"),

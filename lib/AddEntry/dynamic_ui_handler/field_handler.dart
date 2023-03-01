@@ -106,6 +106,8 @@ class FieldHandler extends AddEntryCubit {
     } else if (dropdownType == "categoryId") {
       return cubit.categorySelected?.name;
     } else if (dropdownType == "caste") {
+      print(cubit.castSelected?.toJson());
+      print("cubit.castSelected?.name :${cubit.castSelected?.name}");
       return cubit.castSelected?.name;
     } else if (dropdownType == "educationId") {
       return cubit.qualificationSelected?.name;
