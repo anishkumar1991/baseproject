@@ -156,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
+        "expired": MessageLookupByLibrary.simpleMessage("समाप्त"),
         "female": MessageLookupByLibrary.simpleMessage("स्त्री"),
         "fillSecondaryInformation":
             MessageLookupByLibrary.simpleMessage("अतिरिक्त जानकारी भरें"),
@@ -226,6 +227,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("डेट से फ़िल्टर करे"),
         "notificationsomethingWentWrong":
             MessageLookupByLibrary.simpleMessage("कुछ गलत हो गया"),
+        "ok": MessageLookupByLibrary.simpleMessage("ठीक"),
+        "ongoing": MessageLookupByLibrary.simpleMessage("मौजूदा"),
         "oopsErrorMsg": MessageLookupByLibrary.simpleMessage(
             "उफ़ !! कुछ गलत हो गया कृपया बाद में पुन: प्रयास करें.."),
         "organization": MessageLookupByLibrary.simpleMessage("संगठन का नाम"),

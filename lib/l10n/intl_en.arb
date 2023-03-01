@@ -233,5 +233,9 @@
   "transgender": "Transgender",
   "male": "Male",
   "update": "Update",
-  "female": "Female"
+  "female": "Female",
+  "ongoing" : "OnGoing",
+  "expired" : "Expired",
+  "ok" : "OK"
+
 }

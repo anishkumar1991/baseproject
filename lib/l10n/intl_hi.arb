@@ -232,5 +232,8 @@
   "transgender": "अन्य",
   "male": "पुस्र्ष",
   "update": "अपडेट",
-  "female": "स्त्री"
+  "female": "स्त्री",
+  "ongoing" : "मौजूदा",
+  "expired" : "समाप्त",
+  "ok": "ठीक"
 }

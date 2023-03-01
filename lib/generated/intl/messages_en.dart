@@ -152,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
         "fillSecondaryInformation":
             MessageLookupByLibrary.simpleMessage("Fill Secondary Information"),
@@ -220,6 +221,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Filter by date"),
         "notificationsomethingWentWrong":
             MessageLookupByLibrary.simpleMessage("Something Went Wrong"),
+        "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "ongoing": MessageLookupByLibrary.simpleMessage("OnGoing"),
         "oopsErrorMsg": MessageLookupByLibrary.simpleMessage(
             "oops !! something went to wrong please try again later.."),
         "organization":

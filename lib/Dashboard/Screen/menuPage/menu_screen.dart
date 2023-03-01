@@ -23,7 +23,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-
   final texteditingcontroller = TextEditingController();
 
   @override
@@ -197,7 +196,7 @@ class _MenuPageState extends State<MenuPage> {
                                 textStyle:
                                     Theme.of(context).textTheme.labelLarge,
                               ),
-                              child: const Text('OK'),
+                              child: Text(S.of(context).ok),
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 showDialog<void>(
@@ -228,12 +227,12 @@ class _MenuPageState extends State<MenuPage> {
                                             child: Padding(
                                               padding: EdgeInsets.all(2.0),
                                               child: TextFormField(
-
                                                 decoration: const InputDecoration(
                                                     border: InputBorder.none,
                                                     hintText:
                                                         "Reason for deletion"),
-                                                controller: texteditingcontroller,
+                                                controller:
+                                                    texteditingcontroller,
                                               ),
                                             ),
                                           ),
@@ -254,18 +253,20 @@ class _MenuPageState extends State<MenuPage> {
                                               },
                                             ),
                                             TextButton(
-                                              style: TextButton.styleFrom(
+                                                style: TextButton.styleFrom(
                                                 textStyle: Theme.of(context)
                                                     .textTheme
                                                     .labelLarge,
                                               ),
-                                              child: const Text('OK'),
+                                              child: Text(S.of(context).ok),
                                               onPressed: () {
-                                                sendMail(StorageService
-                                                        .getUserData()!
-                                                    .user!
-                                                    .name
-                                                    .toString(),texteditingcontroller.text);
+                                                sendMail(
+                                                    StorageService
+                                                            .getUserData()!
+                                                        .user!
+                                                        .name
+                                                        .toString(),
+                                                    texteditingcontroller.text);
                                                 Navigator.of(context).pop();
                                                 showDialog<void>(
                                                   context: context,
@@ -277,7 +278,6 @@ class _MenuPageState extends State<MenuPage> {
                                                       content: const Text(
                                                           "You account will be permanently deleted in 15 days"),
                                                       actions: <Widget>[
-
                                                         TextButton(
                                                           style: TextButton
                                                               .styleFrom(
@@ -286,11 +286,12 @@ class _MenuPageState extends State<MenuPage> {
                                                                 .textTheme
                                                                 .labelLarge,
                                                           ),
-                                                          child: const Text(
-                                                              'OK'),
-                                                          onPressed:
-                                                              () async {
-                                                                Navigator.of(context).pop();
+                                                          child: Text(
+                                                              S.of(context).ok),
+                                                          onPressed: () async {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
                                                           },
                                                         )
                                                       ],

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Storage/mannkibaat.dart';
+import 'package:sangathan/Values/icons.dart';
+import 'package:sangathan/generated/l10n.dart';
 import '../../../../../Storage/user_storage_service.dart';
 import '../../../attendeereviewpage/screens/ReviewPageMain.dart';
 import '../../../attendeesformpage/screens/AttendeesFormPage.dart';
@@ -72,9 +74,9 @@ class _OnGoingState extends State<OnGoing> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: Text("Upcoming.."),
+                                  title: Text("${S.of(context).upcoming}.."),
                                   content: Text(
-                                      "You can visit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
+                                      "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
                                   actions: [
                                     TextButton(
                                       style: TextButton.styleFrom(
@@ -82,7 +84,7 @@ class _OnGoingState extends State<OnGoing> {
                                             .textTheme
                                             .labelLarge,
                                       ),
-                                      child: const Text('OK'),
+                                      child:  Text(S.of(context).ok),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
