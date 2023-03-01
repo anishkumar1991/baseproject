@@ -6,43 +6,30 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../Values/space_height_widget.dart';
+import '../../../../../../generated/l10n.dart';
 import '../cubit/profile_cubit.dart';
 
-Future selectOption({required BuildContext context}){
+Future selectOption({required BuildContext context}) {
   return showModalBottomSheet(
       context: context,
-      builder: ((context){
+      builder: ((context) {
         final cubit = context.read<ProfileCubit>();
         return Padding(
-          padding: const EdgeInsets
-              .symmetric(
-              horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
-            crossAxisAlignment:
-            CrossAxisAlignment
-                .start,
-            mainAxisSize:
-            MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                mainAxisAlignment:
-                MainAxisAlignment
-                    .spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Choose',
-                    style: GoogleFonts
-                        .quicksand(
-                        fontSize:
-                        20,
-                        fontWeight:
-                        FontWeight
-                            .w800),
+                    S.of(context).choose,
+                    style: GoogleFonts.quicksand(fontSize: 20, fontWeight: FontWeight.w800),
                   ),
                   IconButton(
                       onPressed: (() async {
-                        Navigator.pop(
-                            context);
+                        Navigator.pop(context);
                       }),
                       icon: const Icon(
                         Icons.close,
@@ -62,7 +49,7 @@ Future selectOption({required BuildContext context}){
 
                     cubit.emitState();
                     // cubit.uploadImageToFirebase(context: context);
-                    if(cubit.imageFile != null){
+                    if (cubit.imageFile != null) {
                       cubit.uploadImageToFirebase(context: context);
                       cubit.emitState();
                     }
@@ -71,13 +58,8 @@ Future selectOption({required BuildContext context}){
                   }
                 }),
                 title: Text(
-                  'Camera',
-                  style: GoogleFonts
-                      .quicksand(
-                      fontSize: 16,
-                      fontWeight:
-                      FontWeight
-                          .w500),
+                  S.of(context).camera,
+                  style: GoogleFonts.quicksand(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
               const Divider(),
@@ -90,8 +72,8 @@ Future selectOption({required BuildContext context}){
                     cubit.imageFile = imageTemp;
                     print("Image Path : ${cubit.imageFile}");
                     cubit.emitState();
-                    if(cubit.imageFile != null){
-                     await cubit.uploadImageToFirebase(context: context);
+                    if (cubit.imageFile != null) {
+                      await cubit.uploadImageToFirebase(context: context);
                       cubit.emitState();
                     }
                   } catch (e) {
@@ -99,11 +81,9 @@ Future selectOption({required BuildContext context}){
                   }
                 }),
                 title: Text(
-                  'Gallery',
-                  style: GoogleFonts
-                      .quicksand(
-                    fontWeight:
-                    FontWeight.w500,
+                  S.of(context).gallery,
+                  style: GoogleFonts.quicksand(
+                    fontWeight: FontWeight.w500,
                     fontSize: 16,
                   ),
                 ),

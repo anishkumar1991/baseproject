@@ -95,6 +95,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
   int? personID;
   String? from;
   Map<String, dynamic> finalAllDataList = {};
+
+  // final api = AddEntryApi(BaseService.dio);
   final api = AddEntryApi(Dio(BaseOptions(contentType: 'application/json', validateStatus: ((status) => true))));
 
   /// gender radio button on tap method
@@ -401,7 +403,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
     emit(GetAddEntryFormStructureLoadingState());
     if (state is GetAddEntryFormStructureLoadingState) {
       try {
-        final res = await api.getAddEntryFormStructure('${StorageService.userAuthToken}',
+        final res = await api.getAddEntryFormStructure('${StorageService.userAuthToken}', "hi",
             'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D', levelID, countryId);
         if (res.response.statusCode == 200) {
           AddEntryFormStructure addEntryFormStructure = AddEntryFormStructure.fromJson(res.data);
@@ -814,9 +816,8 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         }
       }
     }
-
-    submitEntryData(data: map);
     print(map);
+    submitEntryData(data: map);
   }
 
   /// call add and update entry api
@@ -853,7 +854,16 @@ class AddEntryCubit extends Cubit<AddEntryState> {
           }
         }
       } else {
-        emit(SubmitAddEntryErrorState('Something Went Wrong'));
+        Map<String, dynamic>? msg = res.data;
+        if (msg != null) {
+          if (msg.containsKey("message")) {
+            emit(SubmitAddEntryErrorState(msg['message'] ?? ''));
+          } else {
+            emit(SubmitAddEntryErrorState('Something Went Wrong'));
+          }
+        } else {
+          emit(SubmitAddEntryErrorState('Something Went Wrong'));
+        }
       }
     } catch (e) {
       print(e);

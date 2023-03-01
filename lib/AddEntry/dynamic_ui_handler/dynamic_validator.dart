@@ -93,7 +93,7 @@ class DynamicValidator {
     return null;
   }
 
-  static addTextInputFormatters({required String fieldType}) {
+  static addTextInputFormatters({required String fieldType, String? initialValue}) {
     if (fieldType == 'phone') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
@@ -101,6 +101,7 @@ class DynamicValidator {
             mask: '*#########',
             filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
             type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == 'whatsappNo') {
       return [
@@ -109,42 +110,52 @@ class DynamicValidator {
             mask: '*#########',
             filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
             type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == 'age') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-        MaskTextInputFormatter(mask: '##', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
+        MaskTextInputFormatter(
+          mask: '##',
+          filter: {"#": RegExp(r'[0-9]')},
+        )..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == 'std_code') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(mask: '#####', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == 'landline') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(mask: '########', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == 'pinCode') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(mask: '######', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == 'primary_member_id') {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(mask: '##########', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == "aadhaarNumber") {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(mask: '############', filter: {"#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     } else if (fieldType == "pannaNumber") {
       return [
         FilteringTextInputFormatter.allow(RegExp("[0-9]")),
         MaskTextInputFormatter(
             mask: '*##', filter: {"*": RegExp(r'^[1-9]$'), "#": RegExp(r'[0-9]')}, type: MaskAutoCompletionType.lazy)
+          ..formatEditUpdate(TextEditingValue(text: initialValue ?? ""), TextEditingValue(text: initialValue ?? ""))
       ];
     }
   }

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sangathan/Values/string.dart';
 
+import '../../../Storage/user_storage_service.dart';
+
 part 'add_entry_api.g.dart';
 
 @RestApi(baseUrl: AppStrings.baseUrl)
@@ -21,12 +23,47 @@ abstract class AddEntryApi {
 
   /// TODO : For now type id is static need to make dynamic
   @GET('/zila/api/data_entry/form_structure?level_id={levelID}&type_id=1&country_state_id={countryStateId}&is_app=true')
-  Future<HttpResponse> getAddEntryFormStructure(@Header('Authorization') String token,
-      @Header('User-Agent') String userAgent, @Path('levelID') String levelID, @Path('countryStateId') countryStateId);
+  Future<HttpResponse> getAddEntryFormStructure(
+      @Header('Authorization') String token,
+      @Header('Language') String language,
+      @Header('User-Agent') String userAgent,
+      @Path('levelID') String levelID,
+      @Path('countryStateId') countryStateId);
 
   @POST('/zila/api/dashboard/get_filter_options')
   Future<HttpResponse> getDesignation(@Header('Authorization') String token, @Body() Map<String, dynamic> data);
 
   @POST('/zila/api/data_entry/create')
   Future<HttpResponse> submitAddEntry(@Header('Authorization') String token, @Body() Map<String, dynamic> data);
+}
+
+class BaseService {
+  static final dio = Dio(
+    BaseOptions(
+      baseUrl: AppStrings.baseUrl,
+    ),
+  )..interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options.headers.addAll(
+            {
+              'Authorization': 'Bearer ${StorageService.userAuthToken}',
+              'Accept': 'application/json',
+            },
+          );
+          print("-----------------------------  DIO INTERCEPTOR --------------------------------------");
+          print("Base URL   :${options.baseUrl}");
+          print("Methods    :${options.method}");
+          print("headers    :${options.headers}");
+          handler.next(options);
+        },
+        onResponse: (e, handler) {
+          print("Stats code :${e.extra}");
+          print("URL        :${e.realUri}");
+          print("Response   :${e.data}");
+          print("-----------------------------  DIO INTERCEPTOR --------------------------------------");
+          handler.next(e);
+        },
+      ),
+    );
 }

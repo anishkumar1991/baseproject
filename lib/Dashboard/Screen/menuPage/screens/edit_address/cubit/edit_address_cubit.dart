@@ -77,12 +77,26 @@ class EditAddressCubit extends Cubit<EditAddressState> {
             }
           }
         }
+        Set<String> namesSet = <String>{};
+        List<CountryState> duplicatesList = [];
+
+        for (var obj in sortedIndiaStateList) {
+          if (!namesSet.add(obj.subcountry ?? "")) {
+            duplicatesList.add(obj);
+          }
+        }
+
+        sortedIndiaStateList.removeWhere((item) => duplicatesList.contains(item));
+        sortedIndiaStateList.sort(
+          (a, b) => (a.subcountry ?? "").compareTo(b.subcountry ?? ""),
+        );
         emit(GetStateFatchDataState(sortedIndiaStateList));
       } else {
         print('error=${res.data['message']}');
         emit(GetStateErrorState(res.data['message']));
       }
     } catch (e) {
+      print(e.toString());
       emit(GetStateErrorState('Something Went Wrong'));
     }
   }

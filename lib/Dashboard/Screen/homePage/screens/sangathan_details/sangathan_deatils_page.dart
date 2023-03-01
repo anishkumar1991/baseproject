@@ -79,7 +79,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                   cubit.clientId = widget.cliendId;
                   cubit.permissionId = cubit.appPermissions?.first.id ?? 0;
 
-                  context.read<SangathanDetailsCubit>().getAllotedLocations(clientId: widget.cliendId, permissionId: "${cubit.appPermissions?.first.id ?? ""}");
+                  context.read<SangathanDetailsCubit>().getAllotedLocations(
+                      clientId: widget.cliendId, permissionId: "${cubit.appPermissions?.first.id ?? ""}");
                 }
               }
               if (state is LocationFetchedState) {
@@ -118,7 +119,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             const Spacer(),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", backgroundColor: AppColor.orange),
+                              child: CommonLogoWidget(
+                                  name: cubit.selectedAllottedLocation?.name ?? "", backgroundColor: AppColor.orange),
                             ),
                           ],
                         ),
@@ -131,12 +133,14 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                             child: GridView.builder(
                                 shrinkWrap: true,
                                 itemCount: 9,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
                                 itemBuilder: ((context, index) {
                                   return Container(
                                     height: MediaQuery.of(context).size.height * 0.2,
                                     width: MediaQuery.of(context).size.width * 0.2,
-                                    decoration: BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(20)),
+                                    decoration:
+                                        BoxDecoration(color: AppColor.white, borderRadius: BorderRadius.circular(20)),
                                   );
                                 })),
                           ),
@@ -178,7 +182,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                     onTap: () {
                                       showLocationBottomSheet();
                                     },
-                                    child: CommonLogoWidget(name: cubit.selectedAllottedLocation?.name ?? "", backgroundColor: AppColor.orange),
+                                    child: CommonLogoWidget(
+                                        name: cubit.selectedAllottedLocation?.name ?? "",
+                                        backgroundColor: AppColor.orange),
                                   ),
                                 ),
                               ],
@@ -201,7 +207,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                               permissionData.add(cubit.appPermissions![i]);
                                             }
                                           }
-                                          Navigator.pushNamed(context, RoutePath.shaktiKendraScreen, arguments: {"permissionData": permissionData});
+                                          Navigator.pushNamed(context, RoutePath.shaktiKendraScreen,
+                                              arguments: {"permissionData": permissionData});
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(12),
@@ -218,10 +225,13 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                                                   padding: const EdgeInsets.all(2),
                                                   decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(4),
-                                                      gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [
-                                                        AppColor.purple50,
-                                                        AppColor.orange200,
-                                                      ])),
+                                                      gradient: const LinearGradient(
+                                                          begin: Alignment.topLeft,
+                                                          end: Alignment.bottomRight,
+                                                          colors: [
+                                                            AppColor.purple50,
+                                                            AppColor.orange200,
+                                                          ])),
                                                   child: Image.asset(
                                                     AppIcons.shaktikendraImage,
                                                     height: 35,
@@ -255,7 +265,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
           enableDrag: false,
           isDismissible: false,
           context: context,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
           builder: (builder) {
             return BlocConsumer<SangathanDetailsCubit, SangathanDetailsState>(
               listener: ((context, state) {
@@ -298,11 +309,13 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                 for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
                   if (isFound == false) {
                     if (cubit.appPermissions?[i].permissionName == "ShaktiKendraData") {
-                      if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() == state.data.data?[j].name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
+                      if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() ==
+                          state.data.data?[j].name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
                         cubit.sangathanDataList.add(state.data.data?[j]);
                         isFound = true;
                       }
-                    } else if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0] == state.data.data?[j].name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
+                    } else if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0] ==
+                        state.data.data?[j].name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
                       /* print(
                           "${cubit.appPermissions?[i].permissionName} :  ${state.data.data?[j].name}");*/
                       cubit.sangathanDataList.add(state.data.data?[j]);
@@ -321,7 +334,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
               child: GridView.builder(
                   shrinkWrap: true,
                   itemCount: 9,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
                   itemBuilder: ((context, index) {
                     return Container(
                       height: MediaQuery.of(context).size.height * 0.2,
@@ -336,7 +350,8 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: cubit.sangathanDataList.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, crossAxisSpacing: 33, mainAxisSpacing: 16),
                   itemBuilder: ((context, index) {
                     final data = cubit.sangathanDataList[index];
                     return InkWell(
@@ -348,10 +363,14 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
 
                         for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
                           if (cubit.appPermissions?[i].permissionName == "ShaktiKendraData") {
-                            if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() == data?.name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
+                            if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() ==
+                                data?.name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
                               appPermissions.add(cubit.appPermissions![i]);
                             }
-                          } else if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0] == data?.name?.split(RegExp(r"(?=[A-Z])"))[0]) {
+                          } else if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() ==
+                              data?.name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
+                            print(
+                                "${cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim()}  : ${data?.name?.split(RegExp(r"(?=[A-Z])"))[0]}");
                             appPermissions.add(cubit.appPermissions![i]);
                           }
                         }
@@ -368,7 +387,10 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            gradient: const LinearGradient(begin: Alignment.topLeft, end: Alignment.bottomRight, colors: [AppColor.purple50, AppColor.orange200])),
+                            gradient: const LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [AppColor.purple50, AppColor.orange200])),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -390,7 +412,9 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                       ),
                     );
                   }))
-              : Center(child: Text(S.of(context).noOrganizationsAvailable, style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w400)));
+              : Center(
+                  child: Text(S.of(context).noOrganizationsAvailable,
+                      style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.w400)));
         },
       ),
     );

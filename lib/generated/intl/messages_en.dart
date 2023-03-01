@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "The guest / participant / activist present in the program whose name you want to add."),
         "addOptional":
             MessageLookupByLibrary.simpleMessage("Add Tax (optional)"),
+        "addPhoto": MessageLookupByLibrary.simpleMessage("Add Photo"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "addressDeleted":
             MessageLookupByLibrary.simpleMessage("Address Deleted"),
@@ -151,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
+        "female": MessageLookupByLibrary.simpleMessage("Female"),
         "fillSecondaryInformation":
             MessageLookupByLibrary.simpleMessage("Fill Secondary Information"),
         "filter": MessageLookupByLibrary.simpleMessage("Filter"),
@@ -162,6 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionName": MessageLookupByLibrary.simpleMessage("Program Name *"),
         "functionType": MessageLookupByLibrary.simpleMessage("Program Type *"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
+        "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "gettingStateData":
             MessageLookupByLibrary.simpleMessage("Getting state data"),
         "grade": MessageLookupByLibrary.simpleMessage("Category"),
@@ -189,6 +192,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Make shakti kendr"),
         "makeTourSchedules":
             MessageLookupByLibrary.simpleMessage("Make tour schedule"),
+        "male": MessageLookupByLibrary.simpleMessage("Male"),
         "mandal": MessageLookupByLibrary.simpleMessage("Board"),
         "mandalLevelText": MessageLookupByLibrary.simpleMessage("Mandal"),
         "mappedMandal": MessageLookupByLibrary.simpleMessage("Mapped Mandal"),
@@ -323,9 +327,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Total Travel So Far"),
         "tour": MessageLookupByLibrary.simpleMessage("Tour"),
         "townCity": MessageLookupByLibrary.simpleMessage("Town/City"),
+        "transgender": MessageLookupByLibrary.simpleMessage("Transgender"),
         "typeOfFunction": MessageLookupByLibrary.simpleMessage("Program Type"),
         "upcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("Upcoming Trip"),
+        "update": MessageLookupByLibrary.simpleMessage("Update"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("Upload File"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("Upload Photo Here"),

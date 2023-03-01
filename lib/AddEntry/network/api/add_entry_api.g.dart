@@ -106,6 +106,7 @@ class _AddEntryApi implements AddEntryApi {
   @override
   Future<HttpResponse<dynamic>> getAddEntryFormStructure(
     token,
+    language,
     userAgent,
     levelID,
     countryStateId,
@@ -114,6 +115,7 @@ class _AddEntryApi implements AddEntryApi {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
       r'Authorization': token,
+      r'Language': language,
       r'User-Agent': userAgent,
     };
     _headers.removeWhere((k, v) => v == null);

@@ -6,6 +6,7 @@ import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
+import '../../../generated/l10n.dart';
 import '../../Cubit/add_entry_cubit.dart';
 import '../../Cubit/add_entry_state.dart';
 
@@ -59,13 +60,11 @@ class ImageNotUploaded extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
                 child: Container(
                   width: 105,
-                  padding: const EdgeInsets.only(
-                      top: 6, bottom: 6, left: 4, right: 4),
+                  padding: const EdgeInsets.only(top: 6, bottom: 6, left: 4, right: 4),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       color: AppColor.orange300Color,
-                      border: Border.all(
-                          color: AppColor.buttonOrangeBackGroundColor)),
+                      border: Border.all(color: AppColor.buttonOrangeBackGroundColor)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -76,11 +75,9 @@ class ImageNotUploaded extends StatelessWidget {
                       ),
                       spaceWidthWidget(8),
                       Text(
-                        'Add photo',
+                        S.of(context).addPhoto,
                         style: GoogleFonts.quicksand(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: AppColor.buttonOrangeBackGroundColor),
+                            fontWeight: FontWeight.w600, fontSize: 12, color: AppColor.buttonOrangeBackGroundColor),
                       )
                     ],
                   ),

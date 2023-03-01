@@ -249,7 +249,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                         borderRadius: BorderRadius.circular(28.0),
                                       ),
                                       builder: (builder) {
-                                        return StateBottomSheet();
+                                        return const StateBottomSheet();
                                       });
                                 },
                                 keyboardType: TextInputType.emailAddress,
@@ -308,7 +308,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 bordercolor: Colors.transparent,
                                 style: textStyleWithPoppin(color: AppColor.greyColor.withOpacity(0.3), fontSize: 14),
                               )
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                         spaceHeightWidget(5),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.0),

@@ -219,7 +219,7 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
                             tilePadding: EdgeInsets.zero,
                             initiallyExpanded: true,
                             title: Text(
-                              'Fill Secondary Information',
+                              S.of(context).fillSecondaryInformation,
                               style: GoogleFonts.quicksand(fontSize: 20, fontWeight: FontWeight.w600),
                             ),
                             children: [

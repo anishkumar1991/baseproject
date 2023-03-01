@@ -337,8 +337,8 @@ class _AddEntryPageState extends State<AddEntryPage> {
                   if (item.value != null || item.value != "") ...[
                     TextFieldWidget(
                       initialValue: item.value.toString(),
-                      textInputFormatter:
-                          DynamicValidator.addTextInputFormatters(fieldType: cubit.entryField![i].fieldName ?? ''),
+                      textInputFormatter: DynamicValidator.addTextInputFormatters(
+                          fieldType: cubit.entryField![i].fieldName ?? '', initialValue: item.value.toString()),
                       validator: (value) => DynamicValidator.getTextFieldValidation(
                           context: context,
                           fieldName: cubit.entryField![i].fieldName ?? '',
@@ -443,17 +443,17 @@ class _AddEntryPageState extends State<AddEntryPage> {
                     ),
                   ),
                   CustomRadioButton(
-                    title: 'Male',
+                    title: S.of(context).male,
                     value: 'male',
                     groupValue: cubit.selectRadio ?? "",
                   ),
                   CustomRadioButton(
-                    title: 'Female',
+                    title: S.of(context).female,
                     value: 'female',
                     groupValue: cubit.selectRadio ?? "",
                   ),
                   CustomRadioButton(
-                    title: 'Transgender',
+                    title: S.of(context).transgender,
                     value: 'transGender',
                     groupValue: cubit.selectRadio ?? "",
                   ),
