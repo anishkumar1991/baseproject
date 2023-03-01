@@ -99,6 +99,7 @@ dependencies:
   geocoding: any
   open_file_plus: ^3.4.0
   pretty_dio_logger: ^1.2.0-beta-1
+  mailer: ^6.0.0
 #  mannkibaatpackage:
 #    git:
 #      url: https://github.com/MilindPanwar-Jarvis/mannkibaatpackage.git

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Storage/user_storage_service.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
@@ -7,7 +8,8 @@ import 'package:sangathan/Values/space_width_widget.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/splash_screen/cubit/user_profile_state.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
 import '../../../common/appstyle.dart';
 import '../../../generated/l10n.dart';
 import '../../../splash_screen/cubit/user_profile_cubit.dart';
@@ -21,6 +23,9 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+
+  final texteditingcontroller = TextEditingController();
+
   @override
   void initState() {
     context.read<MenuScreenCubit>().getSupportNumber();
@@ -167,6 +172,153 @@ class _MenuPageState extends State<MenuPage> {
                 ),
               ),*/
               //spaceHeightWidget(MediaQuery.of(context).size.height * 0.08),
+              InkWell(
+                  onTap: () {
+                    showDialog<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Account Deletion'),
+                          content: const Text(
+                              'After 15 days, your account will be permanently deleted; however, you can return and login to remain connected.'),
+                          actions: <Widget>[
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
+                              child: const Text('Cancel'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                showDialog<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text("Details"),
+                                      content: Text(S.of(context).welcome +
+                                          " " +
+                                          StorageService.getUserData()!
+                                              .user!
+                                              .name
+                                              .toString() +
+                                          "\n" +
+                                          StorageService.getUserData()!
+                                              .user!
+                                              .phone
+                                              .toString()),
+                                      actions: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5, right: 5, bottom: 20),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 1,
+                                                    color: Colors.black12)),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(2.0),
+                                              child: TextFormField(
+
+                                                decoration: const InputDecoration(
+                                                    border: InputBorder.none,
+                                                    hintText:
+                                                        "Reason for deletion"),
+                                                controller: texteditingcontroller,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge,
+                                              ),
+                                              child: const Text('Cancel'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            TextButton(
+                                              style: TextButton.styleFrom(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .labelLarge,
+                                              ),
+                                              child: const Text('OK'),
+                                              onPressed: () {
+                                                sendMail(StorageService
+                                                        .getUserData()!
+                                                    .user!
+                                                    .name
+                                                    .toString(),texteditingcontroller.text);
+                                                Navigator.of(context).pop();
+                                                showDialog<void>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          "Mail Sent Successfully"),
+                                                      content: const Text(
+                                                          "You account will be permanently deleted in 15 days"),
+                                                      actions: <Widget>[
+
+                                                        TextButton(
+                                                          style: TextButton
+                                                              .styleFrom(
+                                                            textStyle: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge,
+                                                          ),
+                                                          child: const Text(
+                                                              'OK'),
+                                                          onPressed:
+                                                              () async {
+                                                                Navigator.of(context).pop();
+                                                          },
+                                                        )
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: customListTile(
+                      title: "Request For Account Delete",
+                      icon: AppIcons.clearIcon)),
+              spaceHeightWidget(10),
+              const Divider(
+                color: AppColor.dividerColor,
+              ),
               customListTile(title: "Support", icon: AppIcons.supportIcon),
               spaceHeightWidget(10),
               const Divider(
@@ -240,5 +392,28 @@ class _MenuPageState extends State<MenuPage> {
       path: phoneNumber,
     );
     await launchUrl(launchUri);
+  }
+
+  Future sendMail(String name, String text) async {
+    String email = 'sangathantest@gmail.com';
+    String token = 'ggovipygfzprffph';
+
+    final smtpServer = gmail(email, token);
+    final message = Message()
+      ..from = Address(email, name)
+      ..recipients = ['sangatanapp@gmail.com']
+      ..subject = 'Account Deletion Request'
+      ..text = text;
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+    } on MailerException catch (e) {
+      print(e.toString());
+      print('Message not sent.');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
   }
 }
