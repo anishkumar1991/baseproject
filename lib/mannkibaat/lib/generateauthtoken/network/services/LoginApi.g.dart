@@ -13,7 +13,7 @@ class _MannKibaatAuthApi implements MannKibaatAuthApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://staging.mannkibaatprogram.in/';
+    baseUrl ??= 'https://mannkibaatprogram.in/';
   }
 
   final Dio _dio;

@@ -6,7 +6,6 @@ import 'package:sangathan/mannkibaat/lib/generateauthtoken/network/model/LoginMo
 import 'package:sangathan/mannkibaat/lib/generateauthtoken/network/model/UserDetailsModel.dart';
 
 import '../../../../Storage/mannkibaat.dart';
-import '../../Storage/user_storage_service.dart';
 
 import '../network/model/UserNewAddModel.dart';
 import '../network/services/LoginApi.dart';

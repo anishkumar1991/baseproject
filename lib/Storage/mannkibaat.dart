@@ -2,28 +2,25 @@ import 'package:get_storage/get_storage.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
 
 class MKBStorageService {
-  static String userInfoKey = "identification_token";
-  static String userAuthTokenKey = "auth_token";
-  static String? userAuthToken;
-  static GetStorage storage = GetStorage();
-  static UserDetails? userData;
+  static String MKBuserInfoKey = "MKBuserInfoKey";
+  static String MKBuserAuthTokenKey = "MKBuserAuthTokenKey";
+  static GetStorage MKBstorage = GetStorage();
 
   static setUserIdentificationToken(String token) async {
-    await storage.write(userInfoKey, token);
+    await MKBstorage.write(MKBuserInfoKey, token);
   }
 
   static String? getUserIdentificationToken() {
-    return storage.read(userInfoKey);
+    return MKBstorage.read(MKBuserInfoKey);
   }
 
   static setUserAuthToken(String token) async {
-    await storage.write(userAuthTokenKey, token);
+    await MKBstorage.write(MKBuserAuthTokenKey, token);
   }
 
   static String? getUserAuthToken() {
-    userAuthToken = storage.read(userAuthTokenKey);
+    MKBuserAuthTokenKey = MKBstorage.read(MKBuserAuthTokenKey);
 
-    return userAuthToken;
+    return MKBuserAuthTokenKey;
   }
-
 }
