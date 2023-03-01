@@ -97,7 +97,7 @@ dependencies:
   flutter_svg: ^2.0.1
   geolocator: ^9.0.2
   geocoding: any
-  open_file_plus: ^3.4.0
+  open_file_plus: any
   pretty_dio_logger: ^1.2.0-beta-1
 #  mannkibaatpackage:
 #    git:

@@ -6,14 +6,12 @@ import 'package:sangathan/mannkibaat/lib/attendeesformpage/review/cubit/SendEven
 
 import '../../../../../Storage/mannkibaat.dart';
 import '../../../../../Values/Constants.dart';
-import '../../../Storage/AttendeesFormStorage.dart';
 import '../../../formfillsuccesspage/screens/FormSuccess.dart';
 import '../../../utils/appbar/AppBar.dart';
 import '../../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../../utils/buttons/SubmitButton.dart';
 import '../../../utils/drawer/UserProfileDrawer.dart';
 import '../../../values/AppColors.dart';
-
 import '../../cubit/FetchCubit.dart';
 import '../cubit/SendEventCubit.dart';
 import 'BoothAddress.dart';
@@ -125,13 +123,10 @@ class _FormReviewPageState extends State<FormReviewPage> {
                             child: CircularProgressIndicator(),
                           );
                         }
-
                         return SubmitButton(onPress: () async {
                           LocationPermission permission =
                               await Geolocator.requestPermission();
-
                           newPosition = await getCurrentPosition();
-
                           await cubit2.sendEvent(
                               MKBStorageService.getUserAuthToken().toString(),
                               cubit.boothid,

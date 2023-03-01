@@ -19,7 +19,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   TextEditingController searchTextController = TextEditingController();
   int selectIndex = 0;
-  List<Widget> pages = [SocialMediaPage(), HomePage(), const MenuPage()];
+  List<Widget> pages = [SocialMediaPage(), HomePage(), const MenuPage(), DashBoardScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   ? AppIcons.announceIcon
                                   : AppIcons.announceOutlineImage,
                               onTap: () {
+                                print("pressed 0");
+
                                 context.read<DashBoardCubit>().onTapIcons(0);
                               },
                               color: selectIndex == 0
@@ -76,6 +78,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   ? AppIcons.homeIcon
                                   : AppIcons.homeOutlineIcon,
                               onTap: (() {
+                                print("pressed 1");
+
                                 context.read<DashBoardCubit>().onTapIcons(1);
                               }),
                               color: selectIndex == 1
@@ -87,6 +91,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   ? AppIcons.menuIcon
                                   : AppIcons.menuOutline,
                               onTap: (() {
+                                print("pressed 2");
+
                                 context.read<DashBoardCubit>().onTapIcons(2);
                               }),
                               color: selectIndex == 2

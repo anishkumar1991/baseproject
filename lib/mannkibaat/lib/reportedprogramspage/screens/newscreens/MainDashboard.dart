@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/Storage/mannkibaat.dart';
+import 'package:sangathan/mannkibaat/lib/values/AppColors.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
 import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../../generateauthtoken/cubit/SendState.dart';
-import '../../../utils/appbar/AppBar.dart';
 import 'expired.dart';
 import 'ongoing.dart';
 
 class DashboardMainScreen extends StatefulWidget {
-  const DashboardMainScreen({super.key});
+  // const DashboardMainScreen({super.key});
+
+  const DashboardMainScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<DashboardMainScreen> createState() => _DashboardMainScreenState();
@@ -20,7 +23,8 @@ class DashboardMainScreen extends StatefulWidget {
 class _DashboardMainScreenState extends State<DashboardMainScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
+
+  // final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   Future<void> send() async {
     final cubit = context.read<GenerateMannKiBaatAuthCubit>();
@@ -52,7 +56,23 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBarWidget.getAppBar(_key, context),
+      appBar: AppBar(
+          backgroundColor: AppColor().appBarColor,
+          title: Text("भारतीय जनता पार्टी",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10.91,
+                  color: AppColor().textColor)),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: (() {
+              Navigator.pop(context);
+            }),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+          automaticallyImplyLeading: false,
+          titleSpacing: 0),
       body:
           BlocBuilder<GenerateMannKiBaatAuthCubit, GenerateMannKiBaatAuthState>(
         builder: (context, state) {

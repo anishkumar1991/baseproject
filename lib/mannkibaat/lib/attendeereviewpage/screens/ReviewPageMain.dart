@@ -45,7 +45,7 @@ class AttendeeReviewPage extends StatefulWidget {
 }
 
 class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
+  // final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
   void dispose() {
@@ -58,9 +58,25 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
     final cubit = context.read<FetchCubit>();
 
     return Scaffold(
-      appBar: AppBarWidget.getAppBar(_key, context),
+      appBar: AppBar(
+          backgroundColor: AppColor().appBarColor,
+          title: Text("भारतीय जनता पार्टी",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10.91,
+                  color: AppColor().textColor)),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+          automaticallyImplyLeading: false,
+          titleSpacing: 0),
       body: Scaffold(
-        key: _key,
+        // key: _key,
         drawer: const UserProfileDrawer(),
         body: Container(
           decoration: BoxDecorationWidget.getBoxDecoration(),
