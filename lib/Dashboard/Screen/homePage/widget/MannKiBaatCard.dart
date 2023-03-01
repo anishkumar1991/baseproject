@@ -8,7 +8,9 @@ import '../../../../mannkibaat/lib/mannkibaatpackage.dart';
 class MannKiBaatCard extends StatefulWidget {
   final String? mannkibaatAuthToken;
 
-  const MannKiBaatCard({Key? key, required this.mannkibaatAuthToken})
+
+
+  const MannKiBaatCard({Key? key, required this.mannkibaatAuthToken, })
       : super(key: key);
 
   @override
@@ -18,6 +20,7 @@ class MannKiBaatCard extends StatefulWidget {
 class _MannKiBaatCardState extends State<MannKiBaatCard> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: 150,
       decoration: const BoxDecoration(
@@ -59,7 +62,7 @@ class _MannKiBaatCardState extends State<MannKiBaatCard> {
             child: SizedBox(
               height: 30,
               width: 143,
-              child: MainButton(text: S.of(context).click),
+              child: MainButton(text: S.of(context).click,),
             ),
           )
         ],

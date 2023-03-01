@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../Storage/AttendeesFormStorage.dart';
-import '../../attendeereviewpage/screens/ReviewPageMain.dart';
 import '../../utils/appbar/AppBar.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../utils/buttons/SubmitButton.dart';
@@ -11,7 +11,6 @@ import '../../utils/drawer/UserProfileDrawer.dart';
 import '../../values/AppColors.dart';
 import '../../values/Constants.dart';
 import '../cubit/AttendeeFormCubit.dart';
-import '../cubit/FetchCubit.dart';
 import '../review/screens/ReviewPageMain.dart';
 import 'DropDownScreen.dart';
 import 'ImageUploadBox.dart';
@@ -86,9 +85,10 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                               borderRadius: BorderRadius.circular(8),
                               borderSide: BorderSide(
                                   width: 1, color: AppColor().textFieldColor))),
-                      keyboardType: const TextInputType.numberWithOptions(
-                        signed: false,
-                      ),
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      ],
                       onChanged: (value) {
                         AttendeeStorageService.settotalAttendees(
                             value.toString());
@@ -168,7 +168,6 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                       width: Constants.buttonSizeBoxWidth,
                       child: SubmitButton(
                         onPress: () {
-
                           if (AttendeeStorageService.getimage1url() == null &&
                               AttendeeStorageService.getimage2url() == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -180,17 +179,17 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => FormReviewPage(
-                                          totalAttendees:
+                                      totalAttendees:
                                               totalAttendeesController.text,
                                           address: addressController.text,
                                           description:
                                               descriptionController.text,
                                           img1: AttendeeStorageService
-                                                  .getimage1url()
-                                              ?? " ",
+                                                  .getimage1url() ??
+                                              " ",
                                           img2: AttendeeStorageService
-                                                  .getimage2url() ?? " ",
-
+                                                  .getimage2url() ??
+                                              " ",
                                           eventid: widget.eventId,
                                         )));
                           }
