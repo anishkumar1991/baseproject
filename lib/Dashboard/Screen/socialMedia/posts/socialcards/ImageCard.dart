@@ -3,10 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/FetchPostCubit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../network/model/FetchPosts.dart';
+
 class ImageCard extends StatefulWidget {
   final int? tempindex;
+  final List<Post> item;
 
-  const ImageCard({Key? key, required this.tempindex}) : super(key: key);
+   const ImageCard({Key? key, required this.tempindex,required this.item}) : super(key: key);
 
   @override
   State<ImageCard> createState() => _ImageCardState();
@@ -17,15 +20,15 @@ class _ImageCardState extends State<ImageCard> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<FetchPostsCubit>();
+    final cubit = context.read<PostsCubit>();
     return Padding(
       padding: const EdgeInsets.only(left: 5, right: 5),
-      child: cubit.tempModel!.posts[widget.tempindex!].postData.images!.length ==
+      child: widget.item[widget.tempindex!].postData.images!.length ==
               1
           ? ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
-              cubit.tempModel!.posts[widget.tempindex!].postData
+              widget.item[widget.tempindex!].postData
                   .images!.first
                   .toString(),
               fit: BoxFit.fill,
@@ -34,13 +37,13 @@ class _ImageCardState extends State<ImageCard> {
           : Column(
               children: [
                 CarouselSlider.builder(
-                  itemCount: cubit.tempModel!.posts[widget.tempindex!]
+                  itemCount: widget.item[widget.tempindex!]
                       .postData.images!.length,
                   itemBuilder: (context, index, realIndex) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
-                        cubit.tempModel!.posts[widget.tempindex!]
+                        widget.item[widget.tempindex!]
                             .postData.images![index]
                             .toString(),
                         fit: BoxFit.fill,
@@ -63,10 +66,10 @@ class _ImageCardState extends State<ImageCard> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: cubit.tempModel!.posts[widget.tempindex!]
+                  children: widget.item[widget.tempindex!]
                       .postData.images!
                       .map((url) {
-                    int index = cubit.tempModel!.posts[widget.tempindex!]
+                    int index = widget.item[widget.tempindex!]
                         .postData.images!
                         .indexOf(url);
                     return Container(

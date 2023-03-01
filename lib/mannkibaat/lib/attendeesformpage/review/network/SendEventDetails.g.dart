@@ -29,7 +29,7 @@ class _SendEventDetailsApi implements SendEventDetailsApi {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{
       r'Content-Type': 'application/json',
-      r'Accept': 'application/json',
+      r'Accept': '*/*',
       r'Authorization': token,
     };
     _headers.removeWhere((k, v) => v == null);

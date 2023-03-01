@@ -18,7 +18,7 @@ class ReelsCubit extends Cubit<ReelsState> {
     emit(ReelsLoadingState());
     try {
       final res =
-          await api.getReels('Bearer ${StorageService.userAuthToken}', "100");
+          await api.getReels('Bearer ${StorageService.userAuthToken}', "8");
       if (res.response.statusCode == 200) {
         model = ReelsModel.fromJson(res.data);
 

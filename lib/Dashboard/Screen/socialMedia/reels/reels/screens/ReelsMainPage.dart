@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<FetchPostsCubit>();
+    final cubit = context.read<PostsCubit>();
     // cubit.fetchPosts();
     return Scaffold(
       body: SafeArea(

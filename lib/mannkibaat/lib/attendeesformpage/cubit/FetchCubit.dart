@@ -74,7 +74,7 @@ class FetchCubit extends Cubit<FetchStates> {
   Future fetchBooth(String boothAcId) async {
     try {
       String? _auth =
-          MKBStorageService.userAuthToken;
+          MKBStorageService.getUserAuthToken();
       print(_auth);
       final res = await api.fetchBooth(_auth, boothAcId);
       if (res.response.statusCode == 200) {

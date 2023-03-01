@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/mannkibaat/lib/attendeesformpage/review/cubit/SendEventState.dart';
 
+import '../../../../../Storage/mannkibaat.dart';
 import '../../../../../Values/Constants.dart';
 import '../../../Storage/AttendeesFormStorage.dart';
 import '../../../formfillsuccesspage/screens/FormSuccess.dart';
@@ -26,16 +28,16 @@ class FormReviewPage extends StatefulWidget {
   final int eventid;
   final String? address;
   final String? description;
-  final String? img1;
-  final String? img2;
+  final String img1;
+  final String img2;
 
   const FormReviewPage(
       {Key? key,
       this.totalAttendees,
       this.address,
       this.description,
-      this.img1,
-      this.img2,
+      required this.img1,
+      required this.img2,
       required this.eventid})
       : super(key: key);
 
@@ -47,12 +49,6 @@ class _FormReviewPageState extends State<FormReviewPage> {
   Position? position;
   Position? newPosition;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
-  @override
-  void dispose() {
-    AttendeeStorageService.storage.erase();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,26 +105,48 @@ class _FormReviewPageState extends State<FormReviewPage> {
                   SizedBox(
                     width: Constants.buttonSizeBoxWidth,
                     height: Constants.buttonSizeBoxHeight,
-                    child: SubmitButton(onPress: () async {
-                      LocationPermission permission =
-                          await Geolocator.requestPermission();
+                    child: BlocConsumer<SendEventCubit, SendEventState>(
+                      listener: (context, state) {
+                        if (state is EventSendState) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FormSuccess(),
+                              ));
+                        }
+                        if (state is EventErrorState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Error Posting")));
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is EventSendingState) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                      newPosition = await getCurrentPosition();
+                        return SubmitButton(onPress: () async {
+                          LocationPermission permission =
+                              await Geolocator.requestPermission();
 
-                      await cubit2.sendEvent(
-                          cubit.boothid,
-                          cubit.boothname,
-                          int.parse(widget.totalAttendees.toString()),
-                          widget.address,
-                          widget.description,
-                          widget.eventid,
-                          newPosition!.latitude.toString(),
-                          newPosition!.longitude.toString(),
-                          widget.img1,
-                          widget.img2);
+                          newPosition = await getCurrentPosition();
 
-                      Navigator.push(context,MaterialPageRoute(builder: (context) => FormSuccess()));
-                    }),
+                          await cubit2.sendEvent(
+                              MKBStorageService.getUserAuthToken().toString(),
+                              cubit.boothid,
+                              cubit.boothname,
+                              int.parse(widget.totalAttendees.toString()),
+                              widget.address,
+                              widget.description,
+                              widget.eventid,
+                              newPosition!.latitude.toString(),
+                              newPosition!.longitude.toString(),
+                              widget.img1 ?? " ",
+                              widget.img2 ?? " ");
+                        });
+                      },
+                    ),
                   ),
                   const SizedBox(height: 30),
                 ],

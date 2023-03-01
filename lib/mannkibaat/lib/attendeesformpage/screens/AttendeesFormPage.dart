@@ -187,10 +187,10 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                                               descriptionController.text,
                                           img1: AttendeeStorageService
                                                   .getimage1url()
-                                              .toString(),
+                                              ?? " ",
                                           img2: AttendeeStorageService
-                                                  .getimage2url()
-                                              .toString(),
+                                                  .getimage2url() ?? " ",
+
                                           eventid: widget.eventId,
                                         )));
                           }

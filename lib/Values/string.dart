@@ -13,7 +13,7 @@ class AppStrings {
   static const String pravasUserToken =
       "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiZmdBc01DcXdqeGJ2Qjd0ZVkzNEplWmY5In0.yFMJmxhpViVeu76hRsWhxM8oMXka0WZkWnyl4FGVUko";
   static const String baseUrlFOrState = "https://pkgstore.datahub.io";
-  //
+
   // static const String baseUrlMannKiBaat =
   //     "https://staging.mannkibaatprogram.in/";
   static const String baseUrlMannKiBaat = "https://mannkibaatprogram.in/";
@@ -27,9 +27,11 @@ class AppStrings {
   // static const String mannkibaatotp = "123456";
 
   static const String socialmediabaseUrl = "https://saral-social.ccdms.in";
-
+  //
   // static const String socialmediabaseUrl =
   //     "https://saral-social-staging.ccdms.in";
+
+
   static const String buttontext = "Next";
   static const String appbartext = "ओटीपी सत्यापन";
   static const String resendotptimer = "00:43 Sec Left";

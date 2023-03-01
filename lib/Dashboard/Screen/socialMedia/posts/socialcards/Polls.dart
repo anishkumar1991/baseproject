@@ -4,14 +4,15 @@ import 'package:sangathan/Dashboard/Screen/socialMedia/posts/cubit/PollsCubit.da
 
 import 'package:screenshot/screenshot.dart';
 import '../BottomSocialBar.dart';
-import '../cubit/FetchPostCubit.dart';
+import '../network/model/FetchPosts.dart';
 
 class Polls extends StatefulWidget {
   final screenshotController = ScreenshotController();
+  final List<Post> item;
 
   final int tempindex;
 
-  Polls({Key? key, required this.tempindex}) : super(key: key);
+  Polls({Key? key, required this.tempindex, required this.item}) : super(key: key);
 
   @override
   State<Polls> createState() => _PollsState();
@@ -22,7 +23,6 @@ class _PollsState extends State<Polls> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<FetchPostsCubit>();
     final cubit1 = context.read<PollCubit>();
     return Screenshot(
       controller: widget.screenshotController,
@@ -35,7 +35,7 @@ class _PollsState extends State<Polls> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                cubit.tempModel!.posts[widget.tempindex].title.toString(),
+                widget.item[widget.tempindex].title.toString(),
                 style: const TextStyle(
                     fontFamily: "Tw Cen MT",
                     fontWeight: FontWeight.w700,
@@ -45,7 +45,7 @@ class _PollsState extends State<Polls> {
                 height: 12,
               ),
               Text(
-                cubit.tempModel!.posts[widget.tempindex].caption.toString(),
+                widget.item[widget.tempindex].caption.toString(),
                 style: const TextStyle(
                     fontFamily: "Tw Cen MT",
                     fontWeight: FontWeight.w400,
@@ -57,7 +57,7 @@ class _PollsState extends State<Polls> {
               ),
               ListView.separated(
                   shrinkWrap: true,
-                  itemCount: cubit.tempModel!.posts[widget.tempindex].postData
+                  itemCount: widget.item[widget.tempindex].postData
                       .poll!.options.length,
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: ((context, index) =>
@@ -70,7 +70,7 @@ class _PollsState extends State<Polls> {
                           borderRadius: BorderRadius.circular(30)),
                       child: RadioListTile(
                         title: Text(
-                            cubit.tempModel!.posts[widget.tempindex].postData
+                            widget.item[widget.tempindex].postData
                                 .poll!.options[index].content
                                 .toString(),
                             style: const TextStyle(
@@ -82,9 +82,9 @@ class _PollsState extends State<Polls> {
                         groupValue: value1,
                         onChanged: (value) {
                           cubit1.submitPoll(
-                              cubit.tempModel!.posts[widget.tempindex].postData
+                              widget.item[widget.tempindex].postData
                                   .poll!.id,
-                              cubit.tempModel!.posts[widget.tempindex].postData
+                              widget.item[widget.tempindex].postData
                                   .poll!.options[index].id);
                           setState(() {
                             value1 = value!;
@@ -94,6 +94,7 @@ class _PollsState extends State<Polls> {
                     );
                   })),
               BottomSocialBar(
+                item: widget.item,
                   index: widget.tempindex,
                   screenshotController: widget.screenshotController),
               const SizedBox(height: 10),

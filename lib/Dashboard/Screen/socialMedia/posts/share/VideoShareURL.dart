@@ -8,10 +8,9 @@ import '../cubit/FetchPostCubit.dart';
 
 
 Future<void> VideosShareURL(
-    BuildContext context, int index, String sourceLink) async {
-  final cubit = context.read<FetchPostsCubit>();
-  String urlimage = cubit.tempModel!.posts[index!].postData.video.toString();
-  var text1 = cubit.tempModel!.posts[index].title;
+    BuildContext context, int index, String sourceLink, String urlimage,var text1) async {
+  final cubit = context.read<PostsCubit>();
+
   var text2 = "https://mpsangathan.com/app";
   final sharecontent = "$text1\n\n$text2";
 

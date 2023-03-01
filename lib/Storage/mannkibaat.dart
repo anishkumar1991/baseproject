@@ -26,15 +26,4 @@ class MKBStorageService {
     return userAuthToken;
   }
 
-  static removeUserAuthToken() async {
-    userAuthToken = null;
-    await storage.remove(userAuthTokenKey);
-  }
-
-  static removeUserIdentificationToken() async {
-    await storage.remove(userInfoKey);
-    storage.erase();
-  }
-
-
 }

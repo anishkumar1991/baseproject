@@ -6,18 +6,20 @@ import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/ReactionCubit.dart';
+import 'network/model/FetchPosts.dart';
 
 class CustomReactionButton extends StatelessWidget {
   final int index;
   final String id;
+  final List<Post> item;
 
-  const CustomReactionButton({Key? key, required this.index, required this.id})
+  const CustomReactionButton({Key? key, required this.index, required this.id, required this.item})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ReactionCubit>();
-    final cubit1 = context.read<FetchPostsCubit>();
+    final cubit1 = context.read<PostsCubit>();
 
     return ReactionButton(
 
@@ -37,32 +39,32 @@ class CustomReactionButton extends StatelessWidget {
       ),
       reactions: [
         Reaction(
-          title: Text(cubit1.tempModel!.posts[index].reactions[1].reaction.name
+          title: Text(item[index].reactions[1].reaction.name
               .toString()),
           icon: const Icon(Icons.thumb_up_alt_sharp,
               color: Colors.blue, size: 27),
           value: 1,
         ),
         Reaction(
-          title: Text(cubit1.tempModel!.posts[index].reactions[2].reaction.name
+          title: Text(item[index].reactions[2].reaction.name
               .toString()),
           icon: Image.asset("assets/images/hearticon.png", height: 32),
           value: 2,
         ),
         Reaction(
-          title: Text(cubit1.tempModel!.posts[index].reactions[3].reaction.name
+          title: Text(item[index].reactions[3].reaction.name
               .toString()),
           icon: Image.asset("assets/images/wowicon.png", height: 32),
           value: 3,
         ),
         Reaction(
-          title: Text(cubit1.tempModel!.posts[index].reactions[4].reaction.name
+          title: Text(item[index].reactions[4].reaction.name
               .toString()),
           icon: Image.asset("assets/images/sadicon.png", height: 32),
           value: 4,
         ),
         Reaction(
-          title: Text(cubit1.tempModel!.posts[index].reactions[5].reaction.name
+          title: Text(item[index].reactions[5].reaction.name
               .toString()),
           icon: Image.asset("assets/images/angryicon.png", height: 31),
           value: 5,
