@@ -57,7 +57,7 @@ class _ContentScreenState extends State<ContentScreen> {
   @override
   void dispose() {
     _videoPlayerController.dispose();
-    _chewieController!.dispose();
+    _chewieController?.dispose();
     super.dispose();
   }
 

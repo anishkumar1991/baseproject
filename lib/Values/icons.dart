@@ -1,4 +1,6 @@
 class AppIcons {
+  static const String deleteIcon = "assets/images/deleteIcon.png";
+
   static const String appbarlogo = "assets/images/BJP-logo.png";
   static const String micicon = "assets/images/mic_logo.png";
   static const String searchicon = "assets/images/search_icon.png";

@@ -314,7 +314,7 @@ class _MenuPageState extends State<MenuPage> {
                   },
                   child: customListTile(
                       title: "Request For Account Delete",
-                      icon: AppIcons.clearIcon)),
+                      icon: AppIcons.deleteIcon)),
               spaceHeightWidget(10),
               const Divider(
                 color: AppColor.dividerColor,

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sangathan/Values/string.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../cubits/ReelsCubit.dart';
@@ -87,7 +88,7 @@ Future<void> ReelDownloadshare(
   }
 
 
-  var text2 = "https://mpsangathan.com/app";
+  var text2 = AppStrings.shareUrl;
   final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);
   final response = await http.get(url);

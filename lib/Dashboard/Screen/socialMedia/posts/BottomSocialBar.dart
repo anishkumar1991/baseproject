@@ -25,12 +25,15 @@ class BottomSocialBar extends StatelessWidget {
   ScreenshotController? screenshotController = ScreenshotController();
   final List<Post> item;
 
-  BottomSocialBar({Key? key, required this.index, this.screenshotController, required this.item})
+  BottomSocialBar(
+      {Key? key,
+      required this.index,
+      this.screenshotController,
+      required this.item})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final cubit1 = context.read<PostsCubit>();
     final cubit2 = context.read<ShareCubit>();
 
     var id = item[index].id.toString();
@@ -84,11 +87,9 @@ class BottomSocialBar extends StatelessWidget {
                     if (item[index].postType == "Poll") {
                       cubit2.shareToAll(id);
 
-                      final text =
-                          item[index].sharingContent;
+                      final text = item[index].sharingContent;
 
-                      double pixelRatio =
-                          MediaQuery.of(context).devicePixelRatio;
+                      double pixelRatio =  MediaQuery.of(context).devicePixelRatio;
                       final image1 = await screenshotController!.capture(
                           pixelRatio: pixelRatio,
                           delay: const Duration(milliseconds: 10));
@@ -99,47 +100,59 @@ class BottomSocialBar extends StatelessWidget {
                       File(path).writeAsBytesSync(bytes);
                       XFile file = XFile(path);
                       await Share.shareXFiles(text: text, [file]);
-                    } else if (item[index].postType ==
-                        "Video") {
-                      print(
-                          "------------UNDER-Video-Type-----");
-                      if (item[index].postData.video
+                    }
+                    else if (item[index].postType == "Video") {
+                      print("------------UNDER-Video-Type-----");
+                      if (item[index]
+                              .postData
+                              .video
                               .toString()
                               .contains('.m3u8') ||
-                          item[index].postData.video
+                          item[index]
+                              .postData
+                              .video
                               .toString()
                               .contains('.M3U8') ||
-                          item[index].postData.video
+                          item[index]
+                              .postData
+                              .video
                               .toString()
                               .contains('m3u8') ||
-                          item[index].postData.video
+                          item[index]
+                              .postData
+                              .video
                               .toString()
                               .contains('M3U8')) {
-                        print(
-                            "------------------VFORMAT---------------NO");
+                        print("------------------VFORMAT---------------NO");
                         cubit2
-                            .shareToAll(item[index].postData.video
-                            .toString());
+                            .shareToAll(item[index].postData.video.toString());
                         VideosShareURL(
                             context,
                             index,
-                            item[index].postData.video
-                                .toString(),item[index].postData.video.toString(),item[index].title);
+                            item[index].postData.video.toString(),
+                            item[index].postData.video.toString(),
+                            item[index].title);
                       } else {
-                        print("------------------VFORMAT---------------SUPPORTED");
+                        print(
+                            "------------------VFORMAT---------------SUPPORTED");
                         cubit2
-                            .shareToAll(item[index].postData.video
-                            .toString());
+                            .shareToAll(item[index].postData.video.toString());
                         VideoDownloadShare(
                             context,
                             index,
-                            item[index].postData.video
-                                .toString(),item[index].postData.video.toString(),item[index].title);
+                            item[index].postData.video.toString(),
+                            item[index].postData.video.toString(),
+                            item[index].title);
                       }
-                    } else {
+                    }
+                    else {
                       print("----------------else ke andar FORMAT----->");
                       cubit2.shareToAll(id);
-                      share(context, index,item[index].postData.images!.first.toString(), item[index].title);
+                      share(
+                          context,
+                          index,
+                          item[index].postData.images!.first.toString(),
+                          item[index].title);
                     }
                   },
                   icon: const Icon(Icons.share_outlined)),
@@ -172,7 +185,8 @@ class BottomSocialBar extends StatelessWidget {
             IconButton(
               onPressed: () {
                 cubit2.shareToWhatsapp(id);
-                shareOnWhatsapp(context, SocialMedia.whatsapp, index,item[index].title);
+                shareOnWhatsapp(
+                    context, SocialMedia.whatsapp, index, item[index].title);
               },
               icon: const Icon(FontAwesomeIcons.whatsapp,
                   color: Color(0xFF1FAF38)),

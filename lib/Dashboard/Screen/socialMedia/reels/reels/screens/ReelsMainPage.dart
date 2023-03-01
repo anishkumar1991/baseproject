@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     BlurryContainer(
                       borderRadius: BorderRadius.zero,
-                      blur: 20,
+                      blur: 1,
                       width: MediaQuery.of(context).size.width,
                       height: 65,
                       child: Row(
@@ -137,21 +137,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           )
-                          // Expanded(
-                          //   flex: 4,
-                          //   child: Align(
-                          //     alignment: Alignment.centerRight,
-                          //     child: IconButton(
-                          //       onPressed: () {
-                          //         enableFeedback:
-                          //         false;
-                          //       },
-                          //       icon: Icon(
-                          //         Icons.volume_up,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
+
                         ],
                       ),
                     )

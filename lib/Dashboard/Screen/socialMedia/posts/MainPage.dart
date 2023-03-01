@@ -55,32 +55,32 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
               children: [
                 const DisplayList(),
                 BlocBuilder<PostsCubit, PostsState>(builder: (context, state) {
-                  // if (state is FetchingPostsState) {
-                  //   return Center(
-                  //     child: Shimmer.fromColors(
-                  //       baseColor: AppColor.greyColor.withOpacity(0.3),
-                  //       highlightColor: Colors.grey.withOpacity(0.1),
-                  //       child: SingleChildScrollView(
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.only(left: 5, right: 5),
-                  //           child: Column(
-                  //             children: List.generate(
-                  //                 5,
-                  //                     (index) => Padding(
-                  //                   padding: const EdgeInsets.only(top: 10),
-                  //                   child: Container(
-                  //                     decoration: const BoxDecoration(
-                  //                       color: Colors.white,
-                  //                     ),
-                  //                     height: 250,
-                  //                   ),
-                  //                 )).toList(),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   );
-                  // }
+                  if (state is PostsInitial) {
+                    return Center(
+                      child: Shimmer.fromColors(
+                        baseColor: AppColor.greyColor.withOpacity(0.3),
+                        highlightColor: Colors.grey.withOpacity(0.1),
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 5),
+                            child: Column(
+                              children: List.generate(
+                                  5,
+                                      (index) => Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                      ),
+                                      height: 250,
+                                    ),
+                                  )).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                   if (state is PostsLoading && state.isFirstFetch) {
                     return _loadingIndicator();
                   }
@@ -121,7 +121,7 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                         }
                       }
 
-                      return const Text("Ent Of Data");
+                      return _loadingIndicator();
                     },
                   );
                 }),

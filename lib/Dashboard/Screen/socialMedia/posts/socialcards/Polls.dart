@@ -12,7 +12,8 @@ class Polls extends StatefulWidget {
 
   final int tempindex;
 
-  Polls({Key? key, required this.tempindex, required this.item}) : super(key: key);
+  Polls({Key? key, required this.tempindex, required this.item})
+      : super(key: key);
 
   @override
   State<Polls> createState() => _PollsState();
@@ -57,8 +58,8 @@ class _PollsState extends State<Polls> {
               ),
               ListView.separated(
                   shrinkWrap: true,
-                  itemCount: widget.item[widget.tempindex].postData
-                      .poll!.options.length,
+                  itemCount: widget
+                      .item[widget.tempindex].postData.poll!.options.length,
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: ((context, index) =>
                       const SizedBox(height: 8)),
@@ -70,8 +71,8 @@ class _PollsState extends State<Polls> {
                           borderRadius: BorderRadius.circular(30)),
                       child: RadioListTile(
                         title: Text(
-                            widget.item[widget.tempindex].postData
-                                .poll!.options[index].content
+                            widget.item[widget.tempindex].postData.poll!
+                                .options[index].content
                                 .toString(),
                             style: const TextStyle(
                                 fontFamily: 'Tw Cen MT',
@@ -82,10 +83,9 @@ class _PollsState extends State<Polls> {
                         groupValue: value1,
                         onChanged: (value) {
                           cubit1.submitPoll(
-                              widget.item[widget.tempindex].postData
-                                  .poll!.id,
-                              widget.item[widget.tempindex].postData
-                                  .poll!.options[index].id);
+                              widget.item[widget.tempindex].postData.poll!.id,
+                              widget.item[widget.tempindex].postData.poll!
+                                  .options[index].id);
                           setState(() {
                             value1 = value!;
                           });
@@ -94,9 +94,10 @@ class _PollsState extends State<Polls> {
                     );
                   })),
               BottomSocialBar(
+                index: widget.tempindex,
+                screenshotController: widget.screenshotController,
                 item: widget.item,
-                  index: widget.tempindex,
-                  screenshotController: widget.screenshotController),
+              ),
               const SizedBox(height: 10),
               // BottomSocialBar(),
             ],
