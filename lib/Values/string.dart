@@ -6,8 +6,7 @@ class AppStrings {
       "http://34.100.233.103/api/mobile/v1/pravash";
 
   // static const String notificationbaseUrl = "http://35.200.202.116";
-  static const String notificationbaseUrl =
-      "http://notification.ccdms.in";
+  static const String notificationbaseUrl = "http://notification.ccdms.in";
 
   static const String apiKey = "HBNA19QVVAPP";
   static const String pravasUserToken =
@@ -17,6 +16,7 @@ class AppStrings {
   // static const String baseUrlMannKiBaat =
   //     "https://staging.mannkibaatprogram.in/";
   static const String baseUrlMannKiBaat = "https://mannkibaatprogram.in/";
+
   //
   static const String countrystateid = "14";
   static const String acid = "885054";
@@ -27,10 +27,10 @@ class AppStrings {
   // static const String mannkibaatotp = "123456";
 
   static const String socialmediabaseUrl = "https://saral-social.ccdms.in";
+
   //
   // static const String socialmediabaseUrl =
   //     "https://saral-social-staging.ccdms.in";
-
 
   static const String buttontext = "Next";
   static const String appbartext = "ओटीपी सत्यापन";
