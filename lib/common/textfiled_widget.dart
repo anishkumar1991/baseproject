@@ -7,9 +7,8 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
 import '../Values/app_colors.dart';
-import 'keyboard_done_button.dart';
 
-class TextFieldWidget extends StatelessWidget {
+class TextFieldWidget extends StatefulWidget {
   TextFieldWidget(
       {super.key,
       this.controller,
@@ -53,10 +52,35 @@ class TextFieldWidget extends StatelessWidget {
   final List<TextInputFormatter>? textInputFormatter;
   final int? maxLength;
   final bool isMandatoryField;
-  final focusNode = FocusNode();
   FocusNode? focus;
   bool isOtherField;
   GestureTapCallback? onTapDone;
+
+  @override
+  State<TextFieldWidget> createState() => _TextFieldWidgetState();
+}
+
+class _TextFieldWidgetState extends State<TextFieldWidget> {
+  final FocusNode _nodeText1 = FocusNode();
+
+  KeyboardActionsConfig _buildConfig(BuildContext context) {
+    return KeyboardActionsConfig(actions: [
+      KeyboardActionsItem(focusNode: _nodeText1, toolbarButtons: [
+        (node) {
+          return GestureDetector(
+            onTap: () => node.unfocus(),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Done",
+              ),
+            ),
+          );
+        }
+      ]),
+    ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -65,9 +89,9 @@ class TextFieldWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(title),
+            Text(widget.title),
             spaceWidthWidget(5),
-            isMandatoryField
+            widget.isMandatoryField
                 ? const Text(
                     '*',
                     style: TextStyle(color: AppColor.red),
@@ -76,44 +100,31 @@ class TextFieldWidget extends StatelessWidget {
           ],
         ),
         KeyboardActions(
-           enable: Platform.isIOS ? true : false,
+          enable: Platform.isIOS ? true : false,
           autoScroll: false,
-          config: KeyboardActionsConfig(actions: [
-            KeyboardActionsItem(
-                focusNode: isOtherField ? focus! : focusNode,
-                displayArrows: false,
-                displayActionBar: false,
-                footerBuilder: ((context) => CustomKeyBoardDoneButton(
-                      onTapDone: isOtherField
-                          ? onTapDone
-                          : (() {
-                              focusNode.unfocus();
-                            }),
-                    )))
-          ]),
+          config: _buildConfig(context),
           child: TextFormField(
-            initialValue: initialValue,
-            maxLines: maxLines,
-            focusNode: isOtherField ? focus : focusNode,
-            maxLength: maxLength,
+            initialValue: widget.initialValue,
+            maxLines: widget.maxLines,
+            focusNode: _nodeText1,
+            maxLength: widget.maxLength,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            inputFormatters: textInputFormatter,
-            controller: controller,
-            readOnly: readOnly ?? false,
-            keyboardType: keyboardType,
-            validator: validator,
-            onChanged: onChanged,
-            onTap: onTap,
+            inputFormatters: widget.textInputFormatter,
+            controller: widget.controller,
+            readOnly: widget.readOnly ?? false,
+            keyboardType: widget.keyboardType,
+            validator: widget.validator,
+            onChanged: widget.onChanged,
+            onTap: widget.onTap,
             decoration: InputDecoration(
                 counterText: '',
-                border: inpurborder,
-                hintText: hintText,
-                prefixIcon: preFix,
-                labelText: labelText,
-                errorText: errorText,
-                labelStyle: GoogleFonts.poppins(
-                    color: AppColor.naturalBlackColor, fontSize: 14),
-                suffixIcon: suffixWidget),
+                border: widget.inpurborder,
+                hintText: widget.hintText,
+                prefixIcon: widget.preFix,
+                labelText: widget.labelText,
+                errorText: widget.errorText,
+                labelStyle: GoogleFonts.poppins(color: AppColor.naturalBlackColor, fontSize: 14),
+                suffixIcon: widget.suffixWidget),
           ),
         ),
       ],

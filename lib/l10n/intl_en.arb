@@ -227,5 +227,11 @@
   "selectCategory": "First select category",
   "continueText": "Continue",
   "gallery": "Gallery",
-  "camera": "Camera"
+  "camera": "Camera",
+  "addPhoto": "Add Photo",
+  "gender": "Gender",
+  "transgender": "Transgender",
+  "male": "Male",
+  "update": "Update",
+  "female": "Female"
 }

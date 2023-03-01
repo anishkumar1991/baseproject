@@ -226,5 +226,11 @@
   "selectCategory": "पहले श्रेणी का चयन करें",
   "continueText": "जारी रखें",
   "gallery": "गैलरी",
-  "camera": "कैमरा"
+  "camera": "कैमरा",
+  "gender": "लिंग",
+  "addPhoto": "ऐड फोटो",
+  "transgender": "अन्य",
+  "male": "पुस्र्ष",
+  "update": "अपडेट",
+  "female": "स्त्री"
 }

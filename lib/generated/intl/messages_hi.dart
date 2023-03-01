@@ -46,6 +46,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "कार्यक्रम में उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता जिनका नाम आप जोड़ना चाहते है।"),
         "addOptional":
             MessageLookupByLibrary.simpleMessage("ऐड कर ( वैकल्पिक  )"),
+        "addPhoto": MessageLookupByLibrary.simpleMessage("ऐड फोटो"),
         "address": MessageLookupByLibrary.simpleMessage("एड्रेस"),
         "addressDeleted":
             MessageLookupByLibrary.simpleMessage("एड्रेस डिलीटेड"),
@@ -155,6 +156,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
+        "female": MessageLookupByLibrary.simpleMessage("स्त्री"),
         "fillSecondaryInformation":
             MessageLookupByLibrary.simpleMessage("अतिरिक्त जानकारी भरें"),
         "filter": MessageLookupByLibrary.simpleMessage("फ़िल्टर"),
@@ -168,6 +170,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "functionType":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार *"),
         "gallery": MessageLookupByLibrary.simpleMessage("गैलरी"),
+        "gender": MessageLookupByLibrary.simpleMessage("लिंग"),
         "gettingStateData":
             MessageLookupByLibrary.simpleMessage("राज्य डेटा प्राप्त करना"),
         "grade": MessageLookupByLibrary.simpleMessage("श्रेणी"),
@@ -195,6 +198,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र बनाये"),
         "makeTourSchedules": MessageLookupByLibrary.simpleMessage(
             "प्रवास के अंतरगर्त कार्यक्रम बनाये"),
+        "male": MessageLookupByLibrary.simpleMessage("पुस्र्ष"),
         "mandal": MessageLookupByLibrary.simpleMessage("मंडल"),
         "mandalLevelText": MessageLookupByLibrary.simpleMessage("मण्डल"),
         "mappedMandal": MessageLookupByLibrary.simpleMessage("मैप्ड मंडल"),
@@ -325,10 +329,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("अब तक की कुल यात्रा -"),
         "tour": MessageLookupByLibrary.simpleMessage("प्रवास"),
         "townCity": MessageLookupByLibrary.simpleMessage("टाउन/सिटी "),
+        "transgender": MessageLookupByLibrary.simpleMessage("अन्य"),
         "typeOfFunction":
             MessageLookupByLibrary.simpleMessage("कार्यक्रम का प्रकार"),
         "upcoming": MessageLookupByLibrary.simpleMessage("आगामी"),
         "upcomingTrip": MessageLookupByLibrary.simpleMessage("आगामी प्रवास -"),
+        "update": MessageLookupByLibrary.simpleMessage("अपडेट"),
         "uploadFile": MessageLookupByLibrary.simpleMessage("अपलोड फाइल"),
         "uploadPhoto":
             MessageLookupByLibrary.simpleMessage("फोटो यहाँ अपलोड करें"),

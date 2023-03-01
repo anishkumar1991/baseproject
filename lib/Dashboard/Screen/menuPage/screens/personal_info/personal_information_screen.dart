@@ -24,15 +24,14 @@ import 'cubit/personal_info_cubit.dart';
 class PersonalInformationScreen extends StatefulWidget {
   UserDetailModel userDetails;
 
-  PersonalInformationScreen({Key? key, required this.userDetails})
-      : super(key: key);
+  PersonalInformationScreen({Key? key, required this.userDetails}) : super(key: key);
 
   @override
-  State<PersonalInformationScreen> createState() =>
-      _PersonalInformationScreenState();
+  State<PersonalInformationScreen> createState() => _PersonalInformationScreenState();
 }
 
 class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
+  @override
   void initState() {
     fillData();
     super.initState();
@@ -41,23 +40,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   dynamic tempId = 0;
 
   fillData({final cubit}) {
-    context.read<PersonalInfoCubit>().nameCtr.text =
-        widget.userDetails.data?.name ?? '';
-    context.read<PersonalInfoCubit>().userNameCtr.text =
-        widget.userDetails.data?.username ?? '';
-    context.read<PersonalInfoCubit>().mobileNumberCtr.text =
-        widget.userDetails.data?.phoneNumber ?? '';
-    context.read<PersonalInfoCubit>().boiCtr.text =
-        widget.userDetails.data?.dob ?? '';
-    context.read<PersonalInfoCubit>().religionCtr.text =
-        widget.userDetails.data?.religion?.name ?? '';
-    context.read<PersonalInfoCubit>().statusCtr.text =
-        widget.userDetails.data?.category?.name ?? '';
-    context.read<PersonalInfoCubit>().castCtr.text =
-        widget.userDetails.data?.caste?.name ?? '';
+    context.read<PersonalInfoCubit>().nameCtr.text = widget.userDetails.data?.name ?? '';
+    context.read<PersonalInfoCubit>().userNameCtr.text = widget.userDetails.data?.username ?? '';
+    context.read<PersonalInfoCubit>().mobileNumberCtr.text = widget.userDetails.data?.phoneNumber ?? '';
+    context.read<PersonalInfoCubit>().boiCtr.text = widget.userDetails.data?.dob ?? '';
+    context.read<PersonalInfoCubit>().religionCtr.text = widget.userDetails.data?.religion?.name ?? '';
+    context.read<PersonalInfoCubit>().statusCtr.text = widget.userDetails.data?.category?.name ?? '';
+    context.read<PersonalInfoCubit>().castCtr.text = widget.userDetails.data?.caste?.name ?? '';
     getGenderRadioButtonValue(widget.userDetails.data?.gender?.toLowerCase());
-    context.read<PersonalInfoCubit>().getCasteDropDownValue(
-        id: widget.userDetails.data?.category?.id.toString() ?? '0');
+    context
+        .read<PersonalInfoCubit>()
+        .getCasteDropDownValue(id: widget.userDetails.data?.category?.id.toString() ?? '0');
   }
 
   getGenderRadioButtonValue(String? type) {
@@ -102,40 +95,29 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color:
-                                          AppColor.greyColor.withOpacity(0.5)),
+                                  border: Border.all(color: AppColor.greyColor.withOpacity(0.5)),
                                   shape: BoxShape.circle),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(350),
-                                  child: widget.userDetails.data?.avatar !=
-                                              null &&
+                                  child: widget.userDetails.data?.avatar != null &&
                                           widget.userDetails.data?.avatar != ''
                                       ? Image.network(
                                           widget.userDetails.data?.avatar ?? '',
                                           fit: BoxFit.cover,
-                                          errorBuilder: (BuildContext context,
-                                              Object exception,
-                                              StackTrace? stackTrace) {
-                                            return const Icon(Icons.person,
-                                                size: 25);
+                                          errorBuilder:
+                                              (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                            return const Icon(Icons.person, size: 25);
                                           },
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
+                                          loadingBuilder:
+                                              (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                                             if (loadingProgress == null) {
                                               return child;
                                             }
                                             return Center(
                                               child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
+                                                value: loadingProgress.expectedTotalBytes != null
+                                                    ? loadingProgress.cumulativeBytesLoaded /
+                                                        loadingProgress.expectedTotalBytes!
                                                     : null,
                                               ),
                                             );
@@ -145,35 +127,28 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                           color: AppColor.white,
                                           height: 84,
                                           width: 84,
-                                          child: Image.asset(
-                                              AppIcons.sangathanLogo))),
+                                          child: Image.asset(AppIcons.sangathanLogo))),
                             )
                           : Container(
                               height: 100,
                               width: 100,
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color:
-                                          AppColor.greyColor.withOpacity(0.5)),
+                                  border: Border.all(color: AppColor.greyColor.withOpacity(0.5)),
                                   shape: BoxShape.circle),
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(350),
-                                  child: Image.file(cubit.imageFile!,
-                                      fit: BoxFit.cover)),
+                                  child: Image.file(cubit.imageFile!, fit: BoxFit.cover)),
                             ),
                       spaceHeightWidget(15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(AppIcons.cameraIcon,
-                              height: 20, width: 20),
+                          Image.asset(AppIcons.cameraIcon, height: 20, width: 20),
                           spaceWidthWidget(5),
                           Text(
-                            "Update",
-                            style: textStyleWithPoppin(
-                                fontSize: 14,
-                                color: AppColor.orange,
-                                fontWeight: FontWeight.w500),
+                            S.of(context).update,
+                            style:
+                                textStyleWithPoppin(fontSize: 14, color: AppColor.orange, fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
@@ -214,8 +189,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                         cubit.emitState();
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 16.0, left: 15, right: 15),
+                                        padding: const EdgeInsets.only(top: 16.0, left: 15, right: 15),
                                         child: Image.asset(
                                           AppIcons.clearIcon,
                                           height: 2,
@@ -251,8 +225,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                         cubit.emitState();
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 16.0, left: 15, right: 15),
+                                        padding: const EdgeInsets.only(top: 16.0, left: 15, right: 15),
                                         child: Image.asset(
                                           AppIcons.clearIcon,
                                           height: 2,
@@ -279,14 +252,10 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 labelText: S.of(context).mobileNumber,
                                 onChanged: (value) {},
                                 textInputFormatter: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.allow(
-                                      RegExp("[0-9]")),
+                                  FilteringTextInputFormatter.allow(RegExp("[0-9]")),
                                   MaskTextInputFormatter(
                                       mask: '*#########',
-                                      filter: {
-                                        "*": RegExp(r'^[5-9]'),
-                                        "#": RegExp(r'[0-9]')
-                                      },
+                                      filter: {"*": RegExp(r'^[5-9]'), "#": RegExp(r'[0-9]')},
                                       type: MaskAutoCompletionType.lazy)
                                 ],
                                 validator: ((value) {
@@ -294,8 +263,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     return 'Please Enter Mobile Number';
                                   } else if (value?.length != 10) {
                                     return 'Mobile number should be 10 digit';
-                                  } else if (RegExp(r'0000000000')
-                                      .hasMatch(value!)) {
+                                  } else if (RegExp(r'0000000000').hasMatch(value!)) {
                                     return 'This Number is Not Valid Number';
                                   }
                                   return null;
@@ -325,41 +293,33 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     keyboardType: TextInputType.emailAddress,
                                     validator: ((value) {
                                       if (value.isNotEmpty) {
-                                        if (cubit.calculateAge(
-                                                DateFormat("yyyy-MM-dd")
-                                                    .parse(value)) <
-                                            16) {
+                                        if (cubit.calculateAge(DateFormat("yyyy-MM-dd").parse(value)) < 16) {
                                           return S.of(context).dobError;
                                         }
                                       }
 
                                       return null;
                                     }),
-                                    suffixWidget:
-                                        Image.asset(AppIcons.calenderIcon)),
+                                    suffixWidget: Image.asset(AppIcons.calenderIcon)),
                                 spaceHeightWidget(5),
-                                (widget.userDetails.data?.dob != '' &&
-                                        widget.userDetails.data?.dob != null)
+                                (widget.userDetails.data?.dob != '' && widget.userDetails.data?.dob != null)
                                     ? Row(
                                         children: [
                                           Text(
                                             "${S.of(context).age}:",
                                             style: textStyleWithPoppin(
                                                 fontSize: 11,
-                                                color:
-                                                    AppColor.naturalBlackColor,
+                                                color: AppColor.naturalBlackColor,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           spaceWidthWidget(3),
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 1.0),
+                                            padding: const EdgeInsets.only(top: 1.0),
                                             child: Text(
                                               "${cubit.calculateYear(dob: cubit.boiCtr.text)} ${S.of(context).years}",
                                               style: textStyleWithPoppin(
                                                   fontSize: 10,
-                                                  color: AppColor
-                                                      .naturalBlackColor,
+                                                  color: AppColor.naturalBlackColor,
                                                   fontWeight: FontWeight.w200),
                                             ),
                                           ),
@@ -386,14 +346,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   await showModalBottomSheet(
                                       context: context,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(28.0),
+                                        borderRadius: BorderRadius.circular(28.0),
                                       ),
                                       builder: (builder) {
                                         return bottom(
                                             context: context,
-                                            dropDownList:
-                                                dropDownValue?.data?.religion,
+                                            dropDownList: dropDownValue?.data?.religion,
                                             text: S.of(context).religion,
                                             id: cubit.religionId ?? 0,
                                             controller: cubit.religionCtr);
@@ -423,14 +381,12 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                   await showModalBottomSheet(
                                       context: context,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(28.0),
+                                        borderRadius: BorderRadius.circular(28.0),
                                       ),
                                       builder: (builder) {
                                         return bottom(
                                             context: context,
-                                            dropDownList: dropDownValue
-                                                ?.data?.personCategory,
+                                            dropDownList: dropDownValue?.data?.personCategory,
                                             text: S.of(context).category,
                                             id: cubit.gradeId ?? 0,
                                             controller: cubit.statusCtr);
@@ -458,8 +414,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                               keyboardType: TextInputType.emailAddress,
                               onTap: () {
                                 if (cubit.statusCtr.text.isEmpty) {
-                                  EasyLoading.showToast(
-                                      S.of(context).pleaseSelectCategory);
+                                  EasyLoading.showToast(S.of(context).pleaseSelectCategory);
                                 } else {
                                   showCastData(cubit: cubit);
                                 }
@@ -478,11 +433,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Gender",
+                      S.of(context).gender,
                       style: textStyleWithPoppin(
-                          fontSize: 14,
-                          color: AppColor.black.withOpacity(0.8),
-                          fontWeight: FontWeight.w500),
+                          fontSize: 14, color: AppColor.black.withOpacity(0.8), fontWeight: FontWeight.w500),
                     ),
                   ),
                   BlocBuilder<PersonalInfoCubit, PersonalInfoState>(
@@ -503,17 +456,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         context.read<UserProfileCubit>().getUserProfileData();
                         Navigator.pop(context);
                         EasyLoading.dismiss();
-                        EasyLoading.showSuccess("Profile Updated",
-                            duration: const Duration(milliseconds: 500));
+                        EasyLoading.showSuccess("Profile Updated", duration: const Duration(milliseconds: 500));
                       }
                     },
                     child: CommonButton(
                       onTap: () {
                         if (cubit.formKey.currentState!.validate()) {
                           if (cubit.image != null) {
-                            cubit.getNetworkUrlAndUpdateProfile(
-                                id: widget.userDetails.data?.id,
-                                context: context);
+                            cubit.getNetworkUrlAndUpdateProfile(id: widget.userDetails.data?.id, context: context);
                           } else {
                             print(cubit.religionId);
                             print(cubit.castId);
@@ -547,8 +497,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                       height: 38,
                       borderRadius: 25,
                       // style: const TextStyle(fontSize: 20, color: AppColor.white),
-                      style: textStyleWithPoppin(
-                          color: AppColor.white, fontSize: 16),
+                      style: textStyleWithPoppin(color: AppColor.white, fontSize: 16),
                     ),
                   ),
                   spaceHeightWidget(15),
@@ -573,11 +522,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               cubit.changeValue(value!);
             }),
         Text(
-          "Male",
-          style: textStyleWithPoppin(
-              fontSize: 14,
-              color: AppColor.naturalBlackColor,
-              fontWeight: FontWeight.w500),
+          S.of(context).male,
+          style: textStyleWithPoppin(fontSize: 14, color: AppColor.naturalBlackColor, fontWeight: FontWeight.w500),
         ),
         spaceWidthWidget(3),
         Radio(
@@ -588,11 +534,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               cubit.changeValue(value!);
             }),
         Text(
-          "Female",
-          style: textStyleWithPoppin(
-              fontSize: 14,
-              color: AppColor.naturalBlackColor,
-              fontWeight: FontWeight.w500),
+          S.of(context).female,
+          style: textStyleWithPoppin(fontSize: 14, color: AppColor.naturalBlackColor, fontWeight: FontWeight.w500),
         ),
         spaceWidthWidget(3),
         Radio(
@@ -603,11 +546,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               cubit.changeValue(value!);
             }),
         Text(
-          "Transgender",
-          style: textStyleWithPoppin(
-              fontSize: 14,
-              color: AppColor.naturalBlackColor,
-              fontWeight: FontWeight.w500),
+          S.of(context).transgender,
+          style: textStyleWithPoppin(fontSize: 14, color: AppColor.naturalBlackColor, fontWeight: FontWeight.w500),
         ),
       ],
     );
@@ -625,9 +565,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
       child: Container(
           decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(28.0),
-                  topRight: Radius.circular(28.0))),
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0))),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -639,17 +577,14 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                   child: Container(
                     height: 5,
                     width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: AppColor.borderColor),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColor.borderColor),
                   ),
                 ),
                 spaceHeightWidget(30),
                 Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      color: AppColor.borderColor, fontSize: 16),
+                  style: GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
                 ),
                 spaceHeightWidget(30),
                 Expanded(
@@ -665,9 +600,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 if (text == S.of(context).category) {
                                   id = list?[index].id ?? 0;
                                   controller.text = list?[index].name ?? '';
-                                  context
-                                      .read<PersonalInfoCubit>()
-                                      .getCasteDropDownValue(id: id.toString());
+                                  context.read<PersonalInfoCubit>().getCasteDropDownValue(id: id.toString());
                                   Navigator.pop(context, id);
                                 } else {
                                   id = list?[index].id ?? 0;
@@ -680,8 +613,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 child: Text(
                                   list?[index].name ?? '',
                                   textAlign: TextAlign.left,
-                                  style: GoogleFonts.poppins(
-                                      color: AppColor.black, fontSize: 16),
+                                  style: GoogleFonts.poppins(color: AppColor.black, fontSize: 16),
                                 ),
                               ),
                             ),
@@ -712,9 +644,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             child: Container(
                 decoration: const BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(28.0),
-                        topRight: Radius.circular(28.0))),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(28.0), topRight: Radius.circular(28.0))),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -726,17 +656,15 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                         child: Container(
                           height: 5,
                           width: 100,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: AppColor.borderColor),
+                          decoration:
+                              BoxDecoration(borderRadius: BorderRadius.circular(25), color: AppColor.borderColor),
                         ),
                       ),
                       spaceHeightWidget(30),
                       Text(
                         S.of(context).caste,
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.poppins(
-                            color: AppColor.borderColor, fontSize: 16),
+                        style: GoogleFonts.poppins(color: AppColor.borderColor, fontSize: 16),
                       ),
                       spaceHeightWidget(30),
                       Expanded(
@@ -746,28 +674,20 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 itemCount: cubit.castData?.data?.length,
                                 itemBuilder: (context, index) {
                                   return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          cubit.castId =
-                                              cubit.castData?.data?[index].id ??
-                                                  0;
-                                          cubit.castCtr.text = cubit.castData
-                                                  ?.data?[index].name ??
-                                              '';
+                                          cubit.castId = cubit.castData?.data?[index].id ?? 0;
+                                          cubit.castCtr.text = cubit.castData?.data?[index].name ?? '';
                                           Navigator.pop(context);
                                         },
                                         child: SizedBox(
                                           width: double.infinity,
                                           child: Text(
-                                            cubit.castData?.data?[index].name ??
-                                                '',
+                                            cubit.castData?.data?[index].name ?? '',
                                             textAlign: TextAlign.left,
-                                            style: GoogleFonts.poppins(
-                                                color: AppColor.black,
-                                                fontSize: 16),
+                                            style: GoogleFonts.poppins(color: AppColor.black, fontSize: 16),
                                           ),
                                         ),
                                       ),
@@ -779,8 +699,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                     ],
                                   );
                                 })
-                            : Center(
-                                child: Text(S.of(context).noDataAvailable)),
+                            : Center(child: Text(S.of(context).noDataAvailable)),
                       )
                     ],
                   ),
