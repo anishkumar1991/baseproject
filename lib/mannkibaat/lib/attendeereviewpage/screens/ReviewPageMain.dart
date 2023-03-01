@@ -4,13 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../Storage/AttendeesFormStorage.dart';
 import '../../attendeesformpage/cubit/FetchCubit.dart';
-import '../../formfillsuccesspage/screens/FormSuccess.dart';
-import '../../utils/appbar/AppBar.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
-import '../../utils/buttons/SubmitButton.dart';
-import '../../utils/drawer/UserProfileDrawer.dart';
 import '../../values/AppColors.dart';
-import '../../values/Constants.dart';
 import 'BoothAddress.dart';
 import 'BoothName.dart';
 import 'DescriptionSection.dart';
@@ -77,7 +72,6 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
           titleSpacing: 0),
       body: Scaffold(
         // key: _key,
-        drawer: const UserProfileDrawer(),
         body: Container(
           decoration: BoxDecorationWidget.getBoxDecoration(),
           child: SingleChildScrollView(

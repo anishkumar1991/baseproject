@@ -7,7 +7,6 @@ import '../BottomSocialBar.dart';
 import '../network/model/FetchPosts.dart';
 
 class Polls extends StatefulWidget {
-  final screenshotController = ScreenshotController();
   final List<Post> item;
 
   final int tempindex;
@@ -20,13 +19,15 @@ class Polls extends StatefulWidget {
 }
 
 class _PollsState extends State<Polls> {
+  ScreenshotController screenshotController = ScreenshotController();
+
   var value1;
 
   @override
   Widget build(BuildContext context) {
     final cubit1 = context.read<PollCubit>();
     return Screenshot(
-      controller: widget.screenshotController,
+      controller: screenshotController,
       child: Material(
         elevation: 4,
         child: Padding(
@@ -95,11 +96,10 @@ class _PollsState extends State<Polls> {
                   })),
               BottomSocialBar(
                 index: widget.tempindex,
-                screenshotController: widget.screenshotController,
+                screenshotController: screenshotController,
                 item: widget.item,
               ),
               const SizedBox(height: 10),
-              // BottomSocialBar(),
             ],
           ),
         ),

@@ -12,6 +12,7 @@ import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/Share.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/ShareOnWhatsapp.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/VideoShare.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/share/VideoShareURL.dart';
+import 'package:sangathan/Values/string.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'ReactionButton.dart';
@@ -35,7 +36,6 @@ class BottomSocialBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit2 = context.read<ShareCubit>();
-
     var id = item[index].id.toString();
     var shareToAllCount = item[index].shares.other;
     var shareToWhatsapp = item[index].shares.whatsapp;
@@ -86,10 +86,15 @@ class BottomSocialBar extends StatelessWidget {
                   onPressed: () async {
                     if (item[index].postType == "Poll") {
                       cubit2.shareToAll(id);
+                      final text1 = item[index].title+"\n"+item[index].caption;
+                      var text2 = AppStrings.shareUrl;
 
-                      final text = item[index].sharingContent;
+                      final text = "$text1\n\n$text2";
 
-                      double pixelRatio =  MediaQuery.of(context).devicePixelRatio;
+
+
+                      double pixelRatio =
+                          MediaQuery.of(context).devicePixelRatio;
                       final image1 = await screenshotController!.capture(
                           pixelRatio: pixelRatio,
                           delay: const Duration(milliseconds: 10));
@@ -100,8 +105,7 @@ class BottomSocialBar extends StatelessWidget {
                       File(path).writeAsBytesSync(bytes);
                       XFile file = XFile(path);
                       await Share.shareXFiles(text: text, [file]);
-                    }
-                    else if (item[index].postType == "Video") {
+                    } else if (item[index].postType == "Video") {
                       print("------------UNDER-Video-Type-----");
                       if (item[index]
                               .postData
@@ -144,8 +148,7 @@ class BottomSocialBar extends StatelessWidget {
                             item[index].postData.video.toString(),
                             item[index].title);
                       }
-                    }
-                    else {
+                    } else {
                       print("----------------else ke andar FORMAT----->");
                       cubit2.shareToAll(id);
                       share(

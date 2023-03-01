@@ -10,7 +10,6 @@ import '../../../formfillsuccesspage/screens/FormSuccess.dart';
 import '../../../utils/appbar/AppBar.dart';
 import '../../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../../utils/buttons/SubmitButton.dart';
-import '../../../utils/drawer/UserProfileDrawer.dart';
 import '../../../values/AppColors.dart';
 import '../../cubit/FetchCubit.dart';
 import '../cubit/SendEventCubit.dart';
@@ -57,7 +56,6 @@ class _FormReviewPageState extends State<FormReviewPage> {
       appBar: AppBarWidget.getAppBar(_key, context),
       body: Scaffold(
         key: _key,
-        drawer: const UserProfileDrawer(),
         body: Container(
           decoration: BoxDecorationWidget.getBoxDecoration(),
           child: SingleChildScrollView(

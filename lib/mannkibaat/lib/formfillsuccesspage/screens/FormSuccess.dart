@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../reportedprogramspage/screens/newscreens/MainDashboard.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
-import '../../utils/drawer/UserProfileDrawer.dart';
 import '../../values/AppColors.dart';
 
 class FormSuccess extends StatelessWidget {
@@ -48,7 +47,6 @@ class FormSuccess extends StatelessWidget {
             titleSpacing: 0),
         body: Scaffold(
           key: _key,
-          drawer: const UserProfileDrawer(),
           body: Container(
             decoration: BoxDecorationWidget.getBoxDecoration(),
             child: ListView(

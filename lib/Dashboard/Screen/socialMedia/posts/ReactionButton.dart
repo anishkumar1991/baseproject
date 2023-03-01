@@ -82,18 +82,18 @@ class CustomReactionButton extends StatelessWidget {
   }
 
   Widget ownReaction() {
-    if (item[index].myReaction!.reaction.name == "LIKE") {
+    if (item[index].myReaction?.reaction.name == "LIKE") {
       return const Icon(Icons.thumb_up_alt_sharp, color: Colors.blue, size: 27);
-    } else if (item[index].myReaction!.reaction.name == "LOVE") {
+    } else if (item[index].myReaction?.reaction.name == "LOVE") {
       return Image.asset("assets/images/hearticon.png", height: 32);
-    } else if (item[index].myReaction!.reaction.name == "WOW") {
+    } else if (item[index].myReaction?.reaction.name == "WOW") {
       return Image.asset("assets/images/wowicon.png", height: 32);
-    } else if (item[index].myReaction!.reaction.name == "SAD") {
+    } else if (item[index].myReaction?.reaction.name == "SAD") {
       return Image.asset("assets/images/sadicon.png", height: 32);
-    } else if (item[index].myReaction!.reaction.name == "ANGRY") {
+    } else if (item[index].myReaction?.reaction.name == "ANGRY") {
       return Image.asset("assets/images/angryicon.png", height: 31);
     } else {
-      return SizedBox();
+      return const Icon(Icons.thumb_up_alt_sharp, size: 27);
     }
   }
 }

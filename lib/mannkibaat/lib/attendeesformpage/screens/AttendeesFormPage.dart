@@ -7,7 +7,6 @@ import '../../Storage/AttendeesFormStorage.dart';
 import '../../utils/appbar/AppBar.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../utils/buttons/SubmitButton.dart';
-import '../../utils/drawer/UserProfileDrawer.dart';
 import '../../values/AppColors.dart';
 import '../../values/Constants.dart';
 import '../cubit/AttendeeFormCubit.dart';
@@ -45,7 +44,6 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
         appBar: AppBarWidget.getAppBar(_key, context),
         body: Scaffold(
           key: _key,
-          drawer: const UserProfileDrawer(),
           body: Container(
             decoration: BoxDecorationWidget.getBoxDecoration(),
             child: Padding(

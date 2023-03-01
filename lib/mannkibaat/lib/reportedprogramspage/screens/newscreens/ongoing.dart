@@ -67,17 +67,39 @@ class _OnGoingState extends State<OnGoing> {
                       onTap: () {
                         if (state.dashModal.data[index].eventHasDetail ==
                             false) {
-                          print(
-                              'inside REVIEW statement-->${state.dashModal.data[index].eventDetail.totalAttendees}');
-                          print(
-                              'Event Detail-->${state.dashModal.data[index].eventDetail}');
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AttendeesFormPage(
-                                        eventId: state.dashModal.data[index].id,
-                                      )));
+                          if (startdate.isAfter(currentDate)) {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text("Upcoming.."),
+                                  content: Text(
+                                      "You can visit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
+                                  actions: [
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
+                                      ),
+                                      child: const Text('OK'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AttendeesFormPage(
+                                          eventId:
+                                              state.dashModal.data[index].id,
+                                        )));
+                          }
                         } else {
                           Navigator.push(
                               context,
