@@ -6,6 +6,7 @@ import 'package:sangathan/mannkibaat/lib/attendeesformpage/review/cubit/SendEven
 
 import '../../../../../Storage/mannkibaat.dart';
 import '../../../../../Values/Constants.dart';
+import '../../../../../Values/app_colors.dart';
 import '../../../formfillsuccesspage/screens/FormSuccess.dart';
 import '../../../utils/appbar/AppBar.dart';
 import '../../../utils/backgroundboxdecoration/BoxDecoration.dart';
@@ -53,14 +54,30 @@ class _FormReviewPageState extends State<FormReviewPage> {
     final cubit2 = context.read<SendEventCubit>();
 
     return Scaffold(
-      appBar: AppBarWidget.getAppBar(_key, context),
+      appBar: AppBar(
+          backgroundColor: AppColor().appBarColor,
+          title: Text("भारतीय जनता पार्टी",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: AppColor().textColor)),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: (() {
+              Navigator.pop(context);
+            }),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+          automaticallyImplyLeading: false,
+          titleSpacing: 0),
       body: Scaffold(
         key: _key,
         body: Container(
           decoration: BoxDecorationWidget.getBoxDecoration(),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(right: 15),
+              padding: const EdgeInsets.only(left: 15),
               child: Column(
                 children: [
                   Row(
@@ -87,17 +104,17 @@ class _FormReviewPageState extends State<FormReviewPage> {
                     vidhanSabha: cubit.vidhansabhaname,
                     state: "Madhya Pradesh",
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 2),
                   ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 1),
                   ReviewBoothName(booth: cubit.boothname),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 4),
                   ReviewBoothAddress(boothAddress: widget.address),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 8),
                   ReviewDescription(description: widget.description),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 10),
                   ReviewImages(img1: widget.img1, img2: widget.img2),
-                  const SizedBox(height: 43),
+                  const SizedBox(height: 2),
                   SizedBox(
                     width: Constants.buttonSizeBoxWidth,
                     height: Constants.buttonSizeBoxHeight,

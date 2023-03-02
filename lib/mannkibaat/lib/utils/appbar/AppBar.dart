@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../values/AppColors.dart';
+import '../../../../Values/app_colors.dart';
 
 class AppBarWidget {
   static getAppBar(GlobalKey<ScaffoldState> globalKey, BuildContext context) {

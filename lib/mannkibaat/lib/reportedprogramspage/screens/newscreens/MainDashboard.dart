@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:sangathan/generated/l10n.dart';
-import 'package:sangathan/mannkibaat/lib/values/AppColors.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
+import '../../../../../Values/app_colors.dart';
 import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../../generateauthtoken/cubit/SendState.dart';
 import 'expired.dart';
@@ -62,7 +63,7 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
           title: Text("भारतीय जनता पार्टी",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
-                  fontSize: 10.91,
+                  fontSize: 14,
                   color: AppColor().textColor)),
           centerTitle: true,
           leading: IconButton(
@@ -94,7 +95,7 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
                           child: TabBar(
                             unselectedLabelColor: const Color(0xFF666666),
                             indicator: BoxDecoration(
-                              color: const Color(0xFF447EFF),
+                              color: AppColor.primaryColor,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             controller: tabController,

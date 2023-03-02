@@ -6,6 +6,8 @@ import 'package:sangathan/mannkibaat/lib/reportedprogramspage/cubit/DashCubit.da
 import 'package:sangathan/mannkibaat/lib/reportedprogramspage/screens/newscreens/MainDashboard.dart';
 import 'package:sangathan/mannkibaat/lib/values/AppColors.dart';
 
+import '../../Values/app_colors.dart';
+
 
 class MainButton extends StatefulWidget {
   final String text;
@@ -27,7 +29,7 @@ class _MainButtonState extends State<MainButton> {
               RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           )),
-          backgroundColor: MaterialStateProperty.all(AppColor().buttonColor),
+          backgroundColor: MaterialStateProperty.all(AppColor.primaryColor),
         ),
         onPressed: () {
           DashCubit();

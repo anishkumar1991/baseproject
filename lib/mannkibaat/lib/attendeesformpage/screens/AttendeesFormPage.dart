@@ -3,11 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../Storage/AttendeesFormStorage.dart';
-import '../../utils/appbar/AppBar.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../utils/buttons/SubmitButton.dart';
-import '../../values/AppColors.dart';
 import '../../values/Constants.dart';
 import '../cubit/AttendeeFormCubit.dart';
 import '../review/screens/ReviewPageMain.dart';
@@ -41,7 +40,23 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
         ),
       ],
       child: Scaffold(
-        appBar: AppBarWidget.getAppBar(_key, context),
+        appBar: AppBar(
+            backgroundColor: AppColor().appBarColor,
+            title: Text("भारतीय जनता पार्टी",
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: AppColor().textColor)),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: (() {
+                Navigator.pop(context);
+              }),
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.black,
+            ),
+            automaticallyImplyLeading: false,
+            titleSpacing: 0),
         body: Scaffold(
           key: _key,
           body: Container(
@@ -85,6 +100,7 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                                   width: 1, color: AppColor().textFieldColor))),
                       keyboardType: TextInputType.phone,
                       inputFormatters: <TextInputFormatter>[
+                        LengthLimitingTextInputFormatter(4),
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ],
                       onChanged: (value) {
@@ -112,6 +128,11 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                               borderSide: BorderSide(
                                   width: 1, color: AppColor().textFieldColor))),
                       keyboardType: TextInputType.name,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(150),
+
+                        /// here char limit is 5
+                      ],
                       onChanged: (value) {
                         AttendeeStorageService.setaddress(value.toString());
                         print(AttendeeStorageService.getaddress());
@@ -142,6 +163,11 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                                     width: 1,
                                     color: AppColor().textFieldColor))),
                         keyboardType: TextInputType.name,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(300),
+
+                          /// here char limit is 5
+                        ],
                         onChanged: (value) {
                           AttendeeStorageService.setdescription(
                               value.toString());

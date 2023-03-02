@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../Storage/AttendeesFormStorage.dart';
 import '../../attendeesformpage/cubit/FetchCubit.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
@@ -58,7 +59,7 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
           title: Text("भारतीय जनता पार्टी",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
-                  fontSize: 10.91,
+                  fontSize: 14,
                   color: AppColor().textColor)),
           centerTitle: true,
           leading: IconButton(
@@ -76,7 +77,7 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
           decoration: BoxDecorationWidget.getBoxDecoration(),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(right: 15),
+              padding: const EdgeInsets.only(left: 14),
               child: Column(
                 children: [
                   Row(
@@ -103,17 +104,17 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
                     vidhanSabha: widget.vidhanSabha,
                     state: widget.state,
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 2),
                   ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 1),
                   ReviewBoothName(booth: widget.booth),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 4),
                   ReviewBoothAddress(boothAddress: widget.address),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 9),
                   ReviewDescription(description: widget.description),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 10),
                   ReviewImages(img1: widget.img1, img2: widget.img2),
-                  const SizedBox(height: 43),
+                  const SizedBox(height: 4),
                   // SizedBox(
                   //   width: Constants.buttonSizeBoxWidth,
                   //   height: Constants.buttonSizeBoxHeight,

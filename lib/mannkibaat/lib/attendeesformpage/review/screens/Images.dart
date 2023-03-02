@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../values/AppColors.dart';
+import '../../../../../Values/app_colors.dart';
 
 class ReviewImages extends StatelessWidget {
   final String img1;
@@ -18,10 +17,10 @@ class ReviewImages extends StatelessWidget {
       title: Text("तस्वीर",
           style: GoogleFonts.publicSans(
               fontWeight: FontWeight.w400,
-              fontSize: 16,
+              fontSize: 18,
               color: AppColor().reviewFormTextColor)),
       subtitle: Padding(
-        padding: const EdgeInsets.only(top: 6),
+        padding: const EdgeInsets.only(top: 0),
         child: Row(
           children: [
             SizedBox(
@@ -31,6 +30,7 @@ class ReviewImages extends StatelessWidget {
                     //extensions like .jpg, .png etc
                     errorBuilder: (context, error, stackTrace) => Image.asset(
                           "assets/images/mannkibaat/image.png",
+                          color:  Colors.black12,
                           width: 120,
                           height: 200,
                         ))),
@@ -42,6 +42,7 @@ class ReviewImages extends StatelessWidget {
                     //extensions like .jpg, .png etc
                     errorBuilder: (context, error, stackTrace) => Image.asset(
                           "assets/images/mannkibaat/image.png",
+                          color:  Colors.black12,
                           width:  100,
                           height: 200,
                         ))),

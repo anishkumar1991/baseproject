@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../values/AppColors.dart';
 
 class ReviewVidhanAndStates extends StatelessWidget {
@@ -26,9 +27,9 @@ class ReviewVidhanAndStates extends StatelessWidget {
               Text(
                 "${vidhanSabha}",
                 style: GoogleFonts.publicSans(
-                    color: AppColor().buttonColor,
+                    color: Colors.black,
                     fontWeight: FontWeight.w600,
-                    fontSize: 16),
+                    fontSize: 18),
               )
             ],
           ),
@@ -41,13 +42,13 @@ class ReviewVidhanAndStates extends StatelessWidget {
               Text("राज्य",
                   style: GoogleFonts.publicSans(
                       fontWeight: FontWeight.w400,
-                      fontSize: 16,
+                      fontSize: 18,
                       color: AppColor().reviewFormTextColor)),
               Text(state ?? " ",
                   style: GoogleFonts.publicSans(
-                      color: AppColor().buttonColor,
+                      color: Colors.black,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16))
+                      fontSize: 18))
             ],
           ),
         ),

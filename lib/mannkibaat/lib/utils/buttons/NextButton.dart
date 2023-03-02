@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../values/AppColors.dart';
 
 class BUTTON extends StatelessWidget {
@@ -29,7 +30,7 @@ class BUTTON extends StatelessWidget {
               style: GoogleFonts.quicksand(
                   fontWeight: FontWeight.w600,
                   fontSize: 20,
-                  color: AppColor().buttonTextColor),
+                  color: AppColor().buttonTextColorMKB),
             ),
             const Icon(Icons.arrow_forward),
           ],

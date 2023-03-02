@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../values/AppColors.dart';
 
 class ReviewImages extends StatelessWidget {
@@ -18,7 +19,7 @@ class ReviewImages extends StatelessWidget {
       title: Text("तस्वीर",
           style: GoogleFonts.publicSans(
               fontWeight: FontWeight.w400,
-              fontSize: 16,
+              fontSize: 18,
               color: AppColor().reviewFormTextColor)),
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 6),
