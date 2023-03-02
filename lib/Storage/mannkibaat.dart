@@ -19,8 +19,8 @@ class MKBStorageService {
   }
 
   static String? getUserAuthToken() {
-    MKBuserAuthTokenKey = MKBstorage.read(MKBuserAuthTokenKey);
+    return MKBstorage.read(MKBuserAuthTokenKey);
 
-    return MKBuserAuthTokenKey;
+
   }
 }
