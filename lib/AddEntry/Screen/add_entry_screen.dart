@@ -480,7 +480,7 @@ class _AddEntryPageState extends State<AddEntryPage> {
             title: cubit.getLocaleName(cubit.entryField![i].displayNameForUI ?? "", currentLocale),
             validator: ((value) {
               if (value.isNotEmpty) {
-                if (cubit.calculateAge(DateFormat("dd-MMM-yyyy").parse(value)) < 16) {
+                if (cubit.calculateAge(DateFormat("dd/MM/yyyy").parse(value)) < 16) {
                   return S.of(context).dobError;
                 }
               }

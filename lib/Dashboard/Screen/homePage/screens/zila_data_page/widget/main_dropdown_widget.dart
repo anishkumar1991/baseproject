@@ -222,10 +222,27 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                           const SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            showDropdownValueBasedOnType(locationList[index]),
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  showDropdownValueBasedOnType(locationList[index]),
+                                  textAlign: TextAlign.left,
+                                  style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
+                                ),
+                                if (widget.typeName == "Booth" && widget.typeLevel == "Booth")
+                                  Text(
+                                    locationList[index].mandalName == null
+                                        ? S.of(context).notMappedWithAnyMandal
+                                        : "${S.of(context).mappedMandal} :${locationList[index].mandalName ?? ""}",
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.quicksand(
+                                        fontSize: 14, fontWeight: FontWeight.w500, color: AppColor.borderColor),
+                                  ),
+                              ],
+                            ),
                           )
                         ],
                       ),
