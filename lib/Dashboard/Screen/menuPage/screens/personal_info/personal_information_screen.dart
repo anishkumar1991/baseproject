@@ -47,6 +47,9 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     context.read<PersonalInfoCubit>().religionCtr.text = widget.userDetails.data?.religion?.name ?? '';
     context.read<PersonalInfoCubit>().statusCtr.text = widget.userDetails.data?.category?.name ?? '';
     context.read<PersonalInfoCubit>().castCtr.text = widget.userDetails.data?.caste?.name ?? '';
+    context.read<PersonalInfoCubit>().religionId = widget.userDetails.data?.religion?.id;
+    context.read<PersonalInfoCubit>().castId = widget.userDetails.data?.caste?.id;
+    context.read<PersonalInfoCubit>().gradeId = widget.userDetails.data?.category?.id;
     getGenderRadioButtonValue(widget.userDetails.data?.gender?.toLowerCase());
     context
         .read<PersonalInfoCubit>()
