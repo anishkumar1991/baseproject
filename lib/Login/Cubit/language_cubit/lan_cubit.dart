@@ -1,10 +1,9 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_storage/get_storage.dart';
 
 part "language_state.dart";
+
+String currentLanguage = "hi";
 
 class LanguageCubit extends Cubit<LanguageState> {
   LanguageCubit() : super(LanguageInitial());

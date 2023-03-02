@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/network/model/FetchPosts.dart';
@@ -8,8 +6,7 @@ import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/Polls.d
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/topBar.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
-import 'package:shimmer/shimmer.dart';
-import '../../../../Values/app_colors.dart';
+
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 import 'socialcards/VideoCard.dart';
@@ -29,8 +26,7 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
     BlocProvider.of<PostsCubit>(context).loadPosts();
 
     scrollController.addListener(() {
-      if (scrollController.offset ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.offset == scrollController.position.maxScrollExtent) {
         BlocProvider.of<PostsCubit>(context).loadPosts();
       }
     });
@@ -100,21 +96,20 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                     itemCount: posts.length + (isLoading ? 1 : 0),
                     itemBuilder: (context, index) {
                       if (index < posts.length) {
-
                         if (posts[index].postType == "Image") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: CustomCard(tempkey: 2, index: index,item: posts),
+                            child: CustomCard(tempkey: 2, index: index, item: posts),
                           );
                         } else if (posts[index].postType == "Poll") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: Polls(tempindex: index,item:  posts),
+                            child: Polls(tempindex: index, item: posts),
                           );
                         } else if (posts[index].postType == "Video") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: VideoCard(index: index,item: posts),
+                            child: VideoCard(index: index, item: posts),
                           );
                         } else {
                           return const SizedBox();
@@ -135,8 +130,8 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
   }
 
   Widget _loadingIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Center(child: CircularProgressIndicator()),
     );
   }

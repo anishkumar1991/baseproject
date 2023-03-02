@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/netwo
 import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/network/model/delete_reason_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../../../Login/Cubit/language_cubit/lan_cubit.dart';
 import '../../../../../../Storage/user_storage_service.dart';
 import '../../sangathan_details/network/model/ClientAppPermissionModel.dart';
 import '../network/api/data_entry_api.dart';
@@ -133,7 +136,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getPartyZila({required String remainingURL, required String type}) async {
     try {
       emit(DataFetchingLoadingState());
-      final res = await api.dynamicDropdown('Bearer ${StorageService.userAuthToken}', remainingURL);
+      final res = await api.dynamicDropdown('Bearer ${StorageService.userAuthToken}', currentLanguage, remainingURL);
 
       print("------------------------------------ Get required location ----------------------------");
       print("remainingURL:$remainingURL");
@@ -156,7 +159,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
   Future getDependentDropdownData({required String remainingURL, required String type}) async {
     try {
       emit(DependentDropdownLoadingState());
-      final res = await api.dynamicDropdown('Bearer ${StorageService.userAuthToken}', remainingURL);
+      final res = await api.dynamicDropdown('Bearer ${StorageService.userAuthToken}', currentLanguage, remainingURL);
 
       print("------------------------------------ dependent Dropdown Data $type ----------------------------");
       print("remainingURL:$remainingURL");
@@ -242,7 +245,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       emit(BoothPannasStatusLoadingState());
       final res = await api.getBoothPannasStatus('Bearer ${StorageService.userAuthToken}', boothID);
       print("------------------------------------ get Booth Panna Status ----------------------------");
-
+      print("Url :${res.response.realUri}");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");
       print("------------------------------------ ------------------------ ----------------------------");

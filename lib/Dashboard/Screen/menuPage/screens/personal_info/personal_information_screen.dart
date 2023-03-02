@@ -123,11 +123,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                             );
                                           },
                                         )
-                                      : Container(
-                                          color: AppColor.white,
-                                          height: 84,
-                                          width: 84,
-                                          child: Image.asset(AppIcons.sangathanLogo))),
+                                      : SizedBox(
+                                          height: 84, width: 84, child: Image.asset(AppIcons.userProfilePlaceholder))),
                             )
                           : Container(
                               height: 100,

@@ -5,7 +5,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail.state.dart';
 import 'package:sangathan/Dashboard/Screen/homePage/screens/sangathan_details/cubit/sangathan_detail_cubit.dart';
-import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/zila_data_screen.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
@@ -16,6 +15,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
 import '../../../../../common/common_logo_widget.dart';
+import '../zila_data_page/zila_data_screen.dart';
 import 'network/model/ClientAppPermissionModel.dart';
 import 'widget/select_allotted_location_sheet_widget.dart';
 
@@ -357,21 +357,23 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
                     return InkWell(
                       onTap: (() {
                         cubit.getDataLevelId(data?.id);
-                        // Navigator.pushNamed(context, RoutePath.addEntryScreen,
-                        //     arguments: data[index]['text']);
                         List<AppPermissions> appPermissions = [];
 
                         for (int i = 0; i < (cubit.appPermissions?.length ?? 0); i++) {
                           if (cubit.appPermissions?[i].permissionName == "ShaktiKendraData") {
+                            print(cubit.appPermissions?[i].action);
                             if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() ==
                                 data?.name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
                               appPermissions.add(cubit.appPermissions![i]);
                             }
-                          } else if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() ==
-                              data?.name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
-                            print(
-                                "${cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim()}  : ${data?.name?.split(RegExp(r"(?=[A-Z])"))[0]}");
-                            appPermissions.add(cubit.appPermissions![i]);
+                          } else {
+                            if (cubit.appPermissions?[i].permissionName != "ShaktiKendra") {
+                              if (cubit.appPermissions?[i].permissionName?.split(RegExp(r"(?=[A-Z])"))[0].trim() ==
+                                  data?.name?.split(RegExp(r"(?=[A-Z])"))[0].trim()) {
+                                appPermissions.add(cubit.appPermissions![i]);
+                                print("----------- Here enter ------------");
+                              }
+                            }
                           }
                         }
 
@@ -535,7 +537,7 @@ getLocalizationNameOfLevel(BuildContext context, String levelName) {
     return S.of(context).vidhanSabhaLevel;
   } else if (levelName == "Shakti Kendra") {
     return S.of(context).shaktiKendra;
-  } else if (levelName == "Booth" || levelName == "Panna") {
+  } else if (levelName == "Booth") {
     return S.of(context).booth;
   } else if (levelName == "Panna") {
     return S.of(context).panna;

@@ -12,14 +12,14 @@ import 'package:sangathan/route/route_path.dart';
 
 import '../../../Values/string.dart';
 import '../../../splash_screen/cubit/user_profile_cubit.dart';
-import '../notification/screens/NotificatioMainScreen.dart';
+import '../../../splash_screen/cubit/user_profile_state.dart';
 import 'cubit/home_page_cubit.dart';
 import 'cubit/home_page_state.dart';
 
 final homePageScaffoldGlobalKey = GlobalKey<ScaffoldState>();
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -29,10 +29,16 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController searchTextController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    SizeConfig().getCurrentOrientation(context);
+  void initState() {
     context.read<HomePageCubit>().getClientAppLists();
     print(AppStrings.baseUrl);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig().getCurrentOrientation(context);
+
     return Scaffold(
       key: homePageScaffoldGlobalKey,
       // drawer: const CustomDrawerWidget(),
@@ -72,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   //         size: 20,
                   //       )),
                   // ),
-SizedBox(),
+                  SizedBox(),
                   Image.asset(
                     AppIcons.sangathanLogo,
                     height: 55,
@@ -86,43 +92,37 @@ SizedBox(),
                     child: Container(
                       height: 42,
                       width: 42,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: AppColor.dividerColor)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(350),
-                        child: userProfileModel.data?.avatar != null &&
-                                userProfileModel.data?.avatar != ''
-                            ? Image.network(
-                                userProfileModel.data?.avatar ?? '',
-                                fit: BoxFit.cover,
-                                errorBuilder: (BuildContext context,
-                                    Object exception, StackTrace? stackTrace) {
-                                  return const Icon(Icons.person, size: 25);
-                                },
-                                loadingBuilder: (BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent? loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  }
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
+                      decoration:
+                          BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColor.dividerColor)),
+                      child: BlocBuilder<UserProfileCubit, UserProfileState>(
+                        builder: (context, state) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(350),
+                            child: userProfileModel.data?.avatar != null && userProfileModel.data?.avatar != ''
+                                ? Image.network(
+                                    userProfileModel.data?.avatar ?? '',
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                      return const Icon(Icons.person, size: 25);
+                                    },
+                                    loadingBuilder:
+                                        (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      }
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress.expectedTotalBytes != null
+                                              ? loadingProgress.cumulativeBytesLoaded /
+                                                  loadingProgress.expectedTotalBytes!
                                               : null,
-                                    ),
-                                  );
-                                },
-                              )
-                            : Container(
-                                color: AppColor.white,
-                                child: Image.asset(AppIcons.sangathanLogo)),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Container(color: AppColor.white, child: Image.asset(AppIcons.userProfilePlaceholder)),
+                          );
+                        },
                       ),
                     ),
                   )
@@ -195,27 +195,19 @@ SizedBox(),
                         builder: (context, state) {
                           if (state is ClientAppListsSuccessState) {
                             if (state.clientAppListsModel.sections != null) {
-                              for (var item
-                                  in state.clientAppListsModel.sections!) {
+                              for (var item in state.clientAppListsModel.sections!) {
                                 if (item.type == "app_cards") {
                                   if (item.data != null) {
                                     for (var innerItem in item.data!) {
                                       if (innerItem.name == "Data Entry") {
                                         return GestureDetector(
                                             onTap: (() {
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  RoutePath
-                                                      .sangathanDetailsScreen,
-                                                  arguments:
-                                                      SangathanDetailsPage(
-                                                    cliendId: innerItem.clientId
-                                                        .toString(),
+                                              Navigator.pushNamed(context, RoutePath.sangathanDetailsScreen,
+                                                  arguments: SangathanDetailsPage(
+                                                    cliendId: innerItem.clientId.toString(),
                                                   ));
                                             }),
-                                            child: SngathanCardWidget(
-                                                clientId: innerItem.clientId
-                                                    .toString()));
+                                            child: SngathanCardWidget(clientId: innerItem.clientId.toString()));
                                       }
                                     }
                                   }
@@ -236,17 +228,12 @@ SizedBox(),
                         builder: (context, state) {
                           if (state is ClientAppListsSuccessState) {
                             if (state.clientAppListsModel.sections != null) {
-                              for (var item
-                                  in state.clientAppListsModel.sections!) {
+                              for (var item in state.clientAppListsModel.sections!) {
                                 if (item.type == "carousel") {
                                   if (item.data != null) {
                                     for (var innerItem in item.data!) {
-                                      if (innerItem.actionUrl!
-                                              .contains("mannkibaat") ==
-                                          true) {
-                                        return MannKiBaatCard(
-                                            mannkibaatAuthToken:
-                                                innerItem.actionUrl);
+                                      if (innerItem.actionUrl!.contains("mannkibaat") == true) {
+                                        return MannKiBaatCard(mannkibaatAuthToken: innerItem.actionUrl);
                                       }
                                     }
                                   }
@@ -265,8 +252,7 @@ SizedBox(),
                         builder: (context, state) {
                           if (state is ClientAppListsSuccessState) {
                             if (state.clientAppListsModel.sections != null) {
-                              for (var item
-                                  in state.clientAppListsModel.sections!) {
+                              for (var item in state.clientAppListsModel.sections!) {
                                 if (item.type == "app_cards") {
                                   if (item.data != null) {
                                     for (var innerItem in item.data!) {

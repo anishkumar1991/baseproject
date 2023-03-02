@@ -220,11 +220,15 @@ class _DataEntryApi implements DataEntryApi {
   @override
   Future<HttpResponse<dynamic>> dynamicDropdown(
     token,
+    language,
     reason,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
+    final _headers = <String, dynamic>{
+      r'Authorization': token,
+      r'Language': language,
+    };
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result =

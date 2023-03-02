@@ -20,7 +20,6 @@ import '../../../../../common/appstyle.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../../../../Cubit/dashboard_cubit.dart';
-import '../personal_info/cubit/personal_info_cubit.dart';
 import 'cubit/profile_cubit.dart';
 import 'network/model/user_detail_model.dart';
 
@@ -252,9 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 if (state is UserLogOutSuccessState) {
                                   EasyLoading.showSuccess(state.msg);
                                   userProfileModel = UserDetailModel();
-                                  Future.delayed(Duration.zero).then((value) {
-                                    context.read<PersonalInfoCubit>().imageFile = null;
-                                  });
+
                                   print("model data name : ${userProfileModel.data?.name}");
                                   Navigator.pushNamedAndRemoveUntil(context, RoutePath.loginScreen, (route) => false);
                                   context.read<DashBoardCubit>().onTapIcons(0);

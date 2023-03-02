@@ -729,6 +729,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         if (DynamicUIHandler.calenderView.contains(item.key)) {
           if (item.value != null && item.value != "") {
             date = item.value;
+            dobController.text = item.value;
           }
         }
       }
