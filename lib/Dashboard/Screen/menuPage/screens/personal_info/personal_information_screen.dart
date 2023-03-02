@@ -472,7 +472,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 "username": cubit.userNameCtr.text,
                                 "dob": cubit.boiCtr.text,
                                 "religion_id": cubit.religionId,
-                                "cast_id": cubit.castId,
+                                "caste_id": cubit.castId,
                                 "category_id": cubit.gradeId
                               });
                             } else {
@@ -482,7 +482,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                                 "dob": cubit.boiCtr.text,
                                 "gender": cubit.value.name,
                                 "religion_id": cubit.religionId,
-                                "cast_id": cubit.castId,
+                                "caste_id": cubit.castId,
                                 "category_id": cubit.gradeId
                               });
                             }
