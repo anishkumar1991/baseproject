@@ -535,7 +535,7 @@ getLocalizationNameOfLevel(BuildContext context, String levelName) {
     return S.of(context).vidhanSabhaLevel;
   } else if (levelName == "Shakti Kendra") {
     return S.of(context).shaktiKendra;
-  } else if (levelName == "Booth") {
+  } else if (levelName == "Booth" || levelName == "Panna") {
     return S.of(context).booth;
   } else if (levelName == "Panna") {
     return S.of(context).panna;

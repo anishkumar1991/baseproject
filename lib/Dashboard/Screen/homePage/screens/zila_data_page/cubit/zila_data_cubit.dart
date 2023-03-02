@@ -135,7 +135,7 @@ class ZilaDataCubit extends Cubit<ZilaDataState> {
       emit(DataFetchingLoadingState());
       final res = await api.dynamicDropdown('Bearer ${StorageService.userAuthToken}', remainingURL);
 
-      print("------------------------------------ Get Party Zila ----------------------------");
+      print("------------------------------------ Get required location ----------------------------");
       print("remainingURL:$remainingURL");
       print("Status code : ${res.response.statusCode}");
       print("Response :${res.data}");

@@ -83,51 +83,53 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(widget.title),
-            spaceWidthWidget(5),
-            widget.isMandatoryField
-                ? const Text(
-                    '*',
-                    style: TextStyle(color: AppColor.red),
-                  )
-                : const SizedBox.shrink()
-          ],
-        ),
-        KeyboardActions(
-          enable: Platform.isIOS ? true : false,
-          autoScroll: false,
-          config: _buildConfig(context),
-          child: TextFormField(
-            initialValue: widget.initialValue,
-            maxLines: widget.maxLines,
-            focusNode: _nodeText1,
-            maxLength: widget.maxLength,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            inputFormatters: widget.textInputFormatter,
-            controller: widget.controller,
-            readOnly: widget.readOnly ?? false,
-            keyboardType: widget.keyboardType,
-            validator: widget.validator,
-            onChanged: widget.onChanged,
-            onTap: widget.onTap,
-            decoration: InputDecoration(
-                counterText: '',
-                border: widget.inpurborder,
-                hintText: widget.hintText,
-                prefixIcon: widget.preFix,
-                labelText: widget.labelText,
-                errorText: widget.errorText,
-                labelStyle: GoogleFonts.poppins(color: AppColor.naturalBlackColor, fontSize: 14),
-                suffixIcon: widget.suffixWidget),
+    return Material(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(widget.title),
+              spaceWidthWidget(5),
+              widget.isMandatoryField
+                  ? const Text(
+                      '*',
+                      style: TextStyle(color: AppColor.red),
+                    )
+                  : const SizedBox.shrink()
+            ],
           ),
-        ),
-      ],
+          KeyboardActions(
+            enable: Platform.isIOS ? true : false,
+            autoScroll: false,
+            config: _buildConfig(context),
+            child: TextFormField(
+              initialValue: widget.initialValue,
+              maxLines: widget.maxLines,
+              focusNode: _nodeText1,
+              maxLength: widget.maxLength,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              inputFormatters: widget.textInputFormatter,
+              controller: widget.controller,
+              readOnly: widget.readOnly ?? false,
+              keyboardType: widget.keyboardType,
+              validator: widget.validator,
+              onChanged: widget.onChanged,
+              onTap: widget.onTap,
+              decoration: InputDecoration(
+                  counterText: '',
+                  border: widget.inpurborder,
+                  hintText: widget.hintText,
+                  prefixIcon: widget.preFix,
+                  labelText: widget.labelText,
+                  errorText: widget.errorText,
+                  labelStyle: GoogleFonts.poppins(color: AppColor.naturalBlackColor, fontSize: 14),
+                  suffixIcon: widget.suffixWidget),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
