@@ -56,12 +56,12 @@ class SendEventCubit extends Cubit<SendEventState> {
         print(res.response.requestOptions.headers);
         print(res.data);
         print("event details not posted");
-        emit(EventErrorState());
+        emit(EventErrorState(res.data["message"] ?? ''));
       }
     } on Exception catch (e) {
       print(e.toString());
       print("event details not posted exception");
-      emit(EventErrorState());
+      emit(EventErrorState(e.toString()));
     }
   }
 }

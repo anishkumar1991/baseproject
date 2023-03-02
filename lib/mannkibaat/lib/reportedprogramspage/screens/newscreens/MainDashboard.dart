@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:sangathan/Storage/mannkibaat.dart';
 import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/mannkibaat/lib/values/AppColors.dart';
 
@@ -30,8 +31,11 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
   Future<void> send() async {
     final cubit = context.read<GenerateMannKiBaatAuthCubit>();
     var number = StorageService.getUserData();
-    await cubit.sendOtp(mobileNumber: number!.user!.phone.toString());
-    await cubit.submitOTP();
+    print(MKBStorageService.getUserAuthToken());
+    if (MKBStorageService.getUserAuthToken() == null) {
+      await cubit.sendOtp(mobileNumber: number!.user!.phone.toString());
+      await cubit.submitOTP();
+    }
   }
 
   Future<void> adduser() async {
@@ -136,16 +140,74 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
           } else if (state is NewUserState) {
             adduser();
           }
-          return Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              CircularProgressIndicator(),
-              SizedBox(height: 10),
-              Text("कृपया प्रतीक्षा करें"),
-            ],
-          ));
+
+          return MKBStorageService.getUserAuthToken() != null
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 20, right: 12, left: 12),
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.black12, width: 1.5),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(3),
+                              child: TabBar(
+                                unselectedLabelColor: const Color(0xFF666666),
+                                indicator: BoxDecoration(
+                                  color: const Color(0xFF447EFF),
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                                controller: tabController,
+                                tabs: [
+                                  Tab(
+                                    child: Text(
+                                      S.of(context).ongoing,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Tab(
+                                    child: Text(
+                                      S.of(context).expired,
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          controller: tabController,
+                          children: const [
+                            OnGoing(),
+                            Expired(),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : Center(
+                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 10),
+                    Text("कृपया प्रतीक्षा करें"),
+                  ],
+                ));
         },
       ),
     );

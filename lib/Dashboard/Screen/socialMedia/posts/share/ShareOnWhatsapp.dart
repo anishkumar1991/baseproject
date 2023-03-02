@@ -9,11 +9,11 @@ import '../cubit/FetchPostCubit.dart';
 enum SocialMedia { whatsapp }
 
 Future shareOnWhatsapp(
-    BuildContext context, SocialMedia socialMedia, int index,var text1) async {
+    BuildContext context, SocialMedia socialMedia, int index,var text1,var text3) async {
   final cubit = context.read<PostsCubit>();
 
   var text2 = AppStrings.shareUrl;
-  final text = "$text1\n\n$text2";
+  final text = "$text1\n\n$text3\n\n$text2";
   final urls = {
     SocialMedia.whatsapp: 'whatsapp://send?text=$text',
   };

@@ -49,6 +49,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    LocationPermission permission;
     final cubit = context.read<FetchCubit>();
     final cubit2 = context.read<SendEventCubit>();
 
@@ -109,10 +110,9 @@ class _FormReviewPageState extends State<FormReviewPage> {
                               MaterialPageRoute(
                                 builder: (context) => FormSuccess(),
                               ));
-                        }
-                        if (state is EventErrorState) {
+                        } else if (state is EventErrorState) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Error Posting")));
+                              SnackBar(content: Text(state.error)));
                         }
                       },
                       builder: (context, state) {
@@ -122,8 +122,6 @@ class _FormReviewPageState extends State<FormReviewPage> {
                           );
                         }
                         return SubmitButton(onPress: () async {
-                          LocationPermission permission =
-                              await Geolocator.requestPermission();
                           newPosition = await getCurrentPosition();
                           await cubit2.sendEvent(
                               MKBStorageService.getUserAuthToken().toString(),
@@ -137,6 +135,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
                               newPosition!.longitude.toString(),
                               widget.img1 ?? " ",
                               widget.img2 ?? " ");
+
                         });
                       },
                     ),
@@ -151,13 +150,29 @@ class _FormReviewPageState extends State<FormReviewPage> {
     );
   }
 
-  getCurrentPosition() async {
-    position = await Geolocator.getCurrentPosition(
+  Future<Position> getCurrentPosition() async {
+    LocationPermission permission;
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Location permissions denied.")));
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Color(0xFFFF9559),
+          content: Text(
+              "Location permissions are completely disabled, please enable them by going to the app settings.")));
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    print("latitutue ${position!.latitude}");
-
-    print("longitutue ${position!.longitude}");
-
-    return position;
   }
 }

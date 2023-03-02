@@ -236,6 +236,11 @@
   "female": "Female",
   "ongoing" : "OnGoing",
   "expired" : "Expired",
-  "ok" : "OK"
-
+  "ok" : "OK",
+  "accountdeletion" : "Request For Account Delete",
+  "support" : "Support",
+  "details" : "Details",
+  "reasonfordeletion" : "Reason for deletion",
+  "mailsend" : "Mail Sent Successfully",
+  "accountdeletionmessage" : "Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused."
 }

@@ -13,7 +13,7 @@ class _SendFcmTokenApi implements SendFcmTokenApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://35.200.202.116';
+    baseUrl ??= 'http://notification.ccdms.in';
   }
 
   final Dio _dio;

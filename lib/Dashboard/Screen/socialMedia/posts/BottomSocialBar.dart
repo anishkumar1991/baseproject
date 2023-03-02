@@ -135,7 +135,7 @@ class BottomSocialBar extends StatelessWidget {
                             index,
                             item[index].postData.video.toString(),
                             item[index].postData.video.toString(),
-                            item[index].title);
+                            item[index].title,item[index].caption);
                       } else {
                         print(
                             "------------------VFORMAT---------------SUPPORTED");
@@ -146,7 +146,7 @@ class BottomSocialBar extends StatelessWidget {
                             index,
                             item[index].postData.video.toString(),
                             item[index].postData.video.toString(),
-                            item[index].title);
+                            item[index].title,item[index].caption);
                       }
                     } else {
                       print("----------------else ke andar FORMAT----->");
@@ -155,7 +155,8 @@ class BottomSocialBar extends StatelessWidget {
                           context,
                           index,
                           item[index].postData.images!.first.toString(),
-                          item[index].title);
+                          item[index].title,
+                          item[index].caption);
                     }
                   },
                   icon: const Icon(Icons.share_outlined)),
@@ -189,7 +190,7 @@ class BottomSocialBar extends StatelessWidget {
               onPressed: () {
                 cubit2.shareToWhatsapp(id);
                 shareOnWhatsapp(
-                    context, SocialMedia.whatsapp, index, item[index].title);
+                    context, SocialMedia.whatsapp, index, item[index].title,item[index].caption);
               },
               icon: const Icon(FontAwesomeIcons.whatsapp,
                   color: Color(0xFF1FAF38)),

@@ -110,7 +110,7 @@ class _OnGoingState extends State<OnGoing> {
                                         vidhanSabha:
                                             '${state.dashModal.data[index].eventDetail.ac?.first.name}',
                                         state:
-                                            '${state.dashModal.data[index].eventDetail.countryStateRef?.first.name}',
+                                            '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
                                         totalAttendees:
                                             '${state.dashModal.data[index].eventDetail.totalAttendees}',
                                         booth:

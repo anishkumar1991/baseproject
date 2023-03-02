@@ -43,12 +43,6 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
   // final GlobalKey<ScaffoldState> _key = GlobalKey();
 
   @override
-  void dispose() {
-    AttendeeStorageService.storage.erase();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final cubit = context.read<FetchCubit>();
 
