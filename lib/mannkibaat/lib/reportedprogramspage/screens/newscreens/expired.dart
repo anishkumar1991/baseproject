@@ -93,6 +93,7 @@ class _ExpiredState extends State<Expired>
                                         )));
                           },
                           child: ProgramCard(
+                            clickNreport: 'Report >',
                               id: '${state.dashModal.data[index].id}',
                               date:
                                   state.dashModal.data[index].airedDetail.date,

@@ -50,7 +50,7 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: AppColor().appBarColor,
-          title: Text("भारतीय जनता पार्टी",
+          title: Text("मन की बात",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,

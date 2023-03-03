@@ -7,6 +7,7 @@ import 'package:sangathan/generated/l10n.dart';
 import 'package:sangathan/mannkibaat/lib/values/AppColors.dart';
 
 import '../../../../../Storage/user_storage_service.dart';
+import '../../../../../Values/app_colors.dart';
 import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../../generateauthtoken/cubit/SendState.dart';
 import 'expired.dart';
@@ -64,7 +65,7 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
       backgroundColor: Colors.white,
       appBar: AppBar(
           backgroundColor: AppColor().appBarColor,
-          title: Text("भारतीय जनता पार्टी",
+          title: Text("मन की बात",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
@@ -160,7 +161,7 @@ class _DashboardMainScreenState extends State<DashboardMainScreen>
                               child: TabBar(
                                 unselectedLabelColor: const Color(0xFF666666),
                                 indicator: BoxDecoration(
-                                  color: const Color(0xFF447EFF),
+                                  color: AppColor.primaryColor,
                                   borderRadius: BorderRadius.circular(25),
                                 ),
                                 controller: tabController,

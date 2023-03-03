@@ -57,7 +57,7 @@ class _CardContentState extends State<CardContent> {
     return Stack(
       children: [
         Positioned(
-          top: -3,
+          top: -38,
           left: 0,
           bottom: 0,
           right: 0,
@@ -88,9 +88,7 @@ class _CardContentState extends State<CardContent> {
                         Flexible(
                           child: Column(
                             children: [
-                              SizedBox(
-                                height: 10,
-                              ),
+
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
@@ -104,14 +102,14 @@ class _CardContentState extends State<CardContent> {
                               ),
 
                               SizedBox(
-                                height: 50,
+                                height: 60,
                               ),
                               Container(
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.start,
                                   crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                      CrossAxisAlignment.end,
                                   children: [
                                     Column(
                                       mainAxisAlignment:
@@ -166,7 +164,7 @@ class _CardContentState extends State<CardContent> {
                           ),
                         ),
                         SizedBox(
-                          height: 4,
+                          height: 2,
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,

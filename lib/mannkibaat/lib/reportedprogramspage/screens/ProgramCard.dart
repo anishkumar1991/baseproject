@@ -30,7 +30,7 @@ class ProgramCard extends StatelessWidget {
       shadowColor: AppColor().cardBGcolor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: SizedBox(
-        height: 150,
+        height: 180,
         child: CardContent(
           id: id,
           date: date,

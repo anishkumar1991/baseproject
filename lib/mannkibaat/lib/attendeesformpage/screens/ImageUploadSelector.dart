@@ -27,7 +27,7 @@ void image1Upload(BuildContext context) {
               ),
               ListTile(
                   leading: Icon(
-                    color: AppColor().buttonColor,
+                    color: AppColor.primaryColor,
                     Icons.photo_library,
                   ),
                   title: Text(
@@ -48,7 +48,7 @@ void image1Upload(BuildContext context) {
                   }),
               ListTile(
                 leading: Icon(
-                  color: AppColor().buttonColor,
+                  color: AppColor.primaryColor,
                   Icons.photo_camera,
                 ),
                 title: Text(

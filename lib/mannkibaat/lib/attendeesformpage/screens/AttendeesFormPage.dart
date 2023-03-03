@@ -42,7 +42,7 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
       child: Scaffold(
         appBar: AppBar(
             backgroundColor: AppColor().appBarColor,
-            title: Text("भारतीय जनता पार्टी",
+            title: Text("मन की बात",
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,

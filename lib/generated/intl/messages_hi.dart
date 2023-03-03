@@ -85,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "clgName":
             MessageLookupByLibrary.simpleMessage("संस्थान या कॉलेज का नाम"),
         "click": MessageLookupByLibrary.simpleMessage("क्लिक करें"),
+        "clicktoknowmore": MessageLookupByLibrary.simpleMessage(
+            "अधिक जानने के लिए क्लिक करें"),
         "comment": MessageLookupByLibrary.simpleMessage("टिपण्णी"),
         "continueText": MessageLookupByLibrary.simpleMessage("जारी रखें"),
         "createATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाएँ"),

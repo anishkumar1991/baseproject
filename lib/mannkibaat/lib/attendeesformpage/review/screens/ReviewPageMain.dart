@@ -57,7 +57,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: AppColor().appBarColor,
-          title: Text("भारतीय जनता पार्टी",
+          title: Text("मन की बात",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
                   fontSize: 14,

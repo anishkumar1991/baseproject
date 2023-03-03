@@ -85,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "clgName": MessageLookupByLibrary.simpleMessage(
             "Name of the Institute or College"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
+        "clicktoknowmore":
+            MessageLookupByLibrary.simpleMessage("Click to know more"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "continueText": MessageLookupByLibrary.simpleMessage("Continue"),
         "createATour": MessageLookupByLibrary.simpleMessage("Create a tour"),

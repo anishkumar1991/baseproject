@@ -26,10 +26,10 @@ class FormSuccess extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
             backgroundColor: AppColor().appBarColor,
-            title: Text("भारतीय जनता पार्टी",
+            title: Text("मन की बात",
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w700,
-                    fontSize: 10.91,
+                    fontSize: 14,
                     color: AppColor().textColor)),
             centerTitle: true,
             leading: IconButton(
@@ -106,7 +106,7 @@ class FormSuccess extends StatelessWidget {
                         decoration: TextDecoration.underline,
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
-                        color: AppColor().formSuccessText),
+                        color: AppColor.primaryColor),
                   ),
                 ),
               ],

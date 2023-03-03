@@ -2470,6 +2470,16 @@ class S {
     );
   }
 
+  /// `Click to know more`
+  String get clicktoknowmore {
+    return Intl.message(
+      'Click to know more',
+      name: 'clicktoknowmore',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused.`
   String get accountdeletionmessage {
     return Intl.message(
