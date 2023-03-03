@@ -143,7 +143,7 @@ class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<On
                           },
                           child: ProgramCard(
                               clickNreport: S.of(context).report,
-                              id: '${state.dashModal.data[index].id}',
+                              id: '${state.dashModal.data[index].name}',
                               date: state.dashModal.data[index].airedDetail.date,
                               time: state.dashModal.data[index].airedDetail.time,
 
@@ -224,7 +224,7 @@ class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<On
                           },
                           child: ProgramCard(
                               clickNreport: '${S.of(context).clicktoknowmore} >',
-                              id: '${state.dashModal.data[index].id}',
+                              id: '${state.dashModal.data[index].name}',
                               date: state.dashModal.data[index].airedDetail.date,
                               time: state.dashModal.data[index].airedDetail.time,
 

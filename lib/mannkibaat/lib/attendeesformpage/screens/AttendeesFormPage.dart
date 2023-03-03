@@ -117,26 +117,32 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                         fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(height: 12),
-                  TextFormField(
-                      controller: addressController,
-                      style: TextStyle(color: AppColor().textColor),
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColor().textFieldColor,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                  width: 1, color: AppColor().textFieldColor))),
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(150),
+                  IntrinsicHeight(
+                    child: TextFormField(
+                        // keyboardType: TextInputType.multiline,
+                        minLines: 1,
+                        maxLines: 20,
 
-                        /// here char limit is 5
-                      ],
-                      onChanged: (value) {
-                        AttendeeStorageService.setaddress(value.toString());
-                        print(AttendeeStorageService.getaddress());
-                      }),
+                        controller: addressController,
+                        style: TextStyle(color: AppColor().textColor),
+                        decoration: InputDecoration(
+                             filled: true,
+                            fillColor: AppColor().textFieldColor,
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: BorderSide(
+                                    width: 1, color: AppColor().textFieldColor))),
+                        keyboardType: TextInputType.name,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(150),
+
+                          /// here char limit is 5
+                        ],
+                        onChanged: (value) {
+                          AttendeeStorageService.setaddress(value.toString());
+                          print(AttendeeStorageService.getaddress());
+                        }),
+                  ),
                   const SizedBox(height: 15),
                   Text(
                     'विवरण',
@@ -147,36 +153,38 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                   ),
                   const SizedBox(height: 12),
                   SizedBox(
-                    height: 90,
-                    child: TextFormField(
-                        controller: descriptionController,
-                        expands: true,
-                        maxLines: null,
-                        minLines: null,
-                        style: TextStyle(color: AppColor().textColor),
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: AppColor().textFieldColor,
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(
-                                    width: 1,
-                                    color: AppColor().textFieldColor))),
-                        keyboardType: TextInputType.name,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(300),
+                    child: IntrinsicHeight(
+                      child: TextFormField(
+                          minLines: 1,
+                          maxLines: 20,
+                          controller: descriptionController,
+                          expands: false,
 
-                          /// here char limit is 5
-                        ],
-                        onChanged: (value) {
-                          AttendeeStorageService.setdescription(
-                              value.toString());
-                          print(AttendeeStorageService.getdescription());
-                        }),
+                          style: TextStyle(color: AppColor().textColor),
+                          decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor().textFieldColor,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      width: 1,
+                                      color: AppColor().textFieldColor))),
+                          keyboardType: TextInputType.name,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(300),
+
+                            /// here char limit is 5
+                          ],
+                          onChanged: (value) {
+                            AttendeeStorageService.setdescription(
+                                value.toString());
+                            print(AttendeeStorageService.getdescription());
+                          }),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'तश्वीरें अपलोड करें *',
+                    'फोटो अपलोड करें *',
                     style: GoogleFonts.publicSans(
                         fontSize: 16,
                         color: AppColor().textColor,
