@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Storage/mannkibaat.dart';
 import '../../../../../Storage/user_storage_service.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../attendeereviewpage/screens/ReviewPageMain.dart';
 import '../../../attendeesformpage/screens/AttendeesFormPage.dart';
 import '../../../generateauthtoken/cubit/SendCubit.dart';
@@ -93,7 +94,7 @@ class _ExpiredState extends State<Expired>
                                         )));
                           },
                           child: ProgramCard(
-                            clickNreport: 'Report >',
+                            clickNreport: '${S.of(context).clicktoknowmore} >',
                               id: '${state.dashModal.data[index].id}',
                               date:
                                   state.dashModal.data[index].airedDetail.date,

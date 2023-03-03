@@ -11,14 +11,14 @@ import '../../cubit/DashState.dart';
 import '../ProgramCard.dart';
 
 class OnGoing extends StatefulWidget {
-
   const OnGoing({Key? key}) : super(key: key);
 
   @override
   State<OnGoing> createState() => _OnGoingState();
 }
 
-class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<OnGoing>{
+class _OnGoingState extends State<OnGoing>
+    with AutomaticKeepAliveClientMixin<OnGoing> {
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
@@ -70,9 +70,8 @@ class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<On
                     DateTime startdate =
                         state.dashModal.data[index].airedDetail.startDateTime;
                     DateTime enddate =
-                          state.dashModal.data[index].airedDetail.endDateTime;
-                    if(state.dashModal.data[index].eventHasDetail ==
-                        false){
+                        state.dashModal.data[index].airedDetail.endDateTime;
+                    if (state.dashModal.data[index].eventHasDetail == false) {
                       if (enddate.isAfter(currentDate) ||
                           enddate.isAtSameMomentAs(currentDate) ||
                           startdate.isAfter(currentDate) ||
@@ -83,77 +82,117 @@ class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<On
                           onTap: () {
                             if (state.dashModal.data[index].eventHasDetail ==
                                 false) {
+                              print("start date $startdate");
+                              print("current date $currentDate");
+                              print(startdate.hour);
+                              print(currentDate.hour);
                               if (startdate.isAfter(currentDate)) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title:
-                                      Text("${S.of(context).upcoming}.."),
-                                      content: Text(
-                                          "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
-                                      actions: [
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge,
+                                if (startdate.hour > currentDate.hour) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title:
+                                            Text("${S.of(context).upcoming}.."),
+                                        content: Text(
+                                            "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
+                                        actions: [
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge,
+                                            ),
+                                            child: Text(S.of(context).ok),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
                                           ),
-                                          child: Text(S.of(context).ok),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else if (startdate.day > currentDate.day) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title:
+                                            Text("${S.of(context).upcoming}.."),
+                                        content: Text(
+                                            "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
+                                        actions: [
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge,
+                                            ),
+                                            child: Text(S.of(context).ok),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else if (startdate.hour < currentDate.hour) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AttendeesFormPage(
+                                                eventId: state
+                                                    .dashModal.data[index].id,
+                                              )));
+                                }
                               } else {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => AttendeesFormPage(
-                                          eventId: state
-                                              .dashModal.data[index].id,
-                                        )));
+                                              eventId: state
+                                                  .dashModal.data[index].id,
+                                            )));
                               }
                             } else {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AttendeeReviewPage(
-                                        vidhanSabha:
-                                        '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                        state:
-                                        '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
-                                        totalAttendees:
-                                        '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                        booth:
-                                        '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                        address:
-                                        '${state.dashModal.data[index].eventDetail.address}',
-                                        description:
-                                        '${state.dashModal.data[index].eventDetail.description}',
-                                        img1:
-                                        '${state.dashModal.data[index].eventDetail.photo1}',
-                                        img2:
-                                        '${state.dashModal.data[index].eventDetail.photo2}',
-                                      )));
+                                            vidhanSabha:
+                                                '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                            state:
+                                                '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
+                                            totalAttendees:
+                                                '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                            booth:
+                                                '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                            address:
+                                                '${state.dashModal.data[index].eventDetail.address}',
+                                            description:
+                                                '${state.dashModal.data[index].eventDetail.description}',
+                                            img1:
+                                                '${state.dashModal.data[index].eventDetail.photo1}',
+                                            img2:
+                                                '${state.dashModal.data[index].eventDetail.photo2}',
+                                          )));
                             }
                           },
                           child: ProgramCard(
                               clickNreport: S.of(context).report,
                               id: '${state.dashModal.data[index].id}',
-                              date: state.dashModal.data[index].airedDetail.date,
-                              time: state.dashModal.data[index].airedDetail.time,
+                              date:
+                                  state.dashModal.data[index].airedDetail.date,
+                              time:
+                                  state.dashModal.data[index].airedDetail.time,
 
                               //right now I am not fetching images because API is having faulty images.
                               img: state.dashModal.data[index].eventPhoto),
                         );
                       }
-
-
-                    }else{
+                    } else {
                       if (enddate.isAfter(currentDate) ||
                           enddate.isAtSameMomentAs(currentDate) ||
                           startdate.isAfter(currentDate) ||
@@ -170,7 +209,7 @@ class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<On
                                   builder: (context) {
                                     return AlertDialog(
                                       title:
-                                      Text("${S.of(context).upcoming}.."),
+                                          Text("${S.of(context).upcoming}.."),
                                       content: Text(
                                           "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
                                       actions: [
@@ -194,64 +233,64 @@ class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<On
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => AttendeesFormPage(
-                                          eventId: state
-                                              .dashModal.data[index].id,
-                                        )));
+                                              eventId: state
+                                                  .dashModal.data[index].id,
+                                            )));
                               }
                             } else {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AttendeeReviewPage(
-                                        vidhanSabha:
-                                        '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                        state:
-                                        '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
-                                        totalAttendees:
-                                        '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                        booth:
-                                        '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                        address:
-                                        '${state.dashModal.data[index].eventDetail.address}',
-                                        description:
-                                        '${state.dashModal.data[index].eventDetail.description}',
-                                        img1:
-                                        '${state.dashModal.data[index].eventDetail.photo1}',
-                                        img2:
-                                        '${state.dashModal.data[index].eventDetail.photo2}',
-                                      )));
+                                            vidhanSabha:
+                                                '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                            state:
+                                                '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
+                                            totalAttendees:
+                                                '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                            booth:
+                                                '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                            address:
+                                                '${state.dashModal.data[index].eventDetail.address}',
+                                            description:
+                                                '${state.dashModal.data[index].eventDetail.description}',
+                                            img1:
+                                                '${state.dashModal.data[index].eventDetail.photo1}',
+                                            img2:
+                                                '${state.dashModal.data[index].eventDetail.photo2}',
+                                          )));
                             }
                           },
                           child: ProgramCard(
-                              clickNreport: '${S.of(context).clicktoknowmore} >',
+                              clickNreport:
+                                  '${S.of(context).clicktoknowmore} >',
                               id: '${state.dashModal.data[index].id}',
-                              date: state.dashModal.data[index].airedDetail.date,
-                              time: state.dashModal.data[index].airedDetail.time,
+                              date:
+                                  state.dashModal.data[index].airedDetail.date,
+                              time:
+                                  state.dashModal.data[index].airedDetail.time,
 
                               //right now I am not fetching images because API is having faulty images.
                               img: state.dashModal.data[index].eventPhoto),
                         );
                       }
-
-
                     }
 
                     return SizedBox();
                   },
-
                 ),
                 status == 0
                     ? Padding(
-                  padding: const EdgeInsets.only(top: 150),
-                  child: Center(
-                      child: Text(
-                        "कोई रिकॉर्ड उपलब्ध नहीं है",
-                        style: GoogleFonts.quicksand(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500),
-                      )),
-                )
+                        padding: const EdgeInsets.only(top: 150),
+                        child: Center(
+                            child: Text(
+                          "कोई रिकॉर्ड उपलब्ध नहीं है",
+                          style: GoogleFonts.quicksand(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        )),
+                      )
                     : const SizedBox()
               ],
             ),

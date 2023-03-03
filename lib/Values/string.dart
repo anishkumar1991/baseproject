@@ -18,8 +18,8 @@ class AppStrings {
       "https://saral-social-staging.ccdms.in";
   static const String baseUrlMannKiBaat =
       "https://staging.mannkibaatprogram.in/";
-  static const String countrystateid = "3";
-  static const String acid = "357";
+  static const String countrystateid = "14";
+  static const String acid = "1611";
   static const String mannkibaatotp = "123456";
 
 
