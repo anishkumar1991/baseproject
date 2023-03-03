@@ -14,7 +14,7 @@ class ReviewTotalAttendee extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         child: ListTile(
-            title: Text("कुल उपस्थित",
+            title: Text("कुल उपस्थित*",
                 style: GoogleFonts.publicSans(
                     fontWeight: FontWeight.w400,
                     fontSize: 16,
@@ -22,7 +22,7 @@ class ReviewTotalAttendee extends StatelessWidget {
             subtitle: Text(totalAttendees ?? " ",
                 style: GoogleFonts.publicSans(
                     color: Colors.black,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     fontSize: 18))));
   }
 }

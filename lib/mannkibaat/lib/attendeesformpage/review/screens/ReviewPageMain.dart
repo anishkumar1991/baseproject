@@ -153,7 +153,7 @@ class _FormReviewPageState extends State<FormReviewPage> {
                               widget.img1 ?? " ",
                               widget.img2 ?? " ");
 
-                        });
+                        }, textButtonText: 'सबमिट ',);
                       },
                     ),
                   ),
