@@ -23,6 +23,8 @@ class AttendeesFormPage extends StatefulWidget {
 }
 
 class _AttendeesFormPageState extends State<AttendeesFormPage> {
+  final totalAttendeesKey = GlobalKey<FormState>();
+
   TextEditingController totalAttendeesController = TextEditingController();
 
   TextEditingController addressController = TextEditingController();
@@ -89,6 +91,7 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
+                    key: totalAttendeesKey,
                       controller: totalAttendeesController,
                       style: TextStyle(color: AppColor().textColor),
                       decoration: InputDecoration(
@@ -103,6 +106,12 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                         LengthLimitingTextInputFormatter(4),
                         FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                       ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Total Att';
+                        }
+                        return null;
+                      },
                       onChanged: (value) {
                         AttendeeStorageService.settotalAttendees(
                             value.toString());
@@ -200,32 +209,39 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                       width: Constants.buttonSizeBoxWidth,
                       child: SubmitButton(
                         onPress: () {
-                          if (AttendeeStorageService.getimage1url() == null &&
+                          if (totalAttendeesController.value.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("कुल उपस्थिति संख्या भरें")));
+                          } else if (AttendeeStorageService.getimage1url() ==
+                              null &&
                               AttendeeStorageService.getimage2url() == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content:
-                                        Text("Please Select Atleast 1 Image")));
+                                    Text("कृपया 1 फोटो चुनें")));
                           } else {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => FormReviewPage(
-                                      totalAttendees:
-                                              totalAttendeesController.text,
+                                    builder: (context) =>
+                                        FormReviewPage(
+                                          totalAttendees:
+                                          totalAttendeesController.text,
                                           address: addressController.text,
                                           description:
-                                              descriptionController.text,
+                                          descriptionController.text,
                                           img1: AttendeeStorageService
-                                                  .getimage1url() ??
+                                              .getimage1url() ??
                                               " ",
                                           img2: AttendeeStorageService
-                                                  .getimage2url() ??
+                                              .getimage2url() ??
                                               " ",
                                           eventid: widget.eventId,
                                         )));
                           }
                         },
+                        textButtonText: 'प्रीव्यू व सबमिट ',
                       ),
                     ),
                   ),

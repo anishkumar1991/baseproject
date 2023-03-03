@@ -28,7 +28,7 @@ class ReviewVidhanAndStates extends StatelessWidget {
                 "${vidhanSabha}",
                 style: GoogleFonts.publicSans(
                     color: Colors.black,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     fontSize: 18),
               )
             ],
@@ -47,7 +47,7 @@ class ReviewVidhanAndStates extends StatelessWidget {
               Text(state ?? " ",
                   style: GoogleFonts.publicSans(
                       color: Colors.black,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w400,
                       fontSize: 18))
             ],
           ),

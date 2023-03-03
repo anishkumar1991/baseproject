@@ -19,7 +19,7 @@ class ReviewBoothName extends StatelessWidget {
                 booth?? " ",
                 style: GoogleFonts.publicSans(
                     color:Colors.black,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w400,
                     fontSize: 18))));
   }
 }

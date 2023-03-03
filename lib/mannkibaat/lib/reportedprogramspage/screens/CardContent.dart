@@ -132,7 +132,8 @@ class _CardContentState extends State<CardContent> {
                                               fontWeight: FontWeight.w700,
                                               fontSize: 14,
                                               color:
-                                                  AppColor.primaryColor),
+                                              AppColor()
+                                                  .dashboardTextColorDark),
                                         ),
                                       ],
                                     ),
@@ -169,7 +170,7 @@ class _CardContentState extends State<CardContent> {
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            '$clickNreport',
+                            '${clickNreport} >',
                             style: GoogleFonts.publicSans(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
