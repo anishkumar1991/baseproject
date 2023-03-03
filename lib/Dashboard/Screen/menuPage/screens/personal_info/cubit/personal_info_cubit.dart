@@ -46,11 +46,11 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   final TextEditingController castCtr = TextEditingController();
 
   final FocusNode nameFocusNode = FocusNode();
-    final FocusNode userNameFocusNode = FocusNode();
+  final FocusNode userNameFocusNode = FocusNode();
   final FocusNode mobileFocusNode = FocusNode();
 
-  final api = UpdatePersonalDetailsApi(Dio(BaseOptions(
-      contentType: 'application/json', validateStatus: ((status) => true))));
+  final api =
+      UpdatePersonalDetailsApi(Dio(BaseOptions(contentType: 'application/json', validateStatus: ((status) => true))));
 
   emitState() {
     emit(PersonalInfoInitial());
@@ -72,9 +72,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   }
 
   String calculateYear({required String dob}) {
-    return daysBetween(
-            from: DateFormat("yyyy-MM-dd").parse(dob), to: DateTime.now())
-        .toString();
+    return daysBetween(from: DateFormat("yyyy-MM-dd").parse(dob), to: DateTime.now()).toString();
   }
 
   int daysBetween({required DateTime from, required DateTime to}) {
@@ -86,8 +84,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   Future getCasteDropDownValue({required String id}) async {
     try {
       emit(PersonalInfoInitial());
-      final res =
-          await api.getCast('Bearer ${StorageService.userAuthToken}', id);
+      final res = await api.getCast('Bearer ${StorageService.userAuthToken}', id);
       print('cast res =${res.response}');
       if (res.response.statusCode == 200) {
         CastModel data = CastModel.fromJson(res.data);
@@ -102,22 +99,21 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     }
   }
 
-  updatePersonalDetails(
-      {required Map<String, dynamic> data, bool? isProfile}) async {
+  updatePersonalDetails({required Map<String, dynamic> data, bool? isProfile}) async {
     emit(LoadingState());
     try {
       StorageService.getUserAuthToken();
-      var res = await api.updatePersonalDetails(
-          'Bearer ${StorageService.userAuthToken}', data);
+      var res = await api.updatePersonalDetails('Bearer ${StorageService.userAuthToken}', data);
       print("------------------ update user ---------------");
+      print("Passing data :${data}");
+      print("Url : ${res.response.realUri}");
       print('sangathan Data =${res.response.statusCode}');
       print('sangathan data =${res.response.data}');
       print('tokrn =${StorageService.userAuthToken}');
       print("---------------------------------");
       if (res.response.statusCode == 200) {
         print(res.response.data);
-        UserDetailModel updateData =
-            UserDetailModel.fromJson(res.response.data);
+        UserDetailModel updateData = UserDetailModel.fromJson(res.response.data);
         emit(UpdateDataState(updateData));
       } else {
         print('error=${res.data['message']}');
@@ -135,8 +131,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     }
   }
 
-  getNetworkUrlAndUpdateProfile(
-      {int? id, required BuildContext context}) async {
+  getNetworkUrlAndUpdateProfile({int? id, required BuildContext context}) async {
     EasyLoading.show(status: S.of(context).uploading);
     final imageTemp = File(image!.path);
     imageFile = imageTemp;
@@ -144,8 +139,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     task = FirebaseApi.uploadFile(destination, imageFile!);
     final snapshot = await task!.whenComplete(() {
       EasyLoading.dismiss();
-      EasyLoading.showSuccess("Photo Uploaded",
-          duration: const Duration(milliseconds: 500));
+      EasyLoading.showSuccess("Photo Uploaded", duration: const Duration(milliseconds: 500));
     });
     urlDownload = await snapshot.ref.getDownloadURL();
     print('Image Download-Link: $urlDownload');
@@ -156,7 +150,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
         "dob": boiCtr.text,
         "avatar": urlDownload,
         "religion_id": religionId,
-        "cast_id": castId,
+        "caste_id": castId,
         "category_id": gradeId
       });
     } else {
@@ -167,7 +161,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
         "gender": value.name,
         "avatar": urlDownload,
         "religion_id": religionId,
-        "cast_id": castId,
+        "caste_id": castId,
         "category_id": gradeId
       });
     }
@@ -177,11 +171,9 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
     emit(PersonalInfoInitial());
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: DateTime(
-            DateTime.now().year - 16, DateTime.now().month, DateTime.now().day),
+        initialDate: DateTime(DateTime.now().year - 16, DateTime.now().month, DateTime.now().day),
         firstDate: DateTime(1900, 8),
-        lastDate: DateTime(DateTime.now().year - 16, DateTime.now().month,
-            DateTime.now().day));
+        lastDate: DateTime(DateTime.now().year - 16, DateTime.now().month, DateTime.now().day));
     if (picked != null && picked != dateTime) {
       dateTime = picked;
       date = ddMMMYYYYfromDateTime(dateTime);
@@ -202,8 +194,7 @@ class PersonalInfoCubit extends Cubit<PersonalInfoState> {
   Future<void> selectImage({BuildContext? context}) async {
     emit(PersonalInfoInitial());
     var imageFile = await selectOption(context: context!);
-    print(
-        "=-======================================================================= $imageFile");
+    print("=-======================================================================= $imageFile");
     emit(ImageSelectSuccess(imgFile: imageFile));
   }
 }

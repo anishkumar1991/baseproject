@@ -19,7 +19,9 @@ class MainDropdownWidget extends StatefulWidget {
   final int? countryStateId;
   final int? dataLevelId;
 
-  const MainDropdownWidget({Key? key, required this.typeLevel, required this.typeName, this.dataLevelId, this.countryStateId}) : super(key: key);
+  const MainDropdownWidget(
+      {Key? key, required this.typeLevel, required this.typeName, this.dataLevelId, this.countryStateId})
+      : super(key: key);
 
   @override
   State<MainDropdownWidget> createState() => _MainDropdownWidgetState();
@@ -33,7 +35,6 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
         final cubit = BlocProvider.of<ZilaDataCubit>(context);
         if (state is PartyZilaSelectedState) {
           cubit.selectedFilterIndex = 1;
-          context.read<ZilaDataCubit>().getDeleteReason();
           cubit.zilaSelected = null;
           cubit.partyzilaList = state.data;
           locationListSortBasedOnType();
@@ -43,12 +44,25 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
             cubit.zilaSelected = cubit.partyzilaList.first;
             cubit.acId = cubit.partyzilaList.first.id;
           }
-          if (context.read<SangathanDetailsCubit>().typeLevelName == DropdownHandler.gettingLocationTypeForCondition(widget.typeName)) {
-            context
-                .read<ZilaDataCubit>()
-                .getUnitData(data: {"type": "Unit", "data_level": widget.dataLevelId, "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId});
+          if (context.read<SangathanDetailsCubit>().typeLevelName ==
+              DropdownHandler.gettingLocationTypeForCondition(widget.typeName)) {
+            print("get unit data widget ");
+            if (widget.typeName == "Panna") {
+              print(cubit.zilaSelected?.toJson());
+              context.read<ZilaDataCubit>().getBoothPannasStatus(cubit.zilaSelected?.id ?? 0);
+            } else {
+              print("get unit data cubit.zilaSelected?.toJson()");
+              context.read<ZilaDataCubit>().getUnitData(data: {
+                "type": "Unit",
+                "data_level": widget.dataLevelId,
+                "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId
+              });
+            }
           } else {
-            if (widget.typeName == "Mandal" || widget.typeName == "Booth" || widget.typeName == "Shakti Kendra") {
+            if (widget.typeName == "Mandal" ||
+                widget.typeName == "Booth" ||
+                widget.typeName == "Shakti Kendra" ||
+                widget.typeName == "Panna") {
               DropdownHandler.dynamicDependentDropdown(
                   context: context,
                   type: widget.typeName,
@@ -56,9 +70,11 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                   locationId: context.read<SangathanDetailsCubit>().selectedAllottedLocation?.id ?? 0,
                   locationType: context.read<SangathanDetailsCubit>().typeLevelName ?? "");
             } else {
-              context
-                  .read<ZilaDataCubit>()
-                  .getUnitData(data: {"type": "Unit", "data_level": widget.dataLevelId, "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId});
+              context.read<ZilaDataCubit>().getUnitData(data: {
+                "type": "Unit",
+                "data_level": widget.dataLevelId,
+                "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId
+              });
             }
           }
         }
@@ -69,7 +85,8 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                   enableDrag: false,
                   isDismissible: false,
                   context: context,
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
                   builder: (builder) {
                     return bottomSheetWidget(cubit.partyzilaList);
                   });
@@ -88,7 +105,8 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                           children: [
                             Text(
                               mainDropdownName(),
-                              style: GoogleFonts.roboto(color: AppColor.greyColor, fontWeight: FontWeight.w400, fontSize: 14),
+                              style: GoogleFonts.roboto(
+                                  color: AppColor.greyColor, fontWeight: FontWeight.w400, fontSize: 14),
                             ),
                             Text(
                               showDropdownValueBasedOnType(cubit.zilaSelected),
@@ -110,10 +128,12 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
   }
 
   mainDropdownName() {
-    if (context.read<SangathanDetailsCubit>().typeLevelName == DropdownHandler.gettingLocationTypeForCondition(widget.typeName)) {
-      return getLocalizationNameOfLevel(context, widget.typeName);
+    if (context.read<SangathanDetailsCubit>().typeLevelName ==
+        DropdownHandler.gettingLocationTypeForCondition(widget.typeName)) {
+      return getLocalizationNameOfLevel(context, widget.typeName,
+          levelUser: context.read<SangathanDetailsCubit>().typeLevelName);
     } else {
-      return "${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.typeName, context))}";
+      return "${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.typeName, context), levelUser: context.read<SangathanDetailsCubit>().typeLevelName ?? "")}";
     }
   }
 
@@ -130,8 +150,8 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
             children: [
               Text(
                 currentLocale == "hi"
-                    ? "${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.typeName, context))} ${S.of(context).choose}"
-                    : "${S.of(context).choose} ${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.typeName, context))}",
+                    ? "${mainDropdownName()} ${S.of(context).choose}"
+                    : "${S.of(context).choose} ${mainDropdownName()}",
                 textAlign: TextAlign.left,
                 style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w600),
               ),
@@ -157,12 +177,18 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                   GestureDetector(
                     onTap: () {
                       cubit.onChnageZila(locationList[index]);
-                      if (context.read<SangathanDetailsCubit>().typeLevelName == DropdownHandler.gettingLocationTypeForCondition(widget.typeName)) {
-                        context
-                            .read<ZilaDataCubit>()
-                            .getUnitData(data: {"type": "Unit", "data_level": widget.dataLevelId, "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId});
+                      if (context.read<SangathanDetailsCubit>().typeLevelName ==
+                          DropdownHandler.gettingLocationTypeForCondition(widget.typeName)) {
+                        context.read<ZilaDataCubit>().getUnitData(data: {
+                          "type": "Unit",
+                          "data_level": widget.dataLevelId,
+                          "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId
+                        });
                       } else {
-                        if (widget.typeName == "Mandal" || widget.typeName == "Booth" || widget.typeName == "Panna" || widget.typeName == "Shakti Kendra") {
+                        if (widget.typeName == "Mandal" ||
+                            widget.typeName == "Booth" ||
+                            widget.typeName == "Panna" ||
+                            widget.typeName == "Shakti Kendra") {
                           DropdownHandler.dynamicDependentDropdown(
                               context: context,
                               type: widget.typeName,
@@ -171,8 +197,16 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                               locationType: context.read<SangathanDetailsCubit>().typeLevelName ?? "");
                         }
                       }
-                      if (widget.typeName != "Mandal" && widget.typeName != "Booth" && widget.typeName != "Panna" && widget.typeName != "Shakti Kendra") {
-                        context.read<ZilaDataCubit>().getEntryData(data: {"level": widget.dataLevelId, "unit": cubit.unitId ?? "", "sub_unit": cubit.subUnitId, "level_name": cubit.levelNameId});
+                      if (widget.typeName != "Mandal" &&
+                          widget.typeName != "Booth" &&
+                          widget.typeName != "Panna" &&
+                          widget.typeName != "Shakti Kendra") {
+                        context.read<ZilaDataCubit>().getEntryData(data: {
+                          "level": widget.dataLevelId,
+                          "unit": cubit.unitId ?? "",
+                          "sub_unit": cubit.subUnitId,
+                          "level_name": cubit.levelNameId
+                        });
                       }
                       Future.delayed(Duration.zero).then((value) => Navigator.pop(context));
                     },
@@ -181,14 +215,35 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
                       color: AppColor.transparent,
                       child: Row(
                         children: [
-                          CommonLogoWidget(name: locationList[index].name ?? "", backgroundColor: cubit.zilaSelected?.id == locationList[index].id ? AppColor.orange : AppColor.naturalBlackColor),
+                          CommonLogoWidget(
+                              name: locationList[index].name ?? "",
+                              backgroundColor: cubit.zilaSelected?.id == locationList[index].id
+                                  ? AppColor.orange
+                                  : AppColor.naturalBlackColor),
                           const SizedBox(
                             width: 10,
                           ),
-                          Text(
-                            showDropdownValueBasedOnType(locationList[index]),
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  showDropdownValueBasedOnType(locationList[index]),
+                                  textAlign: TextAlign.left,
+                                  style: GoogleFonts.quicksand(fontSize: 18, fontWeight: FontWeight.w500),
+                                ),
+                                if (widget.typeName == "Booth" && widget.typeLevel == "Booth")
+                                  Text(
+                                    locationList[index].mandalName == null
+                                        ? S.of(context).notMappedWithAnyMandal
+                                        : "${S.of(context).mappedMandal} :${locationList[index].mandalName ?? ""}",
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.quicksand(
+                                        fontSize: 14, fontWeight: FontWeight.w500, color: AppColor.borderColor),
+                                  ),
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -219,7 +274,10 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
   locationListSortBasedOnType() {
     final cubit = BlocProvider.of<ZilaDataCubit>(context);
     String typeOfLevel = DropdownHandler.mainDropdownName(widget.typeName, context);
-    if (typeOfLevel == "Panna" || typeOfLevel == S.of(context).booth || typeOfLevel == "Lok Sabha" || typeOfLevel == S.of(context).vidhanSabha) {
+    if (typeOfLevel == "Panna" ||
+        typeOfLevel == S.of(context).booth ||
+        typeOfLevel == "Lok Sabha" ||
+        typeOfLevel == S.of(context).vidhanSabha) {
       cubit.partyzilaList.sort((a, b) => int.parse(a.number.toString()).compareTo(int.parse(b.number.toString())));
     } else {
       cubit.partyzilaList.sort((a, b) => (a.name ?? "").compareTo(b.name ?? ""));

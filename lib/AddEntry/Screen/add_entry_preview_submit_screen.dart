@@ -37,12 +37,12 @@ class _AddEntryPreviewSubmitState extends State<AddEntryPreviewSubmit> {
   String dateDDMMMYYYY(String date) {
     if (date.contains("/")) {
       DateTime tempDate = DateFormat("dd-MM-yyyy").parse(date.replaceAll("/", "-"));
-      var outputFormat = DateFormat('dd MMM yyyy');
+      var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(tempDate);
       return outputDate;
     } else {
       DateTime tempDate = DateFormat("yyyy-MM-dd").parse(date);
-      var outputFormat = DateFormat('dd MMM yyyy');
+      var outputFormat = DateFormat('dd/MM/yyyy');
       var outputDate = outputFormat.format(tempDate);
       return outputDate;
     }

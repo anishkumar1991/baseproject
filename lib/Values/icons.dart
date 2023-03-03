@@ -6,15 +6,13 @@ class AppIcons {
   static const String searchicon = "assets/images/search_icon.png";
   static const String listView = "assets/images/listview_image.png";
   static const String notification = "assets/images/notification_icon.png";
-  static const String sangathanCardImage =
-      "assets/images/sangathan_card_image.png";
+  static const String sangathanCardImage = "assets/images/sangathan_card_image.png";
   static const String sangathanLogo = "assets/images/sangathan_logo.png";
   static const String personImage = "assets/images/person_image.png";
   static const String meetingImage = "assets/images/metting_image.png";
   static const String arrowForward = "assets/images/arrow_forward_icon.png";
   static const String memberImage = "assets/images/member_image.png";
-  static const String announceOutlineImage =
-      "assets/images/announce_outline.png";
+  static const String announceOutlineImage = "assets/images/announce_outline.png";
   static const String announceIcon = "assets/images/announce_icon.png";
   static const String homeIcon = "assets/images/home_icons.png";
   static const String homeOutlineIcon = "assets/images/home_outline.png";
@@ -33,11 +31,9 @@ class AppIcons {
   static const String logOutIcon = "assets/images/logout_icon.png";
   static const String customerService = "assets/images/customer_service.png";
   static const String drawerIcon = "assets/images/drawer_icon.png";
-  static const String shaktikendraImage =
-      "assets/images/shaktikendra_image.png";
+  static const String shaktikendraImage = "assets/images/shaktikendra_image.png";
   static const String addUserImage = "assets/images/add_user_image.png";
-  static const String galleryColorImage =
-      "assets/images/gallery_color_image.png";
+  static const String galleryColorImage = "assets/images/gallery_color_image.png";
   static const String galleryImage = "assets/images/gallery_image.png";
   static const String personLogo = "assets/images/person_logo.png";
   static const String userImage = "assets/images/user_logo.png";
@@ -53,8 +49,7 @@ class AppIcons {
   static const String calender_1 = "assets/images/calender_1.png";
   static const String datePickerIcon = "assets/images/datePicker.png";
   static const String supportIcon = "assets/images/support.png";
-  static const String customerService1 =
-      "assets/images/customer_service(1).png";
+  static const String customerService1 = "assets/images/customer_service(1).png";
   static const String profileBack = "assets/images/profile_back.png";
   static const String circle1 = "assets/images/circle1.png";
   static const String circle2 = "assets/images/circle2.png";
@@ -77,4 +72,5 @@ class AppIcons {
   static const String mandal = "assets/images/mandal.png";
   static const String pdfIcon = "assets/images/pdf_icon.png";
   static const String fileListIcon = "assets/images/file_list_icon.png";
+  static const String userProfilePlaceholder = "assets/images/user_profile_placeholder.png";
 }

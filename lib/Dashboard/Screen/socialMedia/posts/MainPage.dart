@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/network/model/FetchPosts.dart';
@@ -135,8 +133,8 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
   }
 
   Widget _loadingIndicator() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
       child: Center(child: CircularProgressIndicator()),
     );
   }

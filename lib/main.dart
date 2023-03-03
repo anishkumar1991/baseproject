@@ -20,6 +20,12 @@ import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/string.dart';
+// import 'mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
+// import 'mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
+import 'package:sangathan/mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
+import 'package:sangathan/mannkibaat/lib/attendeesformpage/review/cubit/SendEventCubit.dart';
+import 'package:sangathan/mannkibaat/lib/generateauthtoken/cubit/SendCubit.dart';
+import 'package:sangathan/mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
 import 'package:sangathan/route/route_path.dart';
 import 'package:sangathan/route/routes.dart';
 
@@ -43,12 +49,6 @@ import 'Dashboard/Screen/socialMedia/posts/cubit/ShareCubit.dart';
 import 'Dashboard/Screen/socialMedia/reels/reels/cubits/ReelShareCubit.dart';
 import 'Login/Cubit/language_cubit/lan_cubit.dart';
 import 'generated/l10n.dart';
-// import 'mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
-// import 'mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
-import 'mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
-import 'mannkibaat/lib/attendeesformpage/review/cubit/SendEventCubit.dart';
-import 'mannkibaat/lib/generateauthtoken/cubit/SendCubit.dart';
-import 'mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
 import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
@@ -138,6 +138,7 @@ class _MyAppState extends State<MyApp> {
       child: BlocBuilder<LanguageCubit, LanguageState>(
         builder: (context, lang) {
           final cubit = context.read<LanguageCubit>();
+          currentLanguage = cubit.lang ?? "hi";
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             useInheritedMediaQuery: true,
@@ -156,11 +157,8 @@ class _MyAppState extends State<MyApp> {
             onGenerateRoute: RouteGenerator.generatorRoute,
             // home: NotificationMainScreen(),
             initialRoute: RoutePath.splashScreenPage,
-            theme: Theme.of(context).copyWith(
-              colorScheme: Theme.of(context).colorScheme.copyWith(
-                    primary: AppColor.primaryColor,
-                  ),
-            ),
+            theme: Theme.of(context)
+                .copyWith(colorScheme: Theme.of(context).colorScheme.copyWith(primary: AppColor.primaryColor)),
           );
         },
       ),

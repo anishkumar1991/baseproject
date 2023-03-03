@@ -108,7 +108,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
 
   /// Date picker date formatter
   static String ddMMMYYYYfromDateTime(DateTime date) {
-    return DateFormat('dd-MMM-yyyy').format(date);
+    return DateFormat('dd/MM/yyyy').format(date);
   }
 
   /// here make final value map with key
@@ -729,6 +729,7 @@ class AddEntryCubit extends Cubit<AddEntryState> {
         if (DynamicUIHandler.calenderView.contains(item.key)) {
           if (item.value != null && item.value != "") {
             date = item.value;
+            dobController.text = item.value;
           }
         }
       }

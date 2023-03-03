@@ -85,14 +85,20 @@ class _DataUnitState extends State<DataUnit> {
                 "level_name": cubit.levelNameId
               });
             }
+            print(context.read<SangathanDetailsCubit>().typeLevelName);
+            print(DropdownHandler.gettingLocationTypeForCondition(widget.type));
+            if (context.read<SangathanDetailsCubit>().typeLevelName !=
+                DropdownHandler.gettingLocationTypeForCondition(widget.type)) {
+              if (widget.type == "Panna") {
+                /* DropdownHandler.dynamicDependentDropdown(
+                    context: context,
+                    type: widget.type,
+                    id: cubit.levelNameId.toString(),
+                    locationId: context.read<SangathanDetailsCubit>().selectedAllottedLocation?.id ?? 0,
+                    locationType: context.read<SangathanDetailsCubit>().typeLevelName ?? "");*/
 
-            if (widget.type == "Panna") {
-              DropdownHandler.dynamicDependentDropdown(
-                  context: context,
-                  type: widget.type,
-                  id: cubit.levelNameId.toString(),
-                  locationId: context.read<SangathanDetailsCubit>().selectedAllottedLocation?.id ?? 0,
-                  locationType: context.read<SangathanDetailsCubit>().typeLevelName ?? "");
+                context.read<ZilaDataCubit>().getBoothPannasStatus(cubit.dependentDropdownList.first.id ?? 0);
+              }
             }
           }
 

@@ -12,6 +12,7 @@ import 'package:sangathan/route/route_path.dart';
 
 import '../../../Values/string.dart';
 import '../../../splash_screen/cubit/user_profile_cubit.dart';
+import '../../../splash_screen/cubit/user_profile_state.dart';
 import 'cubit/home_page_cubit.dart';
 import 'cubit/home_page_state.dart';
 
@@ -189,7 +190,6 @@ SizedBox(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       /// Sangathan  card widget
                       BlocBuilder<HomePageCubit, HomePageState>(
                         builder: (context, state) {

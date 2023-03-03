@@ -60,6 +60,7 @@ class EntryDetailsList extends StatelessWidget {
                 cubit.filterData();
               }
             }
+            context.read<ZilaDataCubit>().getDeleteReason();
           }
           if (state is DataFetchingLoadingState) {
             cubit.dataList = null;

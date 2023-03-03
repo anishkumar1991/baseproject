@@ -39,17 +39,7 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
           cubit.levelNameId = null;
           cubit.dependentDropdownList = state.dependentDropdownData;
           locationListSortBasedOnType();
-          if (widget.type == "Panna") {
-            if (cubit.dependentDropdownList.isNotEmpty) {
-              context.read<ZilaDataCubit>().getBoothPannasStatus(cubit.dependentDropdownList.first.id ?? 0);
-            }
-          } else {
-            context.read<ZilaDataCubit>().getUnitData(data: {
-              "type": "Unit",
-              "data_level": widget.dataLevelId,
-              "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId
-            });
-          }
+
           bool isFoundKey = false;
           if (cubit.dependentDropdownList.isNotEmpty) {
             if (widget.typeLevel == "Mandal") {
@@ -88,7 +78,17 @@ class _DependentDropdownWidgetState extends State<DependentDropdownWidget> {
             cubit.pannaKramaankListData = [];
             cubit.onDataFound();
           }
-
+          if (widget.type == "Panna") {
+            if (cubit.dependentDropdownList.isNotEmpty) {
+              context.read<ZilaDataCubit>().getBoothPannasStatus(cubit.dependentDropdownList.first.id ?? 0);
+            }
+          } else {
+            context.read<ZilaDataCubit>().getUnitData(data: {
+              "type": "Unit",
+              "data_level": widget.dataLevelId,
+              "country_state_id": widget.countryStateId ?? StorageService.userData?.user?.countryStateId
+            });
+          }
           if (cubit.dependentDropdownSelected == null) {
             cubit.dataList = [];
             cubit.dataListWithoutSort = [];
