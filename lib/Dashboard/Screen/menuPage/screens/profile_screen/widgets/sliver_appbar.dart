@@ -45,16 +45,16 @@ class MyAppBar extends StatelessWidget {
                           right: MediaQuery.of(context).size.width * 0.22,
                           left: MediaQuery.of(context).size.width * 0.22,
                           child: Image.asset(AppIcons.rect)),
-                      Positioned(
+                      /*  Positioned(
                           top: MediaQuery.of(context).size.height * 0.165,
                           right: MediaQuery.of(context).size.width * 0.3,
                           left: MediaQuery.of(context).size.width * 0.3,
-                          child: Image.asset(AppIcons.textLogo)),
-                      Positioned(
+                          child: Image.asset(AppIcons.textLogo)),*/
+                      /*  Positioned(
                           top: MediaQuery.of(context).size.height * 0.115,
                           right: MediaQuery.of(context).size.width * 0.45,
                           left: MediaQuery.of(context).size.width * 0.45,
-                          child: Image.asset(AppIcons.bjpLogo)),
+                          child: Image.asset(AppIcons.bjpLogo)),*/
                     ],
                   ),
                   Positioned(
