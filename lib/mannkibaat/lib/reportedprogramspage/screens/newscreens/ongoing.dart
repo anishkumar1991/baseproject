@@ -37,13 +37,25 @@ class _OnGoingState extends State<OnGoing> {
         if (state is DashErrorState) {
           return Center(
             child: Text(
-              "कुछ गलत हुआ.",
+              state.error,
               style: GoogleFonts.quicksand(
                   fontWeight: FontWeight.w600, fontSize: 20),
             ),
           );
         }
         if (state is DashGotEventsState) {
+          for (var item in state.dashModal.data) {
+            DateTime startdate = item.airedDetail.startDateTime;
+            DateTime enddate = item.airedDetail.endDateTime;
+
+            if (enddate.isAfter(currentDate) ||
+                enddate.isAtSameMomentAs(currentDate) ||
+                startdate.isAfter(currentDate) ||
+                startdate.isAtSameMomentAs(currentDate)) {
+              status = 1;
+            }
+          }
+
           return Column(
             children: [
               const Divider(
@@ -74,7 +86,8 @@ class _OnGoingState extends State<OnGoing> {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
-                                  title: Text("${S.of(context).upcoming}.."),
+                                  title:
+                                      Text("${S.of(context).upcoming}.."),
                                   content: Text(
                                       "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
                                   actions: [
@@ -84,7 +97,7 @@ class _OnGoingState extends State<OnGoing> {
                                             .textTheme
                                             .labelLarge,
                                       ),
-                                      child:  Text(S.of(context).ok),
+                                      child: Text(S.of(context).ok),
                                       onPressed: () {
                                         Navigator.of(context).pop();
                                       },
@@ -98,8 +111,8 @@ class _OnGoingState extends State<OnGoing> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AttendeesFormPage(
-                                          eventId:
-                                              state.dashModal.data[index].id,
+                                          eventId: state
+                                              .dashModal.data[index].id,
                                         )));
                           }
                         } else {
@@ -128,25 +141,34 @@ class _OnGoingState extends State<OnGoing> {
                       },
                       child: ProgramCard(
                           id: '${state.dashModal.data[index].id}',
-                          date: state.dashModal.data[index].airedDetail.date,
-                          time: state.dashModal.data[index].airedDetail.time,
+                          date:
+                              state.dashModal.data[index].airedDetail.date,
+                          time:
+                              state.dashModal.data[index].airedDetail.time,
 
                           //right now I am not fetching images because API is having faulty images.
                           img: state.dashModal.data[index].eventPhoto),
                     );
+                  } else {
+                    if (status != 1) {
+                      status = 0;
+                    }
                   }
                 },
               ),
-              // status == 0
-              //     ? Center(
-              //         child: Text(
-              //         "कोई रिकॉर्ड उपलब्ध नहीं है",
-              //         style: GoogleFonts.quicksand(
-              //             color: Colors.black,
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.w500),
-              //       ))
-              //     : const SizedBox(),
+              status == 0
+                  ? Padding(
+                padding: const EdgeInsets.only(top: 150),
+                child: Center(
+                    child: Text(
+                      "कोई रिकॉर्ड उपलब्ध नहीं है",
+                      style: GoogleFonts.quicksand(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500),
+                    )),
+              )
+                  : const SizedBox()
             ],
           );
         }

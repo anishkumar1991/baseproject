@@ -18,8 +18,6 @@ class Expired extends StatefulWidget {
 }
 
 class _ExpiredState extends State<Expired> {
-
-
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
@@ -35,7 +33,7 @@ class _ExpiredState extends State<Expired> {
         if (state is DashErrorState) {
           return Center(
             child: Text(
-              "कुछ गलत हुआ.",
+              state.error,
               style: GoogleFonts.quicksand(
                   fontWeight: FontWeight.w600, fontSize: 20),
             ),
@@ -43,86 +41,84 @@ class _ExpiredState extends State<Expired> {
         }
 
         if (state is DashGotEventsState) {
+          for (int i = 0; i<state.dashModal.data.length;i++) {
+            DateTime enddate = state.dashModal.data[i].airedDetail.endDateTime;
+            if (enddate.isBefore(currentDate)) {
+              if (state.dashModal.data[i].eventHasDetail == true) {
+                status = 1;
+              }
+            }
+          }
+
           return Column(
             children: [
               const Divider(
                 color: Color(0xFF979797),
               ),
               const SizedBox(height: 10),
-              BlocBuilder<DashCubit, DashStates>(
-                builder: (context, state) {
-                  if (state is DashGotEventsState) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: state.dashModal.data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        DateTime enddate =
-                            state.dashModal.data[index].airedDetail.endDateTime;
-                        if (enddate.isBefore(currentDate)) {
-                          if (state.dashModal.data[index].eventHasDetail == true) {
-                            status = 1;
-                            return InkWell(
-                              onTap: () {
-                                print(
-                                    'inside REVIEW statement-->${state.dashModal.data[index].eventDetail.totalAttendees}');
-                                print(
-                                    'Event Detail-->${state.dashModal.data[index].eventDetail}');
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemCount: state.dashModal.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  DateTime enddate =
+                      state.dashModal.data[index].airedDetail.endDateTime;
+                  if (enddate.isBefore(currentDate)) {
+                    if (state.dashModal.data[index].eventHasDetail == true) {
+                      status = 0;
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AttendeeReviewPage(
+                                        vidhanSabha:
+                                            '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                        state:
+                                            '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
+                                        totalAttendees:
+                                            '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                        booth:
+                                            '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                        address:
+                                            '${state.dashModal.data[index].eventDetail.address}',
+                                        description:
+                                            '${state.dashModal.data[index].eventDetail.description}',
+                                        img1:
+                                            '${state.dashModal.data[index].eventDetail.photo1}',
+                                        img2:
+                                            '${state.dashModal.data[index].eventDetail.photo2}',
+                                      )));
+                        },
+                        child: ProgramCard(
+                            id: '${state.dashModal.data[index].id}',
+                            date: state.dashModal.data[index].airedDetail.date,
+                            time: state.dashModal.data[index].airedDetail.time,
 
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AttendeeReviewPage(
-                                          vidhanSabha:
-                                          '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                          state:
-                                          '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
-                                          totalAttendees:
-                                          '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                          booth:
-                                          '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                          address:
-                                          '${state.dashModal.data[index].eventDetail.address}',
-                                          description:
-                                          '${state.dashModal.data[index].eventDetail.description}',
-                                          img1:
-                                          '${state.dashModal.data[index].eventDetail.photo1}',
-                                          img2:
-                                          '${state.dashModal.data[index].eventDetail.photo1}',
-                                        )));
-                              },
-                              child: ProgramCard(
-                                  id: '${state.dashModal.data[index].id}',
-                                  date: state.dashModal.data[index].airedDetail.date,
-                                  time: state.dashModal.data[index].airedDetail.time,
-
-                                  //right now I am not fetching images because API is having faulty images.
-                                  img: state.dashModal.data[index].eventPhoto),
-                            );
-                          }
-                        }
-                        return const SizedBox();
-                      },
-                    );
+                            //right now I am not fetching images because API is having faulty images.
+                            img: state.dashModal.data[index].eventPhoto),
+                      );
+                    }
                   }
-                  return const Text("fetching");
+                  return const SizedBox();
                 },
               ),
               status == 0
-                  ? Center(
-                  child: Text(
-                    "कोई रिकॉर्ड उपलब्ध नहीं है",
-                    style: GoogleFonts.quicksand(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ))
-                  : const SizedBox(),
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 150),
+                      child: Center(
+                          child: Text(
+                        "कोई रिकॉर्ड उपलब्ध नहीं है",
+                        style: GoogleFonts.quicksand(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500),
+                      )),
+                    )
+                  : const SizedBox()
             ],
           );
         }
-
-
 
         return const Center(child: CircularProgressIndicator());
       },
