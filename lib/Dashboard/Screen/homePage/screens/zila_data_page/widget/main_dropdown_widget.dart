@@ -130,9 +130,10 @@ class _MainDropdownWidgetState extends State<MainDropdownWidget> {
   mainDropdownName() {
     if (context.read<SangathanDetailsCubit>().typeLevelName ==
         DropdownHandler.gettingLocationTypeForCondition(widget.typeName)) {
-      return getLocalizationNameOfLevel(context, widget.typeName);
+      return getLocalizationNameOfLevel(context, widget.typeName,
+          levelUser: context.read<SangathanDetailsCubit>().typeLevelName);
     } else {
-      return "${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.typeName, context))}";
+      return "${getLocalizationNameOfLevel(context, DropdownHandler.mainDropdownName(widget.typeName, context), levelUser: context.read<SangathanDetailsCubit>().typeLevelName ?? "")}";
     }
   }
 

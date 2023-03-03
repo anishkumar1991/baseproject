@@ -95,14 +95,15 @@ class DropdownHandler {
   }
 
   static gettingReverseLocationTypeForCondition(String type) {
+    print(type);
     if (type == "CountryState") {
       return "Pradesh";
     } else if (type == "Zila") {
       return "Zila";
     } else if (type == "Mandal") {
       return "Mandal";
-    } else if (type == "Vibhag") {
-      return "StateZone";
+    } else if (type == "StateZone") {
+      return "Vibhag";
     } else if (type == "ParliamentaryConstituency") {
       return "Lok Sabha";
     } else if (type == "AssemblyConstituency") {

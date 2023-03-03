@@ -524,7 +524,7 @@ class _SangathanDetailsPageState extends State<SangathanDetailsPage> {
   }
 }
 
-getLocalizationNameOfLevel(BuildContext context, String levelName) {
+getLocalizationNameOfLevel(BuildContext context, String levelName, {String? levelUser}) {
   if (levelName == "Pradesh") {
     return S.of(context).pradesh;
   } else if (levelName == "Vibhag") {
@@ -540,7 +540,11 @@ getLocalizationNameOfLevel(BuildContext context, String levelName) {
   } else if (levelName == "Booth") {
     return S.of(context).booth;
   } else if (levelName == "Panna") {
-    return S.of(context).panna;
+    if (levelUser == "Booth") {
+      return S.of(context).booth;
+    } else {
+      return S.of(context).panna;
+    }
   } else if (levelName == "Mandal") {
     return S.of(context).mandalLevelText;
   } else {
