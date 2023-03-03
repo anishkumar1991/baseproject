@@ -11,6 +11,7 @@ class ProgramCard extends StatelessWidget {
   final String time;
   final String img;
   final String clickNreport;
+  final String airedText;
 
 
   ProgramCard({required String this.id,
@@ -18,7 +19,7 @@ class ProgramCard extends StatelessWidget {
     required this.date,
     required this.time,
     required this.img,
-    required this.clickNreport})
+    required this.clickNreport, required this.airedText})
       : super(key: key);
 
   @override
@@ -37,6 +38,8 @@ class ProgramCard extends StatelessWidget {
           time: time,
           img: img,
           clickNreport: clickNreport,
+          airText: airedText,
+
         ),
       ),
     );

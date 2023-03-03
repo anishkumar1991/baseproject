@@ -10,6 +10,7 @@ class CardContent extends StatefulWidget {
   final String time;
   final String img;
   final String clickNreport;
+  final String airText;
 
   const CardContent(
       {required String this.id,
@@ -17,7 +18,7 @@ class CardContent extends StatefulWidget {
       required this.date,
       required this.time,
       required this.img,
-      required this.clickNreport});
+      required this.clickNreport, required this.airText});
 
   @override
   State<CardContent> createState() => _CardContentState(
@@ -118,7 +119,7 @@ class _CardContentState extends State<CardContent> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Aired on-',
+                                          widget.airText,
                                           style: GoogleFonts.publicSans(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 14,

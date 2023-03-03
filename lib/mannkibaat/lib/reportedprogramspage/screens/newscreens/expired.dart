@@ -94,6 +94,7 @@ class _ExpiredState extends State<Expired>
                                         )));
                           },
                           child: ProgramCard(
+                            airedText:S.of(context).airedon,
                             clickNreport: '${S.of(context).clicktoknowmore} >',
                               id: '${state.dashModal.data[index].id}',
                               date:

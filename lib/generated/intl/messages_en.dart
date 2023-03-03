@@ -60,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "ageError":
             MessageLookupByLibrary.simpleMessage("Age should be 2 digit"),
+        "airedon": MessageLookupByLibrary.simpleMessage("Aired On"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "alreadyVerified":
             MessageLookupByLibrary.simpleMessage("Person already verified"),
@@ -186,6 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
+        "live": MessageLookupByLibrary.simpleMessage("Live"),
         "logOut": MessageLookupByLibrary.simpleMessage("Log Out"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to log out?"),

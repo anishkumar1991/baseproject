@@ -243,5 +243,7 @@
   "reasonfordeletion" : "Reason for deletion",
   "mailsend" : "Mail Sent Successfully",
   "clicktoknowmore": "Click to know more",
+  "airedon": "Aired On",
+  "live": "Live",
   "accountdeletionmessage" : "Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused."
 }

@@ -60,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("उम्र"),
         "ageError":
             MessageLookupByLibrary.simpleMessage("उम्र २ अंकों की होनी चाहिए"),
+        "airedon": MessageLookupByLibrary.simpleMessage("प्रसारित किया गया"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "alreadyVerified": MessageLookupByLibrary.simpleMessage(
             "व्यक्ति पहले से ही सत्यापित है"),
@@ -192,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("भाषा"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
+        "live": MessageLookupByLibrary.simpleMessage("लाइव"),
         "logOut": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
             "क्या आप लॉग आउट करना चाहते हैं?"),

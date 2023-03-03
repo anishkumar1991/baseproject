@@ -24,6 +24,7 @@ class _OnGoingState extends State<OnGoing>
     DateTime currentDate = DateTime.now();
     var time = null;
     var temptimeshow;
+    String? airedText;
     int status = 0;
     final cubit = context.read<DashCubit>();
     cubit.getDashData(MKBStorageService.getUserAuthToken().toString());
@@ -71,6 +72,7 @@ class _OnGoingState extends State<OnGoing>
                         state.dashModal.data[index].airedDetail.startDateTime;
                     DateTime enddate =
                         state.dashModal.data[index].airedDetail.endDateTime;
+
                     if (state.dashModal.data[index].eventHasDetail == false) {
                       if (enddate.isAfter(currentDate) ||
                           enddate.isAtSameMomentAs(currentDate) ||
@@ -181,6 +183,10 @@ class _OnGoingState extends State<OnGoing>
                             }
                           },
                           child: ProgramCard(
+                              airedText: (startdate.hour <= currentDate.hour &&
+                                      startdate.day <= currentDate.day)
+                                  ? S.of(context).live
+                                  : S.of(context).upcoming,
                               clickNreport: S.of(context).report,
                               id: '${state.dashModal.data[index].id}',
                               date:
@@ -262,6 +268,10 @@ class _OnGoingState extends State<OnGoing>
                             }
                           },
                           child: ProgramCard(
+                              airedText: (startdate.hour <= currentDate.hour &&
+                                      startdate.day <= currentDate.day)
+                                  ? S.of(context).live
+                                  : S.of(context).upcoming,
                               clickNreport:
                                   '${S.of(context).clicktoknowmore} >',
                               id: '${state.dashModal.data[index].id}',

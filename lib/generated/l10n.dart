@@ -2480,6 +2480,26 @@ class S {
     );
   }
 
+  /// `Aired On`
+  String get airedon {
+    return Intl.message(
+      'Aired On',
+      name: 'airedon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Live`
+  String get live {
+    return Intl.message(
+      'Live',
+      name: 'live',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused.`
   String get accountdeletionmessage {
     return Intl.message(
