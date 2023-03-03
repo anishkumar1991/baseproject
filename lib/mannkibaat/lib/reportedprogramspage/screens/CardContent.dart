@@ -83,7 +83,7 @@ class _CardContentState extends State<CardContent> {
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 11, left: 9, right: 1, bottom: 11),
+                        top: 11, left: 20, right: 1, bottom: 11),
                     child: Column(
                       children: [
                         Flexible(
@@ -94,7 +94,7 @@ class _CardContentState extends State<CardContent> {
                                 alignment: Alignment.topLeft,
                                 child: Text(
                                   // ('${state.dashModal.data?.first.id}th Mann ki Baat'),
-                                  '${id}th Mann ki Baat',
+                                  '${id}',
                                   style: GoogleFonts.publicSans(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 16,
@@ -172,7 +172,7 @@ class _CardContentState extends State<CardContent> {
                           child: Text(
                             '$clickNreport',
                             style: GoogleFonts.publicSans(
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w500,
                                 fontSize: 14,
                                 color: Colors.blue),
                           ),
@@ -185,10 +185,11 @@ class _CardContentState extends State<CardContent> {
               Expanded(
                 flex: 4,
                 child: Container(
+                  // color: Colors.black,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 20, right: 10),
+                    padding: const EdgeInsets.only(top: 10, left: 14, right: 16,bottom: 16),
                     child: Card(
                       color: Colors.white,
                       margin: const EdgeInsets.symmetric(vertical: 10),
