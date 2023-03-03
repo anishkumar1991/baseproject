@@ -88,12 +88,13 @@ class _CardContentState extends State<CardContent> {
                       children: [
                         Flexible(
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
 
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                  // ('${state.dashModal.data?.first.id}th Mann ki Baat'),
+
                                   '${id}',
                                   style: GoogleFonts.publicSans(
                                       fontWeight: FontWeight.w700,
@@ -102,9 +103,7 @@ class _CardContentState extends State<CardContent> {
                                 ),
                               ),
 
-                              SizedBox(
-                                height: 60,
-                              ),
+
                               Container(
                                 child: Row(
                                   mainAxisAlignment:
@@ -138,7 +137,7 @@ class _CardContentState extends State<CardContent> {
                                       ],
                                     ),
                                     SizedBox(
-                                      width: 20,
+                                      width: 17,
                                     ),
                                     Text(
                                       //' ${state.dashModal.data?.first.airedDetail?.time}',
@@ -165,7 +164,7 @@ class _CardContentState extends State<CardContent> {
                           ),
                         ),
                         SizedBox(
-                          height: 2,
+                          height: 10,
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,

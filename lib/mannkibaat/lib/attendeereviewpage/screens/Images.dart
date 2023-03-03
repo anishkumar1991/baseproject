@@ -32,18 +32,17 @@ class ReviewImages extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                  child: Image.network(img1!,
-                      width: 120,
-                      height: 200,
-                      //extensions like .jpg, .png etc
-                      errorBuilder: (context, error, stackTrace) => Image.asset(
-                            "assets/images/mannkibaat/image.png",
-                            color: Colors.black12,
-                            width: 120,
-                            height: 200,
-                          ))),
-              const SizedBox(width: 10),
+              Image.network(img1!,
+                  width: 120,
+                  height: 200,
+                  //extensions like .jpg, .png etc
+                  errorBuilder: (context, error, stackTrace) => Image.asset(
+                        "assets/images/mannkibaat/image.png",
+                        color: Colors.black12,
+                        width: 120,
+                        height: 200,
+                      )),
+              const SizedBox(width: 25),
               SizedBox(
                   child: Image.network(img2!,
                       width: 120,
