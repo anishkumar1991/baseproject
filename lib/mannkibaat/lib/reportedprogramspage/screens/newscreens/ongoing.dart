@@ -19,7 +19,7 @@ class OnGoing extends StatefulWidget {
   State<OnGoing> createState() => _OnGoingState();
 }
 
-class _OnGoingState extends State<OnGoing> {
+class _OnGoingState extends State<OnGoing> with AutomaticKeepAliveClientMixin<OnGoing> {
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
@@ -177,4 +177,8 @@ class _OnGoingState extends State<OnGoing> {
       },
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
