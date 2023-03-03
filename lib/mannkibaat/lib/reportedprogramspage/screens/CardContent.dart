@@ -18,7 +18,8 @@ class CardContent extends StatefulWidget {
       required this.date,
       required this.time,
       required this.img,
-      required this.clickNreport, required this.airText});
+      required this.clickNreport,
+      required this.airText});
 
   @override
   State<CardContent> createState() => _CardContentState(
@@ -90,12 +91,10 @@ class _CardContentState extends State<CardContent> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-
-                                  '${id}',
+                                  id,
                                   style: GoogleFonts.publicSans(
                                       fontWeight: FontWeight.w700,
                                       fontSize: 16,
@@ -103,54 +102,47 @@ class _CardContentState extends State<CardContent> {
                                 ),
                               ),
 
-
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.end,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          widget.airText,
-                                          style: GoogleFonts.publicSans(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14,
-                                              color: AppColor()
-                                                  .dashboardTextColorLight),
-                                        ),
-                                        Text(
-                                          // ' ${state.dashModal.data?.first.airedDetail?.date}',
-                                          '$date',
-                                          style: GoogleFonts.publicSans(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 14,
-                                              color:
-                                              AppColor()
-                                                  .dashboardTextColorDark),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 17,
-                                    ),
-                                    Text(
-                                      //' ${state.dashModal.data?.first.airedDetail?.time}',
-                                      '$time',
-                                      style: GoogleFonts.publicSans(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          color: AppColor()
-                                              .dashboardTextColorLight),
-                                    )
-                                  ],
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        widget.airText,
+                                        style: GoogleFonts.publicSans(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: AppColor()
+                                                .dashboardTextColorLight),
+                                      ),
+                                      Text(
+                                        // ' ${state.dashModal.data?.first.airedDetail?.date}',
+                                        date,
+                                        style: GoogleFonts.publicSans(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14,
+                                            color: AppColor()
+                                                .dashboardTextColorDark),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 17,
+                                  ),
+                                  Text(
+                                    //' ${state.dashModal.data?.first.airedDetail?.time}',
+                                    '$time',
+                                    style: GoogleFonts.publicSans(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                        color:
+                                            AppColor().dashboardTextColorLight),
+                                  )
+                                ],
                               ),
                               // Align(
                               //   alignment: Alignment.topLeft,
@@ -164,13 +156,13 @@ class _CardContentState extends State<CardContent> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            '${clickNreport} >',
+                            '$clickNreport ',
                             style: GoogleFonts.publicSans(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
@@ -184,12 +176,13 @@ class _CardContentState extends State<CardContent> {
               ),
               Expanded(
                 flex: 4,
-                child: Container(
+                child: SizedBox(
                   // color: Colors.black,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 14, right: 16,bottom: 16),
+                    padding: const EdgeInsets.only(
+                        top: 10, left: 14, right: 16, bottom: 16),
                     child: Card(
                       color: Colors.white,
                       margin: const EdgeInsets.symmetric(vertical: 10),

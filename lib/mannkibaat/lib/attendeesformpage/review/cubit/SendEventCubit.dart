@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/Storage/mannkibaat.dart';
+import 'package:sangathan/mannkibaat/lib/Storage/AttendeesFormStorage.dart';
 
 import '../network/SendEventDetails.dart';
 import '../network/model/SendEventDetails.dart';
@@ -50,6 +51,9 @@ class SendEventCubit extends Cubit<SendEventState> {
 
         emit(EventSendState());
         print("event details posted");
+        AttendeeStorageService.setimage1url("");
+        AttendeeStorageService.setimage2url("");
+
       } else {
         print(res.response.statusCode);
         print(res.response.requestOptions.uri);

@@ -42,7 +42,7 @@ void image1Upload(BuildContext context) {
                     XFile? selectedImage = await ImagePicker()
                         .pickImage(source: ImageSource.gallery);
                     if (selectedImage != null) {
-                      File convertedImage1 = File(selectedImage!.path);
+                      File convertedImage1 = File(selectedImage.path);
                       cubit.selectedImage1(convertedImage1);
                     }
                   }),
