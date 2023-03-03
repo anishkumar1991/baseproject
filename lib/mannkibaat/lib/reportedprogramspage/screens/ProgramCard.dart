@@ -28,9 +28,9 @@ class ProgramCard extends StatelessWidget {
       elevation: 5,
       margin: const EdgeInsets.symmetric(vertical: 10),
       shadowColor: AppColor().cardBGcolor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: SizedBox(
-        height: 100,
+        height: 150,
         child: CardContent(
           id: id,
           date: date,

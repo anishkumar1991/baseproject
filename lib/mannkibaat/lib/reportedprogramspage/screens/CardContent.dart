@@ -54,159 +54,165 @@ class _CardContentState extends State<CardContent> {
   @override
   Widget build(BuildContext context) {
     //final cubit = context.read<DashCubit>();
-    return Row(
+    return Stack(
       children: [
-        Expanded(
-          flex: 5,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            alignment: Alignment.centerLeft,
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(top: 11, left: 9, right: 1, bottom: 11),
-              child: Stack(
-                children: [
-                  // Positioned(
-                  //   top: 0.0,
-                  //   left: 0.0,
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.all(8.0),
-                  //     child: Image.asset('assets/images/SiderMKB.png'),
-                  //   ),
-                  // ),
-                  Column(
-                    children: [
-                      Flexible(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                // ('${state.dashModal.data?.first.id}th Mann ki Baat'),
-                                '${id}th Mann ki Baat',
-                                style: GoogleFonts.publicSans(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    color: AppColor.primaryColor),
-                              ),
-                            ),
-
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Aired on-',
-                                        style: GoogleFonts.publicSans(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 10,
-                                            color: AppColor()
-                                                .dashboardTextColorLight),
-                                      ),
-                                      Text(
-                                        // ' ${state.dashModal.data?.first.airedDetail?.date}',
-                                        '$date',
-                                        style: GoogleFonts.publicSans(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 10,
-                                            color: AppColor.primaryColor),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    //' ${state.dashModal.data?.first.airedDetail?.time}',
-                                    '$time',
-                                    style: GoogleFonts.publicSans(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 10,
-                                        color:
-                                            AppColor().dashboardTextColorLight),
-                                  )
-                                ],
-                              ),
-                            ),
-                            // Align(
-                            //   alignment: Alignment.topLeft,
-                            //   child:,
-                            // ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            // Align(
-                            //   alignment: Alignment.topLeft,
-                            //   child:,
-                            // ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            // Align(
-                            //   alignment: Alignment.topLeft,
-                            //   child: ,
-                            // ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 4,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          '$clickNreport',
-                          style: GoogleFonts.publicSans(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                              color: Colors.blue),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+        Positioned(
+          top: -3,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          child: Stack(children: [
+            Image.asset(
+              'assets/images/DashMKB3Edit.jpg',
+              width: MediaQuery.of(context).size.width,
+              height: 400,
             ),
-          ),
+          ]),
         ),
-        Expanded(
-          flex: 4,
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 0),
-              child: Card(
-                color: Colors.white,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                shadowColor: AppColor().cardBGcolor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                child: Center(
-                  child: Image.network(
-                    img,
-                    //extensions like .jpg, .png etc
-                    errorBuilder: (context, error, stackTrace) =>
-                        SvgPicture.network(
-                      img, // for .svg extension
+        Positioned.fill(
+          top: 0,
+          bottom: 0,
+          child: Row(
+            children: [
+              Expanded(
+                flex: 5,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 11, left: 9, right: 1, bottom: 11),
+                    child: Column(
+                      children: [
+                        Flexible(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  // ('${state.dashModal.data?.first.id}th Mann ki Baat'),
+                                  '${id}th Mann ki Baat',
+                                  style: GoogleFonts.publicSans(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                              ),
+
+                              SizedBox(
+                                height: 50,
+                              ),
+                              Container(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Aired on-',
+                                          style: GoogleFonts.publicSans(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                              color: AppColor()
+                                                  .dashboardTextColorLight),
+                                        ),
+                                        Text(
+                                          // ' ${state.dashModal.data?.first.airedDetail?.date}',
+                                          '$date',
+                                          style: GoogleFonts.publicSans(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 14,
+                                              color:
+                                                  AppColor.primaryColor),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      //' ${state.dashModal.data?.first.airedDetail?.time}',
+                                      '$time',
+                                      style: GoogleFonts.publicSans(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: AppColor()
+                                              .dashboardTextColorLight),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              // Align(
+                              //   alignment: Alignment.topLeft,
+                              //   child:,
+                              // ),
+
+                              // Align(
+                              //   alignment: Alignment.topLeft,
+                              //   child: ,
+                              // ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            '$clickNreport',
+                            style: GoogleFonts.publicSans(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: Colors.blue),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-            ),
+              Expanded(
+                flex: 4,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 20, right: 10),
+                    child: Card(
+                      color: Colors.white,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      shadowColor: AppColor().cardBGcolor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          img,
+                          //extensions like .jpg, .png etc
+                          errorBuilder: (context, error, stackTrace) =>
+                              SvgPicture.network(
+                            img, // for .svg extension
+                          ),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
         )
       ],
