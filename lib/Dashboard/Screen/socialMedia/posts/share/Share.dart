@@ -9,11 +9,11 @@ import 'package:path_provider/path_provider.dart';
 import '../cubit/FetchPostCubit.dart';
 
 Future<void> share(
-    BuildContext context, int index, String urlimage, var text1) async {
+    BuildContext context, int index, String urlimage, var text1,var text3) async {
   final cubit = context.read<PostsCubit>();
 
   var text2 = AppStrings.shareUrl;
-  final text = "$text1\n\n$text2";
+  final text = "$text1\n\n$text3\n\n$text2";
   final url = Uri.parse(urlimage);
   final response = await http.get(url);
   final bytes = response.bodyBytes;

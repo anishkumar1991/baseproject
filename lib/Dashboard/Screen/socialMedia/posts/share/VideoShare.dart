@@ -13,7 +13,7 @@ import 'package:share_plus/share_plus.dart';
 import '../cubit/FetchPostCubit.dart';
 
 Future<void> VideoDownloadShare(
-    BuildContext context, int index, String sourceLink,String urlimage, var text1 ) async {
+    BuildContext context, int index, String sourceLink,String urlimage, var text1 ,var text3) async {
   final cubit = context.read<PostsCubit>();
 
   String? savePath;
@@ -89,7 +89,7 @@ Future<void> VideoDownloadShare(
 
 
   var text2 = "https://mpsangathan.com/app";
-  final text = "$text1\n\n$text2";
+  final text = "$text1\n\n$text3\n\n$text2";
   final url = Uri.parse(urlimage);
   final response = await http.get(url);
   final bytes = response.bodyBytes;

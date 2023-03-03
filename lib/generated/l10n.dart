@@ -2419,6 +2419,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Request For Account Delete`
+  String get accountdeletion {
+    return Intl.message(
+      'Request For Account Delete',
+      name: 'accountdeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Support`
+  String get support {
+    return Intl.message(
+      'Support',
+      name: 'support',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Details`
+  String get details {
+    return Intl.message(
+      'Details',
+      name: 'details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason for deletion`
+  String get reasonfordeletion {
+    return Intl.message(
+      'Reason for deletion',
+      name: 'reasonfordeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mail Sent Successfully`
+  String get mailsend {
+    return Intl.message(
+      'Mail Sent Successfully',
+      name: 'mailsend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused.`
+  String get accountdeletionmessage {
+    return Intl.message(
+      'Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused.',
+      name: 'accountdeletionmessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
