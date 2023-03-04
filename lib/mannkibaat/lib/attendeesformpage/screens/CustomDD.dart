@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDown extends StatelessWidget {
@@ -23,7 +22,7 @@ class CustomDropDown extends StatelessWidget {
       children: [
         Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+          style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
         ),
         DropdownButtonHideUnderline(
           child: DropdownButton(
@@ -34,7 +33,7 @@ class CustomDropDown extends StatelessWidget {
               isExpanded: true,
               value: selectedValue,
               hint: Text(
-                hintText ?? "",
+                hintText!,
                 style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 16,

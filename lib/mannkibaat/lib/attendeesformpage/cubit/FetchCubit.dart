@@ -36,6 +36,15 @@ class FetchCubit extends Cubit<FetchStates> {
     emit(DropDownSelected());
   }
 
+  void initialeVidhanSabha(ApiDataList vidhanSabhaName) {
+    emit(FetchingState());
+    vidhanSabhaSelected = vidhanSabhaName;
+    vidhansabhaname = vidhanSabhaSelected!.name;
+    boothSelected = null;
+    fetchBooth(vidhanSabhaSelected!.id.toString());
+    emit(DropDownSelected());
+  }
+
   void onChangeBooth(Datum boothName) {
     emit(FetchingState());
     boothSelected = boothName;

@@ -57,6 +57,7 @@ class _DropDownState extends State<DropDown> {
               Container(
                 child: CustomDropDown(
                   title: "बूथ *",
+
                   selectedValue: cubit.boothSelected,
                   hintText: 'बूथ चुनें',
                   dropDownList: cubit.boothList
@@ -65,6 +66,7 @@ class _DropDownState extends State<DropDown> {
                       .toList(),
                   onChange: ((value) {
                     cubit.onChangeBooth(value!);
+
                   }),
                 ),
               )
