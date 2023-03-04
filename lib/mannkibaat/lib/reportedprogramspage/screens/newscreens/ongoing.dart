@@ -88,7 +88,8 @@ class _OnGoingState extends State<OnGoing>
                             print(startdate.hour);
                             print(currentDate.hour);
                             if (startdate.isAfter(currentDate)) {
-                              if (startdate.hour > currentDate.hour && startdate.day >= currentDate.day) {
+                              if (startdate.hour > currentDate.hour &&
+                                  startdate.day >= currentDate.day) {
                                 showDialog(
                                   context: context,
                                   builder: (context) {
@@ -113,53 +114,51 @@ class _OnGoingState extends State<OnGoing>
                                     );
                                   },
                                 );
-                              }     else if (startdate.hour <= currentDate.hour) {
+                              } else if (startdate.hour <= currentDate.hour) {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => AttendeesFormPage(
-                                          eventId: state
-                                              .dashModal.data[index].id,
-                                        )));
-                              }
-                              else if (startdate.hour >= currentDate.hour && startdate.day<=currentDate.day) {
+                                              eventId: state
+                                                  .dashModal.data[index].id,
+                                            )));
+                              } else if (startdate.hour >= currentDate.hour &&
+                                  startdate.day <= currentDate.day) {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => AttendeesFormPage(
-                                          eventId: state
-                                              .dashModal.data[index].id,
-                                        )));
+                                              eventId: state
+                                                  .dashModal.data[index].id,
+                                            )));
                               }
-                            }
-                            else if (startdate.hour >= currentDate.hour && startdate.day<=currentDate.day) {
+                            } else if (startdate.hour >= currentDate.hour &&
+                                startdate.day <= currentDate.day) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AttendeesFormPage(
-                                        eventId: state
-                                            .dashModal.data[index].id,
-                                      )));
-                            }
-                            else if (startdate.hour >= currentDate.hour && startdate.month<currentDate.month) {
+                                            eventId:
+                                                state.dashModal.data[index].id,
+                                          )));
+                            } else if (startdate.hour >= currentDate.hour &&
+                                startdate.month < currentDate.month) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AttendeesFormPage(
-                                        eventId: state
-                                            .dashModal.data[index].id,
-                                      )));
-                            }
-                            else if (startdate.hour <= currentDate.hour) {
+                                            eventId:
+                                                state.dashModal.data[index].id,
+                                          )));
+                            } else if (startdate.hour <= currentDate.hour) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => AttendeesFormPage(
-                                        eventId: state
-                                            .dashModal.data[index].id,
-                                      )));
+                                            eventId:
+                                                state.dashModal.data[index].id,
+                                          )));
                             }
-
                           } else {
                             Navigator.push(
                                 context,
@@ -188,7 +187,8 @@ class _OnGoingState extends State<OnGoing>
                             airedText: (startdate.hour <= currentDate.hour &&
                                     startdate.day == currentDate.day)
                                 ? S.of(context).live
-                                : (startdate.day >= currentDate.day && startdate.month == currentDate.month)
+                                : (startdate.day >= currentDate.day &&
+                                        startdate.month == currentDate.month)
                                     ? S.of(context).upcoming
                                     : S.of(context).airedon,
                             clickNreport:
@@ -196,7 +196,7 @@ class _OnGoingState extends State<OnGoing>
                                         false)
                                     ? S.of(context).report
                                     : '${S.of(context).clicktoknowmore} >',
-                            id: state.dashModal.data[index].name,
+                            id: state.dashModal.data[index].name ?? "",
                             date: state.dashModal.data[index].airedDetail.date,
                             time: state.dashModal.data[index].airedDetail.time,
 

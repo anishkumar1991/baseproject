@@ -150,8 +150,8 @@ class _FormReviewPageState extends State<FormReviewPage> {
                               widget.eventid,
                               newPosition!.latitude.toString(),
                               newPosition!.longitude.toString(),
-                              widget.img1 ?? " ",
-                              widget.img2 ?? " ");
+                              widget.img1,
+                              widget.img2);
 
                         }, textButtonText: 'सबमिट ',);
                       },

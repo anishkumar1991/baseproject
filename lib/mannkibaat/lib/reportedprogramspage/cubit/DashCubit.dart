@@ -28,7 +28,7 @@ class DashCubit extends Cubit<DashStates> {
         Map<String, dynamic>? msg = res.data;
         emit(DashErrorState(msg?['error'] + "\n\n" + msg?['status'] ?? ''));
       }
-    } catch (e) {
+    } catch  (e) {
       emit(DashErrorState(e.toString()));
     }
   }

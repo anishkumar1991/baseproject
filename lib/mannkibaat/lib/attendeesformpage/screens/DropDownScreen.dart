@@ -43,7 +43,7 @@ class _DropDownState extends State<DropDown> {
                   hintText: 'विधान सभा का चयन करें',
                   dropDownList: cubit.acList
                       .map((e) =>
-                          DropdownMenuItem(value: e, child: Text(e.name ?? '')))
+                          DropdownMenuItem(value: e, child: Text(e.name)))
                       .toList(),
 
                   onChange: ((value) {
@@ -61,7 +61,7 @@ class _DropDownState extends State<DropDown> {
                   hintText: 'बूथ चुनें',
                   dropDownList: cubit.boothList
                       .map((e) =>
-                          DropdownMenuItem(value: e, child: Text(e.name ?? '')))
+                          DropdownMenuItem(value: e, child: Text(e.name)))
                       .toList(),
                   onChange: ((value) {
                     cubit.onChangeBooth(value!);

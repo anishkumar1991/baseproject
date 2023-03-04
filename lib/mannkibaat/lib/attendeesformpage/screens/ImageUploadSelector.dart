@@ -61,7 +61,7 @@ void image1Upload(BuildContext context) {
                   XFile? selectedImage =
                       await ImagePicker().pickImage(source: ImageSource.camera);
                   if (selectedImage != null) {
-                    File convertedImage1 = File(selectedImage!.path);
+                    File convertedImage1 = File(selectedImage.path);
                     cubit.selectedImage1(convertedImage1);
                   }
                 },
@@ -109,7 +109,7 @@ void image2Upload(BuildContext context) {
                     XFile? selectedImage = await ImagePicker()
                         .pickImage(source: ImageSource.gallery);
                     if (selectedImage != null) {
-                      File convertedImage2 = File(selectedImage!.path);
+                      File convertedImage2 = File(selectedImage.path);
                       cubit.selectedImage2(convertedImage2);
                     }
                   }),
@@ -128,7 +128,7 @@ void image2Upload(BuildContext context) {
                   XFile? selectedImage =
                       await ImagePicker().pickImage(source: ImageSource.camera);
                   if (selectedImage != null) {
-                    File convertedImage2 = File(selectedImage!.path);
+                    File convertedImage2 = File(selectedImage.path);
                     cubit.selectedImage2(convertedImage2);
                   }
                 },

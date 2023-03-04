@@ -13,6 +13,7 @@ import 'package:sangathan/route/route_path.dart';
 import '../../../Values/string.dart';
 import '../../../splash_screen/cubit/user_profile_cubit.dart';
 import '../../../splash_screen/cubit/user_profile_state.dart';
+import '../notification/screens/NotificatioMainScreen.dart';
 import 'cubit/home_page_cubit.dart';
 import 'cubit/home_page_state.dart';
 
@@ -48,31 +49,31 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // InkWell(
-                  //   onTap: (() {
-                  //     Navigator.push(context, MaterialPageRoute(
-                  //       builder: (context) {
-                  //         return const NotificationMainScreen();
-                  //       },
-                  //     ));
-                  //   }),
-                  //   child: Container(
-                  //       padding: const EdgeInsets.all(8),
-                  //       decoration: BoxDecoration(
-                  //           shape: BoxShape.circle,
-                  //           color: AppColor.greyColor.withOpacity(0.1)),
-                  //       // child: Image.asset(
-                  //       //   AppIcons.notification,
-                  //       //   height: 10,
-                  //       //   color: AppColor.greyColor,
-                  //       // ),
-                  //       child: const Icon(
-                  //         Icons.notifications,
-                  //         color: AppColor.greyColor,
-                  //         size: 20,
-                  //       )),
-                  // ),
-SizedBox(),
+                  InkWell(
+                    onTap: (() {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const NotificationMainScreen();
+                        },
+                      ));
+                    }),
+                    child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColor.greyColor.withOpacity(0.1)),
+                        // child: Image.asset(
+                        //   AppIcons.notification,
+                        //   height: 10,
+                        //   color: AppColor.greyColor,
+                        // ),
+                        child: const Icon(
+                          Icons.notifications,
+                          color: AppColor.greyColor,
+                          size: 20,
+                        )),
+                  ),
+
                   Image.asset(
                     AppIcons.sangathanLogo,
                     height: 55,

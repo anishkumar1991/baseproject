@@ -90,7 +90,7 @@ class GuestCubit extends Cubit<GuestState> {
     }else{
       attendeesIdForEdit = attendeesId;
       nameCtr.text = name ?? '';
-      phoneNumber.text = phone.toString() ?? '';
+      phoneNumber.text = phone.toString();
       position.text = designation ?? '';
     }
     emit(EditAttendeesLoadingState());

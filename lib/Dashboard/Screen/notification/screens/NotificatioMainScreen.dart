@@ -21,27 +21,37 @@ class NotificationMainScreen extends StatefulWidget {
 class _NotificationMainScreenState extends State<NotificationMainScreen>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
+  String? showtab;
 
   @override
   void initState() {
+    fetchNotification();
     final cubit = context.read<NotificationCubit>();
-    cubit.fetchNotification();
-    tabController = TabController(length: 3, vsync: this);
+
+    if (cubit.tempModel?.isCircularShow == false &&
+        cubit.tempModel?.isReportShow == true) {
+      tabController = TabController(length: 2, vsync: this);
+      showtab = "Report";
+    } else if (cubit.tempModel?.isCircularShow == true &&
+        cubit.tempModel?.isReportShow == false) {
+      tabController = TabController(length: 2, vsync: this);
+      showtab = "Circular";
+    } else if (cubit.tempModel?.isCircularShow == false &&
+        cubit.tempModel?.isReportShow == false) {
+      showtab = "Notification";
+    } else {
+      tabController = TabController(length: 3, vsync: this);
+      showtab = "All";
+    }
+    super.initState();
+
+    // tabController = TabController(length: 3, vsync: this);
   }
 
-  //   if (cubit.tempModel!.isCircularShow == false &&
-  //       cubit.tempModel!.isReportShow == true) {
-  //     tabController = TabController(length: 2, vsync: this);
-  //   } else if (cubit.tempModel!.isCircularShow == true &&
-  //       cubit.tempModel!.isReportShow == false) {
-  //     tabController = TabController(length: 2, vsync: this);
-  //   } else if (cubit.tempModel!.isCircularShow == false &&
-  //       cubit.tempModel!.isReportShow == false) {
-  //   } else {
-  //     tabController = TabController(length: 3, vsync: this);
-  //   }
-  //   super.initState();
-  // }
+  Future<void> fetchNotification() async {
+    final cubit = context.read<NotificationCubit>();
+    await cubit.fetchNotification();
+  }
 
   @override
   void dispose() {
@@ -162,64 +172,187 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 20, right: 12, left: 12),
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black12, width: 1.5),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30)),
-                child: Column(
+          child: showtab == "All"
+              ? Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: TabBar(
-                        unselectedLabelColor: const Color(0xFF666666),
-                        indicator: BoxDecoration(
-                          color: const Color(0xFF447EFF),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        controller: tabController,
-                        tabs: [
-                          Tab(
-                            child: Text(
-                              S.of(context).circular,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Tab(
-                            child: Text(
-                              S.of(context).report,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          Tab(
-                            child: Text(
-                              S.of(context).notification,
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14, fontWeight: FontWeight.w600),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black12, width: 1.5),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(3),
+                            child: TabBar(
+                              unselectedLabelColor: const Color(0xFF666666),
+                              indicator: BoxDecoration(
+                                color: AppColor.primaryColor,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              controller: tabController,
+                              tabs: [
+                                Tab(
+                                  child: Text(
+                                    S.of(context).circular,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Tab(
+                                  child: Text(
+                                    S.of(context).report,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Tab(
+                                  child: Text(
+                                    S.of(context).notification,
+                                    style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
+                    Expanded(
+                      child: TabBarView(
+                        controller: tabController,
+                        children: const [
+                          CircularScreen(),
+                          ReportScreen(),
+                          NotificationScreen(),
+                        ],
+                      ),
+                    )
                   ],
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: tabController,
-                  children:  const [
-                    CircularScreen(),
-                    ReportScreen(),
-                    NotificationScreen(),
-                  ],
-                ),
-              )
-            ],
-          ),
+                )
+              : showtab == "Circular"
+                  ? Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              border:
+                                  Border.all(color: Colors.black12, width: 1.5),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(3),
+                                child: TabBar(
+                                  unselectedLabelColor: const Color(0xFF666666),
+                                  indicator: BoxDecoration(
+                                    color: AppColor.primaryColor,
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  controller: tabController,
+                                  tabs: [
+                                    Tab(
+                                      child: Text(
+                                        S.of(context).circular,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    // Tab(
+                                    //   child: Text(
+                                    //     S.of(context).report,
+                                    //     style: GoogleFonts.poppins(
+                                    //         fontSize: 14,
+                                    //         fontWeight: FontWeight.w600),
+                                    //   ),
+                                    // ),
+                                    Tab(
+                                      child: Text(
+                                        S.of(context).notification,
+                                        style: GoogleFonts.poppins(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: TabBarView(
+                            controller: tabController,
+                            children: const [
+                              CircularScreen(),
+                              // ReportScreen(),
+                              NotificationScreen(),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  : showtab == "Report"
+                      ? Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.black12, width: 1.5),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(3),
+                                    child: TabBar(
+                                      unselectedLabelColor:
+                                          const Color(0xFF666666),
+                                      indicator: BoxDecoration(
+                                        color: AppColor.primaryColor,
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      controller: tabController,
+                                      tabs: [
+                                        Tab(
+                                          child: Text(
+                                            S.of(context).report,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                        Tab(
+                                          child: Text(
+                                            S.of(context).notification,
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: TabBarView(
+                                controller: tabController,
+                                children: const [
+                                  ReportScreen(),
+                                  NotificationScreen(),
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      : SizedBox(),
         ),
       ),
     );

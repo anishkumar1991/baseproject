@@ -50,7 +50,7 @@ class Datum {
   });
 
   int id;
-  String name;
+  String? name;
   String? status;
   AiredDetail airedDetail;
   bool canCreate;
