@@ -1,11 +1,14 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sangathan/Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/network/model/FetchPosts.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/CustomCard.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/Polls.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/topBar.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
+import 'package:sangathan/notification_handler/local_notification_handler.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../../../Values/app_colors.dart';
 import 'cubit/FetchPostCubit.dart';
@@ -25,6 +28,47 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
   @override
   void initState() {
     BlocProvider.of<PostsCubit>(context).loadPosts();
+    // 1. This method call when app in terminated state and you get a notification
+    // when you click on notification app open from terminated state and you can get notification data in this method
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (message) {
+        LocalNotificationService.createanddisplaynotification(
+            message!, context);
+
+        print("FirebaseMessaging.instance.getInitialMessage");
+        if (message != null) {
+          print("New Notification");
+        }
+      },
+    );
+
+    // 2. This method only call when App in forground it mean app must be opened
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        print("FirebaseMessaging.onMessage.listen");
+        LocalNotificationService.createanddisplaynotification(message, context);
+
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data11 ${message.data}");
+        }
+      },
+    );
+
+    // 3. This method only call when App in background and not terminated(not closed)
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (message) {
+        LocalNotificationService.createanddisplaynotification(message, context);
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data22 ${message.data['_id']}");
+        }
+      },
+    );
 
     scrollController.addListener(() {
       if (scrollController.offset ==
@@ -64,15 +108,15 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                             child: Column(
                               children: List.generate(
                                   5,
-                                      (index) => Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                      ),
-                                      height: 250,
-                                    ),
-                                  )).toList(),
+                                  (index) => Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            color: Colors.white,
+                                          ),
+                                          height: 250,
+                                        ),
+                                      )).toList(),
                             ),
                           ),
                         ),

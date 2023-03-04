@@ -162,18 +162,18 @@ class _PannaPdfViewerState extends State<PannaPdfViewer> {
     if (_permissionReady ?? false) {
       await prepareSaveDir();
       var pdfName = widget.pannaNumber;
-
-      try {
-        await Dio().download(widget.pdfLink ?? "", "$_localPath/$pdfName.pdf");
-
-        LocalNotificationService.createAndDisplayNotificationDownload(
-            "$pdfName.pdf", " $_localPath/$pdfName.pdf", "File Downloaded");
-        print("Download done");
-      } catch (e) {
-        LocalNotificationService.createAndDisplayNotificationDownload(
-            "$pdfName.pdf", "".toString(), "File Download Fail");
-        print("Exception :: $e");
-      }
+      //
+      // try {
+      //   await Dio().download(widget.pdfLink ?? "", "$_localPath/$pdfName.pdf");
+      //
+      //   LocalNotificationService.createAndDisplayNotificationDownload(
+      //       "$pdfName.pdf", " $_localPath/$pdfName.pdf", "File Downloaded");
+      //   print("Download done");
+      // } catch (e) {
+      //   LocalNotificationService.createAndDisplayNotificationDownload(
+      //       "$pdfName.pdf", "".toString(), "File Download Fail");
+      //   print("Exception :: $e");
+      // }
     }
   }
 }

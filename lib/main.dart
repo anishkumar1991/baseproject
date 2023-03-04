@@ -20,6 +20,7 @@ import 'package:sangathan/Login/Cubit/login_cubit.dart';
 import 'package:sangathan/Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/string.dart';
+
 // import 'mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
 // import 'mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
 import 'package:sangathan/mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
@@ -53,19 +54,10 @@ import 'notification_handler/firebase_notification_handler.dart';
 import 'notification_handler/local_notification_handler.dart';
 import 'splash_screen/cubit/user_profile_cubit.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  debugPrint("Handling a background message:---------------- ${message.messageId}");
-  debugPrint("Handling a background message:-------------- ${message.data}");
-  LocalNotificationService.createAndDisplayNotification(
-    message: message,
-    flutterLocalNotificationsPlugin: flutterLocalNotificationsPlugin,
-  );
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   await GetStorage.init();
   runApp(const MyApp());
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -85,9 +77,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    FirebaseMessaging.instance.subscribeToTopic("sangathan").then((value) => debugPrint("subscribed to sangathan"));
+    FirebaseMessaging.instance
+        .subscribeToTopic("sangathan")
+        .then((value) => debugPrint("subscribed to sangathan"));
     LocalNotificationService.initialize(context);
-    firebaseNotification(context);
     super.initState();
   }
 
@@ -157,8 +150,10 @@ class _MyAppState extends State<MyApp> {
             onGenerateRoute: RouteGenerator.generatorRoute,
             // home: NotificationMainScreen(),
             initialRoute: RoutePath.splashScreenPage,
-            theme: Theme.of(context)
-                .copyWith(colorScheme: Theme.of(context).colorScheme.copyWith(primary: AppColor.primaryColor)),
+            theme: Theme.of(context).copyWith(
+                colorScheme: Theme.of(context)
+                    .colorScheme
+                    .copyWith(primary: AppColor.primaryColor)),
           );
         },
       ),

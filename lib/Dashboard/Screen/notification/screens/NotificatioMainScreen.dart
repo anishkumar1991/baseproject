@@ -62,9 +62,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<DatePicCubit>();
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0,
@@ -356,7 +354,7 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                           ? const NotificationScreen()
                           : const SizedBox(),
         ),
-      ),
-    );
+      );
+
   }
 }
