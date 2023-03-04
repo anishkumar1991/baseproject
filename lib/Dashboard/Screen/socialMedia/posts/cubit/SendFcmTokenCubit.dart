@@ -14,7 +14,8 @@ class SendFcmTokenCubit extends Cubit<SendFcmTokenState> {
 
   Future<void> sendFcm(var fcm, String phone) async {
     try {
-      final res = await api.sendFcm({"fcm_token": fcm.toString(), "phone": phone, "device_id" : " "});
+      final res = await api.sendFcm(
+          {"fcm_token": fcm.toString(), "phone": phone, "device_id": " "});
       if (res.response.statusCode == 200) {
         print("FCM token sended");
         emit(SendFcmTokenSendedState());

@@ -352,7 +352,9 @@ class _NotificationMainScreenState extends State<NotificationMainScreen>
                             )
                           ],
                         )
-                      : SizedBox(),
+                      : showtab == "Notification"
+                          ? const NotificationScreen()
+                          : const SizedBox(),
         ),
       ),
     );

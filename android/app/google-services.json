@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "410120124539",
-    "project_id": "sangathan-b272e",
-    "storage_bucket": "sangathan-b272e.appspot.com"
+    "project_number": "663792260205",
+    "project_id": "sangathannew",
+    "storage_bucket": "sangathannew.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:410120124539:android:0ba917dff60dcf4f2c4ade",
+        "mobilesdk_app_id": "1:663792260205:android:48d4a28b32f6af94e29b64",
         "android_client_info": {
           "package_name": "com.jarvis.mpsangathan"
         }
       },
       "oauth_client": [
         {
-          "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
+          "client_id": "663792260205-b0louakmqmd0pdgisobv00m4m5ftmte0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA2VhFhNh7RTpYUKRKQOywQm0wDDdWg98c"
+          "current_key": "AIzaSyASGl6jWvZ7KBIWFzg4nYEcwk5T0ep3YUA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "410120124539-4a9v79id3fv9208bfg38o1k49oerb46c.apps.googleusercontent.com",
+              "client_id": "663792260205-b0louakmqmd0pdgisobv00m4m5ftmte0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
