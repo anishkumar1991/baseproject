@@ -83,12 +83,12 @@ class _OnGoingState extends State<OnGoing>
                         onTap: () {
                           if (state.dashModal.data[index].eventHasDetail ==
                               false) {
-                            print("start date $startdate");
-                            print("current date $currentDate");
+                            print("start date ${startdate.day}");
+                            print("current date ${currentDate.day}");
                             print(startdate.hour);
                             print(currentDate.hour);
                             if (startdate.isAfter(currentDate)) {
-                              if (startdate.hour > currentDate.hour || startdate.day > currentDate.day) {
+                              if (startdate.hour > currentDate.hour && startdate.day >= currentDate.day) {
                                 showDialog(
                                   context: context,
                                   builder: (context) {
@@ -122,6 +122,33 @@ class _OnGoingState extends State<OnGoing>
                                               .dashModal.data[index].id,
                                         )));
                               }
+                              else if (startdate.hour >= currentDate.hour && startdate.day<=currentDate.day) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AttendeesFormPage(
+                                          eventId: state
+                                              .dashModal.data[index].id,
+                                        )));
+                              }
+                            }
+                            else if (startdate.hour >= currentDate.hour && startdate.day<=currentDate.day) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AttendeesFormPage(
+                                        eventId: state
+                                            .dashModal.data[index].id,
+                                      )));
+                            }
+                            else if (startdate.hour >= currentDate.hour && startdate.month<currentDate.month) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AttendeesFormPage(
+                                        eventId: state
+                                            .dashModal.data[index].id,
+                                      )));
                             }
                             else if (startdate.hour <= currentDate.hour) {
                               Navigator.push(
@@ -161,7 +188,7 @@ class _OnGoingState extends State<OnGoing>
                             airedText: (startdate.hour <= currentDate.hour &&
                                     startdate.day == currentDate.day)
                                 ? S.of(context).live
-                                : (startdate.day > currentDate.day && startdate.month == currentDate.month)
+                                : (startdate.day >= currentDate.day && startdate.month == currentDate.month)
                                     ? S.of(context).upcoming
                                     : S.of(context).airedon,
                             clickNreport:
