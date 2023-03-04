@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDown extends StatelessWidget {
@@ -41,6 +40,7 @@ class CustomDropDown extends StatelessWidget {
                     color: Colors.grey),
               ),
               items: dropDownList,
+
               onChanged: ((value) => onChange!(value))),
         ),
         const Divider(

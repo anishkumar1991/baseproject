@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../cubit/FetchCubit.dart';
-import '../cubit/FetchStates.dart';
-import 'CustomDD.dart';
+import '../../attendeesformpage/cubit/FetchCubit.dart';
+import '../../attendeesformpage/cubit/FetchStates.dart';
+import '../../attendeesformpage/screens/CustomDD.dart';
 
-class DropDown extends StatefulWidget {
-  const DropDown({Key? key}) : super(key: key);
+class EditableDropDown extends StatefulWidget {
+  final String vidhanSabhaPreFilled;
+  final String boothPreFilled;
+  const EditableDropDown({Key? key, required this.vidhanSabhaPreFilled, required this.boothPreFilled}) : super(key: key);
 
   @override
-  State<DropDown> createState() => _DropDownState();
+  State<EditableDropDown> createState() => _EditableDropDown();
 }
 
-class _DropDownState extends State<DropDown> {
+class _EditableDropDown extends State<EditableDropDown> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<FetchCubit>();
@@ -43,7 +45,7 @@ class _DropDownState extends State<DropDown> {
                   hintText: 'विधान सभा का चयन करें',
                   dropDownList: cubit.acList
                       .map((e) =>
-                          DropdownMenuItem(value: e, child: Text(e.name)))
+                      DropdownMenuItem(value: e, child: Text(e.name)))
                       .toList(),
 
                   onChange: ((value) {
@@ -57,16 +59,14 @@ class _DropDownState extends State<DropDown> {
               Container(
                 child: CustomDropDown(
                   title: "बूथ *",
-
                   selectedValue: cubit.boothSelected,
                   hintText: 'बूथ चुनें',
                   dropDownList: cubit.boothList
                       .map((e) =>
-                          DropdownMenuItem(value: e, child: Text(e.name)))
+                      DropdownMenuItem(value: e, child: Text(e.name)))
                       .toList(),
                   onChange: ((value) {
                     cubit.onChangeBooth(value!);
-
                   }),
                 ),
               )

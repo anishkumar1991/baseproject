@@ -174,16 +174,17 @@ class _CardContentState extends State<CardContent> {
                   ),
                 ),
               ),
+
               Expanded(
                 flex: 4,
-                child: SizedBox(
+                child:  SizedBox(
                   // color: Colors.black,
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 10, left: 14, right: 16, bottom: 16),
-                    child: Card(
+                    child: img==""? const SizedBox() : Card(
                       color: Colors.white,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       shadowColor: AppColor().cardBGcolor,
@@ -196,8 +197,8 @@ class _CardContentState extends State<CardContent> {
                           //extensions like .jpg, .png etc
                           errorBuilder: (context, error, stackTrace) =>
                               SvgPicture.network(
-                            img, // for .svg extension
-                          ),
+                                img, // for .svg extension
+                              ),
                           fit: BoxFit.fill,
                         ),
                       ),

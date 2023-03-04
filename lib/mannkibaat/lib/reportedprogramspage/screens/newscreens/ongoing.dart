@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Storage/mannkibaat.dart';
 import 'package:sangathan/generated/l10n.dart';
 
+import '../../../attendeereviewpage/Editable/EditableReviewPage.dart';
 import '../../../attendeereviewpage/screens/ReviewPageMain.dart';
 import '../../../attendeesformpage/screens/AttendeesFormPage.dart';
 import '../../cubit/DashCubit.dart';
@@ -156,31 +157,57 @@ class _OnGoingState extends State<OnGoing>
                                   MaterialPageRoute(
                                       builder: (context) => AttendeesFormPage(
                                             eventId:
-                                                state.dashModal.data[index].id,
+                                            state.dashModal.data[index].id,
                                           )));
                             }
                           } else {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AttendeeReviewPage(
-                                          vidhanSabha:
-                                              '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                          state:
-                                              '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
-                                          totalAttendees:
-                                              '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                          booth:
-                                              '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                          address:
-                                              '${state.dashModal.data[index].eventDetail.address}',
-                                          description:
-                                              '${state.dashModal.data[index].eventDetail.description}',
-                                          img1:
-                                              '${state.dashModal.data[index].eventDetail.photo1}',
-                                          img2:
-                                              '${state.dashModal.data[index].eventDetail.photo2}',
-                                        )));
+                            if(state.dashModal.data[index].canEdit==false){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditableReviewPage(
+                                        vidhanSabha:
+                                        '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                        state:
+                                        '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
+                                        totalAttendees:
+                                        '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                        booth:
+                                        '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                        address:
+                                        '${state.dashModal.data[index].eventDetail.address}',
+                                        description:
+                                        '${state.dashModal.data[index].eventDetail.description}',
+                                        img1:
+                                        '${state.dashModal.data[index].eventDetail.photo1}',
+                                        img2:
+                                        '${state.dashModal.data[index].eventDetail.photo2}',
+                                        id:  state.dashModal.data[index].id,
+                                      )));
+                            }else{
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AttendeeReviewPage(
+                                        vidhanSabha:
+                                        '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                        state:
+                                        '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
+                                        totalAttendees:
+                                        '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                        booth:
+                                        '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                        address:
+                                        '${state.dashModal.data[index].eventDetail.address}',
+                                        description:
+                                        '${state.dashModal.data[index].eventDetail.description}',
+                                        img1:
+                                        '${state.dashModal.data[index].eventDetail.photo1}',
+                                        img2:
+                                        '${state.dashModal.data[index].eventDetail.photo2}',
+                                      )));
+                            }
+
                           }
                         },
                         child: ProgramCard(
