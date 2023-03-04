@@ -6,12 +6,12 @@ import '../Dashboard/Screen/notification/screens/NotificatioMainScreen.dart';
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin();
 
   static void initialize(BuildContext context) {
     // initializationSettings  for Android
     const InitializationSettings initializationSettings =
-        InitializationSettings(
+    InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
     );
 
@@ -34,9 +34,12 @@ class LocalNotificationService {
     );
   }
 
-  static void createanddisplaynotification(RemoteMessage message, BuildContext context1) async {
+  static void createanddisplaynotification(RemoteMessage message,
+      BuildContext context1) async {
     try {
-      final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+      final id = DateTime
+          .now()
+          .millisecondsSinceEpoch ~/ 1000;
       const NotificationDetails notificationDetails = NotificationDetails(
         android: AndroidNotificationDetails(
           "sangathnapp",
@@ -52,7 +55,6 @@ class LocalNotificationService {
         message.notification!.body,
         notificationDetails,
         payload: message.data['_id'],
-
       );
 
       Navigator.of(context1).push(
@@ -60,11 +62,8 @@ class LocalNotificationService {
           builder: (context) => NotificationMainScreen(),
         ),
       );
-
-
     } on Exception catch (e) {
       print(e);
     }
   }
-
 }
