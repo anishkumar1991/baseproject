@@ -13,6 +13,7 @@ import '../../attendeesformpage/screens/ImageUploadBox.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../utils/buttons/SubmitButton.dart';
 import 'EditableDropDownScreen.dart';
+import 'EditableImageBox.dart';
 
 
 class EditableAttendeesFormPage extends StatefulWidget {
@@ -33,7 +34,6 @@ class EditableAttendeesFormPage extends StatefulWidget {
 }
 
 class _EditableAttendeesFormPage extends State<EditableAttendeesFormPage> {
-
   final totalAttendeesKey = GlobalKey<FormState>();
 
   TextEditingController totalAttendeesController = TextEditingController();
@@ -51,6 +51,7 @@ class _EditableAttendeesFormPage extends State<EditableAttendeesFormPage> {
     // cubit.boothSelected?.name=widget.boothPreFilled;
     totalAttendeesController.text=widget.totalAttendeesPreFilled;
     descriptionController.text=widget.descriptionPreFilled;
+    addressController.text = widget.addressPreFilled;
     // imgCubit.tempimage1=widget.img1PreFilled1;
     // imgCubit.tempimage2=widget.img1PreFilled2;
     // cubit.fetchAcId();
@@ -221,7 +222,7 @@ class _EditableAttendeesFormPage extends State<EditableAttendeesFormPage> {
                             fontWeight: FontWeight.w400),
                       ),
                       const SizedBox(height: 10),
-                      ImageBox(),
+                      EditableImageBox(prefilledImage1: widget.img1PreFilled1,prefilledImage2: widget.img1PreFilled2),
                       const SizedBox(height: 25),
                       Align(
                         alignment: Alignment.center,

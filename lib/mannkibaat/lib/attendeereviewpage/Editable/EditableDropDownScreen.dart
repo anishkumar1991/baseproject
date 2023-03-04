@@ -3,12 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../attendeesformpage/cubit/FetchCubit.dart';
 import '../../attendeesformpage/cubit/FetchStates.dart';
+import '../../attendeesformpage/network/model/VidhanSabhaModel.dart';
 import '../../attendeesformpage/screens/CustomDD.dart';
 
 class EditableDropDown extends StatefulWidget {
   final String vidhanSabhaPreFilled;
   final String boothPreFilled;
-  const EditableDropDown({Key? key, required this.vidhanSabhaPreFilled, required this.boothPreFilled}) : super(key: key);
+
+  const EditableDropDown(
+      {Key? key,
+      required this.vidhanSabhaPreFilled,
+      required this.boothPreFilled})
+      : super(key: key);
 
   @override
   State<EditableDropDown> createState() => _EditableDropDown();
@@ -33,42 +39,38 @@ class _EditableDropDown extends State<EditableDropDown> {
           }
         },
         builder: (context, state) {
+          print("hello i am ${cubit.vidhanSabhaSelected}");
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                child: CustomDropDown(
-                  title: "विधान सभा *",
-
-                  selectedValue: cubit.vidhanSabhaSelected,
-                  hintText: 'विधान सभा का चयन करें',
-                  dropDownList: cubit.acList
-                      .map((e) =>
-                      DropdownMenuItem(value: e, child: Text(e.name)))
-                      .toList(),
-
-                  onChange: ((value) {
-                    cubit.onChangeVidhanSabha(value!);
-                  }),
-                ),
+              CustomDropDown(
+                title: "विधान सभा *",
+                selectedValue: cubit.vidhanSabhaSelected,
+                hintText: widget.vidhanSabhaPreFilled,
+                dropDownList: cubit.acList
+                    .map((e) =>
+                        DropdownMenuItem(value: e, child: Text(e.name)))
+                    .toList(),
+                onChange: ((value) {
+                  cubit.onChangeVidhanSabha(value!);
+                }),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
-                child: CustomDropDown(
-                  title: "बूथ *",
-                  selectedValue: cubit.boothSelected,
-                  hintText: 'बूथ चुनें',
-                  dropDownList: cubit.boothList
-                      .map((e) =>
-                      DropdownMenuItem(value: e, child: Text(e.name)))
-                      .toList(),
-                  onChange: ((value) {
-                    cubit.onChangeBooth(value!);
-                  }),
-                ),
+              CustomDropDown(
+                title: "बूथ *",
+                selectedValue: cubit.boothSelected,
+                hintText: widget.boothPreFilled,
+                dropDownList: cubit.boothList
+                    .map((e) =>
+                        DropdownMenuItem(value: e, child: Text(e.name)))
+                    .toList(),
+                onChange: ((value) {
+                  cubit.onChangeBooth(value!);
+                }),
               )
             ],
           );

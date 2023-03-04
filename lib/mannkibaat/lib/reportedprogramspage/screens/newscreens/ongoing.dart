@@ -161,7 +161,7 @@ class _OnGoingState extends State<OnGoing>
                                           )));
                             }
                           } else {
-                            if(state.dashModal.data[index].canEdit==false){
+                            if(state.dashModal.data[index].canEdit==true){
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

@@ -25,7 +25,7 @@ class EditableReviewPage extends StatefulWidget {
   final String img1;
   final String img2;
 
-  EditableReviewPage(
+  const EditableReviewPage(
       {Key? key,
       required this.vidhanSabha,
       required this.state,
@@ -34,7 +34,8 @@ class EditableReviewPage extends StatefulWidget {
       required this.address,
       required this.description,
       required this.img1,
-      required this.img2, required this.id})
+      required this.img2,
+      required this.id})
       : super(key: key);
 
   @override
@@ -92,21 +93,20 @@ class _EditableReviewPage extends State<EditableReviewPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>AttendeesFormPage(
-                                      eventId: widget.id,
-
-                                    //   vidhanSabhaPreFilled: widget.vidhanSabha,
-                                    // boothPreFilled: widget.booth,
-                                    //   totalAttendeesPreFilled: widget.totalAttendees,
-                                    //   img1PreFilled2: "eee",
-                                    //   img1PreFilled1: 'eee',
-                                    //   descriptionPreFilled: widget.description,
-                                    //   addressPreFilled: widget.address,
-
-
-
-
-                                    )));
+                                    builder: (context) =>
+                                        EditableAttendeesFormPage(
+                                          eventId: widget.id,
+                                          vidhanSabhaPreFilled:
+                                              widget.vidhanSabha,
+                                          boothPreFilled: widget.booth,
+                                          totalAttendeesPreFilled:
+                                              widget.totalAttendees,
+                                          img1PreFilled2: widget.img2,
+                                          img1PreFilled1: widget.img1,
+                                          descriptionPreFilled:
+                                              widget.description,
+                                          addressPreFilled: widget.address,
+                                        )));
                           },
                           icon: const Icon(Icons.edit),
                           color: AppColor().reviewFormTextColor),
