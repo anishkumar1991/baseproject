@@ -13,7 +13,7 @@ class _UpdatePersonalDetailsApi implements UpdatePersonalDetailsApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saral-staging.ccdms.in';
+    baseUrl ??= 'https://saralk.ccdms.in';
   }
 
   final Dio _dio;
@@ -67,7 +67,7 @@ class _UpdatePersonalDetailsApi implements UpdatePersonalDetailsApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/data/caste?category_id=${id}',
+              '/zila/api/data/caste?category_id=${id}&level=1&level_name=14',
               queryParameters: queryParameters,
               data: _data,
             )
