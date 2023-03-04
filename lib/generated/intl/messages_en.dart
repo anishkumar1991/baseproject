@@ -37,6 +37,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Theme and Insight"),
         "aadharNumber": MessageLookupByLibrary.simpleMessage(
             "Aadhaar Number should be 12 digit"),
+        "accountdeletion":
+            MessageLookupByLibrary.simpleMessage("Request For Account Delete"),
+        "accountdeletionmessage": MessageLookupByLibrary.simpleMessage(
+            "Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused."),
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addAttendeesHeader": MessageLookupByLibrary.simpleMessage(
             "Present Guest / Participant / Worker"),
@@ -56,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "ageError":
             MessageLookupByLibrary.simpleMessage("Age should be 2 digit"),
+        "airedon": MessageLookupByLibrary.simpleMessage("Aired On"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "alreadyVerified":
             MessageLookupByLibrary.simpleMessage("Person already verified"),
@@ -81,6 +86,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "clgName": MessageLookupByLibrary.simpleMessage(
             "Name of the Institute or College"),
         "click": MessageLookupByLibrary.simpleMessage("Click"),
+        "clicktoknowmore":
+            MessageLookupByLibrary.simpleMessage("Click to know more"),
         "comment": MessageLookupByLibrary.simpleMessage("Comment"),
         "continueText": MessageLookupByLibrary.simpleMessage("Continue"),
         "createATour": MessageLookupByLibrary.simpleMessage("Create a tour"),
@@ -111,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Want to remove this shakti kendr?"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("Description of Tour"),
+        "details": MessageLookupByLibrary.simpleMessage("Details"),
         "dialogSubtitle": MessageLookupByLibrary.simpleMessage(
             "This will delete profession from your profile."),
         "dialogSubtitle1": MessageLookupByLibrary.simpleMessage(
@@ -152,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "Enter your mobile number, we will send you OTP to verify later"),
         "entry": MessageLookupByLibrary.simpleMessage("Entry"),
+        "expired": MessageLookupByLibrary.simpleMessage("Expired"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
         "fillSecondaryInformation":
             MessageLookupByLibrary.simpleMessage("Fill Secondary Information"),
@@ -178,6 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "later": MessageLookupByLibrary.simpleMessage("Later"),
         "level": MessageLookupByLibrary.simpleMessage("Level"),
+        "live": MessageLookupByLibrary.simpleMessage("Live"),
         "logOut": MessageLookupByLibrary.simpleMessage("Log Out"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to log out?"),
@@ -187,6 +197,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Login to get the programs and information related to the organization"),
         "lokSabha": MessageLookupByLibrary.simpleMessage("Lok Sabha"),
+        "mailsend":
+            MessageLookupByLibrary.simpleMessage("Mail Sent Successfully"),
         "makeProgram": MessageLookupByLibrary.simpleMessage("Make a Program"),
         "makeShaktikendr":
             MessageLookupByLibrary.simpleMessage("Make shakti kendr"),
@@ -220,6 +232,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Filter by date"),
         "notificationsomethingWentWrong":
             MessageLookupByLibrary.simpleMessage("Something Went Wrong"),
+        "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "ongoing": MessageLookupByLibrary.simpleMessage("OnGoing"),
         "oopsErrorMsg": MessageLookupByLibrary.simpleMessage(
             "oops !! something went to wrong please try again later.."),
         "organization":
@@ -269,6 +283,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "program": MessageLookupByLibrary.simpleMessage("Program"),
         "reasonforDeletion": MessageLookupByLibrary.simpleMessage(
             "Please select a reason for deletion"),
+        "reasonfordeletion":
+            MessageLookupByLibrary.simpleMessage("Reason for deletion"),
         "religion": MessageLookupByLibrary.simpleMessage("Religion"),
         "report": MessageLookupByLibrary.simpleMessage("Report"),
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
@@ -315,6 +331,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "STD Code Number should be 5 digit"),
         "subject": MessageLookupByLibrary.simpleMessage("Subject"),
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
+        "support": MessageLookupByLibrary.simpleMessage("Support"),
         "sureToDelete":
             MessageLookupByLibrary.simpleMessage("Are you sure to delete?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("Make a Tour"),

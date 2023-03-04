@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../Storage/user_storage_service.dart';
 import '../network/model/dash_model.dart';
 import '../network/services/DashApi.dart';
 import 'DashState.dart';
@@ -27,7 +26,7 @@ class DashCubit extends Cubit<DashStates> {
         emit(DashGotEventsState(model));
       } else {
         Map<String, dynamic>? msg = res.data;
-        emit(DashErrorState(msg?['error'] ?? ''));
+        emit(DashErrorState(msg?['error'] + "\n\n" + msg?['status'] ?? ''));
       }
     } catch (e) {
       emit(DashErrorState(e.toString()));

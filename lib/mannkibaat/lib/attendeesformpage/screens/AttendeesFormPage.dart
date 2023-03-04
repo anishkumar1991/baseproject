@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../Storage/AttendeesFormStorage.dart';
-import '../../attendeereviewpage/screens/ReviewPageMain.dart';
-import '../../utils/appbar/AppBar.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../utils/buttons/SubmitButton.dart';
-import '../../utils/drawer/UserProfileDrawer.dart';
-import '../../values/AppColors.dart';
 import '../../values/Constants.dart';
 import '../cubit/AttendeeFormCubit.dart';
 import '../cubit/FetchCubit.dart';
@@ -26,6 +24,8 @@ class AttendeesFormPage extends StatefulWidget {
 }
 
 class _AttendeesFormPageState extends State<AttendeesFormPage> {
+  final totalAttendeesKey = GlobalKey<FormState>();
+
   TextEditingController totalAttendeesController = TextEditingController();
 
   TextEditingController addressController = TextEditingController();
@@ -36,6 +36,8 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<FetchCubit>();
+    cubit.fetchAcId();
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -43,10 +45,25 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
         ),
       ],
       child: Scaffold(
-        appBar: AppBarWidget.getAppBar(_key, context),
+        appBar: AppBar(
+            backgroundColor: AppColor().appBarColor,
+            title: Text("मन की बात",
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: AppColor().textColor)),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: (() {
+                Navigator.pop(context);
+              }),
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.black,
+            ),
+            automaticallyImplyLeading: false,
+            titleSpacing: 0),
         body: Scaffold(
           key: _key,
-          drawer: const UserProfileDrawer(),
           body: Container(
             decoration: BoxDecorationWidget.getBoxDecoration(),
             child: Padding(
@@ -77,6 +94,7 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                   ),
                   const SizedBox(height: 10),
                   TextFormField(
+                      key: totalAttendeesKey,
                       controller: totalAttendeesController,
                       style: TextStyle(color: AppColor().textColor),
                       decoration: InputDecoration(
@@ -86,9 +104,17 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                               borderRadius: BorderRadius.circular(8),
                               borderSide: BorderSide(
                                   width: 1, color: AppColor().textFieldColor))),
-                      keyboardType: const TextInputType.numberWithOptions(
-                        signed: false,
-                      ),
+                      keyboardType: TextInputType.phone,
+                      inputFormatters: <TextInputFormatter>[
+                        LengthLimitingTextInputFormatter(4),
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter Total Att';
+                        }
+                        return null;
+                      },
                       onChanged: (value) {
                         AttendeeStorageService.settotalAttendees(
                             value.toString());
@@ -103,37 +129,12 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                         fontWeight: FontWeight.w400),
                   ),
                   const SizedBox(height: 12),
-                  TextFormField(
-                      controller: addressController,
-                      style: TextStyle(color: AppColor().textColor),
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColor().textFieldColor,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                  width: 1, color: AppColor().textFieldColor))),
-                      keyboardType: TextInputType.name,
-                      onChanged: (value) {
-                        AttendeeStorageService.setaddress(value.toString());
-                        print(AttendeeStorageService.getaddress());
-                      }),
-                  const SizedBox(height: 15),
-                  Text(
-                    'विवरण',
-                    style: GoogleFonts.publicSans(
-                        fontSize: 16,
-                        color: AppColor().textColor,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    height: 90,
+                  IntrinsicHeight(
                     child: TextFormField(
-                        controller: descriptionController,
-                        expands: true,
-                        maxLines: null,
-                        minLines: null,
+                        // keyboardType: TextInputType.multiline,
+                        minLines: 1,
+                        maxLines: 20,
+                        controller: addressController,
                         style: TextStyle(color: AppColor().textColor),
                         decoration: InputDecoration(
                             filled: true,
@@ -144,15 +145,57 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                                     width: 1,
                                     color: AppColor().textFieldColor))),
                         keyboardType: TextInputType.name,
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(150),
+
+                          /// here char limit is 5
+                        ],
                         onChanged: (value) {
-                          AttendeeStorageService.setdescription(
-                              value.toString());
-                          print(AttendeeStorageService.getdescription());
+                          AttendeeStorageService.setaddress(value.toString());
+                          print(AttendeeStorageService.getaddress());
                         }),
+                  ),
+                  const SizedBox(height: 15),
+                  Text(
+                    'विवरण',
+                    style: GoogleFonts.publicSans(
+                        fontSize: 16,
+                        color: AppColor().textColor,
+                        fontWeight: FontWeight.w400),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    child: IntrinsicHeight(
+                      child: TextFormField(
+                          minLines: 1,
+                          maxLines: 20,
+                          controller: descriptionController,
+                          expands: false,
+                          style: TextStyle(color: AppColor().textColor),
+                          decoration: InputDecoration(
+                              filled: true,
+                              fillColor: AppColor().textFieldColor,
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      width: 1,
+                                      color: AppColor().textFieldColor))),
+                          keyboardType: TextInputType.name,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(300),
+
+                            /// here char limit is 5
+                          ],
+                          onChanged: (value) {
+                            AttendeeStorageService.setdescription(
+                                value.toString());
+                            print(AttendeeStorageService.getdescription());
+                          }),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'तश्वीरें अपलोड करें *',
+                    'फोटो अपलोड करें *',
                     style: GoogleFonts.publicSans(
                         fontSize: 16,
                         color: AppColor().textColor,
@@ -168,13 +211,29 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                       width: Constants.buttonSizeBoxWidth,
                       child: SubmitButton(
                         onPress: () {
-
-                          if (AttendeeStorageService.getimage1url() == null &&
-                              AttendeeStorageService.getimage2url() == null) {
+                          if (cubit.vidhanSabhaSelected == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content:
-                                        Text("Please Select Atleast 1 Image")));
+                                    content: Text("विधान सभा का चयन करें")));
+                          } else if (cubit.boothSelected == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("बूथ का चयन करें")));
+                          } else if (totalAttendeesController
+                              .value.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("कुल उपस्थिति संख्या भरें")));
+                          } else if ((AttendeeStorageService.getimage1url() ==
+                                      null ||
+                                  AttendeeStorageService.getimage1url() ==
+                                      "") &&
+                              (AttendeeStorageService.getimage2url() == null ||
+                                  AttendeeStorageService.getimage2url() ==
+                                      "")) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("कृपया 1 फोटो चुनें")));
                           } else {
                             Navigator.push(
                                 context,
@@ -186,15 +245,16 @@ class _AttendeesFormPageState extends State<AttendeesFormPage> {
                                           description:
                                               descriptionController.text,
                                           img1: AttendeeStorageService
-                                                  .getimage1url()
-                                              ?? " ",
+                                                  .getimage1url() ??
+                                              " ",
                                           img2: AttendeeStorageService
-                                                  .getimage2url() ?? " ",
-
+                                                  .getimage2url() ??
+                                              " ",
                                           eventid: widget.eventId,
                                         )));
                           }
                         },
+                        textButtonText: 'प्रीव्यू व सबमिट ',
                       ),
                     ),
                   ),

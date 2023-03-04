@@ -23,7 +23,6 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
-
   final texteditingcontroller = TextEditingController();
 
   @override
@@ -178,16 +177,15 @@ class _MenuPageState extends State<MenuPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Account Deletion'),
-                          content: const Text(
-                              'After 15 days, your account will be permanently deleted; however, you can return and login to remain connected.'),
+                          title: Text(S.of(context).accountdeletion),
+                          content: Text(S.of(context).accountdeletionmessage),
                           actions: <Widget>[
                             TextButton(
                               style: TextButton.styleFrom(
                                 textStyle:
                                     Theme.of(context).textTheme.labelLarge,
                               ),
-                              child: const Text('Cancel'),
+                              child: Text(S.of(context).cancel),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
@@ -197,25 +195,16 @@ class _MenuPageState extends State<MenuPage> {
                                 textStyle:
                                     Theme.of(context).textTheme.labelLarge,
                               ),
-                              child: const Text('OK'),
+                              child: Text(S.of(context).ok),
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 showDialog<void>(
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Text("Details"),
-                                      content: Text(S.of(context).welcome +
-                                          " " +
-                                          StorageService.getUserData()!
-                                              .user!
-                                              .name
-                                              .toString() +
-                                          "\n" +
-                                          StorageService.getUserData()!
-                                              .user!
-                                              .phone
-                                              .toString()),
+                                      title: Text(S.of(context).details),
+                                      content: Text(
+                                          "${S.of(context).welcome} ${StorageService.getUserData()!.user!.name}\n${StorageService.getUserData()!.user!.phone}"),
                                       actions: <Widget>[
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -228,12 +217,13 @@ class _MenuPageState extends State<MenuPage> {
                                             child: Padding(
                                               padding: EdgeInsets.all(2.0),
                                               child: TextFormField(
-
-                                                decoration: const InputDecoration(
+                                                decoration: InputDecoration(
                                                     border: InputBorder.none,
-                                                    hintText:
-                                                        "Reason for deletion"),
-                                                controller: texteditingcontroller,
+                                                    hintText: S
+                                                        .of(context)
+                                                        .reasonfordeletion),
+                                                controller:
+                                                    texteditingcontroller,
                                               ),
                                             ),
                                           ),
@@ -248,7 +238,7 @@ class _MenuPageState extends State<MenuPage> {
                                                     .textTheme
                                                     .labelLarge,
                                               ),
-                                              child: const Text('Cancel'),
+                                              child: Text(S.of(context).cancel),
                                               onPressed: () {
                                                 Navigator.of(context).pop();
                                               },
@@ -259,25 +249,25 @@ class _MenuPageState extends State<MenuPage> {
                                                     .textTheme
                                                     .labelLarge,
                                               ),
-                                              child: const Text('OK'),
+                                              child: Text(S.of(context).ok),
                                               onPressed: () {
-                                                sendMail(StorageService
-                                                        .getUserData()!
-                                                    .user!
-                                                    .name
-                                                    .toString(),texteditingcontroller.text);
+                                                sendMail(
+                                                    StorageService
+                                                            .getUserData()!
+                                                        .user!
+                                                        .name
+                                                        .toString(),
+                                                    texteditingcontroller.text);
                                                 Navigator.of(context).pop();
                                                 showDialog<void>(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
                                                     return AlertDialog(
-                                                      title: const Text(
-                                                          "Mail Sent Successfully"),
-                                                      content: const Text(
-                                                          "You account will be permanently deleted in 15 days"),
+                                                      content: Text(S
+                                                          .of(context)
+                                                          .mailsend),
                                                       actions: <Widget>[
-
                                                         TextButton(
                                                           style: TextButton
                                                               .styleFrom(
@@ -286,11 +276,12 @@ class _MenuPageState extends State<MenuPage> {
                                                                 .textTheme
                                                                 .labelLarge,
                                                           ),
-                                                          child: const Text(
-                                                              'OK'),
-                                                          onPressed:
-                                                              () async {
-                                                                Navigator.of(context).pop();
+                                                          child: Text(
+                                                              S.of(context).ok),
+                                                          onPressed: () async {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
                                                           },
                                                         )
                                                       ],
@@ -313,13 +304,14 @@ class _MenuPageState extends State<MenuPage> {
                     );
                   },
                   child: customListTile(
-                      title: "Request For Account Delete",
-                      icon: AppIcons.clearIcon)),
+                      title: S.of(context).accountdeletion,
+                      icon: AppIcons.deleteIcon)),
               spaceHeightWidget(10),
               const Divider(
                 color: AppColor.dividerColor,
               ),
-              customListTile(title: "Support", icon: AppIcons.supportIcon),
+              customListTile(
+                  title: S.of(context).support, icon: AppIcons.supportIcon),
               spaceHeightWidget(10),
               const Divider(
                 color: AppColor.dividerColor,
@@ -376,7 +368,7 @@ class _MenuPageState extends State<MenuPage> {
             ),
             spaceHeightWidget(5),
             Text(
-              "Support",
+              S.of(context).support,
               style: textStyleWithPoppin(
                   color: AppColor.greyColor.withOpacity(0.7), fontSize: 13),
             )

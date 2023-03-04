@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../Values/app_colors.dart';
-import '../../../../Values/icons.dart';
 import '../../../../Values/size_config.dart';
 import '../../../../generated/l10n.dart';
 import '../../../Cubit/dashboard_cubit.dart';
@@ -55,6 +54,7 @@ class SocialCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(24)),
                       backgroundColor: AppColor.redLight),
                   onPressed: (() {
+                    print("context of SOCIAL CARD-----------> $context");
                     context.read<DashBoardCubit>().onTapIcons(0);
                   }),
                   child: Text(

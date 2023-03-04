@@ -6,14 +6,12 @@ import 'package:sangathan/mannkibaat/lib/attendeesformpage/review/cubit/SendEven
 
 import '../../../../../Storage/mannkibaat.dart';
 import '../../../../../Values/Constants.dart';
-import '../../../Storage/AttendeesFormStorage.dart';
+import '../../../../../Values/app_colors.dart';
 import '../../../formfillsuccesspage/screens/FormSuccess.dart';
 import '../../../utils/appbar/AppBar.dart';
 import '../../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../../utils/buttons/SubmitButton.dart';
-import '../../../utils/drawer/UserProfileDrawer.dart';
 import '../../../values/AppColors.dart';
-
 import '../../cubit/FetchCubit.dart';
 import '../cubit/SendEventCubit.dart';
 import 'BoothAddress.dart';
@@ -52,19 +50,35 @@ class _FormReviewPageState extends State<FormReviewPage> {
 
   @override
   Widget build(BuildContext context) {
+    LocationPermission permission;
     final cubit = context.read<FetchCubit>();
     final cubit2 = context.read<SendEventCubit>();
 
     return Scaffold(
-      appBar: AppBarWidget.getAppBar(_key, context),
+      appBar: AppBar(
+          backgroundColor: AppColor().appBarColor,
+          title: Text("मन की बात",
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                  color: AppColor().textColor)),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: (() {
+              Navigator.pop(context);
+            }),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.black,
+          ),
+          automaticallyImplyLeading: false,
+          titleSpacing: 0),
       body: Scaffold(
         key: _key,
-        drawer: const UserProfileDrawer(),
         body: Container(
           decoration: BoxDecorationWidget.getBoxDecoration(),
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.only(right: 15),
+              padding: const EdgeInsets.only(left: 15),
               child: Column(
                 children: [
                   Row(
@@ -91,17 +105,17 @@ class _FormReviewPageState extends State<FormReviewPage> {
                     vidhanSabha: cubit.vidhansabhaname,
                     state: "Madhya Pradesh",
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 2),
                   ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 1),
                   ReviewBoothName(booth: cubit.boothname),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 4),
                   ReviewBoothAddress(boothAddress: widget.address),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 8),
                   ReviewDescription(description: widget.description),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 10),
                   ReviewImages(img1: widget.img1, img2: widget.img2),
-                  const SizedBox(height: 43),
+                  const SizedBox(height: 2),
                   SizedBox(
                     width: Constants.buttonSizeBoxWidth,
                     height: Constants.buttonSizeBoxHeight,
@@ -113,10 +127,9 @@ class _FormReviewPageState extends State<FormReviewPage> {
                               MaterialPageRoute(
                                 builder: (context) => FormSuccess(),
                               ));
-                        }
-                        if (state is EventErrorState) {
+                        } else if (state is EventErrorState) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Error Posting")));
+                              SnackBar(content: Text(state.error)));
                         }
                       },
                       builder: (context, state) {
@@ -125,13 +138,8 @@ class _FormReviewPageState extends State<FormReviewPage> {
                             child: CircularProgressIndicator(),
                           );
                         }
-
                         return SubmitButton(onPress: () async {
-                          LocationPermission permission =
-                              await Geolocator.requestPermission();
-
                           newPosition = await getCurrentPosition();
-
                           await cubit2.sendEvent(
                               MKBStorageService.getUserAuthToken().toString(),
                               cubit.boothid,
@@ -144,7 +152,8 @@ class _FormReviewPageState extends State<FormReviewPage> {
                               newPosition!.longitude.toString(),
                               widget.img1 ?? " ",
                               widget.img2 ?? " ");
-                        });
+
+                        }, textButtonText: 'सबमिट ',);
                       },
                     ),
                   ),
@@ -158,13 +167,29 @@ class _FormReviewPageState extends State<FormReviewPage> {
     );
   }
 
-  getCurrentPosition() async {
-    position = await Geolocator.getCurrentPosition(
+  Future<Position> getCurrentPosition() async {
+    LocationPermission permission;
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Location permissions denied.")));
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: Color(0xFFFF9559),
+          content: Text(
+              "Location permissions are completely disabled, please enable them by going to the app settings.")));
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+    return await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    print("latitutue ${position!.latitude}");
-
-    print("longitutue ${position!.longitude}");
-
-    return position;
   }
 }

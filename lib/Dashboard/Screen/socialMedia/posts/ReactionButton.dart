@@ -13,16 +13,15 @@ class CustomReactionButton extends StatelessWidget {
   final String id;
   final List<Post> item;
 
-  const CustomReactionButton({Key? key, required this.index, required this.id, required this.item})
+  const CustomReactionButton(
+      {Key? key, required this.index, required this.id, required this.item})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ReactionCubit>();
-    final cubit1 = context.read<PostsCubit>();
 
     return ReactionButton(
-
       boxPadding: const EdgeInsets.all(8),
       boxReactionSpacing: 5,
       boxElevation: 10,
@@ -34,38 +33,33 @@ class CustomReactionButton extends StatelessWidget {
         });
       },
       initialReaction: Reaction(
-        icon: const Icon(Icons.thumb_up_alt_sharp, size: 27),
+        icon: ownReaction(),
         value: 0,
       ),
       reactions: [
         Reaction(
-          title: Text(item[index].reactions[1].reaction.name
-              .toString()),
+          title: Text(item[index].reactions[1].reaction.name.toString()),
           icon: const Icon(Icons.thumb_up_alt_sharp,
               color: Colors.blue, size: 27),
           value: 1,
         ),
         Reaction(
-          title: Text(item[index].reactions[2].reaction.name
-              .toString()),
+          title: Text(item[index].reactions[2].reaction.name.toString()),
           icon: Image.asset("assets/images/hearticon.png", height: 32),
           value: 2,
         ),
         Reaction(
-          title: Text(item[index].reactions[3].reaction.name
-              .toString()),
+          title: Text(item[index].reactions[3].reaction.name.toString()),
           icon: Image.asset("assets/images/wowicon.png", height: 32),
           value: 3,
         ),
         Reaction(
-          title: Text(item[index].reactions[4].reaction.name
-              .toString()),
+          title: Text(item[index].reactions[4].reaction.name.toString()),
           icon: Image.asset("assets/images/sadicon.png", height: 32),
           value: 4,
         ),
         Reaction(
-          title: Text(item[index].reactions[5].reaction.name
-              .toString()),
+          title: Text(item[index].reactions[5].reaction.name.toString()),
           icon: Image.asset("assets/images/angryicon.png", height: 31),
           value: 5,
         ),
@@ -85,8 +79,21 @@ class CustomReactionButton extends StatelessWidget {
     } else if (reaction == 5) {
       await cubit.sendReaction(id, "angry");
     }
+  }
 
-
-
+  Widget ownReaction() {
+    if (item[index].myReaction?.reaction.name == "LIKE") {
+      return const Icon(Icons.thumb_up_alt_sharp, color: Colors.blue, size: 27);
+    } else if (item[index].myReaction?.reaction.name == "LOVE") {
+      return Image.asset("assets/images/hearticon.png", height: 32);
+    } else if (item[index].myReaction?.reaction.name == "WOW") {
+      return Image.asset("assets/images/wowicon.png", height: 32);
+    } else if (item[index].myReaction?.reaction.name == "SAD") {
+      return Image.asset("assets/images/sadicon.png", height: 32);
+    } else if (item[index].myReaction?.reaction.name == "ANGRY") {
+      return Image.asset("assets/images/angryicon.png", height: 31);
+    } else {
+      return const Icon(Icons.thumb_up_alt_sharp, size: 27);
+    }
   }
 }

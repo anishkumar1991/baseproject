@@ -2389,6 +2389,126 @@ class S {
       args: [],
     );
   }
+
+  /// `OnGoing`
+  String get ongoing {
+    return Intl.message(
+      'OnGoing',
+      name: 'ongoing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Expired`
+  String get expired {
+    return Intl.message(
+      'Expired',
+      name: 'expired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message(
+      'OK',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request For Account Delete`
+  String get accountdeletion {
+    return Intl.message(
+      'Request For Account Delete',
+      name: 'accountdeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Support`
+  String get support {
+    return Intl.message(
+      'Support',
+      name: 'support',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Details`
+  String get details {
+    return Intl.message(
+      'Details',
+      name: 'details',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason for deletion`
+  String get reasonfordeletion {
+    return Intl.message(
+      'Reason for deletion',
+      name: 'reasonfordeletion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mail Sent Successfully`
+  String get mailsend {
+    return Intl.message(
+      'Mail Sent Successfully',
+      name: 'mailsend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Click to know more`
+  String get clicktoknowmore {
+    return Intl.message(
+      'Click to know more',
+      name: 'clicktoknowmore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Aired On`
+  String get airedon {
+    return Intl.message(
+      'Aired On',
+      name: 'airedon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Live`
+  String get live {
+    return Intl.message(
+      'Live',
+      name: 'live',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused.`
+  String get accountdeletionmessage {
+    return Intl.message(
+      'Your account will be permanently deleted 15 days after you request it; however, you can login again within 15 days to remain connected, and the deletion procedure will be paused.',
+      name: 'accountdeletionmessage',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

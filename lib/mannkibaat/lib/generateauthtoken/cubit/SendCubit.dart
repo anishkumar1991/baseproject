@@ -6,7 +6,6 @@ import 'package:sangathan/mannkibaat/lib/generateauthtoken/network/model/LoginMo
 import 'package:sangathan/mannkibaat/lib/generateauthtoken/network/model/UserDetailsModel.dart';
 
 import '../../../../Storage/mannkibaat.dart';
-import '../../Storage/user_storage_service.dart';
 
 import '../network/model/UserNewAddModel.dart';
 import '../network/services/LoginApi.dart';
@@ -22,6 +21,7 @@ class GenerateMannKiBaatAuthCubit extends Cubit<GenerateMannKiBaatAuthState> {
   Future sendOtp({required String mobileNumber}) async {
     try {
       emit(LoadingState());
+
       final res = await api.sendOtp({'phone_number': mobileNumber});
       if (res.response.statusCode == 200) {
         LoginModel model = LoginModel.fromJson(res.data);
@@ -44,8 +44,8 @@ class GenerateMannKiBaatAuthCubit extends Cubit<GenerateMannKiBaatAuthState> {
     try {
       emit(SubmitOtpLoadingState());
       var token = MKBStorageService.getUserIdentificationToken().toString();
-      final res =
-          await api.submitOtp({'identification_token': token, 'otp': AppStrings.mannkibaatotp});
+      final res = await api.submitOtp(
+          {'identification_token': token, 'otp': AppStrings.mannkibaatotp});
       print(res.response.requestOptions.uri);
 
       print('res==+${res.response.data}');

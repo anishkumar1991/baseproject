@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../../Values/app_colors.dart';
 import '../../reportedprogramspage/screens/newscreens/MainDashboard.dart';
-import '../../utils/appbar/AppBar.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
-import '../../utils/drawer/UserProfileDrawer.dart';
 import '../../values/AppColors.dart';
 
 class FormSuccess extends StatelessWidget {
@@ -13,70 +13,104 @@ class FormSuccess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBarWidget.getAppBar(_key, context),
-      body: Scaffold(
-        key: _key,
-        drawer: const UserProfileDrawer(),
-        body: Container(
-          decoration: BoxDecorationWidget.getBoxDecoration(),
-          child: ListView(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 60),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Image(
-                  image: Image
-                      .asset(
-                      "assets/images/mannkibaat/formsuccess.png")
-                      .image,
-                  //width: 300,
-                  height: 200,
+    final BuildContext s = context;
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => DashboardMainScreen()),
+            (Route<dynamic> route) => route.isFirst);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+            backgroundColor: AppColor().appBarColor,
+            title: Text("मन की बात",
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: AppColor().textColor)),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            DashboardMainScreen()),
+                    (Route<dynamic> route) => route.isFirst);
+              },
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.black,
+            ),
+            automaticallyImplyLeading: false,
+            titleSpacing: 0),
+        body: Scaffold(
+          key: _key,
+          body: Container(
+            decoration: BoxDecorationWidget.getBoxDecoration(),
+            child: ListView(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 60),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 70),
-              ),
-              Align(
-                  child: Text(
-                    'कार्यक्रम सफलतापूर्वक रिपोर्ट किया गया',
-                    style: GoogleFonts.publicSans(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 18,
-                        color: AppColor().dashboardTextColorDark),
-                  )),
-              const Padding(
-                padding: EdgeInsets.only(top: 10),
-              ),
-              Align(
-                child: Text(
-                  'वाह! अच्छा काम करते रहो!',
-                  style: GoogleFonts.publicSans(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                      color: AppColor().dashboardTextColorDark),
+                Align(
+                  alignment: Alignment.center,
+                  child: Image(
+                    image:
+                        Image.asset("assets/images/mannkibaat/formsuccess.png")
+                            .image,
+                    //width: 300,
+                    height: 200,
+                  ),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 35),
-              ),
-              TextButton(
-                onPressed: () {
-
-                  Navigator.push(context,MaterialPageRoute(builder: (context) =>  DashboardMainScreen()));
-                },
-                child: Text(
-                  'सभी कार्यक्रमों में जाएं',
+                const Padding(
+                  padding: EdgeInsets.only(top: 70),
+                ),
+                Align(
+                    child: Text(
+                  'कार्यक्रम सफलतापूर्वक रिपोर्ट किया गया',
                   style: GoogleFonts.publicSans(
-                      decoration: TextDecoration.underline,
                       fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                      color: AppColor().formSuccessText),
+                      fontSize: 18,
+                      color: AppColor().dashboardTextColorDark),
+                )),
+                const Padding(
+                  padding: EdgeInsets.only(top: 10),
                 ),
-              ),
-            ],
+                Align(
+                  child: Text(
+                    'वाह! अच्छा काम करते रहो!',
+                    style: GoogleFonts.publicSans(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                        color: AppColor().dashboardTextColorDark),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 35),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                DashboardMainScreen()),
+                        (Route<dynamic> route) => route.isFirst);
+                  },
+                  child: Text(
+                    'सभी कार्यक्रमों में जाएं',
+                    style: GoogleFonts.publicSans(
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: AppColor.primaryColor),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

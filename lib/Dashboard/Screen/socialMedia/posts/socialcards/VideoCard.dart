@@ -58,7 +58,7 @@ final List<Post> item;
                 )),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 10, 20, 10),
-              child: BottomSocialBar(index: index!,item: item),
+              child: BottomSocialBar(index: index!,item: item,),
             )
           ],
         ));

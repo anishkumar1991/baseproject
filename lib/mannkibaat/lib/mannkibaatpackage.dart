@@ -1,21 +1,19 @@
-library mannkibaatpackage;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
-import 'package:sangathan/mannkibaat/lib/attendeesformpage/cubit/FetchCubit.dart';
 import 'package:sangathan/mannkibaat/lib/reportedprogramspage/cubit/DashCubit.dart';
 import 'package:sangathan/mannkibaat/lib/reportedprogramspage/screens/newscreens/MainDashboard.dart';
 import 'package:sangathan/mannkibaat/lib/values/AppColors.dart';
 
-import '../../Storage/mannkibaat.dart';
-import 'generateauthtoken/cubit/SendCubit.dart';
+import '../../Values/app_colors.dart';
+
 
 class MainButton extends StatefulWidget {
   final String text;
 
-  const MainButton({Key? key, required this.text}) : super(key: key);
+  const MainButton({Key? key, required this.text})
+      : super(key: key);
 
   @override
   State<MainButton> createState() => _MainButtonState();
@@ -31,14 +29,14 @@ class _MainButtonState extends State<MainButton> {
               RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           )),
-          backgroundColor: MaterialStateProperty.all(AppColor().buttonColor),
+          backgroundColor: MaterialStateProperty.all(AppColor.primaryColor),
         ),
         onPressed: () {
           DashCubit();
           var user = StorageService.getUserData();
           print("hello i am here ${user?.user?.phone}");
           Navigator.push(context,
-              MaterialPageRoute(builder: (counter) => DashboardMainScreen()));
+              MaterialPageRoute(builder: (counter) => const DashboardMainScreen()));
         },
         child: Text(
           widget.text,

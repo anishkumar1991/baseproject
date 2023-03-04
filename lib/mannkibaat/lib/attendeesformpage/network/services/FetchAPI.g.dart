@@ -13,7 +13,7 @@ class _FetchAPI implements FetchAPI {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://mannkibaatprogram.in/';
+    baseUrl ??= 'https://staging.mannkibaatprogram.in/';
   }
 
   final Dio _dio;

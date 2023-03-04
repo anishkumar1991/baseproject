@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../values/AppColors.dart';
 
 class SubmitButton extends StatelessWidget {
+  final String textButtonText;
   final Function() onPress;
 
 
-  const SubmitButton({Key? key, required this.onPress})
+  const SubmitButton({Key? key, required this.onPress, required this.textButtonText})
       : super(key: key);
 
   @override
@@ -19,15 +21,15 @@ class SubmitButton extends StatelessWidget {
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               )),
-          backgroundColor: MaterialStateProperty.all(AppColor().buttonColor),
+          backgroundColor: MaterialStateProperty.all(AppColor.primaryColor),
         ),
         onPressed: onPress,
         child: Text(
-          "जमा करें",
+          textButtonText,
           style: GoogleFonts.quicksand(
               fontWeight: FontWeight.w600,
               fontSize: 20,
-              color: AppColor().buttonTextColor),
+              color: AppColor().buttonTextColorMKB),
         ));
   }
 }

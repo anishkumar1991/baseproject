@@ -6,7 +6,8 @@ import 'package:sangathan/Dashboard/Screen/socialMedia/posts/socialcards/Polls.d
 import 'package:sangathan/Dashboard/Screen/socialMedia/posts/topBar.dart';
 import 'package:sangathan/Dashboard/Screen/socialMedia/reels/horizontaltile/screens/DisplayList.dart';
 import 'package:sangathan/Storage/user_storage_service.dart';
-
+import 'package:shimmer/shimmer.dart';
+import '../../../../Values/app_colors.dart';
 import 'cubit/FetchPostCubit.dart';
 import 'cubit/FetchPostsState.dart';
 import 'socialcards/VideoCard.dart';
@@ -26,7 +27,8 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
     BlocProvider.of<PostsCubit>(context).loadPosts();
 
     scrollController.addListener(() {
-      if (scrollController.offset == scrollController.position.maxScrollExtent) {
+      if (scrollController.offset ==
+          scrollController.position.maxScrollExtent) {
         BlocProvider.of<PostsCubit>(context).loadPosts();
       }
     });
@@ -51,32 +53,32 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
               children: [
                 const DisplayList(),
                 BlocBuilder<PostsCubit, PostsState>(builder: (context, state) {
-                  // if (state is FetchingPostsState) {
-                  //   return Center(
-                  //     child: Shimmer.fromColors(
-                  //       baseColor: AppColor.greyColor.withOpacity(0.3),
-                  //       highlightColor: Colors.grey.withOpacity(0.1),
-                  //       child: SingleChildScrollView(
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.only(left: 5, right: 5),
-                  //           child: Column(
-                  //             children: List.generate(
-                  //                 5,
-                  //                     (index) => Padding(
-                  //                   padding: const EdgeInsets.only(top: 10),
-                  //                   child: Container(
-                  //                     decoration: const BoxDecoration(
-                  //                       color: Colors.white,
-                  //                     ),
-                  //                     height: 250,
-                  //                   ),
-                  //                 )).toList(),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   );
-                  // }
+                  if (state is PostsInitial) {
+                    return Center(
+                      child: Shimmer.fromColors(
+                        baseColor: AppColor.greyColor.withOpacity(0.3),
+                        highlightColor: Colors.grey.withOpacity(0.1),
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 5),
+                            child: Column(
+                              children: List.generate(
+                                  5,
+                                      (index) => Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                      ),
+                                      height: 250,
+                                    ),
+                                  )).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                   if (state is PostsLoading && state.isFirstFetch) {
                     return _loadingIndicator();
                   }
@@ -99,7 +101,8 @@ class _SocialMediaPageState extends State<SocialMediaPage> {
                         if (posts[index].postType == "Image") {
                           return Padding(
                             padding: const EdgeInsets.only(top: 18),
-                            child: CustomCard(tempkey: 2, index: index, item: posts),
+                            child: CustomCard(
+                                tempkey: 2, index: index, item: posts),
                           );
                         } else if (posts[index].postType == "Poll") {
                           return Padding(

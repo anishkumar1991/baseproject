@@ -10,7 +10,7 @@ abstract class ReelsAPI {
 
   @GET('/api/mobile/v1/reels')
   Future<HttpResponse> getReels(@Header('Authorization') String token,
-      @Query("size") String size);
+      @Query("size") int size,@Query("page") int page);
 
   @POST("/api/mobile/v1/reels/react")
   Future<HttpResponse> sendReelLike(@Header('Authorization') String token,

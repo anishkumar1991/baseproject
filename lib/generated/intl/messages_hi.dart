@@ -37,6 +37,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("विषय एवं अंतर्दृष्टि"),
         "aadharNumber": MessageLookupByLibrary.simpleMessage(
             "आधार संख्या १२ अंकों की होनी चाहिए"),
+        "accountdeletion":
+            MessageLookupByLibrary.simpleMessage("खाता हटाने के लिए अनुरोध"),
+        "accountdeletionmessage": MessageLookupByLibrary.simpleMessage(
+            "आपके खाते को आपके अनुरोध के 15 दिन बाद स्थायी रूप से हटा दिया जाएगा; हालांकि, आप 15 दिनों के भीतर कनेक्ट रहने के लिए फिर से लॉग इन कर सकते हैं, और हटाने की प्रक्रिया रुक जाएगी।"),
         "add": MessageLookupByLibrary.simpleMessage("ऐड करे"),
         "addAttendeesHeader": MessageLookupByLibrary.simpleMessage(
             "उपस्थित अतिथि / प्रतिभागी / कार्यकर्ता"),
@@ -56,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("उम्र"),
         "ageError":
             MessageLookupByLibrary.simpleMessage("उम्र २ अंकों की होनी चाहिए"),
+        "airedon": MessageLookupByLibrary.simpleMessage("प्रसारित किया गया"),
         "all": MessageLookupByLibrary.simpleMessage("सभी"),
         "alreadyVerified": MessageLookupByLibrary.simpleMessage(
             "व्यक्ति पहले से ही सत्यापित है"),
@@ -81,6 +86,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "clgName":
             MessageLookupByLibrary.simpleMessage("संस्थान या कॉलेज का नाम"),
         "click": MessageLookupByLibrary.simpleMessage("क्लिक करें"),
+        "clicktoknowmore": MessageLookupByLibrary.simpleMessage(
+            "अधिक जानने के लिए क्लिक करें"),
         "comment": MessageLookupByLibrary.simpleMessage("टिपण्णी"),
         "continueText": MessageLookupByLibrary.simpleMessage("जारी रखें"),
         "createATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाएँ"),
@@ -113,6 +120,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "इस शक्ति केंद्र को हटाना चाहते हैं?"),
         "descriptionOfTour":
             MessageLookupByLibrary.simpleMessage("प्रवास का विषय"),
+        "details": MessageLookupByLibrary.simpleMessage("विवरण"),
         "dialogSubtitle": MessageLookupByLibrary.simpleMessage(
             "यह आपकी प्रोफ़ाइल से पेशा हटा देगा।"),
         "dialogSubtitle1": MessageLookupByLibrary.simpleMessage(
@@ -156,6 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterYourMobileNumber": MessageLookupByLibrary.simpleMessage(
             "अपना मोबाइल नंबर दर्ज करें, हम आपको बाद में सत्यापित करने के लिए ओटीपी भेजेंगे"),
         "entry": MessageLookupByLibrary.simpleMessage("एंट्री"),
+        "expired": MessageLookupByLibrary.simpleMessage("समाप्त"),
         "female": MessageLookupByLibrary.simpleMessage("स्त्री"),
         "fillSecondaryInformation":
             MessageLookupByLibrary.simpleMessage("अतिरिक्त जानकारी भरें"),
@@ -184,6 +193,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("भाषा"),
         "later": MessageLookupByLibrary.simpleMessage("बाद मे"),
         "level": MessageLookupByLibrary.simpleMessage("लेवल "),
+        "live": MessageLookupByLibrary.simpleMessage("लाइव"),
         "logOut": MessageLookupByLibrary.simpleMessage("लॉग आउट"),
         "logOutDes": MessageLookupByLibrary.simpleMessage(
             "क्या आप लॉग आउट करना चाहते हैं?"),
@@ -193,6 +203,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "संगठन से जुड़े कार्यक्रम एवं जानकारी प्राप्त करने हेतु लॉगिन करे"),
         "lokSabha": MessageLookupByLibrary.simpleMessage("लोकसभा"),
+        "mailsend":
+            MessageLookupByLibrary.simpleMessage("ईमेल सफलतापूर्वक भेजा गया"),
         "makeProgram": MessageLookupByLibrary.simpleMessage("कार्यक्रम बनायें"),
         "makeShaktikendr":
             MessageLookupByLibrary.simpleMessage("शक्तिकेंद्र बनाये"),
@@ -226,6 +238,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("डेट से फ़िल्टर करे"),
         "notificationsomethingWentWrong":
             MessageLookupByLibrary.simpleMessage("कुछ गलत हो गया"),
+        "ok": MessageLookupByLibrary.simpleMessage("ठीक"),
+        "ongoing": MessageLookupByLibrary.simpleMessage("मौजूदा"),
         "oopsErrorMsg": MessageLookupByLibrary.simpleMessage(
             "उफ़ !! कुछ गलत हो गया कृपया बाद में पुन: प्रयास करें.."),
         "organization": MessageLookupByLibrary.simpleMessage("संगठन का नाम"),
@@ -272,6 +286,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "program": MessageLookupByLibrary.simpleMessage("कार्यक्रम"),
         "reasonforDeletion": MessageLookupByLibrary.simpleMessage(
             "कृपया हटाने का एक कारण चुनें"),
+        "reasonfordeletion":
+            MessageLookupByLibrary.simpleMessage("हटाने का कारण"),
         "religion": MessageLookupByLibrary.simpleMessage("धर्म"),
         "report": MessageLookupByLibrary.simpleMessage("रिपोर्ट"),
         "resend": MessageLookupByLibrary.simpleMessage("पुन: भेजें"),
@@ -317,6 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "एसटीडी कोड संख्या ५ अंकों की होनी चाहिए"),
         "subject": MessageLookupByLibrary.simpleMessage("विषय"),
         "submit": MessageLookupByLibrary.simpleMessage("सबमिट"),
+        "support": MessageLookupByLibrary.simpleMessage("सहायता"),
         "sureToDelete":
             MessageLookupByLibrary.simpleMessage("क्या वाकई हटाना है?"),
         "takeATour": MessageLookupByLibrary.simpleMessage("प्रवास बनाये"),

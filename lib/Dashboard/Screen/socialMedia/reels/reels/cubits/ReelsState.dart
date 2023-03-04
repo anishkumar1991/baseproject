@@ -2,16 +2,18 @@ import '../network/model/ReelsModel.dart';
 
 abstract class ReelsState {}
 
-class ReelsInitialState extends ReelsState {}
+class PostsInitial extends ReelsState {}
+class PostsLoaded extends ReelsState {
+  final List<Reel> posts;
 
-class ReelsLoadingState extends ReelsState {}
-
-class ReelsFetchedState extends ReelsState {
-  final ReelsModel reelsModel;
-
-  ReelsFetchedState(this.reelsModel);
+  PostsLoaded(this.posts);
 }
 
-class ReelsErrorState extends ReelsState {
+class PostsLoading extends ReelsState {
+  final List<Reel> oldPosts;
+  final bool isFirstFetch;
 
+  PostsLoading(this.oldPosts, {this.isFirstFetch=false});
 }
+
+class ReelsErrorState extends ReelsState{}

@@ -23,4 +23,5 @@ class RoutePath {
   static const String addEntryPreviewSubmit = 'addEntryPreviewSubmit';
   static const String shaktiKendraScreen = 'ShaktiKendraScreen';
   static const String editShaktiKendraScreen = 'EditShaktiKendraScreen';
+  static const String homeScreenRoute = 'openHomeScreen';
 }

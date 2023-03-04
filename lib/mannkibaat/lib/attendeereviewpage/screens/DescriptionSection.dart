@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../Values/app_colors.dart';
 import '../../values/AppColors.dart';
 
 class ReviewDescription extends StatelessWidget {
@@ -14,13 +15,13 @@ class ReviewDescription extends StatelessWidget {
             title: Text("विवरण",
                 style: GoogleFonts.publicSans(
                     fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                    fontSize: 18,
                     color: AppColor().reviewFormTextColor)),
             subtitle: Text(
                 description ?? " ",
                 style: GoogleFonts.publicSans(
-                    color: const Color(0xFF444446),
+                    color: Colors.black,
                     fontWeight: FontWeight.w400,
-                    fontSize: 14))));
+                    fontSize: 18))));
   }
 }

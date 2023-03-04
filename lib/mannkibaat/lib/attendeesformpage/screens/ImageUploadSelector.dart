@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../../Values/app_colors.dart';
 import '../../values/AppColors.dart';
 import '../cubit/AttendeeFormCubit.dart';
 
@@ -26,7 +27,7 @@ void image1Upload(BuildContext context) {
               ),
               ListTile(
                   leading: Icon(
-                    color: AppColor().buttonColor,
+                    color: AppColor.primaryColor,
                     Icons.photo_library,
                   ),
                   title: Text(
@@ -41,13 +42,13 @@ void image1Upload(BuildContext context) {
                     XFile? selectedImage = await ImagePicker()
                         .pickImage(source: ImageSource.gallery);
                     if (selectedImage != null) {
-                      File convertedImage1 = File(selectedImage!.path);
+                      File convertedImage1 = File(selectedImage.path);
                       cubit.selectedImage1(convertedImage1);
                     }
                   }),
               ListTile(
                 leading: Icon(
-                  color: AppColor().buttonColor,
+                  color: AppColor.primaryColor,
                   Icons.photo_camera,
                 ),
                 title: Text(
@@ -93,7 +94,7 @@ void image2Upload(BuildContext context) {
               ),
               ListTile(
                   leading: Icon(
-                    color: AppColor().buttonColor,
+                    color: AppColor.primaryColor,
                     Icons.photo_library,
                   ),
                   title: Text(
@@ -114,7 +115,7 @@ void image2Upload(BuildContext context) {
                   }),
               ListTile(
                 leading: Icon(
-                  color: AppColor().buttonColor,
+                  color: AppColor.primaryColor,
                   Icons.photo_camera,
                 ),
                 title: Text(

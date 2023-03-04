@@ -292,6 +292,14 @@ class RouteGenerator {
             );
           },
         );
+      // case RoutePath.homeScreenRoute:
+      //   return MaterialPageRoute(
+      //     settings: RouteSettings(name: settings.name),
+      //     builder: (context) {
+      //       return
+      //     },
+      //   );
+
 
       default:
         return MaterialPageRoute(

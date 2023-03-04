@@ -7,14 +7,15 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sangathan/Values/string.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../cubits/ReelsCubit.dart';
 
 Future<void> ReelDownloadshare(
-    BuildContext context, int index, String sourceLink) async {
+    BuildContext context, int index, String sourceLink,String urlimage,String text1) async {
   final cubit = context.read<ReelsCubit>();
-  String urlimage = cubit.model!.reels[index].postData.reel.toString();
+
   String? savePath;
 
   Map<Permission, PermissionStatus> statuses = await [
@@ -86,9 +87,8 @@ Future<void> ReelDownloadshare(
     print("permisison not granted");
   }
 
-  final text1 = cubit.model!.reels[index].title;
 
-  var text2 = "https://mpsangathan.com/app";
+  var text2 = AppStrings.shareUrl;
   final text = "$text1\n\n$text2";
   final url = Uri.parse(urlimage);
   final response = await http.get(url);
