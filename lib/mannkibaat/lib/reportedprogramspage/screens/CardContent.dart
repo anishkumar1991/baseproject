@@ -12,28 +12,35 @@ class CardContent extends StatefulWidget {
   final String img;
   final String clickNreport;
   final String airText;
+  final String reportText;
   final Function() onPressAddEvent;
+  final String addMoreReport;
+  final Function() onPressAddMoreEvent;
 
-  const CardContent(
-      {required String this.id,
-      super.key,
-      required this.date,
-      required this.time,
-      required this.img,
-      required this.clickNreport,
-      required this.airText,
-      required this.onPressAddEvent,
-      });
+  const CardContent({
+    required String this.id,
+    super.key,
+    required this.date,
+    required this.time,
+    required this.img,
+    required this.clickNreport,
+    required this.airText,
+    required this.onPressAddEvent,
+    required this.reportText,
+    required this.onPressAddMoreEvent,
+    required this.addMoreReport,
+  });
 
   @override
   State<CardContent> createState() => _CardContentState(
-      id: this.id,
-      date: this.date,
-      time: this.time,
-      img: this.img,
-      clickNreport: this.clickNreport,
-    onPressAddEvent: this.onPressAddEvent,
-  );
+        id: this.id,
+        date: this.date,
+        time: this.time,
+        img: this.img,
+        clickNreport: this.clickNreport,
+        onPressAddEvent: this.onPressAddEvent,
+        onPressAddMoreEvent: this.onPressAddMoreEvent,
+      );
 }
 
 class _CardContentState extends State<CardContent> {
@@ -42,8 +49,8 @@ class _CardContentState extends State<CardContent> {
   final String time;
   final String img;
   final String clickNreport;
-  final Function onPressAddEvent;
-
+  final Function() onPressAddEvent;
+  final Function() onPressAddMoreEvent;
 
   _CardContentState({
     required this.id,
@@ -52,6 +59,7 @@ class _CardContentState extends State<CardContent> {
     required this.img,
     required this.clickNreport,
     required this.onPressAddEvent,
+    required this.onPressAddMoreEvent,
   });
 
   // @override
@@ -68,18 +76,35 @@ class _CardContentState extends State<CardContent> {
     return Stack(
       children: [
         Positioned(
-          top: -38,
-          left: 0,
-          bottom: 0,
-          right: 0,
-          child: Stack(children: [
-            Image.asset(
-              'assets/images/DashMKB3Edit.jpg',
-              width: MediaQuery.of(context).size.width,
-              height: 400,
+          top: -2,
+          left: -3,
+          right: -8,
+          child: Container(
+            // color: Colors.red,
+            width: MediaQuery.of(context).size.width,
+            child: ClipRRect(
+              //borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'assets/images/DashMKB3Edit.jpg',
+                fit: BoxFit.fitWidth,
+                width: MediaQuery.of(context).size.width,
+              ),
             ),
-          ]),
+          ),
         ),
+        // Positioned(
+        //   top: -38,
+        //   left: 0,
+        //   bottom: 0,
+        //   right: 0,
+        //   child: Container(
+        //     child: Image.asset(
+        //       'assets/images/DashMKB3Edit.jpg',
+        //       width: MediaQuery.of(context).size.width,
+        //       height: 400,
+        //     ),
+        //   ),
+        // ),
         Positioned.fill(
           top: 0,
           bottom: 0,
@@ -89,19 +114,19 @@ class _CardContentState extends State<CardContent> {
                 flex: 5,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 11, left: 20, right: 1, bottom: 11),
+                        top: 11, left: 20, right: 1, bottom: 0),
                     child: Column(
                       children: [
-                        Flexible(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
+                        Column(
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                height: 70,
                                 child: Text(
                                   id,
                                   style: GoogleFonts.publicSans(
@@ -110,86 +135,17 @@ class _CardContentState extends State<CardContent> {
                                       color: Colors.white),
                                 ),
                               ),
-
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        widget.airText,
-                                        style: GoogleFonts.publicSans(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14,
-                                            color: AppColor()
-                                                .dashboardTextColorLight),
-                                      ),
-                                      Text(
-                                        // ' ${state.dashModal.data?.first.airedDetail?.date}',
-                                        date,
-                                        style: GoogleFonts.publicSans(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
-                                            color: AppColor()
-                                                .dashboardTextColorDark),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    width: 17,
-                                  ),
-                                  Text(
-                                    //' ${state.dashModal.data?.first.airedDetail?.time}',
-                                    '$time',
-                                    style: GoogleFonts.publicSans(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color:
-                                            AppColor().dashboardTextColorLight),
-                                  )
-                                ],
-                              ),
-                              // Align(
-                              //   alignment: Alignment.topLeft,
-                              //   child:,
-                              // ),
-
-                              // Align(
-                              //   alignment: Alignment.topLeft,
-                              //   child: ,
-                              // ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            '$clickNreport ',
-                            style: GoogleFonts.publicSans(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                                color: Colors.blue),
-                          ),
-                        )    ,
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: AddEventButton(onPressAddEvent: () {  }, textButtonText: '',
-
-                          ),
+                        SizedBox(
+                          height: 20,
                         ),
                       ],
                     ),
                   ),
                 ),
               ),
-
               Expanded(
                 flex: 4,
                 child:  SizedBox(
@@ -198,32 +154,95 @@ class _CardContentState extends State<CardContent> {
                   height: MediaQuery.of(context).size.height,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 10, left: 14, right: 16, bottom: 16),
+                        top: 10, left: 14, right: 16, bottom: 30),
                     child: img==""? const SizedBox() : Card(
                       color: Colors.white,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       shadowColor: AppColor().cardBGcolor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          img,
-                          //extensions like .jpg, .png etc
-                          errorBuilder: (context, error, stackTrace) =>
-                              SvgPicture.network(
-                                img, // for .svg extension
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                img,
+                                //extensions like .jpg, .png etc
+                                errorBuilder: (context, error, stackTrace) =>
+                                    SvgPicture.network(
+                                  img, // for .svg extension
+                                ),
+                                fit: BoxFit.fill,
                               ),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
+                            ),
+                          ),
                   ),
                 ),
               )
             ],
           ),
-        )
+        ),
+        Positioned(
+          bottom: 50,
+          left: 10,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.airText,
+                    style: GoogleFonts.publicSans(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                        color: AppColor()
+                            .dashboardTextColorLight),
+                  ),
+                  Text(
+                    // ' ${state.dashModal.data?.first.airedDetail?.date}',
+                    date,
+                    style: GoogleFonts.publicSans(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                        color: AppColor()
+                            .dashboardTextColorDark),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                width: 17,
+              ),
+              Text(
+                //' ${state.dashModal.data?.first.airedDetail?.time}',
+                '$time',
+                style: GoogleFonts.publicSans(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                    color:
+                    AppColor().dashboardTextColorLight),
+              )
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 6,
+          left: 10,
+          child: AddEventButton(
+            onPressAddEvent: onPressAddEvent,
+            textButtonText: widget.reportText,
+          ),
+        ),
+        Positioned(
+            bottom: 6,
+            right: 10,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: AddEventButton(
+                onPressAddEvent: onPressAddMoreEvent,
+                textButtonText: widget.addMoreReport,
+              ),
+            ))
       ],
     );
   }

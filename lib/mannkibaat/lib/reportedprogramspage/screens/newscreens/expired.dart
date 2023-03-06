@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Storage/mannkibaat.dart';
-import '../../../../../Storage/user_storage_service.dart';
+
 import '../../../../../generated/l10n.dart';
 import '../../../attendeereviewpage/screens/ReviewPageMain.dart';
-import '../../../attendeesformpage/screens/AttendeesFormPage.dart';
-import '../../../generateauthtoken/cubit/SendCubit.dart';
 import '../../cubit/DashCubit.dart';
 import '../../cubit/DashState.dart';
 import '../ProgramCard.dart';
@@ -55,9 +53,6 @@ class _ExpiredState extends State<Expired>
           return SingleChildScrollView(
             child: Column(
               children: [
-                const Divider(
-                  color: Color(0xFF979797),
-                ),
                 const SizedBox(height: 10),
                 ListView.builder(
                   shrinkWrap: true,
@@ -94,16 +89,19 @@ class _ExpiredState extends State<Expired>
                                         )));
                           },
                           child: ProgramCard(
-                            airedText:S.of(context).airedon,
+                            onPressAddMoreEvent: () {},
+                            addMoreReport: "",
+                            airedText: S.of(context).airedon,
                             clickNreport: '${S.of(context).clicktoknowmore} >',
-                              id: state.dashModal.data[index].name?? " ",
-                              date:
-                                  state.dashModal.data[index].airedDetail.date,
-                              time:
-                                  state.dashModal.data[index].airedDetail.time,
+                            id: state.dashModal.data[index].name ?? " ",
+                            date: state.dashModal.data[index].airedDetail.date,
+                            time: state.dashModal.data[index].airedDetail.time,
 
-                              //right now I am not fetching images because API is having faulty images.
-                              img: state.dashModal.data[index].eventPhoto, onPressAddEvent: () {  },),
+                            //right now I am not fetching images because API is having faulty images.
+                            img: state.dashModal.data[index].eventPhoto,
+                            onPressAddEvent: () {},
+                            reportText: '',
+                          ),
                         );
                       }
                     }

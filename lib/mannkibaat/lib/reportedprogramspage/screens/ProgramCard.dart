@@ -10,7 +10,10 @@ class ProgramCard extends StatelessWidget {
   final String img;
   final String clickNreport;
   final String airedText;
-  final Function onPressAddEvent;
+  final String reportText;
+  final Function() onPressAddEvent;
+  final String addMoreReport;
+  final Function() onPressAddMoreEvent;
 
 
 
@@ -19,7 +22,7 @@ class ProgramCard extends StatelessWidget {
     required this.date,
     required this.time,
     required this.img,
-    required this.clickNreport, required this.airedText, required this.onPressAddEvent})
+    required this.clickNreport, required this.airedText, required this.onPressAddEvent, required this.reportText, required this.addMoreReport, required this.onPressAddMoreEvent})
       : super(key: key);
 
   @override
@@ -27,11 +30,11 @@ class ProgramCard extends StatelessWidget {
     return Card(
       color: Colors.white,
       elevation: 5,
-      margin: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
       shadowColor: AppColor().cardBGcolor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: SizedBox(
-        height: 180,
+        height: 200,
         child: CardContent(
           id: id,
           date: date,
@@ -39,7 +42,10 @@ class ProgramCard extends StatelessWidget {
           img: img,
           clickNreport: clickNreport,
           airText: airedText,
-          onPressAddEvent: onPressAddEvent(),
+          onPressAddEvent: onPressAddEvent,
+          reportText:reportText,
+          onPressAddMoreEvent: onPressAddMoreEvent,
+          addMoreReport: addMoreReport,
 
         ),
       ),

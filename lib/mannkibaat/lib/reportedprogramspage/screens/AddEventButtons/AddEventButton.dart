@@ -13,10 +13,15 @@ class AddEventButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
         onPressed: onPressAddEvent,
+        style: TextButton.styleFrom(
+          minimumSize: Size.zero,
+          padding: EdgeInsets.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
         child: Text(
           textButtonText,
           style: GoogleFonts.publicSans(
-              fontWeight: FontWeight.w500, fontSize: 14, color: Colors.blue),
+              fontWeight: FontWeight.w600, fontSize: 14, color: Colors.blue),
         ));
   }
 }
