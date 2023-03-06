@@ -100,7 +100,9 @@ dependencies:
   open_file_plus: any
   pretty_dio_logger: ^1.2.0-beta-1
   mailer: ^6.0.0
-  cached_video_player: ^1.0.3
+  cached_video_player: ^2.0.0-dev.1
+  better_player: ^0.0.83
+  flutter_cache_manager: ^3.3.0
 #  mannkibaatpackage:
 #    git:
 #      url: https://github.com/MilindPanwar-Jarvis/mannkibaatpackage.git

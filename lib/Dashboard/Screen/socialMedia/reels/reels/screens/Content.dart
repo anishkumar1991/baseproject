@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:video_player/video_player.dart';
 
 import '../network/model/ReelsModel.dart';
@@ -41,7 +42,10 @@ class _ContentScreenState extends State<ContentScreen> {
 
 
   Future initializePlayer() async {
-    _videoPlayerController = VideoPlayerController.network(widget.src);
+    final cacheManager = DefaultCacheManager();
+    final file = await cacheManager.getSingleFile(widget.src);
+
+    _videoPlayerController = VideoPlayerController.file(file);
     await Future.wait([_videoPlayerController.initialize()]);
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
