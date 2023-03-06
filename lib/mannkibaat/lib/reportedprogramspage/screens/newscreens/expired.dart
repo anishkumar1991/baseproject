@@ -103,7 +103,7 @@ class _ExpiredState extends State<Expired>
                                   state.dashModal.data[index].airedDetail.time,
 
                               //right now I am not fetching images because API is having faulty images.
-                              img: state.dashModal.data[index].eventPhoto),
+                              img: state.dashModal.data[index].eventPhoto, onPressAddEvent: () {  },),
                         );
                       }
                     }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../Values/app_colors.dart';
-
-import '../../values/AppColors.dart';
 import 'CardContent.dart';
 
 class ProgramCard extends StatelessWidget {
@@ -12,6 +10,8 @@ class ProgramCard extends StatelessWidget {
   final String img;
   final String clickNreport;
   final String airedText;
+  final Function() onPressAddEvent;
+
 
 
   ProgramCard({required String this.id,
@@ -19,7 +19,7 @@ class ProgramCard extends StatelessWidget {
     required this.date,
     required this.time,
     required this.img,
-    required this.clickNreport, required this.airedText})
+    required this.clickNreport, required this.airedText, required this.onPressAddEvent})
       : super(key: key);
 
   @override
@@ -39,6 +39,8 @@ class ProgramCard extends StatelessWidget {
           img: img,
           clickNreport: clickNreport,
           airText: airedText,
+          onPressAddEvent: () {
+            onPressAddEvent; },
 
         ),
       ),

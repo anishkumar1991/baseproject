@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../Values/app_colors.dart';
+import 'AddEventButtons/AddEventButton.dart';
 
 class CardContent extends StatefulWidget {
   final String id;
@@ -11,6 +12,7 @@ class CardContent extends StatefulWidget {
   final String img;
   final String clickNreport;
   final String airText;
+  final Function() onPressAddEvent;
 
   const CardContent(
       {required String this.id,
@@ -19,7 +21,9 @@ class CardContent extends StatefulWidget {
       required this.time,
       required this.img,
       required this.clickNreport,
-      required this.airText});
+      required this.airText,
+      required this.onPressAddEvent,
+      });
 
   @override
   State<CardContent> createState() => _CardContentState(
@@ -27,7 +31,9 @@ class CardContent extends StatefulWidget {
       date: this.date,
       time: this.time,
       img: this.img,
-      clickNreport: this.clickNreport);
+      clickNreport: this.clickNreport,
+    onPressAddEvent: this.onPressAddEvent,
+  );
 }
 
 class _CardContentState extends State<CardContent> {
@@ -36,6 +42,8 @@ class _CardContentState extends State<CardContent> {
   final String time;
   final String img;
   final String clickNreport;
+  final Function() onPressAddEvent;
+
 
   _CardContentState({
     required this.id,
@@ -43,6 +51,7 @@ class _CardContentState extends State<CardContent> {
     required this.time,
     required this.img,
     required this.clickNreport,
+    required this.onPressAddEvent,
   });
 
   // @override
@@ -167,6 +176,16 @@ class _CardContentState extends State<CardContent> {
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14,
                                 color: Colors.blue),
+                          ),
+                        )    ,
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: AddEventButton(
+                            onPress: onPressAddEvent,
+
+                            textButtonText: 'Add More Report ',
+
+
                           ),
                         ),
                       ],

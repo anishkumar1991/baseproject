@@ -80,49 +80,80 @@ class _OnGoingState extends State<OnGoing>
                         startdate.isAtSameMomentAs(currentDate)) {
                       status = 1;
                       print("id ${state.dashModal.data[index].id}");
-                      return InkWell(
-                        onTap: () {
-                          if (state.dashModal.data[index].eventHasDetail ==
-                              false) {
-                            print("start date ${startdate.day}");
-                            print("current date ${currentDate.day}");
-                            print(startdate.hour);
-                            print(currentDate.hour);
-                            if (startdate.isAfter(currentDate)) {
-                              if (startdate.hour > currentDate.hour &&
-                                  startdate.day >= currentDate.day) {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title:
-                                          Text("${S.of(context).upcoming}.."),
-                                      content: Text(
-                                          "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
-                                      actions: [
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge,
+                      return ProgramCard(
+                        airedText: (startdate.hour <= currentDate.hour &&
+                                startdate.day == currentDate.day)
+                            ? S.of(context).live
+                            : (startdate.day >= currentDate.day &&
+                                    startdate.month == currentDate.month)
+                                ? S.of(context).upcoming
+                                : S.of(context).airedon,
+                        clickNreport:
+                            (state.dashModal.data[index].eventHasDetail ==
+                                    false)
+                                ? S.of(context).report
+                                : '${S.of(context).clicktoknowmore} >',
+                        id: state.dashModal.data[index].name ?? "",
+                        date: state.dashModal.data[index].airedDetail.date,
+                        time: state.dashModal.data[index].airedDetail.time,
+
+                        //right now I am not fetching images because API is having faulty images.
+                        img: state.dashModal.data[index].eventPhoto,
+                        onPressAddEvent: () {
+
+                            if (state.dashModal.data[index].eventHasDetail ==
+                                false) {
+                              print("start date ${startdate.day}");
+                              print("current date ${currentDate.day}");
+                              print(startdate.hour);
+                              print(currentDate.hour);
+                              if (startdate.isAfter(currentDate)) {
+                                if (startdate.hour > currentDate.hour &&
+                                    startdate.day >= currentDate.day) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title:
+                                            Text("${S.of(context).upcoming}.."),
+                                        content: Text(
+                                            "You can edit after ${state.dashModal.data[index].airedDetail.date + " " + state.dashModal.data[index].airedDetail.time}"),
+                                        actions: [
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge,
+                                            ),
+                                            child: Text(S.of(context).ok),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
                                           ),
-                                          child: Text(S.of(context).ok),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              } else if (startdate.hour <= currentDate.hour) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AttendeesFormPage(
-                                              eventId: state
-                                                  .dashModal.data[index].id,
-                                            )));
+                                        ],
+                                      );
+                                    },
+                                  );
+                                } else if (startdate.hour <= currentDate.hour) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AttendeesFormPage(
+                                                eventId: state
+                                                    .dashModal.data[index].id,
+                                              )));
+                                } else if (startdate.hour >= currentDate.hour &&
+                                    startdate.day <= currentDate.day) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AttendeesFormPage(
+                                                eventId: state
+                                                    .dashModal.data[index].id,
+                                              )));
+                                }
                               } else if (startdate.hour >= currentDate.hour &&
                                   startdate.day <= currentDate.day) {
                                 Navigator.push(
@@ -132,103 +163,78 @@ class _OnGoingState extends State<OnGoing>
                                               eventId: state
                                                   .dashModal.data[index].id,
                                             )));
+                              } else if (startdate.hour >= currentDate.hour &&
+                                  startdate.month < currentDate.month) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AttendeesFormPage(
+                                              eventId: state
+                                                  .dashModal.data[index].id,
+                                            )));
+                              } else if (startdate.hour <= currentDate.hour) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AttendeesFormPage(
+                                              eventId: state
+                                                  .dashModal.data[index].id,
+                                            )));
                               }
-                            } else if (startdate.hour >= currentDate.hour &&
-                                startdate.day <= currentDate.day) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AttendeesFormPage(
-                                            eventId:
-                                                state.dashModal.data[index].id,
-                                          )));
-                            } else if (startdate.hour >= currentDate.hour &&
-                                startdate.month < currentDate.month) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AttendeesFormPage(
-                                            eventId:
-                                                state.dashModal.data[index].id,
-                                          )));
-                            } else if (startdate.hour <= currentDate.hour) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AttendeesFormPage(
-                                            eventId:
-                                                state.dashModal.data[index].id,
-                                          )));
-                            }
-                          } else {
-                            print(state.dashModal.data[index].canEdit);
-                            if (state.dashModal.data[index].canEdit == false) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => EditableReviewPage(
-                                            vidhanSabha:
-                                                '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                            state:
-                                                '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
-                                            totalAttendees:
-                                                '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                            booth:
-                                                '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                            address:
-                                                '${state.dashModal.data[index].eventDetail.address}',
-                                            description:
-                                                '${state.dashModal.data[index].eventDetail.description}',
-                                            img1:
-                                                '${state.dashModal.data[index].eventDetail.photo1}',
-                                            img2:
-                                                '${state.dashModal.data[index].eventDetail.photo2}',
-                                            id: state.dashModal.data[index].id,
-                                          )));
                             } else {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AttendeeReviewPage(
-                                            vidhanSabha:
-                                                '${state.dashModal.data[index].eventDetail.ac?.first.name}',
-                                            state:
-                                                '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
-                                            totalAttendees:
-                                                '${state.dashModal.data[index].eventDetail.totalAttendees}',
-                                            booth:
-                                                '${state.dashModal.data[index].eventDetail.location?.first.name}',
-                                            address:
-                                                '${state.dashModal.data[index].eventDetail.address}',
-                                            description:
-                                                '${state.dashModal.data[index].eventDetail.description}',
-                                            img1:
-                                                '${state.dashModal.data[index].eventDetail.photo1}',
-                                            img2:
-                                                '${state.dashModal.data[index].eventDetail.photo2}',
-                                          )));
+                              print(state.dashModal.data[index].canEdit);
+                              if (state.dashModal.data[index].canEdit ==
+                                  false) {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditableReviewPage(
+                                              vidhanSabha:
+                                                  '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                              state:
+                                                  '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
+                                              totalAttendees:
+                                                  '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                              booth:
+                                                  '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                              address:
+                                                  '${state.dashModal.data[index].eventDetail.address}',
+                                              description:
+                                                  '${state.dashModal.data[index].eventDetail.description}',
+                                              img1:
+                                                  '${state.dashModal.data[index].eventDetail.photo1}',
+                                              img2:
+                                                  '${state.dashModal.data[index].eventDetail.photo2}',
+                                              id: state
+                                                  .dashModal.data[index].id,
+                                            )));
+                              } else {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AttendeeReviewPage(
+                                              vidhanSabha:
+                                                  '${state.dashModal.data[index].eventDetail.ac?.first.name}',
+                                              state:
+                                                  '${state.dashModal.data[index].eventDetail.countryState?.first.name}',
+                                              totalAttendees:
+                                                  '${state.dashModal.data[index].eventDetail.totalAttendees}',
+                                              booth:
+                                                  '${state.dashModal.data[index].eventDetail.location?.first.name}',
+                                              address:
+                                                  '${state.dashModal.data[index].eventDetail.address}',
+                                              description:
+                                                  '${state.dashModal.data[index].eventDetail.description}',
+                                              img1:
+                                                  '${state.dashModal.data[index].eventDetail.photo1}',
+                                              img2:
+                                                  '${state.dashModal.data[index].eventDetail.photo2}',
+                                            )));
+                              }
                             }
-                          }
                         },
-                        child: ProgramCard(
-                            airedText: (startdate.hour <= currentDate.hour &&
-                                    startdate.day == currentDate.day)
-                                ? S.of(context).live
-                                : (startdate.day >= currentDate.day &&
-                                        startdate.month == currentDate.month)
-                                    ? S.of(context).upcoming
-                                    : S.of(context).airedon,
-                            clickNreport:
-                                (state.dashModal.data[index].eventHasDetail ==
-                                        false)
-                                    ? S.of(context).report
-                                    : '${S.of(context).clicktoknowmore} >',
-                            id: state.dashModal.data[index].name ?? "",
-                            date: state.dashModal.data[index].airedDetail.date,
-                            time: state.dashModal.data[index].airedDetail.time,
-
-                            //right now I am not fetching images because API is having faulty images.
-                            img: state.dashModal.data[index].eventPhoto),
                       );
                     }
 
