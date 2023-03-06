@@ -169,6 +169,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  cached_video_player:
+    dependency: "direct main"
+    description:
+      name: cached_video_player
+      sha256: "634c01b09380024c10b87f78e821264d9a77714df12f9415519f66d5699e1fc0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.3"
   card_swiper:
     dependency: "direct main"
     description:

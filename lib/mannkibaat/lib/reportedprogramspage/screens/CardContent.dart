@@ -42,7 +42,7 @@ class _CardContentState extends State<CardContent> {
   final String time;
   final String img;
   final String clickNreport;
-  final Function() onPressAddEvent;
+  final Function onPressAddEvent;
 
 
   _CardContentState({
@@ -180,11 +180,7 @@ class _CardContentState extends State<CardContent> {
                         )    ,
                         Align(
                           alignment: Alignment.bottomLeft,
-                          child: AddEventButton(
-                            onPress: onPressAddEvent,
-
-                            textButtonText: 'Add More Report ',
-
+                          child: AddEventButton(onPressAddEvent: () {  }, textButtonText: '',
 
                           ),
                         ),

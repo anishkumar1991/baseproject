@@ -10,7 +10,7 @@ class ProgramCard extends StatelessWidget {
   final String img;
   final String clickNreport;
   final String airedText;
-  final Function() onPressAddEvent;
+  final Function onPressAddEvent;
 
 
 
@@ -39,8 +39,7 @@ class ProgramCard extends StatelessWidget {
           img: img,
           clickNreport: clickNreport,
           airText: airedText,
-          onPressAddEvent: () {
-            onPressAddEvent; },
+          onPressAddEvent: onPressAddEvent(),
 
         ),
       ),

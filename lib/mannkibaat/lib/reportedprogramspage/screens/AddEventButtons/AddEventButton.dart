@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AddEventButton extends StatelessWidget {
   final String textButtonText;
-  final Function() onPress;
+  final Function() onPressAddEvent;
 
   const AddEventButton(
-      {Key? key, required this.onPress, required this.textButtonText})
+      {Key? key, required this.onPressAddEvent, required this.textButtonText})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: onPress,
+        onPressed: onPressAddEvent,
         child: Text(
           textButtonText,
           style: GoogleFonts.publicSans(

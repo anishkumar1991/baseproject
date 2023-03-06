@@ -50,6 +50,7 @@ class _ContentScreenState extends State<ContentScreen> {
       looping: true,
       autoInitialize: true,
       aspectRatio: 10 / 20,
+
     );
     setState(() {});
   }
