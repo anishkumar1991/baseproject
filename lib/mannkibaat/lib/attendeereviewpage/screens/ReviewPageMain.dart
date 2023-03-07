@@ -3,10 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../Values/app_colors.dart';
-import '../../Storage/AttendeesFormStorage.dart';
 import '../../attendeesformpage/cubit/FetchCubit.dart';
 import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
-import '../../values/AppColors.dart';
 import 'BoothAddress.dart';
 import 'BoothName.dart';
 import 'DescriptionSection.dart';
@@ -99,9 +97,9 @@ class _AttendeeReviewPageState extends State<AttendeeReviewPage> {
                     state: widget.state,
                   ),
                   const SizedBox(height: 0),
-                  ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
-                  const SizedBox(height: 0),
                   ReviewBoothName(booth: widget.booth),
+                  const SizedBox(height: 0),
+                  ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
                   const SizedBox(height: 0),
                   ReviewBoothAddress(boothAddress: widget.address),
                   const SizedBox(height: 0),

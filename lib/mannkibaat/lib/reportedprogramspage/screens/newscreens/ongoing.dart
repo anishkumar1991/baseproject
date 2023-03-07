@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Storage/mannkibaat.dart';
 
 import '../../../../../generated/l10n.dart';
-import '../../../attendeereviewpage/Editable/EditableReviewPage.dart';
+import '../../../attendeereviewpage/editableAndNewEvent/Editable/EditableReviewPage.dart';
 import '../../../attendeereviewpage/screens/ReviewPageMain.dart';
 import '../../../attendeesformpage/screens/AttendeesFormPage.dart';
 import '../../cubit/DashCubit.dart';
@@ -198,7 +198,7 @@ class _OnGoingState extends State<OnGoing>
                           }
                           else {
                             print(state.dashModal.data[index].canEdit);
-                            if (state.dashModal.data[index].canEdit == false) {
+                            if (state.dashModal.data[index].canEdit == true) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -220,6 +220,8 @@ class _OnGoingState extends State<OnGoing>
                                             img2:
                                                 '${state.dashModal.data[index].eventDetail.photo2}',
                                             id: state.dashModal.data[index].id,
+                                            eventDetailId:
+                                                "${state.dashModal.data[index].eventDetail.id}",
                                           )));
                             } else {
                               Navigator.push(

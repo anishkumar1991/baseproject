@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../attendeesformpage/cubit/FetchCubit.dart';
-import '../../attendeesformpage/cubit/FetchStates.dart';
-import '../../attendeesformpage/network/model/VidhanSabhaModel.dart';
-import '../../attendeesformpage/screens/CustomDD.dart';
+import '../../../../../AddEntry/Screen/widget/drop_down_widget.dart';
+import '../../../attendeesformpage/cubit/FetchCubit.dart';
+import '../../../attendeesformpage/cubit/FetchStates.dart';
+
 
 class EditableDropDown extends StatefulWidget {
   final String vidhanSabhaPreFilled;

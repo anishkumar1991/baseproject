@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/mannkibaat/lib/attendeesformpage/screens/AttendeesFormPage.dart';
 
-import '../../../../Values/app_colors.dart';
-import '../../attendeesformpage/cubit/FetchCubit.dart';
-import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
-import '../screens/BoothAddress.dart';
-import '../screens/BoothName.dart';
-import '../screens/DescriptionSection.dart';
-import '../screens/Images.dart';
-import '../screens/TotalAttendee.dart';
-import '../screens/VidharSabhaStates.dart';
+import '../../../../../Values/app_colors.dart';
+import '../../../attendeesformpage/cubit/FetchCubit.dart';
+import '../../../attendeesformpage/review/screens/BoothAddress.dart';
+import '../../../attendeesformpage/review/screens/BoothName.dart';
+import '../../../attendeesformpage/review/screens/DescriptionSection.dart';
+import '../../../attendeesformpage/review/screens/Images.dart';
+import '../../../attendeesformpage/review/screens/TotalAttendee.dart';
+import '../../../attendeesformpage/review/screens/VidharSabhaStates.dart';
+import '../../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import 'EditableAttendeesFormPage.dart';
 
 class EditableReviewPage extends StatefulWidget {
@@ -24,6 +24,7 @@ class EditableReviewPage extends StatefulWidget {
   final String description;
   final String img1;
   final String img2;
+  final String eventDetailId;
 
   const EditableReviewPage(
       {Key? key,
@@ -35,7 +36,8 @@ class EditableReviewPage extends StatefulWidget {
       required this.description,
       required this.img1,
       required this.img2,
-      required this.id})
+      required this.id,
+      required this.eventDetailId})
       : super(key: key);
 
   @override
@@ -106,6 +108,7 @@ class _EditableReviewPage extends State<EditableReviewPage> {
                                           descriptionPreFilled:
                                               widget.description,
                                           addressPreFilled: widget.address,
+                                          eventDetailId: widget.eventDetailId,
                                         )));
                           },
                           icon: const Icon(Icons.edit),

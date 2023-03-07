@@ -3,18 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../Values/Constants.dart';
-import '../../../../Values/app_colors.dart';
-import '../../Storage/AttendeesFormStorage.dart';
-import '../../attendeesformpage/cubit/AttendeeFormCubit.dart';
-import '../../attendeesformpage/cubit/FetchCubit.dart';
-import '../../attendeesformpage/review/screens/ReviewPageMain.dart';
-import '../../attendeesformpage/screens/ImageUploadBox.dart';
-import '../../utils/backgroundboxdecoration/BoxDecoration.dart';
-import '../../utils/buttons/SubmitButton.dart';
+import '../../../../../Values/Constants.dart';
+import '../../../../../Values/app_colors.dart';
+import '../../../Storage/AttendeesFormStorage.dart';
+import '../../../attendeesformpage/cubit/AttendeeFormCubit.dart';
+import '../../../attendeesformpage/cubit/FetchCubit.dart';
+import '../../../utils/backgroundboxdecoration/BoxDecoration.dart';
+import '../../../utils/buttons/SubmitButton.dart';
 import 'EditableDropDownScreen.dart';
+import 'EditableFormReviewPAge.dart';
 import 'EditableImageBox.dart';
-
 
 class EditableAttendeesFormPage extends StatefulWidget {
   final int eventId;
@@ -25,12 +23,24 @@ class EditableAttendeesFormPage extends StatefulWidget {
   final String descriptionPreFilled;
   final String img1PreFilled1;
   final String img1PreFilled2;
+  final String eventDetailId;
 
-
-   EditableAttendeesFormPage({Key? key, required this.eventId, required this.vidhanSabhaPreFilled, required this.boothPreFilled, required this.totalAttendeesPreFilled, required this.addressPreFilled, required this.descriptionPreFilled, required this.img1PreFilled1, required this.img1PreFilled2}) : super(key: key);
+  EditableAttendeesFormPage(
+      {Key? key,
+      required this.eventId,
+      required this.vidhanSabhaPreFilled,
+      required this.boothPreFilled,
+      required this.totalAttendeesPreFilled,
+      required this.addressPreFilled,
+      required this.descriptionPreFilled,
+      required this.img1PreFilled1,
+      required this.img1PreFilled2,
+      required this.eventDetailId})
+      : super(key: key);
 
   @override
-  State<EditableAttendeesFormPage> createState() => _EditableAttendeesFormPage();
+  State<EditableAttendeesFormPage> createState() =>
+      _EditableAttendeesFormPage();
 }
 
 class _EditableAttendeesFormPage extends State<EditableAttendeesFormPage> {
@@ -258,19 +268,22 @@ class _EditableAttendeesFormPage extends State<EditableAttendeesFormPage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => FormReviewPage(
+                                        builder: (context) =>
+                                        EditableFormReviewPage(
                                           totalAttendees:
-                                          totalAttendeesController.text,
+                                              totalAttendeesController.text,
                                           address: addressController.text,
                                           description:
-                                          descriptionController.text,
+                                              descriptionController.text,
                                           img1: AttendeeStorageService
-                                              .getimage1url() ??
+                                                  .getimage1url() ??
                                               " ",
                                           img2: AttendeeStorageService
-                                              .getimage2url() ??
+                                                  .getimage2url() ??
                                               " ",
                                           eventid: widget.eventId,
+
+                                          eventDetailId: widget.eventDetailId,
                                         )));
                               }
                             },

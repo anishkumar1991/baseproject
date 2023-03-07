@@ -8,41 +8,44 @@ import 'package:sangathan/mannkibaat/lib/attendeesformpage/review/cubit/SendEven
 import '../../../../../Storage/mannkibaat.dart';
 import '../../../../../Values/Constants.dart';
 import '../../../../../Values/app_colors.dart';
+import '../../../attendeesformpage/cubit/FetchCubit.dart';
+import '../../../attendeesformpage/review/cubit/SendEventCubit.dart';
+import '../../../attendeesformpage/review/screens/BoothAddress.dart';
+import '../../../attendeesformpage/review/screens/BoothName.dart';
+import '../../../attendeesformpage/review/screens/DescriptionSection.dart';
+import '../../../attendeesformpage/review/screens/Images.dart';
+import '../../../attendeesformpage/review/screens/TotalAttendee.dart';
+import '../../../attendeesformpage/review/screens/VidharSabhaStates.dart';
 import '../../../formfillsuccesspage/screens/FormSuccess.dart';
 import '../../../utils/backgroundboxdecoration/BoxDecoration.dart';
 import '../../../utils/buttons/SubmitButton.dart';
-import '../../cubit/FetchCubit.dart';
-import '../cubit/SendEventCubit.dart';
-import 'BoothAddress.dart';
-import 'BoothName.dart';
-import 'DescriptionSection.dart';
-import 'Images.dart';
-import 'TotalAttendee.dart';
-import 'VidharSabhaStates.dart';
 
-class FormReviewPage extends StatefulWidget {
+
+
+class EditableFormReviewPage extends StatefulWidget {
   final String? totalAttendees;
   final int eventid;
   final String? address;
   final String? description;
   final String img1;
   final String img2;
+  final String eventDetailId;
 
-  const FormReviewPage(
+  const EditableFormReviewPage(
       {Key? key,
-      this.totalAttendees,
-      this.address,
-      this.description,
-      required this.img1,
-      required this.img2,
-      required this.eventid})
+        this.totalAttendees,
+        this.address,
+        this.description,
+        required this.img1,
+        required this.img2,
+        required this.eventid, required this.eventDetailId})
       : super(key: key);
 
   @override
-  State<FormReviewPage> createState() => _FormReviewPageState();
+  State<EditableFormReviewPage> createState() => _EditableFormReviewPage();
 }
 
-class _FormReviewPageState extends State<FormReviewPage> {
+class _EditableFormReviewPage extends State<EditableFormReviewPage> {
   Position? position;
   Position? newPosition;
   final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -132,21 +135,16 @@ class _FormReviewPageState extends State<FormReviewPage> {
                         }
                       },
                       builder: (context, state) {
-                      // if (state is EventSendingState) {
-                      //   return const Center(
-                      //     child: CircularProgressIndicator(),
-                      //   );
-                      // }
-                      if (state is EventSendingState) {
-                        return const SpinKitFadingCircle(
-                          color: AppColor.buttonOrangeBackGroundColor,
-                          size: 30,
-                        );
-                      }
-                      return SubmitButton(
-                        onPress: () async {
+                        if (state is EventSendingState) {
+                          return const SpinKitFadingCircle(
+                            color: AppColor.buttonOrangeBackGroundColor,
+                            size: 30,
+                          );
+                        }
+                        return SubmitButton(onPress: () async {
+                          print('-------eventDetailsID--->${widget.eventDetailId}');
                           newPosition = await getCurrentPosition();
-                          await cubit2.sendEvent(
+                          await cubit2.sendEventAgain(
                               MKBStorageService.getUserAuthToken().toString(),
                               cubit.boothid,
                               cubit.boothname,
@@ -157,11 +155,13 @@ class _FormReviewPageState extends State<FormReviewPage> {
                               newPosition!.latitude.toString(),
                               newPosition!.longitude.toString(),
                               widget.img1,
-                              widget.img2);
-                        },
-                        textButtonText: 'सबमिट',
-                      );
-                    }),
+                              widget.img2,
+                            widget.eventDetailId,
+                          );
+
+                        }, textButtonText: 'सबमिट',);
+                      },
+                    ),
                   ),
                   const SizedBox(height: 30),
                 ],

@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../Storage/AttendeesFormStorage.dart';
-import '../../attendeesformpage/cubit/AttendeeFormCubit.dart';
-import '../../attendeesformpage/cubit/AttendeeFormState.dart';
-import '../../attendeesformpage/screens/ImageUploadSelector.dart';
+
+import '../../../Storage/AttendeesFormStorage.dart';
+import '../../../attendeesformpage/cubit/AttendeeFormCubit.dart';
+import '../../../attendeesformpage/cubit/AttendeeFormState.dart';
+import '../../../attendeesformpage/screens/ImageUploadSelector.dart';
+
 
 class EditableImageBox extends StatelessWidget {
   File? convertedImage1;
