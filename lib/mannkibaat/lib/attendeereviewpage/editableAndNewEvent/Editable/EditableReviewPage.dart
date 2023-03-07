@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sangathan/mannkibaat/lib/attendeesformpage/screens/AttendeesFormPage.dart';
 
 import '../../../../../Values/app_colors.dart';
 import '../../../attendeesformpage/cubit/FetchCubit.dart';
@@ -120,9 +119,9 @@ class _EditableReviewPage extends State<EditableReviewPage> {
                     state: widget.state,
                   ),
                   const SizedBox(height: 0),
-                  ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
-                  const SizedBox(height: 0),
                   ReviewBoothName(booth: widget.booth),
+                  ReviewTotalAttendee(totalAttendees: widget.totalAttendees),
+
                   const SizedBox(height: 0),
                   ReviewBoothAddress(boothAddress: widget.address),
                   const SizedBox(height: 0),
