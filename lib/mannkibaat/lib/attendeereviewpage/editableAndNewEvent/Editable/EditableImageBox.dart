@@ -86,14 +86,14 @@ class EditableImageBox extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: CupertinoButton(
                       onPressed: () async {
-                        image1Upload(context);
+                        image2Upload(context);
                       },
                       padding: EdgeInsets.zero,
                       child: (downloadUrlImage2 != null)
                           ? Image.network(downloadUrlImage2!)
                           : BlocBuilder<AttendeeFormCubit, AttendeeFormState>(
                               builder: (context, state) {
-                                if (state is Image1UploadingState) {
+                                if (state is Image2UploadingState) {
                                   return const CircularProgressIndicator();
                                 }
                                 return prefilledImage2 != null
