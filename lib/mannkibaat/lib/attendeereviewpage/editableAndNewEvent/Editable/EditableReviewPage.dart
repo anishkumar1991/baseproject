@@ -102,8 +102,8 @@ class _EditableReviewPage extends State<EditableReviewPage> {
                                           boothPreFilled: widget.booth,
                                           totalAttendeesPreFilled:
                                               widget.totalAttendees,
-                                          img1PreFilled2: widget.img2,
                                           img1PreFilled1: widget.img1,
+                                          img2PreFilled2: widget.img2,
                                           descriptionPreFilled:
                                               widget.description,
                                           addressPreFilled: widget.address,

@@ -22,7 +22,7 @@ class EditableAttendeesFormPage extends StatefulWidget {
   final String addressPreFilled;
   final String descriptionPreFilled;
   final String img1PreFilled1;
-  final String img1PreFilled2;
+  final String img2PreFilled2;
   final String eventDetailId;
 
   EditableAttendeesFormPage(
@@ -34,7 +34,7 @@ class EditableAttendeesFormPage extends StatefulWidget {
       required this.addressPreFilled,
       required this.descriptionPreFilled,
       required this.img1PreFilled1,
-      required this.img1PreFilled2,
+      required this.img2PreFilled2,
       required this.eventDetailId})
       : super(key: key);
 
@@ -232,7 +232,9 @@ class _EditableAttendeesFormPage extends State<EditableAttendeesFormPage> {
                             fontWeight: FontWeight.w400),
                       ),
                       const SizedBox(height: 10),
-                      EditableImageBox(prefilledImage1: widget.img1PreFilled1,prefilledImage2: widget.img1PreFilled2),
+                      EditableImageBox(
+                          prefilledImage1: widget.img1PreFilled1,
+                          prefilledImage2: widget.img2PreFilled2),
                       const SizedBox(height: 25),
                       Align(
                         alignment: Alignment.center,

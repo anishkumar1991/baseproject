@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class EditableImageBox extends StatelessWidget {
       },
       builder: (context, state) {
         AttendeeStorageService.setimage1url(prefilledImage1!);
+        AttendeeStorageService.setimage2url(prefilledImage2!);
         return SizedBox(
           height: 200,
           child: DottedBorder(
@@ -84,29 +86,27 @@ class EditableImageBox extends StatelessWidget {
                   fit: FlexFit.tight,
                   child: CupertinoButton(
                       onPressed: () async {
-                        image2Upload(context);
+                        image1Upload(context);
                       },
                       padding: EdgeInsets.zero,
                       child: (downloadUrlImage2 != null)
                           ? Image.network(downloadUrlImage2!)
                           : BlocBuilder<AttendeeFormCubit, AttendeeFormState>(
                               builder: (context, state) {
-                                if (state is Image2UploadingState) {
+                                if (state is Image1UploadingState) {
                                   return const CircularProgressIndicator();
                                 }
-                                return Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Icon(
-                                      Icons.image,
-                                      color: Colors.grey,
-                                      size: 80,
-                                    ),
-                                  ],
-                                );
+                                return prefilledImage2 != null
+                                    ? Image.network(prefilledImage2!,
+                                        fit: BoxFit.fill)
+                                    : const Icon(
+                                        Icons.image,
+                                        color: Colors.grey,
+                                        size: 80,
+                                      );
                               },
                             )),
-                ),
+                )
               ],
             ),
           ),
