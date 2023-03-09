@@ -100,8 +100,11 @@ dependencies:
   open_file_plus: any
   pretty_dio_logger: ^1.2.0-beta-1
   mailer: ^6.0.0
-
   flutter_cache_manager: ^3.3.0
+  upgrader: ^6.0.1
+
+
+
 #  mannkibaatpackage:
 #    git:
 #      url: https://github.com/MilindPanwar-Jarvis/mannkibaatpackage.git
