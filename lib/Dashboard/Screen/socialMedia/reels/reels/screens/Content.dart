@@ -56,7 +56,6 @@ class _ContentScreenState extends State<ContentScreen> {
       aspectRatio: 10 / 20,
 
     );
-    setState(() {});
   }
 
   @override
