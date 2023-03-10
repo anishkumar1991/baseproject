@@ -54,14 +54,20 @@ class _ContentScreenState extends State<ContentScreen> {
       looping: true,
       autoInitialize: true,
       aspectRatio: 10 / 20,
-
     );
+    setState(() {});
+
   }
 
   @override
   void dispose() {
     _videoPlayerController.dispose();
+    _videoPlayerController.pause();
+    _videoPlayerController.setVolume(0);
     _chewieController?.dispose();
+    _chewieController?.allowMuting;
+    _chewieController?.pause();
+    _chewieController?.setVolume(0);
     super.dispose();
   }
 
