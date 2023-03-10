@@ -33,6 +33,7 @@ class _ContentScreenState extends State<ContentScreen> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
   final bool _liked = false;
+  bool _isCached = false;
 
   @override
   void initState() {
@@ -40,13 +41,23 @@ class _ContentScreenState extends State<ContentScreen> {
     initializePlayer();
   }
 
-
   Future initializePlayer() async {
     final cacheManager = DefaultCacheManager();
-    final file = await cacheManager.getSingleFile(widget.src);
+    final fileInfo =
+        (!mounted) ? null : await cacheManager.getFileFromCache(widget.src);
+    var isCached = fileInfo?.validTill.isAfter(DateTime.now()) ?? false;
 
-    _videoPlayerController = VideoPlayerController.file(file);
+    if (isCached) {
+      isCached = true;
+      _videoPlayerController = VideoPlayerController.file(fileInfo!.file);
+    } else {
+      _videoPlayerController = VideoPlayerController.network(widget.src);
+      await cacheManager.downloadFile(widget.src);
+    }
+    // final cacheManager = DefaultCacheManager();
+    // final file = await cacheManager.getSingleFile(widget.src);
     await Future.wait([_videoPlayerController.initialize()]);
+    setState(() {});
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       autoPlay: true,
@@ -55,21 +66,10 @@ class _ContentScreenState extends State<ContentScreen> {
       autoInitialize: true,
       aspectRatio: 10 / 20,
     );
-    setState(() {});
-
   }
 
   @override
-  void dispose() {
-    _videoPlayerController.dispose();
-    _videoPlayerController.pause();
-    _videoPlayerController.setVolume(0);
-    _chewieController?.dispose();
-    _chewieController?.allowMuting;
-    _chewieController?.pause();
-    _chewieController?.setVolume(0);
-    super.dispose();
-  }
+  deactivate();
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +79,7 @@ class _ContentScreenState extends State<ContentScreen> {
         _chewieController != null &&
                 _chewieController!.videoPlayerController.value.isInitialized
             ? GestureDetector(
-                onTap: () {
-                },
+                onTap: () {},
                 child: Chewie(
                   controller: _chewieController!,
                 ),
@@ -108,5 +107,20 @@ class _ContentScreenState extends State<ContentScreen> {
         )
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    // _videoPlayerController.pause();
+
+    _videoPlayerController.setVolume(0);
+    _chewieController = null;
+    _chewieController?.dispose();
+
+    // _chewieController?.allowMuting;
+    // _chewieController?.pause();
+    _chewieController?.setVolume(0);
+    super.dispose();
   }
 }
