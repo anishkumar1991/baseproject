@@ -8,7 +8,6 @@ import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Values/space_height_widget.dart';
 import 'package:sangathan/Values/space_width_widget.dart';
 
-import '../../../Dashboard/Screen/socialMedia/posts/cubit/SendFcmTokenCubit.dart';
 import '../../../Storage/user_storage_service.dart';
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../Utils/ConnectivityCheck/not_connected.dart';
@@ -156,10 +155,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) async {
         if (state is UserLoginSuccessfullyState) {
-          final fcmcubit = context.read<SendFcmTokenCubit>();
-
-          await fcmcubit.sendFcm(
-              StorageService.getUserFcmToken(), widget.number);
 
           if (state.userDetails.user?.onboarding == "started") {
             showDialog(

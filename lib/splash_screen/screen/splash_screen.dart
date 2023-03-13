@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (state is UserProfileDataFetchedState) {
             Navigator.pushNamedAndRemoveUntil(
               context,
-              RoutePath.dashBoardScreen,
+              RoutePath.scannerMainScreen,
               (route) => false,
             );
           } else if (state is UserProfileErrorState) {
