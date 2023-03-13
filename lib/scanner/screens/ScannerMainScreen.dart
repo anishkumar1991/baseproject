@@ -27,30 +27,38 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
         ),
         child: Column(
           children: [
-            SizedBox(
-              height: 50,
+            const SizedBox(
+              height: 100,
             ),
-            Text(
-              "Sangathan QR Scanner",
-
-              style: TextStyle(color:AppColor.red,fontWeight: FontWeight.w400),
+            const Text(
+              "SANGATHAN QR",
+              style:
+                  TextStyle(color: AppColor.primaryColor, fontSize:30,fontWeight: FontWeight.w900),
             ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 20,
+            const SizedBox(
+              height: 10,
+            ),
+            Divider(color: Colors.black, thickness: 0.2),
+            GestureDetector(
+              onTap: (){
+                scanQRCode();
+              },
+              child: Container(
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "Click Here To Scan",
+                      style: TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(width: 10,),
+                    Icon(Icons.qr_code)
+                  ],
                 ),
-                Text(
-                  "Scan QR Code",
-                  style: TextStyle(fontWeight: FontWeight.w400),
-                ),
-                IconButton(
-                    onPressed: () {
-                      scanQRCode();
-                    },
-                    icon: Icon(Icons.qr_code))
-              ],
+              ),
             ),
+            Divider(color: Colors.black, thickness: 0.2),
           ],
         ),
       ),
@@ -81,12 +89,12 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
             onPressed: () {
               scanQRCode();
             },
-            child: Text('Scan QR'),
+            child: const Text('Scan QR'),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20.0,
           ),
-          Text(getResult),
+          Text(getResult, style: TextStyle(fontWeight: FontWeight.w400),),
         ],
       )),
     );
@@ -95,7 +103,7 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
   void scanQRCode() async {
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666' , "Cancel", true, ScanMode.QR);
+          '#ff6666', "Cancel", true, ScanMode.QR);
 
       if (!mounted) return;
 
