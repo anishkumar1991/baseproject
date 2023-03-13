@@ -24,4 +24,6 @@ class RoutePath {
   static const String shaktiKendraScreen = 'ShaktiKendraScreen';
   static const String editShaktiKendraScreen = 'EditShaktiKendraScreen';
   static const String homeScreenRoute = 'openHomeScreen';
+  static const String scannerMainScreen = 'scanner';
+
 }

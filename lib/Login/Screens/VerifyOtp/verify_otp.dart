@@ -172,7 +172,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
             Future.delayed(Duration.zero).then((value) =>
                 Navigator.pushNamedAndRemoveUntil(
                     context,
-                    RoutePath.dashBoardScreen,
+                    RoutePath.scannerMainScreen,
                     (Route<dynamic> route) => false));
           }
         } else if (state is LoginFaieldState) {

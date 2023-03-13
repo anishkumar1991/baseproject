@@ -102,6 +102,8 @@ dependencies:
   mailer: ^6.0.0
   flutter_cache_manager: ^3.3.0
   upgrader: ^6.0.1
+  qr_code_scanner: ^1.0.1
+  flutter_barcode_scanner: ^2.0.0
 
 
 

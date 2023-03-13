@@ -6,6 +6,7 @@ import 'package:sangathan/Dashboard/Screen/homePage/screens/zila_data_page/zila_
 import 'package:sangathan/Login/Screens/LoginScreen/login_page.dart';
 import 'package:sangathan/Login/Screens/VerifyOtp/verify_otp.dart';
 import 'package:sangathan/route/route_path.dart';
+import 'package:sangathan/scanner/screens/ScannerMainScreen.dart';
 
 import '../AddEntry/Screen/add_entry_preview_submit_screen.dart';
 import '../Dashboard/Screen/homePage/screens/pravas_module/create_function_page/create_function_page.dart';
@@ -38,11 +39,11 @@ class RouteGenerator {
           },
         );
 
-      case RoutePath.dashBoardScreen:
+      case RoutePath.scannerMainScreen:
         return MaterialPageRoute(
           settings: RouteSettings(name: settings.name),
           builder: (context) {
-            return const DashBoardScreen();
+            return const ScannerMainScreen();
           },
         );
       case RoutePath.verifyOtpScreen:
@@ -292,6 +293,14 @@ class RouteGenerator {
             );
           },
         );
+      case RoutePath.scannerMainScreen:
+        return MaterialPageRoute(
+          settings: RouteSettings(name: settings.name),
+          builder: (context) {
+            return const ScannerMainScreen();
+          },
+        );
+
       // case RoutePath.homeScreenRoute:
       //   return MaterialPageRoute(
       //     settings: RouteSettings(name: settings.name),
@@ -299,7 +308,6 @@ class RouteGenerator {
       //       return
       //     },
       //   );
-
 
       default:
         return MaterialPageRoute(
