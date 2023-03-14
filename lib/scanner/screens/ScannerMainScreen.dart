@@ -5,8 +5,6 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sangathan/Values/app_colors.dart';
 
-import 'QrScreen.dart';
-
 class ScannerMainScreen extends StatefulWidget {
   const ScannerMainScreen({Key? key}) : super(key: key);
 
@@ -32,15 +30,17 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
             ),
             const Text(
               "SANGATHAN QR",
-              style:
-                  TextStyle(color: AppColor.primaryColor, fontSize:30,fontWeight: FontWeight.w900),
+              style: TextStyle(
+                  color: AppColor.primaryColor,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w900),
             ),
             const SizedBox(
               height: 10,
             ),
             Divider(color: Colors.black, thickness: 0.2),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 scanQRCode();
               },
               child: Container(
@@ -52,7 +52,9 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
                       "Click Here To Scan",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Icon(Icons.qr_code)
                   ],
                 ),
@@ -63,12 +65,12 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
         ),
       ),
       appBar: AppBar(
-          backgroundColor: AppColor().appBarColor,
+          backgroundColor: AppColor.primaryColor,
           title: Text("Sangathan - QR Scanner Page",
               style: GoogleFonts.poppins(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
-                  color: AppColor().textColor)),
+                  color: AppColor.black)),
           centerTitle: true,
           leading: Builder(builder: (context) {
             return IconButton(
@@ -94,7 +96,10 @@ class _ScannerMainScreenState extends State<ScannerMainScreen> {
           const SizedBox(
             height: 20.0,
           ),
-          Text(getResult, style: TextStyle(fontWeight: FontWeight.w400),),
+          Text(
+            getResult,
+            style: TextStyle(fontWeight: FontWeight.w400),
+          ),
         ],
       )),
     );

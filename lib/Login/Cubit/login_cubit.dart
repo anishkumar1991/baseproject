@@ -9,7 +9,6 @@ import 'package:sangathan/Login/Cubit/login_state.dart';
 import 'package:sangathan/Login/Network/api/auth_api.dart';
 import 'package:sangathan/Login/Network/model/login_model.dart';
 import 'package:sangathan/Login/Network/model/user_model.dart';
-import 'package:sangathan/Storage/mannkibaat.dart';
 
 import '../../Storage/user_storage_service.dart';
 import '../Network/model/onboarding_model.dart';
@@ -143,7 +142,6 @@ class LoginCubit extends Cubit<LoginState> {
         Map<String, dynamic> msg = respose.data;
         /* await StorageService.removeUserAuthToken();
         await StorageService.removeUserIdentificationToken();*/
-        MKBStorageService.cleanMKBStorage();
         StorageService.cleanAllLocalStorage();
         emit(UserLogOutSuccessState(msg['message']));
       } else {

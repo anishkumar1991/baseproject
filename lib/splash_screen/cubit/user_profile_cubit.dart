@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sangathan/splash_screen/cubit/user_profile_state.dart';
 import 'package:sangathan/splash_screen/network/api/user_profile_api.dart';
 
-import '../../Dashboard/Screen/menuPage/screens/profile_screen/network/model/user_detail_model.dart';
+import '../../Login/Network/model/user_detail_model.dart';
 import '../../Storage/user_storage_service.dart';
 
 UserDetailModel userProfileModel = UserDetailModel();

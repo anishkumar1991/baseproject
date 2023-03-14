@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../Dashboard/Screen/menuPage/screens/profile_screen/network/model/user_detail_model.dart';
+import '../../Login/Network/model/user_detail_model.dart';
 
 abstract class UserProfileState extends Equatable {
   @override

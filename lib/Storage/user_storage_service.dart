@@ -5,19 +5,10 @@ class StorageService {
   static String userInfoKey = "identification_token";
   static String userAuthTokenKey = "auth_token";
   static String userDataKey = "user_data";
-  static String fcmToken = "fcmToken";
 
   static String? userAuthToken;
   static GetStorage storage = GetStorage();
   static UserDetails? userData;
-
-  static setUserFcmToken(String token) async {
-    await storage.write(fcmToken, token);
-  }
-
-  static String? getUserFcmToken() {
-    return storage.read(fcmToken);
-  }
 
   static setUserIdentificationToken(String token) async {
     await storage.write(userInfoKey, token);
