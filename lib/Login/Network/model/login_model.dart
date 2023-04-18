@@ -10,24 +10,48 @@ String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
   LoginModel({
-    required this.success,
-    required this.message,
-    required this.identificationToken,
+    required this.responseCode,
+    required this.responseStatus,
+    required this.responseData,
+    required this.responseMsg,
   });
 
-  bool? success;
-  String? message;
-  String? identificationToken;
+  int responseCode;
+  int responseStatus;
+  ResponseData responseData;
+  String responseMsg;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    success: json["success"],
-    message: json["message"],
-    identificationToken: json["identification_token"],
+    responseCode: json["response_code"],
+    responseStatus: json["response_status"],
+    responseData: ResponseData.fromJson(json["response_data"]),
+    responseMsg: json["response_msg"],
   );
 
   Map<String, dynamic> toJson() => {
-    "success": success,
-    "message": message,
-    "identification_token": identificationToken,
+    "response_code": responseCode,
+    "response_status": responseStatus,
+    "response_data": responseData.toJson(),
+    "response_msg": responseMsg,
+  };
+}
+
+class ResponseData {
+  ResponseData({
+    required this.mobile,
+    required this.status,
+  });
+
+  String mobile;
+  String status;
+
+  factory ResponseData.fromJson(Map<String, dynamic> json) => ResponseData(
+    mobile: json["mobile"],
+    status: json["status"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "mobile": mobile,
+    "status": status,
   };
 }

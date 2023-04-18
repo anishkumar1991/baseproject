@@ -13,7 +13,7 @@ class _AuthApi implements AuthApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://saral-staging.ccdms.in';
+    baseUrl ??= 'https://blue.salarynow.in/salaryadmin/api';
   }
 
   final Dio _dio;
@@ -35,115 +35,7 @@ class _AuthApi implements AuthApi {
     )
             .compose(
               _dio.options,
-              '/zila/api/login',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> resendOtp(data) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(data);
-    final _result =
-        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/zila/api/resend_otp',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> submitOtp(
-    data,
-    agent,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'User-Agent': agent};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(data);
-    final _result =
-        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/zila/api/submit_otp',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> userOnboarding(
-    token,
-    data,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(data);
-    final _result =
-        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/zila/api/onboarding',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = _result.data;
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<dynamic>> logOut(token) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    final _result =
-        await _dio.fetch(_setStreamType<HttpResponse<dynamic>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-            .compose(
-              _dio.options,
-              '/zila/api/logout',
+              '/Auth/login',
               queryParameters: queryParameters,
               data: _data,
             )

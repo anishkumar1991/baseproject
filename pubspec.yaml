@@ -72,13 +72,8 @@ dependencies:
   upgrader: ^6.0.1
   qr_code_scanner: ^1.0.1
   flutter_barcode_scanner: ^2.0.0
+  pretty_dio_logger: ^1.2.0-beta-1
 
-
-
-#  mannkibaatpackage:
-#    git:
-#      url: https://github.com/MilindPanwar-Jarvis/mannkibaatpackage.git
-#      ref: master
 
 
 dev_dependencies:

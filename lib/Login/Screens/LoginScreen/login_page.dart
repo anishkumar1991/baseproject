@@ -11,8 +11,6 @@ import 'package:sangathan/Utils/ConnectivityCheck/not_connected.dart';
 import 'package:sangathan/Values/app_colors.dart';
 import 'package:sangathan/Values/icons.dart';
 import 'package:sangathan/common/common_button.dart';
-import 'package:sangathan/route/route_path.dart';
-
 import '../../../Utils/ConnectivityCheck/cubit/connectivity_cubit.dart';
 import '../../../generated/l10n.dart';
 
@@ -48,7 +46,7 @@ class LoginScreen extends StatelessWidget {
                         Align(
                             alignment: Alignment.center,
                             child: Image.asset(
-                              AppIcons.loginImage,
+                              AppIcons.icMail,
                               height: 200,
                             )),
                         const SizedBox(
@@ -90,10 +88,10 @@ class LoginScreen extends StatelessWidget {
                           listener: (context, state) {
                             if (state is UserLoggedState) {
                               LoginModel loginModel = state.model;
-                              EasyLoading.showSuccess(loginModel.message ?? '');
-                              Navigator.pushNamed(
+                              EasyLoading.showSuccess(loginModel.responseMsg ?? '');
+                             /* Navigator.pushNamed(
                                   context, RoutePath.verifyOtpScreen,
-                                  arguments: mobileNumController.text);
+                                  arguments: mobileNumController.text);*/
                             } else if (state is LoginFaieldState) {
                               EasyLoading.showError(state.error);
                             }

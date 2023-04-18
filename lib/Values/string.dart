@@ -11,7 +11,8 @@ class AppStrings {
   // static const String mannkibaatotp = "170950";
 
   /// staging urls and string
-  static const String baseUrl = "https://saral-staging.ccdms.in";
+  //static const String baseUrl = "https://saralk.ccdms.in";
+  static const String baseUrl = "https://blue.salarynow.in/salaryadmin/api";
   static const String socialmediabaseUrl =
       "https://saral-social-staging.ccdms.in";
   static const String baseUrlMannKiBaat =
@@ -20,7 +21,6 @@ class AppStrings {
   static const String acid = "1611";
   static const String mannkibaatotp = "123456";
 
-  /// *****  notification urls  ****  (Do not change to production without asking  "Sumit")
   /// staging
   static const String notificationbaseUrl = "http://staging-notification.ccdms.in";
   /// production
